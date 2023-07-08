@@ -8,7 +8,6 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.EnumSource
-import org.junit.jupiter.params.provider.ValueSource
 
 class CardNumberCalculatorTest {
 
@@ -69,7 +68,7 @@ class CardNumberCalculatorTest {
             Card(shape = CardShape.DIAMOND, CardNumber.TEN),
             Card(shape = CardShape.DIAMOND, CardNumber.TWO),
             Card(shape = CardShape.DIAMOND, CardNumber.A)
-            )
+        )
         val actual = cardNumberCalculator.calculateSumOfCardNumbers(cardList)
 
         assertThat(actual).isEqualTo(13)

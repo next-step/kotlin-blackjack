@@ -1,6 +1,10 @@
 package blackjack.domain
 
-import blackjack.domain.gamer.*
+import blackjack.domain.gamer.BlackJackGamer
+import blackjack.domain.gamer.Dealer
+import blackjack.domain.gamer.GameRecordType
+import blackjack.domain.gamer.GamerType
+import blackjack.domain.gamer.Player
 
 class RuleChecker {
 

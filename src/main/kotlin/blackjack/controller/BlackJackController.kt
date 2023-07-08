@@ -5,6 +5,7 @@ import blackjack.domain.deck.RandomDeckShuffleStrategy
 import blackjack.domain.gamer.BlackJackGamer
 import blackjack.domain.gamer.Dealer
 import blackjack.domain.gamer.Player
+import blackjack.dto.GeneratePlayerRequest
 import blackjack.ui.InputView
 import blackjack.ui.ResultView
 
@@ -14,9 +15,9 @@ class BlackJackController(
 ) {
 
     fun start() {
-        val playerNameList = inputView.getPlayerNames()
+        val playerRequest = getPlayerRequest()
         val dealer = Dealer()
-        val playerList = Player.generatePlayers(playerNameList)
+        val playerList = Player.generatePlayers(playerRequest)
         val blackJackGame = BlackJackGame(RandomDeckShuffleStrategy())
 
         val gamerList = makeGamerList(playerList, dealer)
@@ -32,6 +33,11 @@ class BlackJackController(
         aggregateGameResult(blackJackGame, playerList, dealer)
 
         printGameResult(gamerList)
+    }
+
+    private fun getPlayerRequest(): List<GeneratePlayerRequest> {
+        val playerNameList = inputView.getPlayerNames()
+        return inputView.getPlayerRequest(playerNameList)
     }
 
     private fun makeGamerList(playerList: List<Player>, dealer: Dealer): List<BlackJackGamer> {
