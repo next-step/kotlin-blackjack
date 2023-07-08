@@ -24,20 +24,25 @@ class BlackJackGameController(
     private fun playGame(game: BlackJackGame) {
         game.handOutDefaultCardToPlayers()
         outputView.printDefaultReceivedCards(game.players.values)
+
         game.players.values.forEach { player ->
-            while (player.score < BLACK_JACK) {
-                if (inputView.requestReceiveAdditionalCard(player.name)) {
-                    game.handOutAdditionalCardTo(player)
-                    outputView.printlnPlayerCards(player)
-                    continue
-                }
-                break
-            }
+            requestAndReceiveCard(player, game)
         }
 
-        if (game.dealer.cards.sumOfScoreWithAceAsOne <= DEALER_MINIMUM_SCORE) {
+        if (game.dealer.score <= DEALER_MINIMUM_SCORE) {
             game.handOutAdditionalCardTo(game.dealer)
             outputView.printlnDealerGetAdditionalCard()
+        }
+    }
+
+    private fun requestAndReceiveCard(player: Player, game: BlackJackGame) {
+        while (player.score < BLACK_JACK) {
+            if (inputView.requestReceiveAdditionalCard(player.name)) {
+                game.handOutAdditionalCardTo(player)
+                outputView.printlnPlayerCards(player)
+                continue
+            }
+            break
         }
     }
 }
