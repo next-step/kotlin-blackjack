@@ -9,7 +9,7 @@ import blackjack.domain.participant.Player
 class BlackJack(
     val players: List<Player>,
     val dealer: Dealer = Dealer(),
-    private val gameCards: GameCards = GameCardGenerator.crete(),
+    private val gameCards: GameCards = GameCardGenerator().crete(),
 ) {
     fun distributeInitialCard() {
         dealer.drawInitCards(drawInitCards())

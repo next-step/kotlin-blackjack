@@ -1,9 +1,11 @@
 package blackjack.domain.card
 
-object GameCardGenerator {
-    fun crete(): GameCards = GameCards(getAllCards().shuffled().toMutableList())
+class GameCardGenerator {
+    fun crete(): GameCards = GameCards(CARDS.shuffled().toMutableList())
 
-    private fun getAllCards(): List<Card> = Shape.values().flatMap { shape ->
-        Character.values().map { char -> Card(shape, char) }
+    companion object {
+        private val CARDS: List<Card> = Shape.values().flatMap { shape ->
+            Character.values().map { char -> Card(shape, char) }
+        }
     }
 }

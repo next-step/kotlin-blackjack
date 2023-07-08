@@ -7,7 +7,7 @@ internal class CardsTest {
     @Test
     internal fun `카드를 추가하면 카드가 추가된다`() {
         val cards = Cards()
-        cards.addCard(GameCardGenerator.crete().draw())
+        cards.addCard(GameCardGenerator().crete().draw())
         cards.values.size shouldBe 1
     }
 
