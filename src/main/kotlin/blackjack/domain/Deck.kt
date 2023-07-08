@@ -1,11 +1,14 @@
 package blackjack.domain
 
 class Deck {
-    val cards: MutableList<Card> = Suit.values().flatMap { suit ->
+    private val _cards: MutableList<Card> = Suit.values().flatMap { suit ->
         Denomination.values().map { Card(suit, it) }
     }.shuffled().toMutableList()
 
+    val cards: List<Card>
+        get() = _cards.toList()
+
     fun drawCard(): Card {
-        return cards.removeAt(0)
+        return _cards.removeAt(0)
     }
 }
