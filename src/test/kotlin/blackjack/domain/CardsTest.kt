@@ -17,7 +17,7 @@ class CardsTest : StringSpec({
     val cards = Cards(cardList)
 
     "카드 숫자의 합을 구하여 반환한다." {
-        cards.value shouldBe 21
+        cards.value() shouldBe 21
     }
 
     "카드 리스트를 가져올 수 있다." {
@@ -49,7 +49,7 @@ class CardsTest : StringSpec({
                 14
             ),
         ) { someCards, value ->
-            someCards.value shouldBe value
+            someCards.value() shouldBe value
         }
     }
 })
