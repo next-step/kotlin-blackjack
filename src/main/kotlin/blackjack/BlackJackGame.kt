@@ -22,7 +22,6 @@ class BlackJackGame {
         DisplayView.result(players)
     }
 
-
     private fun dealOutAdditionalCards(dealer: Dealer, players: Players) {
         players.players.forEach {
             dealOutAdditionalCard(dealer, it)
@@ -33,7 +32,13 @@ class BlackJackGame {
         DisplayView.dealOutAdditionalCard(player)
         if (InputView.inputAdditionalCard() == "y") {
             dealer.dealOutCard(player)
-            (player.getScore() >= MAX_SCORE).takeIf { it }?.let { dealOutAdditionalCard(dealer, player) }
+            takeAnotherCard(dealer, player)
+        }
+    }
+
+    private fun takeAnotherCard(dealer: Dealer, player: Player) {
+        if (player.getScore() >= MAX_SCORE) {
+            dealOutAdditionalCard(dealer, player)
         }
     }
 
