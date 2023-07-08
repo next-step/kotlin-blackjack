@@ -1,8 +1,7 @@
 package domain.turn
 
 import domain.card.CardDeck
-import domain.card.Cards
-import domain.player.Dealer
+import domain.dealer.Dealer
 import domain.player.Players
 
 open class Turn(
@@ -15,8 +14,8 @@ open class Turn(
         return players.playersCanReceiveMoreCard()
     }
 
-    fun proceed(players: Players, onDealerReceiveCard: (() -> Unit)? = null): Turn {
-        if (players.noMorePlayer() || dealer.result() > Cards.BLACKJACK_POINT) return FinalTurn(
+    fun proceed(onDealerReceiveCard: (() -> Unit)? = null): Turn {
+        if (players.noMoreHit() || dealer.isBlackJack) return FinalTurn(
             dealer,
             players,
             cardDeck
@@ -26,7 +25,7 @@ open class Turn(
 
     private fun hit(onDealerReceiveCard: (() -> Unit)? = null) {
         players.hit(cardDeck)
-        if (dealer.canReceiveMoreCard()) {
+        if (dealer.canReceiveMoreCard) {
             dealer.hit(cardDeck.pop())
             onDealerReceiveCard?.invoke()
         }

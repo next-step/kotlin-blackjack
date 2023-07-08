@@ -1,12 +1,12 @@
 package presentation
 
 import domain.Result
-import domain.player.Dealer
+import domain.dealer.Dealer
 import domain.player.Player
 
 object ResultView {
     fun printInitialState(dealer: Dealer, players: List<Player>) {
-        println("${dealer.name}와 ${players.names().joinToString(", ")}에게 2장의 카드를 나누었습니다.")
+        println("딜러와 ${players.names().joinToString(", ")}에게 2장의 카드를 나누었습니다.")
         dealer.print()
         players.print()
         println()
@@ -52,10 +52,14 @@ object ResultView {
     }
 
     private fun Dealer.print() {
-        println("$name 카드: ${cards.current().first()}")
+        println("딜러 카드: ${cards.current().first()}")
     }
 
     private fun Player.printWithResult() {
-        println("$name 카드: ${cards.current().joinToString(", ")} - 결과: ${result()}")
+        println("$name 카드: ${cards.current().joinToString(", ")} - 결과: $result")
+    }
+
+    private fun Dealer.printWithResult() {
+        println("딜러 카드: ${cards.current().joinToString(", ")} - 결과: $result")
     }
 }

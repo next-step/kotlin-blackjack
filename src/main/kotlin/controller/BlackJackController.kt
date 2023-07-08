@@ -1,6 +1,6 @@
 package controller
 
-import domain.player.Dealer
+import domain.dealer.Dealer
 import domain.player.Player
 import domain.player.Players
 import domain.turn.FinalTurn
@@ -16,21 +16,21 @@ fun main() {
     ResultView.printInitialState(turn.dealer, players.list)
 
     while (true) {
-        val remainPlayers = turn.playersCanTakeNextTurn().list.filter {
+        turn.playersCanTakeNextTurn().list.filterNot {
             InputView.askReceiveCard(it.name)
-        }.let {
-            Players(it)
+        }.forEach {
+            it.stay()
         }
 
-        turn = turn.proceed(remainPlayers) {
+        turn = turn.proceed {
             ResultView.printDealerReceiveCardMessage()
         }
-
-        ResultView.printResult(turn.dealer, players.list)
 
         if (turn is FinalTurn) {
             ResultView.printResult(turn.result(players))
             break
         }
+
+        ResultView.printResult(turn.dealer, players.list)
     }
 }

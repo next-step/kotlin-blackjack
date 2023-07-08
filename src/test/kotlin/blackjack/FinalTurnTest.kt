@@ -2,8 +2,10 @@ package blackjack
 
 import domain.card.Cards
 import domain.card.ShuffledCardDeck
-import domain.player.Dealer
+import domain.dealer.Dealer
+import domain.dealer.DealerState
 import domain.player.Player
+import domain.player.PlayerState
 import domain.player.Players
 import domain.turn.FinalTurn
 import org.assertj.core.api.Assertions.assertThat
@@ -16,7 +18,7 @@ class FinalTurnTest {
 
         val result = FinalTurn(
             Dealer(
-                Cards(listOf(spadeTen, spadeKing, spadeJack)),
+                DealerState(Cards(listOf(spadeTen, spadeKing, spadeJack))),
             ),
             players,
             ShuffledCardDeck.createNew(),
@@ -32,7 +34,7 @@ class FinalTurnTest {
 
         val result = FinalTurn(
             Dealer(
-                Cards(listOf(spadeTen, spadeAce)),
+                DealerState(Cards(listOf(spadeTen, spadeAce))),
             ),
             players,
             ShuffledCardDeck.createNew(),
@@ -44,13 +46,13 @@ class FinalTurnTest {
 
     @Test
     fun `플레이어 승패 계산 테스트`() {
-        val winner = Player("winner", Cards(listOf(spadeTen, spadeKing)))
-        val loser = Player("loser", Cards(listOf(spadeJack)))
+        val winner = Player("winner", PlayerState(Cards(listOf(spadeTen, spadeKing))))
+        val loser = Player("loser", PlayerState(Cards(listOf(spadeJack))))
         val players = Players(listOf(winner, loser))
 
         val result = FinalTurn(
             Dealer(
-                Cards(listOf(spadeTen, spadeSeven)),
+                DealerState(Cards(listOf(spadeTen, spadeSeven))),
             ),
             players,
             ShuffledCardDeck.createNew(),

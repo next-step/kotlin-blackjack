@@ -2,13 +2,12 @@ package domain.turn
 
 import domain.Result
 import domain.card.CardDeck
-import domain.card.Cards
-import domain.player.Dealer
+import domain.dealer.Dealer
 import domain.player.Players
 
 class FinalTurn(dealer: Dealer, players: Players, cardDeck: CardDeck) : Turn(dealer, players, cardDeck) {
     fun result(allPlayers: Players): Result {
-        if (dealer.result() > Cards.BLACKJACK_POINT) {
+        if (dealer.isBust) {
             return Result(
                 winners = allPlayers,
                 losers = Players(emptyList())
@@ -22,12 +21,12 @@ class FinalTurn(dealer: Dealer, players: Players, cardDeck: CardDeck) : Turn(dea
     }
 
     private fun maxPoint(players: Players): Int {
-        return players.list.map {
-            it.result()
+        return players.list.filter {
+            !it.isBust
+        }.map {
+            it.result
         }.filter {
-            it < Cards.BLACKJACK_POINT
-        }.filter {
-            it > dealer.result()
+            it > dealer.result
         }.maxOrNull() ?: Int.MAX_VALUE
     }
 
@@ -36,7 +35,7 @@ class FinalTurn(dealer: Dealer, players: Players, cardDeck: CardDeck) : Turn(dea
         return Players(
             players.list
                 .filter {
-                    it.result() == maxPoint
+                    it.result == maxPoint
                 }
         )
     }
@@ -46,7 +45,7 @@ class FinalTurn(dealer: Dealer, players: Players, cardDeck: CardDeck) : Turn(dea
         return Players(
             players.list
                 .filterNot {
-                    it.result() == maxPoint
+                    it.result == maxPoint
                 }
         )
     }

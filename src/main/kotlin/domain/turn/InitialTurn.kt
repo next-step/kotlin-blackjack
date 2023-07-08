@@ -2,7 +2,7 @@ package domain.turn
 
 import domain.card.CardDeck
 import domain.card.ShuffledCardDeck
-import domain.player.Dealer
+import domain.dealer.Dealer
 import domain.player.Players
 
 class InitialTurn(

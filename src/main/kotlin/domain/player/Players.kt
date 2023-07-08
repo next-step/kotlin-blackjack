@@ -13,12 +13,12 @@ data class Players(val list: List<Player>) {
     fun playersCanReceiveMoreCard(): Players {
         return Players(
             list.filter {
-                it.canReceiveMoreCard()
+                it.canReceiveMoreCard
             }
         )
     }
 
-    fun noMorePlayer(): Boolean {
-        return list.isEmpty()
+    fun noMoreHit(): Boolean {
+        return list.none { it.isHit }
     }
 }

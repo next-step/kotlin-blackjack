@@ -1,7 +1,7 @@
 package blackjack
 
 import domain.card.ShuffledCardDeck
-import domain.player.Dealer
+import domain.dealer.Dealer
 import domain.player.Players
 import domain.turn.InitialTurn
 import domain.turn.Turn
@@ -35,7 +35,7 @@ class TurnTest {
             turn.playersCanTakeNextTurn()
         ).isEqualTo(players)
 
-        turn = turn.proceed(turn.playersCanTakeNextTurn())
+        turn = turn.proceed()
 
         assertThat(
             turn.playersCanTakeNextTurn()
@@ -44,7 +44,7 @@ class TurnTest {
 
     @Test
     fun `카드 추가 지급 테스트`() {
-        val turn = Turn(Dealer(), playersWithTwoPlayer, ShuffledCardDeck.createNew()).proceed(playersWithTwoPlayer)
+        val turn = Turn(Dealer(), playersWithTwoPlayer, ShuffledCardDeck.createNew()).proceed()
 
         turn.players.list.forEach {
             assertThat(it.cards.current()).size().isEqualTo(1)

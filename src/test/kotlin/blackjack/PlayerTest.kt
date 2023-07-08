@@ -2,6 +2,7 @@ package blackjack
 
 import domain.card.Cards
 import domain.player.Player
+import domain.player.PlayerState
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
@@ -32,9 +33,7 @@ class PlayerTest {
     @ParameterizedTest
     @MethodSource("카드 더 받을 수 있는지 확인 테스트 데이터")
     fun `카드 더 받을 수 있는지 확인 테스트`(cards: Cards, condition: Boolean) {
-        val player = Player("peter", cards)
-
-        assertThat(player.canReceiveMoreCard()).isEqualTo(condition)
+        assertThat(PlayerState(cards) is PlayerState.Hit).isEqualTo(condition)
     }
 
     companion object {
