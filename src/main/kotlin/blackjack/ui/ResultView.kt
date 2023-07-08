@@ -81,24 +81,9 @@ class ResultView {
     }
 
     fun printGameResult(gamerList: List<BlackJackGamer>) {
-        println("## 최종 승패")
+        println("## 최종 수익")
         gamerList.forEach {
-            print("${it.name}: ")
-            printGameScore(it)
+            println("${it.name}: ${it.money}")
         }
-    }
-
-    private fun printGameScore(gamer: BlackJackGamer) {
-        if (gamer is Player) println(gamer.getGameRecord().value)
-        if (gamer is Dealer) printDealerRecords(gamer)
-    }
-
-    private fun printDealerRecords(dealer: Dealer) {
-        val totalGameRecord = dealer.getTotalGameRecord()
-        totalGameRecord.forEachIndexed { index, pair ->
-            print("${pair.second}${pair.first.value}")
-            if (index != totalGameRecord.lastIndex) print(" ")
-        }
-        println()
     }
 }

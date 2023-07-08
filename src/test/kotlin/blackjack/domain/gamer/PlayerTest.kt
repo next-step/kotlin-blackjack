@@ -23,7 +23,7 @@ class PlayerTest {
 
     @Test
     fun `플레이어는 이름을 가진다`() {
-        Assertions.assertThat(player.getName()).isEqualTo("name")
+        Assertions.assertThat(player.name).isEqualTo("name")
     }
 
     @Test

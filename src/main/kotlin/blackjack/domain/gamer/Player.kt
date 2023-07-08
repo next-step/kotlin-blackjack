@@ -2,7 +2,7 @@ package blackjack.domain.gamer
 
 import blackjack.dto.GeneratePlayerRequest
 
-class Player private constructor(name: String, private val money: Int) : BlackJackGamer(name) {
+class Player private constructor(name: String, money: Int) : BlackJackGamer(name, money) {
     private lateinit var gameRecord: GameRecordType
 
     override fun getGamerType(): GamerType {
@@ -17,6 +17,18 @@ class Player private constructor(name: String, private val money: Int) : BlackJa
     fun getGameRecord(): GameRecordType {
         require(::gameRecord.isInitialized) { "승패가 결정난 뒤에 조회가 가능합니다." }
         return gameRecord
+    }
+
+    fun blackJackMoney() {
+        require(::gameRecord.isInitialized) { "승패가 결정난 뒤에 돈을 정산받습니다." }
+        money = (money * 1.5).toInt()
+    }
+
+    fun loseMoney(): Int {
+        require(::gameRecord.isInitialized) { "승패가 결정난 뒤에 돈을 정산받습니다." }
+        val loseMoney = money
+        money = 0
+        return loseMoney
     }
 
     companion object {

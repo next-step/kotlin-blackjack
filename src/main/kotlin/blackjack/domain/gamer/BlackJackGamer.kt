@@ -3,7 +3,7 @@ package blackjack.domain.gamer
 import blackjack.domain.CardNumberCalculator
 import blackjack.domain.card.Card
 
-open class BlackJackGamer(val name: String) {
+open class BlackJackGamer(val name: String, var money: Int) {
     private val cards = mutableListOf<Card>()
     private val cardNumberCalculator = CardNumberCalculator()
 

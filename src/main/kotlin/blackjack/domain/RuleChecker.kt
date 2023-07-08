@@ -9,10 +9,10 @@ import blackjack.domain.gamer.Player
 class RuleChecker {
 
     fun checkSumOfCardNumbers(blackJackGamer: BlackJackGamer): Boolean {
-        return blackJackGamer.calculateSumOfCardNumbers() <= proceedCondition(blackJackGamer.getGamerType())
+        return blackJackGamer.calculateSumOfCardNumbers() <= proceedDrawCondition(blackJackGamer.getGamerType())
     }
 
-    private fun proceedCondition(gamerType: GamerType): Int {
+    private fun proceedDrawCondition(gamerType: GamerType): Int {
         if (gamerType == GamerType.PLAYER) return CONDITION_TO_WIN_BLACK_JACK
         return Dealer.CONDITION_TO_DEALER_DRAW_CARD
     }
@@ -47,18 +47,21 @@ class RuleChecker {
     private fun playerIsWinner(player: Player, dealer: Dealer) {
         player.proceedGameRecord(GameRecordType.WIN)
         dealer.proceedGameRecord(GameRecordType.LOSE)
+        if (player.calculateSumOfCardNumbers() == CONDITION_TO_WIN_BLACK_JACK) {
+            player.blackJackMoney()
+        }
     }
 
-    private fun dealerIsWinner(player: Player, dealer: Dealer): BlackJackGamer {
+    private fun dealerIsWinner(player: Player, dealer: Dealer) {
         player.proceedGameRecord(GameRecordType.LOSE)
         dealer.proceedGameRecord(GameRecordType.WIN)
-        return dealer
+        val playerLoseMoney = player.loseMoney()
+        dealer.winMoney(playerLoseMoney)
     }
 
-    private fun noOneIsWinner(player: Player, dealer: Dealer): BlackJackGamer? {
+    private fun noOneIsWinner(player: Player, dealer: Dealer) {
         player.proceedGameRecord(GameRecordType.DRAW)
         dealer.proceedGameRecord(GameRecordType.DRAW)
-        return null
     }
 
     companion object {

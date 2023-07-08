@@ -1,24 +1,34 @@
 package blackjack.domain.gamer
 
-class Dealer : BlackJackGamer(name = "딜러") {
-    private var winRecord = (GameRecordType.WIN to 0)
-    private var loseRecord = (GameRecordType.LOSE to 0)
-    private var drawRecord = (GameRecordType.DRAW to 0)
+import blackjack.domain.gamer.GameRecordType.*
+
+class Dealer : BlackJackGamer(name = DEALER_NAME, 0) {
+    private var winRecord = (WIN to 0)
+    private var loseRecord = (LOSE to 0)
+    private var drawRecord = (DRAW to 0)
 
     override fun getGamerType(): GamerType {
         return GamerType.DEALER
+    }
+
+    override fun proceedGameRecord(gameRecordType: GameRecordType) {
+        when (gameRecordType) {
+            WIN -> winRecord = Pair(WIN, winRecord.second + 1)
+            LOSE -> loseRecord = Pair(LOSE, loseRecord.second + 1)
+            DRAW -> drawRecord = Pair(DRAW, drawRecord.second + 1)
+        }
     }
 
     fun getTotalGameRecord(): List<Pair<GameRecordType, Int>> {
         return listOf(winRecord, loseRecord, drawRecord)
     }
 
-    override fun proceedGameRecord(gameRecordType: GameRecordType) {
-        when (gameRecordType) {
-            GameRecordType.WIN -> winRecord = Pair(GameRecordType.WIN, winRecord.second + 1)
-            GameRecordType.LOSE -> loseRecord = Pair(GameRecordType.LOSE, loseRecord.second + 1)
-            GameRecordType.DRAW -> drawRecord = Pair(GameRecordType.DRAW, drawRecord.second + 1)
-        }
+    fun winMoney(winMoney: Int) {
+        money += winMoney
+    }
+
+    fun loseMoney(loseMoney: Int) {
+        money -= loseMoney
     }
 
     companion object {
