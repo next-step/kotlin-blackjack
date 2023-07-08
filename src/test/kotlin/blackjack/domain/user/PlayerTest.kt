@@ -97,7 +97,7 @@ class PlayerTest : StringSpec({
         player.cards.addCard(Card(CardPattern.Spade, CardNumber.A))
         player.cards.addCard(Card(CardPattern.Club, CardNumber.TEN))
 
-        player.cards.getOptimizedPoint() shouldBe 21
+        player.cards.getScore().value shouldBe 21
     }
 
     "Player가 ACE와 JACK, TEN을 갖고 있을때 getPoint()를 호출하는 경우, ACE를 1으로 간주해 21을 반환한다" {
@@ -106,7 +106,7 @@ class PlayerTest : StringSpec({
         player.cards.addCard(Card(CardPattern.Club, CardNumber.JACK))
         player.cards.addCard(Card(CardPattern.Club, CardNumber.TEN))
 
-        player.cards.getOptimizedPoint() shouldBe 21
+        player.cards.getScore().value shouldBe 21
     }
 
 })

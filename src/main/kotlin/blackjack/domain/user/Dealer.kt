@@ -20,7 +20,7 @@ class Dealer(private val deck: Deck = Deck.create(), name: String = "dealer") : 
     }
 
     fun drawCardBySelfIfPointUnder(dealerDrawThresholdPoint: Int): Boolean {
-        if (cards.getOptimizedPoint() <= dealerDrawThresholdPoint) {
+        if (cards.getScore().value <= dealerDrawThresholdPoint) {
             giveCardTo(this)
             return true
         }

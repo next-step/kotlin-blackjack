@@ -17,9 +17,9 @@ open class Player(val name: String, val cards: Cards = Cards()) {
     fun updateStatus() {
         if (isDone()) return
 
-        val pointResult = cards.getOptimizedPoint()
+        val score = cards.getScore()
         status = ConditionalEndStatus.values()
-            .firstOrNull { it.isMatch(pointResult) }
+            .firstOrNull { it.isMatch(score.value) }
             ?: PlayingStatus.READY
     }
 

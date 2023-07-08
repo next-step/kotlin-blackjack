@@ -9,7 +9,7 @@ class ConsoleResultView : ResultView {
     }
 
     override fun printResult(player: Player) {
-        println("${player.name} ${player.cards.toList()} 결과: ${player.cards.getOptimizedPoint()}")
+        println("${player.name} ${player.cards.toList()} 결과: ${player.cards.getScore().value}")
     }
 
     override fun printFinalResult(player: Player) {

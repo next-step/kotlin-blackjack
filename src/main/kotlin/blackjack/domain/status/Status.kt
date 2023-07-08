@@ -42,15 +42,15 @@ enum class ResultStatus(val desc: String, val isPlayerWin: Boolean, val isDealer
         }
     },
     COMPARE_POINT_PLAYER_WIN("Point 비교, player가 이긴 경우", true, false) {
-        override fun isMatch(player: Player, dealer: Dealer) = player.cards.getOptimizedDiff() < dealer.cards.getOptimizedDiff()
+        override fun isMatch(player: Player, dealer: Dealer) = player.cards.getScore().diff < dealer.cards.getScore().diff
     },
 
     COMPARE_POINT_DEALER_WIN("Point 비교, dealer가 이긴 경우", false, true) {
-        override fun isMatch(player: Player, dealer: Dealer) = player.cards.getOptimizedDiff() > dealer.cards.getOptimizedDiff()
+        override fun isMatch(player: Player, dealer: Dealer) = player.cards.getScore().diff > dealer.cards.getScore().diff
     },
 
     COMPARE_POINT_DRAW("Point 비교, player와 dealer가 비긴 경우", false, false) {
-        override fun isMatch(player: Player, dealer: Dealer) = player.cards.getOptimizedDiff() == dealer.cards.getOptimizedDiff()
+        override fun isMatch(player: Player, dealer: Dealer) = player.cards.getScore().diff == dealer.cards.getScore().diff
     };
 
     abstract fun isMatch(player: Player, dealer: Dealer): Boolean
