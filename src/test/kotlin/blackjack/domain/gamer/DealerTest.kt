@@ -24,4 +24,23 @@ class DealerTest {
         // then
         Assertions.assertThat(dealer.money).isEqualTo(-bettingMoney)
     }
+
+    @Test
+    fun `딜러가 게임에서 승리하면, 플레이어의 베팅금만큼 돈을 얻는다`() {
+        // given
+        val bettingMoney = 10000
+        val playerName = "name"
+        val player = GeneratePlayerRequest(playerName, bettingMoney)
+            .generatePlayer()
+
+        val dealer = Dealer()
+
+        // when
+        player.proceedGameRecord(GameRecordType.LOSE)
+        val playerLoseMoney = player.loseMoney()
+        dealer.winMoney(playerLoseMoney)
+
+        // then
+        Assertions.assertThat(dealer.money).isEqualTo(bettingMoney)
+    }
 }
