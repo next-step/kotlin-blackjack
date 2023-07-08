@@ -70,9 +70,9 @@
 
 ## Step4) 기능 요구 사항 체크리스트
 
-* Player
+* BlackJackGamer
 
-- [ ] 플레이어는 베팅 금액을 가진다.
+- [ ] BlackJackGamer는 money를 가진다. - (딜러와 플레이어 공통)
 
 
 * GeneratePlayerRequest
