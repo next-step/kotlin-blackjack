@@ -12,13 +12,14 @@ class Deck(cards: List<Card> = listOf()) {
     val size: Int
         get() = _cards.size
 
-    val point: Int
-        get() = BlackjackCardPointCalculator.calculate(_cards)
-
     val cards: List<Card>
         get() = _cards.toList()
 
     fun add(card: Card) {
         _cards.add(card)
+    }
+
+    fun getCardPointSum(): Int {
+        return BlackjackCardPointCalculator.calculate(_cards)
     }
 }

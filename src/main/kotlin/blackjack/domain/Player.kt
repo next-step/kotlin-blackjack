@@ -10,14 +10,11 @@ data class Player(
 
     private var isStay: Boolean = false
 
-    val point: Int
-        get() = deck.point
-
     val isBurst: Boolean
-        get() = BlackjackCardPointCalculator.BLACKJACK_POINT_THRESHOLD < point
+        get() = BlackjackCardPointCalculator.BLACKJACK_POINT_THRESHOLD < getDeckPointSum()
 
     val canHit: Boolean
-        get() = BlackjackCardPointCalculator.BLACKJACK_POINT_THRESHOLD >= point && isStay.not()
+        get() = BlackjackCardPointCalculator.BLACKJACK_POINT_THRESHOLD >= getDeckPointSum() && isStay.not()
 
     fun receive(card: Card) {
         check(canHit) { "Can not hit anymore" }
@@ -26,5 +23,9 @@ data class Player(
 
     fun stay() {
         isStay = true
+    }
+
+    fun getDeckPointSum(): Int {
+        return deck.getCardPointSum()
     }
 }

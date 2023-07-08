@@ -20,9 +20,9 @@ internal class PlayerTest {
     @Test
     internal fun `플레이어는 카드를 받고 점수를 계산할 수 있다`() {
         val sut = Player("A")
-        sut.point shouldBe 0
+        sut.getDeckPointSum() shouldBe 0
         sut.receive(Card.of(CardRank.JACK))
-        sut.point shouldBe 10
+        sut.getDeckPointSum() shouldBe 10
     }
 
     @Test

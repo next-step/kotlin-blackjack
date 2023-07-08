@@ -18,7 +18,7 @@ class ResultView {
     fun outputGameResult(players: Players) {
         println()
         players.forEach { player ->
-            println("${getCurrentHandString(player)} - 결과: ${player.point}")
+            println("${getCurrentHandString(player)} - 결과: ${player.getDeckPointSum()}")
         }
     }
 
