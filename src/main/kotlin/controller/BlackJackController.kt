@@ -3,6 +3,7 @@ package controller
 import domain.player.Dealer
 import domain.player.Player
 import domain.player.Players
+import domain.turn.FinalTurn
 import domain.turn.InitialTurn
 import presentation.InputView
 import presentation.ResultView
@@ -15,10 +16,7 @@ fun main() {
     ResultView.printInitialState(turn.dealer, players.list)
 
     while (true) {
-        val playersCanReceiveMoreCard = turn.playersCanTakeNextTurn()
-        if (playersCanReceiveMoreCard.noMorePlayer()) break
-
-        val remainPlayers = playersCanReceiveMoreCard.list.filter {
+        val remainPlayers = turn.playersCanTakeNextTurn().list.filter {
             InputView.askReceiveCard(it.name)
         }.let {
             Players(it)
@@ -29,5 +27,10 @@ fun main() {
         }
 
         ResultView.printResult(turn.dealer, players.list)
+
+        if (turn is FinalTurn) {
+            ResultView.printResult(turn.result(players))
+            break
+        }
     }
 }

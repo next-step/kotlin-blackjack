@@ -1,5 +1,6 @@
 package presentation
 
+import domain.Result
 import domain.player.Dealer
 import domain.player.Player
 
@@ -22,6 +23,17 @@ object ResultView {
     fun printDealerReceiveCardMessage() {
         println("딜러는 ${Dealer.DEALER_MAX_POINT}이하라 한장의 카드를 더 받았습니다.")
         println()
+    }
+
+    fun printResult(result: Result) {
+        println("## 최종 승패")
+        println("딜러: ${result.numOfLoser}승 ${result.numOfWinner}패")
+        result.winners.list.forEach {
+            println("${it.name}: 승")
+        }
+        result.losers.list.forEach {
+            println("${it.name}: 패")
+        }
     }
 
     private fun List<Player>.names(): List<String> {

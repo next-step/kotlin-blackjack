@@ -23,11 +23,9 @@ class Cards(cards: List<Card> = emptyList()) {
             sumWithoutAce + it
         }
 
-        if (BLACKJACK_POINT in sumOfAllCases) {
-            return BLACKJACK_POINT
-        }
-
-        return sumOfAllCases.min()
+        return sumOfAllCases.filter {
+            it <= BLACKJACK_POINT
+        }.maxOrNull() ?: sumOfAllCases.min()
     }
 
     private fun doesNotHaveAce(): Boolean {

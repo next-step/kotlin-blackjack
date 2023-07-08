@@ -1,6 +1,5 @@
 package blackjack
 
-import domain.card.Card
 import domain.card.Cards
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.params.ParameterizedTest
@@ -11,8 +10,8 @@ import java.util.stream.Stream
 class CardsTest {
     @ParameterizedTest
     @MethodSource("카드 더 받을 수 있는지 확인 테스트 데이터")
-    fun `갖고있는 카드에서 결과 계산 테스트`(cards: List<Card>, result: Int) {
-        assertThat(Cards(cards).result()).isEqualTo(result)
+    fun `갖고있는 카드에서 결과 계산 테스트`(cards: Cards, result: Int) {
+        assertThat(cards.result()).isEqualTo(result)
     }
 
     companion object {
@@ -20,31 +19,35 @@ class CardsTest {
         fun `카드 더 받을 수 있는지 확인 테스트 데이터`(): Stream<Arguments> {
             return Stream.of(
                 Arguments.of(
-                    listOf(spadeTwo, spadeThree), 5
+                    Cards(listOf(spadeTwo, spadeThree)), 5
                 ),
 
                 Arguments.of(
-                    listOf(spadeAce, diamondAce), 2
+                    Cards(listOf(spadeAce, diamondAce)), 12
                 ),
 
                 Arguments.of(
-                    listOf(spadeAce, spadeKing), 21
+                    Cards(listOf(spadeAce, spadeKing)), 21
                 ),
 
                 Arguments.of(
-                    listOf(
-                        spadeAce,
-                        spadeNine,
-                        diamondAce
+                    Cards(
+                        listOf(
+                            spadeAce,
+                            spadeNine,
+                            diamondAce
+                        )
                     ),
                     21
                 ),
 
                 Arguments.of(
-                    listOf(
-                        spadeTwo,
-                        spadeTen,
-                        spadeKing
+                    Cards(
+                        listOf(
+                            spadeTwo,
+                            spadeTen,
+                            spadeKing
+                        )
                     ),
                     22
                 ),

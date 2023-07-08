@@ -1,10 +1,11 @@
 package domain.turn
 
 import domain.card.CardDeck
+import domain.card.Cards
 import domain.player.Dealer
 import domain.player.Players
 
-data class Turn(
+open class Turn(
     val dealer: Dealer,
     val players: Players,
     private val cardDeck: CardDeck
@@ -15,7 +16,12 @@ data class Turn(
     }
 
     fun proceed(players: Players, onDealerReceiveCard: (() -> Unit)? = null): Turn {
-        return copy(players = players).apply { hit(onDealerReceiveCard) }
+        if (players.noMorePlayer() || dealer.result() > Cards.BLACKJACK_POINT) return FinalTurn(
+            dealer,
+            players,
+            cardDeck
+        )
+        return Turn(dealer, players, cardDeck).apply { hit(onDealerReceiveCard) }
     }
 
     private fun hit(onDealerReceiveCard: (() -> Unit)? = null) {
