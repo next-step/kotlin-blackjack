@@ -19,10 +19,7 @@ class BlackjackController {
     }
 
     fun printInitialCards(players: List<Player>) {
-        println("${players.joinToString(", ") { it.name }}에게 2장의 나누었습니다.")
-        players.forEach {
-            ResultView.playerAndCards(it)
-        }
+        ResultView.initialCards(players)
     }
 
     fun drawMoreCard(player: Player): Boolean {
@@ -38,8 +35,6 @@ class BlackjackController {
     }
 
     fun printResult(players: List<Player>) {
-        players.forEach {
-            println("${it.name}카드: ${it.cards.joinToString(", ")} - 결과: ${it.calculateScore()}")
-        }
+        ResultView.result(players)
     }
 }
