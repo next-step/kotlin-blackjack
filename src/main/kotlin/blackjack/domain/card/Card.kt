@@ -42,7 +42,7 @@ class Cards {
     }
 
     fun getOptimizedPoint(): Int {
-        val pointResult = getMinAndMaxPoint()
+        val pointResult = getScore()
 
         return if (pointResult.min >= BLACK_JACK_POINT) pointResult.min
         else pointResult.max
@@ -52,16 +52,16 @@ class Cards {
         return BLACK_JACK_POINT - getOptimizedPoint()
     }
 
-    private fun getMinAndMaxPoint(): ResultPoint {
-        val minPoint = _cards.sumOf { card -> card.number.value }
-        val maxPoint = minPoint + if (hasAce()) ACE_BONUS_POINT else 0
+    private fun getScore(): Score {
+        val minScore = _cards.sumOf { card -> card.number.value }
+        val maxScore = minScore + if (hasAce()) ACE_BONUS_POINT else 0
 
-        return ResultPoint(minPoint, maxPoint)
+        return Score(minScore, maxScore)
     }
 
     private fun hasAce(): Boolean = _cards.any { card -> card.number == CardNumber.A && card.pattern == CardPattern.Spade }
 
-    data class ResultPoint(val min: Int, val max: Int)
+    data class Score(val min: Int, val max: Int)
 
     companion object {
         const val BLACK_JACK_POINT = 21
