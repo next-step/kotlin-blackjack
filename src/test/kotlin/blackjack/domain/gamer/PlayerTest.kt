@@ -72,7 +72,7 @@ class PlayerTest {
         player.loseMoney()
 
         // then
-        Assertions.assertThat(player.money).isEqualTo(-10000)
+        Assertions.assertThat(player.money).isEqualTo(-bettingMoney)
     }
 
     @Test
@@ -84,10 +84,10 @@ class PlayerTest {
             .generatePlayer()
 
         // when
-        player.proceedGameRecord(GameRecordType.LOSE)
-        player.loseMoney()
+        player.proceedGameRecord(GameRecordType.WIN)
+        player.winMoney()
 
         // then
-        Assertions.assertThat(player.money).isEqualTo(-10000)
+        Assertions.assertThat(player.money).isEqualTo(bettingMoney)
     }
 }
