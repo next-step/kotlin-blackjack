@@ -11,10 +11,10 @@ object InitialTurn : Turn {
         cardDeck: CardDeck,
         changeState: (Turn) -> Unit
     ) {
-        dealer.hit(cardDeck)
+        players.hit(cardDeck)
         dealer.hit(cardDeck)
         players.hit(cardDeck)
-        players.hit(cardDeck)
+        dealer.hit(cardDeck)
         changeState(IntermediateTurn)
     }
 }
