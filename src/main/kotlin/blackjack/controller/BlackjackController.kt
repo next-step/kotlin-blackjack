@@ -7,6 +7,7 @@ import blackjack.view.ResultView
 
 class BlackjackController {
     private val deck = Deck()
+
     fun inputPlayers(): List<Player> {
         return InputView.players().map { Player(it) }
     }
