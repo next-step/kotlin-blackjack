@@ -14,11 +14,9 @@ class Player(val name: String) {
     fun calculateScore(): Int {
         val hasAce = cards.any { it.denomination == Denomination.ACE }
 
-        val totalScore = cards.sumOf { it.denomination.score }.let {
-            if (hasAce && it <= 11) {
-                return it + 10
-            }
-            it
+        val totalScore = cards.sumOf { it.denomination.score }
+        if (hasAce && totalScore <= 11) {
+            return totalScore + 10
         }
         return totalScore
     }
