@@ -3,6 +3,7 @@ package blackjack.controller
 import blackjack.domain.Deck
 import blackjack.domain.Player
 import blackjack.view.InputView
+import blackjack.view.ResultView
 
 class BlackjackController {
     private val deck = Deck()
@@ -20,7 +21,7 @@ class BlackjackController {
     fun printInitialCards(players: List<Player>) {
         println("${players.joinToString(", ") { it.name }}에게 2장의 나누었습니다.")
         players.forEach {
-            println("${it.name}카드: ${it.cards.joinToString(", ")}")
+            ResultView.playerAndCards(it)
         }
     }
 
@@ -28,10 +29,9 @@ class BlackjackController {
         if (!player.canDrawMoreCard()) {
             return false
         }
-        println("${player.name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
-        if (InputView.drawMoreCard()) {
+        if (InputView.drawMoreCard(player.name)) {
             player.addCard(deck.drawCard())
-            println("${player.name}카드: ${player.cards.joinToString(", ")}")
+            ResultView.playerAndCards(player)
             return true
         }
         return false
