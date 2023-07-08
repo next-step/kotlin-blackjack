@@ -1,11 +1,13 @@
 package blackjack.controller
 
-import blackjack.domain.BlackJack
+import blackjack.domain.game.BlackJack
 import blackjack.view.InputView
 import blackjack.view.ResultView
 
 fun main() {
     val game = BlackJack(InputView.getNames())
+    game.players.map { it.bet(InputView.getBettingAmount(it)) }
+
     game.distributeInitialCard()
     ResultView.printFirstCards(game)
 
@@ -16,7 +18,7 @@ fun main() {
         ResultView.printPlayerCards(player)
     }
 
-    if (game.shouldDealerDrawCard()) {
+    if (game.dealer.continueDrawing) {
         game.distributeCardForDealer()
         ResultView.printAddDealerCard()
     }

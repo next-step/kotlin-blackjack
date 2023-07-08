@@ -1,4 +1,6 @@
-package blackjack.domain
+package blackjack.domain.card
+
+import blackjack.domain.game.BlackJack
 
 @JvmInline
 value class Cards(val values: MutableList<Card> = mutableListOf()) {
@@ -12,6 +14,10 @@ value class Cards(val values: MutableList<Card> = mutableListOf()) {
             score += ACE_PLUS_SCORE
         }
         return score
+    }
+
+    fun isBlackJack(): Boolean {
+        return values.size == BlackJack.START_CARD_COUNT && score() == BlackJack.BLACKJACK_MAX_SCORE
     }
 
     companion object {
