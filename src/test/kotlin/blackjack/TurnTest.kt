@@ -1,10 +1,12 @@
 package blackjack
 
-import domain.Turn
 import domain.card.Card
 import domain.card.CardDeck
+import domain.card.ShuffledCardDeck
 import domain.player.Player
 import domain.player.Players
+import domain.turn.InitialTurn
+import domain.turn.Turn
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
@@ -16,8 +18,8 @@ class TurnTest {
     @ParameterizedTest
     @MethodSource("게임 초기화 테스트 데이터")
     fun `게임 시작 시 플레이어에게 카드 2장씩 나눠주기 테스트`(players: Players) {
-        with(Turn(players)) {
-            proceedInitialTurn()
+        with(InitialTurn(players)) {
+            proceed()
             players.list.forEach {
                 assertThat(it.cards.current()).size().isEqualTo(2)
             }
@@ -32,7 +34,7 @@ class TurnTest {
             )
         )
 
-        val turn = Turn(
+        var turn: Turn = InitialTurn(
             players,
             object : CardDeck {
 
@@ -49,15 +51,13 @@ class TurnTest {
                     return kings[popCount++]
                 }
             }
-        )
-
-        turn.proceedInitialTurn()
+        ).proceed()
 
         assertThat(
             turn.playersCanTakeNextTurn()
         ).isEqualTo(players)
 
-        turn.proceedNextTurn(turn.playersCanTakeNextTurn())
+        turn = turn.proceed(turn.playersCanTakeNextTurn())
 
         assertThat(
             turn.playersCanTakeNextTurn()
@@ -73,8 +73,7 @@ class TurnTest {
             )
         )
 
-        val turn = Turn(players)
-        turn.proceedNextTurn(players)
+        val turn = Turn(players, ShuffledCardDeck.createNew()).proceed(players)
 
         turn.players.list.forEach {
             assertThat(it.cards.current()).size().isEqualTo(1)

@@ -1,8 +1,8 @@
 package controller
 
-import domain.Turn
 import domain.player.Player
 import domain.player.Players
+import domain.turn.InitialTurn
 import presentation.InputView
 import presentation.ResultView
 
@@ -10,9 +10,7 @@ fun main() {
     val playerNames = InputView.getPlayerNames()
     val players = Players(playerNames.map { Player(it) })
 
-    val turn = Turn(players)
-    turn.proceedInitialTurn()
-
+    var turn = InitialTurn(players).proceed()
     ResultView.printInitialState(players.list)
 
     while (true) {
@@ -25,7 +23,7 @@ fun main() {
             Players(it)
         }
 
-        turn.proceedNextTurn(remainPlayers)
+        turn = turn.proceed(remainPlayers)
 
         ResultView.printResult(players.list)
     }
