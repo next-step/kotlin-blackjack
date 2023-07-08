@@ -1,9 +1,8 @@
 package blackjack.domain
 
-import blackjack.domain.Card
-import blackjack.domain.CardSet
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 
 internal class CardSetTest {
     @Test
@@ -18,5 +17,12 @@ internal class CardSetTest {
         val card: Card = sut.pop()
         println(card)
         sut.size shouldBe 51
+    }
+
+    @Test
+    internal fun `카드세트에서 카드를 전부 뽑았을때 다시 뽑으면 예외가 발생한다`() {
+        val sut = CardSet()
+        repeat(52) { sut.pop() }
+        assertThrows<IllegalStateException> { sut.pop() }
     }
 }

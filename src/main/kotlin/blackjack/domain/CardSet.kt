@@ -20,6 +20,6 @@ class CardSet(
         get() = _cards.size
 
     fun pop(): Card {
-        return _cards.pop()
+        return _cards.removeFirstOrNull() ?: throw IllegalStateException("There are no more cards to draw from the CardSet")
     }
 }
