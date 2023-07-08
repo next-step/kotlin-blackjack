@@ -6,6 +6,7 @@ import blackjack.domain.card.CardShape
 import blackjack.domain.gamer.Dealer
 import blackjack.domain.gamer.GameRecordType
 import blackjack.domain.gamer.Player
+import blackjack.dto.GeneratePlayerRequest
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -34,7 +35,12 @@ class RuleCheckerTest {
         thirdNumber: CardNumber,
         answer: Boolean
     ) {
-        val player = Player("name")
+        // given
+        val bettingMoney = 1
+        val playerName = "name"
+        val player = GeneratePlayerRequest(playerName, bettingMoney)
+            .generatePlayer()
+
         player.addCards(
             listOf(
                 Card(CardShape.CLOVER, firstNumber),
@@ -43,8 +49,10 @@ class RuleCheckerTest {
             )
         )
 
+        // when
         val actual = ruleChecker.checkSumOfCardNumbers(player)
 
+        // then
         Assertions.assertThat(actual).isEqualTo(answer)
     }
 
@@ -86,7 +94,12 @@ class RuleCheckerTest {
                 Card(CardShape.CLOVER, CardNumber.TWO)
             )
         )
-        val player = Player("playerName")
+
+        val bettingMoney = 1
+        val playerName = "name"
+        val player = GeneratePlayerRequest(playerName, bettingMoney)
+            .generatePlayer()
+
         player.addCards(
             listOf(
                 Card(CardShape.CLOVER, CardNumber.TEN),
@@ -118,7 +131,12 @@ class RuleCheckerTest {
                 Card(CardShape.CLOVER, CardNumber.TEN)
             )
         )
-        val player = Player("playerName")
+
+        val bettingMoney = 1
+        val playerName = "name"
+        val player = GeneratePlayerRequest(playerName, bettingMoney)
+            .generatePlayer()
+
         player.addCards(
             listOf(
                 Card(CardShape.CLOVER, CardNumber.TEN),
@@ -126,6 +144,7 @@ class RuleCheckerTest {
                 Card(CardShape.CLOVER, CardNumber.TWO)
             )
         )
+
         // when
         ruleChecker.proceedWhoIsWinner(player, dealer)
 
@@ -151,7 +170,12 @@ class RuleCheckerTest {
                 Card(CardShape.CLOVER, CardNumber.A)
             )
         )
-        val player = Player("playerName")
+
+        val bettingMoney = 1
+        val playerName = "name"
+        val player = GeneratePlayerRequest(playerName, bettingMoney)
+            .generatePlayer()
+
         player.addCards(
             listOf(
                 Card(CardShape.CLOVER, CardNumber.TEN),
@@ -183,13 +207,19 @@ class RuleCheckerTest {
                 Card(CardShape.CLOVER, CardNumber.TEN)
             )
         )
-        val player = Player("playerName")
+
+        val bettingMoney = 1
+        val playerName = "name"
+        val player = GeneratePlayerRequest(playerName, bettingMoney)
+            .generatePlayer()
+
         player.addCards(
             listOf(
                 Card(CardShape.CLOVER, CardNumber.TEN),
                 Card(CardShape.CLOVER, CardNumber.TWO)
             )
         )
+
         // when
         ruleChecker.proceedWhoIsWinner(player, dealer)
 

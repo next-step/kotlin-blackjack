@@ -8,7 +8,6 @@ import blackjack.domain.gamer.Player
 
 class ResultView {
     fun printFirstDraw(gamerList: List<BlackJackGamer>) {
-        println()
         printFirstDrawTitle(gamerList)
         printFirstDrawDetail(gamerList)
         println()

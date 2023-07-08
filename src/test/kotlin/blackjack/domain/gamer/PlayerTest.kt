@@ -3,6 +3,7 @@ package blackjack.domain.gamer
 import blackjack.domain.card.Card
 import blackjack.domain.card.CardNumber
 import blackjack.domain.card.CardShape
+import blackjack.dto.GeneratePlayerRequest
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -14,16 +15,19 @@ class PlayerTest {
 
     @BeforeEach
     fun setUp() {
-        player = Player("이름")
+        val bettingMoney = 1
+        val playerName = "name"
+        player = GeneratePlayerRequest(playerName, bettingMoney)
+            .generatePlayer()
     }
 
     @Test
     fun `플레이어는 이름을 가진다`() {
-        Assertions.assertThat(player.getName()).isEqualTo("이름")
+        Assertions.assertThat(player.getName()).isEqualTo("name")
     }
 
     @Test
-    fun `플레이어는 뽑은 카드를 한번에 한장 씩 추가할 수 있다`() {
+    fun `플레이어는 뽑은 카드를 한번에 한장씩 추가할 수 있다`() {
         val drawCard = Card(shape = CardShape.CLOVER, number = CardNumber.A)
 
         player.addCard(drawCard)
@@ -51,23 +55,7 @@ class PlayerTest {
     }
 
     @Test
-    fun `이름 리스트를 입력받으면 이름을 가지는 플레이어 리스트를 생성한다 `() {
-        val playerNameList = listOf<String>("pobi", "jason")
-
-        val playerList = Player.generatePlayers(playerNameList)
-        val actual = mutableListOf<String>()
-
-        playerList.forEach {
-            actual.add(it.getName())
-        }
-
-        Assertions.assertThat(actual).isEqualTo(playerNameList)
-    }
-
-    @Test
     fun `플레이어의 전적이 결정되기전에 조회할 경우 IllegalArgumentException을 throw 한다`() {
-        val player = Player("playerName")
-
         assertThrows<IllegalArgumentException> { player.getGameRecord() }
     }
 }

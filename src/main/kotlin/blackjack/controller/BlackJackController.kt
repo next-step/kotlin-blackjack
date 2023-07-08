@@ -17,7 +17,7 @@ class BlackJackController(
     fun start() {
         val playerRequest = getPlayerRequest()
         val dealer = Dealer()
-        val playerList = Player.generatePlayers(playerRequest)
+        val playerList = generatePlayers(playerRequest)
         val blackJackGame = BlackJackGame(RandomDeckShuffleStrategy())
 
         val gamerList = makeGamerList(playerList, dealer)
@@ -38,6 +38,12 @@ class BlackJackController(
     private fun getPlayerRequest(): List<GeneratePlayerRequest> {
         val playerNameList = inputView.getPlayerNames()
         return inputView.getPlayerRequest(playerNameList)
+    }
+
+    private fun generatePlayers(generatePlayerRequests: List<GeneratePlayerRequest>): List<Player> {
+        return generatePlayerRequests.map {
+            it.generatePlayer()
+        }
     }
 
     private fun makeGamerList(playerList: List<Player>, dealer: Dealer): List<BlackJackGamer> {
