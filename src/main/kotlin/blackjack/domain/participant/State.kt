@@ -15,7 +15,6 @@ open class State(val cards: Cards = Cards()) {
     private fun isBlackJack() = cards.isBlackJack()
     private fun isBurst() = score() > BlackJack.BLACKJACK_MAX_SCORE
 
-
     fun getRank(dealerState: State): Rank {
         return when {
             isBlackJack() && dealerState.isBlackJack() -> Rank.DRAW
