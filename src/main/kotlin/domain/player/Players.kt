@@ -15,14 +15,14 @@ data class Players(val list: List<Player>) {
             list.filter {
                 it.canReceiveMoreCard()
             }
-        )
+        ).duplicate()
     }
 
     fun noMorePlayer(): Boolean {
         return list.isEmpty()
     }
 
-    fun duplicate(): Players {
+    private fun duplicate(): Players {
         return copy(list = list.toList())
     }
 }

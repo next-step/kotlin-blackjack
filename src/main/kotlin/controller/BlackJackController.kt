@@ -1,6 +1,6 @@
 package controller
 
-import domain.Game
+import domain.Turn
 import domain.player.Player
 import domain.player.Players
 import presentation.InputView
@@ -10,13 +10,13 @@ fun main() {
     val playerNames = InputView.getPlayerNames()
     val players = Players(playerNames.map { Player(it) })
 
-    val game = Game(players)
-    game.start()
+    val turn = Turn(players)
+    turn.proceedInitialTurn()
 
     ResultView.printInitialState(players.list)
 
     while (true) {
-        val playersCanReceiveMoreCard = game.playersCanReceiveMoreCard()
+        val playersCanReceiveMoreCard = turn.playersCanTakeNextTurn()
         if (playersCanReceiveMoreCard.noMorePlayer()) break
 
         val remainPlayers = playersCanReceiveMoreCard.list.filter {
@@ -25,8 +25,7 @@ fun main() {
             Players(it)
         }
 
-        game.updateRemainPlayers(remainPlayers)
-        game.hit()
+        turn.proceedNextTurn(remainPlayers)
 
         ResultView.printResult(players.list)
     }

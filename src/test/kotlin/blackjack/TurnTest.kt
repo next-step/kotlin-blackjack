@@ -1,6 +1,6 @@
 package blackjack
 
-import domain.Game
+import domain.Turn
 import domain.card.Card
 import domain.card.CardDeck
 import domain.player.Player
@@ -12,12 +12,12 @@ import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 import java.util.stream.Stream
 
-class GameTest {
+class TurnTest {
     @ParameterizedTest
     @MethodSource("게임 초기화 테스트 데이터")
     fun `게임 시작 시 플레이어에게 카드 2장씩 나눠주기 테스트`(players: Players) {
-        with(Game(players)) {
-            start()
+        with(Turn(players)) {
+            proceedInitialTurn()
             players.list.forEach {
                 assertThat(it.cards.current()).size().isEqualTo(2)
             }
@@ -32,7 +32,7 @@ class GameTest {
             )
         )
 
-        val game = Game(
+        val turn = Turn(
             players,
             object : CardDeck {
 
@@ -51,16 +51,16 @@ class GameTest {
             }
         )
 
-        game.start()
+        turn.proceedInitialTurn()
 
         assertThat(
-            game.playersCanReceiveMoreCard()
+            turn.playersCanTakeNextTurn()
         ).isEqualTo(players)
 
-        game.hit()
+        turn.proceedNextTurn(turn.playersCanTakeNextTurn())
 
         assertThat(
-            game.playersCanReceiveMoreCard()
+            turn.playersCanTakeNextTurn()
         ).isEqualTo(Players(emptyList()))
     }
 
@@ -73,11 +73,10 @@ class GameTest {
             )
         )
 
-        val game = Game(players)
+        val turn = Turn(players)
+        turn.proceedNextTurn(players)
 
-        game.hit()
-
-        game.players.list.forEach {
+        turn.players.list.forEach {
             assertThat(it.cards.current()).size().isEqualTo(1)
         }
     }
