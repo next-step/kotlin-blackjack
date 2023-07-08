@@ -5,8 +5,16 @@ import domain.card.CardDeck
 import domain.dealer.Dealer
 import domain.player.Players
 
-class FinalTurn(dealer: Dealer, players: Players, cardDeck: CardDeck) : Turn(dealer, players, cardDeck) {
-    fun result(allPlayers: Players): Result {
+object FinalTurn : Turn {
+
+    override fun proceed(
+        dealer: Dealer,
+        players: Players,
+        cardDeck: CardDeck,
+        changeState: (Turn) -> Unit
+    ) = Unit
+
+    fun result(dealer: Dealer, allPlayers: Players): Result {
         if (dealer.isBust) {
             return Result(
                 winners = allPlayers,
@@ -15,12 +23,12 @@ class FinalTurn(dealer: Dealer, players: Players, cardDeck: CardDeck) : Turn(dea
         }
 
         return Result(
-            winners = winners(allPlayers),
-            losers = losers(allPlayers),
+            winners = winners(dealer, allPlayers),
+            losers = losers(dealer, allPlayers),
         )
     }
 
-    private fun maxPoint(players: Players): Int {
+    private fun maxPoint(dealer: Dealer, players: Players): Int {
         return players.list.filter {
             !it.isBust
         }.map {
@@ -30,8 +38,8 @@ class FinalTurn(dealer: Dealer, players: Players, cardDeck: CardDeck) : Turn(dea
         }.maxOrNull() ?: Int.MAX_VALUE
     }
 
-    private fun winners(players: Players): Players {
-        val maxPoint = maxPoint(players)
+    private fun winners(dealer: Dealer, players: Players): Players {
+        val maxPoint = maxPoint(dealer, players)
         return Players(
             players.list
                 .filter {
@@ -40,8 +48,8 @@ class FinalTurn(dealer: Dealer, players: Players, cardDeck: CardDeck) : Turn(dea
         )
     }
 
-    private fun losers(players: Players): Players {
-        val maxPoint = maxPoint(players)
+    private fun losers(dealer: Dealer, players: Players): Players {
+        val maxPoint = maxPoint(dealer, players)
         return Players(
             players.list
                 .filterNot {

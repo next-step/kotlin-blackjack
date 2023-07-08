@@ -14,7 +14,7 @@ sealed interface DealerState {
             return DealerState(cards)
         }
 
-        override val canReceiveMoreCard: Boolean = true
+        override val canReceiveMoreCard: Boolean = cards.result() <= Dealer.DEALER_MAX_POINT
     }
 
     class Bust(override val cards: Cards) : DealerState {

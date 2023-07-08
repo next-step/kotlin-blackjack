@@ -3,7 +3,7 @@ package controller
 import domain.dealer.Dealer
 import domain.player.Player
 import domain.player.Players
-import domain.turn.FinalTurn
+import domain.turn.Game
 import domain.turn.InitialTurn
 import presentation.InputView
 import presentation.ResultView
@@ -11,26 +11,31 @@ import presentation.ResultView
 fun main() {
     val playerNames = InputView.getPlayerNames()
     val players = Players(playerNames.map { Player(it) })
+    val dealer = Dealer()
 
-    var turn = InitialTurn(Dealer(), players).proceed()
-    ResultView.printInitialState(turn.dealer, players.list)
+    val game = Game(InitialTurn, dealer, players)
+    game.proceed()
+    ResultView.printInitialState(dealer, players.list)
+    dealer.addOnHitCallback {
+        ResultView.printDealerReceiveCardMessage()
+    }
 
     while (true) {
-        turn.playersCanTakeNextTurn().list.filterNot {
+        game.playersCanTakeNextTurn().list.filterNot {
             InputView.askReceiveCard(it.name)
         }.forEach {
             it.stay()
         }
 
-        turn = turn.proceed {
-            ResultView.printDealerReceiveCardMessage()
-        }
+        game.proceed()
 
-        if (turn is FinalTurn) {
-            ResultView.printResult(turn.result(players))
+        if (game.isFinish) {
+            game.result?.let {
+                ResultView.printResult(it)
+            }
             break
         }
 
-        ResultView.printResult(turn.dealer, players.list)
+        ResultView.printResult(dealer, players.list)
     }
 }

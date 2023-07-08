@@ -1,11 +1,12 @@
 package domain.dealer
 
-import domain.card.Card
+import domain.card.CardDeck
 import domain.card.Cards
 
 class Dealer(initialState: DealerState = DealerState.Hit(Cards())) {
 
     private var state: DealerState = initialState
+    private var onHit: (() -> Unit)? = null
 
     val cards: Cards
         get() = state.cards
@@ -22,11 +23,16 @@ class Dealer(initialState: DealerState = DealerState.Hit(Cards())) {
     val result: Int
         get() = state.cards.result()
 
-    fun hit(card: Card) {
+    fun hit(cardDeck: CardDeck) {
         val capturedState = state
         if (capturedState is DealerState.Hit) {
-            state = capturedState.hit(card)
+            state = capturedState.hit(cardDeck.pop())
+            onHit?.invoke()
         }
+    }
+
+    fun addOnHitCallback(callback: (() -> Unit)) {
+        onHit = callback
     }
 
     companion object {
