@@ -130,4 +130,16 @@ class PlayerTest {
         // then
         assertThrows<IllegalArgumentException> { player.loseMoney() }
     }
+
+    @Test
+    fun `승부가 결정나기전에 무승부 금액을 정산하면 IllegalArgumentException을 throw 한다`() {
+        // given
+        val bettingMoney = 10000
+        val playerName = "name"
+        player = GeneratePlayerRequest(playerName, bettingMoney)
+            .generatePlayer()
+
+        // then
+        assertThrows<IllegalArgumentException> { player.drawMoney() }
+    }
 }

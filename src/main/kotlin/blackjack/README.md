@@ -85,6 +85,7 @@
 - [x] 플레이어가 블랙잭으로 승리하면 베팅한 금액의 1.5배를 받는다.
 - [x] 승부가 결정나기전에 승리 금액을 정산하면 IllegalArgumentException을 throw 한다.
 - [x] 승부가 결정나기전에 패배 금액을 정산하면 IllegalArgumentException을 throw 한다.
+- [x] 승부가 결정나기전에 무승부 금액을 정산하면 IllegalArgumentException을 throw 한다.
 
 * Dealer
 
