@@ -7,6 +7,8 @@ import blackjack.domain.Players
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
+const val DEALER_MINIMUM_SCORE = 16
+
 class BlackJackGameController(
     private val inputView: InputView = InputView,
     private val outputView: OutputView = OutputView
@@ -14,12 +16,16 @@ class BlackJackGameController(
     fun run() {
         val players = Players(inputView.requestNameOfPlayers().map { Player(name = it) })
         val game = BlackJackGame(players = players)
+        playGame(game)
+        outputView.printScoreOfParticipants(game.players, game.dealer)
+        outputView.printGameResult(game.players, game.dealer)
+    }
+
+    private fun playGame(game: BlackJackGame) {
         game.handOutDefaultCardToPlayers()
-
-        outputView.printDefaultReceivedCards(players.values)
-
+        outputView.printDefaultReceivedCards(game.players.values)
         game.players.values.forEach { player ->
-            while (player.calculateScore() < BLACK_JACK) {
+            while (player.score < BLACK_JACK) {
                 if (inputView.requestReceiveAdditionalCard(player.name)) {
                     game.handOutAdditionalCardTo(player)
                     outputView.printlnPlayerCards(player)
@@ -29,6 +35,9 @@ class BlackJackGameController(
             }
         }
 
-        outputView.printGameResult(game.getGameResult())
+        if (game.dealer.cards.sumOfScoreWithAceAsOne <= DEALER_MINIMUM_SCORE) {
+            game.handOutAdditionalCardTo(game.dealer)
+            outputView.printlnDealerGetAdditionalCard()
+        }
     }
 }
