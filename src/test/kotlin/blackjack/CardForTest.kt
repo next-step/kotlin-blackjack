@@ -1,6 +1,7 @@
 package blackjack
 
 import domain.card.Card
+import domain.card.CardDeck
 import domain.card.CardType
 import domain.card.Denomination
 
@@ -20,6 +21,37 @@ val spadeKing = Card.of(Denomination.KING, CardType.SPADE)
 
 val diamondAce = Card.of(Denomination.ACE, CardType.DIAMOND)
 val diamondKing = Card.of(Denomination.KING, CardType.DIAMOND)
+val diamondQueen = Card.of(Denomination.KING, CardType.DIAMOND)
+val diamondJack = Card.of(Denomination.KING, CardType.DIAMOND)
 
 val heartKing = Card.of(Denomination.KING, CardType.HEART)
+val heartQueen = Card.of(Denomination.KING, CardType.HEART)
+val heartJack = Card.of(Denomination.KING, CardType.HEART)
 val cloverKing = Card.of(Denomination.KING, CardType.CLOVER)
+val cloverQueen = Card.of(Denomination.KING, CardType.CLOVER)
+val cloverJack = Card.of(Denomination.KING, CardType.CLOVER)
+
+val cardDeckOnlyHaveKingQueenJack: CardDeck
+    get() = object : CardDeck {
+
+        var popCount = 0
+
+        val kings: List<Card> = listOf(
+            spadeKing,
+            diamondKing,
+            heartKing,
+            cloverKing,
+            spadeQueen,
+            diamondQueen,
+            heartQueen,
+            cloverQueen,
+            spadeJack,
+            diamondJack,
+            heartJack,
+            cloverJack,
+        )
+
+        override fun pop(): Card {
+            return kings[popCount++]
+        }
+    }

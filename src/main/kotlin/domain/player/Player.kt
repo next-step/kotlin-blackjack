@@ -3,7 +3,7 @@ package domain.player
 import domain.card.Card
 import domain.card.Cards
 
-class Player(val name: String, val cards: Cards = Cards()) {
+open class Player(val name: String, val cards: Cards = Cards()) {
 
     fun hit(card: Card) {
         cards.add(card)
@@ -13,7 +13,7 @@ class Player(val name: String, val cards: Cards = Cards()) {
         return cards.result()
     }
 
-    fun canReceiveMoreCard(): Boolean {
+    open fun canReceiveMoreCard(): Boolean {
         return result() < Cards.BLACKJACK_POINT
     }
 }

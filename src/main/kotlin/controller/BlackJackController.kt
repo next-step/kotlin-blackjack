@@ -1,5 +1,6 @@
 package controller
 
+import domain.player.Dealer
 import domain.player.Player
 import domain.player.Players
 import domain.turn.InitialTurn
@@ -10,8 +11,8 @@ fun main() {
     val playerNames = InputView.getPlayerNames()
     val players = Players(playerNames.map { Player(it) })
 
-    var turn = InitialTurn(players).proceed()
-    ResultView.printInitialState(players.list)
+    var turn = InitialTurn(Dealer(), players).proceed()
+    ResultView.printInitialState(turn.dealer, players.list)
 
     while (true) {
         val playersCanReceiveMoreCard = turn.playersCanTakeNextTurn()
@@ -23,8 +24,10 @@ fun main() {
             Players(it)
         }
 
-        turn = turn.proceed(remainPlayers)
+        turn = turn.proceed(remainPlayers) {
+            ResultView.printDealerReceiveCardMessage()
+        }
 
-        ResultView.printResult(players.list)
+        ResultView.printResult(turn.dealer, players.list)
     }
 }
