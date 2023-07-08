@@ -90,4 +90,20 @@ class PlayerTest {
         // then
         Assertions.assertThat(player.money).isEqualTo(bettingMoney)
     }
+
+    @Test
+    fun `플레이어가 블랙잭으로 승리하면 베팅한 금액의 일점오배를 받는다`() {
+        // given
+        val bettingMoney = 10000
+        val playerName = "name"
+        player = GeneratePlayerRequest(playerName, bettingMoney)
+            .generatePlayer()
+
+        // when
+        player.proceedGameRecord(GameRecordType.WIN)
+        player.blackJackMoney()
+
+        // then
+        Assertions.assertThat(player.money).isEqualTo(15000)
+    }
 }
