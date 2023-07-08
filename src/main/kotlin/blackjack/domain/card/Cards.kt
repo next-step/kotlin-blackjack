@@ -1,5 +1,7 @@
 package blackjack.domain.card
 
+import blackjack.BlackJackGame
+
 class Cards(
     private val cards: MutableList<Card> = mutableListOf()
 ) {
@@ -10,10 +12,15 @@ class Cards(
     fun getScore(): Int {
         var score = cards.sumOf { it.number.score }
 
-        if (cards.any { it.isAce() } && (score + CardNumber.ACE_ADDITIONAL_SCORE) <= 21) {
+        if (isAceAvailable(score)) {
             score += CardNumber.ACE_ADDITIONAL_SCORE
         }
         return score
+    }
+
+    private fun isAceAvailable(score: Int): Boolean {
+        return cards.any { it.isAce() }
+                && (score + CardNumber.ACE_ADDITIONAL_SCORE) <= BlackJackGame.MAX_SCORE
     }
 
     override fun toString(): String {
