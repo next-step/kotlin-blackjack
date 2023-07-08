@@ -58,7 +58,9 @@ sealed class Participant(
     }
 
     private fun blackjackIf21() {
-        if (score == BLACKJACK_SCORE) {
+        if (score == BLACKJACK_SCORE &&
+            cards.size == BLACKJACK_CARD_COUNT
+        ) {
             blackjack()
         }
     }
@@ -85,6 +87,10 @@ sealed class Participant(
 
     fun isDraw(other: Participant): Boolean {
         return this.score == other.score
+    }
+
+    companion object {
+        const val BLACKJACK_CARD_COUNT = 2
     }
 
     enum class ParticipantType {
