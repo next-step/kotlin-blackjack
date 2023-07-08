@@ -4,9 +4,9 @@ import domain.card.CardDeck
 
 data class Players(val list: List<Player>) {
 
-    fun hit(cardDeck: CardDeck, afterHit: ((Player) -> Unit)? = null) {
+    fun hit(cardDeck: CardDeck) {
         list.forEach {
-            it.hit(cardDeck.pop(), afterHit)
+            it.hit(cardDeck.pop())
         }
     }
 
@@ -20,5 +20,9 @@ data class Players(val list: List<Player>) {
 
     fun noMorePlayer(): Boolean {
         return list.isEmpty()
+    }
+
+    fun duplicate(): Players {
+        return copy(list = list.toList())
     }
 }

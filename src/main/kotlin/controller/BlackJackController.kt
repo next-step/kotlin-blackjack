@@ -10,25 +10,23 @@ fun main() {
     val playerNames = InputView.getPlayerNames()
     val players = Players(playerNames.map { Player(it) })
 
-    val game = Game()
-    game.start(players)
+    val game = Game(players)
+    game.start()
 
     ResultView.printInitialState(players.list)
 
-    var remainPlayers = game.playersCanReceiveMoreCard(players)
     while (true) {
-        val playersCanReceiveMoreCard = game.playersCanReceiveMoreCard(remainPlayers)
+        val playersCanReceiveMoreCard = game.playersCanReceiveMoreCard()
         if (playersCanReceiveMoreCard.noMorePlayer()) break
 
-        remainPlayers = playersCanReceiveMoreCard.list.filter {
+        val remainPlayers = playersCanReceiveMoreCard.list.filter {
             InputView.askReceiveCard(it.name)
         }.let {
             Players(it)
         }
 
-        game.hit(remainPlayers) { player ->
-            ResultView.printPlayerState(player)
-        }
+        game.updateRemainPlayers(remainPlayers)
+        game.hit()
 
         ResultView.printResult(players.list)
     }

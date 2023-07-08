@@ -16,8 +16,8 @@ class GameTest {
     @ParameterizedTest
     @MethodSource("게임 초기화 테스트 데이터")
     fun `게임 시작 시 플레이어에게 카드 2장씩 나눠주기 테스트`(players: Players) {
-        with(Game()) {
-            start(players)
+        with(Game(players)) {
+            start()
             players.list.forEach {
                 assertThat(it.cards.current()).size().isEqualTo(2)
             }
@@ -33,6 +33,7 @@ class GameTest {
         )
 
         val game = Game(
+            players,
             object : CardDeck {
 
                 var popCount = 0
@@ -50,16 +51,16 @@ class GameTest {
             }
         )
 
-        game.start(players)
+        game.start()
 
         assertThat(
-            game.playersCanReceiveMoreCard(players)
+            game.playersCanReceiveMoreCard()
         ).isEqualTo(players)
 
-        game.hit(players)
+        game.hit()
 
         assertThat(
-            game.playersCanReceiveMoreCard(players)
+            game.playersCanReceiveMoreCard()
         ).isEqualTo(Players(emptyList()))
     }
 
@@ -72,11 +73,11 @@ class GameTest {
             )
         )
 
-        val game = Game()
+        val game = Game(players)
 
-        game.hit(players)
+        game.hit()
 
-        players.list.forEach {
+        game.players.list.forEach {
             assertThat(it.cards.current()).size().isEqualTo(1)
         }
     }
