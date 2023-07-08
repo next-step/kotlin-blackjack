@@ -327,4 +327,36 @@ class RuleCheckerTest {
         Assertions.assertThat(player.money).isEqualTo(15000)
         Assertions.assertThat(dealer.money).isEqualTo(-15000)
     }
+
+    @Test
+    fun `딜러의 카드 숫자의 합이 21이 넘으면 플레이어는 베팅 금액을 가져간다`() {
+        // given
+        val dealer = Dealer()
+        dealer.addCards(
+            listOf(
+                Card(CardShape.CLOVER, CardNumber.TEN),
+                Card(CardShape.CLOVER, CardNumber.TEN),
+                Card(CardShape.CLOVER, CardNumber.TWO)
+            )
+        )
+
+        val bettingMoney = 10000
+        val playerName = "name"
+        val player = GeneratePlayerRequest(playerName, bettingMoney)
+            .generatePlayer()
+
+        player.addCards(
+            listOf(
+                Card(CardShape.CLOVER, CardNumber.TEN),
+                Card(CardShape.CLOVER, CardNumber.TEN),
+            )
+        )
+
+        // when
+        ruleChecker.proceedWhoIsWinner(player, dealer)
+
+        // then
+        Assertions.assertThat(player.money).isEqualTo(bettingMoney)
+        Assertions.assertThat(dealer.money).isEqualTo(-bettingMoney)
+    }
 }
