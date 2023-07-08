@@ -43,4 +43,23 @@ class DealerTest {
         // then
         Assertions.assertThat(dealer.money).isEqualTo(bettingMoney)
     }
+
+    @Test
+    fun `플레이어가 블랙잭으로 승리하면 딜러는 베팅한 금액의 일점오배를 잃는다`() {
+        // given
+        val bettingMoney = 10000
+        val playerName = "name"
+        val player = GeneratePlayerRequest(playerName, bettingMoney)
+            .generatePlayer()
+
+        val dealer = Dealer()
+
+        // when
+        player.proceedGameRecord(GameRecordType.WIN)
+        val blackJackPlayerWinMoney = player.blackJackMoney()
+        dealer.loseMoney(blackJackPlayerWinMoney)
+
+        // then
+        Assertions.assertThat(dealer.money).isEqualTo(-15000)
+    }
 }
