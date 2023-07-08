@@ -1,6 +1,8 @@
 package blackjack.domain.gamer
 
-class Player(private val name: String) : BlackJackGamer() {
+import blackjack.dto.GeneratePlayerRequest
+
+class Player(private val name: String, private val money: Int) : BlackJackGamer() {
     private lateinit var gameRecord: GameRecordType
 
     override fun getGamerType(): GamerType {
@@ -21,10 +23,10 @@ class Player(private val name: String) : BlackJackGamer() {
     }
 
     companion object {
-        fun generatePlayers(nameList: List<String>): List<Player> {
+        fun generatePlayers(nameList: List<GeneratePlayerRequest>): List<Player> {
             val playerList = mutableListOf<Player>()
             nameList.forEach {
-                playerList.add(Player(it))
+                playerList.add(Player(it.playerName, it.bettingMoney))
             }
             return playerList.toList()
         }
