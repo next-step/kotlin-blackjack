@@ -23,7 +23,7 @@ class Cards(cards: List<Card> = emptyList()) {
             sumWithoutAce + it
         }
 
-        if (sumOfAllCases.contains(BLACKJACK_POINT)) {
+        if (BLACKJACK_POINT in sumOfAllCases) {
             return BLACKJACK_POINT
         }
 
