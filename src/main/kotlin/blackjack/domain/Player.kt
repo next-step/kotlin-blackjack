@@ -1,44 +1,25 @@
 package blackjack.domain
 
-import blackjack.domain.Rank.Companion.ACE_MAX
-import blackjack.domain.Rank.Companion.ACE_MIN
-
 class Player(
     val name: String,
     cards: Cards = Cards()
-) {
+) : Participant {
     var cards: Cards = cards
         private set
+    val score
+        get() = ScoreCalculator.calculateScore(cards)
 
     init {
         require(name.isNotEmpty() && name.isNotBlank())
     }
 
-    fun receiveCards(newCards: List<Card>): Player {
+    override fun receiveCards(newCards: List<Card>) {
         cards = Cards(cards.values + newCards)
-        return this
     }
 
-    fun receiveCard(newCard: Card): Player {
+    override fun receiveCard(newCard: Card) {
         cards = Cards(cards.values + newCard)
-        return this
     }
-
-    fun calculateScore(): Int {
-        var score = cards.sumOfScoreWithAceAsOne
-
-        repeat(getNumberOfAce()) {
-            if (isValidBlackjackScoreWithAceAsEleven(score)) {
-                score += ACE_MAX - ACE_MIN
-            }
-        }
-
-        return score
-    }
-
-    private fun isValidBlackjackScoreWithAceAsEleven(score: Int) = score + ACE_MAX - ACE_MIN <= BLACK_JACK
-
-    private fun getNumberOfAce() = cards.values.count { it.rank == Rank.ACE }
 
     companion object {
         const val DEFAULT_CARD_SIZE = 2
