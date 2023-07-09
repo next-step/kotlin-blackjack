@@ -1,6 +1,8 @@
 package blackjack.controller
 
 import blackjack.domain.Deck
+import blackjack.domain.Participant
+import blackjack.domain.Participants
 import blackjack.domain.Player
 import blackjack.view.InputView
 import blackjack.view.ResultView
@@ -12,30 +14,32 @@ class BlackjackController {
         return InputView.players().map { Player(it) }
     }
 
-    fun drawInitialCards(players: List<Player>) {
-        players.forEach {
+    fun drawInitialCards(participants: Participants) {
+        participants.forEach {
             it.addCard(deck.drawCard())
             it.addCard(deck.drawCard())
         }
+        println()
     }
 
-    fun printInitialCards(players: List<Player>) {
-        ResultView.initialCards(players)
+    fun printInitialCards(participants: Participants) {
+        ResultView.initialCards(participants)
+        println()
     }
 
-    fun drawMoreCard(player: Player): Boolean {
-        if (!player.cards.canDrawMoreCard()) {
+    fun drawMoreCard(participant: Participant): Boolean {
+        if (!participant.canDrawMoreCard()) {
             return false
         }
-        if (InputView.drawMoreCard(player.name)) {
-            player.addCard(deck.drawCard())
-            ResultView.playerAndCards(player)
+        if (InputView.drawMoreCard(participant.name)) {
+            participant.addCard(deck.drawCard())
+            ResultView.participantAndCards(participant)
             return true
         }
         return false
     }
 
-    fun printResult(players: List<Player>) {
-        ResultView.result(players)
+    fun printResult(participants: Participants) {
+        ResultView.result(participants)
     }
 }
