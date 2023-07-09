@@ -12,7 +12,7 @@ fun main() {
     blackjackController.drawInitialCards(participants)
     blackjackController.printInitialCards(participants)
 
-    for (participant in participants.toList().filter { it !is Dealer }) {
+    for (participant in participants.getPlayers()) {
         while (blackjackController.drawMoreCard(participant)) {
             continue
         }
@@ -27,4 +27,7 @@ fun main() {
 
     // 결과를 출력한다.
     blackjackController.printResult(participants)
+
+    // 최종 승패를 출력한다.
+    blackjackController.printFinalResult(participants)
 }

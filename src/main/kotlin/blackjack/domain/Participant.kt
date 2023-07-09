@@ -7,5 +7,9 @@ abstract class Participant(val name: String) {
         cards.add(card)
     }
 
+    fun isBust(): Boolean {
+        return cards.calculateScore() > Cards.BLACKJACK
+    }
+
     abstract fun canDrawMoreCard(): Boolean
 }

@@ -46,5 +46,10 @@ class BlackjackController {
 
     fun printResult(participants: Participants) {
         ResultView.result(participants)
+        println()
+    }
+
+    fun printFinalResult(participants: Participants) {
+        ResultView.finalResult(participants)
     }
 }

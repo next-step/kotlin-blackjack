@@ -19,6 +19,7 @@ object ResultView {
     private fun dealerAndCards(participant: Participant) {
         println("딜러: ${participant.cards.cards.first()}")
     }
+
     fun participantAndCards(participant: Participant) {
         println("${participant.name}카드: ${participant.cards.cards.joinToString(", ")}")
     }
@@ -26,6 +27,17 @@ object ResultView {
     fun result(participants: Participants) {
         participants.forEach {
             println("${it.name}카드: ${it.cards.cards.joinToString(", ")} - 결과: ${it.cards.calculateScore()}")
+        }
+    }
+
+    fun finalResult(participants: Participants) {
+        println("## 최종 승패")
+        if (participants.isDealerBust()) {
+            println("딜러: 패")
+            participants.getPlayers().forEach {
+                println("${it.name}: 승")
+            }
+            return
         }
     }
 }
