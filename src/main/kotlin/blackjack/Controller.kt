@@ -26,7 +26,7 @@ class Controller {
 
     private fun startGame(game: BlackJackGame) {
         game.start()
-        OutputView.printStart(game.getParticipants())
+        OutputView.printStartGame(game.getParticipants())
     }
 
     private fun playGame(game: BlackJackGame) {
@@ -37,17 +37,17 @@ class Controller {
         game.dealerPlay { OutputView.printDealerHit(it) }
 
         for (participant in game.getParticipants()) {
-            OutputView.printPlayerResult(participant)
+            OutputView.printParticipantScore(participant)
         }
     }
 
     private fun printResult(game: BlackJackGame) {
         val gameResults = game.getGameResult()
         for (result in gameResults.getMatchResults()) {
-            OutputView.printProfit(result.player.name, result.ofPlayer().earningAmount)
+            OutputView.printProfit(result.player, result.ofPlayer().earningAmount)
         }
         OutputView.printProfit(
-            gameResults.dealer.name,
+            gameResults.dealer,
             gameResults.getDealerEarningAmount()
         )
     }

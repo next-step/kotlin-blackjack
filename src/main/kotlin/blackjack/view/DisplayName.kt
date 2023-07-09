@@ -22,7 +22,7 @@ object DisplayName {
         CardShape.SPADE -> "스페이드"
     }
 
-    fun participantName(participant: Participant) = when (participant) {
+    fun participant(participant: Participant) = when (participant) {
         is Player -> participant.name
         is Dealer -> "딜러"
     }

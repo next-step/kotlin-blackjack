@@ -5,10 +5,10 @@ import blackjack.domain.Hand
 import blackjack.domain.card.Card
 
 class Player(
-    name: String,
-    hand: Hand = Hand.init,
-    val betAmount: BetAmount
-) : Participant(name, hand) {
+    val name: String,
+    val betAmount: BetAmount,
+    hand: Hand = Hand.init
+) : Participant(hand) {
     fun play(
         isHit: () -> Boolean,
         drawCard: () -> Card

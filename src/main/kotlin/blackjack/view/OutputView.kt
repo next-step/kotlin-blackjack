@@ -5,33 +5,42 @@ import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Participant
 
 object OutputView {
-    fun printStart(participants: List<Participant>) {
-        val playerNames = participants.joinToString(", ") { it.name }
-        println("$playerNames 에게 2장의 카드를 나누었습니다.")
+    fun printStartGame(participants: List<Participant>) {
+        val participantNames = participants.joinToString(", ") { DisplayName.participant(it) }
+        val startCardCount = Participant.START_CARD_COUNT
+        println("$participantNames 에게 ${startCardCount}장의 카드를 나누었습니다.")
+
         for (participant in participants) {
-            printCards(participant.name, participant.cards())
+            val participantName = DisplayName.participant(participant)
+            printCards(participantName, participant.cards())
         }
     }
 
     fun printCards(name: String, cards: List<Card>) {
-        println(resultMessage(name, cards))
+        println(cardsMessage(name, cards))
+    }
+
+    fun printParticipantScore(participant: Participant) {
+        val cards = cardsMessage(DisplayName.participant(participant), participant.cards())
+        val score = participant.score().value
+        println("$cards - 결과: $score")
+    }
+
+    private fun cardsMessage(name: String, cards: List<Card>): String {
+        val cards = cards
+            .joinToString(", ") {
+                DisplayName.cardNumber(it.number) + DisplayName.cardShape(it.shape)
+            }
+        return "${name}의 카드: $cards"
     }
 
     fun printDealerHit(dealer: Dealer) {
-        println("${dealer.name}은 16이하라 한장의 카드를 더 받았습니다.")
+        val name = DisplayName.participant(dealer)
+        println("${name}은 16이하라 한장의 카드를 더 받았습니다.")
     }
 
-    fun printPlayerResult(participant: Participant) {
-        println("${resultMessage(participant.name, participant.cards())} - 결과: ${participant.score().value}")
-    }
-
-    private fun resultMessage(name: String, cards: List<Card>): String {
-        val cardsMessage =
-            cards.joinToString(", ") { DisplayName.cardNumber(it.number) + DisplayName.cardShape(it.shape) }
-        return "${name}의 카드: $cardsMessage"
-    }
-
-    fun printProfit(name: String, profit: Double) {
+    fun printProfit(participant: Participant, profit: Double) {
+        val name = DisplayName.participant(participant)
         println("$name: $profit")
     }
 }
