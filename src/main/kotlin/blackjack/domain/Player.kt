@@ -29,7 +29,7 @@ sealed class Player {
 data class Dealer(
     override val name: String = "Dealer",
     override val deck: Deck = Deck(),
-): Player() {
+) : Player() {
     override val canHit: Boolean
         get() = getDeckPointSum() <= DEALER_HIT_THRESHOLD
 
@@ -44,7 +44,7 @@ data class Dealer(
 data class Challenger(
     override val name: String,
     override val deck: Deck = Deck(),
-): Player() {
+) : Player() {
 
     private var isStay: Boolean = false
     override val canHit: Boolean
@@ -52,5 +52,15 @@ data class Challenger(
 
     fun stay() {
         isStay = true
+    }
+
+    fun isWin(dealer: Dealer): Boolean {
+        if (this.isBurst) {
+            return false
+        }
+        if (dealer.isBurst) {
+            return true
+        }
+        return this.getDeckPointSum() > dealer.getDeckPointSum()
     }
 }
