@@ -1,7 +1,6 @@
 package blackjack.domain.users
 
 import blackjack.domain.Cards
-import blackjack.domain.result.DealerResult
 
 class Dealer(
     name: String,

@@ -7,7 +7,7 @@ import blackjack.domain.users.User
 import blackjack.view.USER_NAME_SPLIT_SYMBOL
 import blackjack.view.enterUserNames
 import blackjack.view.printBlackjackResult
-import blackjack.view.printCardReceiveWant
+import blackjack.view.printCardReceiveNotWant
 import blackjack.view.printLine
 import blackjack.view.printResults
 import blackjack.view.printUserCards
@@ -44,12 +44,14 @@ class BlackjackController {
     }
 
     private fun cardReceiveWant(user: Player, blackjackGame: BlackjackGame) {
-        if (printCardReceiveWant(user.name)) {
-            user.userCardReceive(blackjackGame.handOutCard())
-            printUserCards(user.name, user.cards)
-        } else {
-            user.deckComplete()
+
+        if (printCardReceiveNotWant(user.name)) {
+            return
         }
+
+        blackjackGame.userCardReceive(user)
+
+        printUserCards(user.name, user.cards)
 
         if (user.isDeckInComplete()) {
             cardReceiveWant(user, blackjackGame)

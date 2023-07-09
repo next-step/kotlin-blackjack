@@ -24,11 +24,16 @@ class PlayerTest : StringSpec({
         player.cardValues() shouldBe 21
     }
 
-    "플레이어의 덱을 완성 시킬 수 있다." {
-        val cards = Cards(listOf(Card(Denomination.KING, Suit.SPADE), Card(Denomination.QUEEN, Suit.SPADE)))
+    "플레이어의 덱의 합이 21 이상이면 덱이 완성된다." {
+        val cards = Cards(
+            listOf(
+                Card(Denomination.KING, Suit.SPADE),
+                Card(Denomination.QUEEN, Suit.SPADE),
+                Card(Denomination.ACE, Suit.SPADE)
+            )
+        )
         val player = Player("Lee", cards)
 
-        player.deckComplete()
         player.isDeckInComplete() shouldBe false
     }
 })

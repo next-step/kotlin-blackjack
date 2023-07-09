@@ -13,20 +13,21 @@ class BlackjackGameTest : StringSpec({
             Player(
                 "Test1",
                 Cards(
-                    listOf(Card(Denomination.ACE, Suit.DIAMOND), Card(Denomination.KING, Suit.DIAMOND))
-                ),
-                true
+                    listOf(
+                        Card(Denomination.ACE, Suit.DIAMOND),
+                        Card(Denomination.KING, Suit.DIAMOND)
+                    )
+                )
             )
         val test2 =
             Player(
                 "Test2",
                 Cards(
                     listOf(
-                        Card(Denomination.QUEEN, Suit.DIAMOND), Card(Denomination.KING, Suit.DIAMOND)
+                        Card(Denomination.QUEEN, Suit.DIAMOND),
+                        Card(Denomination.KING, Suit.DIAMOND)
                     )
-
-                ),
-                true
+                )
             )
         val test3 =
             Player(
@@ -42,6 +43,6 @@ class BlackjackGameTest : StringSpec({
 
         val blackjackGame = BlackjackGame(dealer, listOf(test1, test2, test3))
 
-        blackjackGame.cardReceivePossibleUsers().size shouldBe 1
+        blackjackGame.cardReceivePossibleUsers().size shouldBe 2
     }
 })

@@ -1,8 +1,6 @@
 package blackjack.domain
 
-import blackjack.domain.result.DealerResult
 import blackjack.domain.result.GameResults
-import blackjack.domain.result.PlayerResult
 import blackjack.domain.users.Dealer
 import blackjack.domain.users.Player
 import blackjack.domain.users.User
@@ -13,7 +11,7 @@ class BlackjackGame(
     userList: List<Player>,
     private val gameDeck: GameDeck = GameDeck()
 ) {
-    val users: Users = Users(userList, dealer)
+    private val users: Users = Users(userList, dealer)
     private val dealer: Dealer = users.dealer
 
     init {
@@ -29,17 +27,11 @@ class BlackjackGame(
     }
 
     fun calculateBlackjackResult(): GameResults {
-        val dealerCardValue = users.dealerCardValue()
-
-        if (dealerCardValue > BLACKJACK_VALUE) {
-            return dealerLose()
-        }
-
-        return users.calculateGameResult(dealerCardValue)
+        return users.calculateGameResult()
     }
 
-    fun handOutCard(): Card {
-        return gameDeck.handOutCard()
+    fun userCardReceive(user: Player) {
+        user.userCardReceive(handOutCard())
     }
 
     fun dealerCardReceive() {
@@ -48,10 +40,9 @@ class BlackjackGame(
         }
     }
 
-    private fun dealerLose() = GameResults(
-        users.players.map { PlayerResult(it.name, true) },
-        DealerResult(loseCount = users.players.size)
-    )
+    private fun handOutCard(): Card {
+        return gameDeck.handOutCard()
+    }
 
     companion object {
         const val GAME_START_CARD_COUNT = 2

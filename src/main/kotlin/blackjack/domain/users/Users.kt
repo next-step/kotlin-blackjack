@@ -1,5 +1,6 @@
 package blackjack.domain.users
 
+import blackjack.domain.BlackjackGame
 import blackjack.domain.Cards
 import blackjack.domain.result.DealerResult
 import blackjack.domain.result.GameResults
@@ -16,17 +17,24 @@ data class Users(val players: List<Player>, val dealer: Dealer) {
         return players.filter { player -> player.isDeckInComplete() }
     }
 
-    fun dealerCardValue(): Int {
-        return dealer.cardValues()
-    }
+    fun calculateGameResult(): GameResults {
+        val dealerCardValue = dealer.cardValues()
 
-    fun calculateGameResult(dealerCardValue: Int): GameResults {
+        if (dealerCardValue > BlackjackGame.BLACKJACK_VALUE) {
+            return dealerLose()
+        }
+
         var gameResults = GameResults(emptyList(), DealerResult())
         players.forEach {
             gameResults = gameResult(it, dealerCardValue, gameResults)
         }
         return gameResults
     }
+
+    private fun dealerLose() = GameResults(
+        players.map { PlayerResult(it.name, true) },
+        DealerResult(loseCount = players.size)
+    )
 
     private fun gameResult(
         player: Player,
