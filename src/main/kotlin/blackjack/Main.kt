@@ -6,6 +6,7 @@ import blackjack.domain.Player
 import blackjack.view.InputView
 import blackjack.view.ResultView
 import blackjack.view.ResultView.printPlayerInfo
+import blackjack.view.ResultView.printResult
 
 fun main() {
     val playerNames = InputView.receivePlayerNames()
@@ -20,4 +21,6 @@ fun main() {
             printPlayerInfo(it)
         }
     }
+
+    printResult(players)
 }
