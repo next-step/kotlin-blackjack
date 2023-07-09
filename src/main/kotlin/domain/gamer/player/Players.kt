@@ -10,6 +10,14 @@ data class Players(val list: List<Player>) {
         }
     }
 
+    fun names(): List<String> {
+        return list.map { it.name }
+    }
+
+    fun numberOfPlayers(): Int {
+        return list.size
+    }
+
     fun notBustedPlayers(): Players {
         return Players(
             list.filterNot { it.isBust }

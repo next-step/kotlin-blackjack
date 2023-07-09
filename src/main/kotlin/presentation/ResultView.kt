@@ -29,11 +29,11 @@ object ResultView {
     fun printResult(result: Result) {
         println("## 최종 승패")
         println("딜러: ${result.numOfLoser}승 ${result.numOfWinner}패")
-        result.winners.list.forEach {
-            println("${it.name}: 승")
+        result.winners.names().forEach {
+            println("$it: 승")
         }
-        result.losers.list.forEach {
-            println("${it.name}: 패")
+        result.losers.names().forEach {
+            println("$it: 패")
         }
     }
 
