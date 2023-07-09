@@ -1,6 +1,5 @@
 package blackjack.domain.participant
 
-import blackjack.domain.BetAmount
 import blackjack.domain.card.CardNumber
 import blackjack.test.TestObjectGenerator
 import io.kotest.core.spec.style.StringSpec

@@ -1,6 +1,5 @@
-package blackjack.domain
+package blackjack.domain.participant
 
-import blackjack.domain.participant.Players
 import blackjack.test.TestObjectGenerator
 import io.kotest.assertions.throwables.shouldThrowAny
 import io.kotest.core.spec.style.StringSpec

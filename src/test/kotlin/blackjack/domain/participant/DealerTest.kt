@@ -1,7 +1,7 @@
 package blackjack.domain.participant
 
-import blackjack.domain.Hand
 import blackjack.domain.card.CardNumber
+import blackjack.domain.hand.Hand
 import blackjack.test.TestObjectGenerator
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe

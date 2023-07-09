@@ -1,7 +1,7 @@
 package blackjack.domain.result
 
-import blackjack.domain.BetAmount
-import blackjack.domain.Hand
+import blackjack.domain.hand.Hand
+import blackjack.domain.participant.BetAmount
 import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Player
 import blackjack.domain.participant.Players

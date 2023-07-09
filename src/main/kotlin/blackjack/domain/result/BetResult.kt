@@ -1,6 +1,6 @@
 package blackjack.domain.result
 
-import blackjack.domain.BetAmount
+import blackjack.domain.participant.BetAmount
 
 class BetResult private constructor(val result: Result, val earningAmount: Double) {
     constructor(result: Result, earningAmount: Int) : this(result, earningAmount.toDouble())

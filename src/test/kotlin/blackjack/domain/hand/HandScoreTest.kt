@@ -1,10 +1,10 @@
-package blackjack.domain
+package blackjack.domain.hand
 
 import blackjack.domain.card.CardScore
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 
-class ScoreTest : BehaviorSpec({
+class HandScoreTest : BehaviorSpec({
     given("주어진 점수에") {
         val handScore = HandScore(10)
 

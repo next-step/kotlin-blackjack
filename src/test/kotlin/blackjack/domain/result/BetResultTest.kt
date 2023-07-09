@@ -1,6 +1,6 @@
 package blackjack.domain.result
 
-import blackjack.domain.BetAmount
+import blackjack.domain.participant.BetAmount
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 

@@ -1,10 +1,10 @@
 package blackjack.test
 
-import blackjack.domain.BetAmount
-import blackjack.domain.Hand
 import blackjack.domain.card.Card
 import blackjack.domain.card.CardNumber
 import blackjack.domain.card.CardShape
+import blackjack.domain.hand.Hand
+import blackjack.domain.participant.BetAmount
 import blackjack.domain.participant.Player
 
 object TestObjectGenerator {
@@ -17,11 +17,6 @@ object TestObjectGenerator {
 
     fun cards(vararg number: CardNumber): List<Card> {
         return number.toList().map { card(it) }
-    }
-
-    fun handOf22(): Hand {
-        val cards = listOf(card(CardNumber.TEN), card(CardNumber.TEN), card(CardNumber.TWO))
-        return Hand.init.add(cards)
     }
 
     fun handOf21(): Hand {

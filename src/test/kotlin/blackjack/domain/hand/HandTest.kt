@@ -1,4 +1,4 @@
-package blackjack.domain
+package blackjack.domain.hand
 
 import blackjack.domain.card.CardNumber
 import blackjack.test.TestObjectGenerator

@@ -1,7 +1,7 @@
 package blackjack.domain.participant
 
-import blackjack.domain.Hand
 import blackjack.domain.card.Card
+import blackjack.domain.hand.Hand
 
 sealed class Participant(
     protected var hand: Hand

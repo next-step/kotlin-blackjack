@@ -1,7 +1,7 @@
 package blackjack.domain.participant
 
-import blackjack.domain.Hand
 import blackjack.domain.card.Card
+import blackjack.domain.hand.Hand
 
 class Dealer(
     hand: Hand = Hand.init
