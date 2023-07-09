@@ -15,7 +15,16 @@ object ResultView {
     }
 
     fun printPlayer(player: Player) {
-        print("${player.name}카드: ")
-        println(player.cards.cards.joinToString(", ") { it -> "${it.cardType.label}${it.denomination.label}" })
+        println("${player.name}카드: ${playerCards(player)}")
     }
+
+    fun printResult(players: Players) {
+        println()
+        players.forEach { player ->
+            println("${player.name}카드: ${playerCards(player)} - 결과: ${player.score()}")
+        }
+    }
+
+    private fun playerCards(player: Player) =
+        player.cards.cards.joinToString(", ") { it -> "${it.cardType.label}${it.denomination.label}" }
 }

@@ -24,4 +24,5 @@ fun main() {
         }
         ResultView.printPlayer(player)
     }
+    ResultView.printResult(blackJackGame.players)
 }
