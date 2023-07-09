@@ -5,22 +5,32 @@ import io.kotest.inspectors.forAll
 import io.kotest.matchers.shouldBe
 
 class CardTest : StringSpec({
-    "카드는 숫자 1~ 9를 가질수 있다." {
-        listOf("1", "2", "3", "4", "5", "6", "7", "8", "9").forAll {
+    "카드는 숫자 1 ~ 9의 계산할때 1 ~ 9 로 계산된다." {
+        listOf(
+            NumberShape.ONE,
+            NumberShape.TWO,
+            NumberShape.THREE,
+            NumberShape.FOUR,
+            NumberShape.FIVE,
+            NumberShape.SIX,
+            NumberShape.SEVEN,
+            NumberShape.EIGHT,
+            NumberShape.NINE
+        ).forAll {
             val card = Card(it, Pattern.CLOVER)
-            card.getValue() shouldBe it.toInt()
+            card.getValue() shouldBe it.value
         }
     }
 
     "카드 K, Q , J 는 10으로 계산된다." {
-        listOf("K", "Q", "J").forAll {
+        listOf(NumberShape.KING, NumberShape.QUEEN, NumberShape.JACK).forAll {
             val card = Card(it, Pattern.DIAMOND)
             card.getValue() shouldBe 10
         }
     }
 
     "카드 A 는 일단 1의 값을 가진다." {
-        val card = Card("A", Pattern.HEART)
+        val card = Card(NumberShape.ACE, Pattern.HEART)
         card.getValue() shouldBe 1
     }
 })
