@@ -30,7 +30,7 @@ open class Player(
     }
 
     private fun newState(): State {
-        val result = cards.result()
+        val result = cards.score()
         return when {
             result == Cards.BLACKJACK_POINT -> State.BlackJack
             result < Cards.BLACKJACK_POINT -> State.Hit

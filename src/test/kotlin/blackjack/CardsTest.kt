@@ -11,7 +11,7 @@ class CardsTest {
     @ParameterizedTest
     @MethodSource("카드 더 받을 수 있는지 확인 테스트 데이터")
     fun `갖고있는 카드에서 결과 계산 테스트`(cards: Cards, result: Int) {
-        assertThat(cards.result()).isEqualTo(result)
+        assertThat(cards.score()).isEqualTo(result)
     }
 
     companion object {

@@ -12,7 +12,7 @@ class Cards(cards: List<Card> = emptyList()) {
         return cards.toSet()
     }
 
-    fun result(): Int {
+    fun score(): Int {
         val sumWithoutAce = sumWithoutAce()
 
         if (doesNotHaveAce()) {

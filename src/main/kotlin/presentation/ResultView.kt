@@ -57,6 +57,6 @@ object ResultView {
     }
 
     private fun Gamer.printWithResult() {
-        println("$name 카드: ${cards.current().joinToString(", ")} - 결과: $result")
+        println("$name 카드: ${cards.current().joinToString(", ")} - 결과: $score")
     }
 }

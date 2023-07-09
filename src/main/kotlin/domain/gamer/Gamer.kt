@@ -10,8 +10,8 @@ interface Gamer {
 
     val isHit: Boolean
 
-    val result: Int
-        get() = cards.result()
+    val score: Int
+        get() = cards.score()
 
     fun hit(cardDeck: CardDeck)
 }

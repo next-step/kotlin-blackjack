@@ -4,6 +4,7 @@ import domain.State
 import domain.card.CardDeck
 import domain.card.Cards
 import domain.gamer.Gamer
+import domain.gamer.player.Players
 
 class Dealer(
     override val cards: Cards = Cards(),
@@ -31,8 +32,24 @@ class Dealer(
         onHit = callback
     }
 
+    fun winners(players: Players): Players {
+        return players.playersWithMatchedScore(maxScore(players))
+    }
+
+    fun losers(players: Players): Players {
+        return players.playersWithMismatchedScore(maxScore(players))
+    }
+
+    private fun maxScore(players: Players): Int {
+        return players.notBustedPlayers()
+            .results()
+            .filter {
+                it > this.score
+            }.maxOrNull() ?: Int.MAX_VALUE
+    }
+
     private fun newState(): State {
-        val result = cards.result()
+        val result = cards.score()
         return when {
             result > Cards.BLACKJACK_POINT -> State.Bust
             result == Cards.BLACKJACK_POINT -> State.BlackJack
