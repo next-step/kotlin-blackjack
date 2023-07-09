@@ -8,14 +8,10 @@ import blackjack.domain.card.CardShape
 import blackjack.domain.participant.Player
 
 object TestObjectGenerator {
-    fun card(number: CardNumber): Card {
-        return Card(number, CardShape.values().random())
-    }
-
-    fun card(): Card {
+    fun card(number: CardNumber? = null): Card {
         return Card(
-            CardNumber.values().random(),
-            CardShape.values().random()
+            number = number ?: CardNumber.values().random(),
+            shape = CardShape.values().random()
         )
     }
 
@@ -23,28 +19,34 @@ object TestObjectGenerator {
         return number.toList().map { card(it) }
     }
 
-    fun cardsOfScore22(): List<Card> {
-        return listOf(card(CardNumber.TEN), card(CardNumber.TEN), card(CardNumber.TWO))
-    }
-
-    fun cardsOfScore21(): List<Card> {
-        return listOf(card(CardNumber.TEN), card(CardNumber.NINE), card(CardNumber.TWO))
-    }
-
-    fun cardsOfScore20(): List<Card> {
-        return listOf(card(CardNumber.TEN), card(CardNumber.TEN))
-    }
-
     fun handOf22(): Hand {
-        return Hand.init.add(cardsOfScore22())
+        val cards = listOf(card(CardNumber.TEN), card(CardNumber.TEN), card(CardNumber.TWO))
+        return Hand.init.add(cards)
     }
 
     fun handOf21(): Hand {
-        return Hand.init.add(cardsOfScore21())
+        val cards = listOf(card(CardNumber.TEN), card(CardNumber.NINE), card(CardNumber.TWO))
+        return Hand.init.add(cards)
     }
 
     fun handOf20(): Hand {
-        return Hand.init.add(cardsOfScore20())
+        val cards = listOf(card(CardNumber.TEN), card(CardNumber.TEN))
+        return Hand.init.add(cards)
+    }
+
+    fun handOf19(): Hand {
+        val cards = listOf(card(CardNumber.TEN), card(CardNumber.NINE))
+        return Hand.init.add(cards)
+    }
+
+    fun handOfBlackjack(): Hand {
+        val cards = listOf(card(CardNumber.ACE), card(CardNumber.TEN))
+        return Hand.init.add(cards)
+    }
+
+    fun handOfBust(): Hand {
+        val cards = listOf(card(CardNumber.TEN), card(CardNumber.TEN), card(CardNumber.TWO))
+        return Hand.init.add(cards)
     }
 
     fun player(

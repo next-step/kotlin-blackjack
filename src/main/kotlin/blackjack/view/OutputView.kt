@@ -41,6 +41,10 @@ object OutputView {
         val message = results.map { (result, count) -> count.toString() + result.displayName() }.joinToString(" ")
         println("$name: $message")
     }
+
+    fun printProfit(name: String, profit: Double) {
+        println("$name: $profit")
+    }
 }
 
 private fun CardNumber.displayName() = when (this) {

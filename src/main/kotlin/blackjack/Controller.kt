@@ -43,12 +43,12 @@ class Controller {
 
     private fun printResult(game: BlackJackGame) {
         val gameResults = game.getGameResult()
-        for (result in gameResults.getPlayersResult()) {
-            OutputView.printResult(result.player.name, result.ofPlayer())
+        for (result in gameResults.getMatchResults()) {
+            OutputView.printProfit(result.player.name, result.ofPlayer().earningAmount)
         }
-        OutputView.printResult(
+        OutputView.printProfit(
             gameResults.dealer.name,
-            gameResults.getDealerResult()
+            gameResults.getDealerEarningAmount()
         )
     }
 }
