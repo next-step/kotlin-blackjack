@@ -12,7 +12,7 @@ class Deck private constructor(val cards: MutableSet<Card>) {
                 NumberShape.values().map { number ->
                     Card(number, pattern)
                 }
-            }.toMutableSet()
+            }.shuffled().toMutableSet()
             return Deck(cards)
         }
     }
