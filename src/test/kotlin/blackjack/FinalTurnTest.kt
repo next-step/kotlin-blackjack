@@ -3,9 +3,7 @@ package blackjack
 import domain.card.Cards
 import domain.gamer.Gamers
 import domain.gamer.dealer.Dealer
-import domain.gamer.dealer.DealerState
 import domain.gamer.player.Player
-import domain.gamer.player.PlayerState
 import domain.gamer.player.Players
 import domain.turn.FinalTurn
 import org.assertj.core.api.Assertions.assertThat
@@ -15,11 +13,13 @@ class FinalTurnTest {
     @Test
     fun `딜러 버스트이면 모든 플레이어가 승리`() {
         val players = playersWithTwoPlayer
+        val cards = Cards(listOf(spadeTen, spadeKing, spadeJack))
 
         val result = FinalTurn.result(
             Gamers.of(
                 Dealer(
-                    DealerState(Cards(listOf(spadeTen, spadeKing, spadeJack))),
+                    cards,
+                    DealerState(cards),
                 ),
                 players,
             )
@@ -32,11 +32,13 @@ class FinalTurnTest {
     @Test
     fun `딜러 블랙잭이면 모든 플레이어가 패배`() {
         val players = playersWithTwoPlayer
+        val cards = Cards(listOf(spadeTen, spadeAce))
 
         val result = FinalTurn.result(
             Gamers.of(
                 Dealer(
-                    DealerState(Cards(listOf(spadeTen, spadeAce))),
+                    cards,
+                    DealerState(cards),
                 ),
                 players,
             )
@@ -48,14 +50,18 @@ class FinalTurnTest {
 
     @Test
     fun `플레이어 승패 계산 테스트`() {
-        val winner = Player("winner", PlayerState(Cards(listOf(spadeTen, spadeKing))))
-        val loser = Player("loser", PlayerState(Cards(listOf(spadeJack))))
+        val winnerCards = Cards(listOf(spadeTen, spadeKing))
+        val loserCards = Cards(listOf(spadeJack))
+        val winner = Player("winner", winnerCards, PlayerState(winnerCards))
+        val loser = Player("loser", loserCards, PlayerState(loserCards))
         val players = Players(listOf(winner, loser))
+        val dealerCards = Cards(listOf(spadeTen, spadeSeven))
 
         val result = FinalTurn.result(
             Gamers.of(
                 Dealer(
-                    DealerState(Cards(listOf(spadeTen, spadeSeven))),
+                    dealerCards,
+                    DealerState(dealerCards),
                 ),
                 players,
             )

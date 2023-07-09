@@ -6,6 +6,6 @@ data class Result(
     val winners: Players,
     val losers: Players,
 ) {
-    val numOfWinner = winners.list.size
-    val numOfLoser = losers.list.size
+    val numOfWinner: Int = winners.list.size
+    val numOfLoser: Int = losers.list.size
 }

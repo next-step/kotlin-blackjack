@@ -1,30 +1,40 @@
 package domain.gamer.player
 
+import domain.State
 import domain.card.CardDeck
 import domain.card.Cards
 import domain.gamer.Gamer
 
-open class Player(override val name: String, initialState: PlayerState = PlayerState.Hit(Cards())) : Gamer {
+open class Player(
+    override val name: String,
+    override val cards: Cards = Cards(),
+    initialState: State = State.Hit
+) : Gamer {
 
-    private var state: PlayerState = initialState
-
-    override val cards: Cards
-        get() = state.cards
+    private var state: State = initialState
 
     val isBust: Boolean
-        get() = state is PlayerState.Bust
+        get() = state == State.Bust
 
     override val isHit: Boolean
-        get() = state is PlayerState.Hit
+        get() = state == State.Hit
 
     override fun hit(cardDeck: CardDeck) {
-        val capturedState = state
-        if (capturedState is PlayerState.Hit) {
-            state = capturedState.hit(cardDeck.pop())
-        }
+        if (state != State.Hit) return
+        cards.add(cardDeck.pop())
+        state = newState()
     }
 
     fun stay() {
-        state = PlayerState.Stay(state.cards)
+        state = State.Stay
+    }
+
+    private fun newState(): State {
+        val result = cards.result()
+        return when {
+            result == Cards.BLACKJACK_POINT -> State.BlackJack
+            result < Cards.BLACKJACK_POINT -> State.Hit
+            else -> State.Bust
+        }
     }
 }
