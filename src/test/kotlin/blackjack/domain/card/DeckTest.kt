@@ -3,6 +3,7 @@ package blackjack.domain.card
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.inspectors.forAll
 import io.kotest.matchers.collections.shouldContain
+import io.kotest.matchers.collections.shouldNotContain
 import io.kotest.matchers.shouldBe
 
 class DeckTest : StringSpec({
@@ -18,5 +19,11 @@ class DeckTest : StringSpec({
                 deck.cards shouldContain Card(number, pattern)
             }
         }
+    }
+
+    "카드 뭉치에서 카드 한장을 가져가면 그 카드는 뭉치에 남아있으면 안된다." {
+        val deck = Deck.makeDeck()
+        val oneCard = deck.getOneCard()
+        deck.cards shouldNotContain oneCard
     }
 })
