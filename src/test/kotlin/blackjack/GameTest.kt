@@ -1,9 +1,10 @@
 package blackjack
 
-import domain.Game
-import domain.Player
-import domain.card.Card
-import domain.card.CardDeck
+import domain.gamer.Gamers
+import domain.gamer.dealer.Dealer
+import domain.gamer.player.Players
+import domain.turn.Game
+import domain.turn.InitialTurn
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
@@ -14,77 +15,30 @@ import java.util.stream.Stream
 class GameTest {
     @ParameterizedTest
     @MethodSource("게임 초기화 테스트 데이터")
-    fun `게임 시작 시 플레이어 초기화 테스트`(players: List<Player>) {
-        assertThat(Game(players).players).isEqualTo(players)
-    }
-
-    @ParameterizedTest
-    @MethodSource("게임 초기화 테스트 데이터")
-    fun `게임 시작 시 플레이어에게 카드 2장씩 나눠주기 테스트`(players: List<Player>) {
-        with(Game(players)) {
-            start()
-            players.forEach {
-                assertThat(it.cards.current()).size().isEqualTo(2)
-            }
+    fun `게임 시작 시 플레이어에게 카드 2장씩 나눠주기 테스트`(players: Players) {
+        val game = Game(InitialTurn, Gamers.of(Dealer(), players))
+        game.proceed()
+        game.gamers.players.list.forEach {
+            assertThat(it.cards.current()).size().isEqualTo(2)
         }
     }
 
     @Test
     fun `카드 더 받을 수 있는 플레이어 목록 구하기 테스트`() {
-        val players = listOf(
-            Player("peter"),
-        )
-
-        val game = Game(
-            players,
-            object : CardDeck {
-
-                var popCount = 0
-
-                val kings: List<Card> = listOf(
-                    spadeKing,
-                    diamondKing,
-                    heartKing,
-                    cloverKing,
-                )
-
-                override fun pop(): Card {
-                    return kings[popCount++]
-                }
-            }
-        )
-
-        game.start()
+        val players = playersWithOnePlayer
+        val gamer = Gamers.of(Dealer(), players)
+        val game = Game(InitialTurn, gamer, cardDeckOnlyHaveKingQueenJack)
+        game.proceed()
 
         assertThat(
-            game.playersCanReceiveMoreCard()
-        ).isEqualTo(players)
+            gamer.gamerToHit()
+        ).isEqualTo(players.list.first())
 
-        players.forEach {
-            game.hit(it)
-        }
+        game.proceed()
 
         assertThat(
-            game.playersCanReceiveMoreCard()
-        ).isEqualTo(emptyList<Player>())
-    }
-
-    @Test
-    fun `카드 추가 지급 테스트`() {
-        val players = listOf(
-            Player("peter"),
-            Player("승현"),
-        )
-
-        val game = Game(players)
-
-        players.forEach {
-            game.hit(it)
-        }
-
-        game.players.forEach {
-            assertThat(it.cards.current()).size().isEqualTo(1)
-        }
+            gamer.gamerToHit()
+        ).isNull()
     }
 
     companion object {
@@ -92,15 +46,10 @@ class GameTest {
         fun `게임 초기화 테스트 데이터`(): Stream<Arguments> {
             return Stream.of(
                 Arguments.of(
-                    listOf(
-                        Player("peter")
-                    )
+                    playersWithOnePlayer
                 ),
                 Arguments.of(
-                    listOf(
-                        Player("peter"),
-                        Player("승현"),
-                    )
+                    playersWithTwoPlayer
                 ),
             )
         }

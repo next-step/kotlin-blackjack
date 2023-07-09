@@ -1,24 +1,39 @@
 package controller
 
-import domain.Game
-import domain.Player
+import domain.gamer.Gamers
+import domain.gamer.dealer.Dealer
+import domain.gamer.player.Player
+import domain.gamer.player.Players
+import domain.turn.Game
+import domain.turn.InitialTurn
 import presentation.InputView
 import presentation.ResultView
 
 fun main() {
-    val game = Game(
-        InputView.getPlayerNames()
-            .map { Player(it) }
-    )
-    game.start()
-    ResultView.printInitialState(game.players)
+    val playerNames = InputView.getPlayerNames()
+    val players = Players(playerNames.map { Player(it) })
+    val dealer = Dealer()
+
+    val game = Game(InitialTurn, Gamers.of(dealer, players)) {
+        askPlayerWantToStay(it)
+    }
+    game.proceed()
+    ResultView.printInitialState(dealer, players.list)
+    dealer.onHit = {
+        ResultView.printDealerReceiveCardMessage()
+    }
 
     while (true) {
-        val playerReceiveMoreCard = Players(game.playersCanReceiveMoreCard())
-        if (playerReceiveMoreCard.noMorePlayer()) break
-
-        playerReceiveMoreCard.hit(game)
-
-        ResultView.printResult(game.players)
+        game.proceed()
+        if (game.isFinish) break
+        ResultView.printResult(dealer, players.list)
     }
+
+    game.result?.let {
+        ResultView.printResult(it)
+    }
+}
+
+private fun askPlayerWantToStay(name: String): Boolean {
+    return !InputView.askReceiveCard(name)
 }

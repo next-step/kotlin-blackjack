@@ -1,5 +1,7 @@
 package domain.card
 
+import domain.Score
+
 class Cards(cards: List<Card> = emptyList()) {
 
     private val cards: MutableList<Card> = cards.toMutableList()
@@ -12,7 +14,7 @@ class Cards(cards: List<Card> = emptyList()) {
         return cards.toSet()
     }
 
-    fun result(): Int {
+    fun score(): Int {
         val sumWithoutAce = sumWithoutAce()
 
         if (doesNotHaveAce()) {
@@ -23,11 +25,9 @@ class Cards(cards: List<Card> = emptyList()) {
             sumWithoutAce + it
         }
 
-        if (sumOfAllCases.contains(BLACKJACK_POINT)) {
-            return BLACKJACK_POINT
-        }
-
-        return sumOfAllCases.min()
+        return sumOfAllCases.filter {
+            !Score.isBust(it)
+        }.maxOrNull() ?: sumOfAllCases.min()
     }
 
     private fun doesNotHaveAce(): Boolean {
@@ -58,8 +58,6 @@ class Cards(cards: List<Card> = emptyList()) {
     }
 
     companion object {
-        const val BLACKJACK_POINT = 21
-
         fun all(): Cards {
             return Cards(Card.all())
         }
