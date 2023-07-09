@@ -11,7 +11,8 @@ object FinalTurn : Turn {
     override fun proceed(
         gamers: Gamers,
         cardDeck: CardDeck,
-        changeState: (Turn) -> Unit
+        changeState: (Turn) -> Unit,
+        askPlayerWantToStay: ((String) -> Boolean)?,
     ) = Unit
 
     fun result(gamers: Gamers): Result {

@@ -7,6 +7,7 @@ interface Turn {
     fun proceed(
         gamers: Gamers,
         cardDeck: CardDeck,
-        changeState: (Turn) -> Unit
+        changeState: (Turn) -> Unit,
+        askPlayerWantToStay: ((String) -> Boolean)? = null,
     )
 }

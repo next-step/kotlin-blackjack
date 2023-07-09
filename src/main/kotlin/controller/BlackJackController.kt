@@ -14,7 +14,9 @@ fun main() {
     val players = Players(playerNames.map { Player(it) })
     val dealer = Dealer()
 
-    val game = Game(InitialTurn, Gamers.of(dealer, players))
+    val game = Game(InitialTurn, Gamers.of(dealer, players)) {
+        askPlayerWantToStay(it)
+    }
     game.proceed()
     ResultView.printInitialState(dealer, players.list)
     dealer.addOnHitCallback {
@@ -22,29 +24,16 @@ fun main() {
     }
 
     while (true) {
-        askUntilNeedToHit(game)
         game.proceed()
-
-        if (game.isFinish) {
-            game.result?.let {
-                ResultView.printResult(it)
-            }
-            break
-        }
-
+        if (game.isFinish) break
         ResultView.printResult(dealer, players.list)
     }
-}
 
-private fun askUntilNeedToHit(game: Game) {
-    while (true) {
-        val gamer = game.gamerToHit() ?: break
-        if (gamer !is Player) break
-        if (!askPlayerWantToStay(gamer)) break
-        gamer.stay()
+    game.result?.let {
+        ResultView.printResult(it)
     }
 }
 
-private fun askPlayerWantToStay(player: Player): Boolean {
-    return !InputView.askReceiveCard(player.name)
+private fun askPlayerWantToStay(name: String): Boolean {
+    return !InputView.askReceiveCard(name)
 }

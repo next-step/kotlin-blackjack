@@ -7,7 +7,8 @@ object InitialTurn : Turn {
     override fun proceed(
         gamers: Gamers,
         cardDeck: CardDeck,
-        changeState: (Turn) -> Unit
+        changeState: (Turn) -> Unit,
+        askPlayerWantToStay: ((String) -> Boolean)?,
     ) {
         gamers.hit(cardDeck)
         gamers.hit(cardDeck)

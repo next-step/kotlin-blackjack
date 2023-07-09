@@ -26,17 +26,18 @@ class GameTest {
     @Test
     fun `카드 더 받을 수 있는 플레이어 목록 구하기 테스트`() {
         val players = playersWithOnePlayer
-        val game = Game(InitialTurn, Gamers.of(Dealer(), players), cardDeckOnlyHaveKingQueenJack)
+        val gamer = Gamers.of(Dealer(), players)
+        val game = Game(InitialTurn, gamer, cardDeckOnlyHaveKingQueenJack)
         game.proceed()
 
         assertThat(
-            game.gamerToHit()
+            gamer.gamerToHit()
         ).isEqualTo(players.list.first())
 
         game.proceed()
 
         assertThat(
-            game.gamerToHit()
+            gamer.gamerToHit()
         ).isNull()
     }
 
