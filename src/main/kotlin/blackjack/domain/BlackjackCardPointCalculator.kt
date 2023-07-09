@@ -21,7 +21,7 @@ object BlackjackCardPointCalculator {
         cards: List<Card>,
         pointSum: Int,
         depth: Int
-    ) : List<Int> {
+    ): List<Int> {
         if (depth == cards.size) {
             return listOf(pointSum)
         }

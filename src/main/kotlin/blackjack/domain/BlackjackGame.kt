@@ -1,13 +1,17 @@
 package blackjack.domain
 
 class BlackjackGame(
-    private val players: Players,
+    val challengers: Challengers,
+    val dealer: Dealer = Dealer(),
     private val cardSet: CardSet = CardSet(),
 ) {
     fun dealInitialHand() {
-        players.forEach { player ->
+        challengers.forEach { player ->
             player.receive(cardSet.pop())
             player.receive(cardSet.pop())
+        }
+        repeat(2) {
+            dealer.receive(cardSet.pop())
         }
     }
 
