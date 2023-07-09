@@ -10,8 +10,8 @@ enum class Denomination(val score: Int, val label: String) {
     SEVEN(7, "7"),
     EIGHT(8, "8"),
     NINE(9, "9"),
-    TEN(1, "10"),
-    KING(1, "K"),
-    QUEEN(1, "Q"),
-    JACK(1, "J")
+    TEN(10, "10"),
+    KING(10, "K"),
+    QUEEN(10, "Q"),
+    JACK(10, "J")
 }
