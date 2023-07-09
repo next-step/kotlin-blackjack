@@ -3,9 +3,19 @@ package blackjack.domain.gamer
 import blackjack.domain.CardNumberCalculator
 import blackjack.domain.card.Card
 
-open class BlackJackGamer(val name: String, var money: Int = 0) {
+open class BlackJackGamer(val name: String, money: Int = initMoney) {
+    var money = money
+        private set
     private val cards = mutableListOf<Card>()
     private val cardNumberCalculator = CardNumberCalculator()
+
+    fun takeMoney(addMoney: Int) {
+        money += addMoney
+    }
+
+    fun takeMoneyOut(takenMoney: Int) {
+        money -= takenMoney
+    }
 
     fun addCard(card: Card) {
         cards.add(card)

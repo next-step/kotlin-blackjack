@@ -1,6 +1,8 @@
 package blackjack.domain.gamer
 
-import blackjack.domain.gamer.GameRecordType.*
+import blackjack.domain.gamer.GameRecordType.DRAW
+import blackjack.domain.gamer.GameRecordType.LOSE
+import blackjack.domain.gamer.GameRecordType.WIN
 
 class Dealer : BlackJackGamer(name = DEALER_NAME) {
     private var winRecord = (WIN to 0)
@@ -24,11 +26,11 @@ class Dealer : BlackJackGamer(name = DEALER_NAME) {
     }
 
     fun winMoney(winMoney: Int) {
-        money += winMoney
+        super.takeMoney(winMoney)
     }
 
     fun loseMoney(loseMoney: Int) {
-        money -= loseMoney
+        super.takeMoneyOut(loseMoney)
     }
 
     companion object {

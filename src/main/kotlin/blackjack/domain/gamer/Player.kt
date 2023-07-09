@@ -8,6 +8,7 @@ class Player private constructor(name: String, private val bettingMoney: Int) : 
     override fun getGamerType(): GamerType {
         return GamerType.PLAYER
     }
+
     override fun proceedGameRecord(gameRecordType: GameRecordType) {
         gameRecord = gameRecordType
     }
@@ -20,25 +21,25 @@ class Player private constructor(name: String, private val bettingMoney: Int) : 
     fun blackJackMoney(): Int {
         require(::gameRecord.isInitialized) { "승패가 결정난 뒤에 돈을 정산받습니다." }
         val blackJackWinMoney = (bettingMoney * 1.5).toInt()
-        money += blackJackWinMoney
+        super.takeMoney(blackJackWinMoney)
         return blackJackWinMoney
     }
 
     fun winMoney(): Int {
         require(::gameRecord.isInitialized) { "승패가 결정난 뒤에 돈을 정산받습니다." }
-        money += bettingMoney
+        super.takeMoney(bettingMoney)
         return bettingMoney
     }
 
     fun loseMoney(): Int {
         require(::gameRecord.isInitialized) { "승패가 결정난 뒤에 돈을 정산받습니다." }
-        money -= bettingMoney
+        super.takeMoneyOut(bettingMoney)
         return bettingMoney
     }
 
     fun drawMoney() {
         require(::gameRecord.isInitialized) { "승패가 결정난 뒤에 돈을 정산받습니다." }
-        money += bettingMoney
+        super.takeMoney(bettingMoney)
     }
 
     companion object {
