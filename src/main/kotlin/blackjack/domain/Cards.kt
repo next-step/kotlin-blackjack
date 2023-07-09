@@ -28,7 +28,7 @@ class Cards(
     private fun baseScore() = cards.sumOf { it.denomination.score }
 
     companion object {
-        private const val BLACKJACK = 21
+        const val BLACKJACK = 21
         private const val ACE_POINT = 10
         fun of(cards: List<Card>): Cards {
             return cards.shuffled().toCards()

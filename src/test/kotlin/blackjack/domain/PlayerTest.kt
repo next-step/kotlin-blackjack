@@ -11,4 +11,23 @@ class PlayerTest : StringSpec({
         player.hit(Card(CardType.CLOVER, Denomination.ACE))
         player.cards.cards.size shouldBe 1
     }
+
+    "플레이어의 스코어를 계산한다." {
+        val player = Player("tony")
+
+        player.hit(Card(CardType.CLOVER, Denomination.ACE))
+        player.hit(Card(CardType.CLOVER, Denomination.KING))
+
+        player.score() shouldBe 21
+    }
+
+    "스코어가 21 미만일 경우만 카드를 더 받을 수 있다." {
+        val player = Player("tony")
+
+        player.hit(Card(CardType.HEART, Denomination.KING))
+        player.hit(Card(CardType.CLOVER, Denomination.KING))
+        player.hit(Card(CardType.DIAMOND, Denomination.KING))
+
+        player.canReceive() shouldBe false
+    }
 })

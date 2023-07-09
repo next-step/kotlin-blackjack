@@ -11,4 +11,12 @@ class BlackJackGame(
             player.hit(deck.pop())
         }
     }
+
+    fun hit(player: Player) {
+        player.hit(deck.pop())
+    }
+
+    fun canReceivePlayers(): Players {
+        return players.canReceivePlayers()
+    }
 }
