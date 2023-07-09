@@ -2,26 +2,26 @@ package blackjack.domain
 
 import blackjack.domain.card.Card
 
-class Hand private constructor(val cards: List<Card>, val score: Score) {
-    fun isBust() = score.isExceedsMax() && cards.size > 2
+class Hand private constructor(val cards: List<Card>, val handScore: HandScore) {
+    fun isBust() = handScore.isExceedsMax() && cards.size > 2
 
-    fun isBlackJack() = score.isMax() && cards.size == 2
+    fun isBlackJack() = handScore.isMax() && cards.size == 2
 
     fun add(card: Card): Hand {
         return Hand(
             cards = this.cards + card,
-            score = score.plus(card.number.cardScore)
+            handScore = handScore.plus(card.number.cardScore)
         )
     }
 
     fun add(cards: List<Card>): Hand {
         return Hand(
             cards = this.cards + cards,
-            score = score.plus(cards.map { it.number.cardScore })
+            handScore = handScore.plus(cards.map { it.number.cardScore })
         )
     }
 
     companion object {
-        val init = Hand(cards = emptyList(), score = Score.ZERO)
+        val init = Hand(cards = emptyList(), handScore = HandScore.ZERO)
     }
 }

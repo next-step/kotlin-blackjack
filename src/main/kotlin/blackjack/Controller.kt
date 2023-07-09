@@ -1,6 +1,7 @@
 package blackjack
 
 import blackjack.domain.BlackJackGame
+import blackjack.domain.participant.Player
 import blackjack.domain.participant.Players
 import blackjack.view.InputView
 import blackjack.view.OutputView
@@ -16,7 +17,11 @@ class Controller {
 
     private fun getPlayers(): Players {
         val playerNames = InputView.getPlayerNames()
-        return Players.of(playerNames)
+        val players = playerNames.map {
+            val betAmount = InputView.getBetAmount(it)
+            Player(name = it, betAmount = betAmount)
+        }
+        return Players(players)
     }
 
     private fun startGame(game: BlackJackGame) {

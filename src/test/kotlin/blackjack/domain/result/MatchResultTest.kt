@@ -1,22 +1,20 @@
 package blackjack.domain.result
 
-import blackjack.domain.Hand
 import blackjack.domain.participant.Dealer
-import blackjack.domain.participant.Player
-import blackjack.test.FakeGenerator
+import blackjack.test.TestObjectGenerator
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 
 class MatchResultTest : BehaviorSpec({
-    val hand20 = FakeGenerator.handOf20()
-    val hand21 = FakeGenerator.handOf21()
-    val hand22 = FakeGenerator.handOf22()
+    val hand20 = TestObjectGenerator.handOf20()
+    val hand21 = TestObjectGenerator.handOf21()
+    val hand22 = TestObjectGenerator.handOf22()
 
     given("딜러의 점수가 21보다 클때") {
         val dealer = Dealer(hand22)
 
         `when`("플레이어의 점수와 상관없이") {
-            val player = Player("p1", Hand.init)
+            val player = TestObjectGenerator.player(hand = hand20)
             val matchResult = MatchResult(player, dealer)
 
             then("플레이어가 이긴다.") {
@@ -30,7 +28,7 @@ class MatchResultTest : BehaviorSpec({
         val dealer = Dealer(hand21)
 
         `when`("플레이어의 점수가 21보다 크면") {
-            val player = Player("p1", hand22)
+            val player = TestObjectGenerator.player(hand = hand22)
             val matchResult = MatchResult(player, dealer)
             then("딜러가 이긴다.") {
                 matchResult.ofPlayer() shouldBe Result.LOSE
@@ -43,7 +41,7 @@ class MatchResultTest : BehaviorSpec({
 
         `when`("딜러의 점수가 플레이어의 점수보다 크면") {
             val dealer = Dealer(hand21)
-            val player = Player("p1", hand20)
+            val player = TestObjectGenerator.player(hand = hand20)
             val matchResult = MatchResult(player, dealer)
 
             then("딜러가 이긴다.") {
@@ -54,7 +52,7 @@ class MatchResultTest : BehaviorSpec({
 
         `when`("딜러의 점수가 플레이어의 점수보다 작으면") {
             val dealer = Dealer(hand20)
-            val player = Player("p1", hand21)
+            val player = TestObjectGenerator.player(hand = hand21)
             val matchResult = MatchResult(player, dealer)
 
             then("플레이어기 이긴다.") {
@@ -65,7 +63,7 @@ class MatchResultTest : BehaviorSpec({
 
         `when`("딜러의 점수가 플레이어의 점수와 같으면") {
             val dealer = Dealer(hand20)
-            val player = Player("p1", hand20)
+            val player = TestObjectGenerator.player(hand = hand20)
             val matchResult = MatchResult(player, dealer)
 
             then("비긴다.") {

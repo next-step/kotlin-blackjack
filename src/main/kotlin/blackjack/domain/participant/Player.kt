@@ -1,11 +1,13 @@
 package blackjack.domain.participant
 
+import blackjack.domain.BetAmount
 import blackjack.domain.Hand
 import blackjack.domain.card.Card
 
 class Player(
     name: String,
-    hand: Hand = Hand.init
+    hand: Hand = Hand.init,
+    val betAmount: BetAmount
 ) : Participant(name, hand) {
     fun play(
         isHit: () -> Boolean,

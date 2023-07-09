@@ -1,11 +1,13 @@
 package blackjack.test
 
+import blackjack.domain.BetAmount
 import blackjack.domain.Hand
 import blackjack.domain.card.Card
 import blackjack.domain.card.CardNumber
 import blackjack.domain.card.CardShape
+import blackjack.domain.participant.Player
 
-object FakeGenerator {
+object TestObjectGenerator {
     fun card(number: CardNumber): Card {
         return Card(number, CardShape.values().random())
     }
@@ -43,5 +45,17 @@ object FakeGenerator {
 
     fun handOf20(): Hand {
         return Hand.init.add(cardsOfScore20())
+    }
+
+    fun player(
+        name: String? = null,
+        hand: Hand = Hand.init,
+        betAmount: BetAmount = BetAmount(0)
+    ): Player {
+        return Player(
+            name = name ?: TestUtils.randomString(3),
+            hand = hand,
+            betAmount = betAmount
+        )
     }
 }

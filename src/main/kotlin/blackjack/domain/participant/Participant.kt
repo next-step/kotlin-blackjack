@@ -11,7 +11,7 @@ sealed class Participant(
 
     fun isBlackJack() = hand.isBlackJack()
 
-    fun score() = hand.score
+    fun score() = hand.handScore
 
     fun cards() = hand.cards
 
