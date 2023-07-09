@@ -36,8 +36,7 @@ class RuleCheckerTest {
     ) {
         // given
         val bettingMoney = 1
-        val playerName = "name"
-        val player = GeneratePlayerRequest(playerName, bettingMoney)
+        val player = GeneratePlayerRequest("name", bettingMoney)
             .generatePlayer()
 
         player.addCards(
@@ -95,8 +94,7 @@ class RuleCheckerTest {
         )
 
         val bettingMoney = 1
-        val playerName = "name"
-        val player = GeneratePlayerRequest(playerName, bettingMoney)
+        val player = GeneratePlayerRequest("name", bettingMoney)
             .generatePlayer()
 
         player.addCards(
@@ -132,8 +130,7 @@ class RuleCheckerTest {
         )
 
         val bettingMoney = 1
-        val playerName = "name"
-        val player = GeneratePlayerRequest(playerName, bettingMoney)
+        val player = GeneratePlayerRequest("name", bettingMoney)
             .generatePlayer()
 
         player.addCards(
@@ -171,8 +168,7 @@ class RuleCheckerTest {
         )
 
         val bettingMoney = 1
-        val playerName = "name"
-        val player = GeneratePlayerRequest(playerName, bettingMoney)
+        val player = GeneratePlayerRequest("name", bettingMoney)
             .generatePlayer()
 
         player.addCards(
@@ -208,8 +204,7 @@ class RuleCheckerTest {
         )
 
         val bettingMoney = 1
-        val playerName = "name"
-        val player = GeneratePlayerRequest(playerName, bettingMoney)
+        val player = GeneratePlayerRequest("name", bettingMoney)
             .generatePlayer()
 
         player.addCards(
@@ -245,8 +240,7 @@ class RuleCheckerTest {
         )
 
         val bettingMoney = 10000
-        val playerName = "name"
-        val player = GeneratePlayerRequest(playerName, bettingMoney)
+        val player = GeneratePlayerRequest("name", bettingMoney)
             .generatePlayer()
 
         player.addCards(
@@ -277,8 +271,7 @@ class RuleCheckerTest {
         )
 
         val bettingMoney = 10000
-        val playerName = "name"
-        val player = GeneratePlayerRequest(playerName, bettingMoney)
+        val player = GeneratePlayerRequest("name", bettingMoney)
             .generatePlayer()
 
         player.addCards(
@@ -308,8 +301,7 @@ class RuleCheckerTest {
         )
 
         val bettingMoney = 10000
-        val playerName = "name"
-        val player = GeneratePlayerRequest(playerName, bettingMoney)
+        val player = GeneratePlayerRequest("name", bettingMoney)
             .generatePlayer()
 
         player.addCards(
@@ -341,8 +333,7 @@ class RuleCheckerTest {
         )
 
         val bettingMoney = 10000
-        val playerName = "name"
-        val player = GeneratePlayerRequest(playerName, bettingMoney)
+        val player = GeneratePlayerRequest("name", bettingMoney)
             .generatePlayer()
 
         player.addCards(
@@ -372,8 +363,7 @@ class RuleCheckerTest {
         )
 
         val bettingMoney = 10000
-        val playerName = "name"
-        val player = GeneratePlayerRequest(playerName, bettingMoney)
+        val player = GeneratePlayerRequest("name", bettingMoney)
             .generatePlayer()
 
         player.addCards(
