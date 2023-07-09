@@ -1,15 +1,15 @@
 package blackjack
 
+import domain.Score
 import domain.State
 import domain.card.Cards
-import domain.gamer.dealer.Dealer
 
 fun DealerState(cards: Cards): State {
     val result = cards.score()
     return when {
-        result > Cards.BLACKJACK_POINT -> State.Bust
-        result == Cards.BLACKJACK_POINT -> State.BlackJack
-        result > Dealer.DEALER_MAX_POINT -> State.Stay
+        result > Score.BLACKJACK -> State.Bust
+        result == Score.BLACKJACK -> State.BlackJack
+        result > Score.DEALER_HIT_ON_MAX -> State.Stay
         else -> State.Hit
     }
 }
@@ -17,8 +17,8 @@ fun DealerState(cards: Cards): State {
 fun PlayerState(cards: Cards): State {
     val result = cards.score()
     return when {
-        result == Cards.BLACKJACK_POINT -> State.BlackJack
-        result < Cards.BLACKJACK_POINT -> State.Hit
+        result == Score.BLACKJACK -> State.BlackJack
+        result < Score.BLACKJACK -> State.Hit
         else -> State.Bust
     }
 }

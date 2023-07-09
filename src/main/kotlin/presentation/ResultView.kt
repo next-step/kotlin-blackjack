@@ -1,6 +1,7 @@
 package presentation
 
 import domain.Result
+import domain.Score
 import domain.gamer.Gamer
 import domain.gamer.dealer.Dealer
 import domain.gamer.player.Player
@@ -22,7 +23,7 @@ object ResultView {
     }
 
     fun printDealerReceiveCardMessage() {
-        println("딜러는 ${Dealer.DEALER_MAX_POINT}이하라 한장의 카드를 더 받았습니다.")
+        println("딜러는 ${Score.DEALER_HIT_ON_MAX}이하라 한장의 카드를 더 받았습니다.")
         println()
     }
 

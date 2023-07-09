@@ -1,5 +1,6 @@
 package domain.gamer.dealer
 
+import domain.Score
 import domain.State
 import domain.card.CardDeck
 import domain.card.Cards
@@ -47,14 +48,10 @@ class Dealer(
     private fun newState(): State {
         val result = cards.score()
         return when {
-            result > Cards.BLACKJACK_POINT -> State.Bust
-            result == Cards.BLACKJACK_POINT -> State.BlackJack
-            result > DEALER_MAX_POINT -> State.Stay
+            result > Score.BLACKJACK -> State.Bust
+            result == Score.BLACKJACK -> State.BlackJack
+            result > Score.DEALER_HIT_ON_MAX -> State.Stay
             else -> State.Hit
         }
-    }
-
-    companion object {
-        const val DEALER_MAX_POINT = 16
     }
 }

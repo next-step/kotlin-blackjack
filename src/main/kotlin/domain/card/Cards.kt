@@ -1,5 +1,7 @@
 package domain.card
 
+import domain.Score
+
 class Cards(cards: List<Card> = emptyList()) {
 
     private val cards: MutableList<Card> = cards.toMutableList()
@@ -24,7 +26,7 @@ class Cards(cards: List<Card> = emptyList()) {
         }
 
         return sumOfAllCases.filter {
-            it <= BLACKJACK_POINT
+            it <= Score.BLACKJACK
         }.maxOrNull() ?: sumOfAllCases.min()
     }
 
@@ -56,8 +58,6 @@ class Cards(cards: List<Card> = emptyList()) {
     }
 
     companion object {
-        const val BLACKJACK_POINT = 21
-
         fun all(): Cards {
             return Cards(Card.all())
         }

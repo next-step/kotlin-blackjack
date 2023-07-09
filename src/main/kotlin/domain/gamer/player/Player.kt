@@ -1,5 +1,6 @@
 package domain.gamer.player
 
+import domain.Score
 import domain.State
 import domain.card.CardDeck
 import domain.card.Cards
@@ -32,8 +33,8 @@ open class Player(
     private fun newState(): State {
         val result = cards.score()
         return when {
-            result == Cards.BLACKJACK_POINT -> State.BlackJack
-            result < Cards.BLACKJACK_POINT -> State.Hit
+            result == Score.BLACKJACK -> State.BlackJack
+            result < Score.BLACKJACK -> State.Hit
             else -> State.Bust
         }
     }
