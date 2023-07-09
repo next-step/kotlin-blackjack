@@ -3,8 +3,15 @@ package blackjack.domain
 class Deck private constructor(
     val cards: Cards
 ) {
+    private var index = INIT_INDEX
+
+    fun pop(): Card {
+        return cards.get(index++)
+    }
 
     companion object {
+
+        private const val INIT_INDEX = 0
 
         fun create(): Deck {
             return Deck(shuffledCards())
