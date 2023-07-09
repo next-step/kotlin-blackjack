@@ -6,7 +6,8 @@ import blackjack.domain.Participants
 
 fun main() {
     val blackjackController = BlackjackController()
-    val participants = Participants(listOf(Dealer()) + blackjackController.inputPlayers())
+    val dealer = Dealer()
+    val participants = Participants(listOf(dealer) + blackjackController.inputPlayers())
 
     blackjackController.drawInitialCards(participants)
     blackjackController.printInitialCards(participants)
@@ -17,6 +18,12 @@ fun main() {
         }
     }
     println()
+
+    if (dealer.canDrawMoreCard()) {
+        println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
+        println()
+        blackjackController.drawMoreCard(dealer)
+    }
 
     // 결과를 출력한다.
     blackjackController.printResult(participants)

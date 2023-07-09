@@ -7,8 +7,5 @@ abstract class Participant(val name: String) {
         cards.add(card)
     }
 
-    fun canDrawMoreCard(): Boolean {
-        if (this is Dealer) return false
-        return cards.canDrawMoreCard()
-    }
+    abstract fun canDrawMoreCard(): Boolean
 }

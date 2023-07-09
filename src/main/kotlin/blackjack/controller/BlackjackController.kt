@@ -1,5 +1,6 @@
 package blackjack.controller
 
+import blackjack.domain.Dealer
 import blackjack.domain.Deck
 import blackjack.domain.Participant
 import blackjack.domain.Participants
@@ -29,6 +30,10 @@ class BlackjackController {
 
     fun drawMoreCard(participant: Participant): Boolean {
         if (!participant.canDrawMoreCard()) {
+            return false
+        }
+        if (participant is Dealer) {
+            participant.addCard(deck.drawCard())
             return false
         }
         if (InputView.drawMoreCard(participant.name)) {
