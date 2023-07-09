@@ -1,5 +1,6 @@
 package blackjack.domain
 
+import blackjack.domain.card.Deck
 import blackjack.domain.status.PlayingStatus
 import blackjack.domain.user.Dealer
 import blackjack.domain.user.Player
@@ -11,6 +12,7 @@ class BlackJackGame(private val inputView: InputView, private val resultView: Re
 
     private lateinit var playerGroup: PlayerGroup
     private val dealer: Dealer = Dealer()
+    private val deck: Deck = Deck.create()
 
     fun play() {
         initGame()
@@ -24,11 +26,11 @@ class BlackJackGame(private val inputView: InputView, private val resultView: Re
         playerGroup = PlayerGroup.create(playerNames)
         playerGroup.players.forEach {
             player ->
-            player.draw(dealer.deck.getNextCard(), 2)
+            player.draw(deck.getNextCard(), 2)
             resultView.printPlayerCards(player)
         }
 
-        dealer.draw(dealer.deck.getNextCard())
+        dealer.draw(deck.getNextCard())
         resultView.printPlayerCards(dealer)
     }
 
@@ -36,14 +38,14 @@ class BlackJackGame(private val inputView: InputView, private val resultView: Re
 
     private fun drawCards(player: Player) {
         while (!player.isDone()) {
-            player.chooseHitOrStay(inputView.getIsPlayerWantHit(player.name), dealer)
+            player.chooseHitOrStay(inputView.getIsPlayerWantHit(player.name), deck)
             resultView.printPlayerCards(player)
         }
     }
 
     private fun drawCardsForDealer() {
         while (dealer.status is PlayingStatus) {
-            dealer.draw(dealer.deck.getNextCard())
+            dealer.draw(deck.getNextCard())
             resultView.printDealerDrawCardAlert(16)
         }
         dealer.judgeResult(playerGroup)

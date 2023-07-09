@@ -2,14 +2,15 @@ package blackjack.domain.user
 
 import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
+import blackjack.domain.card.Deck
 import blackjack.domain.status.*
 
 open class Player(val name: String, val cards: Cards = Cards()) {
     var status: Status = Hit(this)
 
-    fun chooseHitOrStay(isPlayerWantHit: Boolean, dealer: Dealer) {
+    fun chooseHitOrStay(isPlayerWantHit: Boolean, deck: Deck) {
         if (isPlayerWantHit) {
-            draw(dealer.deck.getNextCard())
+            draw(deck.getNextCard())
             return
         }
         status = status.stay()

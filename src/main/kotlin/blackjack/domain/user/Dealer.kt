@@ -3,17 +3,18 @@ package blackjack.domain.user
 import blackjack.domain.card.Card
 import blackjack.domain.card.Deck
 import blackjack.domain.status.*
+import jdk.jfr.Threshold
 
-class Dealer(val deck: Deck = Deck.create(), name: String = "dealer") : Player(name) {
+class Dealer(name: String = "dealer", private val dealerHitThreshold: Int = 16) : Player(name) {
 
     private var resultStatuses: MutableList<Status> = mutableListOf()
 
     override fun draw(card: Card, count: Int) {
-        if (cards.getScore().value > 16) {
+        if (cards.getScore().value > dealerHitThreshold) {
             status = status.stay()
             return
         }
-        status = status.draw(deck.getNextCard())
+        status = status.draw(card)
     }
 
     override fun getGameResult(): GameResult {
