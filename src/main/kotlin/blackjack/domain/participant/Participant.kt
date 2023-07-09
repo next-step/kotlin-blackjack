@@ -11,11 +11,20 @@ sealed class Participant(
     fun score() = hand.score
     fun cards() = hand.cards
 
-    protected fun addCards(drawCard: () -> List<Card>) {
+    fun start(drawCard: () -> Card) {
+        val cards = List(START_CARD_COUNT) { drawCard() }
+        addCards { cards }
+    }
+
+    private fun addCards(drawCard: () -> List<Card>) {
         hand = hand.add(drawCard())
     }
 
     protected fun addCard(drawCard: () -> Card) {
         hand = hand.add(drawCard())
+    }
+
+    companion object {
+        const val START_CARD_COUNT = 2
     }
 }

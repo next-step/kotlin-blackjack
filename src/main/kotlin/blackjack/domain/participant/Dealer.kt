@@ -6,11 +6,6 @@ import blackjack.domain.card.Card
 class Dealer(
     hand: Hand = Hand.init
 ) : Participant(DEFAULT_NAME, hand) {
-    fun start(drawCard: () -> Card) {
-        val cards = List(START_CARD_COUNT) { drawCard() }
-        addCards { cards }
-    }
-
     fun play(drawCard: () -> Card) {
         if (canDraw().not() || hasPlayedBefore()) return
         addCard(drawCard)
@@ -25,6 +20,5 @@ class Dealer(
 
     companion object {
         const val DEFAULT_NAME = "딜러"
-        const val START_CARD_COUNT = 2
     }
 }

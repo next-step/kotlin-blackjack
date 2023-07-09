@@ -7,11 +7,6 @@ class Player(
     name: String,
     hand: Hand = Hand.init
 ) : Participant(name, hand) {
-    fun start(drawCard: () -> Card) {
-        val cards = List(START_CARD_COUNT) { drawCard() }
-        addCards { cards }
-    }
-
     fun play(
         isHit: () -> Boolean,
         drawCard: () -> Card
@@ -22,8 +17,4 @@ class Player(
     }
 
     private fun canDraw(): Boolean = this.isBust().not()
-
-    companion object {
-        const val START_CARD_COUNT = 2
-    }
 }
