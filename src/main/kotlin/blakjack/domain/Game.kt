@@ -13,6 +13,10 @@ class Game(
         dealer.add(dealer.drawTwoCards())
     }
 
+    fun bet(player: Player, money: Money) {
+        player.bet(money)
+    }
+
     fun hit(player: Player) {
         player.hit(dealer.drawOneCard())
     }
@@ -53,6 +57,12 @@ class Game(
     }
 
     private fun resultIfDealerIsNotBust(player: Player) {
+        if (player.isDraw(dealer)) {
+            player.draw()
+            dealer.draw()
+            return
+        }
+
         if (player.isBust() || !player.isWin(dealer)) {
             dealer.win(player)
             return

@@ -2,6 +2,9 @@ package blakjack.domain
 
 import blakjack.domain.Player.Result.LOSE
 import blakjack.domain.Player.Result.WIN
+import blakjack.domain.extension.cards
+import blakjack.domain.extension.heart10
+import blakjack.domain.extension.heartAce
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 
@@ -15,6 +18,72 @@ class PlayerSpec : DescribeSpec({
             }
             it("카드 목록은 비어있다.") {
                 player.cards shouldBe Cards.empty()
+            }
+        }
+    }
+
+    describe("플레이어 베팅 금액 설정 검증") {
+        val player = Player("홍길동")
+
+        context("베팅 금액 1000원을 설정하면") {
+            player.bet(Money(1000))
+
+            it("플레이어의 베팅 금액은 1000원이다.") {
+                player.bettingMoney shouldBe Money(1000)
+            }
+        }
+    }
+
+    describe("플레이어 수익 검증") {
+        context("플레이어가 이긴 경우") {
+            val dealer = Dealer()
+            val player = Player("홍길동").also { it.win(dealer) }
+
+            context("베팅 금액이 1000원이면") {
+                player.bet(Money(1000))
+
+                it("수익 금액은 1000원이다.") {
+                    player.profit() shouldBe Money(1000)
+                }
+            }
+        }
+
+        context("플레이어가 블랙잭으로 이긴 경우") {
+            val player = Player("홍길동")
+            player.add(cards(heartAce, heart10))
+
+            context("베팅 금액이 1000원이면") {
+                player.bet(Money(1000))
+
+                it("수익 금액은 1500원이다.") {
+                    player.profit() shouldBe Money(1500)
+                }
+            }
+        }
+
+        context("플레이어 비긴 경우") {
+            val player = Player("홍길동").also { it.add(cards(heartAce, heart10)) }
+
+            context("베팅 금액이 1000원이면") {
+                player.bet(Money(1000))
+                player.draw()
+
+                it("수익 금액은 0원이다.") {
+                    player.profit() shouldBe Money(0)
+                }
+            }
+        }
+
+        context("플레이어가 게임에서 진 경우") {
+            val dealer = Dealer()
+            val player = Player("홍길동").also { it.lose(dealer) }
+
+            context("베팅 금액이 1000원이면") {
+                player.bet(Money(1000))
+
+                it("수익 금액은 -1000원이다.") {
+                    player.profit() shouldBe Money(-1000)
+                }
             }
         }
     }

@@ -17,6 +17,7 @@ class BlackJackController {
         val players = game.players
         val participants = listOf(dealer) + players
 
+        players.forEach { player -> playerBetting(game, player) }
         game.initialDraw()
         printIntro(participants)
 
@@ -25,13 +26,18 @@ class BlackJackController {
 
         game.result()
         OutputView.printCardsWithScore(participants)
-        OutputView.printResult(dealer, players)
+        OutputView.printProfit(dealer, players)
     }
 
     private fun printIntro(participants: List<Participant>) {
         OutputView.printIntro(participants).also {
             participants.forEach { OutputView.printCards(it) }
         }
+    }
+
+    private fun playerBetting(game: Game, player: Player) {
+        val bettingMoney = InputView.readBettingMoney(player.name)
+        game.bet(player, bettingMoney)
     }
 
     private fun playerTurn(game: Game, player: Player) {

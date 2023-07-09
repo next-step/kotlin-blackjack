@@ -48,20 +48,20 @@ object OutputView {
         println("딜러는 16이하라 한장의 카드를 더 받았습니다.\n")
     }
 
-    fun printResult(dealer: Dealer, player: List<Player>) {
+    fun printProfit(dealer: Dealer, player: List<Player>) {
         println()
-        println("## 최종 승패")
+        println("## 최종 수익")
 
-        printDealerResult(dealer)
-        player.forEach { printPlayerResult(it) }
+        printDealerProfit(dealer)
+        player.forEach { printPlayerProfit(it) }
     }
 
-    private fun printDealerResult(dealer: Dealer) {
-        println("${dealer.name}: ${dealer.winCount}승 ${dealer.loseCount}패")
+    private fun printDealerProfit(dealer: Dealer) {
+        println("${dealer.name}: ${dealer.profit().value}")
     }
 
-    private fun printPlayerResult(player: Player) {
-        println("${player.name}: ${RESULT_KOREAN_MAP[player.result]}")
+    private fun printPlayerProfit(player: Player) {
+        println("${player.name}: ${player.profit().value}")
     }
 }
 
@@ -86,9 +86,4 @@ private val CARD_SUIT_KOREAN_MAP = mapOf(
     CardSuit.DIAMOND to "다이아몬드",
     CardSuit.SPADE to "스페이드",
     CardSuit.CLOVER to "클로버",
-)
-
-private val RESULT_KOREAN_MAP = mapOf(
-    Player.Result.WIN to "승",
-    Player.Result.LOSE to "패",
 )
