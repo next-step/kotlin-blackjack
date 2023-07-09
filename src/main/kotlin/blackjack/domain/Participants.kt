@@ -29,7 +29,21 @@ class Participants(val participants: List<Participant>) {
         return getDealer().isBust()
     }
 
-    fun isDealerLose(): Boolean {
-        return getDealer().isBust()
+    fun calculateDealerResult(): DealerResult {
+        val dealer = getDealer()
+
+        getPlayers().forEach {
+            if (it.isWin(dealer)) {
+                dealer.dealerResult.lose += 1
+                return@forEach
+            }
+            if (it.isLose(dealer)) {
+                dealer.dealerResult.win += 1
+                return@forEach
+            }
+            dealer.dealerResult.draw += 1
+        }
+
+        return dealer.dealerResult
     }
 }

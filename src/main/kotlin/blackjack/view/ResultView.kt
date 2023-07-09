@@ -39,5 +39,12 @@ object ResultView {
             }
             return
         }
+        val dealerResult = participants.calculateDealerResult()
+        println("딜러: ${dealerResult.win}승 ${dealerResult.lose}패")
+
+        participants.getPlayers().forEach {
+            val gameResult = it.calculateResult(participants.getDealer())
+            println("${it.name}: ${gameResult.result}")
+        }
     }
 }
