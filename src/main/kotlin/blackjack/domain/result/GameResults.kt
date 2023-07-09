@@ -7,14 +7,14 @@ data class GameResults(
     fun playerWin(playerResult: PlayerResult): GameResults {
         return copy(
             playerResults = playerResults.plus(playerResult),
-            dealerResult = dealerResult.dealerLose()
+            dealerResult = dealerResult.dealerFinalRevenue(playerResult.finalRevenue)
         )
     }
 
     fun playerLose(playerResult: PlayerResult): GameResults {
         return copy(
             playerResults = playerResults.plus(playerResult),
-            dealerResult = dealerResult.dealerWin()
+            dealerResult = dealerResult.dealerFinalRevenue(playerResult.finalRevenue)
         )
     }
 }

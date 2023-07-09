@@ -32,8 +32,8 @@ data class Users(val players: List<Player>, val dealer: Dealer) {
     }
 
     private fun dealerLose() = GameResults(
-        players.map { PlayerResult(it.name, true) },
-        DealerResult(loseCount = players.size)
+        players.map { PlayerResult(it.name, it.bettingAmount) },
+        DealerResult(players.minOf { it.bettingAmount })
     )
 
     private fun gameResult(
@@ -41,9 +41,10 @@ data class Users(val players: List<Player>, val dealer: Dealer) {
         dealerCardValue: Int,
         gameResults: GameResults
     ): GameResults {
+        val finalRevenue = player.bettingAmount
         if (player.cardValues() in (dealerCardValue + 1)..21) {
-            return gameResults.playerWin(PlayerResult(player.name, true))
+            return gameResults.playerWin(PlayerResult(player.name, finalRevenue))
         }
-        return gameResults.playerLose(PlayerResult(player.name, false))
+        return gameResults.playerLose(PlayerResult(player.name, finalRevenue.times(-1)))
     }
 }

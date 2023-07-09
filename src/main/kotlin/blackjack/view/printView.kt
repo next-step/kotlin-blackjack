@@ -24,19 +24,11 @@ fun printResults(name: String, cards: List<Card>, cardValues: Int) {
 fun printBlackjackResult(blackjackResult: GameResults) {
     val dealerResult = blackjackResult.dealerResult
 
-    println("## 최종 승패")
-    println("딜러: ${dealerResult.winCount}승 ${dealerResult.loseCount}패")
+    println("## 최종 수익")
+    println("딜러: ${dealerResult.finalRevenue}")
     for (playerResult in blackjackResult.playerResults) {
-        val result = resultWinOrLoseString(playerResult.isWin)
-        println("${playerResult.name}: $result")
+        println("${playerResult.name}: ${playerResult.finalRevenue}")
     }
-}
-
-fun resultWinOrLoseString(isWin: Boolean): String {
-    if (isWin) {
-        return "승"
-    }
-    return "패"
 }
 
 private fun cardsNames(cards: List<Card>): String {
