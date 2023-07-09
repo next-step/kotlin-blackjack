@@ -1,7 +1,9 @@
 package blackjack.domain
 
+import blackjack.domain.Symbol.Companion.ACE_BONUS_VALUE_THRESHOLD
+
 class Hands(var cards: List<Card>) {
-    lateinit var state: State
+    private lateinit var state: State
 
     init {
         require(cards.size == INIT_CARD_SIZE) { "시작 카드는 ${INIT_CARD_SIZE}장이어야 합니다." }
@@ -9,7 +11,13 @@ class Hands(var cards: List<Card>) {
     }
 
     fun sum(): Int {
-        return cards.sumOf { it.value }
+        var sum = cards.sumOf { it.value }
+
+        if (cards.any { it.symbol == Symbol.ACE } && sum <= ACE_BONUS_VALUE_THRESHOLD) {
+            sum += Symbol.ACE_BONUS_VALUE
+        }
+
+        return sum
     }
 
     fun hit(card: Card): State {

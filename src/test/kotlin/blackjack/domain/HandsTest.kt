@@ -4,9 +4,13 @@ import blackjack.BLACKJACK_HANDS
 import blackjack.CLUBS_TWO
 import blackjack.SPADES_ACE
 import blackjack.SPADES_FOUR
+import blackjack.SPADES_KING
+import blackjack.SPADES_SIX
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.CsvSource
 import java.lang.IllegalStateException
 
 class HandsTest {
@@ -29,5 +33,21 @@ class HandsTest {
 
         hands.isFinished() shouldBe true
         shouldThrow<IllegalStateException> { hands.hit(CLUBS_TWO) }
+    }
+
+    @Test
+    fun `ACE를 포함한 총합이 11이하면 Bonus 값(10)이 추가된다`() {
+        val hands = Hands(listOf(SPADES_SIX, SPADES_FOUR))
+        hands.hit(SPADES_ACE)
+
+        hands.sum() shouldBe 21
+    }
+
+    @Test
+    fun `ACE를 포함한 총합이 11초과하면 ACE는 1로 계산된다`() {
+        val hands = Hands(listOf(SPADES_SIX, SPADES_KING))
+        hands.hit(SPADES_ACE)
+
+        hands.sum() shouldBe 17
     }
 }
