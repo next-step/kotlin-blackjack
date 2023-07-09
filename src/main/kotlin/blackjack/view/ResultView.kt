@@ -11,6 +11,11 @@ object ResultView {
     }
 
     fun printPlayerInfo(player: Player) {
-        println("${player.name}카드: ${player.hands.cards.joinToString(",") { "${it.symbol}_${it.type}" }}")
+        val name = player.name
+        println("${name}카드: ${player.hands.cards.joinToString(",") { "${it.symbol}_${it.type}" }}")
+
+        if (player.isBust()) {
+            println("$name Bust!!")
+        }
     }
 }

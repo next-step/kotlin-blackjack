@@ -43,6 +43,10 @@ class Hands(var cards: List<Card>) {
         return !state.isFinished
     }
 
+    fun isBust(): Boolean {
+        return state == State.BUST
+    }
+
     private fun updateState(): State {
         state = State.from(this)
 

@@ -8,4 +8,8 @@ class Player(val name: String, val hands: Hands) {
     fun hit(card: Card) {
         hands.hit(card)
     }
+
+    fun isBust(): Boolean {
+        return hands.isBust()
+    }
 }
