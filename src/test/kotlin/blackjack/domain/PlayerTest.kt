@@ -7,18 +7,18 @@ import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 
 class PlayerTest : StringSpec({
-    "플레이어는 이름과 카드리스트, 덱 완성 여부를 갖고 있다." {
+    "플레이어는 이름과 카드리스트, 배팅 금액을 갖고 있다." {
         val cards = Cards(listOf(Card(Denomination.KING, Suit.SPADE), Card(Denomination.QUEEN, Suit.SPADE)))
-        val player = Player("Lee", cards)
+        val player = Player("Lee", cards, 10000)
 
         player.name shouldBe "Lee"
         player.cards shouldBe cards
-        player.isDeckInComplete() shouldBe true
+        player.bettingAmount shouldBe 10000
     }
 
     "플레이어는 카드를 추가로 받을 수 있다." {
         val cards = Cards(listOf(Card(Denomination.KING, Suit.SPADE), Card(Denomination.QUEEN, Suit.SPADE)))
-        val player = Player("Lee", cards)
+        val player = Player("Lee", cards, 10000)
 
         player.plusCard(Card(Denomination.ACE, Suit.SPADE))
         player.cardValues() shouldBe 21
@@ -32,7 +32,7 @@ class PlayerTest : StringSpec({
                 Card(Denomination.ACE, Suit.SPADE)
             )
         )
-        val player = Player("Lee", cards)
+        val player = Player("Lee", cards, 10000)
 
         player.isDeckInComplete() shouldBe false
     }

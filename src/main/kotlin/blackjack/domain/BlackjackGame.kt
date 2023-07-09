@@ -48,11 +48,11 @@ class BlackjackGame(
         const val GAME_START_CARD_COUNT = 2
         const val BLACKJACK_VALUE = 21
 
-        fun from(userNames: List<String>): BlackjackGame {
+        fun from(userNames: MutableMap<String, Int>): BlackjackGame {
             val gameDeck = GameDeck()
             val users = userNames
                 .map {
-                    Player(it, Cards(gameDeck.handOutCards(GAME_START_CARD_COUNT)))
+                    Player(it.key, Cards(gameDeck.handOutCards(GAME_START_CARD_COUNT)), it.value)
                 }
             val dealer = Dealer("딜러", Cards(gameDeck.handOutCards(GAME_START_CARD_COUNT)))
 

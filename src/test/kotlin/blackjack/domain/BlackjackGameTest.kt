@@ -17,7 +17,8 @@ class BlackjackGameTest : StringSpec({
                         Card(Denomination.ACE, Suit.DIAMOND),
                         Card(Denomination.KING, Suit.DIAMOND)
                     )
-                )
+                ),
+                10000
             )
         val test2 =
             Player(
@@ -27,13 +28,14 @@ class BlackjackGameTest : StringSpec({
                         Card(Denomination.QUEEN, Suit.DIAMOND),
                         Card(Denomination.KING, Suit.DIAMOND)
                     )
-                )
+                ),
+                20000
             )
         val test3 =
             Player(
                 "Test3",
-                Cards(listOf(Card(Denomination.TWO, Suit.DIAMOND), Card(Denomination.KING, Suit.DIAMOND)))
-
+                Cards(listOf(Card(Denomination.TWO, Suit.DIAMOND), Card(Denomination.KING, Suit.DIAMOND))),
+                10000
             )
         val dealer =
             Dealer(

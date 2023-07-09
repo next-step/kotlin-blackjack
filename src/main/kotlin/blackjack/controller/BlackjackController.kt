@@ -5,6 +5,7 @@ import blackjack.domain.Cards
 import blackjack.domain.users.Player
 import blackjack.domain.users.User
 import blackjack.view.USER_NAME_SPLIT_SYMBOL
+import blackjack.view.enterUserBettingAmount
 import blackjack.view.enterUserNames
 import blackjack.view.printBlackjackResult
 import blackjack.view.printCardReceiveNotWant
@@ -16,7 +17,13 @@ import blackjack.view.printUserNames
 class BlackjackController {
     fun start() {
         val userNames = enterUserNames()
-        val blackjackGame = BlackjackGame.from(userNames)
+
+        val userBettingAmountMap = mutableMapOf<String, Int>()
+        for (userName in userNames) {
+            userBettingAmountMap[userName] = enterUserBettingAmount(userName)
+        }
+
+        val blackjackGame = BlackjackGame.from(userBettingAmountMap)
         printUserNames(userNames.joinToString(USER_NAME_SPLIT_SYMBOL))
         printUserCardInfos(blackjackGame.userCards())
 
