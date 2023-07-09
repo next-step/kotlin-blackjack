@@ -1,5 +1,10 @@
 package blackjack.domain
 
+import blackjack.domain.card.CardReceiveSelector
+import blackjack.domain.card.Cards
+import blackjack.domain.card.InputCardReceiveSelector
+import blackjack.domain.card.PrintUserCards
+import blackjack.domain.card.UserCards
 import blackjack.domain.result.GameResults
 import blackjack.domain.users.Dealer
 import blackjack.domain.users.Player
@@ -30,25 +35,44 @@ class BlackjackGame(
         return users.calculateGameResult()
     }
 
-    fun userCardReceive(user: Player) {
-        user.userCardReceive(handOutCard())
+    fun handsOutCards(cardReceiveSelector: InputCardReceiveSelector, printUserCards: PrintUserCards) {
+        cardReceivePossibleUsers().forEach {
+            cardReceiveWant(it, cardReceiveSelector, printUserCards)
+        }
+
+        dealerCardReceive()
     }
 
-    fun dealerCardReceive() {
-        if (dealer.cardReceivePossible()) {
-            dealer.plusCard(gameDeck.handOutCard())
+    private fun cardReceiveWant(
+        user: Player,
+        cardReceiveSelector: CardReceiveSelector,
+        uerCards: UserCards
+    ) {
+
+        if (cardReceiveSelector.cardReceiveNotWant(user.name)) {
+            return
+        }
+
+        user.userCardReceive(gameDeck.handOutCard())
+
+        uerCards.printUserCards(user.name, user.cards)
+
+        if (user.isDeckInComplete()) {
+            cardReceiveWant(user, cardReceiveSelector, uerCards)
         }
     }
 
-    private fun handOutCard(): Card {
-        return gameDeck.handOutCard()
+    private fun dealerCardReceive() {
+        if (dealer.cardReceivePossible()) {
+            dealer.plusCard(gameDeck.handOutCard())
+        }
     }
 
     companion object {
         const val GAME_START_CARD_COUNT = 2
         const val BLACKJACK_VALUE = 21
 
-        fun from(userNames: MutableMap<String, Int>): BlackjackGame {
+        fun from(userNames: Map<String, Int>): BlackjackGame {
             val gameDeck = GameDeck()
             val users = userNames
                 .map {

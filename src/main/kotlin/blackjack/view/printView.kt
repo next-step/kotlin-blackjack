@@ -1,8 +1,8 @@
 package blackjack.view
 
 import blackjack.domain.BlackjackGame.Companion.GAME_START_CARD_COUNT
-import blackjack.domain.Card
-import blackjack.domain.Cards
+import blackjack.domain.card.Card
+import blackjack.domain.card.Cards
 import blackjack.domain.result.GameResults
 
 fun printLine() {

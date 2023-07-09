@@ -1,7 +1,7 @@
 package blackjack.domain.users
 
-import blackjack.domain.Card
-import blackjack.domain.Cards
+import blackjack.domain.card.Card
+import blackjack.domain.card.Cards
 
 abstract class User(
     val name: String,

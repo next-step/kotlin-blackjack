@@ -1,5 +1,6 @@
 package blackjack.domain
 
+import blackjack.domain.card.Card
 import blackjack.enums.Denomination
 import blackjack.enums.Suit
 import io.kotest.core.spec.style.StringSpec

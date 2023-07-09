@@ -1,8 +1,8 @@
 package blackjack.domain.users
 
 import blackjack.domain.BlackjackGame
-import blackjack.domain.Card
-import blackjack.domain.Cards
+import blackjack.domain.card.Card
+import blackjack.domain.card.Cards
 
 class Player(
     name: String,
