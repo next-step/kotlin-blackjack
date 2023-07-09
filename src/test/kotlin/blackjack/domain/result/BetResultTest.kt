@@ -36,7 +36,6 @@ class BetResultTest : StringSpec({
         val betResult = BetResult.ofBlackJackDraw(betAmount)
 
         betResult.earningAmount shouldBe betAmount.value
-
     }
 
     "결과가 '승'이면 반대 결과는 '패'이고 수익만큼 잃는다." {

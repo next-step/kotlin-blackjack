@@ -12,7 +12,7 @@ class MatchResultTest : BehaviorSpec({
     val handBlackJack = TestObjectGenerator.handOfBlackjack()
     val handBust = TestObjectGenerator.handOfBust()
 
-    given("딜러가 버스트 상태일 때") {
+    given("딜러가 버스트 상태인 경우") {
         val dealer = Dealer(handBust)
 
         `when`("플레이어의 점수와 상관없이") {
@@ -29,7 +29,7 @@ class MatchResultTest : BehaviorSpec({
         }
     }
 
-    given("딜러가 버스트가 아니고") {
+    given("딜러가 버스트 상태가 아닌 경우") {
         val dealer = Dealer(hand20)
 
         `when`("플레이어가 버스트이면") {
@@ -46,7 +46,7 @@ class MatchResultTest : BehaviorSpec({
         }
     }
 
-    given("딜러와 플레이어가 블랙잭이나 버스트가 아니고") {
+    given("딜러와 플레이어가 블랙잭이나 버스트 상태가 아닌 경우") {
         `when`("딜러의 점수가 플레이어의 점수보다 크면") {
             val dealer = Dealer(hand20)
             val player = TestObjectGenerator.player(hand = hand19, betAmount = BetAmount(10_000))
@@ -90,7 +90,7 @@ class MatchResultTest : BehaviorSpec({
         }
     }
 
-    given("플레이어의 점수가 블랙잭이고") {
+    given("플레이어의 점수가 블랙잭인 경우") {
         val player = TestObjectGenerator.player(hand = handBlackJack, betAmount = BetAmount(10_000))
 
         `when`("딜러의 점수가 블랙잭이 아니면") {
