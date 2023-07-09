@@ -5,6 +5,7 @@ import blackjack.domain.Cards
 import blackjack.domain.result.DealerResult
 import blackjack.domain.result.GameResults
 import blackjack.domain.result.PlayerResult
+import kotlin.math.roundToInt
 
 data class Users(val players: List<Player>, val dealer: Dealer) {
     val userCards: Map<User, Cards>
@@ -42,6 +43,14 @@ data class Users(val players: List<Player>, val dealer: Dealer) {
         gameResults: GameResults
     ): GameResults {
         val finalRevenue = player.bettingAmount
+        if (player.isBlackjack() && !dealer.isBlackjack()) {
+            return gameResults.playerWin(PlayerResult(player.name, finalRevenue.times(1.5).roundToInt()))
+        }
+
+        if (player.isBlackjack() && dealer.isBlackjack()) {
+            return gameResults.playerWin(PlayerResult(player.name, 0))
+        }
+
         if (player.cardValues() in (dealerCardValue + 1)..21) {
             return gameResults.playerWin(PlayerResult(player.name, finalRevenue))
         }

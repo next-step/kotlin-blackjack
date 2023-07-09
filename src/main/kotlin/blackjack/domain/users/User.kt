@@ -23,4 +23,8 @@ abstract class User(
     fun cardValues(): Int {
         return cards.value()
     }
+
+    fun isBlackjack(): Boolean {
+        return cards.size == 2 && cards.value() == 21
+    }
 }
