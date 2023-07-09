@@ -8,5 +8,7 @@ data class Card(private val numberShape: NumberShape, val pattern: Pattern) {
         return numberShape.value
     }
 
-    infix operator fun plus(other: Card): Int = this.getValue() + other.getValue()
+    override fun toString(): String {
+        return "${numberShape.display}${pattern.display}"
+    }
 }

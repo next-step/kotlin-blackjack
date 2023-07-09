@@ -7,32 +7,6 @@ import blackjack.domain.card.Pattern
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 
-class Player(
-    val name: String,
-    private var hasAce: Boolean = false,
-    val cards: MutableList<Card> = mutableListOf()
-) {
-    fun drawCard(deck: Deck) {
-        cards.add(deck.getOneCard())
-    }
-
-    fun getCardsValue(): Int {
-        val total = cards.sumOf { it.getValue() }
-        if (hasAce) {
-            if (total + 10 <= 21) {
-                return total + 10
-            }
-        }
-        return total
-    }
-
-    companion object {
-        fun of(name: String, deck: Deck): Player {
-            return Player(name, cards = mutableListOf(deck.getOneCard(), deck.getOneCard()))
-        }
-    }
-}
-
 class PlayerTest : BehaviorSpec({
     Given("플레이어는 게임시작시 카드를 두장씩 받는다.") {
         val deck = Deck.makeDeck()
