@@ -1,5 +1,6 @@
 package blackjack.domain
 
+import blackjack.domain.status.PlayingStatus
 import blackjack.domain.user.Dealer
 import blackjack.domain.user.Player
 import blackjack.domain.user.PlayerGroup
@@ -21,33 +22,31 @@ class BlackJackGame(private val inputView: InputView, private val resultView: Re
     private fun initGame() {
         val playerNames: List<String> = inputView.getPlayerNames()
         playerGroup = PlayerGroup.create(playerNames)
-
         playerGroup.players.forEach {
             player ->
-            dealer.giveCardTo(player, 2)
+            player.draw(dealer.deck.getNextCard(), 2)
             resultView.printPlayerCards(player)
         }
 
-        dealer.giveCardTo(dealer, 2)
+        dealer.draw(dealer.deck.getNextCard())
         resultView.printPlayerCards(dealer)
     }
 
     private fun drawCardsForEachPlayer() = playerGroup.players.forEach(::drawCards)
 
     private fun drawCards(player: Player) {
-        generateSequence {
-            player.chooseHitOrStay(inputView.getIsPlayerWantHit(player.name))
-            dealer.giveCardIfPlayerWantHit(player)
-            player
-        }.takeWhile { !it.isDone() }
-            .forEach { resultView.printPlayerCards(it) }
+        while (!player.isDone()) {
+            player.chooseHitOrStay(inputView.getIsPlayerWantHit(player.name), dealer)
+            resultView.printPlayerCards(player)
+        }
     }
 
     private fun drawCardsForDealer() {
-        while (dealer.drawCardBySelfIfPointUnder(DEALER_DRAW_THRESHOLD_POINT)) {
-            resultView.printDealerDrawCardAlert(DEALER_DRAW_THRESHOLD_POINT)
+        while (dealer.status is PlayingStatus) {
+            dealer.draw(dealer.deck.getNextCard())
+            resultView.printDealerDrawCardAlert(16)
         }
-        dealer.judgeGameResult(playerGroup)
+        dealer.judgeResult(playerGroup)
     }
 
 
@@ -65,7 +64,4 @@ class BlackJackGame(private val inputView: InputView, private val resultView: Re
         }
     }
 
-    companion object {
-        private const val DEALER_DRAW_THRESHOLD_POINT = 16
-    }
 }

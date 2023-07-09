@@ -1,45 +1,35 @@
 package blackjack.domain.user
 
+import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
 import blackjack.domain.status.*
 
 open class Player(val name: String, val cards: Cards = Cards()) {
-    private var status: Status = PlayingStatus.READY
+    var status: Status = Hit(this)
 
-    fun chooseHitOrStay(isPlayerWantHit: Boolean) {
+    fun chooseHitOrStay(isPlayerWantHit: Boolean, dealer: Dealer) {
         if (isPlayerWantHit) {
-            status = PlayingStatus.HIT
+            draw(dealer.deck.getNextCard())
             return
         }
-        status = FixedEndStatus.STAY
+        status = status.stay()
     }
 
-    fun updateStatus() {
-        if (isDone()) return
-
-        val score = cards.getScore()
-        status = ConditionalEndStatus.values()
-            .firstOrNull { it.isMatch(score.value) }
-            ?: PlayingStatus.READY
+    open fun draw(card: Card, count: Int = 1) {
+        repeat(count) { status = status.draw(card) }
     }
 
-    fun updateResultStatus(resultStatus: ResultStatus) {
-        status = resultStatus
+    open fun getGameResult(): GameResult {
+        if (status is Win) {
+            return GameResult(1, 0, 0)
+        }
+        if (status is Lose) {
+            return GameResult(0, 1, 0)
+        }
+        return GameResult(0, 0, 1)
     }
 
-    open fun getFinalResult(): FinalResult {
-        val resultStatus = status as ResultStatus
-        val winCount = if(resultStatus.isPlayerWin) 1 else 0
-        val loseCount = if(resultStatus.isDealerWin) 1 else 0
-        return FinalResult(winCount, loseCount)
-    }
-
-    data class FinalResult(val winCount: Int, val loseCount: Int)
-
+    data class GameResult(val winCount: Int, val loseCount: Int, val drawCount: Int)
 
     fun isDone(): Boolean = status is EndStatus
-    fun isBurst(): Boolean = status == ConditionalEndStatus.BURST
-    fun wantHit(): Boolean = status == PlayingStatus.HIT
-
-
 }

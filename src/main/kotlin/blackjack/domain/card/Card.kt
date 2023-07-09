@@ -49,6 +49,14 @@ class Cards {
         return Score(finalScore, BLACK_JACK_POINT - finalScore)
     }
 
+    fun isBlackJackScore(): Boolean {
+        return getScore().value == BLACK_JACK_POINT
+    }
+
+    fun isBurst(): Boolean {
+        return getScore().value > BLACK_JACK_POINT
+    }
+
     private fun hasAce(): Boolean = _cards.any { card -> card.number == CardNumber.A && card.pattern == CardPattern.Spade }
 
     data class Score(val value: Int, val diff: Int)

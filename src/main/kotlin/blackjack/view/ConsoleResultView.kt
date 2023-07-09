@@ -13,20 +13,16 @@ class ConsoleResultView : ResultView {
     }
 
     override fun printFinalResult(player: Player) {
-        val finalResult = player.getFinalResult()
+        val gameResult = player.getGameResult()
 
-        if (player is Dealer) {
-            println("${player.name}: ${finalResult.winCount} 승 ${finalResult.loseCount} 패")
-            return
-        }
-
-        val resultString = when {
-            finalResult.winCount == 1 -> "승"
-            finalResult.loseCount == 1 -> "패"
+        val result = when {
+            player is Dealer -> "${gameResult.winCount}승 ${gameResult.loseCount}패"
+            gameResult.winCount > 0 -> "승"
+            gameResult.loseCount > 0 -> "패"
             else -> "무"
         }
 
-        println("${player.name}: $resultString")
+        println("${player.name} $result")
     }
 
     override fun printDealerDrawCardAlert(dealerDrawThresholdPoint: Int) {

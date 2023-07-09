@@ -1,46 +1,36 @@
 package blackjack.domain.user
 
+import blackjack.domain.card.Card
 import blackjack.domain.card.Deck
-import blackjack.domain.status.ResultStatus
-import java.lang.IllegalStateException
+import blackjack.domain.status.*
 
-class Dealer(private val deck: Deck = Deck.create(), name: String = "dealer") : Player(name) {
+class Dealer(val deck: Deck = Deck.create(), name: String = "dealer") : Player(name) {
 
-    private var resultStatuses: MutableList<ResultStatus> = mutableListOf()
+    private var resultStatuses: MutableList<Status> = mutableListOf()
 
-    fun giveCardTo(player: Player, cardCount: Int = 1) {
-        repeat(cardCount) { player.cards.addCard(deck.getNextCard()) }
-        player.updateStatus()
+    override fun draw(card: Card, count: Int) {
+        if (cards.getScore().value > 16) {
+            status = status.stay()
+            return
+        }
+        status = status.draw(deck.getNextCard())
     }
 
-    fun giveCardIfPlayerWantHit(player: Player) {
-        if (player.wantHit()) {
-            giveCardTo(player)
+    override fun getGameResult(): GameResult {
+        val winCount = resultStatuses.count { it is Win }
+        val loseCount = resultStatuses.count { it is Lose }
+        val drawCount = resultStatuses.count { it is Draw }
+        return GameResult(winCount, loseCount, drawCount)
+    }
+
+    fun judgeResult(playerGroup: PlayerGroup) {
+        playerGroup.players.forEach { player ->
+            val resultStatus = player.status.judge(this)
+            player.status = resultStatus
+
+            resultStatus as ResultStatus
+            resultStatuses.add(resultStatus.reverse())
         }
     }
 
-    fun drawCardBySelfIfPointUnder(dealerDrawThresholdPoint: Int): Boolean {
-        if (cards.getScore().value <= dealerDrawThresholdPoint) {
-            giveCardTo(this)
-            return true
-        }
-        return false
-    }
-
-    fun judgeGameResult(playerGroup: PlayerGroup) {
-        playerGroup.players.forEach {
-            player ->
-            val resultStatus = ResultStatus.values()
-                .firstOrNull { it.isMatch(player, this) }
-                ?: throw IllegalStateException()
-            player.updateResultStatus(resultStatus)
-            resultStatuses.add(resultStatus)
-        }
-    }
-
-    override fun getFinalResult(): FinalResult {
-        val winCount = resultStatuses.filter { resultStatus -> resultStatus.isDealerWin }.count()
-        val loseCount = resultStatuses.size - winCount
-        return FinalResult(winCount, loseCount)
-    }
 }

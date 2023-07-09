@@ -1,57 +1,152 @@
 package blackjack.domain.status
 
+import blackjack.domain.card.Card
+import blackjack.domain.card.Cards
 import blackjack.domain.user.Dealer
 import blackjack.domain.user.Player
 
-interface Status
+interface Status {
+    fun draw(card: Card): Status
+    fun stay(): Status
+    fun judge(dealer: Dealer): Status
+}
+
+interface PlayingStatus : Status
 
 interface EndStatus : Status
 
-enum class FixedEndStatus(val desc: String) : EndStatus {
-    STAY("카드를 더 뽑지 않는 경우"),
+abstract class ResultStatus(val prevPlayerStatus: Status, val prevDealerStatus: Status, val playerScore: Cards.Score, val dealerScore: Cards.Score) : Status{
+    abstract fun reverse(): Status
 }
 
-enum class ConditionalEndStatus(val desc: String) : EndStatus {
-    BURST("카드 점수 합이 21점이 초과된 경우") {
-        override fun isMatch(resultPoint: Int) = resultPoint > BLACK_JACK_POINT
-    },
-    BLACK_JACK("카드 점수 합이 21인 경우") {
-        override fun isMatch(resultPoint: Int) = resultPoint == BLACK_JACK_POINT
-    };
-    abstract fun isMatch(resultPoint: Int): Boolean
+class Hit(val player: Player) : PlayingStatus  {
+    override fun draw(card: Card): Status {
+        player.cards.addCard(card)
+        if (player.cards.isBurst()) {
+            return Burst(player)
+        }
+        if (player.cards.isBlackJackScore()) {
+            return BlackJack(player)
+        }
+        return this
+    }
 
-    companion object {
-        private const val BLACK_JACK_POINT = 21
+    override fun stay(): Status {
+        return Stay(player)
+    }
+
+    override fun judge(dealer: Dealer): Status {
+        throw NotImplementedError()
     }
 }
 
-enum class PlayingStatus(val desc: String) : Status {
-    HIT("카드를 한장 더 뽑는 경우"),
-    READY("최초 상태"),
+class BlackJack(val player: Player) : EndStatus  {
+    override fun draw(card: Card): Status {
+        throw NotImplementedError()
+    }
+
+    override fun stay(): Status {
+        throw NotImplementedError()
+    }
+
+
+    override fun judge(dealer: Dealer): Status {
+        if (dealer.status is BlackJack) {
+            return Draw(this, dealer.status, player.cards.getScore(), dealer.cards.getScore())
+        }
+        return Win(this, dealer.status, player.cards.getScore(), dealer.cards.getScore())
+    }
 }
 
-enum class ResultStatus(val desc: String, val isPlayerWin: Boolean, val isDealerWin: Boolean) : Status {
-    DEALER_BURST("dealer가 BURST 상태, player가 이긴 경우", true, false) {
-        override fun isMatch(player: Player, dealer: Dealer): Boolean {
-            return dealer.isBurst()
+class Stay(val player: Player) : EndStatus {
+    override fun draw(card: Card): Status {
+        throw NotImplementedError()
+    }
+
+    override fun stay(): Status {
+        throw NotImplementedError()
+    }
+
+    override fun judge(dealer: Dealer): Status {
+        if (dealer.status is Burst) {
+            return Win(this, dealer.status, player.cards.getScore(), dealer.cards.getScore())
         }
-    },
-    PLAYER_BURST("player가 BURST 상태, dealer가 이긴 경우", false, true) {
-        override fun isMatch(player: Player, dealer: Dealer): Boolean {
-            return player.isBurst()
+
+        val dealerScoreDiff = dealer.cards.getScore().diff
+        val playerScoreDiff = player.cards.getScore().diff
+
+        return when {
+            dealerScoreDiff > playerScoreDiff -> Win(this, dealer.status, player.cards.getScore(), dealer.cards.getScore())
+            dealerScoreDiff == playerScoreDiff -> Draw(this, dealer.status, player.cards.getScore(), dealer.cards.getScore())
+            else -> Lose(this, dealer.status, player.cards.getScore(), dealer.cards.getScore())
         }
-    },
-    COMPARE_POINT_PLAYER_WIN("Point 비교, player가 이긴 경우", true, false) {
-        override fun isMatch(player: Player, dealer: Dealer) = player.cards.getScore().diff < dealer.cards.getScore().diff
-    },
+    }
+}
 
-    COMPARE_POINT_DEALER_WIN("Point 비교, dealer가 이긴 경우", false, true) {
-        override fun isMatch(player: Player, dealer: Dealer) = player.cards.getScore().diff > dealer.cards.getScore().diff
-    },
+class Burst(val player: Player) : EndStatus {
+    override fun draw(card: Card): Status {
+        throw NotImplementedError()
+    }
 
-    COMPARE_POINT_DRAW("Point 비교, player와 dealer가 비긴 경우", false, false) {
-        override fun isMatch(player: Player, dealer: Dealer) = player.cards.getScore().diff == dealer.cards.getScore().diff
-    };
+    override fun stay(): Status {
+        throw NotImplementedError()
+    }
 
-    abstract fun isMatch(player: Player, dealer: Dealer): Boolean
+    override fun judge(dealer: Dealer): Status {
+        if (dealer.status is Burst) {
+            return Win(this, dealer.status, player.cards.getScore(), dealer.cards.getScore())
+        }
+        return Lose(this, dealer.status, player.cards.getScore(), dealer.cards.getScore())
+    }
+}
+class Win(prevPlayerStatus: Status, prevDealerStatus: Status, playerScore: Cards.Score, dealerScore: Cards.Score) :
+    ResultStatus(prevPlayerStatus, prevDealerStatus, playerScore, dealerScore) {
+    override fun reverse() = Lose(prevPlayerStatus, prevDealerStatus, playerScore, dealerScore)
+
+
+    override fun draw(card: Card): Status {
+        throw NotImplementedError()
+    }
+
+    override fun stay(): Status {
+        throw NotImplementedError()
+    }
+
+    override fun judge(dealer: Dealer): Status {
+        throw NotImplementedError()
+    }
+}
+
+class Lose(prevPlayerStatus: Status, prevDealerStatus: Status, playerScore: Cards.Score, dealerScore: Cards.Score) :
+    ResultStatus(prevPlayerStatus, prevDealerStatus, playerScore, dealerScore) {
+    override fun reverse() = Win(prevPlayerStatus, prevDealerStatus, playerScore, dealerScore)
+
+    override fun draw(card: Card): Status {
+        throw NotImplementedError()
+    }
+
+    override fun stay(): Status {
+        throw NotImplementedError()
+    }
+
+    override fun judge(dealer: Dealer): Status {
+        throw NotImplementedError()
+    }
+}
+
+class Draw(prevPlayerStatus: Status, prevDealerStatus: Status, playerScore: Cards.Score, dealerScore: Cards.Score) :
+    ResultStatus(prevPlayerStatus, prevDealerStatus, playerScore, dealerScore) {
+    override fun reverse() = this
+
+    override fun draw(card: Card): Status {
+        throw NotImplementedError()
+    }
+
+    override fun stay(): Status {
+        throw NotImplementedError()
+    }
+
+    override fun judge(dealer: Dealer): Status {
+        throw NotImplementedError()
+    }
 }
