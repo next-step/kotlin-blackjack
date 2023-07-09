@@ -46,7 +46,7 @@ class BlackJackGame(private val inputView: InputView, private val resultView: Re
     private fun drawCardsForDealer() {
         while (dealer.status is PlayingStatus) {
             dealer.draw(deck.getNextCard())
-            resultView.printDealerDrawCardAlert(16)
+            resultView.printDealerDrawCardAlert(dealer.hitThreshold)
         }
         dealer.judgeResult(playerGroup)
     }
