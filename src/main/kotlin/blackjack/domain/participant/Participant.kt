@@ -8,7 +8,11 @@ sealed class Participant(
     protected var hand: Hand
 ) {
     fun isBust() = hand.isBust()
+
+    fun isBlackJack() = hand.isBlackJack()
+
     fun score() = hand.score
+
     fun cards() = hand.cards
 
     fun start(drawCard: () -> Card) {

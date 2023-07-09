@@ -4,13 +4,14 @@ import blackjack.domain.card.CardScore
 
 @JvmInline
 value class Score(val value: Int) {
+    fun isExceedsMax() = value > MAX_VALUE
+    fun isMax() = value == MAX_VALUE
+
     fun plus(score: CardScore): Score {
         val primaryScoreAdded = Score(score.primary + value)
         val secondaryScoreAdded = Score(score.secondary + value)
-        return primaryScoreAdded.takeIf { it.isBust().not() } ?: secondaryScoreAdded
+        return primaryScoreAdded.takeIf { it.isExceedsMax().not() } ?: secondaryScoreAdded
     }
-
-    fun isBust() = value > MAX_VALUE
 
     fun plus(scores: List<CardScore>): Score {
         return scores

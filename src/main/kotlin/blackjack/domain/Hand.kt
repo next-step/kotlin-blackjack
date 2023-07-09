@@ -3,7 +3,9 @@ package blackjack.domain
 import blackjack.domain.card.Card
 
 class Hand private constructor(val cards: List<Card>, val score: Score) {
-    fun isBust() = score.isBust()
+    fun isBust() = score.isExceedsMax() && cards.size > 2
+
+    fun isBlackJack() = score.isMax() && cards.size == 2
 
     fun add(card: Card): Hand {
         return Hand(
