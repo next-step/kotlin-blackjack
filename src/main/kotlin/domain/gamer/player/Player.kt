@@ -33,9 +33,9 @@ open class Player(
     private fun newState(): State {
         val result = cards.score()
         return when {
-            result == Score.BLACKJACK -> State.BlackJack
-            result < Score.BLACKJACK -> State.Hit
-            else -> State.Bust
+            Score.isBlackJack(result) -> State.BlackJack
+            Score.isBust(result) -> State.Bust
+            else -> State.Hit
         }
     }
 }

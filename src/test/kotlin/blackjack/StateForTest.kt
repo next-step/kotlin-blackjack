@@ -7,9 +7,9 @@ import domain.card.Cards
 fun DealerState(cards: Cards): State {
     val result = cards.score()
     return when {
-        result > Score.BLACKJACK -> State.Bust
-        result == Score.BLACKJACK -> State.BlackJack
-        result > Score.DEALER_HIT_ON_MAX -> State.Stay
+        Score.isBust(result) -> State.Bust
+        Score.isBlackJack(result) -> State.BlackJack
+        Score.isDealerStayOn(result) -> State.Stay
         else -> State.Hit
     }
 }
@@ -17,8 +17,8 @@ fun DealerState(cards: Cards): State {
 fun PlayerState(cards: Cards): State {
     val result = cards.score()
     return when {
-        result == Score.BLACKJACK -> State.BlackJack
-        result < Score.BLACKJACK -> State.Hit
-        else -> State.Bust
+        Score.isBlackJack(result) -> State.BlackJack
+        Score.isBust(result) -> State.Bust
+        else -> State.Hit
     }
 }

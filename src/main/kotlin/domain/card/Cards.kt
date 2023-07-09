@@ -26,7 +26,7 @@ class Cards(cards: List<Card> = emptyList()) {
         }
 
         return sumOfAllCases.filter {
-            it <= Score.BLACKJACK
+            !Score.isBust(it)
         }.maxOrNull() ?: sumOfAllCases.min()
     }
 

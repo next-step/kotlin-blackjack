@@ -48,9 +48,9 @@ class Dealer(
     private fun newState(): State {
         val result = cards.score()
         return when {
-            result > Score.BLACKJACK -> State.Bust
-            result == Score.BLACKJACK -> State.BlackJack
-            result > Score.DEALER_HIT_ON_MAX -> State.Stay
+            Score.isBust(result) -> State.Bust
+            Score.isBlackJack(score) -> State.BlackJack
+            Score.isDealerStayOn(score) -> State.Stay
             else -> State.Hit
         }
     }
