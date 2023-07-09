@@ -10,10 +10,10 @@ class Dealer(
     override val cards: Cards = Cards(),
     initialState: State = State.Hit,
     override val name: String = "딜러",
+    var onHit: (() -> Unit)? = null,
 ) : Gamer {
 
     private var state: State = initialState
-    private var onHit: (() -> Unit)? = null
 
     val isBust: Boolean
         get() = state == State.Bust
@@ -26,10 +26,6 @@ class Dealer(
         cards.add(cardDeck.pop())
         state = newState()
         onHit?.invoke()
-    }
-
-    fun addOnHitCallback(callback: (() -> Unit)) {
-        onHit = callback
     }
 
     fun winners(players: Players): Players {

@@ -19,7 +19,7 @@ fun main() {
     }
     game.proceed()
     ResultView.printInitialState(dealer, players.list)
-    dealer.addOnHitCallback {
+    dealer.onHit = {
         ResultView.printDealerReceiveCardMessage()
     }
 
