@@ -37,7 +37,7 @@ open class BlackJackGamer(val name: String, money: Int = initMoney) {
         return GamerType.PLAYER
     }
 
-    open fun proceedGameRecord(gameRecordType: GameRecordType) {}
+    open fun proceedGameRecord(gameRecordType: GameRecordType) = Unit
 
     companion object {
         const val initMoney = 0
