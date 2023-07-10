@@ -12,11 +12,16 @@ class Player(
         cards.firstOrNull { it.isAce() }?.apply { hasAce = true }
     }
 
-    var hasAce: Boolean = false
-        private set
+    private var hasAce: Boolean = false
     private var isShow: Boolean = false
     private var isStand: Boolean = false
     private var isBust: Boolean = false
+
+    fun drawStartHand(deck: Deck) {
+        repeat(2) {
+            cards.add(deck.getOneCard())
+        }
+    }
 
     fun hitOrStand(input: String, deck: Deck) {
         if (input == HIT_INPUT) {

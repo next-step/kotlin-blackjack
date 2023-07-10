@@ -3,15 +3,17 @@ package blackjack.domain.game
 import blackjack.domain.deck.Deck
 import blackjack.domain.player.Players
 import blackjack.view.BlackJackView
+import blackjack.view.InputView
 import blackjack.view.PlayerView
 
-class BlackJackGame {
-    private val deck = Deck.makeDeck()
+class BlackJackGame(private val deck: Deck) {
     private lateinit var players: Players
     fun start() {
-        BlackJackView.printPlayerInputView()
-        players = Players.of(StringParser.getPlayersFromString(readln(), deck))
+        players = InputView.getPlayerInput()
         BlackJackView.printPlayersInitView(players)
+        players.players.forEach {
+            it.drawStartHand(deck)
+        }
         BlackJackView.printPlayersCardsView(players)
         race(players)
         BlackJackView.printPlayersResultView(players)
@@ -30,6 +32,6 @@ class BlackJackGame {
 }
 
 fun main() {
-    val game = BlackJackGame()
+    val game = BlackJackGame(Deck.makeDeck())
     game.start()
 }

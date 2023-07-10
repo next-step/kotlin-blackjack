@@ -36,10 +36,11 @@
 
 Step2 리뷰
 [X] ACE,ONE 중복삭제
-[] display Domain 에서 삭제
+[X] display Domain 에서 삭제
 [X] Card 의 1,10 상수값 사용
-[] mutableSet 외부 접근시 문제생김 변경
+[X] mutableSet 외부 접근시 문제생김 변경
 [] BlackJackGame -> Controller 로 변경
 [] Cards 와 같은 일급 컬렉션으로 역활분리
 [] hasAce, isStand, isBust 필요한가?
 [] View 클래스 분리
+[X] 시작 핸드 메소드 추가
