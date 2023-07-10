@@ -5,10 +5,6 @@ class Participants(val participants: List<Participant>) {
         return Participants(participants + other.participants)
     }
 
-    fun forEach(action: (Participant) -> Unit) {
-        participants.forEach(action)
-    }
-
     fun toList(): List<Participant> {
         return participants.toList()
     }

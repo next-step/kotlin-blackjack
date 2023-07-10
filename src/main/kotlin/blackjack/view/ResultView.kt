@@ -8,7 +8,7 @@ object ResultView {
     fun initialCards(participants: Participants) {
         val playerNames = participants.getPlayers().joinToString(", ") { it.name }
         println("딜러와 ${playerNames}에게 2장의 나누었습니다.")
-        participants.forEach {
+        participants.participants.forEach {
             participantAndInitialCards(it)
         }
     }
@@ -24,7 +24,7 @@ object ResultView {
     }
 
     fun result(participants: Participants) {
-        participants.forEach {
+        participants.participants.forEach {
             println("${it.name}카드: ${it.cards.cards.joinToString(", ")} - 결과: ${it.cards.calculateScore()}")
         }
     }

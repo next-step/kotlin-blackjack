@@ -16,7 +16,7 @@ class BlackjackController {
     }
 
     fun drawInitialCards(participants: Participants) {
-        participants.forEach {
+        participants.participants.forEach {
             it.addCard(deck.drawCard())
             it.addCard(deck.drawCard())
         }
