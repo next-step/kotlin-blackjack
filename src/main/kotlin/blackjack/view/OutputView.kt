@@ -1,17 +1,17 @@
 package blackjack.view
 
-import blackjack.domain.BlackJackGame
+import blackjack.domain.BlackjackGame
 import blackjack.domain.Card
 import blackjack.domain.Player
 
 object OutputView {
 
-    fun printInitGame(blackJackGame: BlackJackGame) {
+    fun printInitGame(blackJackGame: BlackjackGame) {
         printPlayersName(blackJackGame)
         blackJackGame.players.forEach { player -> printCardsInHand(player) }
     }
 
-    private fun printPlayersName(blackJackGame: BlackJackGame) {
+    private fun printPlayersName(blackJackGame: BlackjackGame) {
         println(blackJackGame.players.joinToString(transform = Player::name) + "에게 2장의 카드를 나누었습니다.")
     }
 

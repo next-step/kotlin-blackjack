@@ -1,6 +1,6 @@
 package blackjack.domain
 
-class BlackJackGame(
+class BlackjackGame(
     private val dealer: Dealer,
     val players: List<Player>
 ) {
@@ -9,12 +9,14 @@ class BlackJackGame(
     }
 
     private fun initGame() {
-        repeat(INIT_DEAL_COUNT) { deal() }
+        repeat(INIT_DEAL_COUNT) { initDeal() }
     }
 
-    private fun deal() {
+    private fun initDeal() {
         players.forEach { player -> dealer.deal(player) }
     }
+
+    fun isNotFinished(): Boolean = players.any { it.canDraw }
 
     companion object {
         private const val INIT_DEAL_COUNT = 2
