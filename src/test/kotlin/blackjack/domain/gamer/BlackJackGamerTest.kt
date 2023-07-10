@@ -3,7 +3,6 @@ package blackjack.domain.gamer
 import blackjack.domain.card.Card
 import blackjack.domain.card.CardNumber
 import blackjack.domain.card.CardShape
-import blackjack.dto.GeneratePlayerRequest
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 
@@ -46,7 +45,6 @@ class BlackJackGamerTest {
         // then
         Assertions.assertThat(blackJackGamer.money).isEqualTo(money - takenMoney)
     }
-
 
     @Test
     fun `BlackJackGamer는 뽑은 카드를 한번에 한장씩 추가할 수 있다`() {
