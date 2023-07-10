@@ -5,11 +5,18 @@ data class Players(
 ) {
     constructor(vararg player: Player) : this(player.toList())
 
-    fun receiveCards(dealer: Dealer): Players {
+    fun receiveDefaultCards(dealer: Dealer): Players {
         return Players(
             values.map { player ->
-                player.receiveCards(dealer.dealInitialCard())
+                player.receiveCards(newCards = dealer.dealDefaultCard())
+                player
             }
         )
+    }
+
+    fun gameResults(dealer: Dealer): List<GameResult> {
+        return values.map {
+            GameResult.resultOfPlayer(it, dealer)
+        }
     }
 }

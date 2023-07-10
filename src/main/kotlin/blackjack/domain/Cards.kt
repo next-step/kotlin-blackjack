@@ -8,4 +8,8 @@ data class Cards(
     val sumOfScoreWithAceAsOne: Int by lazy {
         values.sumOf { it.getScore() }
     }
+
+    val numberOfAce: Int by lazy {
+        values.count { it.rank == Rank.ACE }
+    }
 }

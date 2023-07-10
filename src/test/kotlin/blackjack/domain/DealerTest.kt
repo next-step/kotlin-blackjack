@@ -2,6 +2,7 @@ package blackjack.domain
 
 import blackjack.testdouble.StubCardGenerator
 import io.kotest.core.spec.style.FunSpec
+import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
 
 class DealerTest : FunSpec({
@@ -16,5 +17,18 @@ class DealerTest : FunSpec({
 
         // then
         actual shouldBe card
+    }
+
+    test("딜러는 카드를 받을 수 있다.") {
+        // given
+        val dealer = Dealer()
+        val expectedSize = 2
+        val cards = listOf(Card(Rank.THREE, Suit.SPADE), Card(Rank.QUEEN, Suit.CLUB))
+
+        // when
+        dealer.receiveCards(cards)
+
+        // then
+        dealer.cards.values shouldHaveSize expectedSize
     }
 })
