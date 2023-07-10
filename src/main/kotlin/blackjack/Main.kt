@@ -1,34 +1,7 @@
 package blackjack
 
-import blackjack.domain.BlackjackGame
-import blackjack.domain.Player
-import blackjack.domain.Players
-import blackjack.view.InputView
-import blackjack.view.ResultView
+import blackjack.controller.BlackjackController
 
 fun main() {
-    val inputView = InputView()
-    val resultView = ResultView()
-
-    val players = inputView.inputPlayerNames()
-        .map { Player(it) }
-        .let { Players(it) }
-    val blackjackGame = BlackjackGame(players)
-
-    blackjackGame.dealInitialHand()
-    resultView.outputInitialHand(players)
-
-    players.forEach { player ->
-        while (player.canHit) {
-            val hit = inputView.inputHitDecision(player)
-            if (hit) {
-                blackjackGame.dealCardTo(player)
-                resultView.outputCurrentHand(player)
-            } else {
-                player.stay()
-            }
-        }
-    }
-
-    resultView.outputGameResult(players)
+    BlackjackController().play()
 }

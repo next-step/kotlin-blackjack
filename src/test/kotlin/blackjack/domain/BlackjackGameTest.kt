@@ -6,23 +6,25 @@ import org.junit.jupiter.api.Test
 internal class BlackjackGameTest {
     @Test
     internal fun `게임이 시작되면 플레이어는 두장의 카드를 받는다`() {
-        val playerA = Player("a")
-        val playerB = Player("b")
-        val sut = BlackjackGame(Players(listOf(playerA, playerB)))
+        val challengerA = Challenger("a")
+        val challengerB = Challenger("b")
+        val sut = BlackjackGame(Challengers(listOf(challengerA, challengerB)))
 
         sut.dealInitialHand()
 
-        playerA.deck.size shouldBe 2
-        playerB.deck.size shouldBe 2
+        sut.challengers.forEach { challenger ->
+            challenger.deck.size shouldBe 2
+        }
+        sut.dealer.deck.size shouldBe 2
     }
 
     @Test
     internal fun `플레이어에게 추가로 카드를 전달한다`() {
-        val playerA = Player("a")
-        val sut = BlackjackGame(Players(listOf(playerA)))
+        val challenger = Challenger("a")
+        val sut = BlackjackGame(Challengers(listOf(challenger)))
 
-        sut.dealCardTo(playerA)
+        sut.dealCardTo(challenger)
 
-        playerA.deck.size shouldBe 1
+        challenger.deck.size shouldBe 1
     }
 }
