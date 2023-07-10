@@ -1,5 +1,8 @@
-package blackjack.domain.card
+package blackjack.domain.deck
 
+import blackjack.domain.card.Card
+import blackjack.domain.card.NumberShape
+import blackjack.domain.card.Pattern
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.inspectors.forAll
 import io.kotest.matchers.collections.shouldContain

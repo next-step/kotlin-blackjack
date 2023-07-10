@@ -1,7 +1,7 @@
 package blackjack.domain.player
 
 import blackjack.domain.card.Card
-import blackjack.domain.card.Deck
+import blackjack.domain.deck.Deck
 import blackjack.view.BlackJackView
 
 class Player(

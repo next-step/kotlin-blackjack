@@ -1,9 +1,9 @@
 package blackjack.domain.player
 
 import blackjack.domain.card.Card
-import blackjack.domain.card.Deck
 import blackjack.domain.card.NumberShape
 import blackjack.domain.card.Pattern
+import blackjack.domain.deck.Deck
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 
