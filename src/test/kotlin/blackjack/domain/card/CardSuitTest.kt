@@ -1,6 +1,6 @@
-package blackjack
+package blackjack.domain.card
 
-import blackjack.domain.CardSuit
+import blackjack.domain.card.CardSuit
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test

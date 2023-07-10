@@ -1,4 +1,4 @@
-package blackjack.domain
+package blackjack.domain.card
 
 enum class CardRank(val value: Int, val forOutput: String) {
     ACE(1, "A"),

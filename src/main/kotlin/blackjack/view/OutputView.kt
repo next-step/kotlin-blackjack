@@ -1,7 +1,7 @@
 package blackjack.view
 
 import blackjack.domain.BlackjackGame
-import blackjack.domain.Card
+import blackjack.domain.card.Card
 import blackjack.domain.Player
 
 object OutputView {

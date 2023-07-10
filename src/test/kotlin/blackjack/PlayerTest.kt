@@ -1,8 +1,8 @@
 package blackjack
 
-import blackjack.domain.Card
-import blackjack.domain.CardRank
-import blackjack.domain.CardSuit
+import blackjack.domain.card.Card
+import blackjack.domain.card.CardRank
+import blackjack.domain.card.CardSuit
 import blackjack.domain.Player
 import blackjack.domain.PlayerState
 import io.kotest.inspectors.forAll
