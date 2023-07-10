@@ -6,22 +6,21 @@ import blackjack.domain.Participants
 
 object ResultView {
     fun initialCards(participants: Participants) {
-        println("딜러와 ${participants.toList().joinToString(", ") { it.name }}에게 2장의 나누었습니다.")
+        val playerNames = participants.getPlayers().joinToString(", ") { it.name }
+        println("딜러와 ${playerNames}에게 2장의 나누었습니다.")
         participants.forEach {
-            if (it is Dealer) {
-                dealerAndCards(it)
-                return@forEach
-            }
-            participantAndCards(it)
+            participantAndInitialCards(it)
         }
     }
 
-    private fun dealerAndCards(participant: Participant) {
-        println("딜러: ${participant.cards.cards.first()}")
+    private fun participantAndInitialCards(participant: Participant) {
+        val left = if (participant is Dealer) participant.name else "${participant.name}카드"
+        println("$left: ${participant.getInitialCards().joinToString(", ")}")
     }
 
     fun participantAndCards(participant: Participant) {
-        println("${participant.name}카드: ${participant.cards.cards.joinToString(", ")}")
+        val left = if (participant is Dealer) participant.name else "${participant.name}카드"
+        println("$left: ${participant.cards.cards.joinToString(", ")}")
     }
 
     fun result(participants: Participants) {

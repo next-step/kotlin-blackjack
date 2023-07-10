@@ -7,6 +7,13 @@ abstract class Participant(val name: String) {
         cards.add(card)
     }
 
+    fun getInitialCards(): List<Card> {
+        if (this is Dealer) {
+            return listOf(cards.cards.first())
+        }
+        return cards.cards
+    }
+
     fun isBust(): Boolean {
         return cards.calculateScore() > Cards.BLACKJACK
     }
