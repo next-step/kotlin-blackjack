@@ -16,7 +16,7 @@ class CardsTest : StringSpec({
         shouldThrow<IllegalArgumentException> {
             val cards = Cards()
             cards.get(53)
-        }.message shouldBe "카드의 인덱스는 52가 넘을 수 없습니다."
+        }.message shouldBe "더이상 뽑을 카드가 없습니다."
     }
 
     "에이스 카드가 없다면, 카드들의 점수는 각 끗구의 점수 합계이다." {
