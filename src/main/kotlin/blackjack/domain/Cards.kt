@@ -6,6 +6,7 @@ class Cards(
 
     val cards = _cards.toMutableList()
     fun get(index: Int): Card {
+        require(index <= 52) { "카드의 인덱스는 52가 넘을 수 없습니다." }
         return cards[index]
     }
 

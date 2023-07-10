@@ -1,5 +1,6 @@
 package blackjack.domain
 
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 
@@ -9,6 +10,13 @@ class CardsTest : StringSpec({
         val cards = Cards()
         cards.add(Card(CardType.CLOVER, Denomination.ACE))
         cards.cards.size shouldBe 1
+    }
+
+    "카드의 리스트가 있을 때 인덱스가 52가 넘으면 예외가 발생한다." {
+        shouldThrow<IllegalArgumentException> {
+            val cards = Cards()
+            cards.get(53)
+        }.message shouldBe "카드의 인덱스는 52가 넘을 수 없습니다."
     }
 
     "에이스 카드가 없다면, 카드들의 점수는 각 끗구의 점수 합계이다." {

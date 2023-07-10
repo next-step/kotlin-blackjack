@@ -5,8 +5,7 @@ class Deck private constructor(
 ) {
     private var index = INIT_INDEX
 
-    fun pop(input: Int = index): Card {
-        require(input <= 52) { "카드의 인덱스는 52가 넘을 수 없습니다." }
+    fun draw(): Card {
         return cards.get(index++)
     }
 

@@ -7,13 +7,13 @@ class BlackJackGame(
 
     fun start() {
         players.forEach { player ->
-            player.hit(deck.pop())
-            player.hit(deck.pop())
+            player.hit(deck.draw())
+            player.hit(deck.draw())
         }
     }
 
     fun hit(player: Player) {
-        player.hit(deck.pop())
+        player.hit(deck.draw())
     }
 
     fun canReceivePlayers(): Players {
