@@ -29,7 +29,7 @@ class Cards(
     companion object {
         const val BLACKJACK = 21
         private const val ACE_POINT = 10
-        fun of(cards: List<Card>): Cards {
+        fun shuffled(cards: List<Card>): Cards {
             return cards.shuffled().toCards()
         }
     }

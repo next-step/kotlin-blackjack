@@ -24,7 +24,7 @@ class Deck private constructor(
                     Card(cardType, denomination)
                 }
             }
-            return Cards.of(cards)
+            return Cards.shuffled(cards)
         }
     }
 }
