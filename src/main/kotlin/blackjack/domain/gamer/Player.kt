@@ -1,32 +1,36 @@
 package blackjack.domain.gamer
 
-class Player(private val name: String) : AbstractBlackJackGamer() {
-    private lateinit var gameRecord: GameRecordType
+import blackjack.dto.GeneratePlayerRequest
+
+class Player private constructor(name: String, private val bettingMoney: Int) : BlackJackGamer(name) {
 
     override fun getGamerType(): GamerType {
         return GamerType.PLAYER
     }
 
-    override fun getName(): String {
-        return name
+    fun blackJackMoney(): Int {
+        val blackJackWinMoney = (bettingMoney * 1.5).toInt()
+        super.takeMoney(blackJackWinMoney)
+        return blackJackWinMoney
     }
 
-    override fun proceedGameRecord(gameRecordType: GameRecordType) {
-        gameRecord = gameRecordType
+    fun winMoney(): Int {
+        super.takeMoney(bettingMoney)
+        return bettingMoney
     }
 
-    fun getGameRecord(): GameRecordType {
-        require(::gameRecord.isInitialized) { "승패가 결정난 뒤에 조회가 가능합니다." }
-        return gameRecord
+    fun loseMoney(): Int {
+        super.takeMoneyOut(bettingMoney)
+        return bettingMoney
+    }
+
+    fun drawMoney() {
+        super.takeMoney(bettingMoney)
     }
 
     companion object {
-        fun generatePlayers(nameList: List<String>): List<Player> {
-            val playerList = mutableListOf<Player>()
-            nameList.forEach {
-                playerList.add(Player(it))
-            }
-            return playerList.toList()
+        fun generatePlayer(generatePlayerRequest: GeneratePlayerRequest): Player {
+            return Player(generatePlayerRequest.playerName, generatePlayerRequest.bettingMoney)
         }
     }
 }

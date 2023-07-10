@@ -8,7 +8,6 @@ import blackjack.domain.gamer.Player
 
 class ResultView {
     fun printFirstDraw(gamerList: List<BlackJackGamer>) {
-        println()
         printFirstDrawTitle(gamerList)
         printFirstDrawDetail(gamerList)
         println()
@@ -16,7 +15,7 @@ class ResultView {
 
     private fun printFirstDrawTitle(gamerList: List<BlackJackGamer>) {
         gamerList.forEachIndexed { index, gamer ->
-            print(gamer.getName())
+            print(gamer.name)
             if (index == 0) print("와 ")
             if (index != 0 && index != gamerList.lastIndex) print(", ")
         }
@@ -32,8 +31,8 @@ class ResultView {
     }
 
     private fun printGamerName(gamer: BlackJackGamer) {
-        if (gamer.getGamerType() == GamerType.PLAYER) print("${gamer.getName()}카드: ")
-        if (gamer.getGamerType() == GamerType.DEALER) print("${gamer.getName()} 카드: ")
+        if (gamer.getGamerType() == GamerType.PLAYER) print("${gamer.name}카드: ")
+        if (gamer.getGamerType() == GamerType.DEALER) print("${gamer.name} 카드: ")
     }
 
     private fun getDealerFlutteringCards(cards: List<Card>): String {
@@ -51,7 +50,7 @@ class ResultView {
     }
 
     fun printPlayersWantToDrawCard(player: Player) {
-        println("${player.getName()}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
+        println("${player.name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
     }
 
     fun printGamerCardList(gamer: BlackJackGamer) {
@@ -82,24 +81,9 @@ class ResultView {
     }
 
     fun printGameResult(gamerList: List<BlackJackGamer>) {
-        println("## 최종 승패")
+        println("## 최종 수익")
         gamerList.forEach {
-            print("${it.getName()}: ")
-            printGameScore(it)
+            println("${it.name}: ${it.money}")
         }
-    }
-
-    private fun printGameScore(gamer: BlackJackGamer) {
-        if (gamer is Player) println(gamer.getGameRecord().value)
-        if (gamer is Dealer) printDealerRecords(gamer)
-    }
-
-    private fun printDealerRecords(dealer: Dealer) {
-        val totalGameRecord = dealer.getTotalGameRecord()
-        totalGameRecord.forEachIndexed { index, pair ->
-            print("${pair.second}${pair.first.value}")
-            if (index != totalGameRecord.lastIndex) print(" ")
-        }
-        println()
     }
 }

@@ -1,20 +1,43 @@
 package blackjack.domain.gamer
 
+import blackjack.domain.CardNumberCalculator
 import blackjack.domain.card.Card
 
-interface BlackJackGamer {
-    fun addCard(card: Card)
+open class BlackJackGamer(val name: String, money: Int = initMoney) {
+    var money = money
+        private set
+    private val cards = mutableListOf<Card>()
+    private val cardNumberCalculator = CardNumberCalculator()
 
-    fun addCards(drawCards: List<Card>)
+    fun takeMoney(addMoney: Int) {
+        money += addMoney
+    }
 
-    fun getCards(): List<Card>
+    fun takeMoneyOut(takenMoney: Int) {
+        money -= takenMoney
+    }
 
-    fun calculateSumOfCardNumbers(): Int
+    fun addCard(card: Card) {
+        cards.add(card)
+    }
 
-    fun getGamerType(): GamerType
+    fun addCards(drawCards: List<Card>) {
+        cards.addAll(drawCards)
+    }
 
-    fun getName(): String
+    fun getCards(): List<Card> {
+        return cards.toList()
+    }
 
-    fun proceedGameRecord(gameRecordType: GameRecordType)
+    fun calculateSumOfCardNumbers(): Int {
+        return cardNumberCalculator.calculateSumOfCardNumbers(cards)
+    }
 
+    open fun getGamerType(): GamerType {
+        return GamerType.PLAYER
+    }
+
+    companion object {
+        const val initMoney = 0
+    }
 }
