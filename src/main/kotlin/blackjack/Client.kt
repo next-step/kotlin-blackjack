@@ -2,6 +2,7 @@ package blackjack
 
 import blackjack.domain.BlackjackGame
 import blackjack.domain.Dealer
+import blackjack.domain.PlayerState
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
@@ -13,9 +14,10 @@ fun main() {
     OutputView.printInitGame(blackJackGame)
     while (blackJackGame.isNotFinished()) {
         blackJackGame.players.forEach { player ->
-            if (player.canDraw) {
-                val inputDrawResponse =  InputView.inputDrawResponse(player)
-                dealer.deal(player)
+            if (player.state == PlayerState.PLAYING) {
+                val inputDrawResponse = InputView.inputDrawResponse(player)
+                if (inputDrawResponse) dealer.deal(player)
+                else player.stopDraw()
             }
         }
     }

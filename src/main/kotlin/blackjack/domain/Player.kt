@@ -3,8 +3,11 @@ package blackjack.domain
 class Player(
     val name: String = "player"
 ) {
-    var canDraw: Boolean = true
-        get() = sum() <= 21
+    var state: PlayerState = PlayerState.PLAYING
+        get() {
+            if (field == PlayerState.PLAYING && sum() > 21) field = PlayerState.BURST
+            return field
+        }
         private set
 
     private val _cards = mutableListOf<Card>()
@@ -14,4 +17,6 @@ class Player(
     fun addCards(cards: List<Card>): Boolean = _cards.addAll(cards)
     fun addCard(card: Card): Boolean = _cards.add(card)
     fun sum(): Int = cards.sumOf { it.rank.value }
+
+    fun stopDraw() { state = PlayerState.STOP }
 }

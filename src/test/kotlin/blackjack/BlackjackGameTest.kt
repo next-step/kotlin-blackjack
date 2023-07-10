@@ -1,9 +1,6 @@
 package blackjack
 
 import blackjack.domain.BlackjackGame
-import blackjack.domain.Card
-import blackjack.domain.CardRank
-import blackjack.domain.CardSuit
 import blackjack.domain.Dealer
 import blackjack.domain.Player
 import io.kotest.inspectors.forAll
@@ -18,11 +15,10 @@ internal class BlackjackGameTest {
     private lateinit var blackjackGame: BlackjackGame
 
     @BeforeEach
-    fun beforeEach(){
+    fun beforeEach() {
         dealer = Dealer()
         players = listOf(Player(), Player())
         blackjackGame = BlackjackGame(dealer, players)
-
     }
 
     @DisplayName("플레이어는 게임 시작 시 카드 두 장을 지급받는다.")
@@ -58,8 +54,7 @@ internal class BlackjackGameTest {
     fun isNotFinishReturnFalse() {
         val dealer = Dealer()
         val players = listOf(Player(), Player())
-        val card = Card.of(CardSuit.DIAMOND, CardRank.KING)
-        players.forEach { it.addCards(listOf(card, card, card)) }
+        players.forEach(Player::stopDraw)
 
         val blackjackGame = BlackjackGame(dealer, players)
         val actual = blackjackGame.isNotFinished()

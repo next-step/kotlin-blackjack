@@ -16,7 +16,7 @@ class BlackjackGame(
         players.forEach { player -> dealer.deal(player) }
     }
 
-    fun isNotFinished(): Boolean = players.any { it.canDraw }
+    fun isNotFinished(): Boolean = players.any { it.state == PlayerState.PLAYING }
 
     companion object {
         private const val INIT_DEAL_COUNT = 2

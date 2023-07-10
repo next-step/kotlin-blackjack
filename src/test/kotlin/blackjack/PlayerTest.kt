@@ -4,12 +4,12 @@ import blackjack.domain.Card
 import blackjack.domain.CardRank
 import blackjack.domain.CardSuit
 import blackjack.domain.Player
+import blackjack.domain.PlayerState
 import io.kotest.inspectors.forAll
 import io.kotest.matchers.collections.shouldContain
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
-import kotlin.math.exp
 
 internal class PlayerTest {
 
@@ -62,28 +62,41 @@ internal class PlayerTest {
         }
     }
 
-    @DisplayName("플레이어의 canDraw 값은 카드 합이 21 이하면 true 초과면 false이다.")
+    @DisplayName("플레이어의 playerState 값은 카드 합이 21 이하면 Playing 초과면 Burst이다.")
     @Test
-    fun canDraw() {
+    fun playerState() {
         val testCases = listOf(
             listOf(
                 Card.of(CardSuit.DIAMOND, CardRank.TWO),
                 Card.of(CardSuit.DIAMOND, CardRank.THREE),
-            ) to true,
+            ) to PlayerState.PLAYING,
             listOf(
                 Card.of(CardSuit.HEART, CardRank.JACK),
                 Card.of(CardSuit.HEART, CardRank.QUEEN),
                 Card.of(CardSuit.HEART, CardRank.KING),
-            ) to false
+            ) to PlayerState.BURST
         )
 
         testCases.forAll { testCase ->
             val player = Player()
             player.addCards(testCase.first)
-            val actual = player.canDraw
+            val actual = player.state
             val expect = testCase.second
 
             actual shouldBe expect
         }
+    }
+
+    @DisplayName("플레이어는 카드 뽑기를 멈추고 상태를 변경할 수 있다.")
+    @Test
+    fun stopDraw() {
+        val player = Player()
+        player.state shouldBe PlayerState.PLAYING
+
+        player.stopDraw()
+        val actual = player.state
+        val expect = PlayerState.STOP
+
+        actual shouldBe expect
     }
 }
