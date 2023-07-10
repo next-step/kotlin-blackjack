@@ -56,8 +56,10 @@ class Player(
     }
 
     fun printCards() {
-        BlackJackView.printPlayerCardsView(this)
-        isShow = true
+        if (!isShow) {
+            BlackJackView.printPlayerCardsView(this)
+            isShow = true
+        }
     }
 
     companion object {

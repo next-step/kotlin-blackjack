@@ -24,7 +24,7 @@ object BlackJackView {
     }
 
     fun printPlayerMoreCardView(player: Player) {
-        println("${player.name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n")
+        println("${player.name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
     }
 
     fun printPlayersResultView(players: Players) {
