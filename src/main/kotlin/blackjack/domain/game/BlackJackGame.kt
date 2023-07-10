@@ -3,6 +3,7 @@ package blackjack.domain.game
 import blackjack.domain.deck.Deck
 import blackjack.domain.player.Players
 import blackjack.view.BlackJackView
+import blackjack.view.PlayerView
 
 class BlackJackGame {
     private val deck = Deck.makeDeck()
@@ -19,7 +20,7 @@ class BlackJackGame {
     private fun race(players: Players) {
         players.players.forEach {
             while (it.canPlayable()) {
-                BlackJackView.printPlayerMoreCardView(it)
+                PlayerView.printPlayerMoreCardView(it)
                 val yOrN = readln()
                 it.hitOrStand(yOrN, deck)
                 it.printCards()

@@ -42,3 +42,4 @@ Step2 리뷰
 [] BlackJackGame -> Controller 로 변경
 [] Cards 와 같은 일급 컬렉션으로 역활분리
 [] hasAce, isStand, isBust 필요한가?
+[] View 클래스 분리

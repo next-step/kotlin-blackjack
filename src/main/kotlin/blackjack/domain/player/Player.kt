@@ -2,7 +2,7 @@ package blackjack.domain.player
 
 import blackjack.domain.card.Card
 import blackjack.domain.deck.Deck
-import blackjack.view.BlackJackView
+import blackjack.view.PlayerView
 
 class Player(
     val name: String,
@@ -61,7 +61,7 @@ class Player(
 
     fun printCards() {
         if (!isShow) {
-            BlackJackView.printPlayerCardsView(this)
+            PlayerView.printPlayerCardsView(this)
             isShow = true
         }
     }

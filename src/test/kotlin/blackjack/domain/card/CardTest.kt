@@ -7,7 +7,7 @@ import io.kotest.matchers.shouldBe
 class CardTest : StringSpec({
     "카드는 숫자 1 ~ 9의 계산할때 1 ~ 9 로 계산된다." {
         listOf(
-            NumberShape.ONE,
+            NumberShape.ACE,
             NumberShape.TWO,
             NumberShape.THREE,
             NumberShape.FOUR,
@@ -17,7 +17,7 @@ class CardTest : StringSpec({
             NumberShape.EIGHT,
             NumberShape.NINE
         ).forAll {
-            val card = Card(it, Pattern.CLOVER)
+            val card = Card(it, Pattern.CLUB)
             card.getValue() shouldBe it.value
         }
     }

@@ -1,6 +1,6 @@
 package blackjack.domain.card
 
-enum class NumberShape(val value: Int, val display: String) {
+enum class NumberShape(val value: Int, private val symbol: String) {
     ACE(1, "A"),
     TWO(2, "2"),
     THREE(3, "3"),
@@ -12,5 +12,9 @@ enum class NumberShape(val value: Int, val display: String) {
     NINE(9, "9"),
     JACK(10, "J"),
     QUEEN(10, "Q"),
-    KING(10, "K"),
+    KING(10, "K"), ;
+
+    override fun toString(): String {
+        return symbol
+    }
 }

@@ -11,6 +11,6 @@ data class Card(private val numberShape: NumberShape, val pattern: Pattern) {
     }
 
     override fun toString(): String {
-        return "${numberShape.display}${pattern.display}"
+        return "$numberShape$pattern"
     }
 }
