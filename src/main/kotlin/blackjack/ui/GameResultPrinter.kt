@@ -1,8 +1,8 @@
 package blackjack.ui
 
 import blackjack.domain.Dealer
-import blackjack.domain.GameResultSummary
 import blackjack.domain.card.Hand
+import blackjack.domain.gameresult.GameResultSummary
 import blackjack.domain.player.Player
 
 object GameResultPrinter {

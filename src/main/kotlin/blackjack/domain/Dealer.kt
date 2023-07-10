@@ -5,7 +5,7 @@ import blackjack.domain.card.CardDeck
 import blackjack.domain.card.Hand
 import blackjack.domain.card.OpenCards
 
-class Dealer(val cardDeck: CardDeck): Playable(Hand.empty()) {
+class Dealer(val cardDeck: CardDeck) : Playable(Hand.empty()) {
     fun fetchOpenCard(): OpenCards = OpenCards(cardDeck.fetch(), cardDeck.fetch())
     fun dealing(playable: Playable) {
         if (playable.isFinished()) {
@@ -13,6 +13,8 @@ class Dealer(val cardDeck: CardDeck): Playable(Hand.empty()) {
         }
         playable.hit(cardDeck.fetch())
     }
+
+    fun hitSelf() = hit(cardDeck.fetch())
 
     fun shouldHit(): Boolean = total() <= SHOULD_HIT_SCORE
 
@@ -22,5 +24,3 @@ class Dealer(val cardDeck: CardDeck): Playable(Hand.empty()) {
         const val SHOULD_HIT_SCORE = 16
     }
 }
-
-
