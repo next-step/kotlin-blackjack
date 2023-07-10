@@ -28,11 +28,11 @@ abstract class Participant(val name: String) {
         return cards.calculateScore() < participant.cards.calculateScore()
     }
 
-    fun calculateResult(participant: Participant): GameResult {
+    fun calculateResult(participant: Participant): PlayerGameResult {
         return when {
-            isWin(participant) -> GameResult.WIN
-            isLose(participant) -> GameResult.LOSE
-            else -> GameResult.DRAW
+            isWin(participant) -> PlayerGameResult.WIN
+            isLose(participant) -> PlayerGameResult.LOSE
+            else -> PlayerGameResult.DRAW
         }
     }
 

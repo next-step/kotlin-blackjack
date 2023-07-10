@@ -1,6 +1,6 @@
 package blackjack.domain
 
-class Participants(val dealer: Dealer, val players: List<Player>) {
+class Participants(private val dealer: Dealer, val players: List<Player>) {
     val participants: List<Participant> = listOf(dealer) + players
 
     fun isDealerBust(): Boolean {
@@ -21,5 +21,11 @@ class Participants(val dealer: Dealer, val players: List<Player>) {
         }
 
         return dealer.dealerResult
+    }
+
+    fun getFinalResult(): FinalResult {
+        val dealerResult = calculateDealerResult()
+        val playerResults = players.associateWith { player -> player.calculateResult(dealer) }
+        return FinalResult(dealerResult, playerResults)
     }
 }

@@ -33,9 +33,9 @@ class ParticipantsTest : FunSpec({
         val participants = Participants(dealer, listOf(player1, player2))
         val dealerResult = participants.calculateDealerResult()
 
-        dealerResult shouldBe DealerResult(win = 1, lose = 1, draw = 0)
-        player1.calculateResult(dealer) shouldBe GameResult.WIN
-        player2.calculateResult(dealer) shouldBe GameResult.LOSE
+        dealerResult shouldBe DealerResult(isBust = false, win = 1, lose = 1, draw = 0)
+        player1.calculateResult(dealer) shouldBe PlayerGameResult.WIN
+        player2.calculateResult(dealer) shouldBe PlayerGameResult.LOSE
     }
 
     context("딜러와 2명의 플레이어가 있는 경우 딜러가 2승 0패 하는 상황") {
@@ -56,8 +56,8 @@ class ParticipantsTest : FunSpec({
         val participants = Participants(dealer, listOf(player1, player2))
         val dealerResult = participants.calculateDealerResult()
 
-        dealerResult shouldBe DealerResult(win = 2, lose = 0, draw = 0)
-        player1.calculateResult(dealer) shouldBe GameResult.LOSE
-        player2.calculateResult(dealer) shouldBe GameResult.LOSE
+        dealerResult shouldBe DealerResult(isBust = false, win = 2, lose = 0, draw = 0)
+        player1.calculateResult(dealer) shouldBe PlayerGameResult.LOSE
+        player2.calculateResult(dealer) shouldBe PlayerGameResult.LOSE
     }
 })

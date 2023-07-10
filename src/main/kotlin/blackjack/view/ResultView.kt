@@ -1,6 +1,7 @@
 package blackjack.view
 
 import blackjack.domain.Dealer
+import blackjack.domain.FinalResult
 import blackjack.domain.Participant
 import blackjack.domain.Participants
 
@@ -29,21 +30,19 @@ object ResultView {
         }
     }
 
-    fun finalResult(participants: Participants) {
+    fun finalResult(finalResult: FinalResult) {
         println("## 최종 승패")
-        if (participants.isDealerBust()) {
+        if (finalResult.dealerResult.isBust) {
             println("딜러: 패")
-            participants.players.forEach {
-                println("${it.name}: 승")
+            finalResult.playersResults.forEach { (player, _) ->
+                println("${player.name}: 승")
             }
             return
         }
-        val dealerResult = participants.calculateDealerResult()
-        println("딜러: ${dealerResult.win}승 ${dealerResult.lose}패")
+        println("딜러: ${finalResult.dealerResult.win}승 ${finalResult.dealerResult.lose}패")
 
-        participants.players.forEach {
-            val gameResult = it.calculateResult(participants.dealer)
-            println("${it.name}: ${gameResult.result}")
+        finalResult.playersResults.forEach { (player, gameResult) ->
+            println("${player.name}: ${gameResult.result}")
         }
     }
 }

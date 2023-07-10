@@ -2,6 +2,7 @@ package blackjack.controller
 
 import blackjack.domain.Dealer
 import blackjack.domain.Deck
+import blackjack.domain.FinalResult
 import blackjack.domain.Participant
 import blackjack.domain.Participants
 import blackjack.domain.Player
@@ -49,7 +50,7 @@ class BlackjackController {
         println()
     }
 
-    fun printFinalResult(participants: Participants) {
-        ResultView.finalResult(participants)
+    fun printFinalResult(finalResult: FinalResult) {
+        ResultView.finalResult(finalResult)
     }
 }

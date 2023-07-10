@@ -29,5 +29,5 @@ fun main() {
     blackjackController.printResult(participants)
 
     // 최종 승패를 출력한다.
-    blackjackController.printFinalResult(participants)
+    blackjackController.printFinalResult(participants.getFinalResult())
 }

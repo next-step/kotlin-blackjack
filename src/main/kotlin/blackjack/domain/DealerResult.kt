@@ -1,3 +1,3 @@
 package blackjack.domain
 
-data class DealerResult(var win: Int, var lose: Int, var draw: Int)
+data class DealerResult(val isBust: Boolean, var win: Int, var lose: Int, var draw: Int)
