@@ -40,7 +40,7 @@ Step2 리뷰
 [X] Card 의 1,10 상수값 사용
 [X] mutableSet 외부 접근시 문제생김 변경
 [] BlackJackGame -> Controller 로 변경
-[] Cards 와 같은 일급 컬렉션으로 역활분리
-[] hasAce, isStand, isBust 필요한가?
+[X] Cards 와 같은 일급 컬렉션으로 역활분리
+[X] hasAce, isStand, isBust 필요한가?
 [] View 클래스 분리
 [X] 시작 핸드 메소드 추가

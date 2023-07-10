@@ -11,7 +11,7 @@ class Deck private constructor(private val cards: MutableSet<Card>) {
     }
 
     fun getOneCard(): Card {
-        return cards.shuffled().first().also { cards.remove(it) }
+        return cards.first().also { cards.remove(it) }
     }
 
     companion object {
@@ -20,7 +20,7 @@ class Deck private constructor(private val cards: MutableSet<Card>) {
                 NumberShape.values().map { number ->
                     Card(number, pattern)
                 }
-            }.toMutableSet()
+            }.shuffled().toMutableSet()
             return Deck(cards)
         }
     }

@@ -17,7 +17,7 @@ object BlackJackView {
 
     fun printPlayersResultView(players: Players) {
         players.players.forEach {
-            println("${it.name}카드: ${it.cards.joinToString(", ")} - 결과: ${it.getCardsValue()}")
+            println("${it.name}카드: ${it.getHands().joinToString(", ")} - 결과: ${it.getHandsValue()}")
         }
     }
 }

@@ -5,7 +5,7 @@ import blackjack.domain.player.Player
 object PlayerView {
 
     fun printPlayerCardsView(player: Player) {
-        println("${player.name}카드: ${player.cards.joinToString(", ")}")
+        println("${player.name}카드: ${player.getHands().joinToString(", ")}")
     }
 
     fun printPlayerMoreCardView(player: Player) {

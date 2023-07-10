@@ -6,6 +6,9 @@ import blackjack.view.BlackJackView
 import blackjack.view.InputView
 import blackjack.view.PlayerView
 
+const val BLACKJACK_NUMBER = 21
+const val ACE_HIDDEN_VALUE = 10
+
 class BlackJackGame(private val deck: Deck) {
     private lateinit var players: Players
     fun start() {
@@ -24,8 +27,12 @@ class BlackJackGame(private val deck: Deck) {
             while (it.canPlayable()) {
                 PlayerView.printPlayerMoreCardView(it)
                 val yOrN = readln()
-                it.hitOrStand(yOrN, deck)
-                it.printCards()
+                if (yOrN == "y") {
+                    it.hit(deck)
+                }
+                if (yOrN == "n") {
+                    break
+                }
             }
         }
     }
