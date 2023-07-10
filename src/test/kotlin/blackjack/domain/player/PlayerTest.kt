@@ -20,7 +20,6 @@ class PlayerTest : BehaviorSpec({
         When("가지고 있는 수가 11이하 일때") {
             val player = Player(
                 "player",
-                hasAce = true,
                 mutableListOf(
                     Card(NumberShape.ACE, Pattern.SPADE),
                     Card(NumberShape.KING, Pattern.SPADE)
@@ -33,7 +32,6 @@ class PlayerTest : BehaviorSpec({
         When("가지고 있는 수가 11보다 클떄") {
             val player = Player(
                 "player",
-                hasAce = true,
                 mutableListOf(
                     Card(NumberShape.ACE, Pattern.SPADE),
                     Card(NumberShape.NINE, Pattern.SPADE),
@@ -47,17 +45,28 @@ class PlayerTest : BehaviorSpec({
     }
     Given("플레이어는 카드를 더 받거나 멈출 수 있다") {
         val deck = Deck.makeDeck()
-        val player = Player.of("pavlo", deck)
         When("플레이어가 2장의 카드에서 카드를 더 받을때") {
+            val player = Player.of("pavlo", deck)
             player.hitOrStand(Player.HIT_INPUT, deck)
             Then("플레이어의 카드 수가 3장이 되어야한다.") {
                 player.cards.size shouldBe 3
             }
         }
         When("플레이어가 2장의 카드에서 카드를 더 받지 않을때") {
+            val player = Player.of("wade", deck)
             player.hitOrStand(Player.STAND_INPUT, deck)
             Then("플레이어의 카드 수가 2장이여야 한다.") {
                 player.cards.size shouldBe 2
+            }
+        }
+    }
+
+    Given("플레이어가 ACE를 뽑은 유무를 알 수 있어야한다.") {
+        val deck = Deck.makeDeck { Card(NumberShape.ACE, Pattern.SPADE) }
+        When("플레이어가 Ace를 뽑았을때") {
+            val player = Player.of("pavlo", deck)
+            Then("플레이어의 hasAce가 true 로 변경된다.") {
+                player.hasAce shouldBe true
             }
         }
     }
