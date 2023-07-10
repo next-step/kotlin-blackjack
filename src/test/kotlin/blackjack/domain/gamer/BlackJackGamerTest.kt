@@ -63,21 +63,26 @@ class BlackJackGamerTest {
         Assertions.assertThat(blackJackGamer.getCards()).isEqualTo(answer)
     }
 
-//    @Test
-//    fun `블랙잭 플레이어는 뽑은 카드를 한번에 여러장 씩 추가할 수 있다`() {
-//        val drawCards = mutableListOf<Card>()
-//        drawCards.add(Card(shape = CardShape.DIAMOND, number = CardNumber.TWO))
-//        drawCards.add(Card(shape = CardShape.HEART, number = CardNumber.THREE))
-//        drawCards.add(Card(shape = CardShape.CLOVER, number = CardNumber.A))
-//
-//        player.addCards(drawCards)
-//
-//        val answer = listOf(
-//            Card(shape = CardShape.DIAMOND, number = CardNumber.TWO),
-//            Card(shape = CardShape.HEART, number = CardNumber.THREE),
-//            Card(shape = CardShape.CLOVER, number = CardNumber.A)
-//        )
-//
-//        Assertions.assertThat(player.getCards()).isEqualTo(answer)
-//    }
+    @Test
+    fun `BlackJackGamer는 뽑은 카드를 한번에 여러장 씩 추가할 수 있다`() {
+        // given
+        val drawCards = mutableListOf<Card>()
+        drawCards.add(Card(shape = CardShape.DIAMOND, number = CardNumber.TWO))
+        drawCards.add(Card(shape = CardShape.HEART, number = CardNumber.THREE))
+        drawCards.add(Card(shape = CardShape.CLOVER, number = CardNumber.A))
+
+        val blackJackGamer = BlackJackGamer(name = "name", money = 1)
+
+        // when
+        blackJackGamer.addCards(drawCards)
+
+        val answer = listOf(
+            Card(shape = CardShape.DIAMOND, number = CardNumber.TWO),
+            Card(shape = CardShape.HEART, number = CardNumber.THREE),
+            Card(shape = CardShape.CLOVER, number = CardNumber.A)
+        )
+
+        // then
+        Assertions.assertThat(blackJackGamer.getCards()).isEqualTo(answer)
+    }
 }
