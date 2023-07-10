@@ -45,13 +45,19 @@ class PlayerTest : BehaviorSpec({
             }
         }
     }
-    Given("플레이어는 카드를 더 받을 수 있다") {
+    Given("플레이어는 카드를 더 받거나 멈출 수 있다") {
         val deck = Deck.makeDeck()
         val player = Player.of("pavlo", deck)
-        When("플레이어가 2장의 카드에서 카드를 더 받을떄") {
-            player.drawCard(deck)
+        When("플레이어가 2장의 카드에서 카드를 더 받을때") {
+            player.hitOrStand(Player.HIT_INPUT, deck)
             Then("플레이어의 카드 수가 3장이 되어야한다.") {
                 player.cards.size shouldBe 3
+            }
+        }
+        When("플레이어가 2장의 카드에서 카드를 더 받지 않을때") {
+            player.hitOrStand(Player.STAND_INPUT, deck)
+            Then("플레이어의 카드 수가 2장이여야 한다.") {
+                player.cards.size shouldBe 2
             }
         }
     }
