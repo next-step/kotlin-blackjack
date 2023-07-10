@@ -14,13 +14,12 @@ class Cards(
     }
 
     fun score(): Int {
-        val numberOfAce = numberOfAce()
         val baseScore = baseScore()
-        return if (numberOfAce != 0 && baseScore + ACE_POINT <= BLACKJACK) baseScore + ACE_POINT else baseScore
+        return if (containsAce() && baseScore + ACE_POINT <= BLACKJACK) baseScore + ACE_POINT else baseScore
     }
 
-    private fun numberOfAce(): Int {
-        return cards.count {
+    private fun containsAce(): Boolean {
+        return cards.any {
             it.denomination == Denomination.ACE
         }
     }
