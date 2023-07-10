@@ -11,25 +11,25 @@ class CardsTest : StringSpec({
         cards.cards.size shouldBe 1
     }
 
-    "카드들의 스코어를 계산한다." {
+    "에이스 카드가 없다면, 카드들의 점수는 각 끗구의 점수 합계이다." {
         val cards = Cards()
         cards.add(Card(CardType.CLOVER, Denomination.TEN))
         cards.add(Card(CardType.CLOVER, Denomination.KING))
         cards.score() shouldBe 20
     }
 
-    "카드들의 스코어를 계산한다(ACE)." {
+    "에이스 카드가 포함되어 있고 스코어의 총합이 21 이하이면 에이스는 11점으로 계산된다." {
         val cards = Cards()
         cards.add(Card(CardType.CLOVER, Denomination.ACE))
         cards.add(Card(CardType.CLOVER, Denomination.KING))
         cards.score() shouldBe 21
     }
 
-    "카드들의 스코어를 계산한다(ACE 2장)." {
+    "에이스 카드가 포함되어 있고 스코어의 총합이 21이 넘는다면 에이스는 1점으로 계산된다." {
         val cards = Cards()
         cards.add(Card(CardType.CLOVER, Denomination.ACE))
-        cards.add(Card(CardType.HEART, Denomination.ACE))
-        cards.add(Card(CardType.CLOVER, Denomination.KING))
-        cards.score() shouldBe 12
+        cards.add(Card(CardType.HEART, Denomination.TEN))
+        cards.add(Card(CardType.CLOVER, Denomination.TWO))
+        cards.score() shouldBe 13
     }
 })
