@@ -17,7 +17,6 @@ class DealerTest {
         val dealer = Dealer()
 
         // when
-        player.proceedGameRecord(GameRecordType.WIN)
         val playerWinMoney = player.winMoney()
         dealer.loseMoney(playerWinMoney)
 
@@ -36,7 +35,6 @@ class DealerTest {
         val dealer = Dealer()
 
         // when
-        player.proceedGameRecord(GameRecordType.LOSE)
         val playerLoseMoney = player.loseMoney()
         dealer.winMoney(playerLoseMoney)
 
@@ -55,7 +53,6 @@ class DealerTest {
         val dealer = Dealer()
 
         // when
-        player.proceedGameRecord(GameRecordType.WIN)
         val blackJackPlayerWinMoney = player.blackJackMoney()
         dealer.loseMoney(blackJackPlayerWinMoney)
 
