@@ -39,7 +39,7 @@ object OutputView {
             print("${it.name}: ")
             when (result) {
                 GameResult.WIN -> println("승")
-                GameResult.LOSS -> println("패")
+                GameResult.LOSE -> println("패")
                 else -> println("무")
             }
         }
@@ -53,7 +53,7 @@ object OutputView {
         dealerResult.forEach { (result, count) ->
             when (result) {
                 GameResult.WIN -> print("${count}승 ")
-                GameResult.LOSS -> print("${count}패 ")
+                GameResult.LOSE -> print("${count}패 ")
                 else -> print("${count}무 ")
             }
         }

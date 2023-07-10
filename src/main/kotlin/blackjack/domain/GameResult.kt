@@ -2,13 +2,13 @@ package blackjack.domain
 
 enum class GameResult {
     WIN,
-    LOSS,
+    LOSE,
     DRAW;
 
     private fun opposite(): GameResult {
-        return when {
-            this == WIN -> LOSS
-            this == LOSS -> WIN
+        return when (this) {
+            WIN -> LOSE
+            LOSE -> WIN
             else -> DRAW
         }
     }
@@ -23,9 +23,8 @@ enum class GameResult {
             val playerScore = player.score
             val dealerScore = dealer.score
             return when {
-                dealerScore > BLACK_JACK -> WIN
-                dealerScore < playerScore -> WIN
-                dealerScore > playerScore -> LOSS
+                dealerScore > BLACK_JACK || dealerScore < playerScore -> WIN
+                dealerScore > playerScore -> LOSE
                 else -> DRAW
             }
         }
