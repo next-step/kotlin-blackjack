@@ -10,9 +10,9 @@ import io.kotest.matchers.collections.shouldNotContain
 import io.kotest.matchers.shouldBe
 
 class DeckTest : StringSpec({
-    "카드 뭉치의 크기는 초기에 52장이다." {
+    "카드 뭉치의 크기는 초기에 48장이다." {
         val deck = Deck.makeDeck()
-        deck.cards.size shouldBe 52
+        deck.cards.size shouldBe 48
     }
 
     "카드의 네가지 문양으로 13장의 카드를 다 가지고 있어야한다." {
