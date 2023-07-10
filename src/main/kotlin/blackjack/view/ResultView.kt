@@ -6,7 +6,7 @@ import blackjack.domain.Participants
 
 object ResultView {
     fun initialCards(participants: Participants) {
-        val playerNames = participants.getPlayers().joinToString(", ") { it.name }
+        val playerNames = participants.players.joinToString(", ") { it.name }
         println("딜러와 ${playerNames}에게 2장의 나누었습니다.")
         participants.participants.forEach {
             participantAndInitialCards(it)
@@ -33,7 +33,7 @@ object ResultView {
         println("## 최종 승패")
         if (participants.isDealerBust()) {
             println("딜러: 패")
-            participants.getPlayers().forEach {
+            participants.players.forEach {
                 println("${it.name}: 승")
             }
             return
@@ -41,8 +41,8 @@ object ResultView {
         val dealerResult = participants.calculateDealerResult()
         println("딜러: ${dealerResult.win}승 ${dealerResult.lose}패")
 
-        participants.getPlayers().forEach {
-            val gameResult = it.calculateResult(participants.getDealer())
+        participants.players.forEach {
+            val gameResult = it.calculateResult(participants.dealer)
             println("${it.name}: ${gameResult.result}")
         }
     }

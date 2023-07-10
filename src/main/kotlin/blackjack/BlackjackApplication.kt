@@ -7,13 +7,13 @@ import blackjack.domain.Participants
 fun main() {
     val blackjackController = BlackjackController()
     val dealer = Dealer()
-    val participants = Participants(listOf(dealer) + blackjackController.inputPlayers())
+    val participants = Participants(dealer, blackjackController.inputPlayers())
 
     blackjackController.drawInitialCards(participants)
     blackjackController.printInitialCards(participants)
 
-    for (participant in participants.getPlayers()) {
-        while (blackjackController.drawMoreCard(participant)) {
+    for (player in participants.players) {
+        while (blackjackController.drawMoreCard(player)) {
             continue
         }
     }

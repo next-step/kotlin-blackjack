@@ -10,7 +10,7 @@ class ParticipantsTest : FunSpec({
         dealer.addCard(Card(Suit.HEART, Denomination.QUEEN))
         dealer.addCard(Card(Suit.HEART, Denomination.KING))
 
-        val participants = Participants(listOf(dealer, Player("june")))
+        val participants = Participants(dealer, listOf(Player("june")))
 
         participants.isDealerBust() shouldBe true
     }
@@ -30,7 +30,7 @@ class ParticipantsTest : FunSpec({
         player2.addCard(Card(Suit.CLUB, Denomination.SEVEN))
         player2.addCard(Card(Suit.SPADE, Denomination.KING))
 
-        val participants = Participants(listOf(dealer, player1, player2))
+        val participants = Participants(dealer, listOf(player1, player2))
         val dealerResult = participants.calculateDealerResult()
 
         dealerResult shouldBe DealerResult(win = 1, lose = 1, draw = 0)
@@ -53,7 +53,7 @@ class ParticipantsTest : FunSpec({
         player2.addCard(Card(Suit.CLUB, Denomination.SEVEN))
         player2.addCard(Card(Suit.SPADE, Denomination.KING))
 
-        val participants = Participants(listOf(dealer, player1, player2))
+        val participants = Participants(dealer, listOf(player1, player2))
         val dealerResult = participants.calculateDealerResult()
 
         dealerResult shouldBe DealerResult(win = 2, lose = 0, draw = 0)
