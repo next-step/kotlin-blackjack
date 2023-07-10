@@ -16,6 +16,13 @@ class BlackJackGame(
         player.hit(deck.draw())
     }
 
+    fun draw(player: Player, onDraw: (Player) -> Unit) {
+        if (player.canReceive()) {
+            hit(player)
+            onDraw(player)
+        }
+    }
+
     fun canReceivePlayers(): Players {
         return players.canReceivePlayers()
     }

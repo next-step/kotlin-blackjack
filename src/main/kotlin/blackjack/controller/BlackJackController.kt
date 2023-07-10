@@ -18,9 +18,8 @@ fun main() {
     val canReceivePlayers = blackJackGame.canReceivePlayers()
 
     canReceivePlayers.forEach { player ->
-        while (InputView.getMoreCard(player.name) && player.canReceive()) {
-            blackJackGame.hit(player)
-            ResultView.printPlayer(player)
+        while (InputView.getMoreCard(player.name)) {
+            blackJackGame.draw(player) { ResultView.printPlayer(it) }
         }
         ResultView.printPlayer(player)
     }
