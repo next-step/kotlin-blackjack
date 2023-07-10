@@ -2,19 +2,18 @@ package blackjack.controller
 
 import blackjack.domain.BLACK_JACK
 import blackjack.domain.BlackJackGame
+import blackjack.domain.DEALER_MINIMUM_SCORE
 import blackjack.domain.Player
 import blackjack.domain.Players
 import blackjack.view.InputView
 import blackjack.view.OutputView
-
-const val DEALER_MINIMUM_SCORE = 16
 
 class BlackJackGameController(
     private val inputView: InputView = InputView,
     private val outputView: OutputView = OutputView
 ) {
     fun run() {
-        val players = Players(inputView.requestNameOfPlayers().map { Player(name = it) })
+        val players = Players(inputView.requestNameOfPlayers().map(::Player))
         val game = BlackJackGame(players = players)
         playGame(game)
         outputView.printScoreOfParticipants(game.players, game.dealer)

@@ -1,6 +1,7 @@
 package blackjack.domain
 
 const val BLACK_JACK = 21
+const val DEALER_MINIMUM_SCORE = 16
 
 class BlackJackGame(
     val dealer: Dealer = Dealer(),
