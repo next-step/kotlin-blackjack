@@ -1,29 +1,19 @@
 package blackjack.domain.users
 
 import blackjack.domain.BlackjackGame
-import blackjack.domain.Card
-import blackjack.domain.Cards
-import blackjack.domain.result.PlayerResult
-import blackjack.view.printUserCards
+import blackjack.domain.card.Card
+import blackjack.domain.card.Cards
 
 class Player(
     name: String,
     cards: Cards,
-    private var isDeckComplete: Boolean = false
+    val bettingAmount: Int
 ) : User(name, cards) {
-    fun deckComplete() {
-        isDeckComplete = true
-    }
-
     fun isDeckInComplete(): Boolean {
-        return !isDeckComplete
+        return cards.value() < BlackjackGame.BLACKJACK_VALUE
     }
 
     fun userCardReceive(card: Card) {
         plusCard(card)
-
-        if (cards.value() >= BlackjackGame.BLACKJACK_VALUE) {
-            deckComplete()
-        }
     }
 }

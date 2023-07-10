@@ -1,13 +1,14 @@
 package blackjack.controller
 
 import blackjack.domain.BlackjackGame
-import blackjack.domain.Cards
-import blackjack.domain.users.Player
+import blackjack.domain.card.Cards
+import blackjack.domain.card.InputCardReceiveSelector
+import blackjack.domain.card.PrintUserCards
 import blackjack.domain.users.User
 import blackjack.view.USER_NAME_SPLIT_SYMBOL
+import blackjack.view.enterUserBettingAmount
 import blackjack.view.enterUserNames
 import blackjack.view.printBlackjackResult
-import blackjack.view.printCardReceiveWant
 import blackjack.view.printLine
 import blackjack.view.printResults
 import blackjack.view.printUserCards
@@ -16,11 +17,12 @@ import blackjack.view.printUserNames
 class BlackjackController {
     fun start() {
         val userNames = enterUserNames()
-        val blackjackGame = BlackjackGame.from(userNames)
+
+        val blackjackGame = BlackjackGame.from(userNames.associateBy({ it }, { enterUserBettingAmount(it) }))
         printUserNames(userNames.joinToString(USER_NAME_SPLIT_SYMBOL))
         printUserCardInfos(blackjackGame.userCards())
 
-        handOutCards(blackjackGame)
+        blackjackGame.handsOutCards(InputCardReceiveSelector(), PrintUserCards())
 
         printCardResults(blackjackGame.userCards())
 
@@ -32,27 +34,6 @@ class BlackjackController {
         for (userCard in userCards) {
             val user = userCard.key
             printUserCards(user.name, user.cards)
-        }
-    }
-
-    private fun handOutCards(blackjackGame: BlackjackGame) {
-        blackjackGame.cardReceivePossibleUsers().forEach {
-            cardReceiveWant(it, blackjackGame)
-        }
-
-        blackjackGame.dealerCardReceive()
-    }
-
-    private fun cardReceiveWant(user: Player, blackjackGame: BlackjackGame) {
-        if (printCardReceiveWant(user.name)) {
-            user.userCardReceive(blackjackGame.handOutCard())
-            printUserCards(user.name, user.cards)
-        } else {
-            user.deckComplete()
-        }
-
-        if (user.isDeckInComplete()) {
-            cardReceiveWant(user, blackjackGame)
         }
     }
 

@@ -1,4 +1,4 @@
-package blackjack.domain
+package blackjack.domain.card
 
 import blackjack.enums.Denomination
 import blackjack.enums.Suit

@@ -1,4 +1,4 @@
-package blackjack.domain
+package blackjack.domain.card
 
 import blackjack.domain.BlackjackGame.Companion.BLACKJACK_VALUE
 

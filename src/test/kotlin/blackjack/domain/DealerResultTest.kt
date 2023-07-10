@@ -6,10 +6,9 @@ import io.kotest.matchers.shouldBe
 
 class DealerResultTest : StringSpec(
     {
-        "딜러의 승,패의 수를 설정할 수 있다." {
-            val dealerResult = DealerResult(5, 1)
+        "딜러의 최종 수익을 설정할 수 있다." {
+            val dealerResult = DealerResult(50000)
 
-            dealerResult.winCount shouldBe 5
-            dealerResult.loseCount shouldBe 1
+            dealerResult.finalRevenue shouldBe 50000
         }
     })

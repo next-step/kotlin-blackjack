@@ -1,8 +1,11 @@
 package blackjack.domain
 
-import blackjack.domain.result.DealerResult
+import blackjack.domain.card.CardReceiveSelector
+import blackjack.domain.card.Cards
+import blackjack.domain.card.InputCardReceiveSelector
+import blackjack.domain.card.PrintUserCards
+import blackjack.domain.card.UserCards
 import blackjack.domain.result.GameResults
-import blackjack.domain.result.PlayerResult
 import blackjack.domain.users.Dealer
 import blackjack.domain.users.Player
 import blackjack.domain.users.User
@@ -13,7 +16,7 @@ class BlackjackGame(
     userList: List<Player>,
     private val gameDeck: GameDeck = GameDeck()
 ) {
-    val users: Users = Users(userList, dealer)
+    private val users: Users = Users(userList, dealer)
     private val dealer: Dealer = users.dealer
 
     init {
@@ -29,39 +32,51 @@ class BlackjackGame(
     }
 
     fun calculateBlackjackResult(): GameResults {
-        val dealerCardValue = users.dealerCardValue()
+        return users.calculateGameResult()
+    }
 
-        if (dealerCardValue > BLACKJACK_VALUE) {
-            return dealerLose()
+    fun handsOutCards(cardReceiveSelector: InputCardReceiveSelector, printUserCards: PrintUserCards) {
+        cardReceivePossibleUsers().forEach {
+            cardReceiveWant(it, cardReceiveSelector, printUserCards)
         }
 
-        return users.calculateGameResult(dealerCardValue)
+        dealerCardReceive()
     }
 
-    fun handOutCard(): Card {
-        return gameDeck.handOutCard()
+    private fun cardReceiveWant(
+        user: Player,
+        cardReceiveSelector: CardReceiveSelector,
+        uerCards: UserCards
+    ) {
+
+        if (cardReceiveSelector.cardReceiveNotWant(user.name)) {
+            return
+        }
+
+        user.userCardReceive(gameDeck.handOutCard())
+
+        uerCards.printUserCards(user.name, user.cards)
+
+        if (user.isDeckInComplete()) {
+            cardReceiveWant(user, cardReceiveSelector, uerCards)
+        }
     }
 
-    fun dealerCardReceive() {
+    private fun dealerCardReceive() {
         if (dealer.cardReceivePossible()) {
             dealer.plusCard(gameDeck.handOutCard())
         }
     }
 
-    private fun dealerLose() = GameResults(
-        users.players.map { PlayerResult(it.name, true) },
-        DealerResult(loseCount = users.players.size)
-    )
-
     companion object {
         const val GAME_START_CARD_COUNT = 2
         const val BLACKJACK_VALUE = 21
 
-        fun from(userNames: List<String>): BlackjackGame {
+        fun from(userNames: Map<String, Int>): BlackjackGame {
             val gameDeck = GameDeck()
             val users = userNames
                 .map {
-                    Player(it, Cards(gameDeck.handOutCards(GAME_START_CARD_COUNT)))
+                    Player(it.key, Cards(gameDeck.handOutCards(GAME_START_CARD_COUNT)), it.value)
                 }
             val dealer = Dealer("딜러", Cards(gameDeck.handOutCards(GAME_START_CARD_COUNT)))
 

@@ -1,5 +1,7 @@
 package blackjack.domain
 
+import blackjack.domain.card.Card
+import blackjack.domain.card.Cards
 import blackjack.domain.users.Dealer
 import blackjack.domain.users.Player
 import blackjack.enums.Denomination
@@ -13,26 +15,29 @@ class BlackjackGameTest : StringSpec({
             Player(
                 "Test1",
                 Cards(
-                    listOf(Card(Denomination.ACE, Suit.DIAMOND), Card(Denomination.KING, Suit.DIAMOND))
+                    listOf(
+                        Card(Denomination.ACE, Suit.DIAMOND),
+                        Card(Denomination.KING, Suit.DIAMOND)
+                    )
                 ),
-                true
+                10000
             )
         val test2 =
             Player(
                 "Test2",
                 Cards(
                     listOf(
-                        Card(Denomination.QUEEN, Suit.DIAMOND), Card(Denomination.KING, Suit.DIAMOND)
+                        Card(Denomination.QUEEN, Suit.DIAMOND),
+                        Card(Denomination.KING, Suit.DIAMOND)
                     )
-
                 ),
-                true
+                20000
             )
         val test3 =
             Player(
                 "Test3",
-                Cards(listOf(Card(Denomination.TWO, Suit.DIAMOND), Card(Denomination.KING, Suit.DIAMOND)))
-
+                Cards(listOf(Card(Denomination.TWO, Suit.DIAMOND), Card(Denomination.KING, Suit.DIAMOND))),
+                10000
             )
         val dealer =
             Dealer(
@@ -42,6 +47,6 @@ class BlackjackGameTest : StringSpec({
 
         val blackjackGame = BlackjackGame(dealer, listOf(test1, test2, test3))
 
-        blackjackGame.cardReceivePossibleUsers().size shouldBe 1
+        blackjackGame.cardReceivePossibleUsers().size shouldBe 2
     }
 })

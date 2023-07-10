@@ -7,17 +7,22 @@ fun enterUserNames(): List<String> {
     return readln().trim().split(USER_NAME_SPLIT_SYMBOL)
 }
 
-fun printCardReceiveWant(name: String): Boolean {
+fun enterUserBettingAmount(name: String): Int {
+    println("${name}의 배팅 금액은?")
+    return readln().toInt()
+}
+
+fun printCardReceiveNotWant(name: String): Boolean {
     println("${name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
 
     val receiveWant = readln()
     if (receiveWant == "y") {
-        return true
-    }
-
-    if (receiveWant == "n") {
         return false
     }
 
-    return printCardReceiveWant(name)
+    if (receiveWant == "n") {
+        return true
+    }
+
+    return printCardReceiveNotWant(name)
 }
