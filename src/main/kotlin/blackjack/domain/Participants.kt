@@ -26,7 +26,7 @@ class Participants(val participants: List<Participant>) {
     }
 
     fun isDealerBust(): Boolean {
-        return getDealer().isBust()
+        return getDealer().cards.isBust()
     }
 
     fun calculateDealerResult(): DealerResult {

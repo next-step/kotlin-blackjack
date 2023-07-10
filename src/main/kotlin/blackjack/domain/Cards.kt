@@ -18,6 +18,14 @@ class Cards(vararg cards: Card) {
         return calculateScore() < BLACKJACK
     }
 
+    fun isBlackjack(): Boolean {
+        return calculateScore() == BLACKJACK
+    }
+
+    fun isBust(): Boolean {
+        return calculateScore() > BLACKJACK
+    }
+
     fun calculateScore(): Int {
         val hasAce = cards.any { it.denomination == Denomination.ACE }
 

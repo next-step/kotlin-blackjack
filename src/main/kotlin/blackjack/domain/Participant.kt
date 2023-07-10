@@ -14,19 +14,15 @@ abstract class Participant(val name: String) {
         return cards.cards
     }
 
-    fun isBust(): Boolean {
-        return cards.calculateScore() > Cards.BLACKJACK
-    }
-
     fun isWin(participant: Participant): Boolean {
-        if (isBust()) {
+        if (cards.isBust()) {
             return false
         }
         return cards.calculateScore() > participant.cards.calculateScore()
     }
 
     fun isLose(participant: Participant): Boolean {
-        if (isBust()) {
+        if (cards.isBust()) {
             return true
         }
         return cards.calculateScore() < participant.cards.calculateScore()
