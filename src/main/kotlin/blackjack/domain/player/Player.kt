@@ -2,13 +2,14 @@ package blackjack.domain.player
 
 import blackjack.domain.card.Card
 import blackjack.domain.deck.Deck
+import blackjack.domain.game.START_DRAW_COUNT
 
 class Player(
     val name: String,
     private val hands: Hands = Hands()
 ) {
     fun drawStartHand(deck: Deck) {
-        repeat(2) {
+        repeat(START_DRAW_COUNT) {
             hands.addCard(deck.getOneCard())
         }
     }

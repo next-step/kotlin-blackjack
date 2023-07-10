@@ -2,35 +2,32 @@ package blackjack.domain.game
 
 import blackjack.domain.deck.Deck
 import blackjack.domain.player.Players
-import blackjack.view.BlackJackView
 import blackjack.view.InputView
-import blackjack.view.PlayerView
+import blackjack.view.OutputView
 
 const val BLACKJACK_NUMBER = 21
 const val ACE_HIDDEN_VALUE = 10
+const val START_DRAW_COUNT = 2
 
 class BlackJackGame(private val deck: Deck) {
     private lateinit var players: Players
     fun start() {
         players = InputView.getPlayerInput()
-        BlackJackView.printPlayersInitView(players)
-        players.players.forEach {
-            it.drawStartHand(deck)
-        }
-        BlackJackView.printPlayersCardsView(players)
+        OutputView.printPlayersInitView(players)
+        players.prepareGame(deck)
+        OutputView.printPlayersHandsView(players)
         race(players)
-        BlackJackView.printPlayersResultView(players)
+        OutputView.printPlayersResultView(players)
     }
 
     private fun race(players: Players) {
         players.players.forEach {
-            while (it.canPlayable()) {
-                PlayerView.printPlayerMoreCardView(it)
-                val yOrN = readln()
-                if (yOrN == "y") {
+            while (!it.canPlayable()) {
+                val isHit = InputView.getYorN(it.name)
+                if (isHit) {
                     it.hit(deck)
-                }
-                if (yOrN == "n") {
+                    OutputView.printPlayerHandsView(it)
+                } else {
                     break
                 }
             }

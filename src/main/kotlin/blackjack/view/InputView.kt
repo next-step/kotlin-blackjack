@@ -9,4 +9,15 @@ object InputView {
         println()
         return Players.of(playerNames)
     }
+
+    fun getYorN(name: String): Boolean {
+        while (true) {
+            println("${name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
+            val yOrN = readln()
+            if (yOrN == "y")
+                return true
+            if (yOrN == "n")
+                return false
+        }
+    }
 }
