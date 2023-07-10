@@ -5,10 +5,6 @@ class Participants(val participants: List<Participant>) {
         return Participants(participants + other.participants)
     }
 
-    fun toList(): List<Participant> {
-        return participants.toList()
-    }
-
     fun filter(predicate: (Participant) -> Boolean): Participants {
         return Participants(participants.filter(predicate))
     }
