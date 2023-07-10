@@ -9,7 +9,7 @@ class Player(
     val cards: MutableList<Card> = mutableListOf()
 ) {
     init {
-        cards.firstOrNull { it.isAce() }.apply { hasAce = true }
+        cards.firstOrNull { it.isAce() }?.apply { hasAce = true }
     }
 
     var hasAce: Boolean = false

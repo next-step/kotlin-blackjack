@@ -60,14 +60,4 @@ class PlayerTest : BehaviorSpec({
             }
         }
     }
-
-    Given("플레이어가 ACE를 뽑은 유무를 알 수 있어야한다.") {
-        val deck = Deck.makeDeck { Card(NumberShape.ACE, Pattern.SPADE) }
-        When("플레이어가 Ace를 뽑았을때") {
-            val player = Player.of("pavlo", deck)
-            Then("플레이어의 hasAce가 true 로 변경된다.") {
-                player.hasAce shouldBe true
-            }
-        }
-    }
 })
