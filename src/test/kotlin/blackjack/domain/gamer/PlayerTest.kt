@@ -7,7 +7,6 @@ import blackjack.dto.GeneratePlayerRequest
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
 
 class PlayerTest {
 
@@ -55,11 +54,6 @@ class PlayerTest {
     }
 
     @Test
-    fun `플레이어의 전적이 결정되기전에 조회할 경우 IllegalArgumentException을 throw 한다`() {
-        assertThrows<IllegalArgumentException> { player.getGameRecord() }
-    }
-
-    @Test
     fun `플레이어가 게임에서 패배했을때, 돈을 잃는다`() {
         // given
         val bettingMoney = 10000
@@ -68,7 +62,6 @@ class PlayerTest {
             .generatePlayer()
 
         // when
-        player.proceedGameRecord(GameRecordType.LOSE)
         player.loseMoney()
 
         // then
@@ -84,7 +77,6 @@ class PlayerTest {
             .generatePlayer()
 
         // when
-        player.proceedGameRecord(GameRecordType.WIN)
         player.winMoney()
 
         // then
@@ -100,46 +92,9 @@ class PlayerTest {
             .generatePlayer()
 
         // when
-        player.proceedGameRecord(GameRecordType.WIN)
         player.blackJackMoney()
 
         // then
         Assertions.assertThat(player.money).isEqualTo(15000)
-    }
-
-    @Test
-    fun `승부가 결정나기전에 승리 금액을 정산하면 IllegalArgumentException을 throw 한다`() {
-        // given
-        val bettingMoney = 10000
-        val playerName = "name"
-        player = GeneratePlayerRequest(playerName, bettingMoney)
-            .generatePlayer()
-
-        // then
-        assertThrows<IllegalArgumentException> { player.winMoney() }
-    }
-
-    @Test
-    fun `승부가 결정나기전에 패배 금액을 정산하면 IllegalArgumentException을 throw 한다`() {
-        // given
-        val bettingMoney = 10000
-        val playerName = "name"
-        player = GeneratePlayerRequest(playerName, bettingMoney)
-            .generatePlayer()
-
-        // then
-        assertThrows<IllegalArgumentException> { player.loseMoney() }
-    }
-
-    @Test
-    fun `승부가 결정나기전에 무승부 금액을 정산하면 IllegalArgumentException을 throw 한다`() {
-        // given
-        val bettingMoney = 10000
-        val playerName = "name"
-        player = GeneratePlayerRequest(playerName, bettingMoney)
-            .generatePlayer()
-
-        // then
-        assertThrows<IllegalArgumentException> { player.drawMoney() }
     }
 }
