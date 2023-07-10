@@ -16,7 +16,10 @@ fun main() {
         blackJackGame.players.forEach { player ->
             if (player.state == PlayerState.PLAYING) {
                 val inputDrawResponse = InputView.inputDrawResponse(player)
-                if (inputDrawResponse) dealer.deal(player)
+                if (inputDrawResponse) {
+                    dealer.deal(player)
+                    OutputView.printCardsInHand(player)
+                }
                 else player.stopDraw()
             }
         }
