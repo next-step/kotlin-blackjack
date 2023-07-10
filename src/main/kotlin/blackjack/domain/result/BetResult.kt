@@ -2,7 +2,7 @@ package blackjack.domain.result
 
 import blackjack.domain.participant.BetAmount
 
-class BetResult private constructor(val result: Result, val earningAmount: Double) {
+data class BetResult private constructor(val result: Result, val earningAmount: Double) {
     constructor(result: Result, earningAmount: Int) : this(result, earningAmount.toDouble())
 
     fun opposite(): BetResult {
