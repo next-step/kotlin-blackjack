@@ -34,3 +34,11 @@
 [X] 카드를 처음부터 받지 않으면 그 사람이 갖고 있는 카드를 보여준다.
 [X] 카드를 받고나서 카드를 받지 않으면 그 사람이 갖고 있는 카드를 보여주지 않는다.
 
+Step2 리뷰
+[X] ACE,ONE 중복삭제
+[] display Domain 에서 삭제
+[] Card 의 1,10 상수값 사용
+[] mutableSet 외부 접근시 문제생김 변경
+[] BlackJackGame -> Controller 로 변경
+[] Cards 와 같은 일급 컬렉션으로 역활분리
+[] hasAce, isStand, isBust 필요한가?
