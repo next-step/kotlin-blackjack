@@ -3,42 +3,28 @@ package blackjack.domain.gamer
 import blackjack.dto.GeneratePlayerRequest
 
 class Player private constructor(name: String, private val bettingMoney: Int) : BlackJackGamer(name) {
-    private lateinit var gameRecord: GameRecordType
 
     override fun getGamerType(): GamerType {
         return GamerType.PLAYER
     }
 
-    override fun proceedGameRecord(gameRecordType: GameRecordType) {
-        gameRecord = gameRecordType
-    }
-
-    fun getGameRecord(): GameRecordType {
-        require(::gameRecord.isInitialized) { "승패가 결정난 뒤에 조회가 가능합니다." }
-        return gameRecord
-    }
-
     fun blackJackMoney(): Int {
-        require(::gameRecord.isInitialized) { "승패가 결정난 뒤에 돈을 정산받습니다." }
         val blackJackWinMoney = (bettingMoney * 1.5).toInt()
         super.takeMoney(blackJackWinMoney)
         return blackJackWinMoney
     }
 
     fun winMoney(): Int {
-        require(::gameRecord.isInitialized) { "승패가 결정난 뒤에 돈을 정산받습니다." }
         super.takeMoney(bettingMoney)
         return bettingMoney
     }
 
     fun loseMoney(): Int {
-        require(::gameRecord.isInitialized) { "승패가 결정난 뒤에 돈을 정산받습니다." }
         super.takeMoneyOut(bettingMoney)
         return bettingMoney
     }
 
     fun drawMoney() {
-        require(::gameRecord.isInitialized) { "승패가 결정난 뒤에 돈을 정산받습니다." }
         super.takeMoney(bettingMoney)
     }
 
