@@ -28,4 +28,18 @@ class BlackJackGamerTest {
         // then
         Assertions.assertThat(blackJackGamer.money).isEqualTo(money + addMoney)
     }
+
+    @Test
+    fun `외부에서 돈을 입력받아서 그만큼 가지고 있는 돈에서 뺀다`() {
+        // given
+        val money = 0
+        val blackJackGamer = BlackJackGamer("name", money)
+
+        // when
+        val takenMoney = 10000
+        blackJackGamer.takeMoneyOut(takenMoney)
+
+        // then
+        Assertions.assertThat(blackJackGamer.money).isEqualTo(money - takenMoney)
+    }
 }
