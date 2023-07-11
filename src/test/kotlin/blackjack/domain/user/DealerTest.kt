@@ -9,8 +9,6 @@ import blackjack.domain.status.Lose
 import blackjack.domain.status.Stay
 import blackjack.domain.status.Win
 import io.kotest.core.spec.style.StringSpec
-import io.kotest.matchers.should
-import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeInstanceOf
 
 class DealerTest : StringSpec({
@@ -46,7 +44,7 @@ class DealerTest : StringSpec({
         playerB.chooseHitOrStay(false, Deck.create())
 
         //when
-        dealer.judgeResult(PlayerGroup(listOf(playerA, playerB)))
+        dealer.calculateResult(PlayerGroup(listOf(playerA, playerB)))
 
         //then
         playerA.status.shouldBeInstanceOf<Win>()

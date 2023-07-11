@@ -8,7 +8,7 @@ import blackjack.domain.user.Player
 interface Status {
     fun draw(card: Card): Status
     fun stay(): Status
-    fun judge(dealer: Dealer): Status
+    fun calculateResult(dealer: Dealer): Status
 }
 
 interface PlayingStatus : Status
@@ -35,7 +35,7 @@ class Hit(val player: Player) : PlayingStatus  {
         return Stay(player)
     }
 
-    override fun judge(dealer: Dealer): Status {
+    override fun calculateResult(dealer: Dealer): Status {
         throw NotImplementedError()
     }
 }
@@ -50,7 +50,7 @@ class BlackJack(val player: Player) : EndStatus  {
     }
 
 
-    override fun judge(dealer: Dealer): Status {
+    override fun calculateResult(dealer: Dealer): Status {
         if (dealer.status is BlackJack) {
             return Draw(this, dealer.status, player.cards.getScore(), dealer.cards.getScore())
         }
@@ -67,7 +67,7 @@ class Stay(val player: Player) : EndStatus {
         throw NotImplementedError()
     }
 
-    override fun judge(dealer: Dealer): Status {
+    override fun calculateResult(dealer: Dealer): Status {
         if (dealer.status is Burst) {
             return Win(this, dealer.status, player.cards.getScore(), dealer.cards.getScore())
         }
@@ -92,7 +92,7 @@ class Burst(val player: Player) : EndStatus {
         throw NotImplementedError()
     }
 
-    override fun judge(dealer: Dealer): Status {
+    override fun calculateResult(dealer: Dealer): Status {
         if (dealer.status is Burst) {
             return Win(this, dealer.status, player.cards.getScore(), dealer.cards.getScore())
         }
@@ -112,7 +112,7 @@ class Win(prevPlayerStatus: Status, prevDealerStatus: Status, playerScore: Cards
         throw NotImplementedError()
     }
 
-    override fun judge(dealer: Dealer): Status {
+    override fun calculateResult(dealer: Dealer): Status {
         throw NotImplementedError()
     }
 }
@@ -129,7 +129,7 @@ class Lose(prevPlayerStatus: Status, prevDealerStatus: Status, playerScore: Card
         throw NotImplementedError()
     }
 
-    override fun judge(dealer: Dealer): Status {
+    override fun calculateResult(dealer: Dealer): Status {
         throw NotImplementedError()
     }
 }
@@ -146,7 +146,7 @@ class Draw(prevPlayerStatus: Status, prevDealerStatus: Status, playerScore: Card
         throw NotImplementedError()
     }
 
-    override fun judge(dealer: Dealer): Status {
+    override fun calculateResult(dealer: Dealer): Status {
         throw NotImplementedError()
     }
 }

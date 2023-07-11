@@ -6,31 +6,41 @@ import blackjack.domain.card.Deck
 import blackjack.domain.status.*
 
 open class Player(val name: String, val cards: Cards = Cards()) {
-    var status: Status = Hit(this)
+    private var _status: Status = Hit(this)
+    var status: Status = _status
+        get() = _status
+
 
     fun chooseHitOrStay(isPlayerWantHit: Boolean, deck: Deck) {
         if (isPlayerWantHit) {
             draw(deck.getNextCard())
             return
         }
-        status = status.stay()
+        stay()
+    }
+
+    fun stay() {
+        _status = _status.stay()
+    }
+
+    fun calculateResult(dealer: Dealer): Status {
+        _status = _status.calculateResult(dealer)
+        return _status
     }
 
     open fun draw(card: Card, count: Int = 1) {
-        repeat(count) { status = status.draw(card) }
+        repeat(count) { _status = _status.draw(card) }
     }
 
     open fun getGameResult(): GameResult {
-        if (status is Win) {
+        if (_status is Win) {
             return GameResult(1, 0, 0)
         }
-        if (status is Lose) {
+        if (_status is Lose) {
             return GameResult(0, 1, 0)
         }
         return GameResult(0, 0, 1)
     }
 
     data class GameResult(val winCount: Int, val loseCount: Int, val drawCount: Int)
-
-    fun isDone(): Boolean = status is EndStatus
 }
