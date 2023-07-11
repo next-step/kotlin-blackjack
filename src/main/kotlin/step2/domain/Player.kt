@@ -1,7 +1,7 @@
 package step2.domain
 
 data class Player(
-    val name: String
+    val name: String,
 ) {
 
     private val currentScore: CurrentScore = CurrentScore()
@@ -13,8 +13,8 @@ data class Player(
         currentScore.calculateScore(cards.cards)
     }
 
-    fun isBurst(): Boolean {
-        return currentScore.isBurst()
+    fun isBust(): Boolean {
+        return currentScore.isBust()
     }
 
     fun getResultScore(): Int {

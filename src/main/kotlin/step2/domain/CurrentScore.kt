@@ -5,11 +5,11 @@ data class CurrentScore(
     var maxScore: Int = 0
 ) {
     fun calculateScore(cards: Set<Card>) {
-        minScore = cards.sumOf { it.score.defaultScore }
-        maxScore = cards.sumOf { if (it.score.isAce()) CardScore.ACE_LARGE_SCORE else it.score.defaultScore }
+        minScore = cards.sumOf { it.denomination.defaultScore }
+        maxScore = cards.sumOf { if (it.denomination.isAce()) Denomination.ACE_LARGE_SCORE else it.denomination.defaultScore }
     }
 
-    fun isBurst(): Boolean {
+    fun isBust(): Boolean {
         return minScore > BURST_SCORE && maxScore > BURST_SCORE
     }
 

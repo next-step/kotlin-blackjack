@@ -1,10 +1,10 @@
 package step2.domain
 
-object CardDeck {
+object Deck {
 
-    private val cards: Cards = CardDeckGenerator.generateCardDeck()
+    private val cards: Cards = DeckGenerator.generateCardDeck()
 
-    fun draw(count: Int): Set<Card> {
+    fun getCards(count: Int): Set<Card> {
         val drawCards = cards.cards
             .shuffled()
             .take(count)

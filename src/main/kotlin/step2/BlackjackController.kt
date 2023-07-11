@@ -5,15 +5,19 @@ import step2.domain.Players
 import step2.ui.InputView
 import step2.ui.OutputView
 
-class BlackjackController {
+object BlackjackController {
+
+    private const val DRAW_CARD_COUNT = 1
+    private const val INITIAL_DRAW_CARD_COUNT = 2
+    private const val ACCEPT_MORE_CARD_INPUT = "y"
 
     fun execute() {
-        val players = start()
+        val players = initPlayers()
         play(players)
         result(players)
     }
 
-    private fun start(): Players {
+    private fun initPlayers(): Players {
         val players = InputView.readPlayer()
 
         players.players.forEach {
@@ -42,13 +46,7 @@ class BlackjackController {
     }
 
     private fun moreCard(player: Player): Boolean {
-        val moreCard = if (!player.isBurst()) InputView.askDrawMoreCard(player) else null
+        val moreCard = if (!player.isBust()) InputView.askDrawMoreCard(player) else null
         return moreCard?.let { it == ACCEPT_MORE_CARD_INPUT } ?: false
     }
-
- companion object {
-     private const val DRAW_CARD_COUNT = 1
-     private const val INITIAL_DRAW_CARD_COUNT = 2
-     private const val ACCEPT_MORE_CARD_INPUT = "y"
- }
 }

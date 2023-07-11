@@ -1,8 +1,8 @@
 package step2.domain
 
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertAll
 
 class CurrentScoreTest {
 
@@ -10,8 +10,8 @@ class CurrentScoreTest {
     fun `스코어 계산에 성공한다`() {
         // given
         val cards = setOf(
-            Card(CardShape.CLOVER, score = CardScore.TWO),
-            Card(CardShape.CLOVER, score = CardScore.THREE)
+            Card(Suit.CLUB, denomination = Denomination.TWO),
+            Card(Suit.CLUB, denomination = Denomination.THREE)
         )
 
         val currentScore = CurrentScore()
@@ -30,8 +30,8 @@ class CurrentScoreTest {
     fun `Ace가 포함된 경우스코어 계산에 성공한다`() {
         // given
         val cards = setOf(
-            Card(CardShape.CLOVER, score = CardScore.ACE),
-            Card(CardShape.CLOVER, score = CardScore.TWO)
+            Card(Suit.CLUB, denomination = Denomination.ACE),
+            Card(Suit.CLUB, denomination = Denomination.TWO)
         )
 
         val currentScore = CurrentScore()
@@ -54,7 +54,7 @@ class CurrentScoreTest {
         // when
         currentScore.minScore = 22
         currentScore.maxScore = 22
-        val result = currentScore.isBurst()
+        val result = currentScore.isBust()
 
         // then
         assertThat(result).isTrue()
@@ -68,7 +68,7 @@ class CurrentScoreTest {
         // when
         currentScore.minScore = 1
         currentScore.maxScore = 1
-        val result = currentScore.isBurst()
+        val result = currentScore.isBust()
 
         // then
         assertThat(result).isFalse()

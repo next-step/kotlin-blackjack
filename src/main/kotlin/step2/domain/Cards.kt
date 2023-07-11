@@ -5,6 +5,6 @@ class Cards(
 ) {
 
     fun draw(count: Int) {
-        cards.addAll(CardDeck.draw(count))
+        cards.addAll(Deck.getCards(count))
     }
 }

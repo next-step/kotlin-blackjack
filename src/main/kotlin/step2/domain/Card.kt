@@ -1,11 +1,11 @@
 package step2.domain
 
 data class Card(
-    val shape: CardShape,
-    val score: CardScore,
+    val suit: Suit,
+    val denomination: Denomination,
 ) {
 
     fun display(): String {
-        return "${score.cardNumber}${shape.shape}"
+        return "${denomination.cardNumber}${suit.suit}"
     }
 }

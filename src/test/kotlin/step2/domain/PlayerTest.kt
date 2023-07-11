@@ -14,7 +14,7 @@ class PlayerTest {
         // when
         val result = player.getJoiningCardNames(",")
 
-        //then
+        // then
         assertThat(result).isNotBlank()
     }
 }
