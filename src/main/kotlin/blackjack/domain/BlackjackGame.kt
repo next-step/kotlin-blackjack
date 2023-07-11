@@ -6,11 +6,10 @@ class BlackjackGame(
     private val cardSet: CardSet = CardSet(),
 ) {
     fun dealInitialHand() {
-        challengers.forEach { player ->
-            player.receive(cardSet.pop())
-            player.receive(cardSet.pop())
-        }
         repeat(2) {
+            challengers.forEach { player ->
+                player.receive(cardSet.pop())
+            }
             dealer.receive(cardSet.pop())
         }
     }
