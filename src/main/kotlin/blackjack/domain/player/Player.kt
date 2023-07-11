@@ -26,8 +26,15 @@ class Player(
         hands.addCard(deck.getOneCard())
     }
 
-    fun canPlayable(): Boolean {
+    private fun isBust(): Boolean {
         return hands.isBust()
+    }
+
+    fun race(deck: Deck, continueGame: (Player) -> Boolean, afterDrawCard: (Player) -> Unit) {
+        while (!isBust() && continueGame(this)) {
+            hit(deck)
+            afterDrawCard(this)
+        }
     }
 
     companion object {
