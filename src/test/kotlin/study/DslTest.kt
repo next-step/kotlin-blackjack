@@ -1,5 +1,6 @@
 package study
 
+import io.kotest.assertions.throwables.shouldNotThrowAny
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
@@ -77,78 +78,12 @@ class DslTest {
             Language("english", 4)
         )
     }
-}
 
-/**
- * Person에 있는 함수만 이용하겠다는 것을 말한다.
- */
-fun introduce(block: PersonBuilder.() -> Unit): Person {
-    return PersonBuilder().apply(block).build()
-}
-
-class Person(
-    val name: String,
-    val company: String? = null,
-    val skills: Skills = Skills(emptyList(), emptyList()),
-    val languages: List<Language> = emptyList()
-
-)
-
-data class Skills(val softSkills: List<String>, val hardSkills: List<String>)
-data class Language(val name: String, val level: Int)
-
-class PersonBuilder {
-    private lateinit var name: String
-    private var company: String? = null
-    private var skills: Skills = Skills(emptyList(), emptyList())
-    private var languages: List<Language> = emptyList()
-
-    fun name(name: String) {
-        this.name = name
-    }
-
-    fun company(value: String) {
-        company = value
-    }
-
-    fun skills(block: SkillsBuilder.() -> Unit) {
-        skills = SkillsBuilder().apply(block).build()
-    }
-
-    fun languages(block: LanguageBuilder.() -> Unit) {
-        languages = LanguageBuilder().apply(block).build()
-    }
-
-    fun build(): Person {
-        return Person(name, company, skills, languages)
-    }
-}
-
-class SkillsBuilder {
-    var softSkills: MutableList<String> = mutableListOf()
-    var hardSkills: MutableList<String> = mutableListOf()
-
-    fun soft(value: String) {
-        softSkills.add(value)
-    }
-
-    fun hard(value: String) {
-        hardSkills.add(value)
-    }
-
-    fun build(): Skills {
-        return Skills(softSkills, hardSkills)
-    }
-}
-
-class LanguageBuilder {
-    private val languages = mutableListOf<Language>()
-
-    infix fun String.level(value: Int) {
-        languages.add(Language(this, value))
-    }
-
-    fun build(): List<Language> {
-        return languages
+    @Test
+    fun noParameter() {
+        shouldNotThrowAny {
+            introduce {
+            }
+        }
     }
 }
