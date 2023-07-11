@@ -1,6 +1,6 @@
 package blackjack.ui
 
-import blackjack.domain.player.Dealer
+import blackjack.domain.Dealer
 
 object DealerMessagePrinter {
     fun shouldHit() {

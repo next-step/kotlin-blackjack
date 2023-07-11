@@ -1,18 +1,16 @@
 package blackjack.domain.card
 
-import blackjack.domain.player.OpenCards
-
 class Hand {
     private val cards: MutableList<Card> = mutableListOf()
 
     fun getCards(): List<Card> = cards.toList()
     fun first(): Card = cards.firstOrNull() ?: throw IllegalStateException()
-    fun add(card: Card) {
+    fun add(vararg card: Card) {
         if (bust()) {
             throw RuntimeException()
         }
 
-        cards.add(card)
+        cards.addAll(card)
     }
 
     fun total(): Int {

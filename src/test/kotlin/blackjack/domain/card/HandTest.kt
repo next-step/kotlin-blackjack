@@ -1,6 +1,5 @@
 package blackjack.domain.card
 
-import blackjack.domain.player.OpenCards
 import blackjack.fixture.DIAMOND_KING
 import blackjack.fixture.HEART_KING
 import blackjack.fixture.HEART_SEVEN

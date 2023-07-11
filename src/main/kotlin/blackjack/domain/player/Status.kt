@@ -1,7 +1,8 @@
 package blackjack.domain.player
 
-enum class PlayerStatus {
-    INIT,
+enum class Status {
+    NOT_STARTED,
+    OPEN,
     STAY,
     HIT,
     BLACKJACK,

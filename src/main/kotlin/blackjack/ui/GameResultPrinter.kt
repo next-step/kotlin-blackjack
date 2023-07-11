@@ -1,33 +1,33 @@
 package blackjack.ui
 
-import blackjack.domain.GameResult
+import blackjack.domain.Dealer
+import blackjack.domain.card.Hand
+import blackjack.domain.gameresult.GameResultSummary
 import blackjack.domain.player.Player
-import blackjack.domain.player.PlayerName
-import blackjack.domain.player.PlayerStatus
 
 object GameResultPrinter {
-    fun ofPlayer(player: Player) {
-        val playerName: PlayerName = player.name
-        val cardMessages = player.hand.getCards().joinToString(
-            separator = ", ",
-            transform = { "${it.cardNumber.displayName}${it.cardSuit.displayName}" }
-        )
 
-        val result = when (player.status) {
-            PlayerStatus.BUST -> "BUST"
-            PlayerStatus.BLACKJACK -> "BLACKJACK"
-            else -> player.total()
-        }
+    fun dealer(dealer: Dealer) = println("딜러카드: ${cardOfHandMessage(dealer.hand)} - 결과: ${scoreMessage(dealer.hand)}")
+    fun player(player: Player) =
+        println("${playerNameMessage(player)}카드: ${cardOfHandMessage(player.hand)} - 결과: ${scoreMessage(player.hand)}")
 
-        println("${playerName.value}카드: $cardMessages - 결과: $result")
-    }
-
-    fun summary(gameResult: GameResult) {
-        val (dealerResult, playerResults) = gameResult
+    fun summary(gameResultSummary: GameResultSummary) {
         println("## 최종 승패")
-        println("딜러: ${dealerResult.win}승 ${dealerResult.lose}패")
-        playerResults.forEach {
-            println("${it.player.name.value}: ${it.result.displayName}")
-        }
+        println("딜러: ${gameResultSummary.dealerProfit()}")
+        gameResultSummary.playerResults
+            .forEach { println("${playerNameMessage(it.player)}: ${it.profit}") }
     }
+
+    private fun cardOfHandMessage(hand: Hand): String = hand.getCards().joinToString(
+        separator = ", ",
+        transform = { "${it.cardNumber.displayName}${it.cardSuit.displayName}" }
+    )
+
+    private fun scoreMessage(hand: Hand): String {
+        if (hand.bust()) return "BUST"
+        if (hand.blackjack()) return "BLACKJACK"
+        return hand.total().toString()
+    }
+
+    private fun playerNameMessage(player: Player): String = player.name.value
 }
