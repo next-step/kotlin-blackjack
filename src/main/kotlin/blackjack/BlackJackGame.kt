@@ -1,6 +1,7 @@
 package blackjack
 
 import blackjack.domain.Dealer
+import blackjack.domain.Distributor
 import blackjack.domain.Player
 import blackjack.domain.Players
 import blackjack.domain.card.CardDeck
@@ -14,29 +15,37 @@ class BlackJackGame {
         val players = Players(names)
         DisplayView.dealOutCards(players)
 
-        val dealer = Dealer(CardDeck())
-        dealer.dealOutCards(players)
-        DisplayView.cardsOfPlayers(players)
+        val distributor = Distributor(CardDeck())
+        val dealer = Dealer()
 
-        dealOutAdditionalCards(dealer, players)
-        DisplayView.result(players)
+        distributor.dealOutCards(dealer, players)
+        DisplayView.cardsOfPlayers(dealer, players)
+
+        dealOutAdditionalCards(distributor, players)
+        dealOutAdditionalCard(distributor, dealer)
+        DisplayView.finalScore(dealer, players)
     }
 
-    private fun dealOutAdditionalCards(dealer: Dealer, players: Players) {
+    private fun dealOutAdditionalCards(distributor: Distributor, players: Players) {
         players.players.forEach {
-            dealOutAdditionalCard(dealer, it)
+            dealOutAdditionalCard(distributor, it)
         }
     }
 
-    private fun dealOutAdditionalCard(dealer: Dealer, player: Player) {
+    private fun dealOutAdditionalCard(distributor: Distributor, player: Player) {
         DisplayView.dealOutAdditionalCard(player)
         if (InputView.inputAdditionalCard() == "y") {
-            dealer.dealOutCard(player)
-            takeAnotherCard(dealer, player)
+            distributor.dealOutCard(player)
+            takeAnotherCard(distributor, player)
         }
     }
 
-    private fun takeAnotherCard(dealer: Dealer, player: Player) {
+    private fun dealOutAdditionalCard(distributor: Distributor, dealer: Dealer) {
+        distributor.dealOutCard(dealer)
+        DisplayView.dealOutAdditionalCard(dealer)
+    }
+
+    private fun takeAnotherCard(dealer: Distributor, player: Player) {
         if (player.getScore() >= MAX_SCORE) {
             dealOutAdditionalCard(dealer, player)
         }
