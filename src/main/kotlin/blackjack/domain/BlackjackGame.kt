@@ -24,15 +24,12 @@ class BlackjackGame(
     }
 
     fun resultBlackjackGameMoney(): List<BlackjackGameMoneyResult> {
-        val result = mutableListOf<BlackjackGameMoneyResult>()
-
-        players.forEach { player ->
+        return players.map { player ->
             when (dealer.determineResult(player)) {
-                MatchResult.WIN -> result.add(BlackjackGameMoneyResult(player.name, -player.money))
-                MatchResult.LOSE -> result.add(BlackjackGameMoneyResult(player.name, player.money))
-                MatchResult.DRAW -> result.add(BlackjackGameMoneyResult(player.name, 0.0))
+                MatchResult.WIN -> BlackjackGameMoneyResult(player.name, -player.money)
+                MatchResult.LOSE -> BlackjackGameMoneyResult(player.name, player.money)
+                MatchResult.DRAW -> BlackjackGameMoneyResult(player.name, 0.0)
             }
         }
-        return result
     }
 }
