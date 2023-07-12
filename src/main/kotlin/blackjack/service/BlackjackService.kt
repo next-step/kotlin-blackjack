@@ -6,9 +6,6 @@ import blackjack.domain.Deck
 import blackjack.domain.Player
 import blackjack.domain.Score.Companion.BLACK_JACK_SCORE
 import blackjack.domain.enums.Condition
-import blackjack.domain.enums.MatchResult
-import blackjack.dto.BlackjackGameMoneyResult
-import blackjack.dto.BlackjackGameResult
 import blackjack.dto.PlayerInfo
 import blackjack.view.InputView
 
@@ -34,35 +31,6 @@ class BlackjackService {
             checkCondition(player)
         } else if (answer == InputView.stop) {
             player.changeCondition(Condition.STAY)
-        }
-    }
-
-    fun resultBlackjackGame(players: List<Player>, dealer: Dealer): List<BlackjackGameResult> {
-        val result = mutableListOf<BlackjackGameResult>()
-        var (dealerWinCount, dealerDrawCount, dealerLoseCount) = listOf(0, 0, 0)
-
-        players.forEach { player ->
-            val resultMatch = dealer.determineResult(player)
-            addGameResult(result, player.name, resultMatch)
-            when (resultMatch) {
-                MatchResult.WIN -> dealerLoseCount++
-                MatchResult.LOSE -> dealerWinCount++
-                MatchResult.DRAW -> dealerDrawCount++
-            }
-        }
-        result.add(0, BlackjackGameResult(name = dealer.name, win = "${dealerWinCount}${MatchResult.WIN.match}", draw = "${dealerDrawCount}${MatchResult.DRAW.match}", lose = "${dealerLoseCount}${MatchResult.LOSE.match}"))
-        return result
-    }
-
-    private fun addGameResult(
-        result: MutableList<BlackjackGameResult>,
-        playerName: String,
-        resultMatch: MatchResult
-    ) {
-        when (resultMatch) {
-            MatchResult.WIN -> result.add(BlackjackGameResult(name = playerName, win = resultMatch.match))
-            MatchResult.LOSE -> result.add(BlackjackGameResult(name = playerName, lose = resultMatch.match))
-            MatchResult.DRAW -> result.add(BlackjackGameResult(name = playerName, draw = resultMatch.match))
         }
     }
 

@@ -78,9 +78,9 @@ class BlackjackServiceTest {
                 deck = Deck()
             )
         )
-        val actual = BlackjackService().checkAllPlayersBlackjack(blackjackGame)
+        val actual = blackjackGame.checkAllPlayersBlackjack()
         actual shouldBe true
-        player1.betAmount shouldBe 15_000.0
+        player1.money shouldBe 15_000.0
     }
 
     @Test
@@ -104,10 +104,10 @@ class BlackjackServiceTest {
         )
         blackjackGame.dealer.checkBlackjack()
 
-        val actual = BlackjackService().checkAllPlayersBlackjack(blackjackGame)
+        val actual = blackjackGame.checkAllPlayersBlackjack()
         actual shouldBe true
-        player1.betAmount shouldBe 10_000.0
-        player2.betAmount shouldBe 0
+        player1.money shouldBe 10_000.0
+        player2.money shouldBe 0
     }
 
     companion object {
