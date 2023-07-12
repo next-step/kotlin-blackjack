@@ -31,11 +31,7 @@ class Dealer(
     }
 
     private fun changeCondition(score: Score) {
-        if (score > STANDARD_CARD_SCORE) {
-            this.condition = Condition.STAY
-        } else if (score > BLACK_JACK_SCORE) {
-            this.condition = Condition.BUST
-        }
+        this.condition = condition.from(score)
     }
 
     fun draw(count: Int): Cards {
