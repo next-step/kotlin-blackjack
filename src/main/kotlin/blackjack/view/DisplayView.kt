@@ -1,5 +1,6 @@
 package blackjack.view
 
+import blackjack.GameResult
 import blackjack.domain.Dealer
 import blackjack.domain.Player
 import blackjack.domain.Players
@@ -30,17 +31,25 @@ object DisplayView {
         println("${player}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
     }
 
-    fun dealOutAdditionalCard(dealer: Dealer) {
-        if (dealer.getScore() > Dealer.LIMIT_SCORE) {
-            println("딜러는 17이상이라 카드를 더 받지 않았습니다.")
-        } else {
+    fun dealOutAdditionalCard(received: Boolean) {
+        if (received) {
             println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
+        } else {
+            println("딜러는 17이상이라 카드를 더 받지 않았습니다.")
         }
     }
 
     fun finalScore(dealer: Dealer, players: Players) {
         printFinalScore(dealer)
         players.players.forEach { printFinalScore(it) }
+    }
+
+    fun result(dealer: Dealer, players: Players) {
+        println("\n## 최종 승패")
+        val dealerWinCnt = dealer.gameResults.count { it == GameResult.WIN }
+        val dealerLoseCnt = dealer.gameResults.count { it == GameResult.LOSE }
+        println("딜러: ${dealerWinCnt}승 ${dealerLoseCnt}패")
+        players.players.forEach { println("${it.name}: ${it.gameResult.description}") }
     }
 
     private fun printFinalScore(player: Player) {

@@ -24,6 +24,9 @@ class BlackJackGame {
         dealOutAdditionalCards(distributor, players)
         dealOutAdditionalCard(distributor, dealer)
         DisplayView.finalScore(dealer, players)
+
+        GameResultCalculator.getResult(dealer, players)
+        DisplayView.result(dealer, players)
     }
 
     private fun dealOutAdditionalCards(distributor: Distributor, players: Players) {
@@ -41,12 +44,15 @@ class BlackJackGame {
     }
 
     private fun dealOutAdditionalCard(distributor: Distributor, dealer: Dealer) {
-        distributor.dealOutCard(dealer)
-        DisplayView.dealOutAdditionalCard(dealer)
+        val receiveNewCard = dealer.getScore() < Dealer.LIMIT_SCORE
+        if (receiveNewCard) {
+            distributor.dealOutCard(dealer)
+        }
+        DisplayView.dealOutAdditionalCard(receiveNewCard)
     }
 
     private fun takeAnotherCard(dealer: Distributor, player: Player) {
-        if (player.getScore() >= MAX_SCORE) {
+        if (player.getScore() < MAX_SCORE) {
             dealOutAdditionalCard(dealer, player)
         }
     }

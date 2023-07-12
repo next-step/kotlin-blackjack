@@ -1,10 +1,12 @@
 package blackjack.domain
 
+import blackjack.GameResult
 import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
 
 class Dealer(name: String, cards: Cards = Cards()) : Player(name, cards) {
     var isFinished = false
+    val gameResults = mutableListOf<GameResult>()
 
     constructor(cards: Cards = Cards()) : this(DEALER_DISPLAY_NAME, cards)
 
@@ -15,6 +17,10 @@ class Dealer(name: String, cards: Cards = Cards()) : Player(name, cards) {
         } else {
             isFinished = true
         }
+    }
+
+    override fun getGameResult(win: Boolean) {
+        gameResults.add(if (win) GameResult.WIN else GameResult.LOSE)
     }
 
     private fun isAddable(): Boolean {
