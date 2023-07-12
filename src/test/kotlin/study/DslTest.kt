@@ -23,7 +23,6 @@ import org.junit.jupiter.params.provider.ValueSource
  */
 class DslTest {
 
-    // TODO: skills, languages 만들기 숙제
     @ParameterizedTest
     @ValueSource(strings = ["홍길동", "박상오"])
     fun introduce(value: String) {
