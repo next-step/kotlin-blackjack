@@ -11,7 +11,9 @@ class BlackjackController(
     private val resultView: ResultView = ResultView(),
 ) {
     fun play() {
-        val challengers = Challengers(inputView.inputPlayerNames().map { Challenger(it) })
+        val challengers = Challengers(
+            inputView.inputPlayerNames().map { Challenger(it, bettingAmount = inputView.inputBettingAmount(it)) }
+        )
         val blackjackGame = BlackjackGame(challengers)
 
         start(blackjackGame)

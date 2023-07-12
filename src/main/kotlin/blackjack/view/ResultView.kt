@@ -31,6 +31,14 @@ class ResultView {
         challengers.forEach { challenger ->
             println("${challenger.name}: ${ if (challenger.isWin(dealer)) "승" else "패" }")
         }
+
+        println("## 최종 수익")
+
+        val sumOfChallengersReturnAmount = challengers.sumOf { it.getEarnings(dealer) }
+        println("딜러: ${-sumOfChallengersReturnAmount}")
+        challengers.forEach { challenger ->
+            println("${challenger.name}: ${challenger.getEarnings(dealer)}")
+        }
     }
 
     fun outputDealerDeal() {
