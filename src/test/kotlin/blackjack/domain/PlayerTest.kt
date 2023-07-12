@@ -4,6 +4,7 @@ import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.CsvSource
 import org.junit.jupiter.params.provider.ValueSource
 
 internal class PlayerTest {
@@ -43,5 +44,26 @@ internal class PlayerTest {
         sut.receive(Card.of(CardRank.QUEEN))
         sut.receive(Card.of(CardRank.KING))
         assertThrows<IllegalStateException> { sut.receive(Card.of(CardRank.ACE)) }
+    }
+
+    @ParameterizedTest
+    @CsvSource(
+        "ACE, TEN, true",
+        "ACE, NINE, false",
+        "TWO, THREE, false",
+        "JACK, ACE, true",
+    )
+    internal fun `플레이어가 최초로 카드를 두장을 받았을때 점수가 21이면 블랙잭이다`(
+        firstCard: String,
+        secondCard: String,
+        expectedBlackjack: Boolean,
+    ) {
+        val sut = Challenger("A")
+
+        sut.receive(Card.of(CardRank.valueOf(firstCard)))
+        sut.isBlackjack shouldBe false
+
+        sut.receive(Card.of(CardRank.valueOf(secondCard)))
+        sut.isBlackjack shouldBe expectedBlackjack
     }
 }

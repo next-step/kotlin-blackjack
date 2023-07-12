@@ -64,4 +64,62 @@ internal class ChallengerTest {
 
         sut.isWin(dealer) shouldBe challengerWin
     }
+
+    @Test
+    internal fun `도전자가 블랙잭이되면 배팅 금액의 1,5배를 돌려받는다`() {
+        // given : 배팅 금액이 만원인 도전자
+        val sut = Challenger(
+            name = "A",
+            bettingAmount = 10000
+        )
+        val dealer = Dealer()
+
+        // when : 블랙잭이 된 상태에서 금액을 돌려받으면
+        sut.receive(Card.of(CardRank.ACE))
+        sut.receive(Card.of(CardRank.TEN))
+        val earnings = sut.getEarnings(dealer)
+
+        // then : 배팅 금액의 1.5배를 받는다
+        earnings shouldBe 10000 * 1.5
+    }
+
+    @Test
+    internal fun `도전자와 딜러 모두 블랙잭이되면 도전자는 베팅한 금액을 그대로 돌려받는다`() {
+        // given : 배팅 금액이 만원인 도전자
+        val sut = Challenger(
+            name = "A",
+            bettingAmount = 10000
+        )
+        val dealer = Dealer()
+
+        // when : 도전자와 딜러 모두 블랙잭이 된 상태에서는 베팅 금액을 그대로 돌려받기 때문에
+        sut.receive(Card.of(CardRank.ACE))
+        sut.receive(Card.of(CardRank.TEN))
+        dealer.receive(Card.of(CardRank.ACE))
+        dealer.receive(Card.of(CardRank.TEN))
+        val earnings = sut.getEarnings(dealer)
+
+        // then : 수익은 0이된다
+        earnings shouldBe 0
+    }
+
+    @Test
+    internal fun `도전자가 딜러에게 패배할 경우 베팅 금액을 돌려받지 못한다`() {
+        // given : 배팅 금액이 만원인 도전자
+        val sut = Challenger(
+            name = "A",
+            bettingAmount = 10000
+        )
+        val dealer = Dealer()
+
+        // when : 딜러가 이긴 상태에서 금액을 돌려받으면
+        sut.receive(Card.of(CardRank.TWO))
+        sut.receive(Card.of(CardRank.TEN))
+        dealer.receive(Card.of(CardRank.ACE))
+        dealer.receive(Card.of(CardRank.TEN))
+        val earnings = sut.getEarnings(dealer)
+
+        // then : 배팅 금액을 돌려받지 못하기 때문에 수익은 -10000이 된다
+        earnings shouldBe -10000
+    }
 }
