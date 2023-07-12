@@ -17,9 +17,8 @@ class BlackJackController(
     fun play() {
 
         val blackjackGame = initBlackjackGame()
-        val blackjackFlag = blackjackService.checkAllPlayersBlackjack(blackjackGame)
 
-        if (!blackjackFlag) {
+        if (!blackjackGame.checkAllPlayersBlackjack()) {
             raceBlackjack(blackjackGame)
             resultView.printEnter()
             raceDealer(blackjackGame.dealer)
@@ -29,7 +28,7 @@ class BlackJackController(
         resultView.printResultScore(blackjackGame.players, blackjackGame.dealer)
         resultView.printEnter()
 
-        val result = blackjackService.resultBlackjackGameMoney(blackjackGame.players, blackjackGame.dealer)
+        val result = blackjackGame.resultBlackjackGameMoney()
         resultView.printResultMoneyGame(result)
     }
 

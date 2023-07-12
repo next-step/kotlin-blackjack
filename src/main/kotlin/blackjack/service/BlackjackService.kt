@@ -37,19 +37,6 @@ class BlackjackService {
         }
     }
 
-    fun resultBlackjackGameMoney(players: List<Player>, dealer: Dealer): List<BlackjackGameMoneyResult> {
-        val result = mutableListOf<BlackjackGameMoneyResult>()
-
-        players.forEach { player ->
-            when (dealer.determineResult(player)) {
-                MatchResult.WIN -> result.add(BlackjackGameMoneyResult(player.name, -player.betAmount))
-                MatchResult.LOSE -> result.add(BlackjackGameMoneyResult(player.name, player.betAmount))
-                MatchResult.DRAW -> result.add(BlackjackGameMoneyResult(player.name, 0.0))
-            }
-        }
-        return result
-    }
-
     fun resultBlackjackGame(players: List<Player>, dealer: Dealer): List<BlackjackGameResult> {
         val result = mutableListOf<BlackjackGameResult>()
         var (dealerWinCount, dealerDrawCount, dealerLoseCount) = listOf(0, 0, 0)
@@ -65,20 +52,6 @@ class BlackjackService {
         }
         result.add(0, BlackjackGameResult(name = dealer.name, win = "${dealerWinCount}${MatchResult.WIN.match}", draw = "${dealerDrawCount}${MatchResult.DRAW.match}", lose = "${dealerLoseCount}${MatchResult.LOSE.match}"))
         return result
-    }
-
-    fun checkAllPlayersBlackjack(blackjackGame: BlackjackGame): Boolean {
-        var blackjackFlag = false
-        val blackjackPlayers = blackjackGame.players.filter { it.condition == Condition.BLACKJACK }
-
-        if (blackjackPlayers.isNotEmpty()) {
-            blackjackGame.players.filter { it.condition != Condition.BLACKJACK }.forEach { player -> player.loseAllBets() }
-            if (blackjackGame.dealer.condition != Condition.BLACKJACK) {
-                blackjackPlayers.forEach { player -> player.blackjack() }
-            }
-            blackjackFlag = true
-        }
-        return blackjackFlag
     }
 
     private fun addGameResult(
