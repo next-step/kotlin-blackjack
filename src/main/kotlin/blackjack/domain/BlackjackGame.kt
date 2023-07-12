@@ -28,8 +28,8 @@ class BlackjackGame(
 
         players.forEach { player ->
             when (dealer.determineResult(player)) {
-                MatchResult.WIN -> result.add(BlackjackGameMoneyResult(player.name, -player.betAmount))
-                MatchResult.LOSE -> result.add(BlackjackGameMoneyResult(player.name, player.betAmount))
+                MatchResult.WIN -> result.add(BlackjackGameMoneyResult(player.name, -player.money))
+                MatchResult.LOSE -> result.add(BlackjackGameMoneyResult(player.name, player.money))
                 MatchResult.DRAW -> result.add(BlackjackGameMoneyResult(player.name, 0.0))
             }
         }

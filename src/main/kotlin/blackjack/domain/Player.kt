@@ -6,10 +6,10 @@ class Player(
     name: String,
     cards: Cards,
     condition: Condition = Condition.PLAY,
-    betAmount: Double,
+    val betAmount: Double,
 ) : Participant(name, cards, condition) {
 
-    var betAmount: Double = betAmount
+    var money: Double = betAmount
         private set
 
     fun currentCondition(): Condition {
@@ -21,11 +21,11 @@ class Player(
     }
 
     fun loseAllBets() {
-        this.betAmount = 0.0
+        this.money = 0.0
     }
 
     fun blackjack() {
-        betAmount *= BLACKJACK_BET_RATE
+        money = this.betAmount * BLACKJACK_BET_RATE
     }
 
     companion object {

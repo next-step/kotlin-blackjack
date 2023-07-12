@@ -1,6 +1,5 @@
 package blackjack.domain
 
-import blackjack.domain.Score.Companion.BLACK_JACK_SCORE
 import blackjack.domain.Score.Companion.STANDARD_CARD_SCORE
 import blackjack.domain.enums.Condition
 import blackjack.domain.enums.MatchResult
