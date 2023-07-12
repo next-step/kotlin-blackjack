@@ -3,8 +3,8 @@ package learning
 class PersonBuilder {
     private lateinit var name: String
     private var company: String? = null
-    private val skills = mutableListOf<Skill>()
-    private val languages = mutableListOf<Language>()
+    private var skills = mutableListOf<Skill>()
+    private var languages = mutableListOf<Language>()
 
     fun name(value: String) {
         name = value
@@ -15,13 +15,11 @@ class PersonBuilder {
     }
 
     fun skills(block: SkillsBuilder.() -> Unit) {
-        val skillsBuilder = SkillsBuilder().apply(block)
-        skills.addAll(skillsBuilder.skills)
+        this.skills = SkillsBuilder().apply(block).build()
     }
 
     fun languages(block: LanguageBuilder.() -> Unit) {
-        val languageBuilder = LanguageBuilder().apply(block)
-        languages.addAll(languageBuilder.languages)
+        this.languages = LanguageBuilder().apply(block).build()
     }
 
     fun build(): Person {

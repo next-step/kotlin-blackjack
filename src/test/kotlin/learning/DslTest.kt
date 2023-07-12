@@ -1,5 +1,6 @@
 package learning
 
+import io.kotest.matchers.collections.shouldBeIn
 import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
@@ -53,14 +54,11 @@ class DslTest {
                 soft("Good communication skills")
                 hard("Kotlin")
             }
-            languages {
-                "Korean" level 5
-                "English" level 3
-            }
         }
 
-        person.languages.languages[0] shouldBe Language("Korean", 5)
-        person.languages.languages[1] shouldBe Language("English", 3)
+        Skill(SkillType.SOFT, "A passion for problem solving").shouldBeIn(person.skills.skills)
+        Skill(SkillType.SOFT, "Good communication skills").shouldBeIn(person.skills.skills)
+        Skill(SkillType.HARD, "Kotlin").shouldBeIn(person.skills.skills)
     }
 
     @Test
@@ -73,11 +71,14 @@ class DslTest {
                 soft("Good communication skills")
                 hard("Kotlin")
             }
+            languages {
+                "Korean" level 5
+                "English" level 3
+            }
         }
 
-        person.skills.skills[0] shouldBe Skill(SkillType.SOFT, "A passion for problem solving")
-        person.skills.skills[1] shouldBe Skill(SkillType.SOFT, "Good communication skills")
-        person.skills.skills[2] shouldBe Skill(SkillType.HARD, "Kotlin")
+        Language("Korean", 5).shouldBeIn(person.languages.languages)
+        Language("English", 3).shouldBeIn(person.languages.languages)
     }
 }
 
