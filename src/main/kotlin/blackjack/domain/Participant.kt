@@ -13,4 +13,10 @@ abstract class Participant(
     open fun hit(card: Card) {
         cards.append(card)
     }
+
+    open fun checkBlackjack() {
+        if (cards.calculateScore().isBlackjack()) {
+            this.condition = Condition.BLACKJACK
+        }
+    }
 }

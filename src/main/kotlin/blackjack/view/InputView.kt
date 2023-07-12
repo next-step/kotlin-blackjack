@@ -13,6 +13,20 @@ object InputView {
         return readlnOrNull() ?: throw IllegalArgumentException("입력 값은 null 값이 올 수 없습니다")
     }
 
+    fun inputBetAmount(playerName: String): String {
+        println("${playerName}의 배팅 금액은?")
+        val betAmount = readlnOrNull() ?: throw IllegalArgumentException("입력 값은 null 값이 올 수 없습니다")
+        isNumeric(betAmount)
+        return betAmount
+    }
+
+    private fun isNumeric(input: String) {
+        val numericRegex = Regex("^\\d+$")
+        require(numericRegex.matches(input)) {
+            "배팅 금액은 숫자로만 이루어져 있어야 합니다."
+        }
+    }
+
     fun askForCardChoice(player: Player): String {
         println("${player.name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
         val answer = readlnOrNull() ?: throw IllegalArgumentException("입력 값은 null 값이 올 수 없습니다")

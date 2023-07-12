@@ -4,21 +4,22 @@ import blackjack.domain.BlackjackGame
 import blackjack.domain.Dealer
 import blackjack.domain.Deck
 import blackjack.domain.Player
-import blackjack.domain.Score
+import blackjack.domain.Score.Companion.BLACK_JACK_SCORE
 import blackjack.domain.enums.Condition
-import blackjack.domain.enums.MatchResult
-import blackjack.dto.BlackjackGameResult
+import blackjack.dto.PlayerInfo
 import blackjack.view.InputView
 
 class BlackjackService {
 
-    fun initBlackjackGame(players: List<String>): BlackjackGame {
+    fun initBlackjackGame(players: List<PlayerInfo>): BlackjackGame {
         val deck = Deck()
         val dealer = Dealer(deck = deck, cards = deck.drawCard(BASIC_CARD_COUNT))
+        dealer.checkBlackjack()
         val blackJackPlayers = players.map { player ->
             val cards = dealer.draw(BASIC_CARD_COUNT)
-            Player(name = player, cards = cards)
+            Player(name = player.name, cards = cards, betAmount = player.betAmount)
         }
+        blackJackPlayers.forEach { it.checkBlackjack() }
         return BlackjackGame(blackJackPlayers, dealer)
     }
 
@@ -33,45 +34,17 @@ class BlackjackService {
         }
     }
 
-    fun resultBlackjackGame(players: List<Player>, dealer: Dealer): List<BlackjackGameResult> {
-        val result = mutableListOf<BlackjackGameResult>()
-        var (dealerWinCount, dealerDrawCount, dealerLoseCount) = listOf(0, 0, 0)
-
-        players.forEach { player ->
-            val resultMatch = dealer.determineResult(player.cards.calculateScore())
-            addGameResult(result, player.name, resultMatch)
-            when (resultMatch) {
-                MatchResult.WIN -> dealerLoseCount++
-                MatchResult.LOSE -> dealerWinCount++
-                MatchResult.DRAW -> dealerDrawCount++
-            }
-        }
-        result.add(0, BlackjackGameResult(name = dealer.name, win = "${dealerWinCount}${MatchResult.WIN.match}", draw = "${dealerDrawCount}${MatchResult.DRAW.match}", lose = "${dealerLoseCount}${MatchResult.LOSE.match}"))
-        return result
-    }
-
-    private fun addGameResult(
-        result: MutableList<BlackjackGameResult>,
-        playerName: String,
-        resultMatch: MatchResult
-    ) {
-        when (resultMatch) {
-            MatchResult.WIN -> result.add(BlackjackGameResult(name = playerName, win = resultMatch.match))
-            MatchResult.LOSE -> result.add(BlackjackGameResult(name = playerName, lose = resultMatch.match))
-            MatchResult.DRAW -> result.add(BlackjackGameResult(name = playerName, draw = resultMatch.match))
-        }
-    }
-
     fun raceDealer(dealer: Dealer) {
         val card = dealer.draw(Dealer.ONE_DRAW_COUNT).pick()
         dealer.hit(card)
     }
 
     private fun checkCondition(player: Player) {
-        if (player.cards.calculateScore().value == Score.BLACK_JACK_SCORE) {
+        if (player.cards.calculateScore() == BLACK_JACK_SCORE) {
             player.changeCondition(Condition.BLACKJACK)
-        } else if (player.cards.calculateScore().value > Score.BLACK_JACK_SCORE) {
+        } else if (player.cards.calculateScore() > BLACK_JACK_SCORE) {
             player.changeCondition(Condition.BUST)
+            player.loseAllBets()
         }
     }
 

@@ -1,5 +1,6 @@
 package blackjack.domain
 
+import blackjack.domain.Score.Companion.STANDARD_CARD_SCORE
 import blackjack.domain.enums.Condition
 import blackjack.domain.enums.MatchResult
 
@@ -16,7 +17,7 @@ class Dealer(
     }
 
     private fun initCondition(score: Score) {
-        if (score.compareTo(Score.STANDARD_CARD_SCORE) == -1 || score.compareTo(Score.STANDARD_CARD_SCORE) == 0) {
+        if (score < STANDARD_CARD_SCORE || score == STANDARD_CARD_SCORE) {
             this.condition = Condition.PLAY
         }
     }
@@ -29,11 +30,7 @@ class Dealer(
     }
 
     private fun changeCondition(score: Score) {
-        if (score.compareTo(Score.STANDARD_CARD_SCORE) == 1) {
-            this.condition = Condition.STAY
-        } else if (score.compareTo(Score.BLACK_JACK_SCORE) == 1) {
-            this.condition = Condition.BUST
-        }
+        this.condition = condition.from(score)
     }
 
     fun draw(count: Int): Cards {
@@ -44,12 +41,13 @@ class Dealer(
         return this.condition
     }
 
-    fun determineResult(otherScore: Score): MatchResult {
+    fun determineResult(other: Player): MatchResult {
         val score = cards.calculateScore()
+        val otherScore = other.cards.calculateScore()
 
         return when {
-            score.value > otherScore.value -> MatchResult.WIN
-            score.value < otherScore.value -> MatchResult.LOSE
+            score > otherScore -> MatchResult.WIN
+            score < otherScore -> MatchResult.LOSE
             else -> MatchResult.DRAW
         }
     }
