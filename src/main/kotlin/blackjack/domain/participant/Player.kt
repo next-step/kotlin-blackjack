@@ -1,17 +1,13 @@
 package blackjack.domain.participant
 
-import blackjack.domain.Hand
 import blackjack.domain.card.Card
+import blackjack.domain.hand.Hand
 
 class Player(
-    name: String,
+    val name: String,
+    val betAmount: BetAmount,
     hand: Hand = Hand.init
-) : Participant(name, hand) {
-    fun start(drawCard: () -> Card) {
-        val cards = List(START_CARD_COUNT) { drawCard() }
-        addCards { cards }
-    }
-
+) : Participant(hand) {
     fun play(
         isHit: () -> Boolean,
         drawCard: () -> Card
@@ -22,8 +18,4 @@ class Player(
     }
 
     private fun canDraw(): Boolean = this.isBust().not()
-
-    companion object {
-        const val START_CARD_COUNT = 2
-    }
 }
