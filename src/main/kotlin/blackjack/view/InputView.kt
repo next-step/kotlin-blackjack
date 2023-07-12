@@ -15,4 +15,11 @@ object InputView {
             else -> false
         }
     }
+
+    fun requestBetAmountOfPlayers(playerNames: List<String>): List<Int> {
+        return playerNames.map {
+            println("${it}의 배팅 금액은?")
+            readln().toInt()
+        }
+    }
 }

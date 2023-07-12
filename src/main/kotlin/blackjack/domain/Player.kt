@@ -2,10 +2,14 @@ package blackjack.domain
 
 class Player(
     val name: String,
-    val cards: Cards = Cards()
+    val cards: Cards = Cards(),
+    betAmount: Int
 ) : Participant {
     val score
         get() = ScoreCalculator.calculateScore(cards)
+
+    var betAmount: Int = betAmount
+        private set
 
     init {
         require(name.isNotEmpty() && name.isNotBlank())
