@@ -1,9 +1,7 @@
 package blackjack.domain
 
-class Player(val name: String) {
-    val cards = Cards()
-
-    fun addCard(card: Card) {
-        cards.add(card)
+class Player(name: String) : Participant(name) {
+    override fun canDrawMoreCard(): Boolean {
+        return cards.canDrawMoreCard()
     }
 }
