@@ -1,9 +1,12 @@
 package blackjack.domain
 
-data class Cards(
-    val values: List<Card> = emptyList()
+class Cards(
+    values: List<Card> = emptyList()
 ) {
-    constructor(vararg card: Card) : this(values = card.toList())
+    var values: List<Card> = values
+        private set
+
+    constructor(vararg card: Card) : this(values = card.toMutableList())
 
     val sumOfScoreWithAceAsOne: Int by lazy {
         values.sumOf { it.getScore() }
@@ -11,5 +14,13 @@ data class Cards(
 
     val numberOfAce: Int by lazy {
         values.count { it.rank == Rank.ACE }
+    }
+
+    fun add(card: Card) {
+        values = values + card
+    }
+
+    fun addAll(cards: List<Card>) {
+        values = values + cards
     }
 }

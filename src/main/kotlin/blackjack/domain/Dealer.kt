@@ -3,20 +3,18 @@ package blackjack.domain
 class Dealer(
     private val cardGenerator: CardGenerator = randomCardGenerator,
     val name: String = DEALER_NAME,
-    cards: Cards = Cards()
+    val cards: Cards = Cards()
 ) : Participant {
-    var cards: Cards = cards
-        private set
 
     val score
         get() = ScoreCalculator.calculateScore(cards)
 
     override fun receiveCard(newCard: Card) {
-        cards = Cards(cards.values + newCard)
+        cards.add(newCard)
     }
 
     override fun receiveCards(newCards: List<Card>) {
-        this.cards = Cards(newCards)
+        cards.addAll(newCards)
     }
 
     fun dealDefaultCard(): List<Card> {

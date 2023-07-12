@@ -2,10 +2,8 @@ package blackjack.domain
 
 class Player(
     val name: String,
-    cards: Cards = Cards()
+    val cards: Cards = Cards()
 ) : Participant {
-    var cards: Cards = cards
-        private set
     val score
         get() = ScoreCalculator.calculateScore(cards)
 
@@ -14,11 +12,11 @@ class Player(
     }
 
     override fun receiveCards(newCards: List<Card>) {
-        cards = Cards(cards.values + newCards)
+        cards.addAll(newCards)
     }
 
     override fun receiveCard(newCard: Card) {
-        cards = Cards(cards.values + newCard)
+        cards.add(newCard)
     }
 
     companion object {
