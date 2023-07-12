@@ -15,7 +15,7 @@ abstract class Participant(
     }
 
     open fun checkBlackjack() {
-        if(cards.calculateScore().value == Score.BLACK_JACK_SCORE.value) {
+        if(cards.calculateScore() == Score.BLACK_JACK_SCORE) {
             this.condition = Condition.BLACKJACK
         }
     }
