@@ -58,4 +58,17 @@ class DslTest {
         person.skills?.soft shouldBe listOf("A passion for problem solving", "Good communication skills")
         person.skills?.hard shouldBe listOf("Kotlin")
     }
+
+    @Test
+    fun languages() {
+        val person = introduce {
+            name("홍길동")
+            languages {
+                "Korean" level 5
+                "English" level 3
+            }
+        }
+        person.name shouldBe "홍길동"
+        person.languages?.languages shouldBe mapOf("Korean" to 5, "English" to 3)
+    }
 }
