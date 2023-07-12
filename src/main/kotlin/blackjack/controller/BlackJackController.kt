@@ -44,11 +44,11 @@ class BlackJackController(
 
     private fun raceBlackjack(blackjackGame: BlackjackGame) {
         blackjackGame.players.forEach { player ->
-            val answer = inputView.askForCardChoice(player)
-            do {
+            while(player.currentCondition() == Condition.PLAY) {
+                val answer = inputView.askForCardChoice(player)
                 blackjackService.raceBlackjack(player, blackjackGame, answer)
                 resultView.printPlayerAndCards(player)
-            } while (player.currentCondition() == Condition.PLAY)
+            }
         }
     }
 
