@@ -27,21 +27,21 @@ class GameProfit(
             val playerScore = player.score
             when (resultOfPlayer(player, dealer)) {
                 WIN -> handleWin(player, playerScore)
-                LOSE -> handleLoss(player, playerScore)
+                LOSE -> handleLoss(player)
                 else -> {}
             }
         }
     }
 
     private fun handleWin(player: Player, playerScore: Int) {
+        dealerProfit -= player.betAmount
         if (playerScore == BLACK_JACK) {
             player.plusMoney(player.betAmount * BONUS_PERCENTAGE)
         }
-        dealerProfit -= playerScore
     }
 
-    private fun handleLoss(player: Player, playerScore: Int) {
-        dealerProfit += playerScore
+    private fun handleLoss(player: Player) {
+        dealerProfit += player.betAmount
         player.loseAllMoney()
     }
 

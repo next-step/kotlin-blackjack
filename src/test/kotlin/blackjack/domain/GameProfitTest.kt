@@ -10,6 +10,34 @@ import io.kotest.matchers.shouldBe
 
 class GameProfitTest : FunSpec({
 
+    test("처음 두 장의 카드 합이 21일 경우 블랙잭이 되면 베팅 금액의 1.5 배를 딜러에게 받는다.") {
+        // given
+        val players = Players(
+            Player(
+                name = PLAYER_SONG2_NAME,
+                cards = Cards(Card(Rank.ACE, Suit.SPADE), Card(Rank.KING, Suit.HEART), Card(Rank.JACK, Suit.HEART)),
+                betAmount = PLAYER_SONG2_BET_AMOUNT
+            )
+        )
+        val dealer = Dealer(
+            name = DEALER_NAME,
+            cards = Cards(Card(Rank.TWO, Suit.SPADE), Card(Rank.JACK, Suit.HEART))
+        )
+        val expected = PLAYER_SONG2_BET_AMOUNT * 1.5
+
+        // when
+        val actual = GameProfit(players, dealer).profitOfParticipants()
+
+        // then
+        actual.forAll {
+            if (it.participantName == "dealer") {
+                it.profit shouldBe -PLAYER_SONG2_BET_AMOUNT
+            } else {
+                it.profit shouldBe expected
+            }
+        }
+    }
+
     test("딜러와 플레이어가 모두 동시에 블랙잭인 경우 플레이어는 베팅한 금액을 돌려받는다.") {
         // given
         val players = Players(
