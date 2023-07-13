@@ -10,7 +10,7 @@ class Deck private constructor(private val cards: MutableSet<Card>) {
         return cards
     }
 
-    fun getOneCard(): Card {
+    fun popCard(): Card {
         return cards.first().also { cards.remove(it) }
     }
 

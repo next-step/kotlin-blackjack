@@ -10,7 +10,7 @@ class Player(
 ) {
     fun drawStartHand(deck: Deck) {
         repeat(START_DRAW_COUNT) {
-            hands.addCard(deck.getOneCard())
+            hands.addCard(deck.popCard())
         }
     }
 
@@ -22,17 +22,17 @@ class Player(
         return hands.getCardsValue()
     }
 
-    fun hit(deck: Deck) {
-        hands.addCard(deck.getOneCard())
+    fun hit(card: Card) {
+        hands.addCard(card)
     }
 
     private fun isBust(): Boolean {
         return hands.isBust()
     }
 
-    fun race(deck: Deck, continueGame: (Player) -> Boolean, afterDrawCard: (Player) -> Unit) {
+    fun race(card: Card, continueGame: (Player) -> Boolean, afterDrawCard: (Player) -> Unit) {
         while (!isBust() && continueGame(this)) {
-            hit(deck)
+            hit(card)
             afterDrawCard(this)
         }
     }

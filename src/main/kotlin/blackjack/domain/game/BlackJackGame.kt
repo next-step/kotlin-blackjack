@@ -10,20 +10,19 @@ const val START_DRAW_COUNT = 2
 
 class BlackJackGame private constructor(
     private val deck: Deck,
+    private val players: Players
 ) {
-    fun prepare(players: Players) {
+    fun start() {
         players.players.forEach {
             it.drawStartHand(deck)
         }
     }
 
-    fun race(players: Players, continueGame: (Player) -> Boolean, afterDrawCard: (Player) -> Unit) {
-        players.players.forEach {
-            it.race(deck, continueGame, afterDrawCard)
-        }
+    fun bet(continueGame: (Player) -> Boolean, afterDrawCard: (Player) -> Unit) {
+        players.race(deck.popCard(), continueGame, afterDrawCard)
     }
 
     companion object {
-        fun create() = BlackJackGame(Deck.makeDeck())
+        fun create(players: Players) = BlackJackGame(Deck.makeDeck(), players)
     }
 }

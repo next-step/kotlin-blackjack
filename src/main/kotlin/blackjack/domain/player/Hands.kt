@@ -6,13 +6,13 @@ import blackjack.domain.game.BLACKJACK_NUMBER
 
 class Hands(private val cards: MutableSet<Card> = mutableSetOf()) {
 
-    fun getCards(): Set<Card> = cards
+    fun getCards(): Set<Card> = cards.toSet()
     fun addCard(card: Card) {
         cards.add(card)
     }
 
     fun isBust(): Boolean {
-        return cards.sumOf { it.getValue() } > 21
+        return cards.sumOf { it.getValue() } > BLACKJACK_NUMBER
     }
 
     fun getCardsValue(): Int {

@@ -5,20 +5,20 @@ import io.kotest.inspectors.forAll
 import io.kotest.matchers.shouldBe
 
 class CardTest : StringSpec({
-    "카드는 숫자 1 ~ 9의 계산할때 1 ~ 9 로 계산된다." {
+    "카드는 숫자 Ace ~ 9의 계산할때 1 ~ 9 로 계산된다." {
         listOf(
-            NumberShape.ACE,
-            NumberShape.TWO,
-            NumberShape.THREE,
-            NumberShape.FOUR,
-            NumberShape.FIVE,
-            NumberShape.SIX,
-            NumberShape.SEVEN,
-            NumberShape.EIGHT,
-            NumberShape.NINE
+            NumberShape.ACE to 1,
+            NumberShape.TWO to 2,
+            NumberShape.THREE to 3,
+            NumberShape.FOUR to 4,
+            NumberShape.FIVE to 5,
+            NumberShape.SIX to 6,
+            NumberShape.SEVEN to 7,
+            NumberShape.EIGHT to 8,
+            NumberShape.NINE to 9
         ).forAll {
-            val card = Card(it, Pattern.CLUB)
-            card.getValue() shouldBe it.value
+            val card = Card(it.first, Pattern.CLUB)
+            card.getValue() shouldBe it.second
         }
     }
 
@@ -27,10 +27,5 @@ class CardTest : StringSpec({
             val card = Card(it, Pattern.DIAMOND)
             card.getValue() shouldBe 10
         }
-    }
-
-    "카드 A 는 일단 1의 값을 가진다." {
-        val card = Card(NumberShape.ACE, Pattern.HEART)
-        card.getValue() shouldBe 1
     }
 })

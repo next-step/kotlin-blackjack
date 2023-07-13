@@ -7,9 +7,9 @@ import io.kotest.matchers.shouldBe
 
 class BlackJackGameTest : StringSpec({
     "게임이 생성되고 플레이어들이 준비하면 각각 카드를 ${START_DRAW_COUNT}장씩 나눠받는다." {
-        val blackJackGame = BlackJackGame.create()
         val players = Players.of(listOf("pavlo", "wade"))
-        blackJackGame.prepare(players)
+        val blackJackGame = BlackJackGame.create(players)
+        blackJackGame.start()
 
         players.players.forAll {
             it.getHands().size shouldBe START_DRAW_COUNT

@@ -26,7 +26,7 @@ class DeckTest : StringSpec({
 
     "카드 뭉치에서 카드 한장을 가져가면 그 카드는 뭉치에 남아있으면 안된다." {
         val deck = Deck.makeDeck()
-        val oneCard = deck.getOneCard()
+        val oneCard = deck.popCard()
         deck.getCards() shouldNotContain oneCard
     }
 })
