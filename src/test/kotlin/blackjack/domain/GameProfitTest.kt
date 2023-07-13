@@ -64,4 +64,31 @@ class GameProfitTest : FunSpec({
             }
         }
     }
+
+    test("플레이어가 이기면 배팅 금액만큼 받고 딜러는 배팅 금액만큼 잃는다.") {
+        // given
+        val players = Players(
+            Player(
+                name = PLAYER_SONG2_NAME,
+                cards = Cards(Card(Rank.ACE, Suit.SPADE), Card(Rank.TWO, Suit.HEART), Card(Rank.JACK, Suit.HEART)),
+                betAmount = PLAYER_SONG2_BET_AMOUNT
+            )
+        )
+        val dealer = Dealer(
+            name = DEALER_NAME,
+            cards = Cards(Card(Rank.TWO, Suit.SPADE), Card(Rank.THREE, Suit.HEART))
+        )
+
+        // when
+        val actual = GameProfit(players, dealer).profitOfParticipants()
+
+        // then
+        actual.forAll {
+            if (it.participantName == "dealer") {
+                it.profit shouldBe -PLAYER_SONG2_BET_AMOUNT
+            } else {
+                it.profit shouldBe PLAYER_SONG2_BET_AMOUNT
+            }
+        }
+    }
 })
