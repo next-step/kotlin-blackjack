@@ -13,11 +13,21 @@ class BlackJackGameController(
     private val outputView: OutputView = OutputView
 ) {
     fun run() {
-        val players = Players(inputView.requestNameOfPlayers().map(::Player))
+        val playerNames = inputView.requestNameOfPlayers()
+        val betAmounts = inputView.requestBetAmountOfPlayers(playerNames)
+        val players = createPlayers(playerNames, betAmounts.map { it.toDouble() })
+
         val game = BlackJackGame(players = players)
         playGame(game)
+
         outputView.printScoreOfParticipants(game.players, game.dealer)
         outputView.printGameResult(game.players, game.dealer)
+    }
+
+    private fun createPlayers(playerNames: List<String>, betAmounts: List<Double>): Players {
+        return Players(playerNames.mapIndexed { i, name ->
+            Player(name = name, betAmount = betAmounts[i])
+        })
     }
 
     private fun playGame(game: BlackJackGame) {

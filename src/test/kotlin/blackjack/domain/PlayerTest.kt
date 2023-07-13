@@ -45,6 +45,6 @@ class PlayerTest : FunSpec({
         player.receiveCard(Card(Rank.NINE, Suit.HEART))
 
         // then
-        player.betAmount.shouldBeZero()
+        player.betAmount shouldBe 0.0
     }
 })
