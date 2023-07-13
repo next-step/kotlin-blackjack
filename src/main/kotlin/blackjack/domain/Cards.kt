@@ -8,13 +8,12 @@ class Cards(
 
     constructor(vararg card: Card) : this(values = card.toMutableList())
 
-    val sumOfScoreWithAceAsOne: Int by lazy {
-        values.sumOf { it.getScore() }
-    }
+    val sumOfScoreWithAceAsOne: Int
+        get() = values.sumOf { it.getScore() }
 
-    val numberOfAce: Int by lazy {
-        values.count { it.rank == Rank.ACE }
-    }
+    val numberOfAce: Int
+        get() = values.count { it.rank == Rank.ACE }
+
 
     fun add(card: Card) {
         values = values + card

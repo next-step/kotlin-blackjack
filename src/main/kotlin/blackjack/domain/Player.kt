@@ -21,6 +21,13 @@ class Player(
 
     override fun receiveCard(newCard: Card) {
         cards.add(newCard)
+        if (score > BLACK_JACK) {
+            loseAllMoney()
+        }
+    }
+
+    private fun loseAllMoney() {
+        betAmount = 0
     }
 
     companion object {
