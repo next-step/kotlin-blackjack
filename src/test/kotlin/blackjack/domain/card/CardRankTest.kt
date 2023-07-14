@@ -1,6 +1,5 @@
 package blackjack.domain.card
 
-import blackjack.domain.card.CardRank
 import io.kotest.matchers.collections.shouldContainAll
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.DisplayName

@@ -1,8 +1,8 @@
 package blackjack
 
-import blackjack.domain.card.Card
 import blackjack.domain.Dealer
 import blackjack.domain.Player
+import blackjack.domain.card.Card
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeTypeOf

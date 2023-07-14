@@ -29,8 +29,7 @@ class BlackjackGame(
                     if (inputDrawResponse) {
                         dealer.deal(player)
                         OutputView.printCardsInHand(player)
-                    }
-                    else player.stopDraw()
+                    } else player.stopDraw()
                 }
             }
         }

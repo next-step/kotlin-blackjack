@@ -1,10 +1,10 @@
 package blackjack
 
+import blackjack.domain.Player
+import blackjack.domain.PlayerState
 import blackjack.domain.card.Card
 import blackjack.domain.card.CardRank
 import blackjack.domain.card.CardSuit
-import blackjack.domain.Player
-import blackjack.domain.PlayerState
 import io.kotest.inspectors.forAll
 import io.kotest.matchers.collections.shouldContain
 import io.kotest.matchers.shouldBe
@@ -50,6 +50,35 @@ internal class PlayerTest {
                 Card.of(CardSuit.HEART, CardRank.FIVE),
                 Card.of(CardSuit.HEART, CardRank.KING),
             ) to 19
+        )
+
+        testCases.forAll { testCase ->
+            val player = Player()
+            player.addCards(testCase.first)
+            val actual = player.sum()
+            val expect = testCase.second
+
+            actual shouldBe expect
+        }
+    }
+
+    @DisplayName("sum 메서드는 Ace를 1 또는 11로 계산한다.")
+    @Test
+    fun sumAce() {
+        val testCases = listOf(
+            listOf(
+                Card.of(CardSuit.DIAMOND, CardRank.ACE),
+                Card.of(CardSuit.DIAMOND, CardRank.THREE),
+            ) to 14,
+            listOf(
+                Card.of(CardSuit.HEART, CardRank.ACE),
+                Card.of(CardSuit.HEART, CardRank.KING),
+            ) to 21,
+            listOf(
+                Card.of(CardSuit.HEART, CardRank.ACE),
+                Card.of(CardSuit.HEART, CardRank.FIVE),
+                Card.of(CardSuit.HEART, CardRank.KING),
+            ) to 16,
         )
 
         testCases.forAll { testCase ->
