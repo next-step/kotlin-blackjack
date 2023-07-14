@@ -12,16 +12,5 @@ fun main() {
     val blackJackGame = BlackjackGame(dealer, players)
 
     OutputView.printInitGame(blackJackGame)
-    while (blackJackGame.isNotFinished()) {
-        blackJackGame.players.forEach { player ->
-            if (player.state == PlayerState.PLAYING) {
-                val inputDrawResponse = InputView.inputDrawResponse(player)
-                if (inputDrawResponse) {
-                    dealer.deal(player)
-                    OutputView.printCardsInHand(player)
-                }
-                else player.stopDraw()
-            }
-        }
-    }
+    blackJackGame.start()
 }
