@@ -14,7 +14,6 @@ class Cards(
     val numberOfAce: Int
         get() = values.count { it.rank == Rank.ACE }
 
-
     fun add(card: Card) {
         values = values + card
     }

@@ -3,13 +3,12 @@ package blackjack.domain
 class Player(
     val name: String,
     val cards: Cards = Cards(),
-    betAmount: Double
+    val betAmount: Double
 ) : Participant {
+    var profit: Double = INIT_PROFIT
+        private set
     val score
         get() = ScoreCalculator.calculateScore(cards)
-
-    var betAmount: Double = betAmount
-        private set
 
     init {
         require(name.isNotEmpty() && name.isNotBlank())
@@ -27,14 +26,15 @@ class Player(
     }
 
     fun plusMoney(amount: Double) {
-        betAmount += amount
+        profit += amount
     }
 
     fun loseAllMoney() {
-        betAmount = 0.0
+        profit = -betAmount
     }
 
     companion object {
         const val DEFAULT_CARD_SIZE = 2
+        const val INIT_PROFIT = 0.0
     }
 }

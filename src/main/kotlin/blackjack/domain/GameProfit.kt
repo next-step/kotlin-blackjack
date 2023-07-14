@@ -15,9 +15,11 @@ class GameProfit(
         calculateProfitOfParticipant()
 
         participantProfits.add(ParticipantProfit(dealer.name, dealerProfit))
-        participantProfits.addAll(players.values.map {
-            ParticipantProfit(it.name, it.betAmount)
-        })
+        participantProfits.addAll(
+            players.values.map {
+                ParticipantProfit(it.name, it.profit)
+            }
+        )
 
         return participantProfits
     }
@@ -34,10 +36,11 @@ class GameProfit(
     }
 
     private fun handleWin(player: Player, playerScore: Int) {
-        dealerProfit -= player.betAmount
-        if (playerScore == BLACK_JACK) {
-            player.plusMoney(player.betAmount * BONUS_PERCENTAGE)
+        when (playerScore) {
+            BLACK_JACK -> player.plusMoney(player.betAmount * BONUS_PERCENTAGE)
+            else -> player.plusMoney(player.betAmount)
         }
+        dealerProfit -= player.profit
     }
 
     private fun handleLoss(player: Player) {
@@ -46,6 +49,6 @@ class GameProfit(
     }
 
     companion object {
-        const val BONUS_PERCENTAGE = 0.5
+        const val BONUS_PERCENTAGE = 1.5
     }
 }

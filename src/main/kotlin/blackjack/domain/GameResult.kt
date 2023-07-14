@@ -23,9 +23,10 @@ enum class GameResult {
             val playerScore = player.score
             val dealerScore = dealer.score
             return when {
+                dealerScore > BLACK_JACK -> WIN
+                playerScore > BLACK_JACK -> LOSE
                 playerScore == BLACK_JACK && dealerScore != BLACK_JACK -> WIN
-                dealerScore > BLACK_JACK || dealerScore < playerScore -> WIN
-                dealerScore > playerScore -> LOSE
+                playerScore in (dealerScore + 1 until BLACK_JACK) -> WIN
                 else -> DRAW
             }
         }
