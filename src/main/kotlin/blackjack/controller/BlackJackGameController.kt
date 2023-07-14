@@ -3,6 +3,7 @@ package blackjack.controller
 import blackjack.domain.BLACK_JACK
 import blackjack.domain.BlackJackGame
 import blackjack.domain.DEALER_MINIMUM_SCORE
+import blackjack.domain.GameProfit
 import blackjack.domain.Player
 import blackjack.domain.Players
 import blackjack.view.InputView
@@ -22,12 +23,15 @@ class BlackJackGameController(
 
         outputView.printScoreOfParticipants(game.players, game.dealer)
         outputView.printGameResult(game.players, game.dealer)
+        outputView.printGameProfit(GameProfit(game.players, game.dealer).profitOfParticipants())
     }
 
     private fun createPlayers(playerNames: List<String>, betAmounts: List<Double>): Players {
-        return Players(playerNames.mapIndexed { i, name ->
-            Player(name = name, betAmount = betAmounts[i])
-        })
+        return Players(
+            playerNames.mapIndexed { i, name ->
+                Player(name = name, betAmount = betAmounts[i])
+            }
+        )
     }
 
     private fun playGame(game: BlackJackGame) {
