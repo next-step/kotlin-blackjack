@@ -44,7 +44,7 @@ object OutputView {
     fun printGameProfit(participantProfits: List<ParticipantProfit>) {
         println("\n## 최종 수익")
         participantProfits.forEach {
-            println("${it.participantName}: ${it.profit}")
+            println("${it.participantName}: ${it.profit.toInt()}")
         }
     }
 
