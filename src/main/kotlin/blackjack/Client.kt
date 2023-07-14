@@ -12,4 +12,5 @@ fun main() {
 
     OutputView.printInitGame(blackJackGame)
     blackJackGame.start()
+    OutputView.printResult(blackJackGame.players)
 }

@@ -28,7 +28,7 @@ class BlackjackGame(
                     val inputDrawResponse = InputView.inputDrawResponse(player)
                     if (inputDrawResponse) {
                         dealer.deal(player)
-                        OutputView.printCardsInHand(player)
+                        OutputView.printCardsInHandWithEmptyLine(player)
                     } else player.stopDraw()
                 }
             }
