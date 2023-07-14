@@ -1,10 +1,6 @@
 package blackjack.view
 
-import blackjack.domain.Cards
-import blackjack.domain.Dealer
-import blackjack.domain.GameResult
-import blackjack.domain.Player
-import blackjack.domain.Players
+import blackjack.domain.*
 
 object OutputView {
 
@@ -42,6 +38,13 @@ object OutputView {
                 GameResult.LOSE -> println("패")
                 else -> println("무")
             }
+        }
+    }
+
+    fun printGameProfit(participantProfits: List<ParticipantProfit>) {
+        println("\n## 최종 수익")
+        participantProfits.forEach {
+            println("${it.participantName}: ${it.profit}")
         }
     }
 
