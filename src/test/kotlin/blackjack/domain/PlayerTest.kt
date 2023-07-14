@@ -4,7 +4,6 @@ import blackjack.fixture.PlayerFixture.DEALER_NAME
 import blackjack.fixture.PlayerFixture.PLAYER_SONG2_BET_AMOUNT
 import blackjack.fixture.PlayerFixture.PLAYER_SONG2_NAME
 import io.kotest.core.spec.style.FunSpec
-import io.kotest.matchers.ints.shouldBeZero
 import io.kotest.matchers.shouldBe
 
 class PlayerTest : FunSpec({
@@ -45,6 +44,6 @@ class PlayerTest : FunSpec({
         player.receiveCard(Card(Rank.NINE, Suit.HEART))
 
         // then
-        player.betAmount shouldBe 0.0
+        player.profit shouldBe -PLAYER_SONG2_BET_AMOUNT
     }
 })

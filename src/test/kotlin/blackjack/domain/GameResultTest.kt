@@ -49,4 +49,59 @@ class GameResultTest : FunSpec({
         // then
         actual shouldBe expected
     }
+
+    test("딜러가 21을 넘지 않고 플레이어가 21을 초과하면 딜러가 승리한다.") {
+        // given
+        val player = Player(
+            name = PLAYER_SONG2_NAME,
+            cards = Cards(
+                Card(Rank.QUEEN, Suit.SPADE),
+                Card(Rank.KING, Suit.CLUB),
+                Card(Rank.NINE, Suit.HEART)
+            ),
+            betAmount = PLAYER_SONG2_BET_AMOUNT
+        )
+
+        val dealer = Dealer(
+            name = DEALER_NAME,
+            cards = Cards(
+                Card(Rank.KING, Suit.SPADE),
+                Card(Rank.QUEEN, Suit.HEART)
+            )
+        )
+
+        // when
+        val actual = GameResult.resultOfPlayer(player, dealer)
+
+        // then
+        actual shouldBe GameResult.LOSE
+    }
+
+    test("딜러와 플레이어가 모두 동시에 블랙잭인 경우 무승부이다.") {
+        // given
+        val player = Player(
+            name = PLAYER_SONG2_NAME,
+            cards = Cards(
+                Card(Rank.QUEEN, Suit.SPADE),
+                Card(Rank.KING, Suit.CLUB),
+                Card(Rank.ACE, Suit.HEART)
+            ),
+            betAmount = PLAYER_SONG2_BET_AMOUNT
+        )
+
+        val dealer = Dealer(
+            name = DEALER_NAME,
+            cards = Cards(
+                Card(Rank.QUEEN, Suit.SPADE),
+                Card(Rank.KING, Suit.CLUB),
+                Card(Rank.ACE, Suit.HEART)
+            )
+        )
+
+        // when
+        val actual = GameResult.resultOfPlayer(player, dealer)
+
+        // then
+        actual shouldBe GameResult.DRAW
+    }
 })
