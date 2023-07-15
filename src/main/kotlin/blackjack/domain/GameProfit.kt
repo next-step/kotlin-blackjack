@@ -45,7 +45,7 @@ class GameProfit(
 
     private fun handleLoss(player: Player) {
         dealerProfit += player.betAmount
-        player.loseAllMoney()
+        player.loseBetAmount()
     }
 
     companion object {

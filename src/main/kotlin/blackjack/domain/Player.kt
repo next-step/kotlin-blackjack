@@ -21,7 +21,7 @@ class Player(
     override fun receiveCard(newCard: Card) {
         cards.add(newCard)
         if (score > BLACK_JACK) {
-            loseAllMoney()
+            loseBetAmount()
         }
     }
 
@@ -29,7 +29,7 @@ class Player(
         profit += amount
     }
 
-    fun loseAllMoney() {
+    fun loseBetAmount() {
         profit = -betAmount
     }
 
