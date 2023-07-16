@@ -32,4 +32,12 @@ internal class HitTest {
         val actual = hit.draw(SPADES_TEN)
         actual.shouldBeInstanceOf<Burst>()
     }
+
+    @Test
+    internal fun `히트 상태에서 스테이를 선언하면 스테이 상태가 된다`() {
+        val initialDeck = Deck(listOf(SPADES_TWO, SPADES_TEN))
+        val hit = Hit(initialDeck)
+        val actual = hit.stay()
+        actual.shouldBeInstanceOf<Stay>()
+    }
 }

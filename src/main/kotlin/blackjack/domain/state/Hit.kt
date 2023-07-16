@@ -14,4 +14,8 @@ class Hit(private val deck: Deck) : State {
         if (deck.isBurst()) return Burst()
         return Hit(deck)
     }
+
+    fun stay(): State {
+        return Stay()
+    }
 }
