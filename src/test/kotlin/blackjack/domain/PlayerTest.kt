@@ -30,11 +30,11 @@ internal class PlayerTest {
     internal fun `플레이어는 카드 점수 합계가 21점을 넘으면 버스트 된다`() {
         val sut = Challenger("A")
         sut.receive(Card.of(CardRank.JACK))
-        sut.isBurst shouldBe false
+        sut.isBurst() shouldBe false
         sut.receive(Card.of(CardRank.QUEEN))
-        sut.isBurst shouldBe false
+        sut.isBurst() shouldBe false
         sut.receive(Card.of(CardRank.KING))
-        sut.isBurst shouldBe true
+        sut.isBurst() shouldBe true
     }
 
     @Test
@@ -61,9 +61,9 @@ internal class PlayerTest {
         val sut = Challenger("A")
 
         sut.receive(Card.of(CardRank.valueOf(firstCard)))
-        sut.isBlackjack shouldBe false
+        sut.isBlackjack() shouldBe false
 
         sut.receive(Card.of(CardRank.valueOf(secondCard)))
-        sut.isBlackjack shouldBe expectedBlackjack
+        sut.isBlackjack() shouldBe expectedBlackjack
     }
 }

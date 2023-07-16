@@ -10,30 +10,21 @@ sealed class Player {
     abstract val deck: Deck
     abstract val canHit: Boolean
 
-    var isBlackjack: Boolean = false
-        private set
-
-    var cardReceiveCount: Int = 0
-        private set
-
-    val isBurst: Boolean
-        get() = BLACKJACK_POINT_THRESHOLD < getDeckPointSum()
-
     fun receive(card: Card) {
         check(canHit) { "Can not hit anymore" }
         deck.add(card)
-        cardReceiveCount += 1
-        checkBlackjack()
     }
 
     fun getDeckPointSum(): Int {
         return deck.getCardPointSum()
     }
 
-    private fun checkBlackjack() {
-        if (2 == cardReceiveCount && BLACKJACK_POINT_THRESHOLD == getDeckPointSum()) {
-            isBlackjack = true
-        }
+    fun isBlackjack(): Boolean {
+        return deck.isBlackjack()
+    }
+
+    fun isBurst(): Boolean {
+        return deck.isBurst()
     }
 }
 
@@ -45,7 +36,7 @@ data class Dealer(
     override val deck: Deck = Deck(),
 ) : Player() {
     override val canHit: Boolean
-        get() = getDeckPointSum() <= DEALER_HIT_THRESHOLD && isBlackjack.not()
+        get() = getDeckPointSum() <= DEALER_HIT_THRESHOLD && isBlackjack().not()
 
     companion object {
         private const val DEALER_HIT_THRESHOLD = 16
@@ -63,28 +54,28 @@ data class Challenger(
 
     private var isStay: Boolean = false
     override val canHit: Boolean
-        get() = BLACKJACK_POINT_THRESHOLD >= getDeckPointSum() && isStay.not() && isBlackjack.not()
+        get() = BLACKJACK_POINT_THRESHOLD >= getDeckPointSum() && isStay.not() && isBlackjack().not()
 
     fun stay() {
         isStay = true
     }
 
     fun isWin(dealer: Dealer): Boolean {
-        if (this.isBurst) {
+        if (this.isBurst()) {
             return false
         }
-        if (dealer.isBurst) {
+        if (dealer.isBurst()) {
             return true
         }
         return this.getDeckPointSum() >= dealer.getDeckPointSum()
     }
 
     fun getEarnings(dealer: Dealer): Int {
-        return if (isBlackjack && dealer.isBlackjack) {
+        return if (isBlackjack() && dealer.isBlackjack()) {
             0
-        } else if (isBlackjack) {
+        } else if (isBlackjack()) {
             (bettingAmount * 1.5).toInt()
-        } else if (dealer.isBlackjack) {
+        } else if (dealer.isBlackjack()) {
             -bettingAmount
         } else {
             if (isWin(dealer)) {
