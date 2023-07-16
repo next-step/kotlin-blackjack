@@ -7,8 +7,18 @@ class ConsoleInputView : InputView {
         return readln().trim().split(",")
     }
 
-    override fun getPlayerHitStatus(playerName: String): String {
+    override fun getIsPlayerWantHit(playerName: String): Boolean {
         println("${playerName}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
-        return readln()
+
+        return when (readln()) {
+            WANT_HIT -> true
+            WANT_STAY -> false
+            else -> throw IllegalArgumentException("Invalid input")
+        }
+    }
+
+    companion object {
+        const val WANT_STAY = "n"
+        const val WANT_HIT = "y"
     }
 }

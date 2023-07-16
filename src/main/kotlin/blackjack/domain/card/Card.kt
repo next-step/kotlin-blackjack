@@ -26,5 +26,43 @@ enum class CardNumber(val displayName: String, val value: Int) {
     TEN("10", 10),
     JACK("J", 10),
     QUEEN("Q", 10),
-    KING("K", 10),
+    KING("K", 10);
+
+    companion object {
+        val COUNT = CardNumber.values().count()
+    }
+}
+
+class Cards {
+    private val _cards: MutableList<Card> = mutableListOf()
+    fun toList() = _cards.toList()
+
+    fun addCard(card: Card) {
+        _cards.add(card)
+    }
+
+    fun getScore(): Score {
+        val minScoreValue = _cards.sumOf { card -> card.number.value }
+        val maxScoreValue = minScoreValue + if (hasAce()) ACE_BONUS_POINT else 0
+
+        val finalScore = if(minScoreValue >= BLACK_JACK_POINT) minScoreValue else maxScoreValue
+        return Score(finalScore, BLACK_JACK_POINT - finalScore)
+    }
+
+    fun isBlackJackScore(): Boolean {
+        return getScore().value == BLACK_JACK_POINT
+    }
+
+    fun isBurst(): Boolean {
+        return getScore().value > BLACK_JACK_POINT
+    }
+
+    private fun hasAce(): Boolean = _cards.any { card -> card.number == CardNumber.A && card.pattern == CardPattern.Spade }
+
+    data class Score(val value: Int, val diff: Int)
+
+    companion object {
+        const val BLACK_JACK_POINT = 21
+        private const val ACE_BONUS_POINT = 10
+    }
 }

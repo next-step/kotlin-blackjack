@@ -6,7 +6,7 @@ class Deck(private val cards: MutableList<Card>) {
 
         CardPattern.values().forEach {
             curPattern ->
-            require(cards.filter { card -> card.pattern == curPattern }.size == CardNumber.values().count())
+            require(cards.filter { card -> card.pattern == curPattern }.size == CardNumber.COUNT)
         }
     }
 
