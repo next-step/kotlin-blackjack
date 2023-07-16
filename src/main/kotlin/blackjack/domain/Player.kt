@@ -1,7 +1,5 @@
 package blackjack.domain
 
-import blackjack.domain.BlackjackCardPointCalculator.BLACKJACK_POINT_THRESHOLD
-
 /**
  * ### 블랙잭을 플레이하는 사람을 표현하는 객체 입니다.
  */
@@ -15,7 +13,7 @@ sealed class Player {
         deck.add(card)
     }
 
-    fun getDeckPointSum(): Int {
+    fun score(): Score {
         return deck.score()
     }
 
@@ -36,11 +34,7 @@ data class Dealer(
     override val deck: Deck = Deck(),
 ) : Player() {
     override val canHit: Boolean
-        get() = getDeckPointSum() <= DEALER_HIT_THRESHOLD && isBlackjack().not()
-
-    companion object {
-        private const val DEALER_HIT_THRESHOLD = 16
-    }
+        get() = score().isLessThanEqualToDealerHitThreshold && isBlackjack().not()
 }
 
 /**
@@ -54,7 +48,7 @@ data class Challenger(
 
     private var isStay: Boolean = false
     override val canHit: Boolean
-        get() = BLACKJACK_POINT_THRESHOLD >= getDeckPointSum() && isStay.not() && isBlackjack().not()
+        get() = score().isLessThanEqualToBlackjack && isStay.not() && isBlackjack().not()
 
     fun stay() {
         isStay = true
@@ -67,7 +61,7 @@ data class Challenger(
         if (dealer.isBurst()) {
             return true
         }
-        return this.getDeckPointSum() >= dealer.getDeckPointSum()
+        return this.score() >= dealer.score()
     }
 
     fun getEarnings(dealer: Dealer): Int {

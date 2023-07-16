@@ -19,9 +19,9 @@ class ResultView {
 
     fun outputGameResult(challengers: Challengers, dealer: Dealer) {
         println()
-        println("딜러 카드: ${getAllHandString(dealer)} ${dealer.getDeckPointSum()}")
+        println("딜러 카드: ${getAllHandString(dealer)} ${dealer.score()}")
         challengers.forEach { challenger ->
-            println("${challenger.name}카드: ${getAllHandString(challenger)} ${challenger.getDeckPointSum()}")
+            println("${challenger.name}카드: ${getAllHandString(challenger)} ${challenger.score()}")
         }
 
         println("## 최종 승패")
