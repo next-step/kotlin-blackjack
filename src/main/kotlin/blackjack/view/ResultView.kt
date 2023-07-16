@@ -1,5 +1,6 @@
 package blackjack.view
 
+import blackjack.domain.Card
 import blackjack.domain.Hands
 import blackjack.domain.Player
 
@@ -29,6 +30,10 @@ object ResultView {
     }
 
     private fun playerInfo(player: Player): String {
-        return "${player.name}카드: ${player.hands.cards.joinToString(",") { "${it.symbol}_${it.type}" }}"
+        return "${player.name}카드: ${player.hands.cards.joinToString(", ") { cardInfo(it) }}"
+    }
+
+    private fun cardInfo(card: Card): String {
+        return "${card.symbol.displayName}${card.type.displayName}"
     }
 }
