@@ -22,7 +22,7 @@ class CardTest {
         "QUEEN,10",
         "KING,10",
     )
-    fun `카드의 숫자는 심볼에 의해 정해진다`(symbol: Symbol, value: Int) {
+    fun `카드의 점수는 심볼에 의해 정해진다`(symbol: Symbol, value: Int) {
         val card = Card.of(Type.CLUBS, symbol)
 
         card.value shouldBe value
