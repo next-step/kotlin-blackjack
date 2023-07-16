@@ -19,15 +19,15 @@ class Deck(cards: List<Card> = listOf()) {
         _cards.add(card)
     }
 
-    fun getCardPointSum(): Int {
+    fun score(): Int {
         return BlackjackCardPointCalculator.calculate(_cards)
     }
 
     fun isBurst(): Boolean {
-        return BlackjackCardPointCalculator.BLACKJACK_POINT_THRESHOLD < getCardPointSum()
+        return BlackjackCardPointCalculator.BLACKJACK_POINT_THRESHOLD < score()
     }
 
     fun isBlackjack(): Boolean {
-        return size == 2 && getCardPointSum() == BlackjackCardPointCalculator.BLACKJACK_POINT_THRESHOLD
+        return size == 2 && score() == BlackjackCardPointCalculator.BLACKJACK_POINT_THRESHOLD
     }
 }

@@ -8,7 +8,7 @@ class Hit(private val deck: Deck) : State {
 
     init {
         require(deck.size >= 2) { "deck size must be greater than equal to 2" }
-        require(deck.getCardPointSum() <= BlackjackCardPointCalculator.BLACKJACK_POINT_THRESHOLD) {
+        require(deck.score() <= BlackjackCardPointCalculator.BLACKJACK_POINT_THRESHOLD) {
             "deck score must be less than equal to 21"
         }
     }

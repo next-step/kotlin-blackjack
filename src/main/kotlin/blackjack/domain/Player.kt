@@ -16,7 +16,7 @@ sealed class Player {
     }
 
     fun getDeckPointSum(): Int {
-        return deck.getCardPointSum()
+        return deck.score()
     }
 
     fun isBlackjack(): Boolean {

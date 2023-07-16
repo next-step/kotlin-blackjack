@@ -18,6 +18,6 @@ internal class DeckTest {
         val sut = Deck()
         sut.add(Card.of(CardRank.JACK, CardSuit.HEART))
         sut.add(Card.of(CardRank.ACE, CardSuit.SPADE))
-        sut.getCardPointSum() shouldBe 21
+        sut.score() shouldBe 21
     }
 }
