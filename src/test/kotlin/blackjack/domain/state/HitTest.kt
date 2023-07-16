@@ -18,6 +18,14 @@ internal class HitTest {
     }
 
     @Test
+    internal fun `카드의 점수가 21점을 넘으면 예외가 발생한다`() {
+        assertThrows<IllegalArgumentException> {
+            val initialDeck = Deck(listOf(SPADES_TWO, SPADES_TEN, SPADES_TEN))
+            Hit(initialDeck)
+        }
+    }
+
+    @Test
     internal fun `히트 상태에서 카드를 한장 받았을때 21점 이하면 히트 상태가 된다`() {
         val initialDeck = Deck(listOf(SPADES_TWO, SPADES_TEN))
         val hit = Hit(initialDeck)
