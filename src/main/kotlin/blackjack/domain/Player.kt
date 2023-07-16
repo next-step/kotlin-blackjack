@@ -3,7 +3,7 @@ package blackjack.domain
 class Player(
     val name: String,
     val cards: Cards = Cards(),
-    val betAmount: Double
+    val betAmount: Double,
 ) : Participant {
     var profit: Double = INIT_PROFIT
         private set

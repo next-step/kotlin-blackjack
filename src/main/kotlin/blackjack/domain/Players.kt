@@ -1,7 +1,7 @@
 package blackjack.domain
 
 data class Players(
-    val values: List<Player>
+    val values: List<Player>,
 ) {
     constructor(vararg player: Player) : this(player.toList())
 

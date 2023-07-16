@@ -1,7 +1,7 @@
 package blackjack.domain
 
 class Cards(
-    values: List<Card> = emptyList()
+    values: List<Card> = emptyList(),
 ) {
     var values: List<Card> = values
         private set

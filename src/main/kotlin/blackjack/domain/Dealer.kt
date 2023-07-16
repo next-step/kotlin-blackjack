@@ -3,7 +3,7 @@ package blackjack.domain
 class Dealer(
     private val cardGenerator: CardGenerator = randomCardGenerator,
     val name: String = DEALER_NAME,
-    val cards: Cards = Cards()
+    val cards: Cards = Cards(),
 ) : Participant {
 
     val score

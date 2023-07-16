@@ -6,7 +6,7 @@ import blackjack.domain.GameResult.WIN
 
 class GameProfit(
     private val players: Players,
-    private val dealer: Dealer
+    private val dealer: Dealer,
 ) {
     private var dealerProfit: Double = 0.0
 
