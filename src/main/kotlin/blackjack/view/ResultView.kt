@@ -1,6 +1,7 @@
 package blackjack.view
 
 import blackjack.domain.Card
+import blackjack.domain.Dealer
 import blackjack.domain.Hands
 import blackjack.domain.Player
 
@@ -23,6 +24,11 @@ object ResultView {
     fun printResult(players: List<Player>) {
         println()
         return players.forEach { printPlayerResult(it) }
+    }
+
+    fun printDealerHit() {
+        println()
+        println("딜러는 ${Dealer.HIT_THRESHOLD}이하라 한장의 카드를 더 받았습니다.")
     }
 
     private fun printPlayerResult(player: Player) {

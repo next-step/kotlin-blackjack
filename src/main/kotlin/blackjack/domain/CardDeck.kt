@@ -1,7 +1,7 @@
 package blackjack.domain
 
 import blackjack.domain.Hands.Companion.INIT_CARD_SIZE
-import java.util.*
+import java.util.Stack
 
 class CardDeck {
     private val deck: Stack<Card>
