@@ -1,8 +1,8 @@
 package blackjack.view
 
-import blackjack.domain.Challengers
 import blackjack.domain.Dealer
 import blackjack.domain.Player
+import blackjack.domain.player.Challengers
 
 class ResultView {
     fun outputInitialHand(challengers: Challengers, dealer: Dealer) {

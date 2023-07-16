@@ -2,7 +2,7 @@ package blackjack.controller
 
 import blackjack.domain.BlackjackGame
 import blackjack.domain.Challenger
-import blackjack.domain.Challengers
+import blackjack.domain.player.Challengers
 import blackjack.view.InputView
 import blackjack.view.ResultView
 
