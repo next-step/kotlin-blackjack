@@ -8,7 +8,7 @@ class Blackjack(playerNames: List<String>) {
     val dealer: Dealer = Dealer(Hands(cardDeck.firstDraw()))
     val players: List<Player> = playerNames.map { Player(it, Hands(cardDeck.firstDraw())) }
 
-    fun play() {
+    fun play(): BlackjackResult {
         players.forEach {
             while (it.hands.isNotFinished() && InputView.willReceiveCard(it.name)) {
                 it.hit(cardDeck.draw())
@@ -20,5 +20,7 @@ class Blackjack(playerNames: List<String>) {
             ResultView.printDealerHit()
             dealer.hit(cardDeck.draw())
         }
+
+        return BlackjackResult(dealer, players)
     }
 }

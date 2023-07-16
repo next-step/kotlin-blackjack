@@ -12,7 +12,7 @@ fun main() {
 
     ResultView.printInit(dealerAndPlayers)
 
-    blackjack.play()
+    val blackjackResult = blackjack.play()
 
-    ResultView.printResult(dealerAndPlayers)
+    ResultView.printResult(blackjackResult)
 }

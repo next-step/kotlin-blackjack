@@ -12,6 +12,20 @@ class Dealer(hands: Hands) : Player("딜러", hands) {
         super.hit(card)
     }
 
+    fun calculatePlayerResult(player: Player): Result {
+        if (player.isBust()) return Result.LOSE
+
+        if (isBust()) return Result.WIN
+
+        val dealerScore = sum()
+        val playerScore = player.sum()
+
+        if (dealerScore > playerScore) return Result.LOSE
+        if (dealerScore < playerScore) return Result.WIN
+
+        return Result.PUSH
+    }
+
     companion object {
         const val HIT_THRESHOLD = 16
     }
