@@ -5,22 +5,13 @@ package blackjack.domain
  *
  * 카드를 추가할 수 있고, 소지한 카드들에 대한 점수를 확인할 수 있습니다.
  */
-class Deck(cards: List<Card> = listOf()) {
-
-    private val _cards: MutableList<Card> = cards.toMutableList()
+class Deck(val cards: List<Card> = listOf()) {
 
     val size: Int
-        get() = _cards.size
-
-    val cards: List<Card>
-        get() = _cards.toList()
-
-    fun add(card: Card) {
-        _cards.add(card)
-    }
+        get() = cards.size
 
     fun score(): Score {
-        return BlackjackCardPointCalculator.calculate(_cards)
+        return BlackjackCardPointCalculator.calculate(cards)
     }
 
     fun isBurst(): Boolean {
@@ -29,5 +20,9 @@ class Deck(cards: List<Card> = listOf()) {
 
     fun isBlackjack(): Boolean {
         return size == 2 && score().isBlackjack
+    }
+
+    operator fun plus(card: Card): Deck {
+        return Deck(cards + card)
     }
 }
