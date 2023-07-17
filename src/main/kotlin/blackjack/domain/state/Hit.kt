@@ -2,6 +2,7 @@ package blackjack.domain.state
 
 import blackjack.domain.Card
 import blackjack.domain.Deck
+import blackjack.domain.Score
 
 class Hit(private val deck: Deck) : State {
 
@@ -10,13 +11,21 @@ class Hit(private val deck: Deck) : State {
         require(deck.score().isLessThanEqualToBlackjack) { "deck score must be less than equal to 21" }
     }
 
-    fun draw(card: Card): State {
-        deck.add(card)
-        if (deck.isBurst()) return Burst()
+    override fun draw(card: Card): State {
+        val deck = deck + card
+        if (deck.isBurst()) return Burst(deck)
         return Hit(deck)
     }
 
-    fun stay(): State {
-        return Stay()
+    override fun score(): Score {
+        return deck.score()
+    }
+
+    override fun stay(): State {
+        return Stay(deck)
+    }
+
+    override fun currentDeck(): Deck {
+        return this.deck
     }
 }

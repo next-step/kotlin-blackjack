@@ -9,3 +9,11 @@ val BURST_SCORE = Score(22)
 val TWO_SCORE = Score(2)
 val TEN_SCORE = Score(10)
 val SEVENTEEN_SCORE = Score(17)
+
+fun createChallengerWithTwelveScore(): Challenger {
+    return Challenger("A").apply { initializeHands(SPADES_TWO, SPADES_TEN) }
+}
+
+fun createDealerWithTwelveScore(): Dealer {
+    return Dealer().apply { initializeHands(SPADES_TWO, SPADES_TEN) }
+}

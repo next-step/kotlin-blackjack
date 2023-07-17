@@ -7,7 +7,7 @@ import blackjack.domain.player.Challengers
 class ResultView {
     fun outputInitialHand(challengers: Challengers, dealer: Dealer) {
         println("딜러와 ${challengers.joinToString { it.name }}에게 2장씩 나누었습니다.")
-        println("딜러: ${dealer.deck.cards.last()}")
+        println("딜러: ${dealer.currentDeck().cards.last()}")
         challengers.forEach { challenger ->
             println("${challenger.name}카드: ${getAllHandString(challenger)}")
         }
@@ -46,6 +46,6 @@ class ResultView {
     }
 
     private fun getAllHandString(player: Player): String {
-        return player.deck.cards.joinToString { it.toString() }
+        return player.currentDeck().cards.joinToString { it.toString() }
     }
 }

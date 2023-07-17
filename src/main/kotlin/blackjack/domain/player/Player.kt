@@ -2,30 +2,49 @@ package blackjack.domain
 
 import blackjack.domain.game.EarningsRateCase
 import blackjack.domain.game.GameResultType
+import blackjack.domain.state.Begin
+import blackjack.domain.state.Blackjack
+import blackjack.domain.state.Burst
+import blackjack.domain.state.Hit
+import blackjack.domain.state.State
 
 /**
  * ### 블랙잭을 플레이하는 사람을 표현하는 객체 입니다.
  */
 sealed class Player {
     abstract val name: String
-    abstract val deck: Deck
     abstract val canHit: Boolean
+
+    protected var state: State = Begin()
 
     fun receive(card: Card) {
         check(canHit) { "Can not hit anymore" }
-        deck.add(card)
+        state = state.draw(card)
+    }
+
+    fun initializeHands(card1: Card, card2: Card) {
+        val begin = state as? Begin ?: throw IllegalStateException("Player state is not Begin")
+        state = begin.drawInitialHands(card1, card2)
+    }
+
+    fun currentDeck(): Deck {
+        return state.currentDeck()
+    }
+
+    fun stay() {
+        state = state.stay()
     }
 
     fun score(): Score {
-        return deck.score()
+        return state.score()
     }
 
     fun isBlackjack(): Boolean {
-        return deck.isBlackjack()
+        return state is Blackjack
     }
 
     fun isBurst(): Boolean {
-        return deck.isBurst()
+        return state is Burst
     }
 }
 
@@ -34,10 +53,9 @@ sealed class Player {
  */
 data class Dealer(
     override val name: String = "Dealer",
-    override val deck: Deck = Deck(),
 ) : Player() {
     override val canHit: Boolean
-        get() = score().isLessThanEqualToDealerHitThreshold && isBlackjack().not()
+        get() = state is Hit && score().isLessThanEqualToDealerHitThreshold
 }
 
 /**
@@ -45,17 +63,11 @@ data class Dealer(
  */
 data class Challenger(
     override val name: String,
-    override val deck: Deck = Deck(),
     val bettingAmount: Int = 0
 ) : Player() {
 
-    private var isStay: Boolean = false
     override val canHit: Boolean
-        get() = score().isLessThanEqualToBlackjack && isStay.not() && isBlackjack().not()
-
-    fun stay() {
-        isStay = true
-    }
+        get() = state is Hit
 
     fun isWin(dealer: Dealer): Boolean {
         return GameResultType.of(this.score(), dealer.score()) == GameResultType.CHALLENGER_WIN

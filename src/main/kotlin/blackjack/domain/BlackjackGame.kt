@@ -26,12 +26,10 @@ class BlackjackGame(
     }
 
     private fun dealInitialHand() {
-        repeat(2) {
-            challengers.forEach { player ->
-                player.receive(cardSet.pop())
-            }
-            dealer.receive(cardSet.pop())
+        challengers.forEach { challenger ->
+            challenger.initializeHands(cardSet.pop(), cardSet.pop())
         }
+        dealer.initializeHands(cardSet.pop(), cardSet.pop())
         onAfterInitializeHands(challengers, dealer)
     }
 
