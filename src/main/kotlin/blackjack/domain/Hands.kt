@@ -22,7 +22,7 @@ class Hands(var cards: List<Card>) {
 
     fun hit(card: Card): State {
         if (isFinished()) {
-            throw IllegalStateException("Finished State에서는 Hit 할 수 없습니다.")
+            error("Finished State에서는 Hit 할 수 없습니다.")
         }
 
         cards += card

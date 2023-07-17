@@ -1,5 +1,6 @@
 package blackjack.domain
 
+import blackjack.cardOf
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
@@ -22,17 +23,17 @@ class CardTest {
         "QUEEN,10",
         "KING,10",
     )
-    fun `카드의 숫자는 심볼에 의해 정해진다`(symbol: Symbol, value: Int) {
-        val card = Card.of(Type.CLUBS, symbol)
+    fun `카드의 점수는 심볼에 의해 정해진다`(symbol: Symbol, value: Int) {
+        val card = cardOf(Type.CLUBS, symbol)
 
         card.value shouldBe value
     }
 
     @Test
     fun `King, Queen, Jack은 10으로 계산한다`() {
-        val king = Card.of(Type.CLUBS, Symbol.KING)
-        val queen = Card.of(Type.CLUBS, Symbol.QUEEN)
-        val jack = Card.of(Type.CLUBS, Symbol.JACK)
+        val king = cardOf(Type.CLUBS, Symbol.KING)
+        val queen = cardOf(Type.CLUBS, Symbol.QUEEN)
+        val jack = cardOf(Type.CLUBS, Symbol.JACK)
 
         king.value shouldBe 10
         queen.value shouldBe 10

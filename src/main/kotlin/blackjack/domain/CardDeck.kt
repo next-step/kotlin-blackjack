@@ -1,28 +1,24 @@
 package blackjack.domain
 
 import blackjack.domain.Hands.Companion.INIT_CARD_SIZE
+import java.util.Stack
 
 class CardDeck {
-    private var index = FIRST_CARD_INDEX
-    private var deck: List<Card> = Card.CARD_DECK.values.toList()
+    private val deck: Stack<Card>
+
+    init {
+        val stack: Stack<Card> = Stack()
+        stack.addAll(Card.CARD_DECK.values.shuffled())
+        deck = stack
+    }
 
     fun firstDraw(): List<Card> {
         return List(INIT_CARD_SIZE) { draw() }
     }
 
     fun draw(): Card {
-        if (index == deck.size) shuffle()
+        require(deck.isNotEmpty()) { "덱의 모든 카드를 소진했습니다." }
 
-        return deck[index++]
-    }
-
-    fun shuffle(): CardDeck {
-        deck = deck.shuffled()
-        index = FIRST_CARD_INDEX
-        return this
-    }
-
-    companion object {
-        private const val FIRST_CARD_INDEX = 0
+        return deck.pop()
     }
 }

@@ -1,7 +1,12 @@
 package blackjack.view
 
+import blackjack.domain.BlackjackResult
+import blackjack.domain.Card
+import blackjack.domain.Dealer
+import blackjack.domain.DealerResult
 import blackjack.domain.Hands
 import blackjack.domain.Player
+import blackjack.domain.PlayerResult
 
 object ResultView {
     fun printInit(players: List<Player>) {
@@ -19,16 +24,44 @@ object ResultView {
         }
     }
 
-    fun printResult(players: List<Player>) {
+    fun printResult(blackjackResult: BlackjackResult) {
         println()
-        return players.forEach { printPlayerResult(it) }
+        printPlayerInfoWithScore(blackjackResult.dealer)
+        blackjackResult.players.forEach { printPlayerInfoWithScore(it) }
+
+        println()
+        println("## 최종 승패")
+        println(dealerResult(blackjackResult.dealerResult))
+        blackjackResult.playerResults
+            .forEach { println(playerResult(it)) }
     }
 
-    private fun printPlayerResult(player: Player) {
+    fun printDealerHit() {
+        println()
+        println("딜러는 ${Dealer.HIT_THRESHOLD}이하라 한장의 카드를 더 받았습니다.")
+    }
+
+    private fun printPlayerInfoWithScore(player: Player) {
         println("${playerInfo(player)} - 결과: ${player.hands.sum()}")
     }
 
     private fun playerInfo(player: Player): String {
-        return "${player.name}카드: ${player.hands.cards.joinToString(",") { "${it.symbol}_${it.type}" }}"
+        return "${player.name}카드: ${player.hands.cards.joinToString(", ") { cardInfo(it) }}"
+    }
+
+    private fun cardInfo(card: Card): String {
+        return "${card.symbol.displayName}${card.type.displayName}"
+    }
+
+    private fun dealerResult(dealerResult: DealerResult): String {
+        val resultDisplayNames = dealerResult.result
+            .entries
+            .map { "${it.value}${it.key.displayName}" }
+
+        return "${dealerResult.dealerName()}: ${resultDisplayNames.joinToString(" ")}"
+    }
+
+    private fun playerResult(playerResult: PlayerResult): String {
+        return "${playerResult.playerName()}: ${playerResult.resultDisplayName()}"
     }
 }

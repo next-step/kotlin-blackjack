@@ -1,26 +1,18 @@
 package blackjack
 
-import blackjack.domain.CardDeck
-import blackjack.domain.Hands
+import blackjack.domain.Blackjack
 import blackjack.domain.Player
 import blackjack.view.InputView
 import blackjack.view.ResultView
-import blackjack.view.ResultView.printPlayerInfo
-import blackjack.view.ResultView.printResult
 
 fun main() {
     val playerNames = InputView.receivePlayerNames()
-    val cardDeck = CardDeck().shuffle()
-    val players = playerNames.map { Player(it, Hands(cardDeck.firstDraw())) }
+    val blackjack = Blackjack(playerNames)
+    val dealerAndPlayers: List<Player> = listOf(blackjack.dealer) + blackjack.players
 
-    ResultView.printInit(players)
+    ResultView.printInit(dealerAndPlayers)
 
-    players.forEach {
-        while (it.hands.isNotFinished() && InputView.willReceiveCard(it.name)) {
-            it.hit(cardDeck.draw())
-            printPlayerInfo(it)
-        }
-    }
+    val blackjackResult = blackjack.play()
 
-    printResult(players)
+    ResultView.printResult(blackjackResult)
 }

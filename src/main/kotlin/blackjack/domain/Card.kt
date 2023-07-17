@@ -9,12 +9,5 @@ class Card private constructor(val type: Type, val symbol: Symbol) {
         }
             .flatten()
             .associateBy { "${it.type.name}${it.symbol.name}" }
-
-        fun of(type: Type, symbol: Symbol): Card {
-            val card = CARD_DECK["${type.name}${symbol.name}"]
-            require(card != null) { "type:${type.name} 과 symbol:${symbol.name} 에 일치하는 카드가 없습니다." }
-
-            return card
-        }
     }
 }
