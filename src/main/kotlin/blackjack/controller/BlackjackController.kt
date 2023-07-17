@@ -2,6 +2,10 @@ package blackjack.controller
 
 import blackjack.domain.BlackjackGame
 import blackjack.domain.Challenger
+import blackjack.domain.OnAfterChallengerHit
+import blackjack.domain.OnAfterDealerHit
+import blackjack.domain.OnAfterInitializeHands
+import blackjack.domain.OnHitDecided
 import blackjack.domain.player.Challengers
 import blackjack.view.InputView
 import blackjack.view.ResultView
@@ -14,42 +18,23 @@ class BlackjackController(
         val challengers = Challengers(
             inputView.inputPlayerNames().map { Challenger(it, bettingAmount = inputView.inputBettingAmount(it)) }
         )
-        val blackjackGame = BlackjackGame(challengers)
+        val onHitDecided: OnHitDecided = { inputView.inputHitDecision(it) }
+        val onAfterInitializeHands: OnAfterInitializeHands = { challengers, dealer ->
+            resultView.outputInitialHand(challengers, dealer)
+        }
+        val onAfterChallengerHit: OnAfterChallengerHit = { resultView.outputCurrentHand(it) }
+        val onAfterDealerHit: OnAfterDealerHit = { resultView.outputDealerDeal() }
 
-        start(blackjackGame)
-        deal(blackjackGame)
+        val blackjackGame = BlackjackGame(
+            challengers = challengers,
+            onHitDecided = onHitDecided,
+            onAfterInitializeHands = onAfterInitializeHands,
+            onAfterChallengerHit = onAfterChallengerHit,
+            onAfterDealerHit = onAfterDealerHit,
+        )
+
+        blackjackGame.run()
         end(blackjackGame)
-    }
-
-    private fun start(blackjackGame: BlackjackGame) {
-        blackjackGame.dealInitialHand()
-        resultView.outputInitialHand(blackjackGame.challengers, blackjackGame.dealer)
-    }
-
-    private fun deal(blackjackGame: BlackjackGame) {
-        dealToChallenger(blackjackGame)
-        dealToDealer(blackjackGame)
-    }
-
-    private fun dealToDealer(blackjackGame: BlackjackGame) {
-        while (blackjackGame.dealer.canHit) {
-            blackjackGame.dealCardTo(blackjackGame.dealer)
-            resultView.outputDealerDeal()
-        }
-    }
-
-    private fun dealToChallenger(blackjackGame: BlackjackGame) {
-        blackjackGame.challengers.forEach { challenger ->
-            while (challenger.canHit) {
-                val hit = inputView.inputHitDecision(challenger)
-                if (hit) {
-                    blackjackGame.dealCardTo(challenger)
-                    resultView.outputCurrentHand(challenger)
-                } else {
-                    challenger.stay()
-                }
-            }
-        }
     }
 
     private fun end(blackjackGame: BlackjackGame) {
