@@ -1,5 +1,8 @@
 package blackjack.domain
 
+import blackjack.domain.game.EarningsRateCase
+import blackjack.domain.game.GameResultType
+
 /**
  * ### 블랙잭을 플레이하는 사람을 표현하는 객체 입니다.
  */
@@ -55,28 +58,12 @@ data class Challenger(
     }
 
     fun isWin(dealer: Dealer): Boolean {
-        if (this.isBurst()) {
-            return false
-        }
-        if (dealer.isBurst()) {
-            return true
-        }
-        return this.score() >= dealer.score()
+        return GameResultType.of(this.score(), dealer.score()) == GameResultType.CHALLENGER_WIN
     }
 
     fun getEarnings(dealer: Dealer): Int {
-        return if (isBlackjack() && dealer.isBlackjack()) {
-            0
-        } else if (isBlackjack()) {
-            (bettingAmount * 1.5).toInt()
-        } else if (dealer.isBlackjack()) {
-            -bettingAmount
-        } else {
-            if (isWin(dealer)) {
-                bettingAmount
-            } else {
-                -bettingAmount
-            }
-        }
+        val gameResultType = GameResultType.of(this.score(), dealer.score())
+        val earningsRate = EarningsRateCase.of(gameResultType, this.isBlackjack(), dealer.isBlackjack()).earningsRate
+        return (earningsRate * bettingAmount).toInt()
     }
 }
