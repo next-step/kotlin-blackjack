@@ -27,7 +27,7 @@ open class Player(
         return getScore() < BlackJackGame.MAX_SCORE
     }
 
-    open fun getGameResult(win: Boolean) {
+    open fun setGameResult(win: Boolean) {
         gameResult = if (win) GameResult.WIN else GameResult.LOSE
     }
 }

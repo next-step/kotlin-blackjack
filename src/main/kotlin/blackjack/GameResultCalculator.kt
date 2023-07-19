@@ -11,8 +11,8 @@ object GameResultCalculator {
         val isDealerLose = scoreOfDealer > BlackJackGame.MAX_SCORE
         players.players.forEach {
             val scoreOfPlayer = it.getScore()
-            it.getGameResult(isDealerLose || scoreOfPlayer > scoreOfDealer)
-            dealer.getGameResult(!isDealerLose && scoreOfDealer > scoreOfPlayer)
+            it.setGameResult(isDealerLose || scoreOfPlayer > scoreOfDealer)
+            dealer.setGameResult(!isDealerLose && scoreOfDealer > scoreOfPlayer)
         }
     }
 }

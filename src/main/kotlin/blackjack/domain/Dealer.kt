@@ -19,7 +19,7 @@ class Dealer(name: String, cards: Cards = Cards()) : Player(name, cards) {
         }
     }
 
-    override fun getGameResult(win: Boolean) {
+    override fun setGameResult(win: Boolean) {
         gameResults.add(if (win) GameResult.WIN else GameResult.LOSE)
     }
 
