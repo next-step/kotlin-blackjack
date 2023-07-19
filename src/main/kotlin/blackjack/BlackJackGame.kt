@@ -51,9 +51,9 @@ class BlackJackGame {
         DisplayView.dealOutAdditionalCard(received)
     }
 
-    private fun takeAnotherCard(dealer: Distributor, player: Player) {
-        if (player.getScore() < MAX_SCORE) {
-            dealOutAdditionalCard(dealer, player)
+    private fun takeAnotherCard(distributor: Distributor, player: Player) {
+        if (player.isReceivableNewCard()) {
+            dealOutAdditionalCard(distributor, player)
         }
     }
 

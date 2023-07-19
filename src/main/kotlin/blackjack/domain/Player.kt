@@ -1,5 +1,6 @@
 package blackjack.domain
 
+import blackjack.BlackJackGame
 import blackjack.GameResult
 import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
@@ -20,6 +21,10 @@ open class Player(
 
     fun getScore(): Int {
         return cards.getScore()
+    }
+
+    open fun isReceivableNewCard(): Boolean {
+        return getScore() < BlackJackGame.MAX_SCORE
     }
 
     open fun getGameResult(win: Boolean) {

@@ -23,7 +23,7 @@ class Dealer(name: String, cards: Cards = Cards()) : Player(name, cards) {
         gameResults.add(if (win) GameResult.WIN else GameResult.LOSE)
     }
 
-    fun isReceivableNewCard(): Boolean {
+    override fun isReceivableNewCard(): Boolean {
         return !isFinished && getScore() < LIMIT_SCORE
     }
 
