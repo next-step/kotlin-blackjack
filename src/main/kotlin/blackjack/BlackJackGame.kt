@@ -44,11 +44,11 @@ class BlackJackGame {
     }
 
     private fun dealOutAdditionalCard(distributor: Distributor, dealer: Dealer) {
-        val receiveNewCard = dealer.getScore() < Dealer.LIMIT_SCORE
-        if (receiveNewCard) {
+        val received = dealer.isReceivableNewCard()
+        if (received) {
             distributor.dealOutCard(dealer)
         }
-        DisplayView.dealOutAdditionalCard(receiveNewCard)
+        DisplayView.dealOutAdditionalCard(received)
     }
 
     private fun takeAnotherCard(dealer: Distributor, player: Player) {
