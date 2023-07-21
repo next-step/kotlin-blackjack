@@ -29,7 +29,7 @@ jason카드: 7클로버, K스페이드 - 결과: 17
 
 ### 기능목록
 - card
-  - shape, number
+  - card shape, card number
 - player
   - name, card list, score
 - players
