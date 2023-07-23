@@ -12,7 +12,7 @@ class BlackJackGame {
 
     fun start() {
         val names = InputView.inputNameOfPlayer()
-        val players = Players(names)
+        val players = Players(names.map { Player(it) })
         DisplayView.dealOutCards(players)
 
         val distributor = Distributor(CardDeck())
@@ -30,7 +30,7 @@ class BlackJackGame {
     }
 
     private fun dealOutAdditionalCards(distributor: Distributor, players: Players) {
-        players.players.forEach {
+        players.forEach {
             dealOutAdditionalCard(distributor, it)
         }
     }

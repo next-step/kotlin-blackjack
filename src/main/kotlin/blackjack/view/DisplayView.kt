@@ -8,13 +8,13 @@ import blackjack.domain.Players
 object DisplayView {
 
     fun dealOutCards(players: Players) {
-        val playersName = players.players.joinToString()
+        val playersName = players.joinToString()
         println("딜러와 ${playersName}에게 2장의 카드 나누었습니다.")
     }
 
     fun cardsOfPlayers(dealer: Dealer, players: Players) {
         cardsOfDealer(dealer)
-        players.players.forEach {
+        players.forEach {
             cardsOfPlayer(it)
         }
     }
@@ -41,7 +41,7 @@ object DisplayView {
 
     fun finalScore(dealer: Dealer, players: Players) {
         printFinalScore(dealer)
-        players.players.forEach { printFinalScore(it) }
+        players.forEach { printFinalScore(it) }
     }
 
     fun result(dealer: Dealer, players: Players) {
@@ -49,7 +49,7 @@ object DisplayView {
         val dealerWinCnt = dealer.gameResults.count { it == GameResult.WIN }
         val dealerLoseCnt = dealer.gameResults.count { it == GameResult.LOSE }
         println("딜러: ${dealerWinCnt}승 ${dealerLoseCnt}패")
-        players.players.forEach { println("${it.name}: ${it.gameResult.description}") }
+        players.forEach { println("${it.name}: ${it.gameResult.description}") }
     }
 
     private fun printFinalScore(player: Player) {

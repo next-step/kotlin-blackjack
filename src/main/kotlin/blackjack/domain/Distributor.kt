@@ -14,7 +14,7 @@ class Distributor(
     fun dealOutCards(dealer: Dealer, players: Players) {
         repeat(DEAL_OUT_CARD_AMOUNT) {
             dealOutCard(dealer)
-            players.players.forEach { dealOutCard(it) }
+            players.forEach { dealOutCard(it) }
         }
     }
 
