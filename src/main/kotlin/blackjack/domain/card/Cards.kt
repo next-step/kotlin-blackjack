@@ -2,9 +2,7 @@ package blackjack.domain.card
 
 import blackjack.BlackJackGame
 
-class Cards(
-    private val cards: MutableList<Card> = mutableListOf()
-) {
+class Cards(private val cards: MutableList<Card> = mutableListOf()) : MutableList<Card> by cards {
     fun addCard(card: Card) {
         cards += card
     }
@@ -19,12 +17,11 @@ class Cards(
     }
 
     private fun isAceAvailable(score: Int): Boolean {
-        return cards.any { it.isAce() }
-                && (score + CardNumber.ACE_ADDITIONAL_SCORE) <= BlackJackGame.MAX_SCORE
+        return cards.any { it.isAce() } &&
+            (score + CardNumber.ACE_ADDITIONAL_SCORE) <= BlackJackGame.MAX_SCORE
     }
 
     override fun toString(): String {
         return cards.joinToString()
     }
-
 }
