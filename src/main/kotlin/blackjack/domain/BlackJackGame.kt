@@ -5,7 +5,7 @@ const val DEALER_MINIMUM_SCORE = 16
 
 class BlackJackGame(
     val dealer: Dealer = Dealer(),
-    players: Players
+    players: Players,
 ) {
     var players: Players = players
         private set

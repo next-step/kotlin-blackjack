@@ -2,9 +2,10 @@ package blackjack.domain
 
 class Player(
     val name: String,
-    cards: Cards = Cards()
+    val cards: Cards = Cards(),
+    val betAmount: Double,
 ) : Participant {
-    var cards: Cards = cards
+    var profit: Double = INIT_PROFIT
         private set
     val score
         get() = ScoreCalculator.calculateScore(cards)
@@ -14,14 +15,26 @@ class Player(
     }
 
     override fun receiveCards(newCards: List<Card>) {
-        cards = Cards(cards.values + newCards)
+        cards.addAll(newCards)
     }
 
     override fun receiveCard(newCard: Card) {
-        cards = Cards(cards.values + newCard)
+        cards.add(newCard)
+        if (score > BLACK_JACK) {
+            loseBetAmount()
+        }
+    }
+
+    fun plusMoney(amount: Double) {
+        profit += amount
+    }
+
+    fun loseBetAmount() {
+        profit = -betAmount
     }
 
     companion object {
         const val DEFAULT_CARD_SIZE = 2
+        const val INIT_PROFIT = 0.0
     }
 }
