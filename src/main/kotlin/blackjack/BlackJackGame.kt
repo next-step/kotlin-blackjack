@@ -25,7 +25,7 @@ class BlackJackGame {
         dealOutAdditionalCard(distributor, dealer)
         DisplayView.finalScore(dealer, players)
 
-        GameResultCalculator.getResult(dealer, players)
+        GameResultCalculator.setResult(dealer, players)
         DisplayView.result(dealer, players)
     }
 
