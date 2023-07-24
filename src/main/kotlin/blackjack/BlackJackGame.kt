@@ -1,6 +1,7 @@
 package blackjack
 
 import blackjack.domain.Dealer
+import blackjack.domain.Distributor
 import blackjack.domain.Player
 import blackjack.domain.Players
 import blackjack.domain.card.CardDeck
@@ -11,34 +12,48 @@ class BlackJackGame {
 
     fun start() {
         val names = InputView.inputNameOfPlayer()
-        val players = Players(names)
+        val players = Players(names.map { Player(it) })
         DisplayView.dealOutCards(players)
 
-        val dealer = Dealer(CardDeck())
-        dealer.dealOutCards(players)
-        DisplayView.cardsOfPlayers(players)
+        val distributor = Distributor(CardDeck())
+        val dealer = Dealer()
 
-        dealOutAdditionalCards(dealer, players)
-        DisplayView.result(players)
+        distributor.dealOutCards(dealer, players)
+        DisplayView.cardsOfPlayers(dealer, players)
+
+        dealOutAdditionalCards(distributor, players)
+        dealOutAdditionalCard(distributor, dealer)
+        DisplayView.finalScore(dealer, players)
+
+        GameResultCalculator.setResult(dealer, players)
+        DisplayView.result(dealer, players)
     }
 
-    private fun dealOutAdditionalCards(dealer: Dealer, players: Players) {
-        players.players.forEach {
-            dealOutAdditionalCard(dealer, it)
+    private fun dealOutAdditionalCards(distributor: Distributor, players: Players) {
+        players.forEach {
+            dealOutAdditionalCard(distributor, it)
         }
     }
 
-    private fun dealOutAdditionalCard(dealer: Dealer, player: Player) {
+    private fun dealOutAdditionalCard(distributor: Distributor, player: Player) {
         DisplayView.dealOutAdditionalCard(player)
         if (InputView.inputAdditionalCard() == "y") {
-            dealer.dealOutCard(player)
-            takeAnotherCard(dealer, player)
+            distributor.dealOutCard(player)
+            takeAnotherCard(distributor, player)
         }
     }
 
-    private fun takeAnotherCard(dealer: Dealer, player: Player) {
-        if (player.getScore() >= MAX_SCORE) {
-            dealOutAdditionalCard(dealer, player)
+    private fun dealOutAdditionalCard(distributor: Distributor, dealer: Dealer) {
+        val received = dealer.isReceivableNewCard()
+        if (received) {
+            distributor.dealOutCard(dealer)
+        }
+        DisplayView.dealOutAdditionalCard(received)
+    }
+
+    private fun takeAnotherCard(distributor: Distributor, player: Player) {
+        if (player.isReceivableNewCard()) {
+            dealOutAdditionalCard(distributor, player)
         }
     }
 

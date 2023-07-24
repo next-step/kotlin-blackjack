@@ -1,7 +1,3 @@
 package blackjack.domain
 
-data class Players(
-    val names: List<String>
-) {
-    val players: List<Player> = names.map { Player(it) }
-}
+data class Players(private val players: List<Player>) : List<Player> by players

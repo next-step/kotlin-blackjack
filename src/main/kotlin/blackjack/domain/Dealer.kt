@@ -1,39 +1,34 @@
 package blackjack.domain
 
+import blackjack.GameResult
 import blackjack.domain.card.Card
-import blackjack.domain.card.CardDeck
-import kotlin.random.Random
+import blackjack.domain.card.Cards
 
-class Dealer(
-    private val cardDeck: CardDeck
-) {
+class Dealer(name: String, cards: Cards = Cards()) : Player(name, cards) {
+    private var isFinished = false
+    val gameResults = mutableListOf<GameResult>()
 
-    /**
-     * 플레이어들에게 2장씩 카드를 분배함
-     */
-    fun dealOutCards(players: Players) {
-        repeat(DEAL_OUT_CARD_AMOUNT){
-            players.players.forEach{ dealOutCard(it) }
+    constructor(cards: Cards = Cards()) : this(DEALER_DISPLAY_NAME, cards)
+
+    // 17점이 넘으면 호출되어도 더 이상 카드를 추가하지 않는다
+    override fun addCard(card: Card) {
+        if (isReceivableNewCard()) {
+            super.addCard(card)
+        } else {
+            isFinished = true
         }
     }
 
-    /**
-     * 플레이어들에게 1장씩 카드를 분배함
-     */
-    fun dealOutCard(player: Player) {
-        player.cards.addCard(peekCard())
+    override fun setGameResult(win: Boolean) {
+        gameResults.add(if (win) GameResult.WIN else GameResult.LOSE)
     }
 
-    /**
-     * 카드덱에서 랜덤한 카드를 1장 꺼냄
-     */
-    private fun peekCard(): Card {
-        val random = Random.Default
-        val randomIndex = random.nextInt(cardDeck.cards.size)
-        return cardDeck.peekCard(randomIndex)
+    override fun isReceivableNewCard(): Boolean {
+        return !isFinished && getScore() < LIMIT_SCORE
     }
 
     companion object {
-        const val DEAL_OUT_CARD_AMOUNT = 2
+        private const val DEALER_DISPLAY_NAME = "딜러"
+        private const val LIMIT_SCORE = 17
     }
 }

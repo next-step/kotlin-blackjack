@@ -20,10 +20,10 @@ class PlayerTest : StringSpec({
 
     "쉼표 기준으로 분리된 이름을 받아 Player들을 생성한다" {
         val nameList = listOf("pobi", "jason")
-        val players = Players(nameList)
+        val players = Players(nameList.map { Player(it) })
 
         nameList.all { name ->
-            players.players.any { player ->
+            players.any { player ->
                 player.name == name
             }
         } shouldBe true
