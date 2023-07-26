@@ -22,7 +22,5 @@ object BlackjackApplication {
         }
 
         outputConsoleView.printResult(players)
-//        val winners = racingCarService.play(namesOfCars, numberOfAttempts)
-//        outputConsoleView.printWinners(winners)
     }
 }
