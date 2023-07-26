@@ -33,7 +33,7 @@ class PlayerTest : StringSpec({
         edge.cards shouldBe list
     }
 
-    "합이 11보다 작으면 ace를 11로 계산하기" {
+    "합이 11보다 작거나 같으면 ace를 11로 계산하기" {
         edge.addCard(Card(CardShape.DIAMOND, CardNumber.ACE))
 
         edge.cardSum() shouldBe 16
