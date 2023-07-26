@@ -15,8 +15,8 @@ object BlackjackApplication {
 
         outputConsoleView.printInitCardMsg(players)
         players.players.map { player ->
-            while (inputConsoleView.wannaGetNextCard(player)) {
-                players.getCard(player.name)
+            while (player.cardSum() < 21 && inputConsoleView.wannaGetNextCard(player)) {
+                players.getCard(player)
                 outputConsoleView.printCards(player)
             }
         }

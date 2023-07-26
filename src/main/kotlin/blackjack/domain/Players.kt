@@ -12,8 +12,7 @@ class Players(names: List<String>) {
         return players.find { it.name == name } ?: throw IllegalArgumentException("no such player")
     }
 
-    fun getCard(name: String) {
-        val player = players.find { it.name == name } ?: throw IllegalArgumentException("no such player")
+    fun getCard(player: Player) {
         player.addCard(randomCard())
     }
 
