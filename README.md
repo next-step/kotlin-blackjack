@@ -31,7 +31,8 @@ jason카드: 7클로버, K스페이드 - 결과: 17
 - card
   - card shape, card number
 - player
-  - name, card list, score
+  - name, card list
+  - cardSum()
 - players
   - player list
 - 입출력

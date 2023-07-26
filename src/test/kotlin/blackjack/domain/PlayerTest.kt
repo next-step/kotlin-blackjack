@@ -28,8 +28,8 @@ class PlayerTest : StringSpec({
         edge.addCard(addCard)
 
         edge.cardSum() shouldBe 30
-        val list = mutableListOf(addCard)
-        list.addAll(initCards)
+        val list = initCards.toMutableList()
+        list.add(addCard)
         edge.cards shouldBe list
     }
 })

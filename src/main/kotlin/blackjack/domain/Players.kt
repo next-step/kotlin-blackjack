@@ -2,14 +2,19 @@ package blackjack.domain
 
 class Players(names: List<String>) {
     private val cards = mutableListOf<Card>()
-    private val players = names.map { Player(it, arrayListOf(randomCard(), randomCard())) }
+    val players = names.map { Player(it, arrayListOf(randomCard(), randomCard())) }
 
     init {
-        require(names.size == setOf(names).size)
+        require(names.size == names.toSet().size)
     }
 
     fun getPlayer(name: String): Player {
         return players.find { it.name == name } ?: throw IllegalArgumentException("no such player")
+    }
+
+    fun getCard(name: String) {
+        val player = players.find { it.name == name } ?: throw IllegalArgumentException("no such player")
+        player.addCard(randomCard())
     }
 
     private fun randomCard(): Card {
