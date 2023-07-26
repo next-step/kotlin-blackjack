@@ -1,7 +1,7 @@
 package learning
 
 class SkillsBuilder {
-    val skills = mutableListOf<Skill>()
+    private val skills = mutableListOf<Skill>()
 
     fun soft(value: String) {
         skills.add(Skill(SkillType.SOFT, value))
@@ -9,5 +9,9 @@ class SkillsBuilder {
 
     fun hard(value: String) {
         skills.add(Skill(SkillType.HARD, value))
+    }
+
+    fun build(): MutableList<Skill> {
+        return skills
     }
 }
