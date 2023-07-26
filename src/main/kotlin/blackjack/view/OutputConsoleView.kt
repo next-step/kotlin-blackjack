@@ -25,6 +25,6 @@ class OutputConsoleView {
     }
 
     private fun cardToString(card: Card): String {
-        return "${card.number.value}${card.shape.value}"
+        return "${card.number.display}${card.shape.display}"
     }
 }
