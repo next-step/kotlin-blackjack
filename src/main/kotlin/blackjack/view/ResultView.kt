@@ -1,13 +1,13 @@
 package blackjack.view
 
-import blackjack.domain.Challengers
 import blackjack.domain.Dealer
 import blackjack.domain.Player
+import blackjack.domain.player.Challengers
 
 class ResultView {
     fun outputInitialHand(challengers: Challengers, dealer: Dealer) {
         println("딜러와 ${challengers.joinToString { it.name }}에게 2장씩 나누었습니다.")
-        println("딜러: ${dealer.deck.cards.last()}")
+        println("딜러: ${dealer.currentDeck().cards.last()}")
         challengers.forEach { challenger ->
             println("${challenger.name}카드: ${getAllHandString(challenger)}")
         }
@@ -19,9 +19,9 @@ class ResultView {
 
     fun outputGameResult(challengers: Challengers, dealer: Dealer) {
         println()
-        println("딜러 카드: ${getAllHandString(dealer)} ${dealer.getDeckPointSum()}")
+        println("딜러 카드: ${getAllHandString(dealer)} ${dealer.score()}")
         challengers.forEach { challenger ->
-            println("${challenger.name}카드: ${getAllHandString(challenger)} ${challenger.getDeckPointSum()}")
+            println("${challenger.name}카드: ${getAllHandString(challenger)} ${challenger.score()}")
         }
 
         println("## 최종 승패")
@@ -31,6 +31,14 @@ class ResultView {
         challengers.forEach { challenger ->
             println("${challenger.name}: ${ if (challenger.isWin(dealer)) "승" else "패" }")
         }
+
+        println("## 최종 수익")
+
+        val sumOfChallengersReturnAmount = challengers.sumOf { it.getEarnings(dealer) }
+        println("딜러: ${-sumOfChallengersReturnAmount}")
+        challengers.forEach { challenger ->
+            println("${challenger.name}: ${challenger.getEarnings(dealer)}")
+        }
     }
 
     fun outputDealerDeal() {
@@ -38,6 +46,6 @@ class ResultView {
     }
 
     private fun getAllHandString(player: Player): String {
-        return player.deck.cards.joinToString { it.toString() }
+        return player.currentDeck().cards.joinToString { it.toString() }
     }
 }
