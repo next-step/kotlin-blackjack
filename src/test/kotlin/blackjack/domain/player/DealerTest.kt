@@ -1,7 +1,7 @@
-package blackjack
+package blackjack.domain.player
 
-import blackjack.domain.Dealer
-import blackjack.domain.Player
+import blackjack.domain.player.Dealer
+import blackjack.domain.player.Player
 import blackjack.domain.card.Card
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe

@@ -1,4 +1,4 @@
-package blackjack.domain
+package blackjack.domain.state
 
 enum class PlayerState {
     PLAYING,

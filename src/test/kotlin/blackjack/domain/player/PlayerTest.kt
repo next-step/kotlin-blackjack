@@ -1,7 +1,6 @@
-package blackjack
+package blackjack.domain.player
 
-import blackjack.domain.Player
-import blackjack.domain.PlayerState
+import blackjack.domain.state.PlayerState
 import blackjack.domain.card.Card
 import blackjack.domain.card.CardRank
 import blackjack.domain.card.CardSuit
