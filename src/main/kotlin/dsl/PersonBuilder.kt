@@ -1,10 +1,4 @@
-package study
-
-fun introduce(
-    block: PersonBuilder.() -> Unit
-): Person {
-    return PersonBuilder().apply(block).build()
-}
+package dsl
 
 class PersonBuilder {
     private lateinit var name: String
@@ -20,5 +14,3 @@ class PersonBuilder {
 
     fun build(): Person = Person(name, company)
 }
-
-data class Person(val name: String, val company: String?)
