@@ -15,7 +15,7 @@ class SkillsBuilder {
         skills.add(Skill(SkillType.HARD, detail))
     }
 
-    fun build() = Skills(skills.toList())
+    fun build() = skills.toList().let(::Skills)
 }
 
 data class Skill(

@@ -72,4 +72,28 @@ class DslTest {
             Skill(SkillType.HARD, "Kotlin")
         )
     }
+
+    @Test
+    fun languages() {
+        val person = introduce {
+            name("박재성")
+            company()
+            skills {
+                soft("A passion for problem solving")
+                soft("Good communication skills")
+                hard("Kotlin")
+            }
+            languages {
+                "Korean" level 5
+                "English" level 3
+            }
+        }
+
+        val languages = person.languages
+        languages.shouldNotBeNull()
+        languages.value shouldBe listOf(
+            Language("Korean", 5),
+            Language("English", 3),
+        )
+    }
 }
