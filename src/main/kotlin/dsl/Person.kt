@@ -1,5 +1,7 @@
 package dsl
 
+import java.util.concurrent.ConcurrentSkipListSet
+
 class PersonBuilder {
     private lateinit var name: String
     private var company: String? = null
@@ -14,9 +16,9 @@ class PersonBuilder {
     }
 
     fun skills(
-        block: Skills.() -> Unit
+        block: SkillsBuilder.() -> Unit
     ) {
-        skills = Skills().apply(block)
+        skills = SkillsBuilder().apply(block).build()
     }
 
     fun build(): Person = Person(name, company, skills)

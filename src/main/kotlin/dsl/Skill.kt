@@ -1,18 +1,21 @@
 package dsl
 
 data class Skills(
-    private val _value: MutableList<Skill> = mutableListOf(),
-) {
     val value: List<Skill>
-        get() = _value
+)
+
+class SkillsBuilder {
+    private val skills: MutableList<Skill> = mutableListOf()
 
     fun soft(detail: String) {
-        _value.add(Skill(SkillType.SOFT, detail))
+        skills.add(Skill(SkillType.SOFT, detail))
     }
 
     fun hard(detail: String) {
-        _value.add(Skill(SkillType.HARD, detail))
+        skills.add(Skill(SkillType.HARD, detail))
     }
+
+    fun build() = Skills(skills.toList())
 }
 
 data class Skill(
