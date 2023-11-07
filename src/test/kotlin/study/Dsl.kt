@@ -1,15 +1,14 @@
 package study
 
 fun introduce(
-    block: Person.() -> Unit
+    block: PersonBuilder.() -> Unit
 ): Person {
-    return Person().apply(block)
+    return PersonBuilder().apply(block).build()
 }
 
-class Person() {
-    lateinit var name: String
-    lateinit var company: String
-
+class PersonBuilder {
+    private lateinit var name: String
+    private var company: String? = null
 
     fun name(value: String) {
         name = value
@@ -18,4 +17,8 @@ class Person() {
     fun company(value: String) {
         company = value
     }
+
+    fun build(): Person = Person(name, company)
 }
+
+data class Person(val name: String, val company: String?)
