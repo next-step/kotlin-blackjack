@@ -4,8 +4,8 @@ class TrumpCardBuilder {
 
     private val cards = mutableListOf<Card>()
 
-    fun card(card: Card) {
-        cards.add(card)
+    fun cards(cards: List<Card>) {
+        this.cards.addAll(cards)
     }
 
     fun build(): TrumpCard {
