@@ -1,6 +1,6 @@
 package blackjack.domain
 
 class Card(
-    val suit: String,
+    val suit: Suit,
     val rank: Rank,
 )
