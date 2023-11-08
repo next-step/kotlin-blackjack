@@ -2,7 +2,11 @@ package dsl
 
 data class Skills(
     val value: List<Skill>
-)
+) {
+    companion object {
+        fun empty(): Skills = Skills(emptyList())
+    }
+}
 
 class SkillsBuilder {
     private val skills: MutableList<Skill> = mutableListOf()
