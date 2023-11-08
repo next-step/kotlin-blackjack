@@ -1,7 +1,8 @@
 package dsl
 
-class PersonBuilder {
-    private lateinit var name: String
+class PersonBuilder(
+    private var name: String
+) {
     private var company: String? = null
     private var skills: Skills = Skills.empty()
     private var languages: Languages = Languages.empty()
