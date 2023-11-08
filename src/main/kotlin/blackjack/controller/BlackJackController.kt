@@ -15,7 +15,14 @@ class BlackJackController {
             initPlayer(it, trumpCard)
         }
         OutputView.printInitCard(players)
-        OutputView.printPlayerCard(players)
+        OutputView.printPlayersCard(players)
+        players.forEach {
+            while (InputView.inputHitOrStand(it)) {
+                it.playerCard.add(trumpCard.draw())
+                OutputView.printPlayerCard(it)
+            }
+        }
+        OutputView.printPlayerResult(players)
     }
 
     private fun initPlayer(playerName: String, trumpCard: TrumpCard): Player {
