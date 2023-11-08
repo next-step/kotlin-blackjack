@@ -16,4 +16,26 @@ class CardTest : BehaviorSpec({
             }
         }
     }
+
+    given("카드의 숫자가 ACE 주어졌을때") {
+        val card = Card(Suit.SPADE, Rank.ACE)
+        `when`("카드의 점수를 계산하면") {
+            val score = card.calculateScore()
+            then("카드의 점수는 1 또는 11이 된다.") {
+                score.first shouldBe 1
+                score.second shouldBe 11
+            }
+        }
+    }
+
+    given("카드에 숫자가 2가 아닌게 주어졌을때") {
+        val card = Card(Suit.SPADE, Rank.TWO)
+        `when`("카드의 점수를 계산하면") {
+            val score = card.calculateScore()
+            then("카드의 점수는 2가 된다.") {
+                score.first shouldBe 2
+                score.second shouldBe 2
+            }
+        }
+    }
 })

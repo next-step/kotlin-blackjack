@@ -49,4 +49,37 @@ class PlayerTest : BehaviorSpec({
             }
         }
     }
+
+    given("플레이어가 카드 스페이드A 하트9를 받았다면") {
+        val player = Player(
+            "원동재",
+            initPlayerCard {
+                add(Card(Suit.SPADE, Rank.ACE))
+                add(Card(Suit.HEART, Rank.NINE))
+            }
+        )
+        `when`("플레이어의 점수를 계산하면") {
+            val score = player.score()
+            then("플레이어의 점수는 20점이다.") {
+                score shouldBe 20
+            }
+        }
+    }
+
+    given("플레이어가 카드 스페이드A 하트9 다이아몬드 킹을 받았다면") {
+        val player = Player(
+            "원동재",
+            initPlayerCard {
+                add(Card(Suit.SPADE, Rank.ACE))
+                add(Card(Suit.HEART, Rank.NINE))
+                add(Card(Suit.DIAMOND, Rank.KING))
+            }
+        )
+        `when`("플레이어의 점수를 계산하면") {
+            val score = player.score()
+            then("플레이어의 점수는 20점이다.") {
+                score shouldBe 20
+            }
+        }
+    }
 })
