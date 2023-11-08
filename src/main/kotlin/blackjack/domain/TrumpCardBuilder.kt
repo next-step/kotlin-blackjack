@@ -8,6 +8,10 @@ class TrumpCardBuilder {
         this.cards.addAll(cards)
     }
 
+    fun shuffle() {
+        cards.shuffle()
+    }
+
     fun build(): TrumpCard {
         return TrumpCard(cards)
     }

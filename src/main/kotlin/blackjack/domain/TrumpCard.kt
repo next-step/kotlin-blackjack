@@ -17,6 +17,7 @@ value class TrumpCard(val cards: List<Card> = emptyList()) {
                 for (suit in Suit.values()) {
                     cards(Rank.values().toList().map { Card(suit, it) })
                 }
+                shuffle()
             }
         }
     }
