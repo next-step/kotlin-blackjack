@@ -1,6 +1,7 @@
 package study
 
-class PersonBuilder(private var name: String) {
+class PersonBuilder() {
+    private lateinit var name: String
     private var company: String = ""
     private var skills: Skills = Skills()
     private var languages: Languages = Languages()

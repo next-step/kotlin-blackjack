@@ -1,3 +1,6 @@
 package study
 
-data class Skills(val hardSkills: List<String> = emptyList(), val softSkills: List<String> = emptyList())
+data class Skills(
+    val hardSkills: List<Skill.Hard> = emptyList(),
+    val softSkills: List<Skill.Soft> = emptyList(),
+)
