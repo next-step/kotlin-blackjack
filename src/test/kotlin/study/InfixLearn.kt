@@ -19,9 +19,11 @@ class InfixLearn : StringSpec({
 
     "중위표현법 예시" {
         val actual1 = 2 거듭제곱 3
+        val mirror1 = 2.거듭제곱(3)
         val actual2 = 3 거듭제곱 2 더하기 7
         val actual3 = 7 더하기 3 거듭제곱 3 더하기 24
         actual1 shouldBe 8
+        mirror1 shouldBe 8
         actual2 shouldBe 16
         actual3 shouldBe 1024
     }
