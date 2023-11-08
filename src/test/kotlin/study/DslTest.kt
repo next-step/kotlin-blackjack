@@ -8,7 +8,7 @@ class DslTest {
 
     @ValueSource(strings = ["김자바", "최코틀"])
     @ParameterizedTest
-    fun nameTest(input: String) {
+리    fun test(input: String) {
         val person = introduce {
             name(input)
             company("양산박")
