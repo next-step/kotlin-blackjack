@@ -8,4 +8,8 @@ data class Card(
         if (rank == Rank.ACE) return 1 to 11
         return rank.score to rank.score
     }
+
+    override fun toString(): String {
+        return "${rank.rankName}${suit.suitName}"
+    }
 }
