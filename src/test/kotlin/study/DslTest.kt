@@ -55,8 +55,8 @@ class DslTest {
         }
         person.name shouldBe "원동재"
         person.company shouldBe "마이다스아이티"
-        person.skills?.softSkills shouldBe listOf("A passion for problem solving", "Good communication skills")
-        person.skills?.hardSkills shouldBe listOf("Kotlin")
+        person.skills.softSkills shouldBe listOf("A passion for problem solving", "Good communication skills")
+        person.skills.hardSkills shouldBe listOf("Kotlin")
     }
 
     @Test
@@ -76,9 +76,9 @@ class DslTest {
         }
         person.name shouldBe "원동재"
         person.company shouldBe "마이다스아이티"
-        person.skills?.softSkills shouldBe listOf("A passion for problem solving", "Good communication skills")
-        person.skills?.hardSkills shouldBe listOf("Kotlin")
-        person.languages?.languages shouldBe listOf(
+        person.skills.softSkills shouldBe listOf("A passion for problem solving", "Good communication skills")
+        person.skills.hardSkills shouldBe listOf("Kotlin")
+        person.languages.languages shouldBe listOf(
             Language.from("Korean", 5),
             Language.from("English", 3)
         )

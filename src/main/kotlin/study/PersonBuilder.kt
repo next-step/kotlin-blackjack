@@ -1,10 +1,9 @@
 package study
 
-class PersonBuilder {
-    private lateinit var name: String
-    private var company: String? = null
-    private var skills: Skills? = null
-    private var languages: Languages? = null
+class PersonBuilder(private var name: String) {
+    private var company: String = ""
+    private var skills: Skills = Skills()
+    private var languages: Languages = Languages()
     fun name(value: String) {
         name = value
     }
