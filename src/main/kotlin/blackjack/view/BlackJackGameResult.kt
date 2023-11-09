@@ -10,8 +10,8 @@ class BlackJackGameResult(
         return players.map {
             mapOf(
                 "name" to it.name,
-                "cards" to it.playerCard.cards.joinToString(", ") { card -> card.display },
-                "score" to it.playerCard.score().score,
+                "cards" to it.cardSet.joinToString(", ") { card -> card.display },
+                "score" to it.cards.score().score,
             )
         }
     }

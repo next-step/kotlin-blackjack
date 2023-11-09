@@ -2,7 +2,6 @@ package blackjack.controller
 
 import blackjack.domain.Player
 import blackjack.domain.TrumpCard
-import blackjack.dsl.BlackJackDsl
 import blackjack.view.BlackJackGameResult
 import blackjack.view.InputView
 import blackjack.view.OutputView
@@ -13,26 +12,17 @@ class BlackJackController {
         val trumpCard = TrumpCard.init()
         val playerNames = InputView.inputPlayerName()
         val players = playerNames.map {
-            initPlayer(it, trumpCard)
+            Player(it).apply { init(trumpCard) }
         }
         OutputView.printInitCard(players)
         OutputView.printPlayersCard(players)
         players.forEach {
             while (InputView.inputHitOrStand(it)) {
-                it.playerCard.add(trumpCard.draw())
+                it.cards.add(trumpCard.draw())
                 OutputView.printPlayerCard(it)
             }
         }
         val result = BlackJackGameResult(players)
         OutputView.printBlackjackGameResult(result)
-    }
-
-    private fun initPlayer(playerName: String, trumpCard: TrumpCard): Player {
-        return Player(
-            playerName,
-            BlackJackDsl.initPlayerCard {
-                init(trumpCard)
-            }
-        )
     }
 }

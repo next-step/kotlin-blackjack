@@ -8,25 +8,26 @@ class TrumpCardTest : BehaviorSpec({
         `when`("트럼프 카드를 생성하면") {
             val trumpCard = TrumpCard.init()
             then("트럼프 카드는 52장이다.") {
-                trumpCard.cards.size shouldBe 52
+                trumpCard.size shouldBe 52
             }
         }
     }
 
     given("트럼프 카드를 2장을 생성하고") {
-        val trumpCard = TrumpCard(
-            mutableListOf(
+        val cards = Cards(
+            mutableSetOf(
                 Card(Suit.SPADE, Rank.ACE),
                 Card(Suit.HEART, Rank.TWO)
             )
         )
+        val trumpCard = TrumpCard(cards)
         `when`("카드를 한장 뽑으면") {
             val card = trumpCard.draw()
             then("뽑은 카드는 스페이드 A이다.") {
                 card shouldBe Card(Suit.SPADE, Rank.ACE)
             }
             then("남은 트럼프 카드는 1장이다.") {
-                trumpCard.cards.size shouldBe 1
+                trumpCard.size shouldBe 1
             }
         }
     }

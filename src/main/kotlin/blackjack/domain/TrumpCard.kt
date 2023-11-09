@@ -1,22 +1,26 @@
 package blackjack.domain
 
-import blackjack.dsl.BlackJackDsl
-
 @JvmInline
-value class TrumpCard(val cards: MutableList<Card> = mutableListOf()) {
+value class TrumpCard(val cards: Cards) {
+    val size: Int
+        get() = cards.cards.size
+    private val firstCard: Card
+        get() = cards.cards.first()
+
     fun draw(): Card {
-        return cards.removeFirst()
+        return firstCard.also {
+            cards.remove(it)
+        }
     }
 
     companion object {
-
         fun init(): TrumpCard {
-            return BlackJackDsl.initTrumpCard {
-                for (suit in Suit.values()) {
-                    cards(Rank.values().toList().map { Card(suit, it) })
-                }
-                shuffle()
+            val cardSet = mutableSetOf<Card>()
+            Suit.values().forEach { suit ->
+                cardSet.addAll(Rank.values().map { Card(suit, it) })
             }
+            cardSet.shuffled()
+            return TrumpCard(Cards(cardSet))
         }
     }
 }
