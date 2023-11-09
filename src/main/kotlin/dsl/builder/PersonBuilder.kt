@@ -27,6 +27,11 @@ data class PersonBuilder(
     }
 
     fun build(): Person {
-        return Person(name, company, skills, languages)
+        return Person(
+            requireNotNull(name),
+            requireNotNull(company),
+            requireNotNull(skills),
+            requireNotNull(languages)
+        )
     }
 }

@@ -1,6 +1,6 @@
 package dsl.model
 
-class Skill(
+data class Skill(
     val type: SkillType?,
     val description: String?,
 )

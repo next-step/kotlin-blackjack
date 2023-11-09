@@ -8,7 +8,7 @@ fun introduce(block: PersonBuilder.() -> Unit): Person {
 }
 
 fun main() {
-    val introduce = introduce {
+    val person = introduce {
         name("김파도")
         company("바람")
         skills {
@@ -21,21 +21,20 @@ fun main() {
             "Kotlin" level 1
         }
     }
-    println("저를 소개합니다 $introduce")
+    println("저를 소개합니다 ${person.introduce()}")
 }
 
-/*
-
-{
-    override fun toString(): String {
-        return """
-        name=${this.name}\n
-        company=${this.company}
-        skills=[${this.skills}]
-        languages=[${this.languages}]
-        """.trimMargin()
-    }
+fun Person.introduce(): String {
+    return ""
 }
+//        return """
+//        name=${this.name}\n
+//        company=${this.company}
+//        skills=[${this.skills.introduce()}]
+//        languages=[${this.languages}]
+//        """.trimMargin()
+//    }
 
-
- */
+// fun Skills.introduce():String{
+//
+// }

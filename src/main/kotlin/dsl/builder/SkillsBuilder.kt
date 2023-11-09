@@ -5,8 +5,8 @@ import dsl.model.SkillType
 import dsl.model.Skills
 
 class SkillsBuilder {
-    private val soft = mutableListOf<String>()
-    private val hard = mutableListOf<String>()
+    private val soft: MutableList<String> = mutableListOf<String>()
+    private val hard: MutableList<String> = mutableListOf<String>()
     fun soft(value: String) {
         soft.add(value)
     }
