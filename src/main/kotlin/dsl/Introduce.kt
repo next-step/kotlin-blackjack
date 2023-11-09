@@ -3,8 +3,6 @@ package dsl
 import dsl.builder.PersonBuilder
 import dsl.model.Person
 
-class IntroduceDsl
-
 fun introduce(block: PersonBuilder.() -> Unit): Person {
     return PersonBuilder().apply(block).build()
 }
@@ -25,3 +23,19 @@ fun main() {
     }
     println("저를 소개합니다 $introduce")
 }
+
+/*
+
+{
+    override fun toString(): String {
+        return """
+        name=${this.name}\n
+        company=${this.company}
+        skills=[${this.skills}]
+        languages=[${this.languages}]
+        """.trimMargin()
+    }
+}
+
+
+ */
