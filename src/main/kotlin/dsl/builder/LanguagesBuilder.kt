@@ -1,4 +1,7 @@
-package dsl.performer
+package dsl.builder
+
+import dsl.model.Language
+import dsl.model.Languages
 
 data class LanguagesBuilder(
     private var languages: MutableSet<Language> = mutableSetOf(),

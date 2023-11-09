@@ -1,4 +1,6 @@
-package dsl.performer
+package dsl.builder
+
+import dsl.model.Skills
 
 class SkillsBuilder {
     private val soft = mutableListOf<String>()

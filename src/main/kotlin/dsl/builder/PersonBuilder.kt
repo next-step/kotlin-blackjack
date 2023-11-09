@@ -1,4 +1,8 @@
-package dsl.performer
+package dsl.builder
+
+import dsl.model.Languages
+import dsl.model.Person
+import dsl.model.Skills
 
 data class PersonBuilder(
     private var name: String? = null,

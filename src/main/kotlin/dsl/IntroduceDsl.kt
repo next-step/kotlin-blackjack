@@ -1,7 +1,7 @@
 package dsl
 
-import dsl.performer.Person
-import dsl.performer.PersonBuilder
+import dsl.builder.PersonBuilder
+import dsl.model.Person
 
 class IntroduceDsl
 

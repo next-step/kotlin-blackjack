@@ -1,4 +1,4 @@
-package dsl.performer
+package dsl.model
 
 data class Person(
     val name: String?,
