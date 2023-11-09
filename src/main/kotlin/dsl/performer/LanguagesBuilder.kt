@@ -11,4 +11,3 @@ data class LanguagesBuilder(
         return Languages(languages)
     }
 }
-

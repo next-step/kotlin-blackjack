@@ -9,5 +9,3 @@ data class Language(
         return "Language(lang=$lang level=$level)"
     }
 }
-
-

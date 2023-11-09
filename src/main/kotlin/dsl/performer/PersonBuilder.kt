@@ -26,4 +26,3 @@ data class PersonBuilder(
         return Person(name, company, skills, languages)
     }
 }
-

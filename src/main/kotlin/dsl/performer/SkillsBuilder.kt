@@ -15,4 +15,3 @@ class SkillsBuilder {
         return Skills(soft, hard)
     }
 }
-

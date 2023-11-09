@@ -9,4 +9,3 @@ data class Skills(
         return "Skills(soft=$soft, hard=$hard)"
     }
 }
-
