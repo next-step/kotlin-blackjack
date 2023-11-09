@@ -1,3 +1,3 @@
 package study
 
-data class Languages(val languages: List<Language>)
+data class Languages(val languages: List<Language> = emptyList())
