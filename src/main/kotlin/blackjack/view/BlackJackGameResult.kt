@@ -1,18 +1,24 @@
 package blackjack.view
 
 import blackjack.domain.Player
-import blackjack.view.OutputView.display
+import blackjack.domain.Suit
 
 class BlackJackGameResult(
-    private val players: List<Player>,
+    private val player: Player,
 ) {
-    fun gameResult(): List<Map<String, Any>> {
-        return players.map {
-            mapOf(
-                "name" to it.name,
-                "cards" to it.cardSet.joinToString(", ") { card -> card.display },
-                "score" to it.cards.score().score,
-            )
+    val playerName: String get() = player.name
+    val cards: String
+        get() = player.cardSet.joinToString(", ") { card ->
+            "${card.rank.rankName}${card.suit.suitName()}"
+        }
+    val score: Int get() = player.cards.score().score
+
+    private fun Suit.suitName(): String {
+        return when (this) {
+            Suit.SPADE -> "스페이드"
+            Suit.HEART -> "하트"
+            Suit.DIAMOND -> "다이아몬드"
+            Suit.CLUB -> "클로버"
         }
     }
 }
