@@ -38,15 +38,44 @@ class DslTest {
         assertThat(person.name).isEqualTo("조재연")
         assertThat(person.company).isEqualTo("Google")
     }
+
+    @Test
+    fun skills() {
+        val person = introduce {
+            name("조재연")
+            skills {
+                soft("A passion for problem solving")
+                soft("Good communication skills")
+                hard("Kotlin")
+            }
+        }
+
+        assertThat(person.skills).containsExactly("A passion for problem solving", "Good communication skills", "Kotlin")
+    }
 }
 
 fun introduce(block: PersonBuilder.() -> Unit): Person {
     return PersonBuilder().apply(block).build()
 }
 
+class SkillBuilder {
+    private val skills = mutableListOf<String>()
+
+    fun soft(skill: String) {
+        skills.add(skill)
+    }
+
+    fun hard(skill: String) {
+        skills.add(skill)
+    }
+
+    fun build(): List<String> = skills.toList()
+}
+
 class PersonBuilder {
     private lateinit var name: String
     private var company: String? = null
+    private val skills = SkillBuilder()
 
     fun name(value: String) {
         name = value
@@ -56,9 +85,17 @@ class PersonBuilder {
         company = value
     }
 
+    fun skills(block: SkillBuilder.() -> Unit) {
+        skills.apply(block)
+    }
+
     fun build(): Person {
-        return Person(name, company)
+        return Person(name, company, skills.build())
     }
 }
 
-data class Person(val name: String, val company: String?)
+data class Person(
+    val name: String,
+    val company: String?,
+    val skills: List<String>,
+)
