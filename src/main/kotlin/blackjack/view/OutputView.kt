@@ -16,6 +16,10 @@ object OutputView {
         }
     }
 
+    fun printPlayerBurst(name: String) {
+        println("$name$PLAYER_BURST")
+    }
+
     fun printPlayerCard(player: Player) {
         println(player.cardDisplay)
     }
@@ -34,6 +38,8 @@ object OutputView {
             Suit.CLUB -> "클로버"
         }
     }
+
+    private const val PLAYER_BURST = "는 21점을 초과했습니다."
 
     private const val PRINT_INIT_CARD = "에게 2장의 나누었습니다."
     private val Player.cardDisplay get() = "${name}카드: ${cardSet.joinToString(", ") { it.display }}"
