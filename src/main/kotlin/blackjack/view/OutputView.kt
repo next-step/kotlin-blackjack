@@ -2,6 +2,7 @@ package blackjack.view
 
 import blackjack.domain.Card
 import blackjack.domain.Player
+import blackjack.domain.Suit
 
 object OutputView {
 
@@ -25,7 +26,16 @@ object OutputView {
         }
     }
 
+    private fun Suit.suitName(): String {
+        return when (this) {
+            Suit.SPADE -> "스페이드"
+            Suit.HEART -> "하트"
+            Suit.DIAMOND -> "다이아몬드"
+            Suit.CLUB -> "클로버"
+        }
+    }
+
     private const val PRINT_INIT_CARD = "에게 2장의 나누었습니다."
     private val Player.cardDisplay get() = "${name}카드: ${cardSet.joinToString(", ") { it.display }}"
-    val Card.display get() = "${rank.rankName}${suit.suitName}"
+    val Card.display get() = "${rank.rankName}${suit.suitName()}"
 }
