@@ -23,5 +23,5 @@ fun main() {
             "Kotlin" level 1
         }
     }
-    println("저를 소개합니다 ${introduce}")
+    println("저를 소개합니다 $introduce")
 }

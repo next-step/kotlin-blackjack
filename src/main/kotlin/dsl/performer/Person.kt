@@ -6,7 +6,7 @@ data class Person(
     val skills: Skills?,
     val languages: Languages?,
 
-    ) {
+) {
     override fun toString(): String {
         return """
         name=${this.name}\n
@@ -14,7 +14,6 @@ data class Person(
         skills=[${this.skills}]
         languages=[${this.languages}]
         """.trimMargin()
-
     }
 }
 

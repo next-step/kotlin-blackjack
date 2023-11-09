@@ -29,7 +29,6 @@ class InfixLearn : StringSpec({
     }
 })
 
-
 infix fun Int.거듭제곱(x: Int): Int {
     return this.toDouble().pow(x).toInt()
 }
@@ -37,5 +36,3 @@ infix fun Int.거듭제곱(x: Int): Int {
 infix fun Int.더하기(x: Int): Int {
     return this + x
 }
-
-
