@@ -20,7 +20,7 @@ object OutputView {
 
     fun printPlayerResult(player: List<Player>) {
         player.forEach {
-            println("${it.name}카드: ${it.playerCard.cards.joinToString(", ")} - 결과: ${it.score()}")
+            println("${it.name}카드: ${it.playerCard.cards.joinToString(", ")} - 결과: ${it.playerCard.score()}")
         }
     }
 
