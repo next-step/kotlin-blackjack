@@ -18,12 +18,10 @@ class TrumpCard(cards: Cards) {
 
     companion object {
         fun init(): TrumpCard {
-            val cardSet = mutableListOf<Card>()
-            Suit.values().forEach { suit ->
-                cardSet.addAll(Rank.values().map { Card(suit, it) })
-            }
-            cardSet.shuffle()
-            return TrumpCard(Cards(cardSet.toMutableSet()))
+            val cards = Suit.values().flatMap { suit ->
+                Rank.values().map { Card(suit, it) }
+            }.shuffled()
+            return TrumpCard(Cards(cards.toMutableSet()))
         }
     }
 }
