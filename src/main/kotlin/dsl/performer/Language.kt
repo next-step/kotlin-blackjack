@@ -10,18 +10,4 @@ data class Language(
     }
 }
 
-data class Languages(
-    val languages: Set<Language>
-)
 
-class LanguagesBuilder {
-    private val languages = mutableSetOf<Language>()
-
-    infix fun String.level(level: Int) {
-        languages.add(Language(this, level))
-    }
-
-    fun build(): Languages {
-        return Languages(languages)
-    }
-}
