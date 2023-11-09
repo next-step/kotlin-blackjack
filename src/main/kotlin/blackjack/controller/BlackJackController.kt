@@ -3,6 +3,7 @@ package blackjack.controller
 import blackjack.domain.Player
 import blackjack.domain.TrumpCard
 import blackjack.dsl.BlackJackDsl
+import blackjack.view.BlackJackGameResult
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
@@ -22,7 +23,8 @@ class BlackJackController {
                 OutputView.printPlayerCard(it)
             }
         }
-        OutputView.printPlayerResult(players)
+        val result = BlackJackGameResult(players)
+        OutputView.printBlackjackGameResult(result)
     }
 
     private fun initPlayer(playerName: String, trumpCard: TrumpCard): Player {

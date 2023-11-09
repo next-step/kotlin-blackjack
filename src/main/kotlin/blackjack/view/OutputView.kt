@@ -15,14 +15,15 @@ object OutputView {
     }
 
     fun printPlayerCard(player: Player) {
-        println("${player.name}카드: ${player.playerCard.cards.joinToString(", ")}")
+        println(player.cardDisplay)
     }
 
-    fun printPlayerResult(player: List<Player>) {
-        player.forEach {
-            println("${it.name}카드: ${it.playerCard.cards.joinToString(", ")} - 결과: ${it.playerCard.score()}")
+    fun printBlackjackGameResult(result: BlackJackGameResult) {
+        result.gameResult().forEach {
+            println("${it["name"]}카드: ${it["cards"]}, 결과: ${it["score"]}")
         }
     }
 
     private const val PRINT_INIT_CARD = "에게 2장의 나누었습니다."
+    private val Player.cardDisplay get() = "${name}카드: ${playerCard.cards.joinToString(", ")}"
 }
