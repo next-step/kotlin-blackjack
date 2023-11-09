@@ -1,5 +1,7 @@
 package dsl.builder
 
+import dsl.model.Skill
+import dsl.model.SkillType
 import dsl.model.Skills
 
 class SkillsBuilder {
@@ -14,6 +16,13 @@ class SkillsBuilder {
     }
 
     fun build(): Skills {
-        return Skills(soft, hard)
+        val softSkills: MutableList<Skill> = soft.map {
+            Skill(SkillType.SOFT, it)
+        }.toMutableList()
+        val hardSkills = hard.map {
+            Skill(SkillType.HARD, it)
+        }
+        softSkills.addAll(hardSkills)
+        return Skills(softSkills)
     }
 }
