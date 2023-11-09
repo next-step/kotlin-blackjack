@@ -8,6 +8,7 @@ value class Score(val score: Int) {
     }
 
     companion object {
-        private const val BLACK_JACK_SCORE = 21
+        const val BLACK_JACK_SCORE = 21
+        const val ACE_BONUS = 10
     }
 }

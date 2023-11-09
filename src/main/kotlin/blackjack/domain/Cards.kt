@@ -1,5 +1,8 @@
 package blackjack.domain
 
+import blackjack.domain.Score.Companion.ACE_BONUS
+import blackjack.domain.Score.Companion.BLACK_JACK_SCORE
+
 @JvmInline
 value class Cards(val cards: MutableSet<Card> = mutableSetOf()) {
 
@@ -12,11 +15,14 @@ value class Cards(val cards: MutableSet<Card> = mutableSetOf()) {
     }
 
     fun score(): Score {
-        val first = Score(cards.sumOf { it.calculateScore().first })
-        val second = Score(cards.sumOf { it.calculateScore().second })
-        if (first.isBurst().not() && second.isBurst().not()) {
-            return Score(maxOf(first.score, second.score))
+        val score = cards.sumOf { it.rank.score }
+        if (hasAce() && score + ACE_BONUS <= BLACK_JACK_SCORE) {
+            return Score(score + ACE_BONUS)
         }
-        return Score(minOf(first.score, second.score))
+        return Score(score)
+    }
+
+    private fun hasAce(): Boolean {
+        return cards.any { it.rank == Rank.ACE }
     }
 }
