@@ -5,7 +5,7 @@ import io.kotest.matchers.shouldBe
 
 class CardTest : BehaviorSpec({
 
-    given("카드에 모양과 숫자가 주어졌을때") {
+    given("카드에 스페이드 모양과 숫자 ACE가 주어졌을때") {
         val suit = Suit.SPADE
         val rank = Rank.ACE
         `when`("카드 생성을 하면") {
