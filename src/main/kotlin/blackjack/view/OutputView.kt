@@ -1,5 +1,6 @@
 package blackjack.view
 
+import blackjack.domain.Card
 import blackjack.domain.Player
 
 object OutputView {
@@ -25,5 +26,6 @@ object OutputView {
     }
 
     private const val PRINT_INIT_CARD = "에게 2장의 나누었습니다."
-    private val Player.cardDisplay get() = "${name}카드: ${playerCard.cards.joinToString(", ")}"
+    private val Player.cardDisplay get() = "${name}카드: ${playerCard.cards.joinToString(", ") { it.display }}"
+    val Card.display get() = "${rank.rankName}${suit.suitName}"
 }
