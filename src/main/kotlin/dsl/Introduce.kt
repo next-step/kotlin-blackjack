@@ -12,7 +12,7 @@ fun main() {
         name("김파도")
         company("바람")
         skills {
-            soft("오호츠크해속 돌고래의 시원함")
+            soft("오호츠크해 연안의 시원함")
             hard("해저화산의 뜨거움")
         }
         languages {
@@ -25,16 +25,10 @@ fun main() {
 }
 
 fun Person.introduce(): String {
-    return ""
+    return """
+        name=${this.name}
+        company=${this.company}
+        skills=${this.skills}
+        languages=${this.languages}
+    """.trimIndent()
 }
-//        return """
-//        name=${this.name}\n
-//        company=${this.company}
-//        skills=[${this.skills.introduce()}]
-//        languages=[${this.languages}]
-//        """.trimMargin()
-//    }
-
-// fun Skills.introduce():String{
-//
-// }
