@@ -10,7 +10,8 @@ object InputView {
     fun join(): Participants {
         println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)")
         val participants: Participants = joinPlayers(readlnOrNull() ?: "")
-        println("${participants.names()} 에게 ${participants.count()} 장의 나누었습니다.")
+        participants.dealing()
+        println("${participants.names()} 에게 2 장씩 나누었습니다.")
         return participants
     }
 
