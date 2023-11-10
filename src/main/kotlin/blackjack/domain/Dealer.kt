@@ -1,21 +1,15 @@
 package blackjack.domain
 
-class Dealer(val cards: Cards = Cards()) {
-    val cardSet get() = cards.cards
+class Dealer(override val cards: Cards = Cards()) : BlackJackPlayer {
+    override val name: String = DEALER_NAME
+    override val cardSet get() = cards.cards
 
-    fun drawBy(trumpCard: TrumpCard) {
-        cards.add(trumpCard.draw())
-    }
-
-    fun isBurst(): Boolean {
-        return cards.score().burst()
-    }
-
-    fun isHit(): Boolean {
+    override fun isHit(): Boolean {
         return cards.score() < Score(DEALER_HIT_SCORE)
     }
 
     companion object {
         private const val DEALER_HIT_SCORE = 17
+        private const val DEALER_NAME = "딜러"
     }
 }

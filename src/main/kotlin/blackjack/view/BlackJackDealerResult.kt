@@ -1,19 +1,18 @@
 package blackjack.view
 
+import blackjack.domain.Card
 import blackjack.domain.Dealer
 import blackjack.domain.Score
-import blackjack.domain.Suit
 import blackjack.domain.WinLose
 
-class BlackJackDealerResult(val dealer: Dealer) {
+class BlackJackDealerResult(private val dealer: Dealer) : BlackJackGameResult {
+
+    override val name: String get() = dealer.name
+    override val cardSet: Set<Card> get() = dealer.cardSet
+    override val cards get() = dealer.cards
 
     val firstCard: String
         get() = "${dealer.cardSet.first().rank.rankName}${dealer.cardSet.first().suit.suitName()}"
-    val cards: String
-        get() = dealer.cardSet.joinToString(", ") { card ->
-            "${card.rank.rankName}${card.suit.suitName()}"
-        }
-    val score: Score get() = dealer.cards.score()
 
     fun winLose(playerScore: List<Score>): String {
         val winLoseResults = playerScore.map { score.winLose(it) }
@@ -22,22 +21,5 @@ class BlackJackDealerResult(val dealer: Dealer) {
         return "${winLoseCount[WinLose.WIN] ?: 0}${WinLose.WIN.name()} " +
             "${winLoseCount[WinLose.LOSE] ?: 0}${WinLose.LOSE.name()} " +
             "${winLoseCount[WinLose.DRAW] ?: 0}${WinLose.DRAW.name()}"
-    }
-
-    private fun Suit.suitName(): String {
-        return when (this) {
-            Suit.SPADE -> "스페이드"
-            Suit.HEART -> "하트"
-            Suit.DIAMOND -> "다이아몬드"
-            Suit.CLUB -> "클로버"
-        }
-    }
-
-    private fun WinLose.name(): String {
-        return when (this) {
-            WinLose.WIN -> "승"
-            WinLose.LOSE -> "패"
-            WinLose.DRAW -> "무"
-        }
     }
 }
