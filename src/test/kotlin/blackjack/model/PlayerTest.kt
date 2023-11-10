@@ -3,7 +3,6 @@ package blackjack.model
 import io.kotest.assertions.throwables.shouldNotThrow
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
-import io.kotest.matchers.shouldHave
 
 class PlayerTest : StringSpec({
     "플레이어는 dealing 시 2장의 카드를 받을 수 있다" {
