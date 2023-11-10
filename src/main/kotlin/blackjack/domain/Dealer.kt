@@ -7,6 +7,10 @@ class Dealer(val cards: Cards = Cards()) {
         cards.add(trumpCard.draw())
     }
 
+    fun isBurst(): Boolean {
+        return cards.score().burst()
+    }
+
     fun isHit(): Boolean {
         return cards.score() < Score(DEALER_HIT_SCORE)
     }

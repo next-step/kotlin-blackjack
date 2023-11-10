@@ -17,9 +17,17 @@ object OutputView {
     }
 
     fun printBlackjackGameResult(result: Pair<BlackJackDealerResult, List<BlackJackGameResult>>) {
-        result.first.run { println("딜러 카드: $cards - 결과: $score") }
-        result.second.forEach {
+        val dealerResult = result.first
+        val playerResults = result.second
+        dealerResult.run { println("딜러 카드: $cards - 결과: ${score.score}") }
+        playerResults.forEach {
             println(it.resultDisplay)
+        }
+
+        println("## 최종 승패")
+        println("딜러: ${dealerResult.winLose(playerResults.map { it.score })}")
+        playerResults.forEach {
+            println("${it.playerName}: ${it.winLose(dealerResult.score)}")
         }
     }
 
@@ -46,5 +54,5 @@ object OutputView {
     private const val PRINT_INIT_CARD = "에게 2장의 나누었습니다."
     private const val PRINT_DEALER_DRAW = "딜러는 16이하라 한장의 카드를 더 받았습니다."
     private val BlackJackGameResult.cardDisplay get() = "${playerName}카드: $cards"
-    private val BlackJackGameResult.resultDisplay get() = "$cardDisplay - 결과: $score"
+    private val BlackJackGameResult.resultDisplay get() = "$cardDisplay - 결과: ${score.score}"
 }
