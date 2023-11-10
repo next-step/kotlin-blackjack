@@ -17,8 +17,7 @@ class BlackJackController {
             Player(it, trumpCard.firstCardDraw())
         }
         val dealer = Dealer(trumpCard.firstCardDraw())
-        OutputView.printInitCard(players.map { it.name })
-        OutputView.printPlayersCard(players.map { it.result() })
+        OutputView.printInitCard(dealer.result() to players.map { it.result() })
         val blackJackResult = playBlackjack(players, dealer, trumpCard)
         OutputView.printBlackjackGameResult(blackJackResult)
     }

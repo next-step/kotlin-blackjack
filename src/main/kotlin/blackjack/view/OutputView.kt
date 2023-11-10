@@ -2,14 +2,10 @@ package blackjack.view
 
 object OutputView {
 
-    fun printInitCard(playerNames: List<String>) {
-        println("${playerNames.joinToString(", ")}$PRINT_INIT_CARD")
-    }
-
-    fun printPlayersCard(results: List<BlackJackGameResult>) {
-        results.forEach {
-            printPlayerCard(it)
-        }
+    fun printInitCard(result: Pair<BlackJackDealerResult, List<BlackJackGameResult>>) {
+        printPlayerName(result.second.map { it.playerName })
+        printDealerFirstCard(result.first)
+        printPlayersCard(result.second)
     }
 
     fun printPlayerBurst(name: String) {
@@ -29,6 +25,20 @@ object OutputView {
 
     fun printDealerDraw() {
         println(PRINT_DEALER_DRAW)
+    }
+
+    private fun printPlayerName(playerNames: List<String>) {
+        println("${playerNames.joinToString(", ")}$PRINT_INIT_CARD")
+    }
+
+    private fun printPlayersCard(results: List<BlackJackGameResult>) {
+        results.forEach {
+            printPlayerCard(it)
+        }
+    }
+
+    private fun printDealerFirstCard(result: BlackJackDealerResult) {
+        println("딜러: ${result.firstCard}")
     }
 
     private const val PLAYER_BURST = "는 21점을 초과했습니다."
