@@ -1,7 +1,7 @@
 package blackjack.model
 
 data class Cards(
-    val cards: MutableSet<Card> = mutableSetOf()
+    private val cards: MutableSet<Card> = mutableSetOf()
 ) {
     fun add(card: Card) {
         cards.add(card)
@@ -9,6 +9,14 @@ data class Cards(
 
     fun totalScore(): Int {
         return cards.sumOf { it.rank.score }
+    }
+
+    fun present(): String {
+        return cards.joinToString(separator = ", ") { "${it.rank.alias}${it.suit.alias}" }
+    }
+
+    fun count(): Int {
+        return cards.size
     }
 
     companion object {

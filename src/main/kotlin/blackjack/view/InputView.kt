@@ -29,9 +29,4 @@ object InputView {
     private fun isHit(): Boolean {
         return (readlnOrNull() ?: "") == "y"
     }
-
-//    private fun dealerDraw(dealer: Dealer) {
-//        "딜러는 16이하라 한장의 카드를 더 받았습니다.\n"
-//        TODO()
-//    }
 }
