@@ -3,8 +3,9 @@ package blackjack.domain
 import blackjack.domain.Score.Companion.ACE_BONUS
 import blackjack.domain.Score.Companion.BLACK_JACK_SCORE
 
-@JvmInline
-value class Cards(val cards: MutableSet<Card> = mutableSetOf()) {
+class Cards(cards: Set<Card> = emptySet()) {
+
+    val cards: MutableSet<Card> = cards.toMutableSet()
 
     fun add(card: Card) {
         cards.add(card)
