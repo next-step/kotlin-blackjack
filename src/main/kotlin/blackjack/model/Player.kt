@@ -14,12 +14,7 @@ data class Player(
     }
 
     fun present(): String {
-        return "${this.name}카드 : " + cardsPresent(this)
+        return "${this.name}카드 : ${this.cards.present()}"//cardsPresent()
     }
 
-    private fun cardsPresent(player: Player): String {
-        return player.cards.cards.joinToString(separator = ", ") { "${it.rank.alias}${it.suit.alias}" }
-    }
 }
-
-
