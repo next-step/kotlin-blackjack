@@ -4,7 +4,22 @@ data class Player(
     val name: String,
     val cards: Cards = Cards.init(),
 ) {
-    fun deal(card: Card) {
+    fun deal(card1: Card, card2: Card) {
+        cards.add(card1)
+        cards.add(card2)
+    }
+
+    fun hit(card: Card) {
         cards.add(card)
     }
+
+    fun present(): String {
+        return "${this.name}카드 : " + cardsPresent(this)
+    }
+
+    private fun cardsPresent(player: Player): String {
+        return player.cards.cards.joinToString(separator = ", ") { "${it.rank.alias}${it.suit.alias}" }
+    }
 }
+
+

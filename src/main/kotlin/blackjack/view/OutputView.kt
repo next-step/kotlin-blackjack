@@ -1,46 +1,27 @@
 package blackjack.view
 
 import blackjack.model.Participants
-import blackjack.model.Player
 
 object OutputView {
 
     fun presentCards(participants: Participants) {
         println(participants.present())
-        /*
-
-        jason카드: 7클로버, K스페이드
-         */
     }
 
     fun result(participants: Participants) {
         presentCardsWitScore(participants)
-        presetResult(participants)
-    }
-
-    private fun presetResult(participants: Participants) {
-        /*
-        ## 최종 승패
-        딜러: 1승 1패
-        pobi: 승
-        jason: 패
-         */
-        TODO("Not yet implemented")
     }
 
     private fun presentCardsWitScore(participants: Participants) {
-        TODO("Not yet implemented")
+        println()
+        println(participants.presentWithScore())
     }
 }
 
 private fun Participants.present(): String {
-    return this.participants.joinToString (separator = "\n"){ it.present() }
+    return this.participants.joinToString(separator = "\n") { it.present() }
 }
 
-private fun Player.present(): String {
-    return "${this.name}카드 : " + cardsPresent(this)
-}//pobi카드: 2하트, 8스페이드
-
-fun cardsPresent(player: Player): String {
-    return player.cards.cards.joinToString(separator = ", ") { "${it.rank.alias}${it.suit.name}" }
+private fun Participants.presentWithScore(): String {
+    return this.participants.joinToString(separator = "\n") { "${it.present()} - 결과: ${it.cards.totalScore()}" }
 }

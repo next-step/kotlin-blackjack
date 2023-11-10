@@ -13,15 +13,16 @@ class Participants(
     }
 
     fun dealing() {
-        participants.forEach{it.deal(Pack.anyCard())}
+        participants.forEach { it.deal(Pack.anyCard(), Pack.anyCard()) }
     }
 
     companion object {
         fun of(inputPlayers: String): Participants {
-            return Participants(inputPlayers.split(",")
-                .asSequence()
-                .map { Player(it) }
-                .toSet()
+            return Participants(
+                inputPlayers.split(",")
+                    .asSequence()
+                    .map { Player(it) }
+                    .toSet()
             )
         }
     }

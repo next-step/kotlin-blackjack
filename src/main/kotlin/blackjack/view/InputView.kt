@@ -1,5 +1,6 @@
 package blackjack.view
 
+import blackjack.model.Pack
 import blackjack.model.Participants
 
 object InputView {
@@ -15,11 +16,18 @@ object InputView {
         return participants
     }
 
-    fun draw(participants: Participants): Participants {
-        "pobi는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)"
-        "pobi카드: 2하트, 8스페이드, A클로버\n"
+    fun draw(participants: Participants) {
+        participants.participants.forEach {
+            println("${it.name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
+            if (isHit()) {
+                it.hit(Pack.anyCard())
+            }
+            println(it.present())
+        }
+    }
 
-        TODO()
+    private fun isHit(): Boolean {
+        return (readlnOrNull() ?: "") == "y"
     }
 
 //    private fun dealerDraw(dealer: Dealer) {
@@ -27,4 +35,3 @@ object InputView {
 //        TODO()
 //    }
 }
-

@@ -7,6 +7,10 @@ data class Cards(
         cards.add(card)
     }
 
+    fun totalScore(): Int {
+        return cards.sumOf { it.rank.score }
+    }
+
     companion object {
         fun init(): Cards {
             return Cards()
