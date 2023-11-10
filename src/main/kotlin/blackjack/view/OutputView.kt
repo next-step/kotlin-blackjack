@@ -15,7 +15,6 @@ object OutputView {
     fun result(participants: Participants) {
         presentCardsWitScore(participants)
         presetResult(participants)
-
     }
 
     private fun presetResult(participants: Participants) {
