@@ -29,7 +29,7 @@ class PlayerTest : BehaviorSpec({
         val trumpCard = TrumpCard.init()
         val player = Player("원동재", trumpCard.firstCardDraw())
         `when`("플레이어 카드에 카드를 한장 더 뽑으면") {
-            player.hit(trumpCard)
+            player.drawBy(trumpCard)
             then("플레이어 카드는 3장이다.") {
                 player.cardSet.size shouldBe 3
             }
@@ -45,7 +45,7 @@ class PlayerTest : BehaviorSpec({
         )
         val player = Player("원동재", cards)
         When("버스트 여부를 확인할 때") {
-            val isBurst = player.burst()
+            val isBurst = player.isBurst()
             Then("버스트이다.") {
                 isBurst shouldBe true
             }
@@ -60,9 +60,39 @@ class PlayerTest : BehaviorSpec({
         )
         val player = Player("원동재", cards)
         When("버스트 여부를 확인할 때") {
-            val isBurst = player.burst()
+            val isBurst = player.isBurst()
             Then("버스트가 아니다.") {
                 isBurst shouldBe false
+            }
+        }
+    }
+
+    given("카드 A스페이드,A다이아몬드, K스페이드, K다이아몬드를 받았다면") {
+        val cards = Cards(
+            Suit.SPADE to Rank.ACE,
+            Suit.DIAMOND to Rank.ACE,
+            Suit.SPADE to Rank.KING,
+            Suit.DIAMOND to Rank.KING
+        )
+        val player = Player("원동재", cards)
+        When("히트 여부를 확인할 때") {
+            val isHit = player.isHit()
+            Then("히트가 아니다.") {
+                isHit shouldBe false
+            }
+        }
+    }
+
+    given("K스페이드, K다이아몬드를 받았다면") {
+        val cards = Cards(
+            Suit.SPADE to Rank.KING,
+            Suit.DIAMOND to Rank.KING
+        )
+        val player = Player("원동재", cards)
+        When("히트 여부를 확인할 때") {
+            val isHit = player.isHit()
+            Then("히트이다.") {
+                isHit shouldBe true
             }
         }
     }

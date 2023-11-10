@@ -17,11 +17,11 @@ class BlackJackController {
         OutputView.printInitCard(players.map { it.name })
         OutputView.printPlayersCard(players.map { it.result() })
         players.forEach {
-            while (it.burst().not() && InputView.inputHitOrStand(it.name)) {
+            while (it.isHit() && InputView.inputHitOrStand(it.name)) {
                 it.cards.add(trumpCard.draw())
                 OutputView.printPlayerCard(it.result())
             }
-            if (it.burst()) OutputView.printPlayerBurst(it.name)
+            if (it.isBurst()) OutputView.printPlayerBurst(it.name)
         }
         val result = players.map { it.result() }
         OutputView.printBlackjackGameResult(result)

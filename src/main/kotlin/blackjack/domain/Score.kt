@@ -3,7 +3,7 @@ package blackjack.domain
 @JvmInline
 value class Score(val score: Int) {
 
-    fun isBurst(): Boolean {
+    fun burst(): Boolean {
         return score > BLACK_JACK_SCORE
     }
 
