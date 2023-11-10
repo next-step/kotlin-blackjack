@@ -32,7 +32,7 @@ introduce {
 ### 용어집
 ```text
 CARD : 카드 한장, RANK+SUIT 로 이루어짐
-  - Cards : 카드 여러장의 일급컬렉션
+  - Cards : 카드 여러장의 일급컬렉트
 
 PACK : 팩 : 53장 카드 한벌의 세트
   - 각각 13장으로 이루어진 4종류의 Suit 로 이루어짐
