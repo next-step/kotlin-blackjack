@@ -12,6 +12,10 @@ class Dealer(val cards: Cards = Cards()) {
     }
 
     fun isHit(): Boolean {
-        return !cards.score().burst()
+        return cards.score() < Score(DEALER_HIT_SCORE)
+    }
+
+    companion object {
+        private const val DEALER_HIT_SCORE = 17
     }
 }

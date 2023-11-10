@@ -3,6 +3,7 @@ package blackjack.controller
 import blackjack.domain.Dealer
 import blackjack.domain.Player
 import blackjack.domain.TrumpCard
+import blackjack.view.BlackJackDealerResult
 import blackjack.view.BlackJackGameResult
 import blackjack.view.InputView
 import blackjack.view.OutputView
@@ -18,18 +19,42 @@ class BlackJackController {
         val dealer = Dealer(trumpCard.firstCardDraw())
         OutputView.printInitCard(players.map { it.name })
         OutputView.printPlayersCard(players.map { it.result() })
-        players.forEach {
+        val blackJackResult = playBlackjack(players, dealer, trumpCard)
+        OutputView.printBlackjackGameResult(blackJackResult)
+    }
+
+    private fun playBlackjack(
+        players: List<Player>,
+        dealer: Dealer,
+        trumpCard: TrumpCard
+    ): Pair<BlackJackDealerResult, List<BlackJackGameResult>> {
+        players.draw(trumpCard)
+        dealer.draw(trumpCard)
+        return dealer.result() to players.map { it.result() }
+    }
+
+    private fun Player.result(): BlackJackGameResult {
+        return BlackJackGameResult(this)
+    }
+
+    private fun Dealer.result(): BlackJackDealerResult {
+        return BlackJackDealerResult(this)
+    }
+
+    private fun List<Player>.draw(trumpCard: TrumpCard) {
+        this.forEach {
             while (it.isHit() && InputView.inputHitOrStand(it.name)) {
                 it.drawBy(trumpCard)
                 OutputView.printPlayerCard(it.result())
             }
             if (it.isBurst()) OutputView.printPlayerBurst(it.name)
         }
-        val result = players.map { it.result() }
-        OutputView.printBlackjackGameResult(result)
     }
 
-    private fun Player.result(): BlackJackGameResult {
-        return BlackJackGameResult(this)
+    private fun Dealer.draw(trumpCard: TrumpCard) {
+        while (this.isHit()) {
+            OutputView.printDealerDraw()
+            this.drawBy(trumpCard)
+        }
     }
 }
