@@ -2,7 +2,7 @@ package blackjack.view
 
 object OutputView {
 
-    fun printInitCard(result: Pair<BlackJackDealerResult, List<BlackJackGameResult>>) {
+    fun printInitCard(result: Pair<BlackJackDealerResult, List<BlackJackPlayerResult>>) {
         printPlayerName(result.second.map { it.playerName })
         printDealerFirstCard(result.first)
         printPlayersCard(result.second)
@@ -12,11 +12,11 @@ object OutputView {
         println("$name$PLAYER_BURST")
     }
 
-    fun printPlayerCard(result: BlackJackGameResult) {
+    fun printPlayerCard(result: BlackJackPlayerResult) {
         println(result.cardDisplay)
     }
 
-    fun printBlackjackGameResult(result: Pair<BlackJackDealerResult, List<BlackJackGameResult>>) {
+    fun printBlackjackGameResult(result: Pair<BlackJackDealerResult, List<BlackJackPlayerResult>>) {
         val dealerResult = result.first
         val playerResults = result.second
         dealerResult.run { println("딜러 카드: $cards - 결과: ${score.score}") }
@@ -39,7 +39,7 @@ object OutputView {
         println("${playerNames.joinToString(", ")}$PRINT_INIT_CARD")
     }
 
-    private fun printPlayersCard(results: List<BlackJackGameResult>) {
+    private fun printPlayersCard(results: List<BlackJackPlayerResult>) {
         results.forEach {
             printPlayerCard(it)
         }
@@ -53,6 +53,6 @@ object OutputView {
 
     private const val PRINT_INIT_CARD = "에게 2장의 나누었습니다."
     private const val PRINT_DEALER_DRAW = "딜러는 16이하라 한장의 카드를 더 받았습니다."
-    private val BlackJackGameResult.cardDisplay get() = "${playerName}카드: $cards"
-    private val BlackJackGameResult.resultDisplay get() = "$cardDisplay - 결과: ${score.score}"
+    private val BlackJackPlayerResult.cardDisplay get() = "${playerName}카드: $cards"
+    private val BlackJackPlayerResult.resultDisplay get() = "$cardDisplay - 결과: ${score.score}"
 }

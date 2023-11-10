@@ -5,7 +5,7 @@ import blackjack.domain.Score
 import blackjack.domain.Suit
 import blackjack.domain.WinLose
 
-class BlackJackGameResult(
+class BlackJackPlayerResult(
     private val player: Player,
 ) {
     val playerName: String get() = player.name
@@ -16,14 +16,9 @@ class BlackJackGameResult(
     val score: Score get() = player.cards.score()
 
     fun winLose(dealerScore: Score): String {
-        if (player.isBurst() || player.cards.score() < dealerScore) {
-            return WinLose.LOSE.name()
-        }
-        if (player.cards.score() > dealerScore) {
-            return WinLose.WIN.name()
-        }
-        return WinLose.DRAW.name()
+        return score.winLose(dealerScore).name()
     }
+
     private fun Suit.suitName(): String {
         return when (this) {
             Suit.SPADE -> "스페이드"

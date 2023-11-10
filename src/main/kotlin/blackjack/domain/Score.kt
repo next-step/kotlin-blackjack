@@ -11,6 +11,16 @@ value class Score(val score: Int) {
         return this.score.compareTo(score.score)
     }
 
+    fun winLose(otherScore: Score): WinLose {
+        when {
+            otherScore.burst() -> return WinLose.WIN
+            this.burst() -> return WinLose.LOSE
+            this > otherScore -> return WinLose.WIN
+            this < otherScore -> return WinLose.LOSE
+        }
+        return WinLose.DRAW
+    }
+
     companion object {
         const val BLACK_JACK_SCORE = 21
         const val ACE_BONUS = 10

@@ -23,4 +23,48 @@ class ScoreTest : BehaviorSpec({
             }
         }
     }
+
+    given("A 점수가 21, B점수가 20이 주어지면") {
+        val scoreA = Score(21)
+        val scoreB = Score(20)
+        `when`("A와 B의 점수를 비교하면") {
+            val isWin = scoreA.winLose(scoreB)
+            then("A가 이긴다.") {
+                isWin shouldBe WinLose.WIN
+            }
+        }
+    }
+
+    given("A 점수가 21, B점수가 22이 주어지면") {
+        val scoreA = Score(12)
+        val scoreB = Score(22)
+        `when`("A와 B의 점수를 비교하면") {
+            val isWin = scoreA.winLose(scoreB)
+            then("A가 이긴다.") {
+                isWin shouldBe WinLose.WIN
+            }
+        }
+    }
+
+    given("A 점수가 22, B점수가 21이 주어지면") {
+        val scoreA = Score(22)
+        val scoreB = Score(21)
+        `when`("A와 B의 점수를 비교하면") {
+            val isWin = scoreA.winLose(scoreB)
+            then("B가 이긴다.") {
+                isWin shouldBe WinLose.LOSE
+            }
+        }
+    }
+
+    given("A점수와 B점수가 동일하면") {
+        val scoreA = Score(21)
+        val scoreB = Score(21)
+        `when`("A와 B의 점수를 비교하면") {
+            val isWin = scoreA.winLose(scoreB)
+            then("비긴다.") {
+                isWin shouldBe WinLose.DRAW
+            }
+        }
+    }
 })

@@ -16,23 +16,12 @@ class BlackJackDealerResult(val dealer: Dealer) {
     val score: Score get() = dealer.cards.score()
 
     fun winLose(playerScore: List<Score>): String {
-        val winLoseResults = winLoseCheck(playerScore)
-        val winCount = winLoseResults.count { it == WinLose.WIN }
-        val loseCount = winLoseResults.count { it == WinLose.LOSE }
-        val drawCount = winLoseResults.count { it == WinLose.DRAW }
-        return "${winCount}승 ${loseCount}패 ${drawCount}무"
-    }
+        val winLoseResults = playerScore.map { score.winLose(it) }
+        val winLoseCount = winLoseResults.groupingBy { it }.eachCount()
 
-    private fun winLoseCheck(playerScore: List<Score>): List<WinLose> {
-        return playerScore.map {
-            if (dealer.isBurst() || it > dealer.cards.score()) {
-                return@map WinLose.LOSE
-            }
-            if (it < dealer.cards.score()) {
-                return@map WinLose.WIN
-            }
-            return@map WinLose.DRAW
-        }
+        return "${winLoseCount[WinLose.WIN] ?: 0}${WinLose.WIN.name()} " +
+            "${winLoseCount[WinLose.LOSE] ?: 0}${WinLose.LOSE.name()} " +
+            "${winLoseCount[WinLose.DRAW] ?: 0}${WinLose.DRAW.name()}"
     }
 
     private fun Suit.suitName(): String {
