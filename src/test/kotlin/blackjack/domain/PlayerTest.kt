@@ -17,9 +17,8 @@ class PlayerTest : BehaviorSpec({
     given("플레이어 이름과 트럼프 카드가 주어지고") {
         val name = "원동재"
         val trumpCard = TrumpCard.init()
-        val player = Player(name)
         `when`("플레이어가 초기 카드를 받게되면") {
-            player.init(trumpCard)
+            val player = Player(name, trumpCard.firstCardDraw())
             then("플레이어의 카드는 2장이 된다.") {
                 player.cardSet.size shouldBe 2
             }
@@ -28,7 +27,7 @@ class PlayerTest : BehaviorSpec({
 
     given("트럼프 카드가 주어지고 플레이어가 2장을 받았다면") {
         val trumpCard = TrumpCard.init()
-        val player = Player("원동재").apply { init(trumpCard) }
+        val player = Player("원동재", trumpCard.firstCardDraw())
         `when`("플레이어 카드에 카드를 한장 더 뽑으면") {
             player.hit(trumpCard)
             then("플레이어 카드는 3장이다.") {

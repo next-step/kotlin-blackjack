@@ -14,6 +14,10 @@ class TrumpCard(cards: Cards) {
         }
     }
 
+    fun firstCardDraw(): Cards {
+        return Cards(setOf(draw(), draw()))
+    }
+
     private fun MutableSet<Card>.safeCopy() = this.map { it.copy() }.toMutableSet()
 
     companion object {
