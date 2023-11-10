@@ -18,7 +18,7 @@ class BlackJackController {
         OutputView.printPlayersCard(players.map { it.result() })
         players.forEach {
             while (it.isHit() && InputView.inputHitOrStand(it.name)) {
-                it.cards.add(trumpCard.draw())
+                it.drawBy(trumpCard)
                 OutputView.printPlayerCard(it.result())
             }
             if (it.isBurst()) OutputView.printPlayerBurst(it.name)
