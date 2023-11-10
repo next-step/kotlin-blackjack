@@ -33,6 +33,6 @@ class CardsTest : BehaviorSpec({
     }
 })
 
-private fun Cards(vararg cards: Pair<Suit, Rank>): Cards {
+fun Cards(vararg cards: Pair<Suit, Rank>): Cards {
     return Cards(cards.map { Card(it.first, it.second) }.toSet())
 }
