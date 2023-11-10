@@ -1,13 +1,14 @@
 package blackjack.view
 
 import blackjack.model.Participants
+import blackjack.model.Player
 
 object OutputView {
 
     fun presentCards(participants: Participants) {
-        TODO("Not yet implemented")
+        println(participants.present())
         /*
-        pobi카드: 2하트, 8스페이드
+
         jason카드: 7클로버, K스페이드
          */
     }
@@ -30,4 +31,16 @@ object OutputView {
     private fun presentCardsWitScore(participants: Participants) {
         TODO("Not yet implemented")
     }
+}
+
+private fun Participants.present(): String {
+    return this.participants.joinToString (separator = "\n"){ it.present() }
+}
+
+private fun Player.present(): String {
+    return "${this.name}카드 : " + cardsPresent(this)
+}//pobi카드: 2하트, 8스페이드
+
+fun cardsPresent(player: Player): String {
+    return player.cards.cards.joinToString(separator = ", ") { "${it.rank.alias}${it.suit.name}" }
 }

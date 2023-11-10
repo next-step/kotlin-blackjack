@@ -1,7 +1,7 @@
 package blackjack.model
 
 class Participants(
-    private val participants: Set<Player>,
+    val participants: Set<Player>,
     // val dealer: Dealer,
 ) {
     fun count(): Int {
@@ -10,6 +10,10 @@ class Participants(
 
     fun names(): String {
         return participants.joinToString(separator = ", ") { it.name }
+    }
+
+    fun dealing() {
+        participants.forEach{it.deal(Pack.anyCard())}
     }
 
     companion object {
