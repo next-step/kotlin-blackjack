@@ -1,5 +1,6 @@
 package blackjack.controller
 
+import blackjack.domain.Dealer
 import blackjack.domain.Player
 import blackjack.domain.TrumpCard
 import blackjack.view.BlackJackGameResult
@@ -14,6 +15,7 @@ class BlackJackController {
         val players = playerNames.map {
             Player(it, trumpCard.firstCardDraw())
         }
+        val dealer = Dealer(trumpCard.firstCardDraw())
         OutputView.printInitCard(players.map { it.name })
         OutputView.printPlayersCard(players.map { it.result() })
         players.forEach {
