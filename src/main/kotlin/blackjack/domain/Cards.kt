@@ -7,6 +7,8 @@ class Cards(cards: Set<Card> = emptySet()) {
 
     val cards: MutableSet<Card> = cards.toMutableSet()
 
+    constructor(other: Cards) : this(other.cards.map { it.copy() }.toSet())
+
     fun add(card: Card) {
         cards.add(card)
     }

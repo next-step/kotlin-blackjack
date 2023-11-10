@@ -1,8 +1,7 @@
 package blackjack.domain
 
 class TrumpCard(cards: Cards) {
-    private val _cards = cards.cards.safeCopy()
-    private val cards = Cards(_cards.safeCopy())
+    private val cards = Cards(cards)
     val size: Int
         get() = cards.cards.size
     private val firstCard: Card
@@ -17,8 +16,6 @@ class TrumpCard(cards: Cards) {
     fun firstCardDraw(): Cards {
         return Cards(setOf(draw(), draw()))
     }
-
-    private fun MutableSet<Card>.safeCopy() = this.map { it.copy() }.toMutableSet()
 
     companion object {
         fun init(): TrumpCard {
