@@ -6,7 +6,7 @@ import blackjack.view.OutputView
 
 fun main(args: Array<String>) {
     val dealer = Dealer(deck(RandomShuffleStrategy) {
-        Rank.values().flatMap { value -> Suit.values() of value }.map { +it }
+        Rank.values().flatMap { value -> Symbol.values() of value }.map { +it }
     })
 
     val nicknames = InputView.readNicknames()
