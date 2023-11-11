@@ -41,7 +41,7 @@ class TrumpCardTest : BehaviorSpec({
         )
         val trumpCard = TrumpCard(cards)
         `when`("초기 카드를 뽑으면") {
-            val card = trumpCard.firstCardDraw()
+            val card = trumpCard.drawFirstCards()
             then("남은 트럼프 카드는 0장이다.") {
                 trumpCard.size shouldBe 0
             }

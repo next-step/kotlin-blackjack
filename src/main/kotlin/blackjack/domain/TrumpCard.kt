@@ -13,7 +13,7 @@ class TrumpCard(cards: Cards) {
         }
     }
 
-    fun firstCardDraw(): Cards {
+    fun drawFirstCards(): Cards {
         return Cards(setOf(draw(), draw()))
     }
 

@@ -7,7 +7,7 @@ class DealerTest : BehaviorSpec({
     given("트럼프 카드가 주어지면") {
         val trumpCard = TrumpCard.init()
         When("딜러에게 초기 카드를 주어질때") {
-            val dealer = Dealer(trumpCard.firstCardDraw())
+            val dealer = Dealer(trumpCard.drawFirstCards())
             Then("딜러의 카드는 2장이다.") {
                 dealer.cards.cards.size shouldBe 2
             }
@@ -16,7 +16,7 @@ class DealerTest : BehaviorSpec({
 
     given("트럼프 카드가 주어지고 딜러 2장을 받았다면") {
         val trumpCard = TrumpCard.init()
-        val dealer = Dealer(trumpCard.firstCardDraw())
+        val dealer = Dealer(trumpCard.drawFirstCards())
         `when`("딜러 카드에 카드를 한장 더 뽑으면") {
             dealer.drawBy(trumpCard)
             then("딜러 카드는 3장이다.") {
