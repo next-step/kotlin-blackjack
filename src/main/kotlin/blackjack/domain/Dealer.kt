@@ -1,7 +1,6 @@
 package blackjack.domain
 
-class Dealer(override val cards: Cards = Cards()) : BlackJackPlayer {
-    override val name: String = DEALER_NAME
+class Dealer(cards: Cards = Cards()) : BlackJackPlayer(DEALER_NAME, cards) {
 
     override fun isHit(): Boolean {
         return cards.score() < Score(DEALER_HIT_SCORE)

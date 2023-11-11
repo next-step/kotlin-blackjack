@@ -1,9 +1,9 @@
 package blackjack.domain
 
 class Player(
-    override val name: String,
-    override val cards: Cards = Cards()
-) : BlackJackPlayer {
+    name: String,
+    cards: Cards = Cards()
+) : BlackJackPlayer(name, cards) {
 
     override fun isHit(): Boolean {
         return !cards.score().burst()
