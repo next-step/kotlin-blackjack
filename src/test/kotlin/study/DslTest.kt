@@ -68,4 +68,31 @@ class DslTest {
         person.languages?.languages?.get("Korean") shouldBe 5
         person.languages?.languages?.get("English") shouldBe 3
     }
+
+    @Test
+    fun all() {
+        val person = introduce {
+            name("홍길동")
+            company("활빈당")
+            skills {
+                soft("A passion for problem solving")
+                soft("Good communication skills")
+                hard("Kotlin")
+            }
+            languages {
+                "Korean" level 5
+                "English" level 3
+            }
+        }
+
+        person.name shouldBe "홍길동"
+        person.company shouldBe "활빈당"
+
+        person.skills?.contains(Skill("soft", "A passion for problem solving")) shouldBe true
+        person.skills?.contains(Skill("soft", "Good communication skills")) shouldBe true
+        person.skills?.contains(Skill("hard", "Kotlin")) shouldBe true
+
+        person.languages?.languages?.get("Korean") shouldBe 5
+        person.languages?.languages?.get("English") shouldBe 3
+    }
 }
