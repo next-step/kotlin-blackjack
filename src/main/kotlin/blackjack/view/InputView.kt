@@ -1,6 +1,7 @@
 package blackjack.view
 
 import blackjack.domain.Nickname
+import blackjack.domain.PlayerDecision
 
 object InputView {
 
@@ -11,8 +12,12 @@ object InputView {
         return readln().split(NICKNAME_DELIMITER).map { Nickname(it.trim()) }
     }
 
-    fun readHitOrStand(nickname: Nickname): String {
+    fun readHitOrStand(nickname: Nickname): PlayerDecision {
         println("${nickname.value}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
-        return readln()
+        return when (readln()) {
+            "y" -> PlayerDecision.HIT
+            "n" -> PlayerDecision.STAND
+            else -> throw IllegalArgumentException("y 또는 n만 입력 가능합니다.")
+        }
     }
 }

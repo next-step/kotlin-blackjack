@@ -11,5 +11,15 @@ fun main(args: Array<String>) {
 
     val nicknames = InputView.readNicknames()
     val players = nicknames.map { Player(it, dealer) }
-    OutputView.writePlayers(players)
+
+    players.map { player -> repeat(2) { player.receiveCard() } }
+    OutputView.writePlayerNames(players)
+    OutputView.writePlayerCards(*players.toTypedArray())
+
+    players.map { player ->
+        while (InputView.readHitOrStand(player.name) == PlayerDecision.HIT) {
+            player.receiveCard()
+            OutputView.writePlayerCards(player)
+        }
+    }
 }

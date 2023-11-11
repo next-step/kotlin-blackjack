@@ -1,7 +1,7 @@
 package blackjack.domain
 
-enum class Suit {
-    SPADE, HEART, DIAMOND, CLUB
+enum class Suit(val symbol: String) {
+    SPADE("스페이드"), HEART("하트"), DIAMOND("다이아"), CLUB("클로버")
 }
 
 enum class Rank(val score: Int) {
