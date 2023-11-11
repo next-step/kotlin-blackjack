@@ -42,6 +42,21 @@ class DslTest {
     }
 
     @Test
+    fun skills() {
+        val person = introduce {
+            skills {
+                soft("A passion for problem solving")
+                soft("Good communication skills")
+                hard("Kotlin")
+            }
+        }
+
+        person.skills?.contains(Skill("soft", "A passion for problem solving")) shouldBe true
+        person.skills?.contains(Skill("soft", "Good communication skills")) shouldBe true
+        person.skills?.contains(Skill("hard", "Kotlin")) shouldBe true
+    }
+
+    @Test
     fun pair() {
         val pair1 = Pair(1, "one")
         val pair2 = 1 to "one"

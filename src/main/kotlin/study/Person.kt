@@ -1,3 +1,7 @@
 package study
 
-data class Person(val name: String, val company: String?)
+data class Person(
+    val name: String?,
+    val company: String?,
+    val skills: Skills?
+)
