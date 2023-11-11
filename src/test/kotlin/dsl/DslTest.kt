@@ -41,4 +41,18 @@ class DslTest : StringSpec({
             "Kotlin"
         )
     }
+
+    "languages Test" {
+        val person = introduce {
+            languages {
+                "Korean" level 5
+                "English" level 3
+            }
+        }
+
+        person.languages shouldBe listOf(
+            Language("Korean", 5),
+            Language("English", 3),
+        )
+    }
 })

@@ -8,6 +8,7 @@ class PersonBuilder {
         soft = emptyList(),
         hard = emptyList()
     )
+    private var languages: List<Language> = emptyList()
 
     fun name(name: String) {
         this.name = name
@@ -21,10 +22,15 @@ class PersonBuilder {
         this.skills = SkillBuilder().apply(block).build()
     }
 
+    fun languages(block: LanguageBuilder.() -> Unit) {
+        this.languages = LanguageBuilder().apply(block).build()
+    }
+
     fun build(): Person = Person(
         name = name,
         company = company,
         skills = skills,
+        languages = languages,
     )
 }
 
