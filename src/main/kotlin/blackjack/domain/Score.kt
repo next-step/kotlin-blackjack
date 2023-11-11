@@ -13,9 +13,6 @@ value class Score(val score: Int) {
 
     fun winLose(otherScore: Score): WinLose {
         when {
-            this.burst() && otherScore.burst() -> return WinLose.DRAW
-            this.burst().not() && otherScore.burst() -> return WinLose.WIN
-            this.burst() && otherScore.burst().not() -> return WinLose.LOSE
             this > otherScore -> return WinLose.WIN
             this < otherScore -> return WinLose.LOSE
         }

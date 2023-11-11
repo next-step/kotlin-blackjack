@@ -10,8 +10,17 @@ abstract class BlackJackPlayer(
     var status: PlayerStatus = PlayerStatus.HIT
         protected set
 
+    init {
+        if (isBlackJack()) {
+            blackjack()
+        }
+    }
+
     fun drawBy(card: Card) {
         cards.add(card)
+        if (isBurst()) {
+            burst()
+        }
     }
 
     fun isBurst(): Boolean {
@@ -31,6 +40,20 @@ abstract class BlackJackPlayer(
     }
 
     fun match(other: BlackJackPlayer): WinLose {
+        if (isBlackJack() && other.isBlackJack()) {
+            return WinLose.DRAW
+        }
+        if (isBurst() && other.isBurst()) {
+            return WinLose.DRAW
+        }
+
+        if (isBlackJack() || other.isBurst()) {
+            return WinLose.WIN
+        }
+
+        if (isBurst() || other.isBlackJack()) {
+            return WinLose.LOSE
+        }
         return cards.score().winLose(other.cards.score())
     }
 

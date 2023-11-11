@@ -49,11 +49,7 @@ class BlackJackController {
                 OutputView.printPlayerCard(it.result())
             }
             if (it.isBurst()) {
-                it.burst()
                 OutputView.printPlayerBurst(it.name)
-            }
-            if (it.isBlackJack()) {
-                it.blackjack()
             }
             it.stand()
         }
@@ -63,12 +59,6 @@ class BlackJackController {
         while (this.isHit()) {
             OutputView.printDealerDraw()
             this.drawBy(trumpCard.draw())
-        }
-        if (this.isBurst()) {
-            this.burst()
-        }
-        if (this.isBlackJack()) {
-            this.blackjack()
         }
     }
 }
