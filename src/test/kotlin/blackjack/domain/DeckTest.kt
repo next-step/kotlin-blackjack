@@ -6,7 +6,7 @@ import io.kotest.matchers.shouldBe
 
 class DeckTest : ExpectSpec({
 
-    val card = Suit.SPADE with Value.ACE
+    val card = Suit.SPADE of Rank.ACE
 
     expect("카드가 52장보다 적으면 예외가 발생한다.") {
         shouldThrow<IllegalArgumentException> {

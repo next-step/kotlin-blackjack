@@ -6,8 +6,8 @@ object TestDeckGenerator {
 
     fun generate(): Deck = deck(FakeShuffleStrategy) {
         for (suit in Suit.values()) {
-            for (value in Value.values()) {
-                +(suit with value)
+            for (value in Rank.values()) {
+                +(suit of value)
             }
         }
     }
