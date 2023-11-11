@@ -5,13 +5,15 @@ import io.kotest.matchers.shouldBe
 
 class DslTest : StringSpec({
 
-    "name Test" {
-        listOf("박재성", "제이슨").forEach { value ->
-            val person = introduce {
-                name(value)
-            }
-
-            person.name shouldBe value
+    "introduce Test" {
+        val name = "박재성"
+        val company = "우아한형제들"
+        val person = introduce {
+            name(name)
+            company(company)
         }
+
+        person.name shouldBe name
+        person.company shouldBe company
     }
 })
