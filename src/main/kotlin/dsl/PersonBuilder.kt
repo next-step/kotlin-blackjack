@@ -2,8 +2,12 @@ package dsl
 
 class PersonBuilder {
 
-    private lateinit var name: String
-    private lateinit var company: String
+    private var name: String = ""
+    private var company: String = ""
+    private var skills: Skills = Skills(
+        soft = emptyList(),
+        hard = emptyList()
+    )
 
     fun name(name: String) {
         this.name = name
@@ -13,9 +17,14 @@ class PersonBuilder {
         this.company = company
     }
 
+    fun skills(block: SkillBuilder.() -> Unit) {
+        this.skills = SkillBuilder().apply(block).build()
+    }
+
     fun build(): Person = Person(
         name = name,
         company = company,
+        skills = skills,
     )
 }
 
