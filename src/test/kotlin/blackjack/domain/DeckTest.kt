@@ -27,7 +27,7 @@ class DeckTest : ExpectSpec({
     expect("카드를 한 장 뽑으면 카드가 한 장 줄어든다.") {
         val deck = deck { repeat(52) { +card } }
 
-        deck.dealCard()
+        deck.draw()
         deck.size shouldBe 51
     }
 })
