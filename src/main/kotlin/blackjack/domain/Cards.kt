@@ -5,16 +5,17 @@ import blackjack.domain.Score.Companion.BLACK_JACK_SCORE
 
 class Cards(cards: Set<Card> = emptySet()) {
 
-    val cards: MutableSet<Card> = cards.toMutableSet()
+    private val _cards: MutableSet<Card> = cards.toMutableSet()
+    val cards: Set<Card> get() = _cards.toSet()
 
     constructor(other: Cards) : this(other.cards.map { it.copy() }.toSet())
 
     fun add(card: Card) {
-        cards.add(card)
+        _cards.add(card)
     }
 
     fun remove(card: Card) {
-        cards.remove(card)
+        _cards.remove(card)
     }
 
     fun score(): Score {
