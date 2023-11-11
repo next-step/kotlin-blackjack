@@ -45,7 +45,7 @@ class BlackJackController {
     private fun List<Player>.draw(trumpCard: TrumpCard) {
         this.forEach {
             while (it.isHit() && InputView.inputHitOrStand(it.name)) {
-                it.drawBy(trumpCard)
+                it.drawBy(trumpCard.draw())
                 OutputView.printPlayerCard(it.result())
             }
             if (it.isBurst()) OutputView.printPlayerBurst(it.name)
@@ -55,7 +55,7 @@ class BlackJackController {
     private fun Dealer.draw(trumpCard: TrumpCard) {
         while (this.isHit()) {
             OutputView.printDealerDraw()
-            this.drawBy(trumpCard)
+            this.drawBy(trumpCard.draw())
         }
     }
 }

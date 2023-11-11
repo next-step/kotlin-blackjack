@@ -29,7 +29,7 @@ class PlayerTest : BehaviorSpec({
         val trumpCard = TrumpCard.init()
         val player = Player("원동재", trumpCard.drawFirstCards())
         `when`("플레이어 카드에 카드를 한장 더 뽑으면") {
-            player.drawBy(trumpCard)
+            player.drawBy(trumpCard.draw())
             then("플레이어 카드는 3장이다.") {
                 player.cards.cards.size shouldBe 3
             }

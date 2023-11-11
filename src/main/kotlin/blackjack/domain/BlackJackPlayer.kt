@@ -5,8 +5,8 @@ abstract class BlackJackPlayer(
     val cards: Cards
 ) {
 
-    fun drawBy(trumpCard: TrumpCard) {
-        cards.add(trumpCard.draw())
+    fun drawBy(card: Card) {
+        cards.add(card)
     }
 
     fun isBurst(): Boolean {

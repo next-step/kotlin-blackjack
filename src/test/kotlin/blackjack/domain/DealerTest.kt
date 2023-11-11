@@ -14,11 +14,15 @@ class DealerTest : BehaviorSpec({
         }
     }
 
-    given("트럼프 카드가 주어지고 딜러 2장을 받았다면") {
-        val trumpCard = TrumpCard.init()
-        val dealer = Dealer(trumpCard.drawFirstCards())
+    given("딜러 카드가 2장이 주어졌다면") {
+        val dealer = Dealer(
+            Cards(
+                Suit.SPADE to Rank.ACE,
+                Suit.DIAMOND to Rank.FIVE,
+            )
+        )
         `when`("딜러 카드에 카드를 한장 더 뽑으면") {
-            dealer.drawBy(trumpCard)
+            dealer.drawBy(Card(Suit.HEART, Rank.TWO))
             then("딜러 카드는 3장이다.") {
                 dealer.cards.cards.size shouldBe 3
             }
@@ -31,7 +35,7 @@ class DealerTest : BehaviorSpec({
             Suit.DIAMOND to Rank.FIVE,
         )
         val dealer = Dealer(cards)
-        When("히트 여부를 확인할 때") {
+        When("카드 점수가 17점 미만이면") {
             val isHit = dealer.isHit()
             Then("히트이다.") {
                 isHit shouldBe true
@@ -45,7 +49,7 @@ class DealerTest : BehaviorSpec({
             Suit.DIAMOND to Rank.SIX,
         )
         val dealer = Dealer(cards)
-        When("히트 여부를 확인할 때") {
+        When("카드 점수가 17점 이상이면") {
             val isHit = dealer.isHit()
             Then("히트가 아니다.") {
                 isHit shouldBe false
