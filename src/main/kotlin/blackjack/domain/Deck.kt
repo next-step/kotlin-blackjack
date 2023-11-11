@@ -30,4 +30,4 @@ class DeckDsl(private val shuffleStrategy: ShuffleStrategy = RandomShuffleStrate
     fun build(): Deck = Deck(cards, shuffleStrategy)
 }
 
-fun deck(init: DeckDsl.() -> Unit): Deck = DeckDsl().apply(init).build()
+fun deck(shuffleStrategy: ShuffleStrategy, init: DeckDsl.() -> Unit): Deck = DeckDsl().apply(init).build()

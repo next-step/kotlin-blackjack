@@ -10,7 +10,7 @@ class DeckTest : ExpectSpec({
 
     expect("카드가 52장보다 적으면 예외가 발생한다.") {
         shouldThrow<IllegalArgumentException> {
-            deck {
+            deck(FakeShuffleStrategy) {
                 repeat(51) { +card }
             }
         }
@@ -18,14 +18,16 @@ class DeckTest : ExpectSpec({
 
     expect("카드가 52장보다 많으면 예외가 발생한다.") {
         shouldThrow<IllegalArgumentException> {
-            deck {
+            deck(FakeShuffleStrategy) {
                 repeat(53) { +card }
             }
         }
     }
 
     expect("카드를 한 장 뽑으면 카드가 한 장 줄어든다.") {
-        val deck = deck { repeat(52) { +card } }
+        val deck = deck(FakeShuffleStrategy) {
+            repeat(52) { +card }
+        }
 
         deck.draw()
         deck.size shouldBe 51
