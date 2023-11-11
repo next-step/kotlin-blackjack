@@ -57,11 +57,15 @@ class DslTest {
     }
 
     @Test
-    fun pair() {
-        val pair1 = Pair(1, "one")
-        val pair2 = 1 to "one"
-        val pair3 = 1 of "one"
+    fun languages() {
+        val person = introduce {
+            languages {
+                "Korean" level 5
+                "English" level 3
+            }
+        }
+
+        person.languages?.languages?.get("Korean") shouldBe 5
+        person.languages?.languages?.get("English") shouldBe 3
     }
 }
-
-infix fun Int.of(s: String): Pair<Int, String> = Pair(this, s)
