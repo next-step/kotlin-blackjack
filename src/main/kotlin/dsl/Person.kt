@@ -8,6 +8,20 @@ fun introduce(block: PersonBuilder.() -> Unit): Person =
 class PersonBuilder {
     private lateinit var name: String
     private var company: String? = null
+    private lateinit var skillList: List<Skill>
+
+    inner class SkillBuilder {
+        private val skillList: MutableList<Skill> = mutableListOf()
+        fun soft(name: String) {
+            skillList.add(Skill(name, SkillType.SOFT))
+        }
+
+        fun hard(name: String) {
+            skillList.add(Skill(name, SkillType.HARD))
+        }
+
+        fun build() = skillList.toList()
+    }
 
     fun name(value: String) {
         name = value
@@ -17,9 +31,24 @@ class PersonBuilder {
         company = value
     }
 
+    fun skills(block: SkillBuilder.() -> Unit) {
+        skillList = SkillBuilder().apply(block).build()
+    }
+
     fun build(): Person {
-        return Person(name, company)
+        return Person(name, company, skillList)
     }
 }
 
-data class Person(val name: String, val company: String?)
+data class Person(
+    val name: String,
+    val company: String?,
+    val skills: List<Skill>
+)
+
+data class Skill(val name: String, val type: SkillType)
+
+enum class SkillType {
+    SOFT,
+    HARD
+}
