@@ -20,7 +20,7 @@ class PlayerTest : BehaviorSpec({
         `when`("플레이어가 초기 카드를 받게되면") {
             val player = Player(name, trumpCard.firstCardDraw())
             then("플레이어의 카드는 2장이 된다.") {
-                player.cardSet.size shouldBe 2
+                player.cards.cards.size shouldBe 2
             }
         }
     }
@@ -31,7 +31,7 @@ class PlayerTest : BehaviorSpec({
         `when`("플레이어 카드에 카드를 한장 더 뽑으면") {
             player.drawBy(trumpCard)
             then("플레이어 카드는 3장이다.") {
-                player.cardSet.size shouldBe 3
+                player.cards.cards.size shouldBe 3
             }
         }
     }

@@ -1,6 +1,5 @@
 package blackjack.view
 
-import blackjack.domain.Card
 import blackjack.domain.Cards
 import blackjack.domain.Score
 import blackjack.domain.Suit
@@ -8,11 +7,10 @@ import blackjack.domain.WinLose
 
 interface BlackJackGameResult {
     val name: String
-    val cardSet: Set<Card>
     val cards: Cards
     val score: Score get() = cards.score()
     val cardDisplay: String
-        get() = cardSet.joinToString(", ") { card ->
+        get() = cards.cards.joinToString(", ") { card ->
             "${card.rank.rankName}${card.suit.suitName()}"
         }
 
