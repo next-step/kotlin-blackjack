@@ -29,4 +29,16 @@ object OutputView {
             Symbol.CLUB -> "클로버"
         }
     }
+
+    fun writePlayerResults(players: List<Player>) {
+        players.forEach { player ->
+            println(
+                "${player.name.value}카드: ${
+                    player.cards.joinToString(", ") { card ->
+                        "${card.rank.score}${getCardSymbolName(card.symbol)}"
+                    }
+                } - 결과: ${player.calculateScore()}"
+            )
+        }
+    }
 }

@@ -22,4 +22,6 @@ fun main(args: Array<String>) {
             OutputView.writePlayerCards(player)
         }
     }
+
+    OutputView.writePlayerResults(players)
 }
