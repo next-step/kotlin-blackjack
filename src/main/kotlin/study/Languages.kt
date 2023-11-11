@@ -9,13 +9,13 @@ class Languages {
         return this@Languages
     }
 
-    override fun toString(): String {
-        return "My languages level are $languages"
+    fun introduce(): String {
+        return "My languages level are ${languages.joinToString { it.introduce() }}"
     }
 }
 
 data class Language(val name: String, val level: Int) {
-    override fun toString(): String {
+    fun introduce(): String {
         return "$name's level $level"
     }
 }

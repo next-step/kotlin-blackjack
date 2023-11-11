@@ -46,11 +46,11 @@ class DslTest {
             }
         }
         person.name shouldBe "조운현"
-        person.skills.toString() shouldContain PASSION
-        person.skills.toString() shouldContain COMMUNICATION
-        person.skills.toString() shouldContain KOTLIN
-        person.skills.toString() shouldContain C_CPP
-        person.skills.toString() shouldNotContain JAVA
+        person.skills?.introduce() shouldContain PASSION
+        person.skills?.introduce() shouldContain COMMUNICATION
+        person.skills?.introduce() shouldContain KOTLIN
+        person.skills?.introduce() shouldContain C_CPP
+        person.skills?.introduce() shouldNotContain JAVA
         person.languages shouldBe null
     }
 
@@ -64,9 +64,9 @@ class DslTest {
             }
         }
         person.name shouldBe "조운현"
-        person.languages.toString() shouldContain "Korean's level 5"
-        person.languages.toString() shouldContain "Japanese's level 1"
-        person.languages.toString() shouldNotContain "English"
+        person.languages?.introduce() shouldContain "Korean's level 5"
+        person.languages?.introduce() shouldContain "Japanese's level 1"
+        person.languages?.introduce() shouldNotContain "English"
         person.skills shouldBe null
     }
 
@@ -87,13 +87,13 @@ class DslTest {
         }
         person.name shouldBe "조운현"
         person.company shouldBe "kakao"
-        person.skills.toString() shouldContain PASSION
-        person.skills.toString() shouldContain COMMUNICATION
-        person.skills.toString() shouldContain C_CPP
-        person.skills.toString() shouldNotContain JAVA
-        person.languages.toString() shouldContain "Korean's level 5"
-        person.languages.toString() shouldContain "English's level 3"
-        person.languages.toString() shouldNotContain "Japanese"
+        person.skills?.introduce() shouldContain PASSION
+        person.skills?.introduce() shouldContain COMMUNICATION
+        person.skills?.introduce() shouldContain C_CPP
+        person.skills?.introduce() shouldNotContain JAVA
+        person.languages?.introduce() shouldContain "Korean's level 5"
+        person.languages?.introduce() shouldContain "English's level 3"
+        person.languages?.introduce() shouldNotContain "Japanese"
     }
 
     companion object {
