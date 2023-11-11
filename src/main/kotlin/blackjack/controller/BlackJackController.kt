@@ -1,9 +1,9 @@
 package blackjack.controller
 
+import blackjack.domain.BlackJackPlayerResult
 import blackjack.domain.Dealer
 import blackjack.domain.Player
 import blackjack.domain.TrumpCard
-import blackjack.view.BlackJackPlayerResult
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
@@ -48,7 +48,14 @@ class BlackJackController {
                 it.drawBy(trumpCard.draw())
                 OutputView.printPlayerCard(it.result())
             }
-            if (it.isBurst()) OutputView.printPlayerBurst(it.name)
+            if (it.isBurst()) {
+                it.burst()
+                OutputView.printPlayerBurst(it.name)
+            }
+            if (it.isBlackJack()) {
+                it.blackjack()
+            }
+            it.stand()
         }
     }
 
@@ -56,6 +63,12 @@ class BlackJackController {
         while (this.isHit()) {
             OutputView.printDealerDraw()
             this.drawBy(trumpCard.draw())
+        }
+        if (this.isBurst()) {
+            this.burst()
+        }
+        if (this.isBlackJack()) {
+            this.blackjack()
         }
     }
 }

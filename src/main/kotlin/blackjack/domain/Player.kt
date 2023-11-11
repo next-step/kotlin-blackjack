@@ -10,6 +10,10 @@ class Player(
     }
 
     override fun isHit(): Boolean {
-        return !cards.score().burst()
+        return status == PlayerStatus.HIT
+    }
+
+    fun stand() {
+        status = PlayerStatus.STAND
     }
 }
