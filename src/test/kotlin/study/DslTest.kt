@@ -15,7 +15,7 @@ import org.junit.jupiter.params.provider.CsvSource
  * hard("Kotlin")
  * }
  * languages {
- * "Korean" level 5
+ * "Korean" level 5용
  * "English" level 3
  * }
  * }
