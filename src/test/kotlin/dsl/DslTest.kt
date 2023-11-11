@@ -33,12 +33,12 @@ class DslTest : StringSpec({
         }
 
         person.skills.soft shouldBe listOf(
-            "A passion for problem solving",
-            "Good communication skills",
+            Skill("A passion for problem solving"),
+            Skill("Good communication skills"),
         )
 
         person.skills.hard shouldBe listOf(
-            "Kotlin"
+            Skill("Kotlin")
         )
     }
 
@@ -54,5 +54,25 @@ class DslTest : StringSpec({
             Language("Korean", 5),
             Language("English", 3),
         )
+    }
+
+    "introduct Test" {
+        val person = introduce {
+            name("이름")
+            company("멋진회사")
+            skills {
+                soft("자바")
+                hard("코틀린")
+            }
+            languages {
+                "한국어" level 100
+            }
+        }
+
+        person.name shouldBe "이름"
+        person.company shouldBe "멋진회사"
+        person.skills.soft shouldBe listOf(Skill("자바"))
+        person.skills.hard shouldBe listOf(Skill("코틀린"))
+        person.languages shouldBe listOf(Language("한국어", 100))
     }
 })
