@@ -1,14 +1,13 @@
 package blackjack.view
 
-import blackjack.domain.Player
+import blackjack.domain.BlackJackPlayer
+import blackjack.domain.Cards
 import blackjack.domain.Score
 
-class BlackJackPlayerResult(private val player: Player) : BlackJackGameResult {
-    val playerName: String get() = player.name
-    override val name: String get() = player.name
-    override val cards get() = player.cards
+class BlackJackPlayerResult(private val blackJackPlayer: BlackJackPlayer) {
+    val name: String get() = blackJackPlayer.name
+    val cards: Cards get() = blackJackPlayer.cards
+    val score: Score get() = cards.score()
 
-    fun winLose(dealerScore: Score): String {
-        return score.winLose(dealerScore).name()
-    }
+    val firstOpenCards: Cards get() = blackJackPlayer.firstOpenCards()
 }

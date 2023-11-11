@@ -5,6 +5,10 @@ class Player(
     cards: Cards = Cards()
 ) : BlackJackPlayer(name, cards) {
 
+    override fun firstOpenCards(): Cards {
+        return Cards(setOf(cards.cards.first(), cards.cards.elementAt(1)))
+    }
+
     override fun isHit(): Boolean {
         return !cards.score().burst()
     }
