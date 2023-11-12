@@ -5,6 +5,7 @@ import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
+import org.junit.jupiter.params.provider.CsvSource
 import org.junit.jupiter.params.provider.MethodSource
 import java.util.stream.Stream
 
@@ -92,5 +93,20 @@ class PlayerCardsTest {
                 ),
             )
         }
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = ["ACE,EIGHT,true", "ACE,ACE,true", "ACE,TEN,false", "ACE,NINE,true"])
+    fun `카드를 추가할 수 있는지 확인`(firstRank: Rank, secondRank: Rank, expected: Boolean) {
+        // given
+        val playerCards = PlayerCards()
+        playerCards.add(Card(Suit.SPADE, firstRank))
+        playerCards.add(Card(Suit.SPADE, secondRank))
+
+        // when
+        val actual = playerCards.canDrawCard()
+
+        // then
+        actual shouldBe expected
     }
 }
