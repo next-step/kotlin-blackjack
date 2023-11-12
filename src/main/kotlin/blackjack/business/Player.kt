@@ -1,6 +1,7 @@
 package blackjack.business
 
 class Player(val name: String, cards: List<Card> = listOf()) {
+
     private val _cards: PlayerCards = PlayerCards(cards)
 
     val score: Int

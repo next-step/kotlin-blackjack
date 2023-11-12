@@ -2,20 +2,20 @@ package blackjack.business
 
 class PlayerCards(cards: List<Card> = listOf()) {
 
+    private val _cards: MutableList<Card> = cards.toMutableList()
+
     val cards: List<Card>
         get() = _cards.toList()
 
     val size: Int
         get() = _cards.size
 
-    private val _cards: MutableList<Card> = cards.toMutableList()
+    operator fun get(i: Int): Card {
+        return _cards[i]
+    }
 
     fun add(card: Card) {
         _cards.add(card)
-    }
-
-    operator fun get(i: Int): Card {
-        return _cards[i]
     }
 
     fun sum(): Int {

@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test
 
 @DisplayName("플레이어 이름 파서 테스트")
 class PlayerNameParserTest {
+
     @Test
     fun `플레이어 이름을 구별자로 구분하여 파싱한다`() {
         // given
