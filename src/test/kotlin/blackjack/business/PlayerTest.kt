@@ -32,4 +32,18 @@ class PlayerTest {
         // then
         canDrawCard shouldBe true
     }
+
+    @Test
+    fun `플레이어의 스코어를 확인한다`() {
+        // given
+        val player = Player("pobi")
+        player.addCard(Card(Suit.SPADE, Rank.ACE))
+        player.addCard(Card(Suit.SPADE, Rank.EIGHT))
+
+        // when
+        val score = player.score
+
+        // then
+        score shouldBe 19
+    }
 }
