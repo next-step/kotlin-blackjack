@@ -5,28 +5,28 @@ import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
 @DisplayName("카드팩")
-class CardsTest {
+class CardDeskTest {
 
     @Test
     fun `52장의 다른 카드를 가지고 있다`() {
         // given,when
-        val cards = Cards()
+        val cardDesk = CardDesk()
 
         // then
-        cards.cards.size shouldBe 52
-        cards.cards.toSet().size shouldBe 52
+        cardDesk.cards.size shouldBe 52
+        cardDesk.cards.toSet().size shouldBe 52
     }
 
     @Test
     fun `52장의 카드에서 랜덤으로 카드를 뽑는다`() {
         // given
-        val cards = Cards()
+        val cardDesk = CardDesk()
 
         // when
-        val card = cards.draw()
+        val card = cardDesk.draw()
 
         // then
-        cards.cards.size shouldBe 51
-        cards.cards.contains(card) shouldBe false
+        cardDesk.cards.size shouldBe 51
+        cardDesk.cards.contains(card) shouldBe false
     }
 }

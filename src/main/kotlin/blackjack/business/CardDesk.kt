@@ -1,6 +1,6 @@
 package blackjack.business
 
-class Cards {
+class CardDesk(private val cardSelectionStrategy: CardSelectionStrategy = RandomCardSelectionStrategy()) {
 
     private val _cards = mutableListOf<Card>()
 
@@ -16,7 +16,7 @@ class Cards {
         get() = _cards.toList()
 
     fun draw(): Card {
-        return _cards.random().also {
+        return cardSelectionStrategy.selectCard(_cards).also {
             _cards.remove(it)
         }
     }

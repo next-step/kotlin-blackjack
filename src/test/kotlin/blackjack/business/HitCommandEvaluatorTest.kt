@@ -1,9 +1,11 @@
 package blackjack.business
 
 import io.kotest.matchers.shouldBe
+import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 
+@DisplayName("Hit 명령어")
 class HitCommandEvaluatorTest {
 
     @ParameterizedTest
