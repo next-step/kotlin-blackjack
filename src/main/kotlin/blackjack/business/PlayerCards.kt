@@ -23,6 +23,10 @@ class PlayerCards {
         return sum
     }
 
+    fun joinToString(delimiter: String): String {
+        return _cards.joinToString(delimiter)
+    }
+
     companion object {
         private const val BLACKJACK = 21
         private const val ACE_OFFSET = 10
