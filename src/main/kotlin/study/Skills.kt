@@ -15,14 +15,14 @@ class Skills {
         return this
     }
 
-    override fun toString(): String {
-        return "I have soft skills: $softSkills, hard skills: $hardSkills"
+    fun introduce(): String {
+        return "I have soft skills: ${softSkills.joinToString { it.introduce() }}, hard skills: ${hardSkills.joinToString { it.introduce() }}"
     }
 }
 
 @JvmInline
 value class Skill(private val skill: String) {
-    override fun toString(): String {
+    fun introduce(): String {
         return skill
     }
 }
