@@ -31,4 +31,18 @@ class BlackJackTest {
 
         assertThat(actualPlayerName).isEqualTo(expectedPlayerName)
     }
+
+    @Test
+    fun `진행중인 플레이어는 카드를 더 뽑을 수 있다`() {
+        val deck = Deck()
+        val blackJack = BlackJack(deck)
+        val player = OnGoingPlayer("a", Cards(listOf()))
+
+        val onGoingPlayer = blackJack.hit(player)
+
+        val actualCardsCount = onGoingPlayer.cards.value.size
+        val expectedCardsCount = 1
+
+        assertThat(actualCardsCount).isEqualTo(expectedCardsCount)
+    }
 }

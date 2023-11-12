@@ -7,4 +7,8 @@ value class Cards(val value: List<Card>) {
             cardPointStrategy.getPoint(card.rank)
         }
     }
+
+    operator fun plus(other: Card): Cards {
+        return Cards(value + other)
+    }
 }

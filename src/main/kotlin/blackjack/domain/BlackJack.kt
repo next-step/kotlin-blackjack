@@ -15,4 +15,10 @@ class BlackJack(
             OnGoingPlayer(player.name, drawnCards)
         }
     }
+
+    fun hit(player: OnGoingPlayer): OnGoingPlayer {
+        val drawnCard = deck.draw()
+
+        return OnGoingPlayer(player.name, player.cards + drawnCard)
+    }
 }
