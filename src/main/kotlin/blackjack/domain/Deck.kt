@@ -3,7 +3,7 @@ package blackjack.domain
 class Deck(private val cards: MutableList<Card>, private val shuffleStrategy: ShuffleStrategy) : List<Card> by cards {
 
     init {
-        require(cards.size == INITIAL_DECK_SIZE) { "카드의 수가 52장이 아닙니다." }
+        require(cards.size == INITIAL_DECK_SIZE) { "카드의 수가 ${INITIAL_DECK_SIZE}장이 아닙니다." }
     }
 
     fun draw(): Card = cards.removeFirst()
@@ -30,4 +30,5 @@ class DeckDsl(private val shuffleStrategy: ShuffleStrategy = RandomShuffleStrate
     fun build(): Deck = Deck(cards, shuffleStrategy)
 }
 
-fun deck(shuffleStrategy: ShuffleStrategy, init: DeckDsl.() -> Unit): Deck = DeckDsl(shuffleStrategy).apply(init).build()
+fun deck(shuffleStrategy: ShuffleStrategy, init: DeckDsl.() -> Unit): Deck =
+    DeckDsl(shuffleStrategy).apply(init).build()

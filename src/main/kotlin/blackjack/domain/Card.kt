@@ -10,7 +10,12 @@ enum class Rank(val score: Int) {
     JACK(10), QUEEN(10), KING(10), ACE(11),
 }
 
-data class Card(val symbol: Symbol, val rank: Rank)
+data class Card(val symbol: Symbol, val rank: Rank) {
+
+    companion object {
+        val ALL_CARDS: List<Card> = Rank.values().flatMap { rank -> Symbol.values() of rank }
+    }
+}
 
 infix fun Symbol.of(rank: Rank): Card = Card(this, rank)
 

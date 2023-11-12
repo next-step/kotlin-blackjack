@@ -1,21 +1,14 @@
 package blackjack.test
 
-import blackjack.domain.*
+import blackjack.domain.Card
+import blackjack.domain.Deck
+import blackjack.domain.FakeShuffleStrategy
+import blackjack.domain.deck
 
 object TestDeckGenerator {
 
     fun generate(vararg cards: Card): Deck = deck(FakeShuffleStrategy) {
         val repeatedCards = generateSequence { cards.iterator() }.flatMap { it.asSequence() }.take(52)
         repeatedCards.forEach { +it }
-    }
-
-    private fun generateFullDeck(): List<Card> {
-        val fullDeck = mutableListOf<Card>()
-        for (suit in Symbol.values()) {
-            for (value in Rank.values()) {
-                fullDeck.add(Card(suit, value))
-            }
-        }
-        return fullDeck
     }
 }
