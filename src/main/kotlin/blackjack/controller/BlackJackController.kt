@@ -21,9 +21,8 @@ class BlackJackController {
         val dealer = Dealer(trumpCard.drawFirstCards())
         OutputView.printFirstCard(dealer.result())
         OutputView.printPlayerFirstCard(players.map { it.result() })
-        val (dealerResult, playersResult) = playBlackjack(players, dealer, trumpCard)
-        OutputView.printBlackjackGameResult(dealerResult)
-        OutputView.printBlackjackGamePlayerResult(playersResult)
+        val (dealerResult, playersResults) = playBlackjack(players, dealer, trumpCard)
+        OutputView.printBlackjackGameResult(dealerResult, playersResults)
     }
 
     private fun playBlackjack(
@@ -33,15 +32,19 @@ class BlackJackController {
     ): Pair<BlackJackDealerResult, List<BlackJackPlayerResult>> {
         players.draw(trumpCard)
         dealer.draw(trumpCard)
-        return dealer.result() to players.map { it.result(it.match(dealer)) }
+        val dealerWinLose = players.map { it.match(dealer).opposite() }
+            .groupingBy { it }
+            .eachCount()
+
+        return dealer.result(dealerWinLose) to players.map { it.result(it.match(dealer)) }
     }
 
     private fun Player.result(winLose: WinLose? = null): BlackJackPlayerResult {
         return BlackJackPlayerResult(this, winLose)
     }
 
-    private fun Dealer.result(): BlackJackDealerResult {
-        return BlackJackDealerResult(this)
+    private fun Dealer.result(winLoseMap: Map<WinLose, Int> = mapOf()): BlackJackDealerResult {
+        return BlackJackDealerResult(this, winLoseMap)
     }
 
     private fun List<Player>.draw(trumpCard: TrumpCard) {

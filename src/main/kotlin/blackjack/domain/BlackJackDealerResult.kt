@@ -2,7 +2,7 @@ package blackjack.domain
 
 class BlackJackDealerResult(
     private val dealer: Dealer,
-    private val winLoseCountBy: Map<WinLose, Int> = mapOf()
+    private val winLoseCountBy: Map<WinLose, Int>
 ) {
 
     val name: String get() = dealer.name

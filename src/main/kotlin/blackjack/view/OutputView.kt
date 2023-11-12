@@ -11,6 +11,7 @@ object OutputView {
     fun printPlayerName(playerNames: List<String>) {
         println("${playerNames.joinToString(", ")}$PRINT_INIT_CARD")
     }
+
     fun printPlayerFirstCard(result: List<BlackJackPlayerResult>) {
         result.forEach {
             println(nameDisplay(it.name) + cardDisplay(it.firstOpenCards))
@@ -29,32 +30,35 @@ object OutputView {
         println(nameDisplay(result.name) + cardDisplay(result.cards))
     }
 
-    fun printBlackjackGamePlayerResult(result: List<BlackJackPlayerResult>) {
+    fun printBlackjackGameResult(dealerResult: BlackJackDealerResult, playerResults: List<BlackJackPlayerResult>) {
+        printBlackjackGameDealerResult(dealerResult)
+        printBlackjackGamePlayerResult(playerResults)
+
+        println(WIN_LOSE_RESULT)
+        println("${dealerResult.name}: ${dealerWinLose(dealerResult)}")
+        playerResults.forEach {
+            println("${it.name}: ${it.winLose.name()}")
+        }
+    }
+
+    fun printDealerDraw() {
+        println(PRINT_DEALER_DRAW)
+    }
+
+    private fun dealerWinLose(dealerResult: BlackJackDealerResult): String {
+        return WinLose.values().joinToString(" ") {
+            "${dealerResult.winLoseCountBy(it)}${it.name()}"
+        }
+    }
+
+    private fun printBlackjackGamePlayerResult(result: List<BlackJackPlayerResult>) {
         result.forEach {
             println(resultDisplay(it.name, it.cards, it.score.score))
         }
     }
 
-    fun printBlackjackGameResult(result: BlackJackPlayerResult) {
+    private fun printBlackjackGameDealerResult(result: BlackJackDealerResult) {
         println(resultDisplay(result.name, result.cards, result.score.score))
-    }
-//    fun printBlackjackGameResult(result: Pair<BlackJackDealerResult, List<BlackJackPlayerResult>>) {
-//        val dealerResult = result.first
-//        val playerResults = result.second
-//        dealerResult.run { println(resultDisplay) }
-//        playerResults.forEach {
-//            println(it.resultDisplay)
-//        }
-//
-//        println(WIN_LOSE_RESULT)
-//        println("${dealerResult.name}: ${dealerResult.winLose(playerResults.map { it.score })}")
-//        playerResults.forEach {
-//            println("${it.playerName}: ${it.winLose(dealerResult.score)}")
-//        }
-//    }
-
-    fun printDealerDraw() {
-        println(PRINT_DEALER_DRAW)
     }
 
     private const val PLAYER_BURST = "는 21점을 초과했습니다."
@@ -73,9 +77,11 @@ object OutputView {
     private fun resultDisplay(name: String, cards: Cards, score: Int): String {
         return "$name 카드: ${cardDisplay(cards)} 결과: $score"
     }
+
     private fun nameDisplay(name: String): String {
         return "$name 카드:"
     }
+
     private fun cardDisplay(cards: Cards): String {
         return cards.cards.joinToString(", ") { card ->
             "${card.rank.rankName}${card.suit.suitName()}"
