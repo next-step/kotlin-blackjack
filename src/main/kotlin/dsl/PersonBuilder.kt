@@ -3,8 +3,8 @@ package dsl
 class PersonBuilder {
     private lateinit var name: String
     private var company: String? = null
-    private var skills: Skills? = Skills(listOf(), listOf())
-    private var languages: Languages? = Languages(listOf())
+    private var skills: Skills = Skills(listOf(), listOf())
+    private var languages: Languages = Languages(listOf())
 
     fun name(value: String) {
         name = value
