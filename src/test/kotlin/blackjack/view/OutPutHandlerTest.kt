@@ -2,7 +2,6 @@ package blackjack.view
 
 import blackjack.business.Card
 import blackjack.business.Player
-import blackjack.business.PlayerCards
 import blackjack.business.Rank
 import blackjack.business.Suit
 import io.kotest.matchers.shouldBe
@@ -23,7 +22,7 @@ class OutPutHandlerTest {
     @Test
     fun `플래이어를 출력한다`() {
         // given
-        val playerCards = PlayerCards()
+        val playerCards: MutableList<Card> = mutableListOf()
         playerCards.add(Card(Suit.SPADE, Rank.ACE))
         playerCards.add(Card(Suit.SPADE, Rank.EIGHT))
         val player = Player("test", playerCards)

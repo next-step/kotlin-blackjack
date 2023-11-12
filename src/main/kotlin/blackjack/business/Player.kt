@@ -1,12 +1,15 @@
 package blackjack.business
 
-class Player(val name: String, val cards: PlayerCards = PlayerCards()) {
+class Player(val name: String, cards: List<Card> = listOf()) {
+    private val _cards: PlayerCards = PlayerCards(cards)
+    val cards: List<Card>
+        get() = _cards.cards
 
     fun addCard(card: Card) {
-        cards.add(card)
+        _cards.add(card)
     }
 
     fun canDrawCard(): Boolean {
-        return cards.canDrawCard()
+        return _cards.canDrawCard()
     }
 }

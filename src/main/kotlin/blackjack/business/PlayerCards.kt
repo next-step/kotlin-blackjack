@@ -1,9 +1,14 @@
 package blackjack.business
 
-class PlayerCards {
+class PlayerCards(cards: List<Card> = listOf()) {
+
+    val cards: List<Card>
+        get() = _cards.toList()
+
     val size: Int
         get() = _cards.size
-    private val _cards: MutableList<Card> = mutableListOf()
+
+    private val _cards: MutableList<Card> = cards.toMutableList()
 
     fun add(card: Card) {
         _cards.add(card)
@@ -21,10 +26,6 @@ class PlayerCards {
             aceCount--
         }
         return sum
-    }
-
-    fun joinToString(delimiter: String): String {
-        return _cards.joinToString(delimiter)
     }
 
     fun canDrawCard(): Boolean {
