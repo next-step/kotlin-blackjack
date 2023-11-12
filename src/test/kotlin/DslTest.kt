@@ -1,5 +1,10 @@
 import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.shouldBe
+import kotlindsl.builder.introduce
+import kotlindsl.enum.SkillType
+import kotlindsl.model.Language
+import kotlindsl.model.Person
+import kotlindsl.model.Skill
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
@@ -90,58 +95,24 @@ class DslTest {
     }
 
     @Test
-    fun pair() {
-        val pair1 = Pair(1, "one")
-        val pair2 = 1 to "one"
-        val pair3 = 1 of "one"
+    fun language() {
+        val person: Person = introduce {
+            name("홍길동")
+            company("활빈당")
+            skills {
+                soft("A passion for problem solving")
+                soft("Good communication skills")
+                hard("Kotlin")
+            }
+            languages {
+                "Korean" level 5
+                "English" level 3
+            }
+        }
+
+        person.language shouldContainExactly listOf(
+            Language("Korean", 5),
+            Language("English", 3)
+        )
     }
-}
-
-infix fun Int.of(s: String): Pair<Int, String> = Pair(this, s)
-
-fun introduce(block: PersonBuilder.() -> Unit): Person {
-    return PersonBuilder().apply(block).build()
-}
-
-data class Person(val name: String, val company: String?, val skills: List<Skill>?)
-
-class PersonBuilder {
-    private lateinit var name: String
-    private var company: String? = null
-    private var skills: List<Skill>? = null
-
-    fun name(value: String) {
-        name = value
-    }
-
-    fun company(value: String) {
-        company = value
-    }
-
-    fun skills(block: SkillBuilder.() -> Unit) {
-        this.skills = SkillBuilder().apply(block).build()
-    }
-
-    fun build(): Person = Person(this.name, this.company, skills)
-}
-
-enum class SkillType {
-    Hard,
-    Soft
-}
-
-data class Skill(val skill: SkillType, val content: String)
-
-class SkillBuilder {
-    private val skills: MutableList<Skill> = mutableListOf()
-
-    fun hard(content: String) = setSkills(SkillType.Hard, content)
-
-    fun soft(content: String) = setSkills(SkillType.Soft, content)
-
-    private fun setSkills(skill: SkillType, content: String) {
-        skills.add(Skill(skill, content))
-    }
-
-    fun build(): List<Skill> = this.skills
 }
