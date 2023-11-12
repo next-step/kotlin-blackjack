@@ -45,4 +45,22 @@ class BlackJackTest {
 
         assertThat(actualCardsCount).isEqualTo(expectedCardsCount)
     }
+
+    @Test
+    fun `카드를 뽑았을 때 21을 초과하면 버스트된 플레이어가 된다`() {
+        val deck = Deck()
+        val blackJack = BlackJack(deck)
+        val cards = Cards(
+            listOf(
+                Card(Suit.Spade, Rank.Ten),
+                Card(Suit.Spade, Rank.Ten),
+                Card(Suit.Spade, Rank.Ace),
+            )
+        )
+        val player = OnGoingPlayer("a", cards)
+
+        val bustedPlayer = blackJack.hit(player)
+
+        assertThat(bustedPlayer).isInstanceOf(BustedPlayer::class.java)
+    }
 }

@@ -3,7 +3,7 @@ package blackjack.domain
 class BlackJack(
     private val deck: Deck,
 ) {
-    fun play(players: List<PreparedPlayer>): List<OnGoingPlayer> {
+    fun play(players: List<PreparedPlayer>): List<Player> {
         return players.map { player ->
             val drawnCards = Cards(
                 listOf(
@@ -12,13 +12,17 @@ class BlackJack(
                 )
             )
 
-            OnGoingPlayer(player.name, drawnCards)
+            OnGoingPlayer.of(player.name, drawnCards)
         }
     }
 
-    fun hit(player: OnGoingPlayer): OnGoingPlayer {
+    fun hit(player: OnGoingPlayer): Player {
         val drawnCard = deck.draw()
 
-        return OnGoingPlayer(player.name, player.cards + drawnCard)
+        return OnGoingPlayer.of(player.name, player.cards + drawnCard)
+    }
+
+    companion object {
+        const val BlackJackedNumber = 21
     }
 }
