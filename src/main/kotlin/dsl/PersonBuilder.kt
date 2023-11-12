@@ -14,15 +14,15 @@ class PersonBuilder(
         company = value
     }
 
-    fun skills(value: Skills) {
-        skills = value
+    fun skills(block: SkillBuilder.() -> Unit) {
+        skills = introduceSkill(block)
     }
 
-    fun languages(value: Languages) {
-        languages = value
+    fun languages(block: LanguageBuilder.() -> Unit) {
+        languages = introduceLanguage(block)
     }
 
-    fun builder(): Person = Person(
+    fun build(): Person = Person(
         name = name,
         company = company,
         skills = skills,
@@ -31,7 +31,5 @@ class PersonBuilder(
 }
 
 fun introduce(block: PersonBuilder.() -> Unit): Person {
-    return PersonBuilder().apply(block).builder()
+    return PersonBuilder().apply(block).build()
 }
-
-infix fun String.of(int: Int): Pair<String, Int> = Pair(this, int)
