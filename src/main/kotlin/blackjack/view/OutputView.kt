@@ -1,5 +1,6 @@
 package blackjack.view
 
+import blackjack.domain.BlackJackDealerResult
 import blackjack.domain.BlackJackPlayerResult
 import blackjack.domain.Cards
 import blackjack.domain.Suit
@@ -12,12 +13,12 @@ object OutputView {
     }
     fun printPlayerFirstCard(result: List<BlackJackPlayerResult>) {
         result.forEach {
-            printFirstCard(it)
+            println(nameDisplay(it.name) + cardDisplay(it.firstOpenCards))
         }
     }
 
-    fun printFirstCard(result: BlackJackPlayerResult) {
-        println(result.printName + cardDisplay(result.firstOpenCards))
+    fun printFirstCard(result: BlackJackDealerResult) {
+        println(nameDisplay(result.name) + cardDisplay(result.firstOpenCards))
     }
 
     fun printPlayerBurst(name: String) {
@@ -25,17 +26,17 @@ object OutputView {
     }
 
     fun printPlayerCard(result: BlackJackPlayerResult) {
-        println(result.printName + cardDisplay(result.cards))
+        println(nameDisplay(result.name) + cardDisplay(result.cards))
     }
 
     fun printBlackjackGamePlayerResult(result: List<BlackJackPlayerResult>) {
         result.forEach {
-            printBlackjackGameResult(it)
+            println(resultDisplay(it.name, it.cards, it.score.score))
         }
     }
 
     fun printBlackjackGameResult(result: BlackJackPlayerResult) {
-        println(result.resultDisplay)
+        println(resultDisplay(result.name, result.cards, result.score.score))
     }
 //    fun printBlackjackGameResult(result: Pair<BlackJackDealerResult, List<BlackJackPlayerResult>>) {
 //        val dealerResult = result.first
@@ -60,8 +61,6 @@ object OutputView {
     private const val PRINT_INIT_CARD = "에게 2장의 나누었습니다."
     private const val PRINT_DEALER_DRAW = "딜러는 16이하라 한장의 카드를 더 받았습니다."
     private const val WIN_LOSE_RESULT = "## 최종 승패"
-    private val BlackJackPlayerResult.printName get() = "$name 카드:"
-    private val BlackJackPlayerResult.resultDisplay get() = "$printName${cardDisplay(cards)} 결과: ${score.score}"
 
     private fun WinLose.name(): String {
         return when (this) {
@@ -69,6 +68,13 @@ object OutputView {
             WinLose.LOSE -> "패"
             WinLose.DRAW -> "무"
         }
+    }
+
+    private fun resultDisplay(name: String, cards: Cards, score: Int): String {
+        return "$name 카드: ${cardDisplay(cards)} 결과: $score"
+    }
+    private fun nameDisplay(name: String): String {
+        return "$name 카드:"
     }
     private fun cardDisplay(cards: Cards): String {
         return cards.cards.joinToString(", ") { card ->

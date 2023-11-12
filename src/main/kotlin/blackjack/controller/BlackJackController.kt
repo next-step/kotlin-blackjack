@@ -1,9 +1,11 @@
 package blackjack.controller
 
+import blackjack.domain.BlackJackDealerResult
 import blackjack.domain.BlackJackPlayerResult
 import blackjack.domain.Dealer
 import blackjack.domain.Player
 import blackjack.domain.TrumpCard
+import blackjack.domain.WinLose
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
@@ -28,18 +30,18 @@ class BlackJackController {
         players: List<Player>,
         dealer: Dealer,
         trumpCard: TrumpCard
-    ): Pair<BlackJackPlayerResult, List<BlackJackPlayerResult>> {
+    ): Pair<BlackJackDealerResult, List<BlackJackPlayerResult>> {
         players.draw(trumpCard)
         dealer.draw(trumpCard)
-        return dealer.result() to players.map { it.result() }
+        return dealer.result() to players.map { it.result(it.match(dealer)) }
     }
 
-    private fun Player.result(): BlackJackPlayerResult {
-        return BlackJackPlayerResult(this)
+    private fun Player.result(winLose: WinLose? = null): BlackJackPlayerResult {
+        return BlackJackPlayerResult(this, winLose)
     }
 
-    private fun Dealer.result(): BlackJackPlayerResult {
-        return BlackJackPlayerResult(this)
+    private fun Dealer.result(): BlackJackDealerResult {
+        return BlackJackDealerResult(this)
     }
 
     private fun List<Player>.draw(trumpCard: TrumpCard) {
