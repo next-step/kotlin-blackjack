@@ -20,7 +20,7 @@ class OutPutHandlerTest {
     }
 
     @Test
-    fun `플래이어를 출력한다`() {
+    fun `플래이어의 카드를 출력한다`() {
         // given
         val playerCards: MutableList<Card> = mutableListOf()
         playerCards.add(Card(Suit.SPADE, Rank.ACE))
@@ -32,5 +32,20 @@ class OutPutHandlerTest {
 
         // then
         outputStreamCaptor.toString().trim() shouldBe "test카드: A스페이드, 8스페이드"
+    }
+
+    @Test
+    fun `플래이어의 결과를 출력한다`() {
+        // given
+        val playerCards: MutableList<Card> = mutableListOf()
+        playerCards.add(Card(Suit.SPADE, Rank.ACE))
+        playerCards.add(Card(Suit.SPADE, Rank.EIGHT))
+        val player = Player("test", playerCards)
+
+        // when
+        OutputHandler.printResult(player)
+
+        // then
+        outputStreamCaptor.toString().trim() shouldBe "test카드: A스페이드, 8스페이드 - 결과: 19"
     }
 }
