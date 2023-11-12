@@ -1,12 +1,14 @@
 package blackjack.business
 
 import io.kotest.matchers.shouldBe
+import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 import java.util.stream.Stream
 
+@DisplayName("플레이어 카드")
 class PlayerCardsTest {
 
     @Test

@@ -2,8 +2,10 @@ package blackjack.business
 
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
+import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
+@DisplayName("플레이어들")
 class PlayersTest {
     @Test
     fun `플레이어가 2명이하이면 예외를 던진다`() {

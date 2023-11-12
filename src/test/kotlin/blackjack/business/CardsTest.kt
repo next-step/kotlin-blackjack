@@ -1,8 +1,10 @@
 package blackjack.business
 
 import io.kotest.matchers.shouldBe
+import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
+@DisplayName("카드팩")
 class CardsTest {
     @Test
     fun `52장의 다른 카드를 가지고 있다`() {

@@ -16,10 +16,15 @@ class PlayerCards {
     fun sum(): Int {
         var sum = _cards.sumOf { it.rank.score }
         var aceCount = _cards.count { it.rank == Rank.ACE }
-        while (sum <= 11 && aceCount > 0) {
-            sum += 10
-            aceCount.minus(1)
+        while (sum > BLACKJACK && aceCount > 0) {
+            sum -= ACE_OFFSET
+            aceCount--
         }
         return sum
+    }
+
+    companion object {
+        private const val BLACKJACK = 21
+        private const val ACE_OFFSET = 10
     }
 }
