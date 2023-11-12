@@ -22,6 +22,10 @@ class BlackJack(
         return OnGoingPlayer.of(player.name, player.cards + drawnCard)
     }
 
+    fun stay(player: Player): FinishedPlayer {
+        return FinishedPlayer(player)
+    }
+
     companion object {
         const val BlackJackedNumber = 21
     }

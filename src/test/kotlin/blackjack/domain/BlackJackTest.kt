@@ -63,4 +63,18 @@ class BlackJackTest {
 
         assertThat(bustedPlayer).isInstanceOf(BustedPlayer::class.java)
     }
+
+    @Test
+    fun `스테이 하면 종료한 플레이어가 된다`() {
+        val deck = Deck()
+        val blackJack = BlackJack(deck)
+        val player = object : Player {
+            override val name: String = ""
+            override val cards: Cards = Cards(emptyList())
+        }
+
+        val finishedPlayer = blackJack.stay(player)
+
+        assertThat(finishedPlayer).isInstanceOf(FinishedPlayer::class.java)
+    }
 }
