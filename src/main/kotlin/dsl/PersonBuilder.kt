@@ -8,7 +8,8 @@ fun introduce(block: PersonBuilder.() -> Unit): Person =
 class PersonBuilder {
     private lateinit var name: String
     private var company: String? = null
-    private lateinit var skillList: List<Skill>
+    private var skillList: List<Skill> = listOf()
+    private var languages: Map<String, Int> = mapOf()
 
     inner class SkillListBuilder {
         private val skillList: MutableList<Skill> = mutableListOf()
@@ -23,6 +24,15 @@ class PersonBuilder {
         fun build() = skillList.toList()
     }
 
+    inner class LanguageMapBuilder {
+        private val langaugeMap: MutableMap<String, Int> = mutableMapOf()
+        infix fun String.level(level: Int) {
+            langaugeMap[this] = level
+        }
+
+        fun build() = langaugeMap.toMap()
+    }
+
     fun name(value: String) {
         name = value
     }
@@ -35,7 +45,9 @@ class PersonBuilder {
         skillList = SkillListBuilder().apply(block).build()
     }
 
-    fun build(): Person {
-        return Person(name, company, skillList)
+    fun languages(block: LanguageMapBuilder.() -> Unit) {
+        languages = LanguageMapBuilder().apply(block).build()
     }
+
+    fun build(): Person = Person(name, company, skillList, languages)
 }

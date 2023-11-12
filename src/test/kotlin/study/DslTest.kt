@@ -4,6 +4,7 @@ import dsl.SkillType
 import dsl.introduce
 import io.kotest.inspectors.forAll
 import io.kotest.matchers.collections.shouldContain
+import io.kotest.matchers.maps.shouldContain
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
@@ -31,7 +32,8 @@ class DslTest {
         name: String,
         company: String,
         softSkills: List<String>,
-        hardSkills: List<String>
+        hardSkills: List<String>,
+        languages: List<Pair<String, Int>>
     ) {
         val person = introduce {
             name(name)
@@ -44,6 +46,11 @@ class DslTest {
                     hard(it)
                 }
             }
+            languages {
+                languages.forEach {
+                    it.first level it.second
+                }
+            }
         }
 
         person.name shouldBe name
@@ -53,6 +60,9 @@ class DslTest {
         }
         person.skills.filter { it.type == SkillType.HARD }.forAll {
             hardSkills shouldContain it.name
+        }
+        languages.forAll {
+            person.languages shouldContain it
         }
     }
 
@@ -65,12 +75,14 @@ class DslTest {
                     "활빈당",
                     listOf("착한 마음씨", "호형호제 못함"),
                     listOf("전투", "곳간 털기"),
+                    listOf(Pair("Korean", 5), Pair("English", 0))
                 ),
                 Arguments.of(
                     "김영태",
                     "홍익대학교",
                     listOf("웃으면서 거절하기", "거절하면서 웃기"),
                     listOf("Flutter", "Dart"),
+                    listOf(Pair("Korean", 5), Pair("English", 0))
                 ),
             )
         }
