@@ -51,34 +51,23 @@ class DslTest {
 
 infix fun Int.of(s: String): Pair<Int, String> = Pair(this, s)
 
-fun introduce(block: Person.() -> Unit): Person {
-    return Person().apply(block)
+fun introduce(block: PersonBuilder.() -> Unit): Person {
+    return PersonBuilder().apply(block).build()
 }
 
-class Person {
-    lateinit var name: String
-    lateinit var company: String
+data class Person(val name: String, val company: String?)
+
+class PersonBuilder {
+   private lateinit var name: String
+   private var company: String? = null
 
     fun name(value: String) {
-        name = value
-    }
+       name = value
+   }
 
-    fun company(value: String) {
-        company = value
-    }
+   fun company(value: String) {
+       company = value
+   }
+
+    fun build(): Person = Person(this.name, this.company)
 }
-
-// class PersonBuilder {
-//    lateinit var name: String
-//    lateinit var company: String
-//
-//    fun name(value: String) {
-//        name = value
-//    }
-//
-//    fun company(value: String) {
-//        company = value
-//    }
-// }
-//
-// data class Person(val name: String, val company: String)
