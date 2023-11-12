@@ -51,6 +51,9 @@ class DslTest {
                 "English" level 3
             }
         }
-        assertThat(person.languages).containsExactly(Language("Korean", 5), Language("English", 3))
+        assertThat(person.languages).containsExactly(
+            Language("Korean", 5),
+            Language("English", 3)
+        )
     }
 }
