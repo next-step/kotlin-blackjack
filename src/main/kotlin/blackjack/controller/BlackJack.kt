@@ -10,31 +10,26 @@ class BlackJack {
         val players = View.inputPlayerNames()
         val dealer = Dealer()
 
-        players.forEach {
-            it.addCards(dealer.dealingTwoCards())
-        }
+        players.initialCardDealing(dealer)
         View.initialCardDealingComment(players)
-        players.forEach { View.showCards(it) }
+        View.showCards(players)
 
-        while (!players.noMoreHit()) {
-            players.processGame(dealer)
+        while (players.noMoreHit().not()) {
+            players.hitablePlayers()
+                .processGame(dealer)
         }
 
-        players.forEach { View.showResult(it) }
+        View.showResults(players)
     }
 
-    private fun List<Player>.noMoreHit() = !(any { it.hit })
-
     private fun List<Player>.processGame(dealer: Dealer) {
-        filter { it.hit }
-            .forEach {
-                val hit = View.hitOrStand(it)
-                if (!hit) {
-                    it.noMoreHit()
-                    return@forEach
-                }
-                it.addCard(dealer.dealingOneCard())
-                View.showCards(it)
+        forEach {
+            if (View.hitOrStand(it).not()) {
+                it.noMoreHit()
+                return@forEach
             }
+            it.addCard(dealer.dealingOneCard())
+            View.showCard(it)
+        }
     }
 }

@@ -4,5 +4,5 @@ data class Card(
     val suit: Suit,
     val number: Number
 ) {
-    fun cardName() = "${number.symbol}${suit.symbol}"
+    fun cardName(): String = "${number.symbol}${suit.symbol}"
 }

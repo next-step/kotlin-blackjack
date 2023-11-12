@@ -25,7 +25,7 @@ class PlayerTest {
     @Test
     fun `초기 값은 카드가 한장도 없고 hit 상태이다`() {
         val player = Player("test")
-        assertThat(player.cardList).isEmpty()
+        assertThat(player.cards).isEmpty()
         assertThat(player.hit).isTrue()
     }
 
@@ -41,17 +41,17 @@ class PlayerTest {
     fun `카드 점수를 구한다`(cardList: List<Card>, expected: Int) {
         val player = Player("test")
         player.addCards(cardList)
-        assertThat(player.getPoint()).isEqualTo(expected)
+        assertThat(player.getPoints()).isEqualTo(expected)
     }
 
     @Test
     fun `카드를 추가한다`() {
         val player = Player("test")
-        assertThat(player.cardList).isEmpty()
+        assertThat(player.cards).isEmpty()
         player.addCard(Card(Suit.SPADE, Number.ACE))
-        assertThat(player.cardList).hasSize(1)
+        assertThat(player.cards).hasSize(1)
         player.addCards(listOf(Card(Suit.DIAMOND, Number.JACK), Card(Suit.HEART, Number.TWO)))
-        assertThat(player.cardList).hasSize(3)
+        assertThat(player.cards).hasSize(3)
     }
 
     @Test

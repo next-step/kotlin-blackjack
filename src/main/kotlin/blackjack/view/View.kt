@@ -1,22 +1,29 @@
 package blackjack.view
 
 import blackjack.model.Player
+import blackjack.model.Players
 
 object View {
 
-    fun inputPlayerNames(): List<Player> {
+    fun inputPlayerNames(): Players {
         println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)")
-        return readln()
-            .split(",")
-            .map { Player(it.trim()) }
+        return Players(
+            readln()
+                .split(",")
+                .map { Player(it.trim()) }
+        )
     }
 
-    fun initialCardDealingComment(players: List<Player>) {
-        println("${players.joinToString { it.name }}에게 2장의 나누었습니다.")
+    fun initialCardDealingComment(players: Players) {
+        println("${players.players.joinToString { it.name }}에게 2장의 나누었습니다.")
     }
 
-    fun showCards(player: Player) {
-        println("${player.name}카드: ${player.cardList.joinToString { it.cardName() }}")
+    fun showCards(players: Players) {
+        players.players.forEach { showCard(it) }
+    }
+
+    fun showCard(player: Player) {
+        println("${player.name}카드: ${player.cards.joinToString { it.cardName() }}")
     }
 
     fun hitOrStand(player: Player): Boolean {
@@ -24,8 +31,12 @@ object View {
         return yesOrNo()
     }
 
-    fun showResult(player: Player) {
-        println("${player.name}카드: ${player.cardList.joinToString { it.cardName() }} - 결과: ${player.getPoint()}")
+    fun showResults(players: Players) {
+        players.players.forEach { showResult(it) }
+    }
+
+    private fun showResult(player: Player) {
+        println("${player.name}카드: ${player.cards.joinToString { it.cardName() }} - 결과: ${player.getPoints()}")
     }
 
     private fun yesOrNo(): Boolean = when (readln()) {

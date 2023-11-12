@@ -1,10 +1,11 @@
 package blackjack.model
 
 import blackjack.dto.Card
+import blackjack.model.Point.Companion.WINNING_POINT
 
 class Player(val name: String) {
 
-    val cardList = mutableListOf<Card>()
+    val cards = mutableListOf<Card>()
     var hit = true
         private set
 
@@ -13,23 +14,24 @@ class Player(val name: String) {
     }
 
     fun addCard(card: Card) {
-        cardList.add(card)
-        if (getPoint() > 21) {
+        cards.add(card)
+        if (getPoints() > WINNING_POINT) {
             noMoreHit()
         }
     }
 
+    // 처음 두 장의 카드를 받기 위한 함수
     fun addCards(cards: List<Card>) {
-        cardList.addAll(cards)
+        this.cards.addAll(cards)
     }
 
-    fun getPoint() = getPoints().getPoint()
+    fun getPoints(): Int = toPoint().calculatePoints()
 
     fun noMoreHit() {
         hit = false
     }
 
-    private fun getPoints() = Point(
-        cardList.map { it.number }
+    private fun toPoint(): Point = Point(
+        cards.map { it.number }
     )
 }

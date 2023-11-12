@@ -12,7 +12,7 @@ class PointTest {
     @ParameterizedTest
     @MethodSource("pointCalcCandidate")
     fun `점수를 구한다`(numbers: List<Number>, expected: Int) {
-        assertThat(Point(numbers).getPoint()).isEqualTo(expected)
+        assertThat(Point(numbers).calculatePoints()).isEqualTo(expected)
     }
 
     companion object {

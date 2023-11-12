@@ -11,5 +11,5 @@ object Deck {
         }
     }
 
-    fun newDeck() = cards.shuffled()
+    fun newDeck(): List<Card> = cards.shuffled().toList()
 }
