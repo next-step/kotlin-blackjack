@@ -1,6 +1,12 @@
 package blackjack.business
 
 class Cards {
+    fun draw(): Card {
+        return _cards.random().also {
+            _cards.remove(it)
+        }
+    }
+
     private val _cards = mutableListOf<Card>()
 
     val cards: List<Card>
