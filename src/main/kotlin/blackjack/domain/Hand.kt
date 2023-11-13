@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.domain
 
 data class Hand(
     val cards: List<Card> = listOf()

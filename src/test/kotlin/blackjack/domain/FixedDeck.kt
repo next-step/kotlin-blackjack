@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.domain
 
 class FixedDeck : Deck {
     override fun hit(): Card {
