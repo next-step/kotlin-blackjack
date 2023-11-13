@@ -21,8 +21,8 @@ data class Hand(
         val sum = cards.sumOf {
             it.num.value
         }
-        if (containsAce() && sum <= 11) {
-            return sum + 10
+        if (containsAce() && sum <= ACE_NUMBER) {
+            return sum + ACE_ADDING_NUMBER
         }
         return sum
     }
@@ -35,5 +35,7 @@ data class Hand(
 
     companion object {
         private const val BLACKJACK_NUMBER = 21
+        private const val ACE_NUMBER = 11
+        private const val ACE_ADDING_NUMBER = 10
     }
 }
