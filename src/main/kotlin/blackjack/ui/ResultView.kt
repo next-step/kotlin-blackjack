@@ -21,7 +21,7 @@ object ResultView {
     private fun printCard(player: Player) {
         val playerCards = player.hand
             .cards
-            .joinToString { "${it.num.value}${it.suit.value}" }
+            .joinToString { "${it.num.symbol}${it.suit.value}" }
         println(playerCards)
     }
 }
