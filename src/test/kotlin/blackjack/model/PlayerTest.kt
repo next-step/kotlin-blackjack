@@ -63,6 +63,32 @@ class PlayerTest {
         assertThat(player.hit).isFalse()
     }
 
+    @Test
+    fun `결과를 생성하지 않고 호출하면 에러가 발생한다`() {
+        assertThatIllegalArgumentException().isThrownBy {
+            val player = Player("test")
+            player.result
+        }
+    }
+
+    @Test
+    fun `승리하면 결과가 승리이다`() {
+        val player = Player("test")
+        player.makeWinner()
+        assertThat(player.result).isNotNull
+        assertThat(player.result?.winning).isEqualTo(1)
+        assertThat(player.result?.losing).isEqualTo(0)
+    }
+
+    @Test
+    fun `패배하면 결과가 패배이다`() {
+        val player = Player("test")
+        player.makeLoser()
+        assertThat(player.result).isNotNull
+        assertThat(player.result?.winning).isEqualTo(0)
+        assertThat(player.result?.losing).isEqualTo(1)
+    }
+
     companion object {
         @JvmStatic
         fun cardPointsCandidate(): Stream<Arguments> {

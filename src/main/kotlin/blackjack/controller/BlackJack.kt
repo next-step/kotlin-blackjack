@@ -1,6 +1,7 @@
 package blackjack.controller
 
 import blackjack.model.Dealer
+import blackjack.model.Participants
 import blackjack.model.Player
 import blackjack.view.View
 
@@ -9,27 +10,34 @@ class BlackJack {
     fun run() {
         val players = View.inputPlayerNames()
         val dealer = Dealer()
+        val participants = Participants(players, dealer)
 
-        players.initialCardDealing(dealer)
+        participants.initialCardDealing()
         View.initialCardDealingComment(players)
-        View.showCards(players)
 
-        while (players.noMoreHit().not()) {
-            players.hitablePlayers()
-                .processGame(dealer)
-        }
+        View.showCards(participants)
 
-        View.showResults(players)
+        participants.processGame()
+
+        participants.makeResult()
+        View.showResults(participants)
     }
 
-    private fun List<Player>.processGame(dealer: Dealer) {
-        forEach {
-            if (View.hitOrStand(it).not()) {
-                it.noMoreHit()
-                return@forEach
+    private fun Participants.processGame() {
+        this.players.players.forEach {
+            it.processGame(this.dealer)
+        }
+        View.dealerMoreCardComment(this.dealer.moreCard())
+    }
+
+    private fun Player.processGame(dealer: Dealer) {
+        while (this.hit) {
+            if (View.hitOrStand(this).not()) {
+                this.noMoreHit()
+                return
             }
-            it.addCard(dealer.dealingOneCard())
-            View.showCard(it)
+            this.addCard(dealer.dealingOneCard())
+            View.showCard(this)
         }
     }
 }
