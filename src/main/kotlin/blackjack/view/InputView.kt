@@ -1,10 +1,23 @@
 package blackjack.view
 
+import blackjack.domain.Money
+
 object InputView {
 
     fun inputPlayerName(): List<String> {
         println(INPUT_PLAYER_NAME)
         return readln().split(DEFAULT_DELIMITER).map { it.trim() }
+    }
+
+    fun inputBetMoney(name: String): Money {
+        println("$name$INPUT_BET_MONEY")
+        val value = readln()
+        runCatching { require(value.toInt() > 0) }
+            .onFailure {
+                println(NOT_FOUND_BET_MONEY)
+                inputBetMoney(name)
+            }
+        return Money(value.toInt())
     }
 
     fun inputHitOrStand(name: String): Boolean {
@@ -28,4 +41,6 @@ object InputView {
     private const val YES = "y"
     private const val NO = "n"
     private const val NOT_FOUND_YES_OR_NO = "$YES 또는 ${NO}을 입력해주세요."
+    private const val INPUT_BET_MONEY = "의 배팅 금액은?"
+    private const val NOT_FOUND_BET_MONEY = "배팅 금액은 0보다 커야 합니다."
 }

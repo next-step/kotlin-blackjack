@@ -14,10 +14,10 @@ class BlackJackController {
     fun start() {
         val trumpCard = TrumpCard.init()
         val playerNames = InputView.inputPlayerName()
-        OutputView.printPlayerName(playerNames)
         val players = playerNames.map {
-            Player(it, trumpCard.drawFirstCards())
+            Player(it, trumpCard.drawFirstCards(), InputView.inputBetMoney(it))
         }
+        OutputView.printPlayerName(playerNames)
         val dealer = Dealer(trumpCard.drawFirstCards())
         OutputView.printFirstCard(dealer.result())
         OutputView.printPlayerFirstCard(players.map { it.result() })

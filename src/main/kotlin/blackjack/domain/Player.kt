@@ -2,7 +2,8 @@ package blackjack.domain
 
 class Player(
     override val name: String,
-    override val cards: Cards = Cards()
+    override val cards: Cards = Cards(),
+    val betMoney: Money = Money()
 ) : BlackJackPlayer() {
 
     init {
