@@ -5,6 +5,7 @@ import blackjack.dto.Number
 import blackjack.dto.Suit
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertAll
 
 class ParticipantsTest {
 
@@ -20,27 +21,33 @@ class ParticipantsTest {
             Dealer()
         )
         participants.initialCardDealing()
-        assertThat(participants.players.players[0].cards).hasSize(2)
-        assertThat(participants.players.players[1].cards).hasSize(2)
-        assertThat(participants.dealer.cards).hasSize(2)
+        assertAll(
+            { assertThat(participants.players.values[0].cards).hasSize(2) },
+            { assertThat(participants.players.values[1].cards).hasSize(2) },
+            { assertThat(participants.dealer.cards).hasSize(2) }
+        )
     }
 
     @Test
     fun `결과를 구한다`() {
+        // given
         val players = Players(listOf(Player("a"), Player("b")))
         val dealer = Dealer()
         val participants = Participants(players, dealer)
 
-        players.players[0].addCards(listOf(Card(Suit.SPADE, Number.ACE), Card(Suit.DIAMOND, Number.KING)))
-        players.players[1].addCards(listOf(Card(Suit.SPADE, Number.TWO), Card(Suit.DIAMOND, Number.QUEEN)))
+        players.values[0].addCards(listOf(Card(Suit.SPADE, Number.ACE), Card(Suit.DIAMOND, Number.KING)))
+        players.values[1].addCards(listOf(Card(Suit.SPADE, Number.TWO), Card(Suit.DIAMOND, Number.QUEEN)))
         dealer.addCards(listOf(Card(Suit.SPADE, Number.THREE), Card(Suit.DIAMOND, Number.JACK)))
+
+        // when
         participants.makeResult()
 
-        assertThat(players.players[0].result?.winning).isEqualTo(1)
-        assertThat(players.players[0].result?.losing).isEqualTo(0)
-        assertThat(players.players[1].result?.winning).isEqualTo(0)
-        assertThat(players.players[1].result?.losing).isEqualTo(1)
-        assertThat(dealer.result?.winning).isEqualTo(1)
-        assertThat(dealer.result?.losing).isEqualTo(1)
+        // then
+        assertThat(players.values[0].blackJackResult?.winning).isEqualTo(1)
+        assertThat(players.values[0].blackJackResult?.losing).isEqualTo(0)
+        assertThat(players.values[1].blackJackResult?.winning).isEqualTo(0)
+        assertThat(players.values[1].blackJackResult?.losing).isEqualTo(1)
+        assertThat(dealer.blackJackResult?.winning).isEqualTo(1)
+        assertThat(dealer.blackJackResult?.losing).isEqualTo(1)
     }
 }

@@ -2,6 +2,7 @@ package blackjack.model
 
 import blackjack.dto.Card
 import blackjack.dto.Deck
+import blackjack.model.Point.Companion.WINNING_POINT
 
 class Dealer : Player(DEALER_NAME) {
 
@@ -35,8 +36,31 @@ class Dealer : Player(DEALER_NAME) {
         return hitted
     }
 
+    fun whoseWinner(players: Players) {
+        var winning = 0
+        var losing = 0
+        players.values.forEach {
+            val won = whoseWinner(it)
+            if (won) {
+                winning++
+            } else {
+                losing++
+            }
+        }
+
+        makeResult(winning, losing)
+    }
+
+    private fun whoseWinner(player: Player): Boolean {
+        val dealerPoint = getPoints()
+        val playerPoint = player.getPoints()
+
+        player.compare(this)
+        return !(dealerPoint > WINNING_POINT || playerPoint in (dealerPoint + 1)..WINNING_POINT)
+    }
+
     companion object {
-        const val DEALER_NAME = "딜러"
-        const val DEALER_HIT_POINT = 16
+        private const val DEALER_NAME = "딜러"
+        private const val DEALER_HIT_POINT = 16
     }
 }

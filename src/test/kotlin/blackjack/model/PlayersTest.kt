@@ -2,6 +2,7 @@ package blackjack.model
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertAll
 
 class PlayersTest {
 
@@ -16,7 +17,9 @@ class PlayersTest {
         )
         val hitablePlayers = players.hitablePlayers()
 
-        assertThat(hitablePlayers.size).isEqualTo(1)
-        assertThat(hitablePlayers[0].name).isEqualTo("b")
+        assertAll(
+            { assertThat(hitablePlayers).hasSize(1) },
+            { assertThat(hitablePlayers[0].name).isEqualTo("b") }
+        )
     }
 }

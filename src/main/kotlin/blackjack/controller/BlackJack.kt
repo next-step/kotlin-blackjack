@@ -24,7 +24,7 @@ class BlackJack {
     }
 
     private fun Participants.processGame() {
-        this.players.players.forEach {
+        this.players.values.forEach {
             it.processGame(this.dealer)
         }
         View.dealerMoreCardComment(this.dealer.moreCard())

@@ -6,6 +6,7 @@ import blackjack.dto.Suit
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatIllegalArgumentException
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertAll
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.EmptySource
@@ -67,26 +68,29 @@ class PlayerTest {
     fun `결과를 생성하지 않고 호출하면 에러가 발생한다`() {
         assertThatIllegalArgumentException().isThrownBy {
             val player = Player("test")
-            player.result
+            player.blackJackResult
         }
     }
 
     @Test
-    fun `승리하면 결과가 승리이다`() {
-        val player = Player("test")
-        player.makeWinner()
-        assertThat(player.result).isNotNull
-        assertThat(player.result?.winning).isEqualTo(1)
-        assertThat(player.result?.losing).isEqualTo(0)
-    }
+    fun `플래이어와 결과를 비교한다`() {
+        // given
+        val playerA = Player("a")
+        val playerB = Player("b")
+        playerA.addCards(listOf(Card(Suit.SPADE, Number.ACE), Card(Suit.DIAMOND, Number.KING)))
+        playerB.addCards(listOf(Card(Suit.SPADE, Number.TWO), Card(Suit.DIAMOND, Number.QUEEN)))
 
-    @Test
-    fun `패배하면 결과가 패배이다`() {
-        val player = Player("test")
-        player.makeLoser()
-        assertThat(player.result).isNotNull
-        assertThat(player.result?.winning).isEqualTo(0)
-        assertThat(player.result?.losing).isEqualTo(1)
+        // when
+        playerA.compare(playerB)
+        playerB.compare(playerA)
+
+        // then
+        assertAll(
+            { assertThat(playerA.blackJackResult?.winning).isEqualTo(1) },
+            { assertThat(playerA.blackJackResult?.losing).isEqualTo(0) },
+            { assertThat(playerB.blackJackResult?.winning).isEqualTo(0) },
+            { assertThat(playerB.blackJackResult?.losing).isEqualTo(1) }
+        )
     }
 
     companion object {

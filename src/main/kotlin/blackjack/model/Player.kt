@@ -1,7 +1,7 @@
 package blackjack.model
 
+import blackjack.dto.BlackJackResult
 import blackjack.dto.Card
-import blackjack.dto.Result
 import blackjack.model.Point.Companion.WINNING_POINT
 
 open class Player(val name: String) {
@@ -9,7 +9,7 @@ open class Player(val name: String) {
     val cards = mutableListOf<Card>()
     var hit = true
         private set
-    var result: Result? = null
+    var blackJackResult: BlackJackResult? = null
         private set
         get() {
             require(field != null) { "게임이 아직 끝나지 않았습니다" }
@@ -42,15 +42,18 @@ open class Player(val name: String) {
         cards.map { it.number }
     )
 
+    fun compare(player: Player) {
+        val point = getPoints()
+        val playerPoint = player.getPoints()
+
+        blackJackResult = if (playerPoint in (point + 1)..WINNING_POINT || point > WINNING_POINT) {
+            BlackJackResult(point, 0, 1)
+        } else {
+            BlackJackResult(point, 1, 0)
+        }
+    }
+
     fun makeResult(winning: Int, losing: Int) {
-        result = Result(getPoints(), winning, losing)
-    }
-
-    fun makeWinner() {
-        makeResult(1, 0)
-    }
-
-    fun makeLoser() {
-        makeResult(0, 1)
+        blackJackResult = BlackJackResult(getPoints(), winning, losing)
     }
 }
