@@ -39,7 +39,7 @@ class BlackJackController {
         return dealer.result(dealerWinLose) to players.map { it.result(it.match(dealer)) }
     }
 
-    private fun Player.result(winLose: WinLose? = null): BlackJackPlayerResult {
+    private fun Player.result(winLose: WinLose = WinLose.NONE): BlackJackPlayerResult {
         return BlackJackPlayerResult(this, winLose)
     }
 

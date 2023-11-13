@@ -71,6 +71,7 @@ object OutputView {
             WinLose.WIN -> "승"
             WinLose.LOSE -> "패"
             WinLose.DRAW -> "무"
+            else -> throw IllegalArgumentException("승패가 없습니다.")
         }
     }
 

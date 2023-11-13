@@ -1,7 +1,7 @@
 package blackjack.domain
 
 enum class WinLose {
-    WIN, LOSE, DRAW
+    WIN, LOSE, DRAW, NONE
     ;
 
     fun opposite(): WinLose {
@@ -9,6 +9,7 @@ enum class WinLose {
             WIN -> LOSE
             LOSE -> WIN
             DRAW -> DRAW
+            NONE -> NONE
         }
     }
 }
