@@ -1,21 +1,19 @@
 package blackjack.domain
 
-class Player(val name: String) {
+class Player(
+    name: String,
+    cards: Cards = Cards()
+) : BlackJackPlayer(name, cards) {
 
-    val cards: Cards = Cards()
-    val cardSet get() = cards.cards
-
-    fun init(trumpCard: TrumpCard) {
-        repeat(2) {
-            cards.add(trumpCard.draw())
-        }
+    override fun firstOpenCards(): Cards {
+        return Cards(setOf(cards.cards.first(), cards.cards.elementAt(1)))
     }
 
-    fun hit(trumpCard: TrumpCard) {
-        cards.add(trumpCard.draw())
+    override fun isHit(): Boolean {
+        return status == PlayerStatus.HIT
     }
 
-    fun burst(): Boolean {
-        return cards.score().isBurst()
+    fun stand() {
+        status = PlayerStatus.STAND
     }
 }

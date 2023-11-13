@@ -3,8 +3,20 @@ package blackjack.domain
 @JvmInline
 value class Score(val score: Int) {
 
-    fun isBurst(): Boolean {
+    fun burst(): Boolean {
         return score > BLACK_JACK_SCORE
+    }
+
+    operator fun compareTo(score: Score): Int {
+        return this.score.compareTo(score.score)
+    }
+
+    fun winLose(otherScore: Score): WinLose {
+        when {
+            this > otherScore -> return WinLose.WIN
+            this < otherScore -> return WinLose.LOSE
+        }
+        return WinLose.DRAW
     }
 
     companion object {

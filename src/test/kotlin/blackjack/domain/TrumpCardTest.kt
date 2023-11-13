@@ -31,4 +31,20 @@ class TrumpCardTest : BehaviorSpec({
             }
         }
     }
+
+    given("트럼프 카드를 2장을 생성하고") {
+        val cards = Cards(
+            mutableSetOf(
+                Card(Suit.SPADE, Rank.ACE),
+                Card(Suit.HEART, Rank.TWO)
+            )
+        )
+        val trumpCard = TrumpCard(cards)
+        `when`("초기 카드를 뽑으면") {
+            val card = trumpCard.drawFirstCards()
+            then("남은 트럼프 카드는 0장이다.") {
+                trumpCard.size shouldBe 0
+            }
+        }
+    }
 })

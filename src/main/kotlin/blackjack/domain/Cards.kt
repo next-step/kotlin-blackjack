@@ -3,15 +3,19 @@ package blackjack.domain
 import blackjack.domain.Score.Companion.ACE_BONUS
 import blackjack.domain.Score.Companion.BLACK_JACK_SCORE
 
-@JvmInline
-value class Cards(val cards: MutableSet<Card> = mutableSetOf()) {
+class Cards(cards: Set<Card> = emptySet()) {
+
+    private val _cards: MutableSet<Card> = cards.toMutableSet()
+    val cards: Set<Card> get() = _cards.toSet()
+
+    constructor(other: Cards) : this(other.cards.map { it.copy() }.toSet())
 
     fun add(card: Card) {
-        cards.add(card)
+        _cards.add(card)
     }
 
     fun remove(card: Card) {
-        cards.remove(card)
+        _cards.remove(card)
     }
 
     fun score(): Score {
