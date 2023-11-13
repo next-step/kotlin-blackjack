@@ -4,7 +4,7 @@ import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.ExpectSpec
 import io.kotest.matchers.shouldBe
 
-class DslTest: ExpectSpec({
+class DslTest : ExpectSpec({
 
     expect("사용자 속성을 입력하면 객체를 생성한다.") {
         val newPerson = introduce {
