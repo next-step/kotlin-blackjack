@@ -3,10 +3,16 @@ package blackjack.domain
 data class RandomDeck(
     val cards: List<Card> = listOf()
 ) : Deck {
-    override fun hit(): Card {
-        return cards.shuffled()
-            .first()
+    override fun init(): List<Card> {
+        return listOf(getNewCard(), getNewCard())
     }
+
+    override fun hit(): Card {
+        return getNewCard()
+    }
+
+    private fun getNewCard() = cards.shuffled()
+        .first()
 
     companion object {
         fun from(): Deck {
