@@ -1,7 +1,7 @@
 package blackjack.domain
 
-data class RandomDeck(
-    val cards: List<Card> = listOf()
+class RandomDeck private constructor(
+    private val cards: List<Card> = listOf()
 ) : Deck {
     override fun init(): List<Card> {
         return listOf(getNewCard(), getNewCard())
