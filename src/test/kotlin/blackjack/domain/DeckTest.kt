@@ -32,4 +32,16 @@ class DeckTest : ExpectSpec({
         deck.draw()
         deck.size shouldBe 51
     }
+
+    expect("카드를 모두 소진하면 예외를 발생한다.") {
+        val deck = deck(FakeShuffleStrategy) {
+            repeat(52) { +card }
+        }
+
+        repeat(52) { deck.draw() }
+
+        shouldThrow<IllegalStateException> {
+            deck.draw()
+        }
+    }
 })

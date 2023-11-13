@@ -6,5 +6,12 @@ class Dealer(private val deck: Deck) {
         deck.shuffle()
     }
 
-    fun dealCard(): Card = deck.draw()
+    fun dealCard(): Card {
+        if (deck.isEmpty()) {
+            deck.reset()
+            deck.shuffle()
+        }
+
+        return deck.draw()
+    }
 }
