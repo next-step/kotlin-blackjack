@@ -20,3 +20,6 @@
 - [x] InputView 에서 입력을 처리한다.
 - [x] 이름을 입력하면, 입력된 이름의 수만큼 카드를 분배한다 (예로 3명 입력, 각각 한장씩 카드를 총 3장 분배)
 - [x] OutputView 에서 출력을 처리한다.
+
+## 질문 목록
+- InputView 안의 private 함수인 checkParticipants 함수를 테스트 하느라 private를 제거하는데, 더 좋은 방법이 있을까?
