@@ -12,4 +12,20 @@ data class Hand(
         val newCards = cards + newCard
         return copy(cards = newCards)
     }
+
+    fun getSum(): Int {
+        val sum = cards.sumOf {
+            it.num.value
+        }
+        if (containsAce() && sum <= 11) {
+            return sum + 10
+        }
+        return sum
+    }
+
+    private fun containsAce(): Boolean {
+        return cards.any {
+            it.num == CardNumber.ACE
+        }
+    }
 }
