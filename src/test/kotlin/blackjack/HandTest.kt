@@ -13,4 +13,16 @@ class HandTest : BehaviorSpec({
             }
         }
     }
+
+    Given("패가 생성된 후") {
+        val hand = Hand()
+        When("히트를 하면") {
+            val newHand = hand.hit(FixedDeck())
+            Then("카드 1장을 새로 가진다.") {
+                newHand.cards shouldContainExactly listOf(
+                    Card(CardSuit.HEART, CardNumber.TWO)
+                )
+            }
+        }
+    }
 })
