@@ -37,8 +37,8 @@ class PersonBuilder {
 
     fun build() = Person(name, company, skills, languages)
 
-    infix fun String.level(level: Int) {
-        languages[this] = level
+    infix fun String.level(languageLevel: Int) {
+        languages[this] = languageLevel
     }
 
     companion object {
