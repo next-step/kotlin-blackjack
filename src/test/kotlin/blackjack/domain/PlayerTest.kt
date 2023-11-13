@@ -1,5 +1,6 @@
 package blackjack.domain
 
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.data.forAll
 import io.kotest.data.row
@@ -40,6 +41,22 @@ class PlayerTest : BehaviorSpec({
                     ),
                 ) { hand, expected ->
                     Player("yeongun", hand).canHit() shouldBe expected
+                }
+            }
+        }
+    }
+
+    Given("공백이거나 null인 이름이 주어지면") {
+        When("플레이어는") {
+            Then("에러를 발생한다.") {
+                forAll(
+                    row(""),
+                    row(" "),
+                    row("    "),
+                ) { name ->
+                    shouldThrow<IllegalArgumentException> {
+                        Player(name)
+                    }
                 }
             }
         }
