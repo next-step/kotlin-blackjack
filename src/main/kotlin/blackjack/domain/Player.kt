@@ -3,7 +3,7 @@ package blackjack.domain
 class Player(
     override val name: String,
     override val cards: Cards = Cards(),
-    val betMoney: Money = Money()
+    private val betMoney: Money = Money()
 ) : BlackJackPlayer() {
 
     init {
@@ -22,6 +22,10 @@ class Player(
 
     fun stand() {
         status = PlayerStatus.STAND
+    }
+
+    fun winLoseMoney(winLose: WinLose): Money {
+        return betMoney.calculateWinLoseMoney(winLose, isBlackJack())
     }
 
     companion object {

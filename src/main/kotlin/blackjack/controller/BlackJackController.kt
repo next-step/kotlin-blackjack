@@ -3,6 +3,7 @@ package blackjack.controller
 import blackjack.domain.BlackJackDealerResult
 import blackjack.domain.BlackJackPlayerResult
 import blackjack.domain.Dealer
+import blackjack.domain.Money
 import blackjack.domain.Player
 import blackjack.domain.TrumpCard
 import blackjack.domain.WinLose
@@ -32,18 +33,18 @@ class BlackJackController {
     ): Pair<BlackJackDealerResult, List<BlackJackPlayerResult>> {
         players.draw(trumpCard)
         dealer.draw(trumpCard)
-        val dealerWinLose = players.map { it.match(dealer).opposite() }
-            .groupingBy { it }
-            .eachCount()
+        val result = players.map { it.match(dealer) to it.winLoseMoney(it.match(dealer)) }
+            .groupBy { it.first }
+            .mapValues { Money(it.value.sumOf { money -> money.second.amount }) }
 
-        return dealer.result(dealerWinLose) to players.map { it.result(it.match(dealer)) }
+        return dealer.result(result) to players.map { it.result(it.match(dealer)) }
     }
 
     private fun Player.result(winLose: WinLose = WinLose.NONE): BlackJackPlayerResult {
         return BlackJackPlayerResult(this, winLose)
     }
 
-    private fun Dealer.result(winLoseMap: Map<WinLose, Int> = mapOf()): BlackJackDealerResult {
+    private fun Dealer.result(winLoseMap: Map<WinLose, Money> = mapOf()): BlackJackDealerResult {
         return BlackJackDealerResult(this, winLoseMap)
     }
 
@@ -55,6 +56,7 @@ class BlackJackController {
             }
             if (it.isBurst()) {
                 OutputView.printPlayerBurst(it.name)
+                return@forEach
             }
             it.stand()
         }

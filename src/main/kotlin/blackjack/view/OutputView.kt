@@ -4,7 +4,6 @@ import blackjack.domain.BlackJackDealerResult
 import blackjack.domain.BlackJackPlayerResult
 import blackjack.domain.Cards
 import blackjack.domain.Suit
-import blackjack.domain.WinLose
 
 object OutputView {
 
@@ -35,21 +34,14 @@ object OutputView {
         printBlackjackGamePlayerResult(playerResults)
 
         println(WIN_LOSE_RESULT)
-        println("${dealerResult.name}: ${dealerWinLose(dealerResult)}")
+        println("${dealerResult.name}: ${dealerResult.winLoseTotalMoney().amount}")
         playerResults.forEach {
-            println("${it.name}: ${it.winLose.name()}")
+            println("${it.name}: ${it.winLoseMoney.amount}")
         }
     }
 
     fun printDealerDraw() {
         println(PRINT_DEALER_DRAW)
-    }
-
-    private fun dealerWinLose(dealerResult: BlackJackDealerResult): String {
-        return WinLose.values().filter { it != WinLose.NONE }
-            .joinToString(" ") {
-                "${dealerResult.winLoseCountBy(it)}${it.name()}"
-            }
     }
 
     private fun printBlackjackGamePlayerResult(result: List<BlackJackPlayerResult>) {
@@ -65,16 +57,7 @@ object OutputView {
     private const val PLAYER_BURST = "는 21점을 초과했습니다."
     private const val PRINT_INIT_CARD = "에게 2장의 나누었습니다."
     private const val PRINT_DEALER_DRAW = "딜러는 16이하라 한장의 카드를 더 받았습니다."
-    private const val WIN_LOSE_RESULT = "## 최종 승패"
-
-    private fun WinLose.name(): String {
-        return when (this) {
-            WinLose.WIN -> "승"
-            WinLose.LOSE -> "패"
-            WinLose.DRAW -> "무"
-            else -> throw IllegalArgumentException("승패가 없습니다.")
-        }
-    }
+    private const val WIN_LOSE_RESULT = "## 최종 수익"
 
     private fun resultDisplay(name: String, cards: Cards, score: Int): String {
         return "$name 카드: ${cardDisplay(cards)} 결과: $score"

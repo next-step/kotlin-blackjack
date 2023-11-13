@@ -13,7 +13,7 @@ class MoneyTest : BehaviorSpec({
         }
     }
 
-    given("베팅금액이 1000원이 주어진다면") {
+    given("금액이 1000원이 주어진다면") {
         val money = Money(1000)
         When("승패가 승리일 때 수익 계산시") {
             val result = money.calculateWinLoseMoney(WinLose.WIN)
@@ -30,12 +30,22 @@ class MoneyTest : BehaviorSpec({
         }
     }
 
-    given("베팅금액이 1000원이 주어진다면") {
+    given("금액이 1000원이 주어진다면") {
         val money = Money(1000)
         When("승패가 승리하고, 블랙잭 일시에") {
             val result = money.calculateWinLoseMoney(WinLose.WIN, true)
             then("수익은 1500원이다.") {
                 result.amount shouldBe 1500
+            }
+        }
+    }
+
+    given("금액이 1000원이 주어졌을 때") {
+        val money = Money(1000)
+        When("반대값을 계산하면") {
+            val result = money.opposite()
+            then("반대값은 -1000원이다.") {
+                result shouldBe Money(-1000)
             }
         }
     }

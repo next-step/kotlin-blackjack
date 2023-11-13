@@ -12,13 +12,13 @@ abstract class BlackJackPlayer {
 
     fun drawBy(card: Card) {
         cards.add(card)
-        if (isBurst()) {
+        if (cards.score() > Score(BLACK_JACK_SCORE)) {
             burst()
         }
     }
 
     fun isBurst(): Boolean {
-        return cards.score().burst()
+        return status == PlayerStatus.BURST
     }
 
     fun isBlackJack(): Boolean {
@@ -36,7 +36,6 @@ abstract class BlackJackPlayer {
     fun match(other: BlackJackPlayer): WinLose {
         return when {
             isBlackJack() && other.isBlackJack() -> WinLose.DRAW
-            isBurst() && other.isBurst() -> WinLose.DRAW
             isBlackJack() || other.isBurst() -> WinLose.WIN
             isBurst() || other.isBlackJack() -> WinLose.LOSE
             else -> cards.score().compareScore(other.cards.score())
