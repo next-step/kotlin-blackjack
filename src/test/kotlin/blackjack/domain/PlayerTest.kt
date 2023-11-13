@@ -9,7 +9,7 @@ class PlayerTest : BehaviorSpec({
 
     given("ACE, JACK 카드룰 순서대로 발급하는 덱이 주어졌을 때") {
         val nickname = Nickname("플레이어")
-        val getDeck: () -> Deck = { TestDeckGenerator.generate(Symbol.SPADE of Rank.ACE, Symbol.SPADE of Rank.JACK) }
+        val getDeck: () -> Deck = { TestDeckGenerator.generate(Symbol.SPADE withRank Rank.ACE, Symbol.SPADE withRank Rank.JACK) }
 
         `when`("플레이어가 카드를 한번 발급하면") {
             val player = Player(nickname, Dealer(getDeck()))
@@ -44,7 +44,7 @@ class PlayerTest : BehaviorSpec({
 
     given("NINE, TEN 카드룰 순서대로 발급하는 덱이 주어졌을 때") {
         val nickname = Nickname("플레이어")
-        val getDeck: () -> Deck = { TestDeckGenerator.generate(Symbol.SPADE of Rank.NINE, Symbol.SPADE of Rank.TEN) }
+        val getDeck: () -> Deck = { TestDeckGenerator.generate(Symbol.SPADE withRank Rank.NINE, Symbol.SPADE withRank Rank.TEN) }
 
         `when`("플레이어가 카드를 한번 발급하면") {
             val player = Player(nickname, Dealer(getDeck()))
