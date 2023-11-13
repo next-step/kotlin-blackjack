@@ -46,9 +46,10 @@ object OutputView {
     }
 
     private fun dealerWinLose(dealerResult: BlackJackDealerResult): String {
-        return WinLose.values().joinToString(" ") {
-            "${dealerResult.winLoseCountBy(it)}${it.name()}"
-        }
+        return WinLose.values().filter { it != WinLose.NONE }
+            .joinToString(" ") {
+                "${dealerResult.winLoseCountBy(it)}${it.name()}"
+            }
     }
 
     private fun printBlackjackGamePlayerResult(result: List<BlackJackPlayerResult>) {
