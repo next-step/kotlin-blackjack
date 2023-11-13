@@ -34,21 +34,13 @@ abstract class BlackJackPlayer {
     }
 
     fun match(other: BlackJackPlayer): WinLose {
-        if (isBlackJack() && other.isBlackJack()) {
-            return WinLose.DRAW
+        return when {
+            isBlackJack() && other.isBlackJack() -> WinLose.DRAW
+            isBurst() && other.isBurst() -> WinLose.DRAW
+            isBlackJack() || other.isBurst() -> WinLose.WIN
+            isBurst() || other.isBlackJack() -> WinLose.LOSE
+            else -> cards.score().compareScore(other.cards.score())
         }
-        if (isBurst() && other.isBurst()) {
-            return WinLose.DRAW
-        }
-
-        if (isBlackJack() || other.isBurst()) {
-            return WinLose.WIN
-        }
-
-        if (isBurst() || other.isBlackJack()) {
-            return WinLose.LOSE
-        }
-        return cards.score().winLose(other.cards.score())
     }
 
     abstract fun firstOpenCards(): Cards
