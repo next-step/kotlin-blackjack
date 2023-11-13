@@ -30,11 +30,27 @@ class HandTest : BehaviorSpec({
     }
 
     Given("패는") {
-        val hand = Hand(listOf(Card(CardSuit.SPADE, CardNumber.ACE), Card(CardSuit.CLUB, CardNumber.TEN)))
         When("getSum() 메서드를 통해") {
-            val sum = hand.getSum()
             Then("자신의 합을 반환한다.") {
-                sum shouldBe 21
+                forAll(
+                    row(Hand(listOf(Card(CardSuit.SPADE, CardNumber.ACE), Card(CardSuit.CLUB, CardNumber.ACE))), 12),
+                    row(
+                        Hand(listOf(Card(CardSuit.SPADE, CardNumber.ACE), Card(CardSuit.CLUB, CardNumber.ACE), Card(CardSuit.CLUB, CardNumber.TEN))),
+                        12
+                    ),
+                    row(Hand(listOf(Card(CardSuit.SPADE, CardNumber.TEN), Card(CardSuit.CLUB, CardNumber.TEN))), 20),
+                    row(Hand(listOf(Card(CardSuit.SPADE, CardNumber.ACE), Card(CardSuit.CLUB, CardNumber.TEN))), 21),
+                    row(
+                        Hand(listOf(Card(CardSuit.SPADE, CardNumber.TEN), Card(CardSuit.CLUB, CardNumber.TEN), Card(CardSuit.HEART, CardNumber.ACE))),
+                        21
+                    ),
+                    row(
+                        Hand(listOf(Card(CardSuit.SPADE, CardNumber.TEN), Card(CardSuit.CLUB, CardNumber.TEN), Card(CardSuit.HEART, CardNumber.TWO))),
+                        22
+                    ),
+                ) { hand, expected ->
+                    hand.getSum() shouldBe expected
+                }
             }
         }
     }
