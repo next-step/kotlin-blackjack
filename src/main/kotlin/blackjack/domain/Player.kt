@@ -12,7 +12,7 @@ class Player(
     }
 
     override fun firstOpenCards(): Cards {
-        return Cards(setOf(cards.cards.first(), cards.cards.elementAt(1)))
+        return cards.take(FIRST_OPEN_COUNT)
     }
 
     override fun isHit(): Boolean {
@@ -21,5 +21,9 @@ class Player(
 
     fun stand() {
         status = PlayerStatus.STAND
+    }
+
+    companion object {
+        private const val FIRST_OPEN_COUNT = 2
     }
 }

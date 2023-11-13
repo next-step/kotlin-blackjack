@@ -31,6 +31,20 @@ class CardsTest : BehaviorSpec({
             }
         }
     }
+
+    given("카드 3장이 주어졌을 때") {
+        val cards = Cards(
+            Suit.SPADE to Rank.ACE,
+            Suit.HEART to Rank.NINE,
+            Suit.DIAMOND to Rank.KING
+        )
+        `when`("2장의 카드를 받아온다면") {
+            val result = cards.take(2)
+            then("받아온 카드의 갯수는 2이다.") {
+                result.cards.size shouldBe 2
+            }
+        }
+    }
 })
 
 fun Cards(vararg cards: Pair<Suit, Rank>): Cards {
