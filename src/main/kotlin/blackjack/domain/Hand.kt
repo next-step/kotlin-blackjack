@@ -13,6 +13,10 @@ data class Hand(
         return copy(cards = newCards)
     }
 
+    fun canHit(): Boolean {
+        return getSum() < BLACKJACK_NUMBER
+    }
+
     fun getSum(): Int {
         val sum = cards.sumOf {
             it.num.value
@@ -27,5 +31,9 @@ data class Hand(
         return cards.any {
             it.num == CardNumber.ACE
         }
+    }
+
+    companion object {
+        private const val BLACKJACK_NUMBER = 21
     }
 }

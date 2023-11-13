@@ -1,6 +1,8 @@
 package blackjack.domain
 
 import io.kotest.core.spec.style.BehaviorSpec
+import io.kotest.data.forAll
+import io.kotest.data.row
 import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.shouldBe
 
@@ -33,6 +35,23 @@ class HandTest : BehaviorSpec({
             val sum = hand.getSum()
             Then("자신의 합을 반환한다.") {
                 sum shouldBe 21
+            }
+        }
+    }
+
+    Given("패가 주어지면") {
+        When("추가로 Hit 할 수 있는지 없는지를") {
+            Then("판단하여 반환한다.") {
+                forAll(
+                    row(Hand(listOf(Card(CardSuit.SPADE, CardNumber.TEN), Card(CardSuit.CLUB, CardNumber.TEN))), true),
+                    row(Hand(listOf(Card(CardSuit.SPADE, CardNumber.ACE), Card(CardSuit.CLUB, CardNumber.TEN))), false),
+                    row(
+                        Hand(listOf(Card(CardSuit.SPADE, CardNumber.TEN), Card(CardSuit.CLUB, CardNumber.TEN), Card(CardSuit.HEART, CardNumber.TWO))),
+                        false
+                    ),
+                ) { hand, expected ->
+                    hand.canHit() shouldBe expected
+                }
             }
         }
     }
