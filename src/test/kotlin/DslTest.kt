@@ -34,7 +34,6 @@ class DslTest {
             )
         }
     }
-
 }
 
 fun introduce(block: PersonBuilder.() -> Unit): Person {

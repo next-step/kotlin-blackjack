@@ -1,5 +1,6 @@
 package blackjack.model
 
 data class Card(
-    val name: String,
+    val type: CardType,
+    val value: CardInfo,
 )

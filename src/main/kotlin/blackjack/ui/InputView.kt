@@ -25,5 +25,4 @@ object InputView {
             }
         } ?: throw IllegalArgumentException("카드 받기 여부는 null을 허용하지 않습니다.")
     }
-
 }
