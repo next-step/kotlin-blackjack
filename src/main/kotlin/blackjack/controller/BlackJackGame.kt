@@ -15,6 +15,7 @@ class BlackJackGame(
 
     init {
         makeCardsPool()
+        allocateDefaultCards()
     }
 
     private fun makeCardsPool() {
