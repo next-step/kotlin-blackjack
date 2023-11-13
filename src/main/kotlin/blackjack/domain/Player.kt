@@ -7,4 +7,8 @@ data class Player(
     fun canHit(): Boolean {
         return hand.canHit()
     }
+
+    fun hit(deck: Deck): Player {
+        return copy(hand = hand.hit(deck))
+    }
 }
