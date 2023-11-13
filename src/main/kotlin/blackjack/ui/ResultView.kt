@@ -22,7 +22,6 @@ object ResultView {
         println()
     }
 
-
     fun printResult(players: Players) {
         println()
         for (player in players.players) {
