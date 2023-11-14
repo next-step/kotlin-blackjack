@@ -24,17 +24,16 @@ class DslTest {
             name shouldBe "greentea.latte"
             company shouldBe "kakao"
             softSkills shouldContainInOrder listOf(
-                "A passion for problem solving",
-                "Good communication skills"
+                Skill.SoftSkill("A passion for problem solving"),
+                Skill.SoftSkill("Good communication skills"),
             )
-            hardSkills shouldContain "Kotlin"
+            hardSkills shouldContain Skill.HardSkill("Kotlin")
             languageLevels shouldContainInOrder listOf(
                 "Korean" to 5,
                 "English" to 3,
             )
         }
     }
-
 }
 
 fun introduce(block: PersonBuilder.() -> Unit): Person {
@@ -45,8 +44,8 @@ class PersonBuilder {
     private lateinit var name: String
     private lateinit var company: String
 
-    private val softSkills = mutableListOf<String>()
-    private val hardSkills = mutableListOf<String>()
+    private val softSkills = mutableListOf<Skill.SoftSkill>()
+    private val hardSkills = mutableListOf<Skill.HardSkill>()
 
     private val languageLevels = mutableListOf<Pair<String, Int>>()
 
@@ -63,11 +62,11 @@ class PersonBuilder {
     }
 
     fun soft(value: String) {
-        softSkills.add(value)
+        softSkills.add(Skill.SoftSkill(value))
     }
 
     fun hard(value: String) {
-        hardSkills.add(value)
+        hardSkills.add(Skill.HardSkill(value))
     }
 
     fun languages(block: PersonBuilder.() -> Unit): PersonBuilder {
@@ -92,7 +91,12 @@ class PersonBuilder {
 data class Person(
     val name: String,
     val company: String?,
-    val softSkills: List<String>,
-    val hardSkills: List<String>,
+    val softSkills: List<Skill.SoftSkill>,
+    val hardSkills: List<Skill.HardSkill>,
     val languageLevels: List<Pair<String, Int>>,
 )
+
+sealed interface Skill {
+    data class SoftSkill(val name: String) : Skill
+    data class HardSkill(val name: String) : Skill
+}
