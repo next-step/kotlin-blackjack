@@ -59,6 +59,28 @@ class DslTest {
         person.skill.getSoftSkillSize() shouldBe 2
         person.skill.getHardSkillSize() shouldBe 1
     }
+
+    @Test
+    fun languages() {
+        val person = introduce {
+            name("홍길동")
+            company("활빈당")
+            skills {
+                soft("A passion for problem solving")
+                soft("Good communication skills")
+                hard("Kotlin")
+            }
+            languages {
+                "Korean" level 5
+                "English" level 3
+            }
+        }
+
+        person.languages.getLanguageLevel("Korean") shouldBe 5
+        person.languages.getLanguageLevel("English") shouldBe 3
+        person.languages.getLanguageLevel("Japanese") shouldBe null
+    }
+
     @Test
     fun pair() {
         val pair1 = Pair(1, "one")
