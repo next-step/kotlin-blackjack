@@ -6,7 +6,7 @@ fun introduce(block: PersonBuilder.() -> Unit): Person =
         .build()
 
 class PersonBuilder {
-    private lateinit var name: String
+    private var name: String = ""
     private var company: String? = null
     private var skillList: List<Skill> = listOf()
     private var languages: Map<String, Int> = mapOf()
@@ -49,5 +49,8 @@ class PersonBuilder {
         languages = LanguageMapBuilder().apply(block).build()
     }
 
-    fun build(): Person = Person(name, company, skillList, languages)
+    fun build(): Person {
+        require(name.isNotEmpty()) { "Please initialize person's name." }
+        return Person(name, company, skillList, languages)
+    }
 }
