@@ -1,6 +1,4 @@
-import blackjack.domain.CardGenerator
-import blackjack.entity.Participant
-import blackjack.entity.toParticipants
+import blackjack.entity.participantsFromNames
 import blackjack.ui.InputView
 import blackjack.ui.OutputView
 
@@ -11,10 +9,6 @@ fun main() {
     OutputView.printParticipantsName(participantName)
 
     // PHASE 2
-    val participants = participantName.split(", ").map { name ->
-        Participant(name = name, cards = CardGenerator.generateCard(INITIAL_COUNT_OF_CARD))
-    }.toParticipants()
+    val participants = participantName.participantsFromNames()
     OutputView.printParticipantsCard(participants)
 }
-
-private const val INITIAL_COUNT_OF_CARD = 2
