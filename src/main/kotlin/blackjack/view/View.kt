@@ -1,5 +1,7 @@
 package blackjack.view
 
+import blackjack.model.Dealer
+import blackjack.model.Participants
 import blackjack.model.Player
 import blackjack.model.Players
 
@@ -15,15 +17,33 @@ object View {
     }
 
     fun initialCardDealingComment(players: Players) {
-        println("${players.players.joinToString { it.name }}에게 2장의 나누었습니다.")
+        println("\n딜러와 ${players.values.joinToString { it.name }}에게 2장의 나누었습니다.")
     }
 
-    fun showCards(players: Players) {
-        players.players.forEach { showCard(it) }
+    fun dealerMoreCardComment(hitted: Boolean) {
+        if (hitted) {
+            println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.\n")
+        } else {
+            println("\n딜러는 17이상이라 카드를 받지 않았습니다.\n")
+        }
+    }
+
+    private fun showCards(players: Players) {
+        players.values.forEach { showCard(it) }
     }
 
     fun showCard(player: Player) {
         println("${player.name}카드: ${player.cards.joinToString { it.cardName() }}")
+    }
+
+    private fun showDealerOneCard(dealer: Dealer) {
+        println("${dealer.name}: ${dealer.cards.first().cardName()}")
+    }
+
+    fun showCards(participants: Participants) {
+        showDealerOneCard(participants.dealer)
+        showCards(participants.players)
+        println()
     }
 
     fun hitOrStand(player: Player): Boolean {
@@ -31,12 +51,32 @@ object View {
         return yesOrNo()
     }
 
-    fun showResults(players: Players) {
-        players.players.forEach { showResult(it) }
+    fun showResults(participants: Participants) {
+        showResult(participants.dealer)
+        showResults(participants.players)
+        println("\n## 최종 승패")
+        showDealerWinAndLose(participants.dealer)
+        showWinAndLose(participants.players)
+    }
+
+    private fun showResults(players: Players) {
+        players.values.forEach { showResult(it) }
     }
 
     private fun showResult(player: Player) {
-        println("${player.name}카드: ${player.cards.joinToString { it.cardName() }} - 결과: ${player.getPoints()}")
+        println("${player.name}카드: ${player.cards.joinToString { it.cardName() }} - 결과: ${player.blackJackResult?.point}")
+    }
+
+    private fun showDealerWinAndLose(dealer: Dealer) {
+        println("${dealer.name}: ${dealer.blackJackResult?.winning}승 ${dealer.blackJackResult?.losing}패")
+    }
+
+    private fun showWinAndLose(players: Players) {
+        players.values.forEach { showWinAndLose(it) }
+    }
+
+    private fun showWinAndLose(player: Player) {
+        println("${player.name}: ${if ((player.blackJackResult?.winning ?: 0) > 0) "승" else "패"}")
     }
 
     private fun yesOrNo(): Boolean = when (readln()) {

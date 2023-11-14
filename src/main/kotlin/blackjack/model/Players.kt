@@ -1,15 +1,13 @@
 package blackjack.model
 
-class Players(val players: List<Player>) {
-
-    fun noMoreHit(): Boolean = !(players.any { it.hit })
+class Players(val values: List<Player>) {
 
     fun initialCardDealing(dealer: Dealer) {
-        players.forEach {
+        values.forEach {
             it.addCards(dealer.dealingTwoCards())
         }
     }
 
     fun hitablePlayers(): List<Player> =
-        players.filter { it.hit }
+        values.filter { it.hit }
 }
