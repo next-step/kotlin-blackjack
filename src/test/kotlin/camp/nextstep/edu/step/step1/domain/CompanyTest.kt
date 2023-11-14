@@ -16,7 +16,7 @@ class CompanyTest : BehaviorSpec({
             }
 
             Then("요청한 이름의 회사가 생성된다") {
-                company.getName() shouldBe "NEXTSTEP"
+                company.name shouldBe "NEXTSTEP"
             }
         }
     }

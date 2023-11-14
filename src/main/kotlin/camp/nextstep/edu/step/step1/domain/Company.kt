@@ -2,7 +2,7 @@ package camp.nextstep.edu.step.step1.domain
 
 @JvmInline
 value class Company(
-    private val name: String
+    val name: String
 ) {
 
     init {

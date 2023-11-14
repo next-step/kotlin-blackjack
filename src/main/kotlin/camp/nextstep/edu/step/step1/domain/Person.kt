@@ -11,7 +11,7 @@ data class Person(
     }
 
     fun getCompanyName(): String {
-        return company.getName()
+        return company.name
     }
 
 }
