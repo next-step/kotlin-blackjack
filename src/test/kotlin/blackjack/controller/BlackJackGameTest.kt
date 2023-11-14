@@ -33,7 +33,7 @@ class BlackJackGameTest {
     }
 
     @Test
-    fun `카드를 더 뽑을 수 있는지 확인하는 용도의로 현재 가지고 있는 카드의 합을 계산`() {
+    fun `카드를 더 뽑을 수 있는지 참여자인지 확인하는 용도로 현재 가지고 있는 카드의 합을 계산`() {
         val participantScore20 = Participant(
             "Paul",
             mutableListOf(
