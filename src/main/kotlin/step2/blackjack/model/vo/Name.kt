@@ -15,6 +15,8 @@ value class Name(val name: String) {
         }
     }
 
+    override fun toString(): String = name
+
     companion object {
         private const val MIN_LENGTH = 3
         private const val MAX_LENGTH = 20

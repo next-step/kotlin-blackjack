@@ -3,6 +3,7 @@ package step2.blackjack
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
+import step2.blackjack.domain.CardCount.getMinTotalCount
 import step2.blackjack.model.Card
 import step2.blackjack.model.User
 import step2.blackjack.model.UserList
@@ -77,7 +78,7 @@ class BlackjackTest: FunSpec({
         val user = User.from("pobi")
         user.cardList + Card.from("하트", "K")
         user.cardList + Card.from("스페이드", "4")
-        user.cardList.isReceiveCheck(21) shouldBe true
+        (user.cardList.getMinTotalCount() < 21) shouldBe true
     }
 
     test("참가자 [pobi]가 [K하트, 4스페이드, 6클로버]를 가지고 있을 경우 카드를 더 받을 수 있다.") {
@@ -85,7 +86,7 @@ class BlackjackTest: FunSpec({
         user.cardList + Card.from("하트", "K")
         user.cardList + Card.from("스페이드", "4")
         user.cardList + Card.from("클로버", "6")
-        user.cardList.isReceiveCheck(21) shouldBe true
+        (user.cardList.getMinTotalCount() < 21) shouldBe true
     }
 
     test("참가자 [pobi]가 [K하트, A스페이드, 6클로버]를 가지고 있을 경우 카드를 더 받을 수 있다.") {
@@ -93,7 +94,7 @@ class BlackjackTest: FunSpec({
         user.cardList + Card.from("하트", "K")
         user.cardList + Card.from("스페이드", "A")
         user.cardList + Card.from("클로버", "6")
-        user.cardList.isReceiveCheck(21) shouldBe true
+        (user.cardList.getMinTotalCount() < 21) shouldBe true
     }
 
     test("참가자 [pobi]가 [K하트, A스페이드, 6클로버, A하트]를 가지고 있을 경우 카드를 더 받을 수 있다.") {
@@ -102,7 +103,7 @@ class BlackjackTest: FunSpec({
         user.cardList + Card.from("스페이드", "A")
         user.cardList + Card.from("클로버", "6")
         user.cardList + Card.from("하트", "A")
-        user.cardList.isReceiveCheck(21) shouldBe true
+        (user.cardList.getMinTotalCount() < 21) shouldBe true
     }
 
     test("참가자 [pobi]가 [K하트, 4스페이드, 7클로버]를 가지고 있을 경우 카드를 더 받을 수 없다.") {
@@ -110,7 +111,7 @@ class BlackjackTest: FunSpec({
         user.cardList + Card.from("하트", "K")
         user.cardList + Card.from("스페이드", "4")
         user.cardList + Card.from("클로버", "7")
-        user.cardList.isReceiveCheck(21) shouldBe false
+        (user.cardList.getMinTotalCount() < 21) shouldBe false
     }
 
     test("참가자 [pobi]가 [K하트, 4스페이드, 8클로버]를 가지고 있을 경우 카드를 더 받을 수 없다.") {
@@ -118,6 +119,6 @@ class BlackjackTest: FunSpec({
         user.cardList + Card.from("하트", "K")
         user.cardList + Card.from("스페이드", "4")
         user.cardList + Card.from("클로버", "8")
-        user.cardList.isReceiveCheck(21) shouldBe false
+        (user.cardList.getMinTotalCount() < 21) shouldBe false
     }
 })
