@@ -26,10 +26,14 @@ class BlackJackGame(
         }
     }
 
-    fun allocateDefaultCards() {
+    private fun allocateDefaultCards() {
         participants.forEach {
             it.cards.addAll(pickRandomCards(DEFAULT_CARD_COUNTS))
         }
+    }
+
+    fun allocateOneCard(participant: Participant) {
+        participant.cards.addAll(pickRandomCards(count = 1))
     }
 
     private fun pickRandomCards(count: Int): List<Card> {
