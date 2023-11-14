@@ -2,7 +2,11 @@ package dsl
 
 data class Languages(
     val value: List<Language>,
-)
+) {
+    companion object {
+        fun empty(): Languages = Languages(emptyList())
+    }
+}
 
 class LanguageBuilder {
     private val languages: MutableList<Language> = mutableListOf()
