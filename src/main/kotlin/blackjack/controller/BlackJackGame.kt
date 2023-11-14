@@ -18,6 +18,20 @@ class BlackJackGame(
         allocateDefaultCards()
     }
 
+    fun allocateCards() {
+        participants.forEach { participant ->
+            while (participant.isPossibleToTakeMoreCard()) {
+                if (InputView.askCardPicking(participant.name)) {
+                    allocateOneCard(participant)
+                    ResultView.showStatusOfParticipant(participant)
+                } else {
+                    ResultView.showStatusOfParticipant(participant)
+                    break
+                }
+            }
+        }
+    }
+
     fun isPossibleToAllocation() = cardsPool.isNotEmpty()
 
     private fun makeCardsPool() {
@@ -59,7 +73,5 @@ fun main() {
 
     ResultView.showInitialStatusOfParticipants(participants)
 
-    blackJackGame.participants.forEach {
-        val isAllocated = InputView.askCardPicking(it.name)
-    }
+    blackJackGame.allocateCards()
 }

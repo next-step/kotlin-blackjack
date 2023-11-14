@@ -18,6 +18,11 @@ object ResultView {
         }
     }
 
+    fun showStatusOfParticipant(participant: Participant) {
+        print("${participant.name}카드 : ")
+        showCards(participant)
+    }
+
     private fun showCards(participant: Participant) {
         participant.cards.forEach {
             val postfix = if (it == participant.cards.last()) "\n" else ", "
