@@ -10,6 +10,7 @@ object OutputView {
     }
 
     fun printParticipantsName(names: String) {
+        println()
         val divideCardString = PRINT_DIVIDE_CARD_TO_PARTICIPANTS.format(names)
         println(divideCardString)
     }
@@ -19,6 +20,7 @@ object OutputView {
             val participantInformation = createParticipantInformation(participant)
             println(participantInformation)
         }
+        println()
     }
 
     private fun createParticipantInformation(participant: Participant): String {
