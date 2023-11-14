@@ -18,6 +18,8 @@ class BlackJackGame(
         allocateDefaultCards()
     }
 
+    fun isPossibleToAllocation() = cardsPool.isNotEmpty()
+
     private fun makeCardsPool() {
         CardType.values().forEach { type ->
             CardInfo.values().forEach { cardInfo ->

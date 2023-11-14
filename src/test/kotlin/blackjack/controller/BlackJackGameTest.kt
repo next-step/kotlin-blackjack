@@ -56,6 +56,18 @@ class BlackJackGameTest {
         participantScore21.isPossibleToTakeMoreCard() shouldBe false
     }
 
+    @ParameterizedTest
+    @MethodSource("makeParticipants")
+    fun `더 나눠줄 카드가 있는지 확인`(participants: List<Participant>) {
+        val blackJackGame = BlackJackGame(participants)
+        blackJackGame.isPossibleToAllocation() shouldBe true
+
+        repeat(52) {
+            blackJackGame.allocateOneCard(participants[0])
+        }
+        blackJackGame.isPossibleToAllocation() shouldBe false
+    }
+
     companion object {
         @JvmStatic
         fun makeParticipants() = listOf(
