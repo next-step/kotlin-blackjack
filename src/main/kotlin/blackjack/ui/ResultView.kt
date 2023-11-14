@@ -21,7 +21,7 @@ object ResultView {
     private fun showCards(participant: Participant) {
         participant.cards.forEach {
             val postfix = if (it == participant.cards.last()) "\n" else ", "
-            print("${it.value.displayName}${it.type.displayName}$postfix")
+            print("${it.info.displayName}${it.type.displayName}$postfix")
         }
     }
 }
