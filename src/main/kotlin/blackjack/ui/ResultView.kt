@@ -15,18 +15,28 @@ object ResultView {
         participants.forEach { participant ->
             print("${participant.name}카드 : ")
             showCards(participant)
+            println()
         }
     }
 
-    fun showStatusOfParticipant(participant: Participant) {
+    fun showStatusOfParticipant(participant: Participant, useNewLine: Boolean = true) {
         print("${participant.name}카드 : ")
         showCards(participant)
+        if (useNewLine) println()
     }
 
     private fun showCards(participant: Participant) {
         participant.cards.forEach {
-            val postfix = if (it == participant.cards.last()) "\n" else ", "
+            val postfix = if (it == participant.cards.last()) "" else ", "
             print("${it.info.displayName}${it.type.displayName}$postfix")
+        }
+    }
+
+    fun showGameResult(participants: List<Participant>) {
+        println()
+        participants.forEach { participant ->
+            showStatusOfParticipant(participant, useNewLine = false)
+            println(" - 결과 : ${participant.takeBestScore()}")
         }
     }
 }

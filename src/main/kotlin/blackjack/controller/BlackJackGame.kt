@@ -74,4 +74,6 @@ fun main() {
     ResultView.showInitialStatusOfParticipants(participants)
 
     blackJackGame.allocateCards()
+
+    ResultView.showGameResult(blackJackGame.participants)
 }
