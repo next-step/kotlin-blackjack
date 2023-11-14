@@ -5,7 +5,7 @@ enum class CardInfo(
     val value1: Int,
     val value2: Int = value1,
 ) {
-    Ace("A", 1, 10),
+    Ace("A", 1, 11),
     One("1", 1),
     Two("2", 2),
     Three("3", 3),
