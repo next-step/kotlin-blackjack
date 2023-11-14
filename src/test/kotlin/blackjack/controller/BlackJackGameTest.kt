@@ -68,6 +68,30 @@ class BlackJackGameTest {
         blackJackGame.isPossibleToAllocation() shouldBe false
     }
 
+    @Test
+    fun `최적의 점수`() {
+        val participant = Participant(
+            "John",
+            mutableListOf(
+                Card(CardType.Clover, CardInfo.Ace),
+                Card(CardType.Clover, CardInfo.Jack),
+                Card(CardType.Clover, CardInfo.King),
+            )
+        )
+
+        val participant2 = Participant(
+            "George",
+            mutableListOf(
+                Card(CardType.Clover, CardInfo.One),
+                Card(CardType.Clover, CardInfo.Two),
+                Card(CardType.Clover, CardInfo.Three),
+            )
+        )
+
+        participant.takeBestScore() shouldBe 21
+        participant2.takeBestScore() shouldBe 6
+    }
+
     companion object {
         @JvmStatic
         fun makeParticipants() = listOf(
