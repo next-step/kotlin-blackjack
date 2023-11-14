@@ -46,6 +46,7 @@ class BlackJackGame(
 
     companion object {
         const val DEFAULT_CARD_COUNTS = 2
+        const val BEST_SCORE = 21
     }
 }
 
@@ -55,4 +56,8 @@ fun main() {
     val blackJackGame = BlackJackGame(participants)
 
     ResultView.showInitialStatusOfParticipants(participants)
+
+    blackJackGame.participants.forEach {
+        val isAllocated = InputView.askCardPicking(it.name)
+    }
 }
