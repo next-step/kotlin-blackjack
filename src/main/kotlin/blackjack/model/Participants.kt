@@ -11,6 +11,17 @@ class Participants(
     }
 
     fun makeResult() {
-        dealer.whoseWinner(players)
+        dealer.compareWithPlayers(players)
+    }
+
+    fun processGame(
+        moreCardComment: (Boolean) -> Unit,
+        hitOrStand: (Player) -> Boolean,
+        showCard: (Player) -> Unit
+    ) {
+        players.values.forEach {
+            it.processGame(dealer, hitOrStand, showCard)
+        }
+        moreCardComment.invoke(dealer.moreCard())
     }
 }

@@ -43,11 +43,13 @@ class ParticipantsTest {
         participants.makeResult()
 
         // then
-        assertThat(players.values[0].blackJackResult?.winning).isEqualTo(1)
-        assertThat(players.values[0].blackJackResult?.losing).isEqualTo(0)
-        assertThat(players.values[1].blackJackResult?.winning).isEqualTo(0)
-        assertThat(players.values[1].blackJackResult?.losing).isEqualTo(1)
-        assertThat(dealer.blackJackResult?.winning).isEqualTo(1)
-        assertThat(dealer.blackJackResult?.losing).isEqualTo(1)
+        assertAll(
+            { assertThat(players.values[0].blackJackResult?.winning).isEqualTo(1) },
+            { assertThat(players.values[0].blackJackResult?.losing).isEqualTo(0) },
+            { assertThat(players.values[1].blackJackResult?.winning).isEqualTo(0) },
+            { assertThat(players.values[1].blackJackResult?.losing).isEqualTo(1) },
+            { assertThat(dealer.blackJackResult?.winning).isEqualTo(1) },
+            { assertThat(dealer.blackJackResult?.losing).isEqualTo(1) }
+        )
     }
 }

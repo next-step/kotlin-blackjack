@@ -46,7 +46,7 @@ open class Player(val name: String) {
         val point = getPoints()
         val playerPoint = player.getPoints()
 
-        blackJackResult = if (playerPoint in (point + 1)..WINNING_POINT || point > WINNING_POINT) {
+        blackJackResult = if (playerPoint in point..WINNING_POINT || point > WINNING_POINT) {
             BlackJackResult(point, 0, 1)
         } else {
             BlackJackResult(point, 1, 0)
@@ -55,5 +55,20 @@ open class Player(val name: String) {
 
     fun makeResult(winning: Int, losing: Int) {
         blackJackResult = BlackJackResult(getPoints(), winning, losing)
+    }
+
+    fun processGame(
+        dealer: Dealer,
+        hitOrStand: (Player) -> Boolean,
+        showCard: (Player) -> Unit
+    ) {
+        while (hit) {
+            if (hitOrStand.invoke(this).not()) {
+                noMoreHit()
+                return
+            }
+            addCard(dealer.dealingOneCard())
+            showCard.invoke(this)
+        }
     }
 }

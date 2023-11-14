@@ -36,27 +36,29 @@ class Dealer : Player(DEALER_NAME) {
         return hitted
     }
 
-    fun whoseWinner(players: Players) {
-        var winning = 0
-        var losing = 0
-        players.values.forEach {
-            val won = whoseWinner(it)
-            if (won) {
-                winning++
-            } else {
-                losing++
-            }
-        }
+    fun compareWithPlayers(players: Players) {
+        val winAndLose = players.values
+            .map { compareWithPlayer(it) }
+            .groupBy { it }
 
-        makeResult(winning, losing)
+        makeResult(
+            winAndLose[true]?.size ?: 0,
+            winAndLose[false]?.size ?: 0
+        )
     }
 
-    private fun whoseWinner(player: Player): Boolean {
+    private fun compareWithPlayer(player: Player): Boolean? {
         val dealerPoint = getPoints()
         val playerPoint = player.getPoints()
 
         player.compare(this)
-        return !(dealerPoint > WINNING_POINT || playerPoint in (dealerPoint + 1)..WINNING_POINT)
+        return if (dealerPoint == playerPoint || (dealerPoint > WINNING_POINT && playerPoint > WINNING_POINT)) {
+            null
+        } else if (dealerPoint > WINNING_POINT || (playerPoint in (dealerPoint + 1)..WINNING_POINT)) {
+            false
+        } else {
+            true
+        }
     }
 
     companion object {

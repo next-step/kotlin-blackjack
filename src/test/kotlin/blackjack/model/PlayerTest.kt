@@ -1,5 +1,6 @@
 package blackjack.model
 
+import blackjack.dto.BlackJackResult
 import blackjack.dto.Card
 import blackjack.dto.Number
 import blackjack.dto.Suit
@@ -72,13 +73,19 @@ class PlayerTest {
         }
     }
 
-    @Test
-    fun `플래이어와 결과를 비교한다`() {
+    @ParameterizedTest
+    @MethodSource("compareTestInput")
+    fun `플래이어와 결과를 비교한다`(
+        aCards: List<Card>,
+        bCards: List<Card>,
+        aResult: BlackJackResult,
+        bResult: BlackJackResult
+    ) {
         // given
         val playerA = Player("a")
         val playerB = Player("b")
-        playerA.addCards(listOf(Card(Suit.SPADE, Number.ACE), Card(Suit.DIAMOND, Number.KING)))
-        playerB.addCards(listOf(Card(Suit.SPADE, Number.TWO), Card(Suit.DIAMOND, Number.QUEEN)))
+        playerA.addCards(aCards)
+        playerB.addCards(bCards)
 
         // when
         playerA.compare(playerB)
@@ -86,10 +93,8 @@ class PlayerTest {
 
         // then
         assertAll(
-            { assertThat(playerA.blackJackResult?.winning).isEqualTo(1) },
-            { assertThat(playerA.blackJackResult?.losing).isEqualTo(0) },
-            { assertThat(playerB.blackJackResult?.winning).isEqualTo(0) },
-            { assertThat(playerB.blackJackResult?.losing).isEqualTo(1) }
+            { assertThat(playerA.blackJackResult).isEqualTo(aResult) },
+            { assertThat(playerB.blackJackResult).isEqualTo(bResult) },
         )
     }
 
@@ -117,6 +122,40 @@ class PlayerTest {
                         Card(Suit.DIAMOND, Number.THREE)
                     ),
                     5
+                ),
+            )
+        }
+
+        @JvmStatic
+        fun compareTestInput(): Stream<Arguments> {
+            return Stream.of(
+                // a < b < 21
+                Arguments.of(
+                    listOf(Card(Suit.DIAMOND, Number.QUEEN), Card(Suit.DIAMOND, Number.FIVE)),
+                    listOf(Card(Suit.SPADE, Number.ACE), Card(Suit.SPADE, Number.SIX)),
+                    BlackJackResult(15, 0, 1),
+                    BlackJackResult(17, 1, 0)
+                ),
+                // a < 21 < b
+                Arguments.of(
+                    listOf(Card(Suit.DIAMOND, Number.QUEEN), Card(Suit.DIAMOND, Number.KING)),
+                    listOf(Card(Suit.SPADE, Number.KING), Card(Suit.SPADE, Number.TEN), Card(Suit.SPADE, Number.THREE)),
+                    BlackJackResult(20, 1, 0),
+                    BlackJackResult(23, 0, 1)
+                ),
+                // 21 < a, b
+                Arguments.of(
+                    listOf(Card(Suit.DIAMOND, Number.QUEEN), Card(Suit.DIAMOND, Number.KING), Card(Suit.DIAMOND, Number.JACK)),
+                    listOf(Card(Suit.SPADE, Number.KING), Card(Suit.SPADE, Number.TEN), Card(Suit.SPADE, Number.THREE)),
+                    BlackJackResult(30, 0, 1),
+                    BlackJackResult(23, 0, 1)
+                ),
+                // a = b < 21
+                Arguments.of(
+                    listOf(Card(Suit.DIAMOND, Number.QUEEN), Card(Suit.DIAMOND, Number.FIVE)),
+                    listOf(Card(Suit.SPADE, Number.SEVEN), Card(Suit.SPADE, Number.EIGHT)),
+                    BlackJackResult(15, 0, 1),
+                    BlackJackResult(15, 0, 1)
                 ),
             )
         }
