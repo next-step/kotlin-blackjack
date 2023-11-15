@@ -10,6 +10,15 @@ class Dealer(cards: Cards = Cards()) : BlackJackPlayer(DEALER_NAME, cards) {
         return cards.score() < Score(DEALER_HIT_SCORE)
     }
 
+    fun winLoseMoney(players: List<Player>): Money {
+        var winLoseMoney: Money = Money()
+        players.forEach {
+            val playerEarningMoney = it.winLoseMoney(this)
+            winLoseMoney += playerEarningMoney.opposite()
+        }
+        return winLoseMoney
+    }
+
     companion object {
         private const val DEALER_HIT_SCORE = 17
         private const val DEALER_NAME = "딜러"

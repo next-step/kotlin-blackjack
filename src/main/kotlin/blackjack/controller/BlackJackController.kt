@@ -6,7 +6,6 @@ import blackjack.domain.Dealer
 import blackjack.domain.Money
 import blackjack.domain.Player
 import blackjack.domain.TrumpCard
-import blackjack.domain.WinLose
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
@@ -33,19 +32,16 @@ class BlackJackController {
     ): Pair<BlackJackDealerResult, List<BlackJackPlayerResult>> {
         players.draw(trumpCard)
         dealer.draw(trumpCard)
-        val result = players.map { it.match(dealer) to it.winLoseMoney(dealer) }
-            .groupBy { it.first }
-            .mapValues { Money(it.value.sumOf { money -> money.second.amount }) }
 
-        return dealer.result(result) to players.map { it.result(it.winLoseMoney(dealer)) }
+        return dealer.result(dealer.winLoseMoney(players)) to players.map { it.result(it.winLoseMoney(dealer)) }
     }
 
     private fun Player.result(money: Money = Money()): BlackJackPlayerResult {
         return BlackJackPlayerResult(this, money)
     }
 
-    private fun Dealer.result(winLoseMap: Map<WinLose, Money> = mapOf()): BlackJackDealerResult {
-        return BlackJackDealerResult(this, winLoseMap)
+    private fun Dealer.result(money: Money = Money()): BlackJackDealerResult {
+        return BlackJackDealerResult(this, money)
     }
 
     private fun List<Player>.draw(trumpCard: TrumpCard) {

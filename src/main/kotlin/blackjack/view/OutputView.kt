@@ -34,7 +34,7 @@ object OutputView {
         printBlackjackGamePlayerResult(playerResults)
 
         println(WIN_LOSE_RESULT)
-        println("${dealerResult.name}: ${dealerResult.winLoseTotalMoney().amount}")
+        println("${dealerResult.name}: ${dealerResult.winLoseMoney.amount}")
         playerResults.forEach {
             println("${it.name}: ${it.winLoseMoney.amount}")
         }
