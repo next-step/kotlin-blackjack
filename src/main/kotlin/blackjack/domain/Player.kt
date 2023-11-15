@@ -19,12 +19,10 @@ class Player(
     }
 
     fun winLoseMoney(otherPlayer: BlackJackPlayer): Money {
-        val winLose = match(otherPlayer)
-        return when {
-            winLose == WinLose.WIN -> betMoney * earningRate()
-            winLose == WinLose.LOSE -> betMoney.opposite()
-            winLose == WinLose.DRAW -> Money()
-            otherPlayer.status == PlayerStatus.BURST -> betMoney
+        return when (match(otherPlayer)) {
+            WinLose.WIN -> betMoney * earningRate()
+            WinLose.LOSE -> betMoney.opposite()
+            WinLose.DRAW -> Money()
             else -> throw IllegalArgumentException("계산할 수 없습니다.")
         }
     }

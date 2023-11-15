@@ -26,9 +26,9 @@ abstract class BlackJackPlayer(val name: String, val cards: Cards) {
 
     fun match(other: BlackJackPlayer): WinLose {
         return when {
-            isBlackJack() && other.isBlackJack() -> WinLose.DRAW
-            isBlackJack() || other.isBurst() -> WinLose.WIN
             isBurst() || other.isBlackJack() -> WinLose.LOSE
+            isBlackJack() || other.isBurst() -> WinLose.WIN
+            isBlackJack() && other.isBlackJack() -> WinLose.DRAW
             else -> cards.score().compareScore(other.cards.score())
         }
     }
