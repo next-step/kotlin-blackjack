@@ -7,7 +7,17 @@ import blackjack.ui.OutputView
 class BlackJack(
     private val participants: Participants
 ) {
-    fun doBlackJack(canGetCard: (Participant) -> Boolean, input: () -> Boolean) = participants.map { participant ->
+    fun doBlackJack(canGetCard: (Participant) -> Boolean, input: () -> Boolean): List<String> =
+        participants.map { participant ->
+            askGetCardToParticipant(canGetCard, participant, input)
+            participant.toString()
+        }
+
+    private fun askGetCardToParticipant(
+        canGetCard: (Participant) -> Boolean,
+        participant: Participant,
+        input: () -> Boolean
+    ) {
         while (canGetCard(participant)) {
             OutputView.printGetMoreOneCard(participant.name)
             if (input().not()) break
@@ -16,7 +26,6 @@ class BlackJack(
             participant.cards = participant.cards.copy(cards = participant.cards.cards + newCard)
             OutputView.printNewCards(participant)
         }
-        participant.toString()
     }
 
     companion object {
