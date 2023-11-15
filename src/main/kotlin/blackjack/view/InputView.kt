@@ -2,6 +2,7 @@ package blackjack.view
 
 import blackjack.model.Card
 import blackjack.model.Participants
+import blackjack.view.Console.present
 
 object InputView {
     private fun joinPlayers(input: String): Participants {

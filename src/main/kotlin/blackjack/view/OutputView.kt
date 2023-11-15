@@ -1,6 +1,7 @@
 package blackjack.view
 
 import blackjack.model.Participants
+import blackjack.view.Console.present
 
 object OutputView {
 

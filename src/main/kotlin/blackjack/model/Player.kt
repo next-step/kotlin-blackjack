@@ -12,8 +12,4 @@ data class Player(
     fun hit(card: Card) {
         cards.add(card)
     }
-
-    fun present(): String {
-        return "${this.name}카드 : ${this.cards.present()}"
-    }
 }
