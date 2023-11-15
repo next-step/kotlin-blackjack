@@ -33,15 +33,15 @@ class BlackJackController {
     ): Pair<BlackJackDealerResult, List<BlackJackPlayerResult>> {
         players.draw(trumpCard)
         dealer.draw(trumpCard)
-        val result = players.map { it.match(dealer) to it.winLoseMoney(it.match(dealer)) }
+        val result = players.map { it.match(dealer) to it.winLoseMoney(dealer) }
             .groupBy { it.first }
             .mapValues { Money(it.value.sumOf { money -> money.second.amount }) }
 
-        return dealer.result(result) to players.map { it.result(it.match(dealer)) }
+        return dealer.result(result) to players.map { it.result(it.winLoseMoney(dealer)) }
     }
 
-    private fun Player.result(winLose: WinLose = WinLose.NONE): BlackJackPlayerResult {
-        return BlackJackPlayerResult(this, winLose)
+    private fun Player.result(money: Money = Money()): BlackJackPlayerResult {
+        return BlackJackPlayerResult(this, money)
     }
 
     private fun Dealer.result(winLoseMap: Map<WinLose, Money> = mapOf()): BlackJackDealerResult {
