@@ -13,7 +13,7 @@ class Hand(
     }
 
     fun canHit(): Boolean {
-        return getSum() < BLACKJACK_NUMBER
+        return getSum() < BLACKJACK
     }
 
     fun getSum(): Int {
@@ -33,7 +33,7 @@ class Hand(
     }
 
     companion object {
-        private const val BLACKJACK_NUMBER = 21
+        private const val BLACKJACK = 21
         private const val ACE_NUMBER = 11
         private const val ACE_ADDING_NUMBER = 10
     }
