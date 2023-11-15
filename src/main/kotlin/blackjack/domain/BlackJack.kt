@@ -12,10 +12,14 @@ class BlackJack(
             OutputView.printGetMoreOneCard(participant.name)
             if (input().not()) break
 
-            val newCard = CardGenerator.generateCard(1)
+            val newCard = CardGenerator.generateCard(GENERATE_SINGLE_CARD)
             participant.cards = participant.cards.copy(cards = participant.cards.cards + newCard)
             OutputView.printNewCards(participant)
         }
         participant.toString()
+    }
+
+    companion object {
+        private const val GENERATE_SINGLE_CARD = 1
     }
 }

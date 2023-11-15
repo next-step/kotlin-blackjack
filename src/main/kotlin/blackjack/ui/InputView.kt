@@ -2,7 +2,7 @@ package blackjack.ui
 
 object InputView {
     fun inputParticipantName(): String {
-        val participants = readln()
+        val participants = readln().replace(" ", "")
         checkParticipants(participants)
         return participants.replace(",", ", ")
     }
