@@ -7,4 +7,5 @@ class BlackJackGame(
     playerNames: PlayerNames
 ) {
     val players: Players = Players.from(playerNames)
+    val dealer: Dealer = Dealer()
 }
