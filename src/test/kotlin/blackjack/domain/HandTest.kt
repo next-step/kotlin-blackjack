@@ -7,22 +7,26 @@ import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.shouldBe
 
 class HandTest : BehaviorSpec({
+    val deck = FixedDeck()
+
     Given("패가 주어졌을 때") {
         val hand = Hand()
+        val initCard = deck.init()
         When("초기화를 하면") {
-            val newHand = hand.init(FixedDeck())
+            hand.init(initCard[0], initCard[1])
             Then("카드 2장을 새로 가진다.") {
-                newHand.cards shouldContainExactly listOf(Card(CardSuit.HEART, CardNumber.TWO), Card(CardSuit.HEART, CardNumber.TWO))
+                hand.cards shouldContainExactly listOf(Card(CardSuit.HEART, CardNumber.TWO), Card(CardSuit.SPADE, CardNumber.EIGHT))
             }
         }
     }
 
     Given("패가 생성된 후") {
         val hand = Hand()
-        When("히트를 하면") {
-            val newHand = hand.hit(FixedDeck())
+        val card = deck.hit()
+        When("receive를 하면") {
+            hand.receive(card)
             Then("카드 1장을 새로 가진다.") {
-                newHand.cards shouldContainExactly listOf(
+                hand.cards shouldContainExactly listOf(
                     Card(CardSuit.HEART, CardNumber.TWO)
                 )
             }
@@ -33,19 +37,37 @@ class HandTest : BehaviorSpec({
         When("getSum() 메서드를 통해") {
             Then("자신의 합을 반환한다.") {
                 forAll(
-                    row(Hand(listOf(Card(CardSuit.SPADE, CardNumber.ACE), Card(CardSuit.CLUB, CardNumber.ACE))), 12),
+                    row(Hand(mutableListOf(Card(CardSuit.SPADE, CardNumber.ACE), Card(CardSuit.CLUB, CardNumber.ACE))), 12),
                     row(
-                        Hand(listOf(Card(CardSuit.SPADE, CardNumber.ACE), Card(CardSuit.CLUB, CardNumber.ACE), Card(CardSuit.CLUB, CardNumber.TEN))),
+                        Hand(
+                            mutableListOf(
+                                Card(CardSuit.SPADE, CardNumber.ACE),
+                                Card(CardSuit.CLUB, CardNumber.ACE),
+                                Card(CardSuit.CLUB, CardNumber.TEN)
+                            )
+                        ),
                         12
                     ),
-                    row(Hand(listOf(Card(CardSuit.SPADE, CardNumber.TEN), Card(CardSuit.CLUB, CardNumber.TEN))), 20),
-                    row(Hand(listOf(Card(CardSuit.SPADE, CardNumber.ACE), Card(CardSuit.CLUB, CardNumber.TEN))), 21),
+                    row(Hand(mutableListOf(Card(CardSuit.SPADE, CardNumber.TEN), Card(CardSuit.CLUB, CardNumber.TEN))), 20),
+                    row(Hand(mutableListOf(Card(CardSuit.SPADE, CardNumber.ACE), Card(CardSuit.CLUB, CardNumber.TEN))), 21),
                     row(
-                        Hand(listOf(Card(CardSuit.SPADE, CardNumber.TEN), Card(CardSuit.CLUB, CardNumber.TEN), Card(CardSuit.HEART, CardNumber.ACE))),
+                        Hand(
+                            mutableListOf(
+                                Card(CardSuit.SPADE, CardNumber.TEN),
+                                Card(CardSuit.CLUB, CardNumber.TEN),
+                                Card(CardSuit.HEART, CardNumber.ACE)
+                            )
+                        ),
                         21
                     ),
                     row(
-                        Hand(listOf(Card(CardSuit.SPADE, CardNumber.TEN), Card(CardSuit.CLUB, CardNumber.TEN), Card(CardSuit.HEART, CardNumber.TWO))),
+                        Hand(
+                            mutableListOf(
+                                Card(CardSuit.SPADE, CardNumber.TEN),
+                                Card(CardSuit.CLUB, CardNumber.TEN),
+                                Card(CardSuit.HEART, CardNumber.TWO)
+                            )
+                        ),
                         22
                     ),
                 ) { hand, expected ->
@@ -59,10 +81,16 @@ class HandTest : BehaviorSpec({
         When("추가로 Hit 할 수 있는지 없는지를") {
             Then("판단하여 반환한다.") {
                 forAll(
-                    row(Hand(listOf(Card(CardSuit.SPADE, CardNumber.TEN), Card(CardSuit.CLUB, CardNumber.TEN))), true),
-                    row(Hand(listOf(Card(CardSuit.SPADE, CardNumber.ACE), Card(CardSuit.CLUB, CardNumber.TEN))), false),
+                    row(Hand(mutableListOf(Card(CardSuit.SPADE, CardNumber.TEN), Card(CardSuit.CLUB, CardNumber.TEN))), true),
+                    row(Hand(mutableListOf(Card(CardSuit.SPADE, CardNumber.ACE), Card(CardSuit.CLUB, CardNumber.TEN))), false),
                     row(
-                        Hand(listOf(Card(CardSuit.SPADE, CardNumber.TEN), Card(CardSuit.CLUB, CardNumber.TEN), Card(CardSuit.HEART, CardNumber.TWO))),
+                        Hand(
+                            mutableListOf(
+                                Card(CardSuit.SPADE, CardNumber.TEN),
+                                Card(CardSuit.CLUB, CardNumber.TEN),
+                                Card(CardSuit.HEART, CardNumber.TWO)
+                            )
+                        ),
                         false
                     ),
                 ) { hand, expected ->

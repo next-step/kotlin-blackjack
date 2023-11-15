@@ -1,16 +1,15 @@
 package blackjack.domain
 
 data class Hand(
-    val cards: List<Card> = listOf()
+    val cards: MutableList<Card> = mutableListOf()
 ) {
-    fun init(deck: Deck): Hand {
-        return copy(cards = listOf(deck.hit(), deck.hit()))
+    fun init(card1: Card, card2: Card) {
+        cards.add(card1)
+        cards.add(card2)
     }
 
-    fun hit(deck: Deck): Hand {
-        val newCard = deck.hit()
-        val newCards = cards + newCard
-        return copy(cards = newCards)
+    fun receive(card: Card) {
+        cards.add(card)
     }
 
     fun canHit(): Boolean {

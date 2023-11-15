@@ -18,10 +18,10 @@ class PlayersTest : BehaviorSpec({
     Given("플레이어가 생성되고 나면") {
         val players = Players.init(listOf("pobi", "jason"))
         When("initCard를 통해") {
-            val newPlayers = players.initCard(FixedDeck())
+            players.initCard(FixedDeck())
             Then("각 Player들은 카드 2장을 새로 갖는다.") {
-                newPlayers.players[0].hand shouldBe Hand(
-                    listOf(
+                players.players[0].hand shouldBe Hand(
+                    mutableListOf(
                         Card(CardSuit.HEART, CardNumber.TWO), Card(CardSuit.SPADE, CardNumber.EIGHT)
                     )
                 )
