@@ -38,6 +38,5 @@ class CardsTest : StringSpec({
             )
         ).totalScore()
         actual shouldBe (11 + 3 + 5)
-
     }
 })
