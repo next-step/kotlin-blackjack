@@ -38,5 +38,4 @@ class CardTest : StringSpec({
             inputList.forEach { CardShape.findCardShapeFromName(it) }
         }
     }
-
 })
