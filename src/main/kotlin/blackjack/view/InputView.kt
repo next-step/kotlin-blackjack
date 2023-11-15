@@ -1,6 +1,6 @@
 package blackjack.view
 
-import blackjack.model.Pack
+import blackjack.model.Card
 import blackjack.model.Participants
 
 object InputView {
@@ -20,7 +20,7 @@ object InputView {
         participants.participants.forEach {
             println("${it.name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
             if (isHit()) {
-                it.hit(Pack.anyCard())
+                it.hit(Card.of())
             }
             println(it.present())
         }

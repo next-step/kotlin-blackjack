@@ -12,7 +12,7 @@ class Participants(
     }
 
     fun dealing() {
-        participants.forEach { it.deal(Pack.anyCard(), Pack.anyCard()) }
+        participants.forEach { it.deal(Card.of(), Card.of()) }
     }
 
     companion object {
