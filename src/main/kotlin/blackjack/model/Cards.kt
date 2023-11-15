@@ -1,10 +1,13 @@
 package blackjack.model
 
-data class Cards(
-    private val cards: MutableSet<Card> = mutableSetOf()
+class Cards(
+    cards: List<Card> = emptyList(),
 ) {
+    private val _cards: MutableList<Card> = cards.toMutableList()
+    private val cards: List<Card> get() = _cards.toList()
+
     fun add(card: Card) {
-        cards.add(card)
+        _cards.add(card)
     }
 
     fun totalScore(): Int {
@@ -21,7 +24,7 @@ data class Cards(
 
     companion object {
         fun init(): Cards {
-            return Cards()
+            return Cards(mutableListOf())
         }
     }
 }
