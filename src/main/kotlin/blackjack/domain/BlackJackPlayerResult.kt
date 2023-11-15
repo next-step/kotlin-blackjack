@@ -1,10 +1,8 @@
 package blackjack.domain
 
-class BlackJackPlayerResult(private val blackJackPlayer: BlackJackPlayer, winLose: WinLose?) {
-    val name: String get() = blackJackPlayer.name
-    val cards: Cards get() = blackJackPlayer.cards
+class BlackJackPlayerResult(private val player: Player, val winLoseMoney: Money) {
+    val name: String get() = player.name
+    val cards: Cards get() = player.cards
     val score: Score get() = cards.score()
-    val firstOpenCards: Cards get() = blackJackPlayer.firstOpenCards()
-
-    val winLose: WinLose = winLose ?: WinLose.DRAW
+    val firstOpenCards: Cards get() = player.firstOpenCards()
 }

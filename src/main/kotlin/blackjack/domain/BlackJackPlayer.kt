@@ -2,59 +2,47 @@ package blackjack.domain
 
 import blackjack.domain.Score.Companion.BLACK_JACK_SCORE
 
-abstract class BlackJackPlayer(
-    val name: String,
-    val cards: Cards
-) {
+abstract class BlackJackPlayer(val name: String, val cards: Cards) {
 
     var status: PlayerStatus = PlayerStatus.HIT
         protected set
 
     init {
-        if (isBlackJack()) {
-            blackjack()
-        }
+        validatePlayerStatus()
     }
 
     fun drawBy(card: Card) {
         cards.add(card)
-        if (isBurst()) {
-            burst()
-        }
+        validatePlayerStatus()
     }
 
     fun isBurst(): Boolean {
-        return cards.score().burst()
+        return status == PlayerStatus.BURST
     }
 
     fun isBlackJack(): Boolean {
         return cards.score() == Score(BLACK_JACK_SCORE)
     }
 
-    fun blackjack() {
-        status = PlayerStatus.BLACKJACK
-    }
-
-    fun burst() {
-        status = PlayerStatus.BURST
-    }
-
     fun match(other: BlackJackPlayer): WinLose {
-        if (isBlackJack() && other.isBlackJack()) {
-            return WinLose.DRAW
+        return when {
+            isBlackJack() || other.isBurst() -> WinLose.WIN
+            isBurst() || other.isBlackJack() -> WinLose.LOSE
+            isBlackJack() && other.isBlackJack() -> WinLose.DRAW
+            else -> cards.score().compareScore(other.cards.score())
         }
-        if (isBurst() && other.isBurst()) {
-            return WinLose.DRAW
-        }
+    }
 
-        if (isBlackJack() || other.isBurst()) {
-            return WinLose.WIN
+    protected fun validatePlayerStatus() {
+        when {
+            cards.score().burst() -> forceUpdateStatus(PlayerStatus.BURST)
+            cards.cards.size == 2 && (cards.score() == Score(BLACK_JACK_SCORE)) -> forceUpdateStatus(PlayerStatus.BLACKJACK)
+            else -> forceUpdateStatus(PlayerStatus.HIT)
         }
+    }
 
-        if (isBurst() || other.isBlackJack()) {
-            return WinLose.LOSE
-        }
-        return cards.score().winLose(other.cards.score())
+    protected fun forceUpdateStatus(status: PlayerStatus) {
+        this.status = status
     }
 
     abstract fun firstOpenCards(): Cards

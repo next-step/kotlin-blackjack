@@ -36,22 +36,6 @@ class PlayerTest : BehaviorSpec({
         }
     }
 
-    given("카드 A스페이드,A다이아몬드, K스페이드, K다이아몬드를 받았다면") {
-        val cards = Cards(
-            Suit.SPADE to Rank.ACE,
-            Suit.DIAMOND to Rank.ACE,
-            Suit.SPADE to Rank.KING,
-            Suit.DIAMOND to Rank.KING
-        )
-        val player = Player("원동재", cards)
-        When("버스트 여부를 확인할 때") {
-            val isBurst = player.isBurst()
-            Then("버스트이다.") {
-                isBurst shouldBe true
-            }
-        }
-    }
-
     given("카드 K다이아몬드, K스페이드를 받았다면") {
         val cards = Cards(
             Suit.DIAMOND to Rank.KING,
@@ -92,6 +76,78 @@ class PlayerTest : BehaviorSpec({
             val isBlackJack = player.isBlackJack()
             Then("블랙잭이다.") {
                 isBlackJack shouldBe true
+            }
+        }
+    }
+
+    given("플레이어와 딜러가 주어지고 베팅금액이 1000원일때") {
+        val player = Player(
+            "원동재",
+            Cards(
+                Suit.SPADE to Rank.KING,
+                Suit.DIAMOND to Rank.KING
+            ),
+            Money(1000)
+        )
+        val dealer = Dealer(
+            Cards(
+                Suit.SPADE to Rank.KING,
+                Suit.DIAMOND to Rank.KING,
+                Suit.HEART to Rank.KING,
+            )
+        )
+        When("딜러가 버스트일때 수익 계산시") {
+            player.stand()
+            val result = player.winLoseMoney(dealer)
+            Then("수익은 1000원이다.") {
+                result.amount shouldBe 1000
+            }
+        }
+    }
+
+    given("플레이어와 딜러가 주어지고 베팅금액이 1000원일때") {
+        val player = Player(
+            "원동재",
+            Cards(
+                Suit.SPADE to Rank.KING,
+                Suit.DIAMOND to Rank.ACE
+            ),
+            Money(1000)
+        )
+        val dealer = Dealer(
+            Cards(
+                Suit.SPADE to Rank.KING,
+                Suit.DIAMOND to Rank.KING,
+            )
+        )
+        When("플레이어가 블랙잭일때 수익 계산시") {
+            val result = player.winLoseMoney(dealer)
+            Then("수익은 1500원이다.") {
+                result.amount shouldBe 1500
+            }
+        }
+    }
+
+    given("플레이어와 딜러가 주어지고 베팅금액이 1000원일때") {
+        val player = Player(
+            "원동재",
+            Cards(
+                Suit.SPADE to Rank.KING,
+                Suit.DIAMOND to Rank.KING
+            ),
+            Money(1000)
+        )
+        val dealer = Dealer(
+            Cards(
+                Suit.SPADE to Rank.KING,
+                Suit.DIAMOND to Rank.KING,
+            )
+        )
+        When("플레이어가 버스트일때 수익 계산시") {
+            player.drawBy(Card(Suit.DIAMOND, Rank.TWO))
+            val result = player.winLoseMoney(dealer)
+            Then("수익은 -1000원이다.") {
+                result.amount shouldBe -1000
             }
         }
     }

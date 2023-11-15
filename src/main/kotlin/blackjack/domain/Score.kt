@@ -11,7 +11,7 @@ value class Score(val score: Int) {
         return this.score.compareTo(score.score)
     }
 
-    fun winLose(otherScore: Score): WinLose {
+    fun compareScore(otherScore: Score): WinLose {
         when {
             this > otherScore -> return WinLose.WIN
             this < otherScore -> return WinLose.LOSE

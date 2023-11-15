@@ -3,9 +3,9 @@ package blackjack.controller
 import blackjack.domain.BlackJackDealerResult
 import blackjack.domain.BlackJackPlayerResult
 import blackjack.domain.Dealer
+import blackjack.domain.Money
 import blackjack.domain.Player
 import blackjack.domain.TrumpCard
-import blackjack.domain.WinLose
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
@@ -14,10 +14,10 @@ class BlackJackController {
     fun start() {
         val trumpCard = TrumpCard.init()
         val playerNames = InputView.inputPlayerName()
-        OutputView.printPlayerName(playerNames)
         val players = playerNames.map {
-            Player(it, trumpCard.drawFirstCards())
+            Player(it, trumpCard.drawFirstCards(), InputView.inputBetMoney(it))
         }
+        OutputView.printPlayerName(playerNames)
         val dealer = Dealer(trumpCard.drawFirstCards())
         OutputView.printFirstCard(dealer.result())
         OutputView.printPlayerFirstCard(players.map { it.result() })
@@ -32,19 +32,16 @@ class BlackJackController {
     ): Pair<BlackJackDealerResult, List<BlackJackPlayerResult>> {
         players.draw(trumpCard)
         dealer.draw(trumpCard)
-        val dealerWinLose = players.map { it.match(dealer).opposite() }
-            .groupingBy { it }
-            .eachCount()
 
-        return dealer.result(dealerWinLose) to players.map { it.result(it.match(dealer)) }
+        return dealer.result(dealer.winLoseMoney(players)) to players.map { it.result(it.winLoseMoney(dealer)) }
     }
 
-    private fun Player.result(winLose: WinLose? = null): BlackJackPlayerResult {
-        return BlackJackPlayerResult(this, winLose)
+    private fun Player.result(money: Money = Money()): BlackJackPlayerResult {
+        return BlackJackPlayerResult(this, money)
     }
 
-    private fun Dealer.result(winLoseMap: Map<WinLose, Int> = mapOf()): BlackJackDealerResult {
-        return BlackJackDealerResult(this, winLoseMap)
+    private fun Dealer.result(money: Money = Money()): BlackJackDealerResult {
+        return BlackJackDealerResult(this, money)
     }
 
     private fun List<Player>.draw(trumpCard: TrumpCard) {
@@ -55,6 +52,7 @@ class BlackJackController {
             }
             if (it.isBurst()) {
                 OutputView.printPlayerBurst(it.name)
+                return@forEach
             }
             it.stand()
         }

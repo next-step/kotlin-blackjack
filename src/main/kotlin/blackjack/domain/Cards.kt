@@ -26,6 +26,10 @@ class Cards(cards: Set<Card> = emptySet()) {
         return Score(score)
     }
 
+    fun take(value: Int): Cards {
+        return Cards(_cards.take(value).toSet())
+    }
+
     private fun hasAce(): Boolean {
         return cards.any { it.rank == Rank.ACE }
     }

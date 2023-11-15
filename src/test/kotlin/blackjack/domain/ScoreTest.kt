@@ -28,7 +28,7 @@ class ScoreTest : BehaviorSpec({
         val scoreA = Score(21)
         val scoreB = Score(20)
         `when`("A와 B의 점수를 비교하면") {
-            val isWin = scoreA.winLose(scoreB)
+            val isWin = scoreA.compareScore(scoreB)
             then("A가 이긴다.") {
                 isWin shouldBe WinLose.WIN
             }
@@ -39,7 +39,7 @@ class ScoreTest : BehaviorSpec({
         val scoreA = Score(21)
         val scoreB = Score(21)
         `when`("A와 B의 점수를 비교하면") {
-            val isWin = scoreA.winLose(scoreB)
+            val isWin = scoreA.compareScore(scoreB)
             then("비긴다.") {
                 isWin shouldBe WinLose.DRAW
             }
