@@ -1,6 +1,6 @@
 package blackjack.domain
 
-data class Hand(
+class Hand(
     val cards: MutableList<Card> = mutableListOf()
 ) {
     fun init(card1: Card, card2: Card) {

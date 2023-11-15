@@ -20,11 +20,8 @@ class PlayersTest : BehaviorSpec({
         When("initCard를 통해") {
             players.initCard(FixedDeck())
             Then("각 Player들은 카드 2장을 새로 갖는다.") {
-                players.players[0].hand shouldBe Hand(
-                    mutableListOf(
-                        Card(CardSuit.HEART, CardNumber.TWO), Card(CardSuit.SPADE, CardNumber.EIGHT)
-                    )
-                )
+                players.players[0].hand.cards[0] shouldBe Card(CardSuit.HEART, CardNumber.TWO)
+                players.players[0].hand.cards[1] shouldBe Card(CardSuit.SPADE, CardNumber.EIGHT)
             }
         }
     }
