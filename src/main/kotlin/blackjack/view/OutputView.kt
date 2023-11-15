@@ -1,19 +1,21 @@
 package blackjack.view
 
-import blackjack.domain.Player
-import blackjack.domain.Rank
-import blackjack.domain.Symbol
+import blackjack.domain.*
 
 object OutputView {
 
     private const val SEPARATOR = ", "
 
-    fun writePlayerNames(players: List<Player>) {
-        println("딜러와 ${players.joinToString(SEPARATOR) { it.name.value }}에게 2장의 나누었습니다.")
+    fun writePlayerNames(participants: List<Participant>) {
+        println(
+            "딜러와 ${
+                participants.filterIsInstance<Player>().joinToString(SEPARATOR) { it.name.value }
+            }에게 2장의 나누었습니다."
+        )
     }
 
-    fun writePlayerCards(vararg players: Player) {
-        players.forEach {
+    fun writeParticipantCards(vararg participants: Participant) {
+        participants.forEach {
             println(
                 "${it.name.value}카드: ${
                     it.cards.joinToString(SEPARATOR) { card ->
@@ -22,17 +24,32 @@ object OutputView {
                 }"
             )
         }
+        println()
     }
 
-    fun writePlayerResults(players: List<Player>) {
-        players.forEach { player ->
+    fun writeDealer(dealer: Dealer) {
+        println("${dealer.name.value}는 16이하라 한 장의 카드를 더 받았습니다.")
+        println()
+    }
+
+    fun writeParticipantResults(participants: List<Participant>) {
+        participants.forEach { participant ->
             println(
-                "${player.name.value}카드: ${
-                    player.cards.joinToString(SEPARATOR) { card ->
+                "${participant.name.value}카드: ${
+                    participant.cards.joinToString(SEPARATOR) { card ->
                         "${card.rank.name()}${card.symbol.name()}"
                     }
-                } - 결과: ${player.calculateScore()}"
+                } - 결과: ${participant.cards.calculateScore()}"
             )
+        }
+        println()
+    }
+
+    fun writeGameResults(result: GameResult) {
+        println("## 최송 승패")
+        println("딜러: ${result.getDealerStats().first}승 ${result.getDealerStats().second}패")
+        result.playerResults.forEach { (player, outcome) ->
+            println("${player.name.value}: ${outcome.name()}")
         }
     }
 
@@ -52,6 +69,13 @@ object OutputView {
             Symbol.HEART -> "하트"
             Symbol.DIAMOND -> "다이아"
             Symbol.CLUB -> "클로버"
+        }
+    }
+
+    private fun GameOutcome.name(): String {
+        return when (this) {
+            GameOutcome.WIN -> "승"
+            GameOutcome.LOSE -> "패"
         }
     }
 }
