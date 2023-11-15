@@ -20,6 +20,6 @@ object InputView {
 
     private const val DELIMITER = ','
     private const val INVALID_INPUT = "올바른 값이 입력되지 않았습니다."
-    private val REGEX = "[^(\\D+,)]".toRegex()
+    private val REGEX = "[^(\\w+,)]".toRegex()
     private const val GET_MORE_CARD = "y"
 }
