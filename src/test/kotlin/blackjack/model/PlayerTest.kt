@@ -1,8 +1,11 @@
 package blackjack.model
 
-import blackjack.dto.BlackJackResult
 import blackjack.dto.Card
+import blackjack.dto.GameResult
+import blackjack.dto.Money
 import blackjack.dto.Number
+import blackjack.dto.PlayerResultStatus
+import blackjack.dto.PlayerStatus
 import blackjack.dto.Suit
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatIllegalArgumentException
@@ -28,14 +31,25 @@ class PlayerTest {
     fun `초기 값은 카드가 한장도 없고 hit 상태이다`() {
         val player = Player("test")
         assertThat(player.cards).isEmpty()
-        assertThat(player.hit).isTrue()
+        assertThat(player.status).isEqualTo(PlayerStatus.HIT)
     }
 
     @Test
-    fun `hit 상태를 변화시키면 hit 상태가 변한다`() {
+    fun `stay 상태로 변화시키면 변하고 그 뒤로 다른 상태로 변하지 않는다`() {
         val player = Player("test")
-        player.noMoreHit()
-        assertThat(player.hit).isFalse()
+        player.stay()
+        assertThat(player.status).isEqualTo(PlayerStatus.STAY)
+        player.bust()
+        assertThat(player.status).isEqualTo(PlayerStatus.STAY)
+    }
+
+    @Test
+    fun `bust 상태로 변화시키면 변하고 그 뒤로 다른 상태로 변하지 않는다`() {
+        val player = Player("test")
+        player.bust()
+        assertThat(player.status).isEqualTo(PlayerStatus.BUST)
+        player.stay()
+        assertThat(player.status).isEqualTo(PlayerStatus.BUST)
     }
 
     @ParameterizedTest
@@ -57,19 +71,19 @@ class PlayerTest {
     }
 
     @Test
-    fun `21이 넘으면 자동으로 hit 상태가 변한다`() {
+    fun `21이 넘으면 자동으로 bust가 된다`() {
         val player = Player("test")
-        assertThat(player.hit).isTrue()
+        assertThat(player.status).isEqualTo(PlayerStatus.HIT)
         player.addCards(listOf(Card(Suit.SPADE, Number.QUEEN), Card(Suit.DIAMOND, Number.JACK)))
         player.addCard(Card(Suit.HEART, Number.KING))
-        assertThat(player.hit).isFalse()
+        assertThat(player.status).isEqualTo(PlayerStatus.BUST)
     }
 
     @Test
     fun `결과를 생성하지 않고 호출하면 에러가 발생한다`() {
         assertThatIllegalArgumentException().isThrownBy {
             val player = Player("test")
-            player.blackJackResult
+            player.gameResult
         }
     }
 
@@ -78,14 +92,16 @@ class PlayerTest {
     fun `플래이어와 결과를 비교한다`(
         aCards: List<Card>,
         bCards: List<Card>,
-        aResult: BlackJackResult,
-        bResult: BlackJackResult
+        aResult: PlayerResultStatus,
+        bResult: PlayerResultStatus
     ) {
         // given
         val playerA = Player("a")
         val playerB = Player("b")
-        playerA.addCards(aCards)
-        playerB.addCards(bCards)
+        playerA.addCards(aCards).apply { if (aCards.size > 2) playerA.bust() }
+        playerB.addCards(bCards).apply { if (bCards.size > 2) playerB.bust() }
+        playerA.stay()
+        playerB.stay()
 
         // when
         playerA.compare(playerB)
@@ -93,9 +109,24 @@ class PlayerTest {
 
         // then
         assertAll(
-            { assertThat(playerA.blackJackResult).isEqualTo(aResult) },
-            { assertThat(playerB.blackJackResult).isEqualTo(bResult) },
+            { assertThat(playerA.gameResult?.playerResultStatus).isEqualTo(aResult) },
+            { assertThat(playerB.gameResult?.playerResultStatus).isEqualTo(bResult) },
         )
+    }
+
+    @ParameterizedTest
+    @MethodSource("getPriceTestInput")
+    fun `결과에 따른 상금이 다르다`(
+        resultStatus: PlayerResultStatus,
+        expected: Double
+    ) {
+        val money = Money(1000)
+        val player = Player("test").apply {
+            setGameResult(GameResult(0, resultStatus))
+            setBettingMoney(money)
+        }
+
+        assertThat(player.getPrice()).isEqualTo(money * expected)
     }
 
     companion object {
@@ -133,29 +164,58 @@ class PlayerTest {
                 Arguments.of(
                     listOf(Card(Suit.DIAMOND, Number.QUEEN), Card(Suit.DIAMOND, Number.FIVE)),
                     listOf(Card(Suit.SPADE, Number.ACE), Card(Suit.SPADE, Number.SIX)),
-                    BlackJackResult(15, 0, 1),
-                    BlackJackResult(17, 1, 0)
+                    PlayerResultStatus.LOSE,
+                    PlayerResultStatus.WIN
                 ),
                 // a < 21 < b
                 Arguments.of(
                     listOf(Card(Suit.DIAMOND, Number.QUEEN), Card(Suit.DIAMOND, Number.KING)),
                     listOf(Card(Suit.SPADE, Number.KING), Card(Suit.SPADE, Number.TEN), Card(Suit.SPADE, Number.THREE)),
-                    BlackJackResult(20, 1, 0),
-                    BlackJackResult(23, 0, 1)
+                    PlayerResultStatus.WIN,
+                    PlayerResultStatus.LOSE
                 ),
                 // 21 < a, b
                 Arguments.of(
                     listOf(Card(Suit.DIAMOND, Number.QUEEN), Card(Suit.DIAMOND, Number.KING), Card(Suit.DIAMOND, Number.JACK)),
                     listOf(Card(Suit.SPADE, Number.KING), Card(Suit.SPADE, Number.TEN), Card(Suit.SPADE, Number.THREE)),
-                    BlackJackResult(30, 0, 1),
-                    BlackJackResult(23, 0, 1)
+                    PlayerResultStatus.LOSE,
+                    PlayerResultStatus.LOSE
                 ),
                 // a = b < 21
                 Arguments.of(
                     listOf(Card(Suit.DIAMOND, Number.QUEEN), Card(Suit.DIAMOND, Number.FIVE)),
                     listOf(Card(Suit.SPADE, Number.SEVEN), Card(Suit.SPADE, Number.EIGHT)),
-                    BlackJackResult(15, 0, 1),
-                    BlackJackResult(15, 0, 1)
+                    PlayerResultStatus.TIE,
+                    PlayerResultStatus.TIE
+                ),
+                // a < b = 21
+                Arguments.of(
+                    listOf(Card(Suit.DIAMOND, Number.QUEEN), Card(Suit.DIAMOND, Number.FIVE)),
+                    listOf(Card(Suit.SPADE, Number.ACE), Card(Suit.SPADE, Number.TEN)),
+                    PlayerResultStatus.LOSE,
+                    PlayerResultStatus.BLACKJACK
+                ),
+            )
+        }
+
+        @JvmStatic
+        fun getPriceTestInput(): Stream<Arguments> {
+            return Stream.of(
+                Arguments.of(
+                    PlayerResultStatus.BLACKJACK,
+                    1.5
+                ),
+                Arguments.of(
+                    PlayerResultStatus.WIN,
+                    1.0
+                ),
+                Arguments.of(
+                    PlayerResultStatus.TIE,
+                    0.0
+                ),
+                Arguments.of(
+                    PlayerResultStatus.LOSE,
+                    -1.0
                 ),
             )
         }

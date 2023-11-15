@@ -2,7 +2,10 @@ package blackjack.model
 
 import blackjack.dto.Card
 import blackjack.dto.Deck
-import blackjack.model.Point.Companion.WINNING_POINT
+import blackjack.dto.GameResult
+import blackjack.dto.Money
+import blackjack.dto.PlayerResultStatus
+import blackjack.dto.PlayerStatus
 
 class Dealer : Player(DEALER_NAME) {
 
@@ -27,39 +30,25 @@ class Dealer : Player(DEALER_NAME) {
 
     fun moreCard(): Boolean {
         var hitted = false
-        if (hit && getPoints() <= DEALER_HIT_POINT) {
+        if (status == PlayerStatus.HIT && getPoints() <= DEALER_HIT_POINT) {
             addCard(dealingOneCard())
             hitted = true
         }
-        noMoreHit()
+        stay()
 
         return hitted
     }
 
     fun compareWithPlayers(players: Players) {
-        val winAndLose = players.values
-            .map { compareWithPlayer(it) }
-            .groupBy { it }
+        players.values
+            .map { it.compare(this) }
 
-        makeResult(
-            winAndLose[true]?.size ?: 0,
-            winAndLose[false]?.size ?: 0
+        setGameResult(
+            GameResult(getPoints(), PlayerResultStatus.TIE) // 딜러는 상태가 어떻든 상관 없다
         )
     }
 
-    private fun compareWithPlayer(player: Player): Boolean? {
-        val dealerPoint = getPoints()
-        val playerPoint = player.getPoints()
-
-        player.compare(this)
-        return if (dealerPoint == playerPoint || (dealerPoint > WINNING_POINT && playerPoint > WINNING_POINT)) {
-            null
-        } else if (dealerPoint > WINNING_POINT || (playerPoint in (dealerPoint + 1)..WINNING_POINT)) {
-            false
-        } else {
-            true
-        }
-    }
+    override fun getPrice(): Money = bettingMoney
 
     companion object {
         private const val DEALER_NAME = "딜러"

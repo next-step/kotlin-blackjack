@@ -1,15 +1,20 @@
 package blackjack.model
 
-import blackjack.dto.BlackJackResult
 import blackjack.dto.Card
+import blackjack.dto.GameResult
+import blackjack.dto.Money
+import blackjack.dto.PlayerResultStatus
+import blackjack.dto.PlayerStatus
 import blackjack.model.Point.Companion.WINNING_POINT
 
 open class Player(val name: String) {
 
     val cards = mutableListOf<Card>()
-    var hit = true
+    var status = PlayerStatus.HIT
         private set
-    var blackJackResult: BlackJackResult? = null
+    var bettingMoney: Money = Money(0)
+        private set
+    var gameResult: GameResult? = null
         private set
         get() {
             require(field != null) { "게임이 아직 끝나지 않았습니다" }
@@ -23,7 +28,7 @@ open class Player(val name: String) {
     fun addCard(card: Card) {
         cards.add(card)
         if (getPoints() > WINNING_POINT) {
-            noMoreHit()
+            bust()
         }
     }
 
@@ -34,27 +39,44 @@ open class Player(val name: String) {
 
     fun getPoints(): Int = toPoint().calculatePoints()
 
-    fun noMoreHit() {
-        hit = false
+    fun stay() {
+        if (status == PlayerStatus.HIT) {
+            status = PlayerStatus.STAY
+        }
+    }
+
+    fun bust() {
+        if (status == PlayerStatus.HIT) {
+            status = PlayerStatus.BUST
+        }
     }
 
     private fun toPoint(): Point = Point(
         cards.map { it.number }
     )
 
-    fun compare(player: Player) {
+    fun compare(dealer: Player) {
         val point = getPoints()
-        val playerPoint = player.getPoints()
+        val dealerPoint = dealer.getPoints()
 
-        blackJackResult = if (playerPoint in point..WINNING_POINT || point > WINNING_POINT) {
-            BlackJackResult(point, 0, 1)
+        gameResult = if (status == PlayerStatus.BUST || (dealer.status == PlayerStatus.STAY && dealerPoint > point)) {
+            GameResult(point, PlayerResultStatus.LOSE)
+        } else if (point == dealerPoint) {
+            GameResult(point, PlayerResultStatus.TIE)
         } else {
-            BlackJackResult(point, 1, 0)
+            GameResult(point, isBlackJack(point))
         }
     }
 
-    fun makeResult(winning: Int, losing: Int) {
-        blackJackResult = BlackJackResult(getPoints(), winning, losing)
+    private fun isBlackJack(point: Int): PlayerResultStatus =
+        if (point == WINNING_POINT && cards.size == 2) {
+            PlayerResultStatus.BLACKJACK
+        } else {
+            PlayerResultStatus.WIN
+        }
+
+    fun setGameResult(gameResult: GameResult) {
+        this.gameResult = gameResult
     }
 
     fun processGame(
@@ -62,13 +84,25 @@ open class Player(val name: String) {
         hitOrStand: (Player) -> Boolean,
         showCard: (Player) -> Unit
     ) {
-        while (hit) {
+        while (status == PlayerStatus.HIT) {
             if (hitOrStand.invoke(this).not()) {
-                noMoreHit()
+                stay()
                 return
             }
             addCard(dealer.dealingOneCard())
             showCard.invoke(this)
         }
     }
+
+    fun setBettingMoney(money: Money) {
+        bettingMoney = money
+    }
+
+    open fun getPrice(): Money =
+        when (gameResult!!.playerResultStatus) {
+            PlayerResultStatus.BLACKJACK -> bettingMoney * 1.5
+            PlayerResultStatus.WIN -> bettingMoney
+            PlayerResultStatus.TIE -> Money(0)
+            PlayerResultStatus.LOSE -> bettingMoney * -1
+        }
 }

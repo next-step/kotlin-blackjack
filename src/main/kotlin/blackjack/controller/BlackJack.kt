@@ -7,7 +7,9 @@ import blackjack.view.View
 class BlackJack {
 
     fun run() {
-        val players = View.inputPlayerNames()
+        val players = View.inputPlayerNames().apply {
+            bettingMoney(View::inputBettingMoney)
+        }
         val dealer = Dealer()
         val participants = Participants(players, dealer)
 

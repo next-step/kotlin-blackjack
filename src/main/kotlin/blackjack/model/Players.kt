@@ -8,6 +8,9 @@ class Players(val values: List<Player>) {
         }
     }
 
-    fun hitablePlayers(): List<Player> =
-        values.filter { it.hit }
+    fun bettingMoney(setBettingMoney: (Player) -> Unit) {
+        values.forEach {
+            setBettingMoney.invoke(it)
+        }
+    }
 }

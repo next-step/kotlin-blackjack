@@ -2,6 +2,7 @@ package blackjack.model
 
 import blackjack.dto.Card
 import blackjack.dto.Number
+import blackjack.dto.PlayerResultStatus
 import blackjack.dto.Suit
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
@@ -40,16 +41,17 @@ class ParticipantsTest {
         dealer.addCards(listOf(Card(Suit.SPADE, Number.THREE), Card(Suit.DIAMOND, Number.JACK)))
 
         // when
+        players.values.forEach { it.stay() }
+        dealer.stay()
         participants.makeResult()
 
         // then
         assertAll(
-            { assertThat(players.values[0].blackJackResult?.winning).isEqualTo(1) },
-            { assertThat(players.values[0].blackJackResult?.losing).isEqualTo(0) },
-            { assertThat(players.values[1].blackJackResult?.winning).isEqualTo(0) },
-            { assertThat(players.values[1].blackJackResult?.losing).isEqualTo(1) },
-            { assertThat(dealer.blackJackResult?.winning).isEqualTo(1) },
-            { assertThat(dealer.blackJackResult?.losing).isEqualTo(1) }
+            { assertThat(players.values[0].gameResult?.point).isEqualTo(21) },
+            { assertThat(players.values[0].gameResult?.playerResultStatus).isEqualTo(PlayerResultStatus.BLACKJACK) },
+            { assertThat(players.values[1].gameResult?.point).isEqualTo(12) },
+            { assertThat(players.values[1].gameResult?.playerResultStatus).isEqualTo(PlayerResultStatus.LOSE) },
+            { assertThat(dealer.gameResult?.point).isEqualTo(13) },
         )
     }
 }

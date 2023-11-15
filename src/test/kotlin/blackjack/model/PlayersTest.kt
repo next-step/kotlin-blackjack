@@ -7,19 +7,21 @@ import org.junit.jupiter.api.assertAll
 class PlayersTest {
 
     @Test
-    fun `hit 가능한 플레이어들을 반환한다`() {
+    fun `처음 카드를 배분하면 두 장씩 받는다`() {
         val players = Players(
             listOf(
-                Player("a").apply { noMoreHit() },
+                Player("a"),
                 Player("b"),
-                Player("c").apply { noMoreHit() }
+                Player("c")
             )
         )
-        val hitablePlayers = players.hitablePlayers()
+
+        players.initialCardDealing(Dealer())
 
         assertAll(
-            { assertThat(hitablePlayers).hasSize(1) },
-            { assertThat(hitablePlayers[0].name).isEqualTo("b") }
+            { assertThat(players.values[0].cards).hasSize(2) },
+            { assertThat(players.values[1].cards).hasSize(2) },
+            { assertThat(players.values[2].cards).hasSize(2) },
         )
     }
 }

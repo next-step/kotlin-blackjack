@@ -1,5 +1,6 @@
 package blackjack.view
 
+import blackjack.dto.Money
 import blackjack.model.Dealer
 import blackjack.model.Participants
 import blackjack.model.Player
@@ -18,6 +19,11 @@ object View {
 
     fun initialCardDealingComment(players: Players) {
         println("\n딜러와 ${players.values.joinToString { it.name }}에게 2장의 나누었습니다.")
+    }
+
+    fun inputBettingMoney(player: Player) {
+        println("${player.name}의 배팅 금액은?")
+        player.setBettingMoney(Money(readln().toIntOrNull() ?: 0))
     }
 
     fun dealerMoreCardComment(hitted: Boolean) {
@@ -54,9 +60,17 @@ object View {
     fun showResults(participants: Participants) {
         showResult(participants.dealer)
         showResults(participants.players)
-        println("\n## 최종 승패")
-        showDealerWinAndLose(participants.dealer)
-        showWinAndLose(participants.players)
+        println("\n## 최종 수익")
+        showPrice(participants.dealer)
+        showPrices(participants.players)
+    }
+
+    private fun showPrices(players: Players) {
+        players.values.forEach { showPrice(it) }
+    }
+
+    private fun showPrice(player: Player) {
+        println("${player.name}: ${player.getPrice().money}")
     }
 
     private fun showResults(players: Players) {
@@ -64,19 +78,7 @@ object View {
     }
 
     private fun showResult(player: Player) {
-        println("${player.name}카드: ${player.cards.joinToString { it.cardName() }} - 결과: ${player.blackJackResult?.point}")
-    }
-
-    private fun showDealerWinAndLose(dealer: Dealer) {
-        println("${dealer.name}: ${dealer.blackJackResult?.winning}승 ${dealer.blackJackResult?.losing}패")
-    }
-
-    private fun showWinAndLose(players: Players) {
-        players.values.forEach { showWinAndLose(it) }
-    }
-
-    private fun showWinAndLose(player: Player) {
-        println("${player.name}: ${if ((player.blackJackResult?.winning ?: 0) > 0) "승" else "패"}")
+        println("${player.name}카드: ${player.cards.joinToString { it.cardName() }} - 결과: ${player.gameResult?.point}")
     }
 
     private fun yesOrNo(): Boolean = when (readln()) {

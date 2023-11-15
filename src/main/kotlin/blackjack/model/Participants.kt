@@ -12,6 +12,7 @@ class Participants(
 
     fun makeResult() {
         dealer.compareWithPlayers(players)
+        getPrice()
     }
 
     fun processGame(
@@ -23,5 +24,13 @@ class Participants(
             it.processGame(dealer, hitOrStand, showCard)
         }
         moreCardComment.invoke(dealer.moreCard())
+    }
+
+    private fun getPrice() {
+        var dealerMoney = dealer.bettingMoney
+        players.values.forEach {
+            dealerMoney -= it.getPrice()
+        }
+        dealer.setBettingMoney(dealerMoney)
     }
 }
