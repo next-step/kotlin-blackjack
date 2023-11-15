@@ -3,9 +3,9 @@ package study.dsl
 import study.builder.LangaugeBuilder
 import study.builder.PersonBuilder
 import study.builder.SkillsBuilder
-import study.dto.Language
-import study.dto.Person
-import study.dto.Skill
+import study.domain.Language
+import study.domain.Person
+import study.domain.Skill
 
 fun introduce(block: PersonBuilder.() -> Unit): Person {
     return PersonBuilder().apply(block).build()

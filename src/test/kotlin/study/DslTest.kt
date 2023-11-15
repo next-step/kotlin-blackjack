@@ -19,6 +19,27 @@ class DslTest {
     }
 
     @Test
+    fun name() {
+        val person = introduce {}
+        person.name shouldBe "홍길동"
+    }
+
+    @Test
+    fun skills() {
+        val person = introduce {
+            name("홍길동")
+            company("활빈당")
+            skills {
+                soft("A passion for problem solving")
+                soft("Good communication skills")
+                hard("Kotlin")
+            }
+        }
+        person.skills[0].description shouldBe "A passion for problem solving"
+        person.skills.size shouldBe 3
+    }
+
+    @Test
     fun languageTest() {
         val person = introduce {
             name("홍길동")

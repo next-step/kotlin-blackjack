@@ -1,3 +1,3 @@
-package study.dto
+package study.domain
 
 data class Skill(val description: String)

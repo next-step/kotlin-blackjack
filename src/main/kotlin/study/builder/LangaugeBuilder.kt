@@ -1,6 +1,6 @@
 package study.builder
 
-import study.dto.Language
+import study.domain.Language
 
 class LangaugeBuilder {
     private var languages: List<Language> = emptyList()

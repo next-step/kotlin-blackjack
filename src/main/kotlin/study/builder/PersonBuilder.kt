@@ -1,14 +1,14 @@
 package study.builder
 
-import study.dto.Language
-import study.dto.Person
-import study.dto.Skill
+import study.domain.Language
+import study.domain.Person
+import study.domain.Skill
 
 class PersonBuilder {
-    private lateinit var name: String
-    private lateinit var company: String
-    private lateinit var skills: List<Skill>
-    private lateinit var languages: List<Language>
+    private var name: String = "홍길동"
+    private var company: String = "미정"
+    private var skills: List<Skill> = emptyList()
+    private var languages: List<Language> = emptyList()
 
     fun name(value: String) {
         name = value

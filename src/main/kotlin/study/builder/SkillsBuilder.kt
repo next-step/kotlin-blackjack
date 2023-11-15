@@ -1,6 +1,6 @@
 package study.builder
 
-import study.dto.Skill
+import study.domain.Skill
 
 class SkillsBuilder {
     private var skills: List<Skill> = emptyList()
