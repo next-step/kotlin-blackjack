@@ -1,6 +1,6 @@
 package blackjack.model
 
-enum class Rank(
+enum class CardRank(
     val score: Int,
     val alias: String,
 ) {

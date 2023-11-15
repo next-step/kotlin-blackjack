@@ -8,11 +8,11 @@ class CardsTest : StringSpec({
     "Cards 의 모든 카드의 점수의 합을 반환해야 한다" {
         val actual = Cards(
             setOf(
-                Card(Suit.SPADE, Rank.ACE),
-                Card(Suit.CLOVER, Rank.THREE),
-                Card(Suit.DIAMOND, Rank.FIVE),
-                Card(Suit.HEART, Rank.EIGHT),
-                Card(Suit.HEART, Rank.KING)
+                Card(Suit.SPADE, CardRank.ACE),
+                Card(Suit.CLOVER, CardRank.THREE),
+                Card(Suit.DIAMOND, CardRank.FIVE),
+                Card(Suit.HEART, CardRank.EIGHT),
+                Card(Suit.HEART, CardRank.KING)
             ).toMutableSet()
         ).totalScore()
         actual shouldBe (1 + 3 + 5 + 8 + 10)

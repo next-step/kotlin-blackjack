@@ -8,11 +8,11 @@ data class Cards(
     }
 
     fun totalScore(): Int {
-        return cards.sumOf { it.rank.score }
+        return cards.sumOf { it.cardRank.score }
     }
 
     fun present(): String {
-        return cards.joinToString(separator = ", ") { "${it.rank.alias}${it.suit.alias}" }
+        return cards.joinToString(separator = ", ") { "${it.cardRank.alias}${it.suit.alias}" }
     }
 
     fun count(): Int {

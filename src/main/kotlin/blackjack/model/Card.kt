@@ -4,15 +4,15 @@ import kotlin.random.Random
 
 data class Card(
     val suit: Suit,
-    val rank: Rank,
+    val cardRank: CardRank,
 ) {
     companion object {
 
         private val random = Random(System.currentTimeMillis())
 
-        private val CARDS: Map<Suit, Map<Rank, Card>> by lazy {
+        private val CARDS: Map<Suit, Map<CardRank, Card>> by lazy {
             Suit.values().associateWith { suit ->
-                Rank.values().associateWith { rank ->
+                CardRank.values().associateWith { rank ->
                     Card(suit, rank)
                 }
             }
@@ -20,12 +20,12 @@ data class Card(
 
         fun of(): Card {
             val s = Suit.values()[random.nextInt(0, Int.MAX_VALUE) % Suit.values().size]
-            val r = Rank.values()[random.nextInt(0, Int.MAX_VALUE) % (Rank.values().size)]
+            val r = CardRank.values()[random.nextInt(0, Int.MAX_VALUE) % (CardRank.values().size)]
             return CARDS[s]!![r]!!
         }
 
-        fun of(suit: Suit, rank: Rank): Card {
-            return CARDS[suit]!![rank]!!
+        fun of(suit: Suit, cardRank: CardRank): Card {
+            return CARDS[suit]!![cardRank]!!
         }
     }
 }
