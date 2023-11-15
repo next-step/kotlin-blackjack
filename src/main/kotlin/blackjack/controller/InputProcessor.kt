@@ -1,6 +1,6 @@
 package blackjack.controller
 
-import blackjack.domain.PlayerNames
+import blackjack.domain.player.PlayerNames
 import blackjack.view.InputView
 
 object InputProcessor {

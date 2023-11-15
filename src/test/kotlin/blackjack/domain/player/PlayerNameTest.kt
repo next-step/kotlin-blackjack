@@ -1,5 +1,6 @@
-package blackjack.domain
+package blackjack.domain.player
 
+import blackjack.domain.player.PlayerName
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.inspectors.forAll
