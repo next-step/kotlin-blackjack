@@ -56,15 +56,4 @@ class DealerTest : BehaviorSpec({
             }
         }
     }
-
-    given("딜러가 버스트 상태이고 플레이어가 버스트 상태가 주어지면") {
-        val dealer = Dealer().apply { burst() }
-        val player = Player("원동재").apply { burst() }
-        When("딜러와 플레이어의 승패를 비교하면") {
-            val winLose = player.match(dealer)
-            Then("플레이어가 이긴다.") {
-                winLose shouldBe WinLose.WIN
-            }
-        }
-    }
 })

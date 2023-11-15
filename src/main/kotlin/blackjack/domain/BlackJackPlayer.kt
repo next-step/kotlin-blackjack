@@ -8,16 +8,12 @@ abstract class BlackJackPlayer(val name: String, val cards: Cards) {
         protected set
 
     init {
-        if (isBlackJack()) {
-            blackjack()
-        }
+        validatePlayerStatus()
     }
 
     fun drawBy(card: Card) {
         cards.add(card)
-        if (cards.score() > Score(BLACK_JACK_SCORE)) {
-            burst()
-        }
+        validatePlayerStatus()
     }
 
     fun isBurst(): Boolean {
@@ -28,14 +24,6 @@ abstract class BlackJackPlayer(val name: String, val cards: Cards) {
         return cards.score() == Score(BLACK_JACK_SCORE)
     }
 
-    fun blackjack() {
-        status = PlayerStatus.BLACKJACK
-    }
-
-    fun burst() {
-        status = PlayerStatus.BURST
-    }
-
     fun match(other: BlackJackPlayer): WinLose {
         return when {
             isBlackJack() && other.isBlackJack() -> WinLose.DRAW
@@ -43,6 +31,18 @@ abstract class BlackJackPlayer(val name: String, val cards: Cards) {
             isBurst() || other.isBlackJack() -> WinLose.LOSE
             else -> cards.score().compareScore(other.cards.score())
         }
+    }
+
+    protected fun validatePlayerStatus() {
+        when {
+            cards.score().burst() -> forceUpdateStatus(PlayerStatus.BURST)
+            cards.cards.size == 2 && (cards.score() == Score(BLACK_JACK_SCORE)) -> forceUpdateStatus(PlayerStatus.BLACKJACK)
+            else -> forceUpdateStatus(PlayerStatus.HIT)
+        }
+    }
+
+    protected fun forceUpdateStatus(status: PlayerStatus) {
+        this.status = status
     }
 
     abstract fun firstOpenCards(): Cards

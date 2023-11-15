@@ -15,7 +15,7 @@ class Player(
     }
 
     fun stand() {
-        status = PlayerStatus.STAND
+        forceUpdateStatus(PlayerStatus.STAND)
     }
 
     fun winLoseMoney(winLose: WinLose): Money {
