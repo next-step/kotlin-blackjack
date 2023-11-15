@@ -2,13 +2,16 @@ package blackjack.domain
 
 import blackjack.domain.Score.Companion.BLACK_JACK_SCORE
 
-abstract class BlackJackPlayer {
-
-    abstract val name: String
-    abstract val cards: Cards
+abstract class BlackJackPlayer(val name: String, val cards: Cards) {
 
     var status: PlayerStatus = PlayerStatus.HIT
         protected set
+
+    init {
+        if (isBlackJack()) {
+            blackjack()
+        }
+    }
 
     fun drawBy(card: Card) {
         cards.add(card)

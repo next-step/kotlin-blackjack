@@ -1,16 +1,10 @@
 package blackjack.domain
 
 class Player(
-    override val name: String,
-    override val cards: Cards = Cards(),
+    name: String,
+    cards: Cards = Cards(),
     private val betMoney: Money = Money()
-) : BlackJackPlayer() {
-
-    init {
-        if (isBlackJack()) {
-            blackjack()
-        }
-    }
+) : BlackJackPlayer(name, cards) {
 
     override fun firstOpenCards(): Cards {
         return cards.take(FIRST_OPEN_COUNT)
