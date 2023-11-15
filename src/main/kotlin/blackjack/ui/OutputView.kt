@@ -1,6 +1,5 @@
 package blackjack.ui
 
-import blackjack.entity.Card
 import blackjack.entity.Participant
 import blackjack.entity.Participants
 
@@ -26,19 +25,24 @@ object OutputView {
     private fun createParticipantInformation(participant: Participant): String {
         return PRINT_PARTICIPANTS_INFORMATION.format(
             participant.name,
-            participant.cards.joinToString { card ->
-                val number = compositeNumberFromNumber(card)
-                "${number}${card.shape.shapeName}"
-            })
+            participant.cards
+        )
     }
 
-    private fun compositeNumberFromNumber(card: Card) =
-        card.number.number.takeIf { it in MINIMUM_NUMBER_NOT_CHARACTER..MAXIMUM_NUMBER_NOT_CHARACTER }
-            ?: card.number.name
+    fun printGetMoreOneCard(participantName: String) {
+        println(ASK_GET_MORE_ONE_CARD.format(participantName))
+    }
+
+    fun printNewCards(participant: Participant) {
+        println(PRINT_PARTICIPANTS_INFORMATION.format(participant.name, participant.cards))
+    }
+
+    fun printResult(result: List<String>) {
+        result.forEach { println(it) }
+    }
 
     private const val ENTER_PARTICIPANTS_NAME = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)"
     private const val PRINT_DIVIDE_CARD_TO_PARTICIPANTS = "%s 에게 각각 2장의 카드를 나누었습니다."
     private const val PRINT_PARTICIPANTS_INFORMATION = "%s카드: %s"
-    private const val MINIMUM_NUMBER_NOT_CHARACTER = 2
-    private const val MAXIMUM_NUMBER_NOT_CHARACTER = 9
+    private const val ASK_GET_MORE_ONE_CARD = "%s은(는) 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)"
 }

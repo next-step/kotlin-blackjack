@@ -3,6 +3,8 @@ package blackjack.card
 import blackjack.domain.CardGenerator
 import blackjack.entity.CardNumber
 import blackjack.entity.CardShape
+import blackjack.entity.Participants
+import blackjack.entity.participantsFromNames
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeInstanceOf
