@@ -27,4 +27,15 @@ class ParticipantTest : StringSpec({
         val participant = Participant("pita", Cards(cardList))
         participant.canGetCard shouldBe true
     }
+
+    "참여자가 가진 카드의 합이 21이 넘고, A를 포함하는 경우 합을 계산할 때 A를 1로 계산하여 더 받을 수 있다고 본다" {
+        // 카드의 합은 24 (A를 11로 계산시에)
+        val cardList = listOf(
+            Card(CardNumber.A, CardShape.DIAMOND),
+            Card(CardNumber.J, CardShape.HEART),
+            Card(CardNumber.THREE, CardShape.SPADE),
+        )
+        val participant = Participant("pita", Cards(cardList))
+        participant.canGetCard shouldBe true
+    }
 })
