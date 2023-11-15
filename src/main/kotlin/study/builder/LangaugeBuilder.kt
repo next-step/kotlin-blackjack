@@ -3,10 +3,10 @@ package study.builder
 import study.dto.Language
 
 class LangaugeBuilder {
-    private var languages = mutableListOf<Language>()
+    private var languages: List<Language> = emptyList()
 
     infix fun String.level(level: Int) {
-        languages.add(Language(this, level))
+        languages = languages + Language(this, level)
     }
 
     fun build(): List<Language> {
