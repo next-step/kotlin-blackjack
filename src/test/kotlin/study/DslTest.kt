@@ -2,8 +2,6 @@ package study
 
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.ValueSource
 import study.dsl.introduce
 import study.dsl.skills
 
