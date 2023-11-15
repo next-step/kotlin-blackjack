@@ -11,7 +11,27 @@ class Cards(
     }
 
     fun totalScore(): Int {
+        if (this.isContainsAce()) {
+            return scoreWithAce()
+        }
+        return simpleSumOfScore()
+    }
+
+    private fun simpleSumOfScore(): Int {
         return cards.sumOf { it.cardRank.score }
+    }
+
+    private fun isContainsAce(): Boolean {
+        return this.cards
+            .any { it.cardRank == CardRank.ACE }
+    }
+
+    private fun scoreWithAce(): Int {
+        val simpleSum = simpleSumOfScore()
+        if (simpleSum + 10 > 21) {
+            return simpleSum
+        }
+        return simpleSum + 10
     }
 
     fun count(): Int {
