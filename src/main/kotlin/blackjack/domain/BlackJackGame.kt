@@ -15,6 +15,7 @@ class BlackJackGame(
     fun run() {
         receiveSetupData()
         progressStage()
+        handleResult()
     }
 
     fun dealCardsToAllPlayers(count: Int) {

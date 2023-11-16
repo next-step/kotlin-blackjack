@@ -1,6 +1,8 @@
 package blackjack.domain.stage
 
+import blackjack.controller.InputProcessor.returnResult
 import blackjack.domain.BlackJackGame
+import blackjack.domain.result.InitialDistributionResult
 
 class InitialDistribution(
     private val game: BlackJackGame,
@@ -12,7 +14,7 @@ class InitialDistribution(
     }
 
     override fun handleResult() {
-        TODO("Not yet implemented")
+        this.returnResult(InitialDistributionResult(game.players))
     }
 
     override fun nextStage(): Stage {

@@ -1,4 +1,4 @@
-package blackjack.view
+package blackjack.view.input
 
 object InputParser {
     private const val PLAYER_NAME_DELIMITER = ","
