@@ -21,8 +21,8 @@ class PlayerCards(cards: List<Card> = listOf()) {
     fun sum(): Int {
         var sum = _cards.sumOf { it.rank.score }
         var aceCount = _cards.count { it.rank == Rank.ACE }
-        while (sum > BLACKJACK && aceCount > 0) {
-            sum -= ACE_OFFSET
+        while (sum + ACE_OFFSET <= BLACKJACK && aceCount > 0) {
+            sum += ACE_OFFSET
             aceCount--
         }
         return sum
