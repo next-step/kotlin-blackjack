@@ -135,6 +135,17 @@ class BlackjackTest : StringSpec({
             .hasMessageContaining("Invalid state transition")
     }
 
+    "Player 가 addCard 하면 Player 의 hand 의 카드 수는 증가해야 한다" {
+        val hand = Hand(Cards(mutableListOf(Card(Suit.Spade, Character.Jack), Card(Suit.Clover, Character.Eight))))
+        val player = Player(hand)
+
+        hand.valueSum() shouldBe 18
+
+        player.hit()
+        val prevCardCount = player.hand.cards.size
+        player.addCard(Card(Suit.Heart, Character.Seven))
+        player.hand.cards.size shouldBe prevCardCount + 1
+    }
 })
 
 class Deck(val cards: Cards) {
