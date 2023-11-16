@@ -1,6 +1,7 @@
 import blackjack.ContinueDeal
 import blackjack.GameBlackjack
 import blackjack.GamePlayer
+import blackjack.GamePlayers
 import blackjack.Message
 import blackjack.PlayerAction
 import view.Input
@@ -15,12 +16,12 @@ fun main() {
     Output.printPlayersInitialDealing(playing)
 
     val updatedPlayers = playing.players.map {
-        var player: GamePlayer? = null
+        var player: GamePlayer = it
         do {
-            Output.printPlayerAction(it)
+            Output.printPlayerAction(player)
             when (ContinueDeal.of(Input.getLine())) {
                 ContinueDeal.YES -> {
-                    player = GameBlackjack.continueDealing(it)
+                    player = GameBlackjack.continueDealing(player)
                     Output.printPlayerCards(player)
                     if(player.isBurst) {
                         break
@@ -29,7 +30,9 @@ fun main() {
                 ContinueDeal.NO -> break
                 ContinueDeal.MISS -> continue
             }
-        } while (player?.action != PlayerAction.STAND)
+        } while (player.action != PlayerAction.STAND)
         player
     }
+
+    Output.printPlayersResult(GamePlayers(updatedPlayers))
 }
