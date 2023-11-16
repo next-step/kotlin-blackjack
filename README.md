@@ -7,6 +7,7 @@
 - [x] Hand 의 sum 은 정확한 값을 반환하야 한다
 - [x] Hand 의 sum 이 21이면 blackjack 이다
 - [x] Hand 의 sum 이 21을 초과하면 bust 이다
+- [x] Hand 의 sum 이 21인 Player 는 blackjack 상태가 된다
 - [ ] Hand 의 sum 이 21을 초과하는 Player 는 bust 상태가 된다
 - [ ] Player 가 hit 하면 Player 의 hand 의 카드 수는 증가해야 한다
 - [ ] Player 가 bust 상태가 되면 hit 할 수 없다

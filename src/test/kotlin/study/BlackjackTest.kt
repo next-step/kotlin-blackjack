@@ -68,6 +68,16 @@ class BlackjackTest : StringSpec({
         hand.isBust() shouldBe true
     }
 
+    "Hand 의 sum 이 21인 Player 는 blackjack 상태가 된다" {
+        val hand = Hand(Cards(mutableListOf(Card(Suit.Spade, Character.Jack), Card(Suit.Clover, Character.Eight), Card(Suit.Clover, Character.Three))))
+        val player = Player(hand)
+
+        hand.valueSum() shouldBe 21
+        hand.isBlackjack() shouldBe true
+        hand.isBust() shouldBe false
+        player.state shouldBe PlayerState.Blackjack
+    }
+
 })
 
 class Deck(val cards: Cards) {
@@ -172,6 +182,13 @@ data class Player(
     val hand: Hand,
     var state: PlayerState = PlayerState.Idle
 ) {
+    init {
+        if (hand.isBlackjack()) {
+            state = PlayerState.Blackjack
+        } else if (hand.isBust()) {
+            state = PlayerState.Bust
+        }
+    }
     fun hit() {
         require(state != PlayerState.Idle) {
             "Invalid state transition: $state -> ${PlayerState.Hit}"
