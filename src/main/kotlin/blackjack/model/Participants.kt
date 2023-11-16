@@ -12,8 +12,7 @@ class Participants(
     }
 
     private fun isGameOver(): Boolean {
-        return participants
-            .any { Referee.isBlackJack(it) }
+        return participants.none { Referee.isBlackJack(it) }
     }
 
     fun isContinue(): Boolean {
