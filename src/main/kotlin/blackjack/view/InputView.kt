@@ -2,8 +2,6 @@ package blackjack.view
 
 import blackjack.model.Participants
 import blackjack.model.Player
-import blackjack.model.pack.ShuffledPack
-import blackjack.view.Console.present
 
 object InputView {
     private const val PLAYER_NAMES_DELIMITER: String = ","
@@ -24,17 +22,12 @@ object InputView {
         return joinPlayers(readlnOrNull() ?: "")
     }
 
-    fun draw(participants: Participants) {
-        participants.participants.forEach {
-            println("${it.name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
-            if (isHit()) {
-                it.hit(ShuffledPack.pickCard())
-            }
-            println(it.present())
-        }
+    private fun isHitInput(): Boolean {
+        return (readlnOrNull() ?: "") == HIT_COMMAND
     }
 
-    private fun isHit(): Boolean {
-        return (readlnOrNull() ?: "") == HIT_COMMAND
+    fun askHit(it: Player): Boolean {
+        println("${it.name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
+        return this.isHitInput()
     }
 }

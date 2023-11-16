@@ -1,5 +1,7 @@
 package blackjack.model
 
+import blackjack.model.pack.ShuffledPack
+
 data class Player(
     val name: String,
     val cards: Cards = Cards.emptyCards(),
@@ -9,7 +11,7 @@ data class Player(
         cards.add(card2)
     }
 
-    fun hit(card: Card) {
-        cards.add(card)
+    fun hit() {
+        cards.add(ShuffledPack.pickCard())
     }
 }

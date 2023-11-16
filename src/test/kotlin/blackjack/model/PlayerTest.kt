@@ -17,7 +17,7 @@ class PlayerTest : StringSpec({
     "플레이어는 hit 시 1장의 카드를 받을 수 있다" {
         shouldNotThrow<IllegalArgumentException> {
             val player = Player("애플")
-            player.hit(ShuffledPack.pickCard())
+            player.hit()
             player.cards.count() shouldBe 1
         }
     }

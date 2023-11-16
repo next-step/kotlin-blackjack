@@ -1,6 +1,7 @@
 package blackjack.view
 
 import blackjack.model.Participants
+import blackjack.model.Player
 import blackjack.view.Console.present
 
 object OutputView {
@@ -20,6 +21,10 @@ object OutputView {
 
     fun dealing(participants: Participants) {
         println("${participants.names()} 에게 2 장씩 나누었습니다.")
+    }
+
+    fun playerCardPresent(it: Player) {
+        println(it.present())
     }
 }
 
