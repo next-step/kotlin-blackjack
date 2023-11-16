@@ -1,6 +1,7 @@
 package study
 
 import io.kotest.core.spec.style.StringSpec
+import io.kotest.matchers.shouldBe
 import org.assertj.core.api.Assertions
 import java.lang.IllegalArgumentException
 
@@ -29,6 +30,14 @@ class BlackjackTest : StringSpec({
         }.isInstanceOf(IllegalArgumentException::class.java)
             .hasMessageContaining("Duplicate cards")
     }
+
+    "Deck 에서 draw 하면 Deck 의 카드 수는 1 감소해야 한다" {
+        val deck = Deck.fullDeck()
+        val prevSize = deck.cardCount()
+        deck.draw()
+        val nowSize = deck.cardCount()
+        prevSize shouldBe nowSize + 1
+    }
 })
 
 class Deck(val cards: Cards) {
@@ -52,7 +61,7 @@ class Deck(val cards: Cards) {
     companion object {
         val initialCardCount = Suit.values().size * Character.values().size
 
-        private fun fullDeck(): Deck {
+        fun fullDeck(): Deck {
             return Deck(Cards.fullCards())
         }
     }
