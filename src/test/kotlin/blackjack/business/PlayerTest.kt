@@ -10,7 +10,7 @@ class PlayerTest {
     @Test
     fun `플레이어의 카드를 추가한다`() {
         // given
-        val player = Player("pobi")
+        val player = Player.from("pobi")
 
         // when
         player.addCard(Card(Suit.SPADE, Rank.ACE))
@@ -23,7 +23,7 @@ class PlayerTest {
     @Test
     fun `플레이어가 추가로 카드를 뽑을 수 있는지 확인한다`() {
         // given
-        val player = Player("pobi")
+        val player = Player.from("pobi")
         player.addCard(Card(Suit.SPADE, Rank.ACE))
         player.addCard(Card(Suit.SPADE, Rank.EIGHT))
 
@@ -37,7 +37,7 @@ class PlayerTest {
     @Test
     fun `플레이어의 스코어를 확인한다`() {
         // given
-        val player = Player("pobi")
+        val player = Player.from("pobi")
         player.addCard(Card(Suit.SPADE, Rank.ACE))
         player.addCard(Card(Suit.SPADE, Rank.EIGHT))
 
@@ -46,5 +46,17 @@ class PlayerTest {
 
         // then
         score shouldBe 19
+    }
+
+    @Test
+    fun `플레이어 생성시 PlayerCards 주입`() {
+        // given
+        val playerCards = PlayerCards(listOf(Card(Suit.SPADE, Rank.ACE), Card(Suit.SPADE, Rank.EIGHT)))
+
+        // when
+        val player = Player.from("pobi", playerCards)
+
+        // then
+        player.score shouldBe 19
     }
 }

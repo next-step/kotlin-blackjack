@@ -35,7 +35,7 @@ class Players private constructor(allPlayers: List<Player>) {
 
     companion object {
         fun from(playerNames: List<String>): Players {
-            return Players(playerNames.map { Player(it) })
+            return Players(playerNames.map { Player.from(it) })
         }
     }
 }

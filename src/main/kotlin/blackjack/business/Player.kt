@@ -1,8 +1,8 @@
 package blackjack.business
 
-class Player(val name: String, cards: List<Card> = listOf()) {
+class Player private constructor(val name: String, playerCards: PlayerCards) {
 
-    private val _cards: PlayerCards = PlayerCards(cards)
+    private val _cards: PlayerCards = playerCards
 
     val score: Int
         get() = _cards.sum()
@@ -15,5 +15,15 @@ class Player(val name: String, cards: List<Card> = listOf()) {
 
     fun canDrawCard(): Boolean {
         return _cards.canDrawCard()
+    }
+
+    companion object {
+        fun from(mame: String, cards: List<Card> = listOf()): Player {
+            return Player(mame, PlayerCards(cards))
+        }
+
+        fun from(mame: String, cards: PlayerCards): Player {
+            return Player(mame, cards)
+        }
     }
 }
