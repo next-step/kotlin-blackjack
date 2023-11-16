@@ -3,16 +3,13 @@ package blackjack.model
 import blackjack.dto.Card
 import blackjack.dto.GameResult
 import blackjack.dto.Money
-import blackjack.dto.PlayerResultStatus
 import blackjack.dto.PlayerStatus
 import blackjack.model.Point.Companion.WINNING_POINT
 
-open class Player(val name: String) {
+open class Player(val name: String, val bettingMoney: Money) {
 
     val cards = mutableListOf<Card>()
     var status = PlayerStatus.HIT
-        private set
-    var bettingMoney: Money = Money(0)
         private set
     var gameResult: GameResult? = null
         private set
@@ -85,24 +82,15 @@ open class Player(val name: String) {
         showCard: (Player) -> Unit
     ) {
         while (status == PlayerStatus.HIT) {
-            if (hitOrStand.invoke(this).not()) {
+            if (hitOrStand(this).not()) {
                 stay()
                 return
             }
             addCard(dealer.dealingOneCard())
-            showCard.invoke(this)
+            showCard(this)
         }
-    }
-
-    fun setBettingMoney(money: Money) {
-        bettingMoney = money
     }
 
     open fun getPrice(): Money =
-        when (gameResult!!.playerResultStatus) {
-            PlayerResultStatus.BLACKJACK -> bettingMoney * 1.5
-            PlayerResultStatus.WIN -> bettingMoney
-            PlayerResultStatus.TIE -> Money(0)
-            PlayerResultStatus.LOSE -> bettingMoney * -1
-        }
+        PlayerResultStatus.getPrice(this)
 }

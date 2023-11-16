@@ -8,22 +8,30 @@ import blackjack.model.Players
 
 object View {
 
-    fun inputPlayerNames(): Players {
+    fun inputPlayerData(): Players {
+        inputPlayerNames().map {
+            Player(it, inputBettingMoney(it))
+        }.let {
+            return Players(it)
+        }
+    }
+    private fun inputPlayerNames(): List<String> {
         println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)")
-        return Players(
-            readln()
-                .split(",")
-                .map { Player(it.trim()) }
-        )
+        return readln()
+            .split(",")
+            .map { it.trim() }
     }
 
     fun initialCardDealingComment(players: Players) {
         println("\n딜러와 ${players.values.joinToString { it.name }}에게 2장의 나누었습니다.")
     }
 
-    fun inputBettingMoney(player: Player) {
-        println("${player.name}의 배팅 금액은?")
-        player.setBettingMoney(Money(readln().toIntOrNull() ?: 0))
+    private fun inputBettingMoney(name: String): Money {
+        println("${name}의 배팅 금액은?")
+        return Money(
+            readln().toIntOrNull()
+                ?: throw IllegalArgumentException("베팅 금액은 숫자여야 합니다.")
+        )
     }
 
     fun dealerMoreCardComment(hitted: Boolean) {

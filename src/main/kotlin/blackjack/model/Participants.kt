@@ -23,7 +23,7 @@ class Participants(
         players.values.forEach {
             it.processGame(dealer, hitOrStand, showCard)
         }
-        moreCardComment.invoke(dealer.moreCard())
+        moreCardComment(dealer.moreCard())
     }
 
     private fun getPrice() {
@@ -31,6 +31,6 @@ class Participants(
         players.values.forEach {
             dealerMoney -= it.getPrice()
         }
-        dealer.setBettingMoney(dealerMoney)
+        dealer.resultMoney = dealerMoney
     }
 }

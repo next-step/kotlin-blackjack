@@ -7,10 +7,4 @@ class Players(val values: List<Player>) {
             it.addCards(dealer.dealingTwoCards())
         }
     }
-
-    fun bettingMoney(setBettingMoney: (Player) -> Unit) {
-        values.forEach {
-            setBettingMoney.invoke(it)
-        }
-    }
 }

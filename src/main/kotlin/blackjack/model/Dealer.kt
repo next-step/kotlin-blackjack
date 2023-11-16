@@ -4,13 +4,13 @@ import blackjack.dto.Card
 import blackjack.dto.Deck
 import blackjack.dto.GameResult
 import blackjack.dto.Money
-import blackjack.dto.PlayerResultStatus
 import blackjack.dto.PlayerStatus
 
-class Dealer : Player(DEALER_NAME) {
+class Dealer(name: String, bettingMoney: Money) : Player(name, bettingMoney) {
 
     private val cardSet = Deck.newDeck()
     private var pointer = 0
+    var resultMoney = bettingMoney
 
     fun dealingTwoCards(): List<Card> {
         require(pointer + 2 < cardSet.size) { "카드가 부족합니다." }
@@ -48,10 +48,10 @@ class Dealer : Player(DEALER_NAME) {
         )
     }
 
-    override fun getPrice(): Money = bettingMoney
+    override fun getPrice(): Money = resultMoney
 
     companion object {
-        private const val DEALER_NAME = "딜러"
+        const val DEALER_NAME = "딜러"
         private const val DEALER_HIT_POINT = 16
     }
 }

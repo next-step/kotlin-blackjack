@@ -1,16 +1,16 @@
 package blackjack.controller
 
+import blackjack.dto.Money
 import blackjack.model.Dealer
+import blackjack.model.Dealer.Companion.DEALER_NAME
 import blackjack.model.Participants
 import blackjack.view.View
 
 class BlackJack {
 
     fun run() {
-        val players = View.inputPlayerNames().apply {
-            bettingMoney(View::inputBettingMoney)
-        }
-        val dealer = Dealer()
+        val players = View.inputPlayerData()
+        val dealer = Dealer(DEALER_NAME, Money.ZERO)
         val participants = Participants(players, dealer)
 
         participants.initialCardDealing()
