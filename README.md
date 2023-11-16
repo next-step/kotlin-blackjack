@@ -9,7 +9,8 @@
 - [x] Hand 의 sum 이 21을 초과하면 bust 이다
 - [x] Hand 의 sum 이 21인 Player 는 blackjack 상태가 된다
 - [x] Hand 의 sum 이 21을 초과하는 Player 는 bust 상태가 된다
-- [ ] Player 가 hit 하면 Player 의 hand 의 카드 수는 증가해야 한다
+- [x] Player 는 Idle 일 때만 hit 할 수 있다
+- [ ] Player 가 addCard 하면 Player 의 hand 의 카드 수는 증가해야 한다
 - [ ] Player 가 bust 상태가 되면 hit 할 수 없다
 - [ ] Player 는 stay 후엔 다시 hit 할 수 없다
 

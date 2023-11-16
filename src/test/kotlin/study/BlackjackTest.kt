@@ -4,6 +4,7 @@ import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 import org.assertj.core.api.Assertions
 import java.lang.IllegalArgumentException
+import java.lang.RuntimeException
 
 class BlackjackTest : StringSpec({
     "Deck 은 52장의 중복 없는 카드로 이루어진다" {
@@ -86,6 +87,52 @@ class BlackjackTest : StringSpec({
         hand.isBlackjack() shouldBe false
         hand.isBust() shouldBe true
         player.state shouldBe PlayerState.Bust
+    }
+
+    "Player 는 Idle 일 때만 hit 할 수 있다" {
+        val bustHand = Hand(Cards(mutableListOf(Card(Suit.Spade, Character.Jack), Card(Suit.Clover, Character.Eight), Card(Suit.Clover, Character.Five))))
+        val bustPlayer = Player(bustHand)
+
+        bustHand.isBust() shouldBe true
+        bustPlayer.state shouldBe PlayerState.Bust
+
+        Assertions.assertThatThrownBy {
+            bustPlayer.hit()
+        }.isInstanceOf(RuntimeException::class.java)
+            .hasMessageContaining("Invalid state transition")
+
+        val blackjackHand = Hand(Cards(mutableListOf(Card(Suit.Spade, Character.Jack), Card(Suit.Clover, Character.Eight), Card(Suit.Clover, Character.Three))))
+        val blackjackPlayer = Player(blackjackHand)
+
+        blackjackHand.isBlackjack() shouldBe true
+        blackjackPlayer.state shouldBe PlayerState.Blackjack
+
+        Assertions.assertThatThrownBy {
+            blackjackPlayer.hit()
+        }.isInstanceOf(RuntimeException::class.java)
+            .hasMessageContaining("Invalid state transition")
+
+        val hand = Hand(Cards(mutableListOf(Card(Suit.Spade, Character.Jack), Card(Suit.Clover, Character.Eight))))
+        val stayPlayer = Player(hand)
+        stayPlayer.stay()
+
+        stayPlayer.state shouldBe PlayerState.Stay
+
+        Assertions.assertThatThrownBy {
+            stayPlayer.hit()
+        }.isInstanceOf(RuntimeException::class.java)
+            .hasMessageContaining("Invalid state transition")
+
+        val idlePlayer = Player(hand)
+
+        idlePlayer.state shouldBe PlayerState.Idle
+        idlePlayer.hit()
+        idlePlayer.state shouldBe PlayerState.Hit
+
+        Assertions.assertThatThrownBy {
+            idlePlayer.hit()
+        }.isInstanceOf(RuntimeException::class.java)
+            .hasMessageContaining("Invalid state transition")
     }
 
 })
@@ -200,8 +247,8 @@ data class Player(
         }
     }
     fun hit() {
-        require(state != PlayerState.Idle) {
-            "Invalid state transition: $state -> ${PlayerState.Hit}"
+        require(state == PlayerState.Idle) {
+            RuntimeException("Invalid state transition: $state -> ${PlayerState.Hit}")
         }
         state = PlayerState.Hit
     }
@@ -213,7 +260,7 @@ data class Player(
 
     fun addCard(card: Card) {
         require(state == PlayerState.Hit) {
-            "Invalid state transition: $state -> ${PlayerState.Hit}"
+            RuntimeException("Invalid state transition: $state -> ${PlayerState.Hit}")
         }
         hand.addCard(card)
         if (hand.isBust()) {
