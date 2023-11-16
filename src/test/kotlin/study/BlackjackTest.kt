@@ -1,5 +1,13 @@
 package study
 
+import blackjack.domain.card.Card
+import blackjack.domain.card.Cards
+import blackjack.domain.card.Character
+import blackjack.domain.card.Deck
+import blackjack.domain.card.Suit
+import blackjack.domain.player.Hand
+import blackjack.domain.player.Player
+import blackjack.domain.player.PlayerState
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 import org.assertj.core.api.Assertions
@@ -54,7 +62,15 @@ class BlackjackTest : StringSpec({
     }
 
     "Hand 의 sum 이 21이면 blackjack 이다" {
-        val hand = Hand(Cards(mutableListOf(Card(Suit.Spade, Character.Jack), Card(Suit.Clover, Character.Eight), Card(Suit.Clover, Character.Three))))
+        val hand = Hand(
+            Cards(
+                mutableListOf(
+                    Card(Suit.Spade, Character.Jack), Card(Suit.Clover, Character.Eight), Card(
+                        Suit.Clover, Character.Three
+                    )
+                )
+            )
+        )
 
         hand.valueSum() shouldBe 21
         hand.isBlackjack() shouldBe true
@@ -62,7 +78,15 @@ class BlackjackTest : StringSpec({
     }
 
     "Hand 의 sum 이 21을 초과하면 bust 이다" {
-        val hand = Hand(Cards(mutableListOf(Card(Suit.Spade, Character.Jack), Card(Suit.Clover, Character.Eight), Card(Suit.Clover, Character.Five))))
+        val hand = Hand(
+            Cards(
+                mutableListOf(
+                    Card(Suit.Spade, Character.Jack), Card(Suit.Clover, Character.Eight), Card(
+                        Suit.Clover, Character.Five
+                    )
+                )
+            )
+        )
 
         hand.valueSum() shouldBe 23
         hand.isBlackjack() shouldBe false
@@ -70,7 +94,15 @@ class BlackjackTest : StringSpec({
     }
 
     "Hand 의 sum 이 21인 Player 는 blackjack 상태가 된다" {
-        val hand = Hand(Cards(mutableListOf(Card(Suit.Spade, Character.Jack), Card(Suit.Clover, Character.Eight), Card(Suit.Clover, Character.Three))))
+        val hand = Hand(
+            Cards(
+                mutableListOf(
+                    Card(Suit.Spade, Character.Jack), Card(Suit.Clover, Character.Eight), Card(
+                        Suit.Clover, Character.Three
+                    )
+                )
+            )
+        )
         val player = Player(hand)
 
         hand.valueSum() shouldBe 21
@@ -80,7 +112,15 @@ class BlackjackTest : StringSpec({
     }
 
     "Hand 의 sum 이 21을 초과하는 Player 는 bust 상태가 된다" {
-        val hand = Hand(Cards(mutableListOf(Card(Suit.Spade, Character.Jack), Card(Suit.Clover, Character.Eight), Card(Suit.Clover, Character.Five))))
+        val hand = Hand(
+            Cards(
+                mutableListOf(
+                    Card(Suit.Spade, Character.Jack), Card(Suit.Clover, Character.Eight), Card(
+                        Suit.Clover, Character.Five
+                    )
+                )
+            )
+        )
         val player = Player(hand)
 
         hand.valueSum() shouldBe 23
@@ -111,7 +151,15 @@ class BlackjackTest : StringSpec({
     }
 
     "Player 가 bust 상태가 되면 hit 할 수 없다" {
-        val bustHand = Hand(Cards(mutableListOf(Card(Suit.Spade, Character.Jack), Card(Suit.Clover, Character.Eight), Card(Suit.Clover, Character.Five))))
+        val bustHand = Hand(
+            Cards(
+                mutableListOf(
+                    Card(Suit.Spade, Character.Jack), Card(Suit.Clover, Character.Eight), Card(
+                        Suit.Clover, Character.Five
+                    )
+                )
+            )
+        )
         val bustPlayer = Player(bustHand)
 
         bustHand.isBust() shouldBe true
@@ -124,7 +172,15 @@ class BlackjackTest : StringSpec({
     }
 
     "Player 가 blackjack 상태가 되면 hit 할 수 없다" {
-        val blackjackHand = Hand(Cards(mutableListOf(Card(Suit.Spade, Character.Jack), Card(Suit.Clover, Character.Eight), Card(Suit.Clover, Character.Three))))
+        val blackjackHand = Hand(
+            Cards(
+                mutableListOf(
+                    Card(Suit.Spade, Character.Jack), Card(Suit.Clover, Character.Eight), Card(
+                        Suit.Clover, Character.Three
+                    )
+                )
+            )
+        )
         val blackjackPlayer = Player(blackjackHand)
 
         blackjackHand.isBlackjack() shouldBe true
@@ -163,139 +219,3 @@ class BlackjackTest : StringSpec({
             .hasMessageContaining("Invalid state transition")
     }
 })
-
-class Deck(val cards: Cards) {
-    init {
-        require(cards.size == initialCardCount) { "Invalid initial Card count ${cards.size}" }
-        require(cards.cardList.count { it.suit == Suit.Spade } == Character.values().size) { "Invalid suit count ${Suit.Spade}" }
-        require(cards.cardList.count { it.suit == Suit.Diamond } == Character.values().size) { "Invalid suit count ${Suit.Diamond}" }
-        require(cards.cardList.count { it.suit == Suit.Heart } == Character.values().size) { "Invalid suit count ${Suit.Heart}" }
-        require(cards.cardList.count { it.suit == Suit.Clover } == Character.values().size) { "Invalid suit count ${Suit.Clover}" }
-        require(cards.cardList.toSet().size == initialCardCount) { "Duplicate cards ${cards.cardList}" }
-    }
-
-    fun draw(): Card = cards.drawTop()
-
-    fun shuffle() {
-        cards.shuffle()
-    }
-
-    fun cardCount(): Int = cards.size
-
-    companion object {
-        val initialCardCount = Suit.values().size * Character.values().size
-
-        fun fullDeck(): Deck {
-            return Deck(Cards.fullCards())
-        }
-    }
-}
-
-data class Cards(private val _cardList: MutableList<Card>) {
-    val cardList get() = _cardList.toList()
-    val size get() = _cardList.size
-
-    fun shuffle() {
-        _cardList.shuffle()
-    }
-
-    fun drawTop(): Card = _cardList.removeAt(0)
-
-    fun add(card: Card) {
-        _cardList.add(card)
-    }
-
-    companion object {
-        fun fullCards(): Cards {
-            val mutableList = mutableListOf<Card>()
-            Suit.values().forEach { suit ->
-                Character.values().forEach { character ->
-                    mutableList.add(Card(suit, character))
-                }
-            }
-            return Cards(mutableList)
-        }
-    }
-}
-
-data class Card(
-    val suit: Suit,
-    val character: Character
-)
-
-enum class Suit {
-    Spade, Diamond, Heart, Clover
-}
-
-enum class Character(val value: Int) {
-    Ace(1),
-    Two(2),
-    Three(3),
-    Four(4),
-    Five(5),
-    Six(6),
-    Seven(7),
-    Eight(8),
-    Nine(9),
-    Ten(10),
-    Jack(10),
-    Queen(10),
-    King(10),
-}
-
-enum class PlayerState {
-    Idle, Hit, Stay, Bust, Blackjack
-}
-
-data class Hand(val cards: Cards) {
-    fun addCard(card: Card) {
-        cards.add(card)
-    }
-    fun valueSum() : Int = cards.cardList.sumOf { it.character.value }
-
-    fun isBlackjack() = valueSum() == blackjack
-
-    fun isBust() = valueSum() > blackjack
-
-    companion object {
-        const val blackjack = 21
-    }
-}
-
-data class Player(
-    val hand: Hand,
-    var state: PlayerState = PlayerState.Idle
-) {
-    init {
-        if (hand.isBlackjack()) {
-            state = PlayerState.Blackjack
-        } else if (hand.isBust()) {
-            state = PlayerState.Bust
-        }
-    }
-    fun hit() {
-        require(state == PlayerState.Idle) {
-            RuntimeException("Invalid state transition: $state -> ${PlayerState.Hit}")
-        }
-        state = PlayerState.Hit
-    }
-
-    fun stay() {
-        require(state == PlayerState.Idle)
-        state = PlayerState.Stay
-    }
-
-    fun addCard(card: Card) {
-        require(state == PlayerState.Hit) {
-            RuntimeException("Invalid state transition: $state -> ${PlayerState.Hit}")
-        }
-        hand.addCard(card)
-        if (hand.isBust()) {
-            state = PlayerState.Bust
-        }
-
-        if (hand.isBlackjack()) {
-            state = PlayerState.Blackjack
-        }
-    }
-}
