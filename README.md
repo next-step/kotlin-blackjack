@@ -59,6 +59,7 @@ Player.hit() :  블랙잭에서 카드를 받는 행동은 "히트" 딜러가 �
 
 - 2차 수정
 ```text
-- 
 - 코드 중 !! 를 requireNotNull 로 대체하고 에러메시지를 출력하게 수정하였습니다
+- MODEL/DOMAIN 클래스 내부에 VIEW 클래스가 있는지 체크하고 수정 // PR 요청 전 regression 하기
+- VIEW 클래스 내부에 MODEL/DOMAIN 로직이 담겨있는지 체크하고 수정   // PR 요청 전 regression 하기
 ```
