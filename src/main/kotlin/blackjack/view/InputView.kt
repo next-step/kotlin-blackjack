@@ -31,3 +31,7 @@ object InputView {
         return (readlnOrNull() ?: "") == "y"
     }
 }
+
+private fun Participants.names(): String {
+    return participants.joinToString(separator = ", ") { it.name }
+}

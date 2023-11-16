@@ -9,10 +9,6 @@ class Participants(
         return participants.size
     }
 
-    fun names(): String {
-        return participants.joinToString(separator = ", ") { it.name }
-    }
-
     fun dealing() {
         participants.forEach { it.deal(ShuffledPack.pickCard(), ShuffledPack.pickCard()) }
     }
