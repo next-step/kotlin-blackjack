@@ -1,6 +1,5 @@
 package blackjack.domain.stage
 
-import blackjack.controller.InputProcessor.returnResult
 import blackjack.domain.BlackJackGame
 import blackjack.domain.result.InitialDistributionResult
 
@@ -14,7 +13,7 @@ class InitialDistribution(
     }
 
     override fun handleResult() {
-        this.returnResult(InitialDistributionResult(game.players))
+        game.emitResult(InitialDistributionResult(game.players))
     }
 
     override fun nextStage(): Stage {

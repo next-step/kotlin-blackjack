@@ -1,12 +1,14 @@
 package blackjack.domain
 
+import blackjack.controller.ResultProcessor
 import blackjack.domain.player.PlayerNames
 import blackjack.domain.player.Players
+import blackjack.domain.result.Result
 import blackjack.domain.stage.InitialDistribution
 import blackjack.domain.stage.Stage
 
 class BlackJackGame(
-    playerNames: PlayerNames
+    playerNames: PlayerNames,
 ) {
     val players: Players = Players.from(playerNames)
     val dealer: Dealer = Dealer()
@@ -22,6 +24,10 @@ class BlackJackGame(
         players.allPlayers.forEach { player ->
             dealer.dealCards(player, count)
         }
+    }
+
+    fun emitResult(result: Result) {
+        ResultProcessor.handle(result)
     }
 
     private fun receiveSetupData() {

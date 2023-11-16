@@ -1,5 +1,6 @@
-package blackjack.controller
+package blackjack
 
+import blackjack.controller.InputProcessor
 import blackjack.domain.BlackJackGame
 
 object BlackJackRunner {
