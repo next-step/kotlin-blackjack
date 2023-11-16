@@ -1,7 +1,7 @@
 package blackjack.view
 
-import blackjack.model.Card
 import blackjack.model.Participants
+import blackjack.model.pack.ShuffledPack
 import blackjack.view.Console.present
 
 object InputView {
@@ -21,7 +21,7 @@ object InputView {
         participants.participants.forEach {
             println("${it.name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
             if (isHit()) {
-                it.hit(Card.of())
+                it.hit(ShuffledPack.pickCard())
             }
             println(it.present())
         }
