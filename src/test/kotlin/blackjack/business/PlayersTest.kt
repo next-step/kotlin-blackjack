@@ -1,6 +1,6 @@
 package blackjack.business
 
-import blackjack.view.OutputHandler.printPlayer
+import blackjack.view.PlayerOutputHandler
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.DisplayName
@@ -33,14 +33,16 @@ class PlayersTest {
         val playerNames = listOf("pobi", "wonyong")
         val players = Players.from(playerNames)
         val cardDesk = CardDesk()
+        val fixPlayerOutputHandler = FixPlayerOutputHandler()
 
         // when
-        players.dealInitialCards(cardDesk, ::printPlayer)
+        players.dealInitialCards(cardDesk) { fixPlayerOutputHandler.print(it) }
 
         // then
         players.forEachPlayer { player ->
             player.cards.size shouldBe 2
         }
+        fixPlayerOutputHandler.printedPlayer shouldBe players.allPlayers
     }
 
     /**
@@ -59,10 +61,11 @@ class PlayersTest {
         val playerNames = listOf("pobi", "jason")
         val players = Players.from(playerNames)
         val cardDesk = CardDesk(FixSelectionStrategy())
-        players.dealInitialCards(cardDesk, ::printPlayer)
+        val fixPlayerOutputHandler = FixPlayerOutputHandler()
+        players.dealInitialCards(cardDesk) {}
 
         // when
-        players.processAdditionalCards(cardDesk, FixDrawConditionStrategy(), ::printPlayer)
+        players.processAdditionalCards(cardDesk, FixDrawConditionStrategy()) { fixPlayerOutputHandler.print(it) }
 
         // then
         players.forEachPlayer { player ->
@@ -71,6 +74,24 @@ class PlayersTest {
                 "jason" -> player.cards.size shouldBe 4
             }
         }
+        // 받은 5개 카드를 모두 출력한다
+        fixPlayerOutputHandler.printedPlayer.size shouldBe 5
+    }
+
+    @Test
+    fun `각 플레이어를 순환하면서 action를 실행한다`() {
+        // given
+        val playerNames = listOf("pobi", "jason")
+        val players = Players.from(playerNames)
+        val target = mutableListOf<Player>()
+
+        // when
+        players.forEachPlayer { player ->
+            target.add(player)
+        }
+
+        // then
+        target shouldBe players.allPlayers
     }
 }
 
@@ -83,5 +104,13 @@ class FixSelectionStrategy : CardSelectionStrategy {
 class FixDrawConditionStrategy : DrawConditionStrategy {
     override fun shouldDraw(playerName: String): Boolean {
         return true
+    }
+}
+
+class FixPlayerOutputHandler : PlayerOutputHandler {
+    val printedPlayer: MutableList<Player> = mutableListOf()
+
+    override fun print(player: Player) {
+        printedPlayer.add(player)
     }
 }
