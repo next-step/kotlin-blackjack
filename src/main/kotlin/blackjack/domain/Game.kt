@@ -10,4 +10,8 @@ class Game(
             it.receiveCard(deck.draw())
         }
     }
+
+    companion object {
+        const val BLACKJACK_SCORE = 21
+    }
 }

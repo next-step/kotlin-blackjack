@@ -8,4 +8,8 @@ class Player(
     fun receiveCard(card: Card) {
         cards.add(card)
     }
+
+    fun isFinished(): Boolean {
+        return cards.calculateScore(false) > Game.BLACKJACK_SCORE
+    }
 }
