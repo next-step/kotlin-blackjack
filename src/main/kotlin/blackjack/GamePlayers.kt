@@ -1,6 +1,6 @@
 package blackjack
 
-class GamePlayers (
+class GamePlayers(
     val players: List<GamePlayer>
 ) {
     val count = players.size

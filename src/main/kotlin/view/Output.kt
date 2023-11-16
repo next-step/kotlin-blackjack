@@ -1,7 +1,6 @@
 package view
 
 import blackjack.Card
-import blackjack.GamePlayer
 import blackjack.GamePlayers
 import blackjack.GamePlayers.Companion.PLAYER_NAME_DELIMITER
 import blackjack.Message

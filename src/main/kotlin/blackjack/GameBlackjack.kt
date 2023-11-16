@@ -1,6 +1,6 @@
 package blackjack
 
-object GameBlackjack{
+object GameBlackjack {
 
     private const val GAME_INIT_CARD_SIZE = 2
 

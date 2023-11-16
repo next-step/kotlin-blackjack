@@ -7,7 +7,7 @@ data class Card(
     enum class Number(
         val value: Int,
         val other: Int = 0
-    ){
+    ) {
         ACE(1, 11),
         TWO(2),
         THREE(3),
