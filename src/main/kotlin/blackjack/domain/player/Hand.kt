@@ -7,7 +7,7 @@ data class Hand(val cards: Cards) {
     fun addCard(card: Card) {
         cards.add(card)
     }
-    fun valueSum() : Int = cards.cardList.sumOf { it.character.value }
+    fun valueSum(): Int = cards.cardList.sumOf { it.character.value }
 
     fun isBlackjack() = valueSum() == blackjack
 
