@@ -1,9 +1,11 @@
 package view
 
 import blackjack.Card
+import blackjack.GameBlackjack.PLAYER_NAME_DELIMITER
+import blackjack.GamePlayer
 import blackjack.GamePlayers
-import blackjack.GamePlayers.Companion.PLAYER_NAME_DELIMITER
 import blackjack.Message
+import blackjack.Message.PRINT_CONTINUE_DEAL
 
 object Output {
 
@@ -11,22 +13,25 @@ object Output {
         println(message)
     }
 
-    fun printPlayers(players: GamePlayers) {
-        val names = getPlayerNames(players)
-        println(Message.PRINT_DEAL_CARDS.format(names))
-
-        val cards = getPlayerCards(players)
-        println(cards)
+    fun printPlayerAction(player: GamePlayer) {
+        println(PRINT_CONTINUE_DEAL.format(player.name))
     }
 
-    private fun getPlayerCards(players: GamePlayers): String =
-        players.players.joinToString("\n") {
-            Message.PRINT_PLAYER_CARDS.format(it.name, getCardsName(it.cards))
-        }
+    fun printPlayerCards(player: GamePlayer) {
+        println(Message.PRINT_PLAYER_CARDS.format(player.name, getCardsName(player.cards)))
+    }
+
+    fun printPlayersInitialDealing(playing: GamePlayers) {
+        val names = getPlayerNames(playing)
+        println(Message.PRINT_DEAL_CARDS.format(names))
+
+        playing.players.forEach(::printPlayerCards)
+    }
+
+    private fun getPlayerNames(players: GamePlayers): String =
+        players.players.joinToString(PLAYER_NAME_DELIMITER) { it.name }
 
     private fun getCardsName(cards: List<Card>): String =
         cards.joinToString(PLAYER_NAME_DELIMITER) { "${it.number.value}${it.symbol.kor}" }
 
-    private fun getPlayerNames(players: GamePlayers): String =
-        players.players.joinToString(PLAYER_NAME_DELIMITER) { it.name }
 }
