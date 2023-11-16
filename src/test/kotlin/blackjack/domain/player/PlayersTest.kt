@@ -12,8 +12,8 @@ class PlayersTest : DescribeSpec({
             it("주어진 이름 순서대로 플레이어들 생성") {
                 val result = Players.from(names)
 
-                result.value[0] shouldBe Player(name1)
-                result.value[1] shouldBe Player(name2)
+                result.allPlayers[0] shouldBe Player(name1)
+                result.allPlayers[1] shouldBe Player(name2)
             }
         }
     }

@@ -5,10 +5,10 @@ data class Card(
     val rank: Rank,
 ) {
     companion object {
-        fun allShuffled(): CardDeck =
+        fun allShuffled(): Deck =
             Suit.entries.flatMap {
                 allRankInSuit(it)
-            }.shuffled().let(::CardDeck)
+            }.shuffled().let(Deck::of)
 
         private fun allRankInSuit(suit: Suit) =
             Rank.entries.map { Card(suit, it) }

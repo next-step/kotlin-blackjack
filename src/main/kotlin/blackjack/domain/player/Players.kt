@@ -1,7 +1,7 @@
 package blackjack.domain.player
 
 data class Players(
-    val value: List<Player>
+    val allPlayers: List<Player>
 ) {
     companion object {
         fun from(names: PlayerNames) =

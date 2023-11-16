@@ -19,4 +19,22 @@ class BlackJackGameTest : DescribeSpec({
             }
         }
     }
+
+    describe("모든 플레이어에게 카드 배분") {
+        val game = BlackJackGame(PlayerNames(listOf(PlayerName("hong"), PlayerName("kim"))))
+        context("카드 배분") {
+            val count = 2
+            game.dealCardsToAllPlayers(count)
+
+            it("플레이어들은 카드 수령") {
+                game.players.allPlayers.forEach { player ->
+                    player.hand.cards.size shouldBe count
+                }
+            }
+
+            it("덱에서는 카드 제거") {
+                game.dealer.deck.cards.size shouldBe 52 - count * 2
+            }
+        }
+    }
 })

@@ -5,6 +5,7 @@ import blackjack.domain.BlackJackGame
 object BlackJackRunner {
     fun start() {
         val game = BlackJackGame(InputProcessor.playerNames)
+        game.run()
     }
 }
 
