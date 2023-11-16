@@ -12,4 +12,13 @@ class Participants(
     fun dealing() {
         participants.forEach { it.deal(ShuffledPack.pickCard(), ShuffledPack.pickCard()) }
     }
+
+    private fun isGameOver(): Boolean {
+        return participants
+            .any { Referee.isBlackJack(it) }
+    }
+
+    fun isContinue(): Boolean {
+        return !isGameOver()
+    }
 }
