@@ -1,14 +1,13 @@
 package domain
 
 class Dealer : CardHolder {
-    private val cards: MutableList<Card> = mutableListOf()
-    private val calculator = Calculator()
+    private val hand = Cards()
 
     override fun receiveCard(card: Card) {
-        cards.add(card)
-        calculator.receiveCard(card)
+        hand.add(card)
     }
 
-    fun calculateScore(): Int = calculator.calculateScore()
-    override fun showHand(): List<Card> = cards.toList()
+    fun calculateScore(): Int = hand.calculateScore()
+
+    override fun showHand(): List<Card> = hand.showHand()
 }

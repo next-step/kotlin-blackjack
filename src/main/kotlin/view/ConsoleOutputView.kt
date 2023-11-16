@@ -1,28 +1,30 @@
 package view
 
-import dto.GameResultDTO
-import dto.GameStateDTO
+import domain.Dealer
+import domain.Player
 
 class ConsoleOutputView : OutputView {
-    override fun showGameState(gameState: GameStateDTO) {
-        gameState.playerHands.forEach { (playerName, hand) ->
-            println("${playerName}의 카드: ${hand.joinToString(", ") { it.toString() }}")
+    override fun showGameState(players: List<Player>, dealer: Dealer) {
+        players.forEach { player ->
+            println("${player.name}의 카드: ${player.showHand().joinToString(", ")}")
         }
+        println("딜러의 카드: ${dealer.showHand().joinToString(", ")}")
     }
 
-    override fun showGameResult(gameResult: GameResultDTO) {
+    override fun showGameResult(players: List<Player>, dealer: Dealer) {
         println("게임 결과:")
-        gameResult.finalScores.forEach { (playerName, scoreAndHand) ->
-            val (hand, score) = scoreAndHand
-            println("$playerName: ${hand.joinToString(", ")} - 결과: $score")
+        players.forEach { player ->
+            println("${player.name}: ${player.showHand().joinToString(", ")} - 결과: ${player.calculateScore()}")
         }
+        println("딜러: ${dealer.showHand().joinToString(", ")} - 결과: ${dealer.calculateScore()}")
     }
 
-    override fun showInitialCards(gameState: GameStateDTO) {
-        val playerNames = gameState.playerHands.keys.joinToString(", ")
+    override fun showInitialCards(players: List<Player>, dealer: Dealer) {
+        val playerNames = players.joinToString(", ") { it.name }
         println("$playerNames 에게 2장의 카드를 나누었습니다.")
-        gameState.playerHands.forEach { (playerName, hand) ->
-            println("${playerName}의 카드: ${hand.joinToString(", ") { it.toString() }}")
+        players.forEach { player ->
+            println("${player.name}의 카드: ${player.showHand().joinToString(", ")}")
         }
+        println("딜러의 카드: ${dealer.showHand().joinToString(", ")}")
     }
 }

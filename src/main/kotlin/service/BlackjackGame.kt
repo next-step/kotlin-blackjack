@@ -1,10 +1,9 @@
 package service
 
+import domain.BlackjackRules
 import domain.Dealer
 import domain.Deck
 import domain.Player
-import dto.GameResultDTO
-import dto.GameStateDTO
 import view.InputView
 import view.OutputView
 
@@ -19,13 +18,12 @@ class BlackjackGame(private val inputView: InputView, private val outputView: Ou
 
     fun startGame() {
         dealInitialCards()
-        outputView.showGameState(createGameStateDTO())
+        outputView.showInitialCards(players, dealer)
 
         playPlayersTurn()
         playDealerTurn()
 
-        val gameResult = createGameResultDTO()
-        outputView.showGameResult(gameResult)
+        outputView.showGameResult(players, dealer)
     }
 
     private fun dealInitialCards() {
@@ -35,15 +33,13 @@ class BlackjackGame(private val inputView: InputView, private val outputView: Ou
         }
         drawCardForDealer()
         drawCardForDealer()
-
-        outputView.showInitialCards(createGameStateDTO())
     }
 
     private fun playPlayersTurn() {
         players.forEach { player ->
             while (player.calculateScore() <= BlackjackRules.MAXIMUM_SCORE && playerWantsToHit(player)) {
                 drawCardForPlayer(player)
-                outputView.showGameState(createGameStateDTO())
+                outputView.showGameState(players, dealer)
             }
         }
     }
@@ -51,7 +47,7 @@ class BlackjackGame(private val inputView: InputView, private val outputView: Ou
     private fun playDealerTurn() {
         while (dealer.calculateScore() < BlackjackRules.DEALER_HIT_THRESHOLD) {
             drawCardForDealer()
-            outputView.showGameState(createGameStateDTO())
+            outputView.showGameState(players, dealer)
         }
     }
 
@@ -61,23 +57,6 @@ class BlackjackGame(private val inputView: InputView, private val outputView: Ou
 
     private fun drawCardForDealer() {
         deck.drawCard()?.let { dealer.receiveCard(it) }
-    }
-
-    private fun createGameStateDTO(): GameStateDTO {
-        return GameStateDTO(
-            playerHands = players.associate { it.name to it.showHand() },
-            dealerHand = dealer.showHand()
-        )
-    }
-
-    private fun createGameResultDTO(): GameResultDTO {
-        return GameResultDTO(
-            finalScores = players.associate { player ->
-                val playerScore = player.calculateScore()
-                val playerHand = player.showHand()
-                player.name to Pair(playerHand, playerScore.toString())
-            }
-        )
     }
 
     private fun playerWantsToHit(player: Player): Boolean {

@@ -1,10 +1,10 @@
 package view
 
-import dto.GameResultDTO
-import dto.GameStateDTO
+import domain.Dealer
+import domain.Player
 
 interface OutputView {
-    fun showGameState(gameState: GameStateDTO)
-    fun showGameResult(gameResult: GameResultDTO)
-    fun showInitialCards(gameState: GameStateDTO)
+    fun showGameState(players: List<Player>, dealer: Dealer)
+    fun showGameResult(players: List<Player>, dealer: Dealer)
+    fun showInitialCards(players: List<Player>, dealer: Dealer)
 }
