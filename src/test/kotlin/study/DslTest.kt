@@ -4,66 +4,41 @@ import dsl.SkillType
 import dsl.introduce
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FunSpec
-import io.kotest.datatest.withData
 import io.kotest.inspectors.forAll
 import io.kotest.matchers.collections.shouldContain
 import io.kotest.matchers.shouldBe
 
-data class PersonDslTestData(
-    val name: String,
-    val company: String? = null,
-    val softSkills: List<String> = emptyList(),
-    val hardSkills: List<String> = emptyList(),
-    val languages: List<Pair<String, Int>> = emptyList(),
-)
+class DslTest : FunSpec({
+    test("사람의 요소를 모두 추가") {
+        val person = introduce {
+            name("홍길동")
+            company("활빈당")
+            skills {
+                soft("착한 마음씨")
+                soft("정의로움")
+                hard("싸움")
+            }
+            languages {
+                "Korean" level 5
+                "English" level 0
+            }
+        }
 
-class DslTestKotest : FunSpec({
-    context("사람의 요소를 모두 추가") {
-        withData(
-            listOf(
-                PersonDslTestData(
-                    "홍길동",
-                    "활빈당",
-                    listOf("착한 마음씨", "호형호제 못함"),
-                    listOf("전투", "곳간 털기"),
-                    listOf(Pair("Korean", 5), Pair("English", 0))
-                )
-            )
-        ) { it ->
-            val person = introduce {
-                name(it.name)
-                if (it.company != null)
-                    company(it.company)
-                skills {
-                    it.softSkills.forEach {
-                        soft(it)
-                    }
-                    it.hardSkills.forEach {
-                        hard(it)
-                    }
-                }
-                languages {
-                    it.languages.forEach {
-                        it.first level it.second
-                    }
-                }
-            }
+        person.name shouldBe "홍길동"
+        person.company shouldBe "활빈당"
+        listOf("착한 마음씨", "정의로움").forAll {
+            person.skills.filter { it.type == SkillType.SOFT }.map { it.name } shouldContain it
+        }
+        listOf("싸움").forAll {
+            person.skills.filter { it.type == SkillType.HARD }.map { it.name } shouldContain it
+        }
 
-            person.name shouldBe it.name
-            person.company shouldBe it.company
-            person.skills.filter { skill -> skill.type == SkillType.SOFT }.forAll { softSkill ->
-                it.softSkills shouldContain softSkill.name
-            }
-            person.skills.filter { skill -> skill.type == SkillType.HARD }.forAll { hardSkill ->
-                it.hardSkills shouldContain hardSkill.name
-            }
-            person.languages.forAll { language ->
-                it.languages shouldContain language.toPair()
-            }
+        listOf(Pair("Korean", 5), Pair("English", 0)).forAll {
+            person.languages.map { mapEntry -> Pair(mapEntry.key, mapEntry.value) } shouldContain it
         }
     }
 
-    context("사람에게는 이름이 필수") {
+    test("사람에게는 이름이 필수") {
         val exception = shouldThrow<IllegalArgumentException> {
             introduce {
             }
