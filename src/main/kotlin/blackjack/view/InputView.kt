@@ -1,12 +1,23 @@
 package blackjack.view
 
 import blackjack.model.Participants
+import blackjack.model.Player
 import blackjack.model.pack.ShuffledPack
 import blackjack.view.Console.present
+import blackjack.view.InputView.PARTICIPANTS_PRESENT_SEPARATOR
 
 object InputView {
+    private const val PLAYER_NAMES_DELIMITER: String = ","
+    private const val HIT_COMMAND: String = "y"
+    const val PARTICIPANTS_PRESENT_SEPARATOR: String = ", "
+
     private fun joinPlayers(input: String): Participants {
-        return Participants.of(input)
+        return Participants(
+            input.split(PLAYER_NAMES_DELIMITER)
+                .asSequence()
+                .map { Player(it) }
+                .toSet()
+        )
     }
 
     fun join(): Participants {
@@ -28,10 +39,10 @@ object InputView {
     }
 
     private fun isHit(): Boolean {
-        return (readlnOrNull() ?: "") == "y"
+        return (readlnOrNull() ?: "") == HIT_COMMAND
     }
 }
 
 private fun Participants.names(): String {
-    return participants.joinToString(separator = ", ") { it.name }
+    return participants.joinToString(separator = PARTICIPANTS_PRESENT_SEPARATOR) { it.name }
 }

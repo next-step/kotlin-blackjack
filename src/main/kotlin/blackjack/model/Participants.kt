@@ -12,15 +12,4 @@ class Participants(
     fun dealing() {
         participants.forEach { it.deal(ShuffledPack.pickCard(), ShuffledPack.pickCard()) }
     }
-
-    companion object {
-        fun of(inputPlayers: String): Participants {
-            return Participants(
-                inputPlayers.split(",")
-                    .asSequence()
-                    .map { Player(it) }
-                    .toSet()
-            )
-        }
-    }
 }
