@@ -1,7 +1,7 @@
 package blackjack.domain
 
 class Deck {
-    val cards: MutableList<Card> = INITIAL_CARDS.toMutableList()
+    private val cards: MutableList<Card> = INITIAL_CARDS.toMutableList()
 
     fun draw(): Card {
         if (cards.isEmpty()) {
