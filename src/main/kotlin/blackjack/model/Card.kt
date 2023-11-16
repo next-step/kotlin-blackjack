@@ -1,4 +1,4 @@
-package blackjack.domain.card
+package blackjack.model
 
 data class Card(
     val suit: Suit,

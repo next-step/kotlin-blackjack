@@ -1,9 +1,9 @@
 package blackjack.domain.player
 
-import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
-import blackjack.domain.card.Character
-import blackjack.domain.card.Suit
+import blackjack.model.Card
+import blackjack.model.Character
+import blackjack.model.Suit
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 import org.assertj.core.api.Assertions

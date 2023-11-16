@@ -1,5 +1,9 @@
 package blackjack.domain.card
 
+import blackjack.model.Card
+import blackjack.model.Character
+import blackjack.model.Suit
+
 data class Cards(private val _cardList: MutableList<Card>) {
     val cardList get() = _cardList.toList()
     val size get() = _cardList.size

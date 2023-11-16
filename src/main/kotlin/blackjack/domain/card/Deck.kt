@@ -1,5 +1,9 @@
 package blackjack.domain.card
 
+import blackjack.model.Card
+import blackjack.model.Character
+import blackjack.model.Suit
+
 class Deck(val cards: Cards) {
     init {
         require(cards.size == initialCardCount) { "Invalid initial Card count ${cards.size}" }

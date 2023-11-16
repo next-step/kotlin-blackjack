@@ -1,6 +1,6 @@
 package blackjack.domain.player
 
-import blackjack.domain.card.Card
+import blackjack.model.Card
 import java.lang.RuntimeException
 
 data class Player(

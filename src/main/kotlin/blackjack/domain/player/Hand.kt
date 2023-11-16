@@ -1,7 +1,7 @@
 package blackjack.domain.player
 
-import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
+import blackjack.model.Card
 
 data class Hand(val cards: Cards) {
     fun addCard(card: Card) {

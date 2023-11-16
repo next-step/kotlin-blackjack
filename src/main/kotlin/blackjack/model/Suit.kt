@@ -1,4 +1,4 @@
-package blackjack.domain.card
+package blackjack.model
 
 enum class Suit {
     Spade, Diamond, Heart, Clover
