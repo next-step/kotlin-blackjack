@@ -56,7 +56,7 @@ class HandTest : StringSpec({
                 )
             )
         )
-        val player = Player(hand)
+        val player = Player("aaa", hand)
 
         hand.valueSum() shouldBe 21
         hand.isBlackjack() shouldBe true
@@ -74,7 +74,7 @@ class HandTest : StringSpec({
                 )
             )
         )
-        val player = Player(hand)
+        val player = Player("aaa", hand)
 
         hand.valueSum() shouldBe 23
         hand.isBlackjack() shouldBe false

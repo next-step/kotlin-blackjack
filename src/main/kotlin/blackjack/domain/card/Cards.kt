@@ -29,4 +29,6 @@ data class Cards(private val _cardList: MutableList<Card>) {
             return Cards(mutableList)
         }
     }
+
+    override fun toString(): String = _cardList.toString()
 }

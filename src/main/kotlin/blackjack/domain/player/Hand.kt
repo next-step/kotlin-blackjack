@@ -13,6 +13,8 @@ data class Hand(val cards: Cards) {
 
     fun isBust() = valueSum() > blackjack
 
+    override fun toString(): String = "$cards - 결과 : ${valueSum()}"
+
     companion object {
         const val blackjack = 21
     }

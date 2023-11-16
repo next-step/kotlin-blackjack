@@ -4,6 +4,7 @@ import blackjack.model.Card
 import java.lang.RuntimeException
 
 data class Player(
+    val name: String,
     val hand: Hand,
     var state: PlayerState = PlayerState.Idle
 ) {
@@ -31,12 +32,12 @@ data class Player(
             RuntimeException("Invalid state transition: $state -> ${PlayerState.Hit}")
         }
         hand.addCard(card)
-        if (hand.isBust()) {
-            state = PlayerState.Bust
-        }
-
-        if (hand.isBlackjack()) {
-            state = PlayerState.Blackjack
+        state = if (hand.isBust()) {
+            PlayerState.Bust
+        } else if (hand.isBlackjack()) {
+            PlayerState.Blackjack
+        } else {
+            PlayerState.Idle
         }
     }
 }
