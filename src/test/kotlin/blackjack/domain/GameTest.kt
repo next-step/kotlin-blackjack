@@ -17,7 +17,7 @@ class GameTest {
 
         game.start()
 
-        assertThat(player1.cards).hasSize(2)
-        assertThat(player2.cards).hasSize(2)
+        assertThat(player1.cards.get()).hasSize(2)
+        assertThat(player2.cards.get()).hasSize(2)
     }
 }
