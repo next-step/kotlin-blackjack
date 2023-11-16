@@ -38,6 +38,13 @@ class BlackjackTest : StringSpec({
         val nowSize = deck.cardCount()
         prevSize shouldBe nowSize + 1
     }
+
+    "Deck 에서 draw 한 카드는 Deck 에서 사라져야 한다" {
+        val deck = Deck.fullDeck()
+        val card = deck.draw()
+
+        deck.cards.cardList.contains(card) shouldBe false
+    }
 })
 
 class Deck(val cards: Cards) {
