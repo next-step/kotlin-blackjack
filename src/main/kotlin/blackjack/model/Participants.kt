@@ -1,7 +1,5 @@
 package blackjack.model
 
-import blackjack.model.pack.ShuffledPack
-
 class Participants(
     val participants: Set<Player>,
 ) {
@@ -10,7 +8,7 @@ class Participants(
     }
 
     fun dealing() {
-        participants.forEach { it.deal(ShuffledPack.pickCard(), ShuffledPack.pickCard()) }
+        participants.forEach { it.deal() }
     }
 
     private fun isGameOver(): Boolean {

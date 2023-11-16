@@ -6,9 +6,9 @@ data class Player(
     val name: String,
     val cards: Cards = Cards.emptyCards(),
 ) {
-    fun deal(card1: Card, card2: Card) {
-        cards.add(card1)
-        cards.add(card2)
+    fun deal() {
+        cards.add(ShuffledPack.pickCard())
+        cards.add(ShuffledPack.pickCard())
     }
 
     fun hit() {
