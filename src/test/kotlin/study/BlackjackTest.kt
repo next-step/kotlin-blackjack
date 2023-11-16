@@ -45,6 +45,13 @@ class BlackjackTest : StringSpec({
 
         deck.cards.cardList.contains(card) shouldBe false
     }
+
+    "Hand 의 sum 은 정확한 값을 반환하야 한다" {
+        val hand = Hand(Cards(mutableListOf(Card(Suit.Spade, Character.Jack), Card(Suit.Clover, Character.Eight))))
+
+        hand.valueSum() shouldBe 18
+    }
+
 })
 
 class Deck(val cards: Cards) {
@@ -124,4 +131,54 @@ enum class Character(val value: Int) {
     Jack(10),
     Queen(10),
     King(10),
+}
+
+enum class PlayerState {
+    Idle, Hit, Stay, Bust, Blackjack
+}
+
+data class Hand(val cards: Cards) {
+    fun addCard(card: Card) {
+        cards.add(card)
+    }
+    fun valueSum() : Int = cards.cardList.sumOf { it.character.value }
+
+    fun isBlackjack() = valueSum() == blackjack
+
+    fun isBust() = valueSum() > blackjack
+
+    companion object {
+        const val blackjack = 21
+    }
+}
+
+data class Player(
+    val hand: Hand,
+    var state: PlayerState = PlayerState.Idle
+) {
+    fun hit() {
+        require(state != PlayerState.Idle) {
+            "Invalid state transition: $state -> ${PlayerState.Hit}"
+        }
+        state = PlayerState.Hit
+    }
+
+    fun stay() {
+        require(state == PlayerState.Idle)
+        state = PlayerState.Stay
+    }
+
+    fun addCard(card: Card) {
+        require(state == PlayerState.Hit) {
+            "Invalid state transition: $state -> ${PlayerState.Hit}"
+        }
+        hand.addCard(card)
+        if (hand.isBust()) {
+            state = PlayerState.Bust
+        }
+
+        if (hand.isBlackjack()) {
+            state = PlayerState.Blackjack
+        }
+    }
 }
