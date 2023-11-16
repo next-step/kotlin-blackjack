@@ -1,5 +1,6 @@
 package blackjack.business
 
+import blackjack.business.PlayerCardDeskTest.Companion.SPACE_ACE
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -27,7 +28,7 @@ class CardDeskTest {
         val card = cardDesk.draw()
 
         // then
-        card shouldBe Card(Suit.SPADE, Rank.ACE)
+        card shouldBe SPACE_ACE
         cardDesk.cards.size shouldBe 51
         cardDesk.cards.contains(card) shouldBe false
     }

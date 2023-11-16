@@ -13,7 +13,7 @@ class PlayerTest {
         val player = Player.from("pobi")
 
         // when
-        player.addCard(Card(Suit.SPADE, Rank.ACE))
+        player.addCard(PlayerCardDeskTest.SPACE_ACE)
 
         // then
         player.cards.size shouldBe 1
@@ -24,8 +24,8 @@ class PlayerTest {
     fun `플레이어가 추가로 카드를 뽑을 수 있는지 확인한다`() {
         // given
         val player = Player.from("pobi")
-        player.addCard(Card(Suit.SPADE, Rank.ACE))
-        player.addCard(Card(Suit.SPADE, Rank.EIGHT))
+        player.addCard(PlayerCardDeskTest.SPACE_ACE)
+        player.addCard(PlayerCardDeskTest.SPACE_EIGHT)
 
         // when
         val canDrawCard = player.canDrawCard()
@@ -38,8 +38,8 @@ class PlayerTest {
     fun `플레이어의 스코어를 확인한다`() {
         // given
         val player = Player.from("pobi")
-        player.addCard(Card(Suit.SPADE, Rank.ACE))
-        player.addCard(Card(Suit.SPADE, Rank.EIGHT))
+        player.addCard(PlayerCardDeskTest.SPACE_ACE)
+        player.addCard(PlayerCardDeskTest.SPACE_EIGHT)
 
         // when
         val score = player.score
@@ -51,7 +51,7 @@ class PlayerTest {
     @Test
     fun `플레이어 생성시 PlayerCards 주입`() {
         // given
-        val playerCards = PlayerCards(listOf(Card(Suit.SPADE, Rank.ACE), Card(Suit.SPADE, Rank.EIGHT)))
+        val playerCards = PlayerCards(listOf(PlayerCardDeskTest.SPACE_ACE, PlayerCardDeskTest.SPACE_EIGHT))
 
         // when
         val player = Player.from("pobi", playerCards)

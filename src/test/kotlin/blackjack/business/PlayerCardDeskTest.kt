@@ -18,11 +18,11 @@ class PlayerCardDeskTest {
         val playerCards = PlayerCards()
 
         // when
-        playerCards.add(Card(Suit.SPADE, Rank.ACE))
+        playerCards.add(SPACE_ACE)
 
         // then
         playerCards.size shouldBe 1
-        playerCards[0] shouldBe Card(Suit.SPADE, Rank.ACE)
+        playerCards[0] shouldBe SPACE_ACE
     }
 
     @ParameterizedTest
@@ -40,54 +40,61 @@ class PlayerCardDeskTest {
     }
 
     companion object {
+        val SPACE_ACE = Card(Suit.SPADE, Rank.ACE)
+        val SPACE_EIGHT = Card(Suit.SPADE, Rank.EIGHT)
+        val SPACE_TWO = Card(Suit.SPADE, Rank.TWO)
+        val SPACE_THEN = Card(Suit.SPADE, Rank.TEN)
+        val SPACE_THREE = Card(Suit.SPADE, Rank.THREE)
+        val SPACE_NINE = Card(Suit.SPADE, Rank.NINE)
+
         @JvmStatic
         fun provideCards(): Stream<Arguments> {
             return Stream.of(
                 Arguments.of(
                     listOf(
-                        Card(Suit.SPADE, Rank.ACE), Card(Suit.SPADE, Rank.EIGHT)
+                        SPACE_ACE, SPACE_EIGHT
                     ),
                     19
                 ),
                 Arguments.of(
                     listOf(
-                        Card(Suit.SPADE, Rank.ACE),
-                        Card(Suit.SPADE, Rank.ACE),
-                        Card(Suit.SPADE, Rank.EIGHT),
-                        Card(Suit.SPADE, Rank.ACE)
+                        SPACE_ACE,
+                        SPACE_ACE,
+                        SPACE_ACE,
+                        SPACE_EIGHT,
                     ),
                     21
                 ),
                 Arguments.of(
                     listOf(
-                        Card(Suit.SPADE, Rank.ACE),
-                        Card(Suit.SPADE, Rank.EIGHT),
-                        Card(Suit.SPADE, Rank.TWO)
+                        SPACE_ACE,
+                        SPACE_EIGHT,
+                        SPACE_TWO
                     ),
                     21
                 ),
                 Arguments.of(
                     listOf(
-                        Card(Suit.SPADE, Rank.ACE),
-                        Card(Suit.SPADE, Rank.EIGHT),
-                        Card(Suit.SPADE, Rank.TWO),
-                        Card(Suit.SPADE, Rank.TEN)
+                        SPACE_ACE,
+                        SPACE_EIGHT,
+                        SPACE_TWO,
+                        SPACE_THEN
                     ),
                     21
                 ),
                 Arguments.of(
                     listOf(
-                        Card(Suit.SPADE, Rank.ACE),
-                        Card(Suit.SPADE, Rank.EIGHT),
-                        Card(Suit.SPADE, Rank.THREE)
+                        SPACE_ACE,
+                        SPACE_EIGHT,
+                        SPACE_THREE
                     ),
                     12
                 ),
                 Arguments.of(
                     listOf(
-                        Card(Suit.SPADE, Rank.ACE),
-                        Card(Suit.SPADE, Rank.NINE),
-                        Card(Suit.SPADE, Rank.TEN)
+                        SPACE_ACE,
+                        SPACE_NINE,
+                        SPACE_THEN
                     ),
                     20
                 ),
