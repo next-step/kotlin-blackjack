@@ -29,7 +29,7 @@ class PlayActionsTest {
     fun `플레이어가 카드를 추가할지 물어본다`() {
         // given
         val playerNames = listOf("pobi", "jason")
-        val cardDesk = CardDesk(FixSelectionStrategy())
+        val cardDesk = CardDesk(cardSelectionStrategy = FixSelectionStrategy())
         val players = Players.from(playerNames)
 
         // when

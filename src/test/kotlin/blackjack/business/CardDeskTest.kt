@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test
 class CardDeskTest {
 
     @Test
-    fun `52장의 다른 카드를 가지고 있다`() {
+    fun `한벌의 카드를 가지고 있다`() {
         // given,when
         val cardDesk = CardDesk()
 
@@ -18,7 +18,7 @@ class CardDeskTest {
     }
 
     @Test
-    fun `52장의 카드에서 랜덤으로 카드를 뽑는다`() {
+    fun `한벌의 카드에서 랜덤으로 카드를 뽑는다`() {
         // given
         val cardDesk = CardDesk()
 
@@ -28,5 +28,29 @@ class CardDeskTest {
         // then
         cardDesk.cards.size shouldBe 51
         cardDesk.cards.contains(card) shouldBe false
+    }
+
+    @Test
+    fun `카드를 추가할 수 있다`() {
+        // given
+        val cardDesk = CardDesk()
+
+        // when
+        cardDesk.addCards()
+
+        // then
+        cardDesk.cards.size shouldBe 104
+    }
+
+    @Test
+    fun `카드가 모두 소진시 새로운 카드 한벌을 추가한다`() {
+        // given
+        val cardDesk = CardDesk()
+
+        // when
+        repeat(52) { cardDesk.draw() }
+
+        // then
+        cardDesk.cards.size shouldBe 52
     }
 }
