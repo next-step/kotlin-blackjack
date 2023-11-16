@@ -57,6 +57,15 @@ class BlackjackTest : StringSpec({
 
         hand.valueSum() shouldBe 21
         hand.isBlackjack() shouldBe true
+        hand.isBust() shouldBe false
+    }
+
+    "Hand 의 sum 이 21을 초과하면 bust 이다" {
+        val hand = Hand(Cards(mutableListOf(Card(Suit.Spade, Character.Jack), Card(Suit.Clover, Character.Eight), Card(Suit.Clover, Character.Five))))
+
+        hand.valueSum() shouldBe 23
+        hand.isBlackjack() shouldBe false
+        hand.isBust() shouldBe true
     }
 
 })
