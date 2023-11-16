@@ -5,11 +5,7 @@ class CardDesk(private val cardSelectionStrategy: CardSelectionStrategy = Random
     private val _cards = mutableListOf<Card>()
 
     init {
-        for (suit in Suit.values()) {
-            for (rank in Rank.values()) {
-                _cards.add(Card(suit, rank))
-            }
-        }
+        _cards.addAll(CardFactory.getCards())
     }
 
     val cards: List<Card>
