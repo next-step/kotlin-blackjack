@@ -4,8 +4,14 @@ import blackjack.view.InputView
 import blackjack.view.OutputView
 
 fun main() {
-    val ps = InputView.join()
-    OutputView.presentCards(ps)
-    InputView.draw(ps)
-    OutputView.result(ps)
+    val participants = InputView.join()
+    participants.dealing()
+    OutputView.dealing(participants)
+    OutputView.presentCards(participants)
+    while (!participants.isContinue()) {
+
+        InputView.draw(participants)
+    }
+
+    OutputView.result(participants)
 }
