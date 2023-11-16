@@ -2,7 +2,7 @@ package blackjack.model
 
 data class Player(
     val name: String,
-    val cards: Cards = Cards.init(),
+    val cards: Cards = Cards.emptyCards(),
 ) {
     fun deal(card1: Card, card2: Card) {
         cards.add(card1)

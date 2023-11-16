@@ -41,8 +41,8 @@ class Cards(
     companion object {
         private const val HIGHEST_SCORE: Int = 21
         private const val ALTERNATIVE_ACE_SCORE_DIFF: Int = 11 - 1
-        
-        fun init(): Cards {
+
+        fun emptyCards(): Cards {
             return Cards(mutableListOf())
         }
     }
