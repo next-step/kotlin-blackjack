@@ -18,14 +18,16 @@ class CardDeskTest {
     }
 
     @Test
-    fun `한벌의 카드에서 랜덤으로 카드를 뽑는다`() {
+    fun `한벌의 카드에서 하나의 카드를 뽑는다`() {
         // given
-        val cardDesk = CardDesk()
+        val cardSelectionStrategy = FixSelectionStrategy()
+        val cardDesk = CardDesk(cardSelectionStrategy)
 
         // when
         val card = cardDesk.draw()
 
         // then
+        card shouldBe Card(Suit.SPADE, Rank.ACE)
         cardDesk.cards.size shouldBe 51
         cardDesk.cards.contains(card) shouldBe false
     }
