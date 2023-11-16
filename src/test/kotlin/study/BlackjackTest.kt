@@ -52,6 +52,13 @@ class BlackjackTest : StringSpec({
         hand.valueSum() shouldBe 18
     }
 
+    "Hand 의 sum 이 21이면 blackjack 이다" {
+        val hand = Hand(Cards(mutableListOf(Card(Suit.Spade, Character.Jack), Card(Suit.Clover, Character.Eight), Card(Suit.Clover, Character.Three))))
+
+        hand.valueSum() shouldBe 21
+        hand.isBlackjack() shouldBe true
+    }
+
 })
 
 class Deck(val cards: Cards) {
