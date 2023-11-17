@@ -70,7 +70,7 @@ object GameManager {
         players: Players
     ) {
         println()
-        DetailedDealerOutputHandler().print(dealer)
+        DetailedDealerOutputHandler.print(dealer)
         players.forEachPlayer(DetailedPlayerOutputHandler::print)
         GameResultOutputHandler.print(dealer, players)
     }
