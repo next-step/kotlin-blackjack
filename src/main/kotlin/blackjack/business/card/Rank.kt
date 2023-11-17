@@ -14,4 +14,10 @@ enum class Rank(val score: Int, val printName: String) {
     JACK(10, "J"),
     QUEEN(10, "Q"),
     KING(10, "K");
+
+    companion object {
+        fun from(i: Int): Rank {
+            return values()[i - 1]
+        }
+    }
 }
