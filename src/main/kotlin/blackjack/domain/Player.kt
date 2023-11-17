@@ -18,7 +18,7 @@ class Player(
         hand.receive(card)
     }
 
-    fun isBurst(): Boolean {
+    fun isBust(): Boolean {
         return hand.getSum() > BLACKJACK
     }
 
