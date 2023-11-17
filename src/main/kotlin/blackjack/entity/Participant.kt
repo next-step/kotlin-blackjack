@@ -2,7 +2,7 @@ package blackjack.entity
 
 data class Participant(
     val name: String,
-    var cards: Cards,
+    val cards: Cards,
 ) {
     val canGetCard: Boolean
         get() {
