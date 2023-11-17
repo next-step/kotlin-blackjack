@@ -1,6 +1,12 @@
 package blackjack.business
 
-class PlayerCards(cards: List<Card> = listOf()) {
+import blackjack.business.BlackJackConst.ACE_OFFSET
+import blackjack.business.BlackJackConst.BLACKJACK
+
+class PlayerCards(
+    cards: List<Card> = listOf(),
+    private val canDrawCardStrategy: CanDrawCardStrategy = PlayerCanDrawCardStrategy()
+) {
 
     private val _cards: MutableList<Card> = cards.toMutableList()
 
@@ -29,11 +35,6 @@ class PlayerCards(cards: List<Card> = listOf()) {
     }
 
     fun canDrawCard(): Boolean {
-        return sum() < BLACKJACK
-    }
-
-    companion object {
-        private const val BLACKJACK = 21
-        private const val ACE_OFFSET = 10
+        return canDrawCardStrategy.canDrawCard(sum())
     }
 }
