@@ -3,7 +3,7 @@ package blackjack.business
 import blackjack.business.CardFixture.SPACE_ACE
 import blackjack.business.CardFixture.SPACE_EIGHT
 import blackjack.business.CardFixture.SPACE_NINE
-import blackjack.business.CardFixture.SPACE_THEN
+import blackjack.business.CardFixture.SPACE_TEN
 import blackjack.business.CardFixture.SPACE_THREE
 import blackjack.business.CardFixture.SPACE_TWO
 import io.kotest.matchers.shouldBe
@@ -16,7 +16,7 @@ import org.junit.jupiter.params.provider.MethodSource
 import java.util.stream.Stream
 
 @DisplayName("플레이어 카드")
-class PlayerCardDeskTest {
+class PlayerCardsTest {
 
     @Test
     fun `카드를 추가한다`() {
@@ -43,6 +43,51 @@ class PlayerCardDeskTest {
 
         // then
         actual shouldBe expected
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = ["ACE,EIGHT,true", "ACE,ACE,true", "ACE,TEN,false", "ACE,NINE,true"])
+    fun `카드를 추가할 수 있는지 확인`(firstRank: Rank, secondRank: Rank, expected: Boolean) {
+        // given
+        val playerCards = PlayerCards()
+        playerCards.add(Card(Suit.SPADE, firstRank))
+        playerCards.add(Card(Suit.SPADE, secondRank))
+
+        // when
+        val actual = playerCards.canDrawCard()
+
+        // then
+        actual shouldBe expected
+    }
+
+    @Test
+    fun `카드의 합이 21을 초과하는지 확인`() {
+        // given
+        val playerCards = PlayerCards()
+        playerCards.add(SPACE_TEN)
+        playerCards.add(SPACE_NINE)
+        playerCards.add(SPACE_THREE)
+
+        // when
+        val actual = playerCards.isBust()
+
+        // then
+        actual shouldBe true
+    }
+
+    @Test
+    fun `카드의 합이 21을 초과하지 않는지 확인`() {
+        // given
+        val playerCards = PlayerCards()
+        playerCards.add(SPACE_TEN)
+        playerCards.add(SPACE_EIGHT)
+        playerCards.add(SPACE_THREE)
+
+        // when
+        val actual = playerCards.isBust()
+
+        // then
+        actual shouldBe false
     }
 
     companion object {
@@ -77,7 +122,7 @@ class PlayerCardDeskTest {
                         SPACE_ACE,
                         SPACE_EIGHT,
                         SPACE_TWO,
-                        SPACE_THEN
+                        SPACE_TEN
                     ),
                     21
                 ),
@@ -93,26 +138,11 @@ class PlayerCardDeskTest {
                     listOf(
                         SPACE_ACE,
                         SPACE_NINE,
-                        SPACE_THEN
+                        SPACE_TEN
                     ),
                     20
                 ),
             )
         }
-    }
-
-    @ParameterizedTest
-    @CsvSource(value = ["ACE,EIGHT,true", "ACE,ACE,true", "ACE,TEN,false", "ACE,NINE,true"])
-    fun `카드를 추가할 수 있는지 확인`(firstRank: Rank, secondRank: Rank, expected: Boolean) {
-        // given
-        val playerCards = PlayerCards()
-        playerCards.add(Card(Suit.SPADE, firstRank))
-        playerCards.add(Card(Suit.SPADE, secondRank))
-
-        // when
-        val actual = playerCards.canDrawCard()
-
-        // then
-        actual shouldBe expected
     }
 }

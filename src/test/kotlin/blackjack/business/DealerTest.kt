@@ -4,6 +4,8 @@ import blackjack.business.CardFixture.SPACE_ACE
 import blackjack.business.CardFixture.SPACE_EIGHT
 import blackjack.business.CardFixture.SPACE_FIVE
 import blackjack.business.CardFixture.SPACE_NINE
+import blackjack.business.CardFixture.SPACE_TEN
+import blackjack.business.CardFixture.SPACE_TWO
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
@@ -35,7 +37,7 @@ class DealerTest {
     }
 
     @Test
-    fun `딜리는 처음에 받은 2장의 합계가 17이상이면 카드를 추가할 수 없다`() {
+    fun `딜러는 처음에 받은 2장의 합계가 17이상이면 카드를 추가할 수 없다`() {
         // given
         val dealer = Dealer()
         dealer.addCard(SPACE_NINE)
@@ -43,5 +45,17 @@ class DealerTest {
 
         // when,then
         dealer.canDrawCard() shouldBe false
+    }
+
+    @Test
+    fun `딜러의 카드의 합이 블랙잭 초과하는지 확인`() {
+        // given
+        val dealer = Dealer()
+        dealer.addCard(SPACE_TEN)
+        dealer.addCard(SPACE_TWO)
+        dealer.addCard(SPACE_TEN)
+
+        // when,then
+        dealer.isBust() shouldBe false
     }
 }

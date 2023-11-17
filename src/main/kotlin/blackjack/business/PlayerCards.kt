@@ -37,4 +37,8 @@ class PlayerCards(
     fun canDrawCard(): Boolean {
         return canDrawCardStrategy.canDrawCard(sum())
     }
+
+    fun isBust(): Boolean {
+        return sum() > BLACKJACK
+    }
 }

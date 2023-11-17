@@ -7,5 +7,5 @@ object CardFixture {
     val SPACE_FIVE = Card(Suit.SPADE, Rank.FIVE)
     val SPACE_EIGHT = Card(Suit.SPADE, Rank.EIGHT)
     val SPACE_NINE = Card(Suit.SPADE, Rank.NINE)
-    val SPACE_THEN = Card(Suit.SPADE, Rank.TEN)
+    val SPACE_TEN = Card(Suit.SPADE, Rank.TEN)
 }

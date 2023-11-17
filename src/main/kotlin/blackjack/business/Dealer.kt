@@ -12,4 +12,8 @@ class Dealer {
     fun canDrawCard(): Boolean {
         return _dealerCards.canDrawCard()
     }
+
+    fun isBust(): Boolean {
+        return _dealerCards.isBust()
+    }
 }
