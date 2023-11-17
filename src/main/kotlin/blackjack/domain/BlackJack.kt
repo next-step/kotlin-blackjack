@@ -7,31 +7,51 @@ class BlackJack(
     private val participants: Participants
 ) {
     fun doBlackJack(
-        canGetCard: (Participant) -> Boolean,
         printGetOneMoreCard: (String) -> Unit,
         input: () -> Boolean,
         printNewCard: (Participant) -> Unit,
     ): List<String> =
         participants.map { participant ->
-            askGetCardToParticipant(canGetCard, printGetOneMoreCard, participant, input, printNewCard)
-            participant.toString()
+            askGetCardToParticipant(
+                participant.canGetCard,
+                printGetOneMoreCard,
+                participant,
+                input,
+                printNewCard
+            ).toString()
         }
 
     private fun askGetCardToParticipant(
-        canGetCard: (Participant) -> Boolean,
+        canGetCard: Boolean,
         printGetOneMoreCard: (String) -> Unit,
         participant: Participant,
         input: () -> Boolean,
         printNewCard: (Participant) -> Unit,
-    ) {
-        while (canGetCard(participant)) {
-            printGetOneMoreCard(participant.name)
-            if (input().not()) break
+    ): Participant {
+        if (canGetCard.not()) return participant
+        if (askWantToGetOneMoreCard(printGetOneMoreCard, participant, input)) return participant
 
-            val newCard = CardGenerator.generateCard(GENERATE_SINGLE_CARD)
-            participant.cards = participant.cards.copy(cards = participant.cards.cards + newCard)
-            printNewCard(participant)
-        }
+        val newCard = CardGenerator.generateCard(GENERATE_SINGLE_CARD)
+        val newCards = participant.cards.addNewCard(newCard)
+        val participantWithNewCards = participant.copy(cards = newCards)
+        printNewCard(participantWithNewCards)
+
+        return askGetCardToParticipant(
+            participantWithNewCards.canGetCard,
+            printGetOneMoreCard,
+            participantWithNewCards,
+            input,
+            printNewCard
+        )
+    }
+
+    private fun askWantToGetOneMoreCard(
+        printGetOneMoreCard: (String) -> Unit,
+        participant: Participant,
+        input: () -> Boolean
+    ): Boolean {
+        printGetOneMoreCard(participant.name)
+        return input().not()
     }
 
     companion object {

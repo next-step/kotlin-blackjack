@@ -16,7 +16,6 @@ fun main() {
     // PHASE 3
     val blackJack = BlackJack(participants)
     val result = blackJack.doBlackJack(
-        canGetCard = { participant -> participant.canGetCard },
         printGetOneMoreCard = { OutputView.printGetOneMoreCard(it) },
         input = { InputView.inputGetMoreCard() },
         printNewCard = { OutputView.printNewCards(it) }
