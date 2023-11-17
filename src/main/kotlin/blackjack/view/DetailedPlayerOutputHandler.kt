@@ -1,6 +1,6 @@
 package blackjack.view
 
-import blackjack.business.Player
+import blackjack.business.participants.Player
 
 class DetailedPlayerOutputHandler : PlayerOutputHandler {
     override fun print(player: Player) =

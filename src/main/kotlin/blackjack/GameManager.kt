@@ -1,9 +1,9 @@
 package blackjack
 
-import blackjack.business.CardDesk
-import blackjack.business.PlayerNameParser
-import blackjack.business.Players
-import blackjack.business.UserInputBasedDrawCondition
+import blackjack.business.card.CardDesk
+import blackjack.business.drawConditionStrategy.UserInputBasedDrawCondition
+import blackjack.business.participants.Players
+import blackjack.business.util.PlayerNameParser
 import blackjack.view.DetailedPlayerOutputHandler
 import blackjack.view.InputHandler
 import blackjack.view.SimplePlayerOutputHandler

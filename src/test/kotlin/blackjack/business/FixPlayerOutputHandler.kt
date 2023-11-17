@@ -1,5 +1,6 @@
 package blackjack.business
 
+import blackjack.business.participants.Player
 import blackjack.view.PlayerOutputHandler
 
 class FixPlayerOutputHandler : PlayerOutputHandler {
