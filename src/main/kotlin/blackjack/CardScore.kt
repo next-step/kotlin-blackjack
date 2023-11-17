@@ -1,3 +1,3 @@
 package blackjack
 
-class CardSgitcore(vararg val number: Int)
+class CardScore(vararg val number: Int)
