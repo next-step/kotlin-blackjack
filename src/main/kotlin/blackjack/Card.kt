@@ -8,7 +8,7 @@ data class Card(
         val value: Int,
         val other: Int = 0
     ) {
-        ACE(1, 11),
+        ACE(11, 1),
         TWO(2),
         THREE(3),
         FOUR(4),
@@ -30,5 +30,9 @@ data class Card(
         SPADE("스페이드"),
         CLOVER("클로버"),
         HEART("하트")
+    }
+
+    companion object {
+        val ACE_CARDS = Symbol.values().map { Card(it, Number.ACE) }
     }
 }

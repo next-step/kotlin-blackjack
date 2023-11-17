@@ -6,14 +6,17 @@ import io.kotest.matchers.shouldBe
 
 class GamePlayerTest : BehaviorSpec({
 
-    val cards = listOf(
-        Card(Card.Symbol.SPADE, Card.Number.TEN),
-        Card(Card.Symbol.SPADE, Card.Number.TWO),
-    )
     val cardShuffleStrategy = CardShuffleStrategy {
-        listOf(Card(Card.Symbol.SPADE, Card.Number.THREE))
+        listOf(
+            Card(Card.Symbol.SPADE, Card.Number.THREE),
+            Card(Card.Symbol.SPADE, Card.Number.ACE)
+        )
     }
     Given("플레이어가 딜러에게 카드를 추가로 받는다면") {
+        val cards = listOf(
+            Card(Card.Symbol.SPADE, Card.Number.TEN),
+            Card(Card.Symbol.SPADE, Card.Number.TWO),
+        )
         val gamePlayer = GamePlayer(
             "test",
             cards
@@ -40,9 +43,9 @@ class GamePlayerTest : BehaviorSpec({
                     Card(Card.Symbol.SPADE, Card.Number.KING),
                 )
             )
-            val dealer2 = GameDealer(cardShuffleStrategy)
-            Then("isBurst 필드가 true로 변경된다.") {
-                val updatedPlayer = burstPlayer.receiveCard(dealer2.deal())
+            val burstDealer = GameDealer(cardShuffleStrategy)
+            Then("버스트가 되고 하드핸드가 된다.") {
+                val updatedPlayer = burstPlayer.receiveCard(burstDealer.deal())
                 updatedPlayer shouldBe GamePlayer(
                     name = "test",
                     cards = listOf(
@@ -51,7 +54,8 @@ class GamePlayerTest : BehaviorSpec({
                         Card(Card.Symbol.SPADE, Card.Number.NINE),
                         Card(Card.Symbol.SPADE, Card.Number.KING),
                     ),
-                    isBust = true
+                    isBust = true,
+                    isSoftHand = false
                 )
             }
         }
