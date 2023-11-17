@@ -1,6 +1,6 @@
 package blackjack.business
 
-import blackjack.business.PlayerCardDeskTest.Companion.SPACE_ACE
+import blackjack.business.CardFixture.SPACE_ACE
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test

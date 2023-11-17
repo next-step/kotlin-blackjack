@@ -1,5 +1,11 @@
 package blackjack.business
 
+import blackjack.business.CardFixture.SPACE_ACE
+import blackjack.business.CardFixture.SPACE_EIGHT
+import blackjack.business.CardFixture.SPACE_NINE
+import blackjack.business.CardFixture.SPACE_THEN
+import blackjack.business.CardFixture.SPACE_THREE
+import blackjack.business.CardFixture.SPACE_TWO
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -40,13 +46,6 @@ class PlayerCardDeskTest {
     }
 
     companion object {
-        val SPACE_ACE = Card(Suit.SPADE, Rank.ACE)
-        val SPACE_EIGHT = Card(Suit.SPADE, Rank.EIGHT)
-        val SPACE_TWO = Card(Suit.SPADE, Rank.TWO)
-        val SPACE_THEN = Card(Suit.SPADE, Rank.TEN)
-        val SPACE_THREE = Card(Suit.SPADE, Rank.THREE)
-        val SPACE_NINE = Card(Suit.SPADE, Rank.NINE)
-
         @JvmStatic
         fun provideCards(): Stream<Arguments> {
             return Stream.of(

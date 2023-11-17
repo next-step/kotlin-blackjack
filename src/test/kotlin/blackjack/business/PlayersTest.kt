@@ -1,6 +1,5 @@
 package blackjack.business
 
-import blackjack.view.PlayerOutputHandler
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.DisplayName
@@ -92,25 +91,5 @@ class PlayersTest {
 
         // then
         target shouldBe players.allPlayers
-    }
-}
-
-class FixSelectionStrategy : CardSelectionStrategy {
-    override fun selectCard(cards: List<Card>): Card {
-        return cards.first()
-    }
-}
-
-class FixDrawConditionStrategy : DrawConditionStrategy {
-    override fun shouldDraw(playerName: String): Boolean {
-        return true
-    }
-}
-
-class FixPlayerOutputHandler : PlayerOutputHandler {
-    val printedPlayer: MutableList<Player> = mutableListOf()
-
-    override fun print(player: Player) {
-        printedPlayer.add(player)
     }
 }
