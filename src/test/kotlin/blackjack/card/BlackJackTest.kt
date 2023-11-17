@@ -24,7 +24,6 @@ class BlackJackTest : StringSpec({
         val result = participants.map { participant ->
             blackJack.doBlackJack(
                 participant = participant.copy(cards = cards),
-                winBlackJack = {},
                 printGetOneMoreCard = { "y" },
                 input = { inputY },
                 printNewCard = {},
@@ -44,7 +43,6 @@ class BlackJackTest : StringSpec({
         val result = participants.map { participant ->
             blackJack.doBlackJack(
                 participant = participant,
-                winBlackJack = {},
                 printGetOneMoreCard = {},
                 input = { inputN },
                 printNewCard = {},

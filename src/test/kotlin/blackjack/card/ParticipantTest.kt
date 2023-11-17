@@ -49,4 +49,15 @@ class ParticipantTest : StringSpec({
         val participant = Participant("pita", Cards(cardList))
         participant.participantState shouldBe ParticipantState.BLACKJACK
     }
+
+    "참여자가 가진 카드와 상관없이 n을 입력해 STAND로 만든다" {
+        // 카드의 합은 24 (A를 11로 계산시에)
+        val cardList = listOf(
+            Card(CardNumber.A, CardShape.DIAMOND),
+            Card(CardNumber.THREE, CardShape.HEART),
+        )
+        val participant = Participant("pita", Cards(cardList))
+        participant.setParticipantState(ParticipantState.STAND)
+        participant.participantState shouldBe ParticipantState.STAND
+    }
 })
