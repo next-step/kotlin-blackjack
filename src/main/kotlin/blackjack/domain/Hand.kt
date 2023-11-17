@@ -1,15 +1,18 @@
 package blackjack.domain
 
 class Hand(
-    val cards: MutableList<Card> = mutableListOf()
+    private val _cards: MutableList<Card> = mutableListOf()
 ) {
+    val cards: List<Card>
+        get() = _cards
+
     fun init(card1: Card, card2: Card) {
-        cards.add(card1)
-        cards.add(card2)
+        _cards.add(card1)
+        _cards.add(card2)
     }
 
     fun receive(card: Card) {
-        cards.add(card)
+        _cards.add(card)
     }
 
     fun canHit(): Boolean {
@@ -17,7 +20,7 @@ class Hand(
     }
 
     fun getSum(): Int {
-        val sum = cards.sumOf {
+        val sum = _cards.sumOf {
             it.num.value
         }
         if (containsAce() && sum <= ACE_NUMBER) {
@@ -27,7 +30,7 @@ class Hand(
     }
 
     private fun containsAce(): Boolean {
-        return cards.any {
+        return _cards.any {
             it.num == CardNumber.ACE
         }
     }
