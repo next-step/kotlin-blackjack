@@ -15,10 +15,6 @@ class Hand(
         _cards.add(card)
     }
 
-    fun canHit(): Boolean {
-        return getSum() < BLACKJACK
-    }
-
     fun getSum(): Int {
         val sum = _cards.sumOf {
             it.num.value
@@ -36,7 +32,6 @@ class Hand(
     }
 
     companion object {
-        private const val BLACKJACK = 21
         private const val ACE_NUMBER = 11
         private const val ACE_ADDING_NUMBER = 10
     }

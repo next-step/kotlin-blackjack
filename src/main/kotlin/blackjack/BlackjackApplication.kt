@@ -19,7 +19,7 @@ fun main() {
 }
 
 private fun play(player: Player, deck: Deck) {
-    while (player.canHit() && InputView.inputHitOrStand(player)) {
+    while (!player.isBurst() && InputView.inputHitOrStand(player)) {
         val card = deck.hit()
         player.hit(card)
         ResultView.printPlayerNameAndCard(player)

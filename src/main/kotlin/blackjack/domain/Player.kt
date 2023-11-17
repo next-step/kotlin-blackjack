@@ -14,10 +14,6 @@ class Player(
         hand.init(cards[0], cards[1])
     }
 
-    fun canHit(): Boolean {
-        return hand.canHit()
-    }
-
     fun hit(card: Card) {
         hand.receive(card)
     }
