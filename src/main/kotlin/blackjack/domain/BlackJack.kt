@@ -2,6 +2,7 @@ package blackjack.domain
 
 import blackjack.entity.Participant
 import blackjack.entity.Participants
+import blackjack.ui.print
 
 class BlackJack(
     private val participants: Participants
@@ -18,7 +19,7 @@ class BlackJack(
                 participant,
                 input,
                 printNewCard
-            ).toString()
+            ).print()
         }
 
     private fun askGetCardToParticipant(

@@ -12,7 +12,7 @@ data class Participant(
 
     fun copyNewCards(newCards: Cards): Participant = copy(cards = newCards)
 
-    private fun sumOfCardNumbers(): Int = if (cards.cardsContainACard) {
+    fun sumOfCardNumbers(): Int = if (cards.cardsContainACard) {
         sumOfCardsWithA()
     } else {
         cards.sumOfCards
@@ -25,12 +25,6 @@ data class Participant(
         cards.sumOfCards
     } else {
         cards.sumOfCards + SUPER_A_PLUS_NUMBER
-    }
-
-    override fun toString(): String {
-        val cardString = cards.joinToString { card -> card.toString() }
-        val resultString = "결과: ${sumOfCardNumbers()}"
-        return "$name 카드: $cardString - $resultString"
     }
 
     companion object {
