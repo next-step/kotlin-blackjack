@@ -15,7 +15,7 @@ class GamePlayer(
     }
 
     private fun isBurst(cards: List<Card>): Boolean =
-        cards.sumOf { it.number.value } > GameBlackjack.BLACKJACK_MAX_SCORE
+        cards.sumOf { it.number.value } > DefaultGameBlackjack.BLACKJACK_MAX_SCORE
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

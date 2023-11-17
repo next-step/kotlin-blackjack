@@ -1,11 +1,13 @@
 import blackjack.Card
 import blackjack.CardShuffleStrategy
 import blackjack.ContinueDeal
+import blackjack.DefaultGameBlackjack
 import blackjack.GameBlackjack
 import blackjack.GameDealer
 import blackjack.GamePlayer
 import blackjack.GamePlayers
 import blackjack.Message
+import blackjack.PrintProxyBlackjack
 import view.Input
 import view.Output
 
@@ -24,27 +26,24 @@ fun main() {
 
     Output.printMessage(Message.INPUT_PLAYER_NAMES)
     val playerNames = Input.getLine()
-    val gameBlackjack = GameBlackjack(gameDealer)
+    val gameBlackjack: GameBlackjack = PrintProxyBlackjack(DefaultGameBlackjack(gameDealer))
 
     val playing = gameBlackjack.initialDealing(playerNames)
     Output.printPlayersInitialDealing(playing)
 
     val updatedPlayers = playing.players.map {
-        var player: GamePlayer = it
-        do {
-            Output.printPlayerAction(player)
-            when (ContinueDeal.of(Input.getLine())) {
-                ContinueDeal.YES -> {
-                    player = gameBlackjack.continueDealing(player)
-                    Output.printPlayerCards(player)
-                }
-
-                ContinueDeal.NO -> break
-                ContinueDeal.MISS -> continue
-            }
-        } while (!player.isBust)
-        player
+        dealing(it, gameBlackjack)
     }
 
     Output.printPlayersResult(GamePlayers(updatedPlayers))
+}
+
+tailrec fun dealing(player: GamePlayer, gameBlackjack: GameBlackjack): GamePlayer {
+    if (player.isBust) return player
+    Output.printPlayerAction(player)
+    return when (ContinueDeal.of(Input.getLine())) {
+        ContinueDeal.YES -> dealing(gameBlackjack.continueDealing(player), gameBlackjack)
+        ContinueDeal.MISS -> player
+        ContinueDeal.NO -> player
+    }
 }

@@ -3,7 +3,7 @@ package blackjack
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 
-class GameBlackjackTest : BehaviorSpec({
+class DefaultGameBlackjackTest : BehaviorSpec({
 
     val heartCards = CardShuffleStrategy {
         listOf(
@@ -17,7 +17,7 @@ class GameBlackjackTest : BehaviorSpec({
     Given("게임 참가자들이 존재하고") {
         val names = "test1,test2"
         When("블랙잭을 시작하면") {
-            val blackjack = GameBlackjack(gameDealer)
+            val blackjack = DefaultGameBlackjack(gameDealer)
             val playing = blackjack.initialDealing(names)
             Then("딜러가 2장의 카드를 각각 배분한다.") {
                 playing shouldBe GamePlayers(
