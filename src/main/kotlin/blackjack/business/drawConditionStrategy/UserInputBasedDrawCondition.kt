@@ -1,6 +1,6 @@
 package blackjack.business.drawConditionStrategy
 
-import blackjack.business.util.HitCommandEvaluator
+import blackjack.view.HitCommandEvaluator
 import blackjack.view.InputHandler
 
 class UserInputBasedDrawCondition : DrawConditionStrategy {

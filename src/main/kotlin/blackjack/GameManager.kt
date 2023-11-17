@@ -4,11 +4,11 @@ import blackjack.business.card.CardDesk
 import blackjack.business.drawConditionStrategy.UserInputBasedDrawCondition
 import blackjack.business.participants.Dealer
 import blackjack.business.participants.Players
-import blackjack.business.util.PlayerNameParser
 import blackjack.view.DetailedDealerOutputHandler
 import blackjack.view.DetailedPlayerOutputHandler
 import blackjack.view.GameResultOutputHandler
 import blackjack.view.InputHandler
+import blackjack.view.PlayerNameParser
 import blackjack.view.SimpleDealerCardOutputHandler
 import blackjack.view.SimplePlayerOutputHandler
 
