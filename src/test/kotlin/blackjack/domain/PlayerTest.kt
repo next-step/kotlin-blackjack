@@ -111,4 +111,26 @@ class PlayerTest : BehaviorSpec({
             }
         }
     }
+
+    Given("플레이어의 패가 버스트 되었는지 판단하고 싶을 때") {
+        When("플레이어는") {
+            Then("가진 패가 21을 넘으면 Burst, 21을 넘지 않으면 Burst가 아니라고 판단하여 반환한다.") {
+                forAll(
+                    row(Hand(mutableListOf(Card(CardSuit.SPADE, CardNumber.TEN), Card(CardSuit.CLUB, CardNumber.TEN))), false),
+                    row(
+                        Hand(
+                            mutableListOf(
+                                Card(CardSuit.SPADE, CardNumber.TEN),
+                                Card(CardSuit.CLUB, CardNumber.TEN),
+                                Card(CardSuit.HEART, CardNumber.TWO)
+                            )
+                        ),
+                        true
+                    ),
+                ) { hand, expected ->
+                    Player("yeongun", hand).isBurst() shouldBe expected
+                }
+            }
+        }
+    }
 })

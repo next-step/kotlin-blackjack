@@ -21,4 +21,12 @@ class Player(
     fun hit(card: Card) {
         hand.receive(card)
     }
+
+    fun isBurst(): Boolean {
+        return hand.getSum() > BLACKJACK
+    }
+
+    companion object {
+        private const val BLACKJACK = 21
+    }
 }
