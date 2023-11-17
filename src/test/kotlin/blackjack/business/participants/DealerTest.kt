@@ -8,6 +8,8 @@ import blackjack.business.CardFixture.SPACE_TEN
 import blackjack.business.CardFixture.SPACE_TWO
 import blackjack.business.card.Card
 import blackjack.business.card.CardDesk
+import blackjack.business.card.Rank
+import blackjack.business.card.Suit
 import blackjack.business.util.GameResult
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
@@ -121,6 +123,25 @@ class DealerTest {
 
         // when,then
         dealer.getPlayerResult(player).result shouldBe GameResult.LOSE
+    }
+
+    @Test
+    fun `플레이어들과 비교하여 dealer의 결과를 반환한다`() {
+        // given
+        val dealer = Dealer()
+        dealer.addCard(SPACE_TEN)
+        dealer.addCard(SPACE_FIVE)
+        val players = Players.from(listOf("pobi", "crong", "honux"))
+        players.allPlayers.forEachIndexed { index, player ->
+            player.addCard(SPACE_TEN)
+            player.addCard(Card(Suit.CLUB, Rank.from(index + 4)))
+        }
+
+        // when
+        val actual = dealer.getDealerResult(players)
+
+        // then
+        actual shouldBe mapOf(GameResult.DRAW to 1, GameResult.WIN to 1, GameResult.LOSE to 1)
     }
 
     companion object {
