@@ -1,26 +1,21 @@
 package blackjack.domain
 
 import blackjack.entity.Participant
-import blackjack.entity.Participants
-import blackjack.ui.print
 
-class BlackJack(
-    private val participants: Participants
-) {
+class BlackJack {
     fun doBlackJack(
+        canGetCard: Boolean,
+        participant: Participant,
         printGetOneMoreCard: (String) -> Unit,
         input: () -> Boolean,
         printNewCard: (Participant) -> Unit,
-    ): List<String> =
-        participants.map { participant ->
-            askGetCardToParticipant(
-                participant.canGetCard,
-                printGetOneMoreCard,
-                participant,
-                input,
-                printNewCard
-            ).print()
-        }
+    ): Participant = askGetCardToParticipant(
+        canGetCard,
+        printGetOneMoreCard,
+        participant,
+        input,
+        printNewCard
+    )
 
     private fun askGetCardToParticipant(
         canGetCard: Boolean,
