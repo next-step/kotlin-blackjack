@@ -7,8 +7,12 @@ import blackjack.business.CardFixture.SPACE_NINE
 import blackjack.business.CardFixture.SPACE_TEN
 import blackjack.business.CardFixture.SPACE_TWO
 import blackjack.business.card.CardDesk
+import blackjack.business.util.GameResult
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.CsvSource
+import org.junit.jupiter.params.provider.ValueSource
 
 class DealerTest {
     @Test
@@ -69,5 +73,30 @@ class DealerTest {
 
         // when,then
         dealer.isBust() shouldBe false
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = ["16,DRAW", "15,LOSE", "17,WIN"])
+    fun `딜러의 카드와 플레이어의 카드를 비교한다`(target: Int, expected: GameResult) {
+        // given
+        val dealer = Dealer()
+        dealer.addCard(SPACE_FIVE)
+        dealer.addCard(SPACE_ACE)
+
+        // when,then
+        dealer.getResult(target) shouldBe expected
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = [20, 21, 22])
+    fun `딜러가 bust면 플레이어는 무조건 이긴다`(target: Int) {
+        // given
+        val dealer = Dealer()
+        dealer.addCard(SPACE_TEN)
+        dealer.addCard(SPACE_FIVE)
+        dealer.addCard(SPACE_TEN)
+
+        // when,then
+        dealer.getResult(target) shouldBe GameResult.WIN
     }
 }
