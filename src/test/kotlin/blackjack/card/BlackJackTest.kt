@@ -17,10 +17,15 @@ class BlackJackTest : StringSpec({
         val blackJack = BlackJack(participants)
 
         participants.first().cards.size shouldBe initialSize
-        blackJack.doBlackJack(canGetCard = { canGetCard }, input = {
-            canGetCard = false
-            inputY
-        })
+        blackJack.doBlackJack(
+            canGetCard = { canGetCard },
+            printGetOneMoreCard = {},
+            input = {
+                canGetCard = false
+                inputY
+            },
+            printNewCard = {},
+        )
         participants.first().cards.size shouldBe expectedSize
     }
 
@@ -33,7 +38,12 @@ class BlackJackTest : StringSpec({
         val blackJack = BlackJack(participants)
 
         participants.first().cards.size shouldBe initialSize
-        blackJack.doBlackJack(canGetCard = { canGetCard }, input = { inputN })
+        blackJack.doBlackJack(
+            canGetCard = { canGetCard },
+            printGetOneMoreCard = {},
+            input = { inputN },
+            printNewCard = {},
+        )
         participants.first().cards.size shouldBe expectedSize
     }
 })

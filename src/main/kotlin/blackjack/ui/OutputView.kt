@@ -29,7 +29,7 @@ object OutputView {
         )
     }
 
-    fun printGetMoreOneCard(participantName: String) {
+    fun printGetOneMoreCard(participantName: String) {
         println(ASK_GET_MORE_ONE_CARD.format(participantName))
     }
 

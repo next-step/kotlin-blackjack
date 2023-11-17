@@ -2,29 +2,35 @@ package blackjack.domain
 
 import blackjack.entity.Participant
 import blackjack.entity.Participants
-import blackjack.ui.OutputView
 
 class BlackJack(
     private val participants: Participants
 ) {
-    fun doBlackJack(canGetCard: (Participant) -> Boolean, input: () -> Boolean): List<String> =
+    fun doBlackJack(
+        canGetCard: (Participant) -> Boolean,
+        printGetOneMoreCard: (String) -> Unit,
+        input: () -> Boolean,
+        printNewCard: (Participant) -> Unit,
+    ): List<String> =
         participants.map { participant ->
-            askGetCardToParticipant(canGetCard, participant, input)
+            askGetCardToParticipant(canGetCard, printGetOneMoreCard, participant, input, printNewCard)
             participant.toString()
         }
 
     private fun askGetCardToParticipant(
         canGetCard: (Participant) -> Boolean,
+        printGetOneMoreCard: (String) -> Unit,
         participant: Participant,
-        input: () -> Boolean
+        input: () -> Boolean,
+        printNewCard: (Participant) -> Unit,
     ) {
         while (canGetCard(participant)) {
-            OutputView.printGetMoreOneCard(participant.name)
+            printGetOneMoreCard(participant.name)
             if (input().not()) break
 
             val newCard = CardGenerator.generateCard(GENERATE_SINGLE_CARD)
             participant.cards = participant.cards.copy(cards = participant.cards.cards + newCard)
-            OutputView.printNewCards(participant)
+            printNewCard(participant)
         }
     }
 
