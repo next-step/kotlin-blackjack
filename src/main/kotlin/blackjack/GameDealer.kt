@@ -2,16 +2,11 @@ package blackjack
 
 import java.lang.IllegalArgumentException
 
-object GameDealer {
+class GameDealer(
+    cardShuffleStrategy: CardShuffleStrategy
+) {
 
-    private val cards: Iterator<Card> = Card.Symbol.values()
-        .flatMap { symbol ->
-            Card.Number.values().map { number ->
-                Card(symbol, number)
-            }
-        }
-        .shuffled()
-        .iterator()
+    private val cards: Iterator<Card> = cardShuffleStrategy.shuffle().iterator()
 
     fun deal(): Card {
         return if (cards.hasNext()) cards.next()

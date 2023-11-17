@@ -1,11 +1,13 @@
 package blackjack
 
-class GamePlayer(
+data class GamePlayer(
     val name: String,
     val cards: List<Card> = emptyList(),
-    val action: PlayerAction,
+    private val action: PlayerAction,
     val isBurst: Boolean = false
 ) {
+    fun isContinueDeal() = action != PlayerAction.STAND
+
     fun receiveCard(card: Card): GamePlayer {
         val updatedCards = mutableListOf(card).apply { this.addAll(cards) }
         return GamePlayer(
