@@ -9,8 +9,7 @@ class GameBlackjack(
             .map {
                 GamePlayer(
                     name = it,
-                    cards = gameDealer.deal(GAME_INIT_CARD_SIZE),
-                    action = PlayerAction.INIT
+                    cards = gameDealer.deal(GAME_INIT_CARD_SIZE)
                 )
             }
         return GamePlayers(gamePlayers)

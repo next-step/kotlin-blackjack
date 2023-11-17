@@ -27,16 +27,14 @@ class GameBlackjackTest : BehaviorSpec({
                             cards = listOf(
                                 Card(Card.Symbol.HEART, Card.Number.ACE),
                                 Card(Card.Symbol.HEART, Card.Number.TWO),
-                            ),
-                            action = PlayerAction.INIT
+                            )
                         ),
                         GamePlayer(
                             name = "test2",
                             cards = listOf(
                                 Card(Card.Symbol.HEART, Card.Number.THREE),
                                 Card(Card.Symbol.HEART, Card.Number.FOUR),
-                            ),
-                            action = PlayerAction.INIT
+                            )
                         )
                     )
                 )

@@ -37,14 +37,12 @@ fun main() {
                 ContinueDeal.YES -> {
                     player = gameBlackjack.continueDealing(player)
                     Output.printPlayerCards(player)
-                    if(player.isBurst) {
-                        break
-                    }
                 }
+
                 ContinueDeal.NO -> break
                 ContinueDeal.MISS -> continue
             }
-        } while (player.isContinueDeal())
+        } while (!player.isBust)
         player
     }
 
