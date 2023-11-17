@@ -13,7 +13,7 @@ class GamePlayer(
         return GamePlayer(
             name = this.name,
             cards = updatedCards,
-            isBust = isBurst(updatedCards),
+            isBust = isBust(updatedCards),
             isSoftHand = isSoftHand(updatedCards)
         )
     }
@@ -47,7 +47,7 @@ class GamePlayer(
         private fun isNotContainsAce(cards: List<Card>): Boolean =
             cards.find { it.number == Card.Number.ACE } == null
 
-        private fun isBurst(cards: List<Card>): Boolean {
+        private fun isBust(cards: List<Card>): Boolean {
             val sum = cards.sumOf { it.number.value }
             if (isNotContainsAce(cards)) return sum > BLACKJACK_MAX_SCORE
             else if (sum > BLACKJACK_MAX_SCORE) return changeHardHand(sum) > BLACKJACK_MAX_SCORE

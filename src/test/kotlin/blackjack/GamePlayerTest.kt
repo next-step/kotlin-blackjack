@@ -35,7 +35,7 @@ class GamePlayerTest : BehaviorSpec({
         }
 
         When("카드의 합이 21을 초과한다면") {
-            val burstPlayer = GamePlayer(
+            val bustPlayer = GamePlayer(
                 "test",
                 listOf(
                     Card(Card.Symbol.SPADE, Card.Number.TWO),
@@ -43,9 +43,9 @@ class GamePlayerTest : BehaviorSpec({
                     Card(Card.Symbol.SPADE, Card.Number.KING),
                 )
             )
-            val burstDealer = GameDealer(cardShuffleStrategy)
+            val bustDealer = GameDealer(cardShuffleStrategy)
             Then("버스트가 되고 하드핸드가 된다.") {
-                val updatedPlayer = burstPlayer.receiveCard(burstDealer.deal())
+                val updatedPlayer = bustPlayer.receiveCard(bustDealer.deal())
                 updatedPlayer shouldBe GamePlayer(
                     name = "test",
                     cards = listOf(
