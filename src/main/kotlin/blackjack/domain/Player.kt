@@ -18,8 +18,7 @@ class Player(
         return hand.canHit()
     }
 
-    fun hit(deck: Deck) {
-        val card = deck.hit()
+    fun hit(card: Card) {
         hand.receive(card)
     }
 }

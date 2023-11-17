@@ -20,7 +20,8 @@ fun main() {
 
 private fun play(player: Player, deck: Deck) {
     while (player.canHit() && InputView.inputHitOrStand(player)) {
-        player.hit(deck)
+        val card = deck.hit()
+        player.hit(card)
         ResultView.printPlayerNameAndCard(player)
     }
 }

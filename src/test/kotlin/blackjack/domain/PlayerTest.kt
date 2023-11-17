@@ -100,4 +100,15 @@ class PlayerTest : BehaviorSpec({
             }
         }
     }
+
+    Given("카드 1장이 주어지면") {
+        val card = Card(CardSuit.SPADE, CardNumber.TEN)
+        val player = Player("pobi")
+        When("플레이어는") {
+            player.hit(card)
+            Then("주어진 1장의 카드를 패에 추가한다.") {
+                player.hand.cards[0] shouldBe Card(CardSuit.SPADE, CardNumber.TEN)
+            }
+        }
+    }
 })
