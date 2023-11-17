@@ -10,7 +10,6 @@ class BlackJack {
         input: () -> Boolean,
         printNewCard: (Participant) -> Unit,
     ): Participant {
-        if (participant.participantState is ParticipantState.BUST) return participant
         if (participant.participantState is ParticipantState.BLACKJACK) { return participant }
         if (askWantToGetOneMoreCard(printGetOneMoreCard, participant, input)) return participant
 
