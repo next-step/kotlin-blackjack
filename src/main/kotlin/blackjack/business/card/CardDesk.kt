@@ -22,4 +22,11 @@ class CardDesk(
             if (_cards.isEmpty()) addCards()
         }
     }
+
+    fun startDraw(): List<Card> = (1..2).map {
+        cardSelectionStrategy.selectCard(_cards).also {
+            _cards.remove(it)
+            if (_cards.isEmpty()) addCards()
+        }
+    }
 }

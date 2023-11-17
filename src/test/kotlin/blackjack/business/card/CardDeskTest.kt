@@ -57,4 +57,17 @@ class CardDeskTest {
         // then
         cardDesk.cards.size shouldBe 52
     }
+
+    @Test
+    fun `시작시 카드를 두장씩 나눠준다`() {
+        // given
+        val cardDesk = CardDesk()
+
+        // when
+        val playerCards = cardDesk.startDraw()
+
+        // then
+        playerCards.size shouldBe 2
+        cardDesk.cards.size shouldBe 50
+    }
 }
