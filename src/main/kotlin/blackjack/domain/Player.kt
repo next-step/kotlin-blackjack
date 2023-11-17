@@ -9,9 +9,9 @@ class Player(
         require(name.isNotBlank()) { "플레이어의 이름은 공백일 수 없습니다." }
     }
 
-    fun init(deck: Deck) {
-        val initCards = deck.init()
-        hand.init(initCards[0], initCards[1])
+    fun init(cards: List<Card>) {
+        require(cards.size == 2) { "처음엔 카드 2장만 받을 수 있습니다." }
+        hand.init(cards[0], cards[1])
     }
 
     fun canHit(): Boolean {

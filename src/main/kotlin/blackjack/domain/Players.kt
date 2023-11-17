@@ -3,7 +3,8 @@ package blackjack.domain
 data class Players(val players: List<Player>) {
     fun initCard(deck: Deck) {
         players.forEach {
-            it.init(deck)
+            val initCards = deck.init()
+            it.init(initCards)
         }
     }
 
