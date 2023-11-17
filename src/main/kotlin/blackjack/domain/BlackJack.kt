@@ -9,18 +9,6 @@ class BlackJack {
         printGetOneMoreCard: (String) -> Unit,
         input: () -> Boolean,
         printNewCard: (Participant) -> Unit,
-    ): Participant = askGetCardToParticipant(
-        printGetOneMoreCard,
-        participant,
-        input,
-        printNewCard
-    )
-
-    private fun askGetCardToParticipant(
-        printGetOneMoreCard: (String) -> Unit,
-        participant: Participant,
-        input: () -> Boolean,
-        printNewCard: (Participant) -> Unit,
     ): Participant {
         if (participant.participantState is ParticipantState.BUST) return participant
         if (participant.participantState is ParticipantState.BLACKJACK) { return participant }
