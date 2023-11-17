@@ -93,6 +93,20 @@ class PlayerCardsTest {
         actual shouldBe false
     }
 
+    @Test
+    fun `여러 카드를 추가할 수 있다`() {
+        // given
+        val playerCards = PlayerCards()
+
+        // when
+        playerCards.addAll(listOf(SPACE_ACE, SPACE_EIGHT))
+
+        // then
+        playerCards.size shouldBe 2
+        playerCards[0] shouldBe SPACE_ACE
+        playerCards[1] shouldBe SPACE_EIGHT
+    }
+
     companion object {
         @JvmStatic
         fun provideCards(): Stream<Arguments> {

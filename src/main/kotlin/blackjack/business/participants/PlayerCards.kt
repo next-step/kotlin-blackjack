@@ -45,4 +45,8 @@ class PlayerCards(
     fun isBust(): Boolean {
         return sum() > BLACKJACK
     }
+
+    fun addAll(cards: List<Card>) {
+        _cards.addAll(cards)
+    }
 }
