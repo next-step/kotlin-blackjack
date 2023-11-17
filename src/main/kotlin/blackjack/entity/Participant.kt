@@ -10,6 +10,8 @@ data class Participant(
             return sumOfCards < MAX_OF_SUM_CARDS
         }
 
+    fun copyNewCards(newCards: Cards): Participant = copy(cards = newCards)
+
     private fun sumOfCardNumbers(): Int = if (cards.cardsContainACard) {
         sumOfCardsWithA()
     } else {

@@ -33,7 +33,7 @@ class BlackJack(
 
         val newCard = CardGenerator.generateCard(GENERATE_SINGLE_CARD)
         val newCards = participant.cards.addNewCard(newCard)
-        val participantWithNewCards = participant.copy(cards = newCards)
+        val participantWithNewCards = participant.copyNewCards(newCards)
         printNewCard(participantWithNewCards)
 
         return askGetCardToParticipant(

@@ -11,7 +11,7 @@ data class Cards(
     val sumOfCards: Int
         get() = cards.sumOf { it.number.number }
 
-    fun addNewCard(card: Cards): Cards = copy(cards + card)
+    fun addNewCard(card: Cards): Cards = Cards(cards + card)
 
     override fun toString(): String {
         return cards.joinToString { card -> card.toString() }
