@@ -19,6 +19,14 @@ class Player private constructor(val name: String, playerCards: PlayerCards) {
         return _cards.canDrawCard()
     }
 
+    fun addCards(playerCards: List<Card>) {
+        _cards.addAll(playerCards)
+    }
+
+    fun isBust(): Boolean {
+        return _cards.isBust()
+    }
+
     companion object {
         fun from(mame: String, cards: List<Card> = listOf()): Player {
             return Player(mame, PlayerCards(cards))
