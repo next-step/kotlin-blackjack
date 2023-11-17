@@ -16,7 +16,7 @@ data class Participant(
         }
     }
 
-    fun setParticipantState(state: ParticipantState) {
+    fun setParticipantState(state: ParticipantState.STAND) {
         participantState = state
     }
 
