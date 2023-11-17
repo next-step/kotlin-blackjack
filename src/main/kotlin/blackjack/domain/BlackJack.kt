@@ -1,16 +1,15 @@
 package blackjack.domain
 
 import blackjack.entity.Participant
+import blackjack.entity.ParticipantState
 
 class BlackJack {
     fun doBlackJack(
-        canGetCard: Boolean,
         participant: Participant,
         printGetOneMoreCard: (String) -> Unit,
         input: () -> Boolean,
         printNewCard: (Participant) -> Unit,
     ): Participant = askGetCardToParticipant(
-        canGetCard,
         printGetOneMoreCard,
         participant,
         input,
@@ -18,13 +17,13 @@ class BlackJack {
     )
 
     private fun askGetCardToParticipant(
-        canGetCard: Boolean,
         printGetOneMoreCard: (String) -> Unit,
         participant: Participant,
         input: () -> Boolean,
         printNewCard: (Participant) -> Unit,
     ): Participant {
-        if (canGetCard.not()) return participant
+        if (participant.participantState is ParticipantState.BUST) return participant
+        if (participant.participantState is ParticipantState.BLACKJACK) { return participant }
         if (askWantToGetOneMoreCard(printGetOneMoreCard, participant, input)) return participant
 
         val newCard = CardGenerator.generateCard(GENERATE_SINGLE_CARD)
@@ -32,13 +31,7 @@ class BlackJack {
         val participantWithNewCards = participant.copyNewCards(newCards)
         printNewCard(participantWithNewCards)
 
-        return askGetCardToParticipant(
-            participantWithNewCards.canGetCard,
-            printGetOneMoreCard,
-            participantWithNewCards,
-            input,
-            printNewCard
-        )
+        return participantWithNewCards
     }
 
     private fun askWantToGetOneMoreCard(
@@ -47,7 +40,9 @@ class BlackJack {
         input: () -> Boolean
     ): Boolean {
         printGetOneMoreCard(participant.name)
-        return input().not()
+        val noMoreCard = input().not()
+        if (noMoreCard) participant.setParticipantState(ParticipantState.STAND)
+        return noMoreCard
     }
 
     companion object {

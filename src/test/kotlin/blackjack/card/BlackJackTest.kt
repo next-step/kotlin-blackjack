@@ -23,8 +23,8 @@ class BlackJackTest : StringSpec({
         participants.first().cards.size shouldBe initialSize
         val result = participants.map { participant ->
             blackJack.doBlackJack(
-                canGetCard = true,
                 participant = participant.copy(cards = cards),
+                winBlackJack = {},
                 printGetOneMoreCard = { "y" },
                 input = { inputY },
                 printNewCard = {},
@@ -43,8 +43,8 @@ class BlackJackTest : StringSpec({
         participants.first().cards.size shouldBe initialSize
         val result = participants.map { participant ->
             blackJack.doBlackJack(
-                canGetCard = participant.canGetCard,
                 participant = participant,
+                winBlackJack = {},
                 printGetOneMoreCard = {},
                 input = { inputN },
                 printNewCard = {},

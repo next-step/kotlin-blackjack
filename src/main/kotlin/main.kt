@@ -1,4 +1,5 @@
 import blackjack.domain.BlackJack
+import blackjack.entity.ParticipantState
 import blackjack.entity.participantsFromNames
 import blackjack.ui.InputView
 import blackjack.ui.OutputView
@@ -17,13 +18,20 @@ fun main() {
     // PHASE 3
     val blackJack = BlackJack()
     val result = participants.map { participant ->
-        blackJack.doBlackJack(
-            canGetCard = participant.canGetCard,
-            participant = participant,
-            printGetOneMoreCard = { OutputView.printGetOneMoreCard(it) },
-            input = { InputView.inputGetMoreCard() },
-            printNewCard = { OutputView.printNewCards(it) }
-        ).print()
+        var resultText = ""
+        var temporary = participant
+        while (true) {
+            val tempParticipant = blackJack.doBlackJack(
+                participant = temporary,
+                printGetOneMoreCard = { OutputView.printGetOneMoreCard(it) },
+                input = { InputView.inputGetMoreCard() },
+                printNewCard = { OutputView.printNewCards(it) }
+            )
+            resultText = tempParticipant.print()
+            temporary = tempParticipant
+            if (tempParticipant.participantState !is ParticipantState.HIT) { break }
+        }
+        resultText
     }
     OutputView.printResult(result)
 }
