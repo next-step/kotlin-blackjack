@@ -19,10 +19,8 @@ class BlackJackGame(
     }
 
     fun run() {
-        while (stage !is End) {
-            progressStage()
-            endStage()
-        }
+        progressStage()
+        endStage()
     }
 
     fun dealCardsToAllPlayers(count: Int) {

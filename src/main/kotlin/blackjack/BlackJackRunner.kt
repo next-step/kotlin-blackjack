@@ -4,18 +4,15 @@ import blackjack.controller.ResultProcessor
 import blackjack.controller.ViewInputProcessor
 import blackjack.domain.BlackJackGame
 
-object BlackJackRunner {
+class BlackJackRunner(
+    val game: BlackJackGame = BlackJackGame(
+        inputProcessor = ViewInputProcessor(),
+        resultProcessor = ResultProcessor(),
+    ),
+) {
     fun start() {
-        val inputProcessor = ViewInputProcessor()
-
-        val game = BlackJackGame(
-            inputProcessor = inputProcessor,
-            resultProcessor = ResultProcessor(),
-        )
-        game.run()
+        while (true) {
+            game.run()
+        }
     }
-}
-
-fun main() {
-    BlackJackRunner.start()
 }
