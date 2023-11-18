@@ -8,9 +8,9 @@ object InputView {
     }
 
     fun checkParticipants(participants: String) {
-        check(participants.startsWith(DELIMITER).not()) { INVALID_INPUT }
-        check(participants.endsWith(DELIMITER).not()) { INVALID_INPUT }
-        check(REGEX.find(participants) == null) { INVALID_INPUT }
+        require(participants.startsWith(DELIMITER).not()) { INVALID_INPUT }
+        require(participants.endsWith(DELIMITER).not()) { INVALID_INPUT }
+        require(REGEX.find(participants) == null) { INVALID_INPUT }
     }
 
     fun inputGetMoreCard(): Boolean {
