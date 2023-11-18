@@ -24,7 +24,7 @@ class PersonBuilder {
     }
 }
 
-fun introduce(block: (PersonBuilder) -> Unit): Person {
+fun introduce(block: PersonBuilder.() -> Unit): Person {
     val personBuilder = PersonBuilder()
     block(personBuilder)
     return personBuilder.build()
