@@ -1,6 +1,6 @@
 package blackjack
 
-class PlayerCards(private val cards: MutableList<PlayingCard> = mutableListOf()) {
+class PlayerCards(val cards: MutableList<PlayingCard> = mutableListOf()) {
     private var compound = CardsCompound.get()
 
     fun addCard(card: PlayingCard) {
@@ -10,8 +10,4 @@ class PlayerCards(private val cards: MutableList<PlayingCard> = mutableListOf())
 
     fun isBusted() = compound.isBusted
     fun getBestScore() = compound.bestNumber
-
-    override fun toString(): String {
-        return cards.joinToString { it.toString() }
-    }
 }
