@@ -1,5 +1,7 @@
 package blackjack.entity
 
+import blackjack.domain.Card
+
 data class Cards(
     val cards: ArrayDeque<Card>
 ) : List<Card> by cards {

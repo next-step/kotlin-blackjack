@@ -1,9 +1,9 @@
 package blackjack.ui
 
-import blackjack.entity.Card
+import blackjack.domain.Card
+import blackjack.domain.Participant
 import blackjack.entity.CardNumber
 import blackjack.entity.Cards
-import blackjack.entity.Participant
 
 fun Card.print(): String {
     val cardNumber = takeCardNumber()

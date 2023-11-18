@@ -1,6 +1,6 @@
 package blackjack.ui
 
-import blackjack.entity.Participant
+import blackjack.domain.Participant
 import blackjack.entity.Participants
 
 object OutputView {

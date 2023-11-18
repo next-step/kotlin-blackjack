@@ -1,6 +1,5 @@
 package blackjack.domain
 
-import blackjack.entity.Card
 import blackjack.entity.Cards
 import blackjack.entity.toCards
 

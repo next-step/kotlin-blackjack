@@ -1,6 +1,7 @@
 package blackjack.entity
 
 import blackjack.domain.CardGenerator
+import blackjack.domain.Participant
 
 data class Participants(
     val participants: List<Participant>

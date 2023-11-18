@@ -1,4 +1,4 @@
-import blackjack.domain.BlackJack
+import blackjack.BlackJack
 import blackjack.entity.Cards
 import blackjack.entity.ParticipantState
 import blackjack.entity.participantsFromNames

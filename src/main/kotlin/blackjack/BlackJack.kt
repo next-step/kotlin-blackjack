@@ -1,7 +1,8 @@
-package blackjack.domain
+package blackjack
 
+import blackjack.domain.CardGenerator
+import blackjack.domain.Participant
 import blackjack.entity.Cards
-import blackjack.entity.Participant
 import blackjack.entity.ParticipantState
 
 class BlackJack(
@@ -13,7 +14,9 @@ class BlackJack(
         input: () -> Boolean,
         printNewCard: (Participant) -> Unit,
     ): Participant {
-        if (participant.participantState is ParticipantState.BLACKJACK) { return participant }
+        if (participant.participantState is ParticipantState.BLACKJACK) {
+            return participant
+        }
         if (askWantToGetOneMoreCard(printGetOneMoreCard, participant, input)) return participant
 
         val newCard = CardGenerator.generateCard(GENERATE_SINGLE_CARD, cardDeque)

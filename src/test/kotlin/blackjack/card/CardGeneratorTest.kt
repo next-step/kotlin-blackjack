@@ -1,7 +1,7 @@
 package blackjack.card
 
+import blackjack.domain.Card
 import blackjack.domain.CardGenerator
-import blackjack.entity.Card
 import blackjack.entity.CardNumber
 import blackjack.entity.CardShape
 import blackjack.entity.Cards

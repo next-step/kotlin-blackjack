@@ -1,4 +1,7 @@
-package blackjack.entity
+package blackjack.domain
+
+import blackjack.entity.Cards
+import blackjack.entity.ParticipantState
 
 data class Participant(
     val name: String,
