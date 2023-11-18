@@ -1,8 +1,8 @@
 package blackjack.view
 
-import blackjack.CardDeck
-import blackjack.GameResult
-import blackjack.Player
+import blackjack.model.CardDeck
+import blackjack.model.GameResult
+import blackjack.model.Player
 
 object OutputView {
     fun renderPlayers(players: List<Player>) {
