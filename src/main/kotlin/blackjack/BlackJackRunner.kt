@@ -1,11 +1,18 @@
 package blackjack
 
-import blackjack.controller.InputProcessor
+import blackjack.controller.ResultProcessor
+import blackjack.controller.ViewInputProcessor
 import blackjack.domain.BlackJackGame
 
 object BlackJackRunner {
     fun start() {
-        val game = BlackJackGame(InputProcessor.playerNames)
+        val inputProcessor = ViewInputProcessor()
+
+        val game = BlackJackGame(
+            playerNames = inputProcessor.playerNames(),
+            inputProcessor = inputProcessor,
+            resultProcessor = ResultProcessor(),
+        )
         game.run()
     }
 }

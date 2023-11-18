@@ -11,10 +11,12 @@ import blackjack.domain.stage.Stage
 
 class BlackJackGame(
     playerNames: PlayerNames,
+    private val inputProcessor: InputProcessor,
+    private val resultProcessor: ResultProcessor,
 ) {
+    private val dealer: Dealer = Dealer()
+    private var stage: Stage = InitialDistribution(this)
     val players: Players = Players.from(playerNames)
-    val dealer: Dealer = Dealer()
-    var stage: Stage = InitialDistribution(this)
 
     fun run() {
         while (stage !is End) {
@@ -29,11 +31,11 @@ class BlackJackGame(
         }
     }
 
-    fun askHitOrStand(): PlayerAction =
-        InputProcessor.playerAction(players.playerInTurn)
+    fun askHitOrStand(): PlayerAction = inputProcessor
+        .playerAction(players.playerInTurn)
 
     fun emitResult(result: Result) {
-        ResultProcessor.handle(result)
+        resultProcessor.handle(result)
     }
 
     private fun progressStage() {
