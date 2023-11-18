@@ -1,5 +1,5 @@
 import blackjack.BlackJack
-import blackjack.entity.Cards
+import blackjack.entity.ParticipantCards
 import blackjack.entity.ParticipantState
 import blackjack.entity.participantsFromNames
 import blackjack.ui.InputView
@@ -13,7 +13,7 @@ fun main() {
     OutputView.printParticipantsName(participantName)
 
     // PHASE 2
-    val cardDeque = Cards.createCardDeque()
+    val cardDeque = ParticipantCards.createCardDeque()
     val participants = participantName.participantsFromNames(cardDeque)
     OutputView.printParticipantsCard(participants)
 

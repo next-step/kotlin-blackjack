@@ -2,11 +2,11 @@ package blackjack
 
 import blackjack.domain.CardGenerator
 import blackjack.domain.Participant
-import blackjack.entity.Cards
+import blackjack.entity.ParticipantCards
 import blackjack.entity.ParticipantState
 
 class BlackJack(
-    private val cardDeque: Cards,
+    private val cardDeque: ParticipantCards,
     private val participant: Participant,
 ) {
     fun doBlackJack(

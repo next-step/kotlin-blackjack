@@ -3,7 +3,7 @@ package blackjack.ui
 import blackjack.domain.Card
 import blackjack.domain.Participant
 import blackjack.entity.CardNumber
-import blackjack.entity.Cards
+import blackjack.entity.ParticipantCards
 
 fun Card.print(): String {
     val cardNumber = takeCardNumber()
@@ -16,13 +16,13 @@ private fun Card.takeCardNumber() =
 
 private fun Card.useNumberIfTen() = if (number == CardNumber.TEN) number.number else number.name
 
-fun Cards.print(): String {
+fun ParticipantCards.print(): String {
     return cards.joinToString { card -> card.print() }
 }
 
 fun Participant.print(): String {
-    val cardString = cards.print()
-    val resultString = "결과: ${cards.sumOfCardNumbers()}"
+    val cardString = participantCards.print()
+    val resultString = "결과: ${participantCards.getCurrentScore()}"
     return "$name 카드: $cardString - $resultString"
 }
 

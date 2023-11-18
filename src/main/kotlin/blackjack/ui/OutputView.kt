@@ -25,7 +25,7 @@ object OutputView {
     private fun createParticipantInformation(participant: Participant): String {
         return PRINT_PARTICIPANTS_INFORMATION.format(
             participant.name,
-            participant.cards.print()
+            participant.participantCards.print()
         )
     }
 
@@ -34,7 +34,7 @@ object OutputView {
     }
 
     fun printNewCards(participant: Participant) {
-        println(PRINT_PARTICIPANTS_INFORMATION.format(participant.name, participant.cards.print()))
+        println(PRINT_PARTICIPANTS_INFORMATION.format(participant.name, participant.participantCards.print()))
     }
 
     fun printResult(result: List<String>) {

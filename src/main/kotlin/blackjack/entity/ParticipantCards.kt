@@ -2,7 +2,7 @@ package blackjack.entity
 
 import blackjack.domain.Card
 
-data class Cards(
+data class ParticipantCards(
     val cards: ArrayDeque<Card>
 ) : List<Card> by cards {
     val cardsContainACard: Boolean
@@ -10,10 +10,10 @@ data class Cards(
             return cards.any { card -> card.number == CardNumber.A }
         }
 
-    val sumOfCards: Int
+    private val sumOfCards: Int
         get() = cards.sumOf { it.number.number }
 
-    fun sumOfCardNumbers(): Int = if (cardsContainACard) {
+    fun getCurrentScore(): Int = if (cardsContainACard) {
         sumOfCardsWithA()
     } else {
         sumOfCards
@@ -28,7 +28,7 @@ data class Cards(
         sumOfCards + SUPER_A_PLUS_NUMBER
     }
 
-    fun addNewCard(card: Cards): Cards {
+    fun addNewCard(card: ParticipantCards): ParticipantCards {
         val cards = (cards + card.cards)
         return cards.toCards()
     }
@@ -36,7 +36,7 @@ data class Cards(
     companion object {
         private const val BLACK_JACK = 21
         private const val SUPER_A_PLUS_NUMBER = 10
-        fun createCardDeque(): Cards {
+        fun createCardDeque(): ParticipantCards {
             val cardNumbers = CardNumber.values()
             val cardShapes = CardShape.values()
             return cardNumbers.flatMap { cardNumber ->
@@ -46,4 +46,4 @@ data class Cards(
     }
 }
 
-fun List<Card>.toCards() = Cards(ArrayDeque(this))
+fun List<Card>.toCards() = ParticipantCards(ArrayDeque(this))

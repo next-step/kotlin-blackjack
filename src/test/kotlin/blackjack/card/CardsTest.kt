@@ -3,7 +3,7 @@ package blackjack.card
 import blackjack.domain.Card
 import blackjack.entity.CardNumber
 import blackjack.entity.CardShape
-import blackjack.entity.Cards
+import blackjack.entity.ParticipantCards
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 
@@ -16,7 +16,7 @@ class CardsTest : StringSpec({
                 Card(CardNumber.A, CardShape.DIAMOND),
             )
         )
-        val deque = Cards(cardDeque)
+        val deque = ParticipantCards(cardDeque)
         deque.cardsContainACard shouldBe true
     }
 
@@ -28,7 +28,7 @@ class CardsTest : StringSpec({
                 Card(CardNumber.THREE, CardShape.DIAMOND),
             )
         )
-        val deque = Cards(cardDeque)
+        val deque = ParticipantCards(cardDeque)
         deque.cardsContainACard shouldBe false
     }
 
@@ -36,7 +36,7 @@ class CardsTest : StringSpec({
         val cardSumDeque = ArrayDeque<Card>(
             listOf(Card(CardNumber.THREE, CardShape.HEART), Card(CardNumber.EIGHT, CardShape.SPADE))
         )
-        val sumDeque = Cards(cardSumDeque)
-        sumDeque.sumOfCards shouldBe 11
+        val sumDeque = ParticipantCards(cardSumDeque)
+        sumDeque.getCurrentScore() shouldBe 11
     }
 })

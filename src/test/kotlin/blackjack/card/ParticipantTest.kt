@@ -4,7 +4,7 @@ import blackjack.BlackJack
 import blackjack.domain.Card
 import blackjack.entity.CardNumber
 import blackjack.entity.CardShape
-import blackjack.entity.Cards
+import blackjack.entity.ParticipantCards
 import blackjack.entity.ParticipantState
 import blackjack.entity.participantsFromNames
 import io.kotest.core.spec.style.StringSpec
@@ -19,7 +19,7 @@ class ParticipantTest : StringSpec({
                 Card(CardNumber.J, CardShape.SPADE),
             )
         )
-        val deque = Cards(cardDeque)
+        val deque = ParticipantCards(cardDeque)
         val participant = "pita".participantsFromNames(deque).participants.first()
         // 블랙잭 진행하여 한장 더 받음
         val result = BlackJack(deque, participant).doBlackJack(
@@ -37,7 +37,7 @@ class ParticipantTest : StringSpec({
                 Card(CardNumber.FOUR, CardShape.HEART),
             )
         )
-        val deque = Cards(cardDeque)
+        val deque = ParticipantCards(cardDeque)
         val participant = "pita".participantsFromNames(deque).participants.first()
         participant.participantState shouldBe ParticipantState.HIT
     }
@@ -51,7 +51,7 @@ class ParticipantTest : StringSpec({
                 Card(CardNumber.THREE, CardShape.SPADE),
             )
         )
-        val deque = Cards(cardDeque)
+        val deque = ParticipantCards(cardDeque)
         val participant = "pita".participantsFromNames(deque).participants.first()
         participant.participantState shouldBe ParticipantState.HIT
     }
@@ -64,7 +64,7 @@ class ParticipantTest : StringSpec({
                 Card(CardNumber.J, CardShape.HEART),
             )
         )
-        val deque = Cards(cardDeque)
+        val deque = ParticipantCards(cardDeque)
         val participant = "pita".participantsFromNames(deque).participants.first()
         participant.participantState shouldBe ParticipantState.BLACKJACK
     }
@@ -77,7 +77,7 @@ class ParticipantTest : StringSpec({
                 Card(CardNumber.THREE, CardShape.HEART),
             )
         )
-        val deque = Cards(cardDeque)
+        val deque = ParticipantCards(cardDeque)
         val participant = "pita".participantsFromNames(deque).participants.first()
         participant.setParticipantState(ParticipantState.STAND)
         participant.participantState shouldBe ParticipantState.STAND

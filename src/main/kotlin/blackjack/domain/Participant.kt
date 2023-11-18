@@ -1,19 +1,19 @@
 package blackjack.domain
 
-import blackjack.entity.Cards
+import blackjack.entity.ParticipantCards
 import blackjack.entity.ParticipantState
 import blackjack.entity.toCards
 
 data class Participant(
     val name: String,
-    val cards: Cards,
+    val participantCards: ParticipantCards,
 ) {
     var participantState: ParticipantState = calculateParticipantState()
         private set
 
     private fun calculateParticipantState(): ParticipantState {
         if (participantState is ParticipantState.STAND) return participantState
-        return when (cards.sumOfCardNumbers()) {
+        return when (participantCards.getCurrentScore()) {
             in MINIMUM_HIT_NUMBER..MAXIMUM_HIT_NUMBER -> ParticipantState.HIT
             BLACK_JACK -> ParticipantState.BLACKJACK
             else -> ParticipantState.BUST
@@ -23,8 +23,8 @@ data class Participant(
     fun setParticipantState(state: ParticipantState.STAND) {
         participantState = state
     }
-    
-    fun drawCard(card: Cards): Participant = copy(cards = (cards + card).toCards())
+
+    fun drawCard(card: ParticipantCards): Participant = copy(participantCards = (participantCards + card).toCards())
 
     companion object {
         private const val MINIMUM_HIT_NUMBER = 1
