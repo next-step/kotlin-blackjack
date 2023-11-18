@@ -1,6 +1,7 @@
 package blackjack.domain.stage
 
 import blackjack.domain.BlackJackGame
+import blackjack.domain.PlayerAction
 
 class InGame(
     private val game: BlackJackGame,
@@ -10,8 +11,10 @@ class InGame(
     }
 
     override fun progress() {
-        playerChoice
-        TODO("Not yet implemented")
+        when (playerChoice) {
+            PlayerAction.HIT -> game.dealCardToPlayerInTurn()
+            else -> TODO()
+        }
     }
 
     override fun emitResult() {

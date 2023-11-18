@@ -41,4 +41,21 @@ class BlackJackGameTest : DescribeSpec({
             }
         }
     }
+
+    describe("이번 차례 플레이어에게 카드 1장 배분") {
+        val game = BlackJackGame(InputProcessorMock())
+        val handCount = game.players.playerInTurn.hand.cards.size
+        val deckCount = game.dealer.deck.cards.size
+        context("카드 배분") {
+            game.dealCardToPlayerInTurn()
+
+            it("플레이어는 카드 1장 수령") {
+                game.players.playerInTurn.hand.cards.count() shouldBe handCount + 1
+            }
+
+            it("덱에서는 카드 1장 제거") {
+                game.dealer.deck.cards.size shouldBe deckCount - 1
+            }
+        }
+    }
 })

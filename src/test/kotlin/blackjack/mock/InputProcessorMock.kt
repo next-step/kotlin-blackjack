@@ -6,15 +6,11 @@ import blackjack.domain.player.Player
 import blackjack.domain.player.PlayerNames
 
 class InputProcessorMock(
-    private val playerNames: List<String>? = null,
+    private val playerNames: List<String> = listOf("kim", "lee"),
+    private val playerAction: PlayerAction = PlayerAction.HIT,
 ) : InputProcessor {
 
-    override fun playerNames(): PlayerNames {
-        val playNamesInput = playerNames ?: listOf("kim", "lee")
-        return playNamesInput.let(PlayerNames::of)
-    }
+    override fun playerNames(): PlayerNames = playerNames.let(PlayerNames::of)
 
-    override fun playerAction(player: Player): PlayerAction {
-        TODO("Not yet implemented")
-    }
+    override fun playerAction(player: Player): PlayerAction = playerAction
 }

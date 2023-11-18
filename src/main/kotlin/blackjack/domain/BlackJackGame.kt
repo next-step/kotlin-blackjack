@@ -4,7 +4,6 @@ import blackjack.controller.InputProcessor
 import blackjack.controller.ResultProcessor
 import blackjack.domain.player.Players
 import blackjack.domain.result.Result
-import blackjack.domain.stage.End
 import blackjack.domain.stage.InitialDistribution
 import blackjack.domain.stage.Stage
 
@@ -12,8 +11,8 @@ class BlackJackGame(
     private val inputProcessor: InputProcessor,
     private val resultProcessor: ResultProcessor = ResultProcessor(),
 ) {
-    private val dealer: Dealer = Dealer()
-    private var stage: Stage = InitialDistribution(this)
+    val dealer: Dealer = Dealer()
+    var stage: Stage = InitialDistribution(this)
     val players: Players by lazy {
         Players.from(inputProcessor.playerNames())
     }
@@ -27,6 +26,10 @@ class BlackJackGame(
         players.allPlayers.forEach { player ->
             dealer.dealCards(player, count)
         }
+    }
+
+    fun dealCardToPlayerInTurn() {
+        dealer.dealCards(players.playerInTurn, 1)
     }
 
     fun askHitOrStand(): PlayerAction = inputProcessor
