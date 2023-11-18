@@ -19,7 +19,8 @@ fun main() {
     players.players
         .forEach { play(it, deck) }
     dealerPlay(players.dealer, deck)
-    ResultView.printResult(players)
+    ResultView.printCardResult(players)
+    ResultView.printGameResult(players)
 }
 
 private fun play(player: Player, deck: Deck) {
