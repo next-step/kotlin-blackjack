@@ -35,6 +35,6 @@ private fun dealerPlay(dealer: Dealer, deck: Deck) {
     while (dealer.canHit()) {
         val card = deck.hit()
         dealer.hit(card)
-        println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
+        ResultView.printDealerHitMessage()
     }
 }

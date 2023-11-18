@@ -33,6 +33,10 @@ object ResultView {
         println()
     }
 
+    fun printDealerHitMessage() {
+        println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
+    }
+
     fun printCardResult(players: Players) {
         println()
         print("딜러 카드: ")
