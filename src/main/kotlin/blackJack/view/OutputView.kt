@@ -1,6 +1,7 @@
 package blackJack.view
 
 import blackJack.domain.Players
+import blackJack.dto.PlayersDto
 
 object OutputView {
 
@@ -13,9 +14,9 @@ object OutputView {
         println(names + BETTING)
     }
 
-    fun printPlayerCards(players: Players) {
-        players.players.forEach { player ->
-            val cardsInfo = player.cards.cards.joinToString(", ") { "${it.rank.score} ${it.suit}" }
+    fun printPlayerCards(players: PlayersDto) {
+        players.playerDtos.forEach { player ->
+            val cardsInfo = player.cardsDto.cardDtos.joinToString(", ") { "${it.rank} ${it.suit}" }
             println("${player.name}카드: $cardsInfo")
         }
     }

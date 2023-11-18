@@ -14,6 +14,5 @@ fun main() {
 
     val players: Players = Players.initBettings(splitNames)
     val playersDto = PlayersDto(players)
-
-    OutputView.printPlayerCards(players)
+    OutputView.printPlayerCards(playersDto)
 }
