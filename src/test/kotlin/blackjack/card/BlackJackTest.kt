@@ -11,19 +11,26 @@ import io.kotest.matchers.shouldBe
 
 class BlackJackTest : StringSpec({
     val initialSize = 2
+    val cardDeque = ArrayDeque<Card>(
+        listOf(
+            Card(CardNumber.J, CardShape.CLOVER),
+            Card(CardNumber.TWO, CardShape.HEART),
+            Card(CardNumber.THREE, CardShape.DIAMOND)
+        )
+    )
+    val deque = Cards(cardDeque)
+    val participants = "pita".participantsFromNames(deque)
+    val blackJack = BlackJack(deque)
 
     "y를 입력 받으면 이전 보다 카드 개수가 1개 더 많다" {
         // input 이 "y" 면 == 에 의해 true를 반환합니다.
         val inputY = true
         val expectedSize = 3
-        val participants = "pita".participantsFromNames()
-        val blackJack = BlackJack()
-        val cards = Cards(listOf(Card(CardNumber.J, CardShape.CLOVER), Card(CardNumber.J, CardShape.HEART)))
 
         participants.first().cards.size shouldBe initialSize
         val result = participants.map { participant ->
             blackJack.doBlackJack(
-                participant = participant.copy(cards = cards),
+                participant = participant,
                 printGetOneMoreCard = { "y" },
                 input = { inputY },
                 printNewCard = {},
@@ -36,8 +43,6 @@ class BlackJackTest : StringSpec({
         // input 이 "n" 면 == 에 의해 false를 반환합니다.
         val inputN = false
         val expectedSize = 2
-        val participants = "pita".participantsFromNames()
-        val blackJack = BlackJack()
 
         participants.first().cards.size shouldBe initialSize
         val result = participants.map { participant ->

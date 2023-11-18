@@ -9,18 +9,34 @@ import io.kotest.matchers.shouldBe
 
 class CardsTest : StringSpec({
     "A카드를 포함하고 있는지 확인" {
-        val cards = Cards(listOf(Card(CardNumber.A, CardShape.HEART)))
-        cards.cardsContainACard shouldBe true
+        val cardDeque = ArrayDeque<Card>(
+            listOf(
+                Card(CardNumber.J, CardShape.CLOVER),
+                Card(CardNumber.TWO, CardShape.HEART),
+                Card(CardNumber.A, CardShape.DIAMOND),
+            )
+        )
+        val deque = Cards(cardDeque)
+        deque.cardsContainACard shouldBe true
     }
 
     "A카드를 포함하고 있지 않은지 확인" {
-        val cards = Cards(listOf(Card(CardNumber.THREE, CardShape.HEART)))
-        cards.cardsContainACard shouldBe false
+        val cardDeque = ArrayDeque<Card>(
+            listOf(
+                Card(CardNumber.J, CardShape.CLOVER),
+                Card(CardNumber.TWO, CardShape.HEART),
+                Card(CardNumber.THREE, CardShape.DIAMOND),
+            )
+        )
+        val deque = Cards(cardDeque)
+        deque.cardsContainACard shouldBe false
     }
 
     "숫자들의 합이 잘 맞는지" {
-        val cardList = listOf(Card(CardNumber.THREE, CardShape.HEART), Card(CardNumber.EIGHT, CardShape.SPADE))
-        val cards = Cards(cardList)
-        cards.sumOfCards shouldBe 11
+        val cardSumDeque = ArrayDeque<Card>(
+            listOf(Card(CardNumber.THREE, CardShape.HEART), Card(CardNumber.EIGHT, CardShape.SPADE))
+        )
+        val sumDeque = Cards(cardSumDeque)
+        sumDeque.sumOfCards shouldBe 11
     }
 })
