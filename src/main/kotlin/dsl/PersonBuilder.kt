@@ -18,9 +18,10 @@ class PersonBuilder {
         skills = SkillBuilder().apply(block).build()
     }
 
-    fun languages(languages: List<Language>) {
-        this.languages = languages
+    fun languages(block: LanguageBuilder.() -> Unit) {
+        languages = LanguageBuilder().apply(block).build()
     }
+
     fun build(): Person {
         return Person(name, company, skills, languages)
     }

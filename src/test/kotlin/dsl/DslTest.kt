@@ -57,12 +57,10 @@ class DslTest {
                 soft("Good communication skills")
                 hard("Kotlin")
             }
-            languages(
-                listOf(
-                    Language("Korean", 5),
-                    Language("English", 3)
-                )
-            )
+            languages {
+                "Korean" level 5
+                "English" level 3
+            }
         }
         assertThat(person.name).isEqualTo("김호준")
         assertThat(person.company).isEqualTo("회사")
