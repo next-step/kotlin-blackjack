@@ -1,6 +1,5 @@
-import dsl.Language
-import dsl.Skill
-import dsl.introduce
+package dsl
+
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
