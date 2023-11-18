@@ -4,10 +4,7 @@ class PersonBuilder {
 
     private var name: String = ""
     private var company: String = ""
-    private var skills: Skills = Skills(
-        soft = emptyList(),
-        hard = emptyList()
-    )
+    private var skills: List<Skill> = emptyList()
     private var languages: List<Language> = emptyList()
 
     fun name(name: String) {
