@@ -15,7 +15,6 @@ class BlackJackGame(
     var stage: Stage = InitialDistribution(this)
 
     fun run() {
-        receiveSetupData()
         progressStage()
         handleResult()
     }
@@ -28,10 +27,6 @@ class BlackJackGame(
 
     fun emitResult(result: Result) {
         ResultProcessor.handle(result)
-    }
-
-    private fun receiveSetupData() {
-        stage.receiveSetupData()
     }
 
     private fun progressStage() {

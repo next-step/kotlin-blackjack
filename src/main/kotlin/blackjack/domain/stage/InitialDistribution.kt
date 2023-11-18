@@ -6,8 +6,6 @@ import blackjack.domain.result.InitialDistributionResult
 class InitialDistribution(
     private val game: BlackJackGame,
 ) : Stage {
-    override fun receiveSetupData() {}
-
     override fun progress() {
         game.dealCardsToAllPlayers(INITIAL_DISTRIBUTION_COUNT)
     }
