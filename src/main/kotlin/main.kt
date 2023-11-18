@@ -28,7 +28,7 @@ fun main() {
                 input = { InputView.inputGetMoreCard() },
                 printNewCard = { OutputView.printNewCards(it) }
             ).also {
-                resultText = ParticipantPrinter(it).print()
+                resultText = ParticipantPrinter.print(it)
                 temporary = it
             }
             if (tempParticipant.participantState !is ParticipantState.HIT) { break }
