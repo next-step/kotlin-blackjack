@@ -48,4 +48,40 @@ class DslTest {
             )
         )
     }
+
+    @Test
+    fun languages() {
+        val person = introduce {
+            name("김호준")
+            company("회사")
+            skills(
+                listOf(
+                    Skill("A passion for problem solving", SkillType.SOFT),
+                    Skill("Good communication skills", SkillType.SOFT),
+                    Skill("Kotlin", SkillType.HARD)
+                )
+            )
+            languages(
+                listOf(
+                    Language("Korean", 5),
+                    Language("English", 3)
+                )
+            )
+        }
+        assertThat(person.name).isEqualTo("김호준")
+        assertThat(person.company).isEqualTo("회사")
+        assertThat(person.skills).isEqualTo(
+            listOf(
+                Skill("A passion for problem solving", SkillType.SOFT),
+                Skill("Good communication skills", SkillType.SOFT),
+                Skill("Kotlin", SkillType.HARD)
+            )
+        )
+        assertThat(person.languages).isEqualTo(
+            listOf(
+                Language("Korean", 5),
+                Language("English", 3)
+            )
+        )
+    }
 }
