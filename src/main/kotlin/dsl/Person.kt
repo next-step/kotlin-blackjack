@@ -1,3 +1,11 @@
 package dsl
 
-data class Person(val name: String)
+class Person {
+    lateinit var name: String
+}
+
+fun introduce(block: (Person) -> Unit): Person {
+    val person = Person()
+    block(person)
+    return person
+}

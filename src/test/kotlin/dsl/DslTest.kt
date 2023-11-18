@@ -8,7 +8,9 @@ class DslTest {
     @ValueSource(strings = ["김호준", "쿠키"])
     @ParameterizedTest
     fun introduce(name: String) {
-        val person = Person(name)
+        val person = introduce {
+            it.name = name
+        }
         assertThat(person.name).isEqualTo(name)
     }
 }
