@@ -1,6 +1,10 @@
 package blackjack.domain.stage
 
-class End : Stage {
+import blackjack.domain.BlackJackGame
+
+class End(
+    private val game: BlackJackGame,
+) : Stage {
     override fun progress() {
         TODO("Not yet implemented")
     }

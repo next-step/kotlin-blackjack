@@ -1,5 +1,9 @@
 package blackjack.domain
 
+import blackjack.domain.card.Card
+import blackjack.domain.card.Hand
+import blackjack.domain.card.Rank
+import blackjack.domain.card.Suit
 import blackjack.domain.player.Player
 import blackjack.domain.player.PlayerName
 import blackjack.domain.player.Players
@@ -55,6 +59,56 @@ class BlackJackGameTest : DescribeSpec({
 
             it("덱에서는 카드 1장 제거") {
                 game.dealer.deck.cards.size shouldBe deckCount - 1
+            }
+        }
+    }
+
+    describe("현재 플레이어의 점수가 최대 첨수 초과했는지 여부 반환") {
+        context("현재 플레어가 최대 점수 21점을 초과했다면") {
+            val playerOverMax =
+                Player(
+                    PlayerName("currentPlayer"), Hand(
+                        mutableListOf(
+                            Card(Suit.DIAMOND, Rank.TEN),
+                            Card(Suit.DIAMOND, Rank.TEN),
+                            Card(Suit.DIAMOND, Rank.TEN),
+                        )
+                    )
+                )
+            val game = BlackJackGame(
+                InputProcessorMock(), players = Players(
+                    listOf(
+                        playerOverMax,
+                        Player(PlayerName("otherPlayer"), Hand()),
+                    )
+                )
+            )
+
+            it("true 반환") {
+                game.isPlayerInTurnScoreOverMax shouldBe true
+            }
+        }
+
+        context("현재 플레어가 최대 점수를 초과하지 않았다면") {
+            val playerUnderMax =
+                Player(
+                    PlayerName("currentPlayer"), Hand(
+                        mutableListOf(
+                            Card(Suit.DIAMOND, Rank.ACE),
+                            Card(Suit.DIAMOND, Rank.TEN),
+                        )
+                    )
+                )
+            val game = BlackJackGame(
+                InputProcessorMock(), players = Players(
+                    listOf(
+                        playerUnderMax,
+                        Player(PlayerName("otherPlayer"), Hand()),
+                    )
+                )
+            )
+            it("false 반환") {
+                game.isPlayerInTurnScoreOverMax shouldBe false
             }
         }
     }

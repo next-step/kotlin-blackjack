@@ -10,12 +10,13 @@ import blackjack.domain.stage.Stage
 class BlackJackGame(
     private val inputProcessor: InputProcessor,
     private val resultProcessor: ResultProcessor = ResultProcessor(),
+    val players: Players = Players.from(inputProcessor.playerNames())
 ) {
     val dealer: Dealer = Dealer()
     var stage: Stage = InitialDistribution(this)
-    val players: Players by lazy {
-        Players.from(inputProcessor.playerNames())
-    }
+
+    val isPlayerInTurnScoreOverMax: Boolean
+        get() = players.isPlayerInTurnOverMaxScore
 
     fun run() {
         progressStage()

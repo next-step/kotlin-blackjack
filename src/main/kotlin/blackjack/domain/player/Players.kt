@@ -6,6 +6,9 @@ data class Players(
     var playerInTurn: Player = allPlayers[0]
         private set
 
+    val isPlayerInTurnOverMaxScore: Boolean
+        get() = playerInTurn.isOverMaxScore
+
     companion object {
         fun from(names: PlayerNames) =
             names.value.map { name -> createPlayer(name) }.let(::Players)

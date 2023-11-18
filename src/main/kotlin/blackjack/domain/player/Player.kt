@@ -7,6 +7,9 @@ data class Player(
     val name: PlayerName,
     val hand: Hand = Hand(),
 ) {
+    val isOverMaxScore: Boolean
+        get() = hand.score.isOverMaxScore
+
     fun addCard(card: Card) {
         hand.add(card)
     }

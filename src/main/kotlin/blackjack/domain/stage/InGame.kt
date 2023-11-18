@@ -22,6 +22,7 @@ class InGame(
     }
 
     override fun nextStage(): Stage {
-        TODO("Not yet implemented")
+        if (game.isPlayerInTurnScoreOverMax) return End(game)
+        return InGame(game)
     }
 }
