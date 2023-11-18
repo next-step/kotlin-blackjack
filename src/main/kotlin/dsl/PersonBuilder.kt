@@ -28,7 +28,5 @@ class PersonBuilder {
 }
 
 fun introduce(block: PersonBuilder.() -> Unit): Person {
-    val personBuilder = PersonBuilder()
-    block(personBuilder)
-    return personBuilder.build()
+    return PersonBuilder().apply(block).build()
 }
