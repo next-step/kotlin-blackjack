@@ -7,9 +7,9 @@ import blackjack.entity.ParticipantState
 
 class BlackJack(
     private val cardDeque: Cards,
+    private val participant: Participant,
 ) {
     fun doBlackJack(
-        participant: Participant,
         printGetOneMoreCard: (String) -> Unit,
         input: () -> Boolean,
         printNewCard: (Participant) -> Unit,

@@ -18,13 +18,12 @@ fun main() {
     OutputView.printParticipantsCard(participants)
 
     // PHASE 3
-    val blackJack = BlackJack(cardDeque)
     val result = participants.map { participant ->
         var resultText = ""
         var temporary = participant
         while (true) {
+            val blackJack = BlackJack(cardDeque, temporary)
             val tempParticipant = blackJack.doBlackJack(
-                participant = temporary,
                 printGetOneMoreCard = { OutputView.printGetOneMoreCard(it) },
                 input = { InputView.inputGetMoreCard() },
                 printNewCard = { OutputView.printNewCards(it) }

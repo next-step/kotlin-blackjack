@@ -20,7 +20,7 @@ class BlackJackTest : StringSpec({
     )
     val deque = Cards(cardDeque)
     val participants = "pita".participantsFromNames(deque)
-    val blackJack = BlackJack(deque)
+    val blackJack = BlackJack(deque, participants.first())
 
     "y를 입력 받으면 이전 보다 카드 개수가 1개 더 많다" {
         // input 이 "y" 면 == 에 의해 true를 반환합니다.
@@ -30,7 +30,6 @@ class BlackJackTest : StringSpec({
         participants.first().cards.size shouldBe initialSize
         val result = participants.map { participant ->
             blackJack.doBlackJack(
-                participant = participant,
                 printGetOneMoreCard = { "y" },
                 input = { inputY },
                 printNewCard = {},
@@ -47,7 +46,6 @@ class BlackJackTest : StringSpec({
         participants.first().cards.size shouldBe initialSize
         val result = participants.map { participant ->
             blackJack.doBlackJack(
-                participant = participant,
                 printGetOneMoreCard = {},
                 input = { inputN },
                 printNewCard = {},

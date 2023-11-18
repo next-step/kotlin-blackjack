@@ -22,8 +22,7 @@ class ParticipantTest : StringSpec({
         val deque = Cards(cardDeque)
         val participant = "pita".participantsFromNames(deque).participants.first()
         // 블랙잭 진행하여 한장 더 받음
-        val result = BlackJack(deque).doBlackJack(
-            participant,
+        val result = BlackJack(deque, participant).doBlackJack(
             {},
             { true },
             {}
