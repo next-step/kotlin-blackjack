@@ -1,14 +1,13 @@
 package blackjack.domain.stage
 
 import blackjack.domain.BlackJackGame
-import blackjack.domain.player.PlayerName
-import blackjack.domain.player.PlayerNames
+import blackjack.mock.InputProcessorMock
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeTypeOf
 
 class InitialDistributionTest : DescribeSpec({
-    val game = BlackJackGame(PlayerNames(listOf(PlayerName("홍길동"), PlayerName("이상순"))))
+    val game = BlackJackGame(InputProcessorMock())
     describe("카드 배분 진행") {
         context("카드 배분 스테이지를 진행시키면") {
             val stage = InitialDistribution(game)

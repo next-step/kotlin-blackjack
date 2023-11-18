@@ -9,7 +9,6 @@ object BlackJackRunner {
         val inputProcessor = ViewInputProcessor()
 
         val game = BlackJackGame(
-            playerNames = inputProcessor.playerNames(),
             inputProcessor = inputProcessor,
             resultProcessor = ResultProcessor(),
         )
