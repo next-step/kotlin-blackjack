@@ -2,6 +2,7 @@ package blackjack.domain
 
 import blackjack.entity.Cards
 import blackjack.entity.ParticipantState
+import blackjack.entity.toCards
 
 data class Participant(
     val name: String,
@@ -22,8 +23,8 @@ data class Participant(
     fun setParticipantState(state: ParticipantState.STAND) {
         participantState = state
     }
-
-    fun copyNewCards(newCards: Cards): Participant = copy(cards = newCards)
+    
+    fun drawCard(card: Cards): Participant = copy(cards = (cards + card).toCards())
 
     companion object {
         private const val MINIMUM_HIT_NUMBER = 1

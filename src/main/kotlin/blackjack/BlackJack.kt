@@ -20,8 +20,7 @@ class BlackJack(
         if (askWantToGetOneMoreCard(printGetOneMoreCard, participant, input)) return participant
 
         val newCard = CardGenerator.generateCard(GENERATE_SINGLE_CARD, cardDeque)
-        val newCards = participant.cards.addNewCard(newCard)
-        val participantWithNewCards = participant.copyNewCards(newCards)
+        val participantWithNewCards = participant.drawCard(newCard)
         printNewCard(participantWithNewCards)
 
         return participantWithNewCards
