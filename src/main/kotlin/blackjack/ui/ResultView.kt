@@ -76,15 +76,15 @@ object ResultView {
     }
 
     private fun printDealerResult(dealerResult: Map<GameResult, Int>) {
-        print("딜러: ")
+        print("딜러:")
         dealerResult[GameResult.WIN]?.let {
-            print("${it}승")
-        }
-        dealerResult[GameResult.LOSE]?.let {
-            print("${it}패")
+            print(" ${it}승")
         }
         dealerResult[GameResult.DRAW]?.let {
-            print("${it}무")
+            print(" ${it}무")
+        }
+        dealerResult[GameResult.LOSE]?.let {
+            print(" ${it}패")
         }
         println()
     }
