@@ -4,7 +4,7 @@ import blackjack.entity.ParticipantState
 import blackjack.entity.participantsFromNames
 import blackjack.ui.InputView
 import blackjack.ui.OutputView
-import blackjack.ui.print
+import blackjack.ui.printer.ParticipantPrinter
 
 fun main() {
     // PHASE 1
@@ -28,7 +28,7 @@ fun main() {
                 input = { InputView.inputGetMoreCard() },
                 printNewCard = { OutputView.printNewCards(it) }
             ).also {
-                resultText = it.print()
+                resultText = ParticipantPrinter(it).print()
                 temporary = it
             }
             if (tempParticipant.participantState !is ParticipantState.HIT) { break }

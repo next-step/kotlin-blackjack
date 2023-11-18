@@ -2,6 +2,7 @@ package blackjack.ui
 
 import blackjack.domain.Participant
 import blackjack.entity.Participants
+import blackjack.ui.printer.ParticipantCardsPrinter
 
 object OutputView {
     fun printEnterParticipantsName() {
@@ -25,7 +26,7 @@ object OutputView {
     private fun createParticipantInformation(participant: Participant): String {
         return PRINT_PARTICIPANTS_INFORMATION.format(
             participant.name,
-            participant.participantCards.print()
+            ParticipantCardsPrinter(participant.participantCards).print()
         )
     }
 
@@ -34,7 +35,12 @@ object OutputView {
     }
 
     fun printNewCards(participant: Participant) {
-        println(PRINT_PARTICIPANTS_INFORMATION.format(participant.name, participant.participantCards.print()))
+        println(
+            PRINT_PARTICIPANTS_INFORMATION.format(
+                participant.name,
+                ParticipantCardsPrinter(participant.participantCards).print()
+            )
+        )
     }
 
     fun printResult(result: List<String>) {
