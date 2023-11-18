@@ -3,7 +3,7 @@ package blackjack.domain.stage
 interface Stage {
     fun progress()
 
-    fun handleResult()
+    fun emitResult()
 
     fun nextStage(): Stage
 }

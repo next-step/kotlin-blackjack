@@ -1,14 +1,14 @@
 package blackjack.view.output
 
 import blackjack.domain.card.Card
-import blackjack.view.model.PlayerView
+import blackjack.view.model.PlayerModel
 
 object OutputView {
     private const val INITIAL_DISTRIBUTION_MSG = "%s에게 2장씩 나누었습니다."
     private const val PLAYER_STATE_MSG = "%s카드: %s"
 
     fun initialDistributionResult(
-        players: List<PlayerView>,
+        players: List<PlayerModel>,
     ) {
         println(INITIAL_DISTRIBUTION_MSG.format(extractPlayerNames(players)))
         players.forEach {
@@ -16,7 +16,7 @@ object OutputView {
         }
     }
 
-    private fun extractPlayerNames(players: List<PlayerView>): String =
+    private fun extractPlayerNames(players: List<PlayerModel>): String =
         players.joinToString(", ") { it.name }
 
     private fun extractCardsState(cards: List<Card>): String =

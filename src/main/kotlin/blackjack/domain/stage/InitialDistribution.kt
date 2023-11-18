@@ -6,16 +6,21 @@ import blackjack.domain.result.InitialDistributionResult
 class InitialDistribution(
     private val game: BlackJackGame,
 ) : Stage {
+    var isProgressDone = false
+        private set
+
     override fun progress() {
         game.dealCardsToAllPlayers(INITIAL_DISTRIBUTION_COUNT)
+        isProgressDone = true
     }
 
-    override fun handleResult() {
+    override fun emitResult() {
         game.emitResult(InitialDistributionResult(game.players))
     }
 
-    override fun nextStage(): Stage {
-        TODO("Not yet implemented")
+    override fun nextStage(): Stage = when (isProgressDone) {
+        true -> InGame(game)
+        false -> this
     }
 
     companion object {

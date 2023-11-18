@@ -2,7 +2,7 @@ package blackjack.controller
 
 import blackjack.domain.result.InitialDistributionResult
 import blackjack.domain.result.Result
-import blackjack.view.model.PlayerView
+import blackjack.view.model.PlayerModel
 import blackjack.view.output.OutputView
 
 object ResultProcessor {
@@ -14,7 +14,7 @@ object ResultProcessor {
     }
 
     private fun drawInitialDistribution(result: InitialDistributionResult) {
-        val model = result.players.allPlayers.map { PlayerView(it.name.value, it.hand.cards) }
+        val model = result.players.allPlayers.map { PlayerModel(it.name.value, it.hand.cards) }
         OutputView.initialDistributionResult(model)
     }
 }
