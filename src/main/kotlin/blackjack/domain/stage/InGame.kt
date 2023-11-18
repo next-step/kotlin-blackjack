@@ -2,6 +2,7 @@ package blackjack.domain.stage
 
 import blackjack.domain.BlackJackGame
 import blackjack.domain.PlayerAction
+import blackjack.domain.result.InGameResult
 
 class InGame(
     private val game: BlackJackGame,
@@ -18,7 +19,7 @@ class InGame(
     }
 
     override fun emitResult() {
-        TODO("Not yet implemented")
+        game.emitResult(InGameResult(game.playerInTurn))
     }
 
     override fun nextStage(): Stage {

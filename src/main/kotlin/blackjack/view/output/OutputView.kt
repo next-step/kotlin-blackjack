@@ -16,6 +16,12 @@ object OutputView {
         }
     }
 
+    fun playerCurrentState(
+        player: PlayerModel,
+    ) {
+        println(PLAYER_STATE_MSG.format(player.name, extractCardsState(player.cards)))
+    }
+
     private fun extractPlayerNames(players: List<PlayerModel>): String =
         players.joinToString(", ") { it.name }
 

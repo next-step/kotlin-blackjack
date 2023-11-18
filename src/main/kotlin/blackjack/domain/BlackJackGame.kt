@@ -2,6 +2,7 @@ package blackjack.domain
 
 import blackjack.controller.InputProcessor
 import blackjack.controller.ResultProcessor
+import blackjack.domain.player.Player
 import blackjack.domain.player.Players
 import blackjack.domain.result.Result
 import blackjack.domain.stage.InitialDistribution
@@ -17,6 +18,9 @@ class BlackJackGame(
 
     val isPlayerInTurnScoreOverMax: Boolean
         get() = players.isPlayerInTurnOverMaxScore
+
+    val playerInTurn : Player
+        get() = players.playerInTurn
 
     fun run() {
         progressStage()
