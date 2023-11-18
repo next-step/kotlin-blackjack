@@ -1,4 +1,4 @@
-package service
+package controller
 
 import domain.BlackjackRules
 import domain.Dealer
@@ -12,11 +12,10 @@ class BlackjackGame(private val inputView: InputView, private val outputView: Ou
     private val players = mutableListOf<Player>()
     private val dealer = Dealer()
 
-    fun addPlayer(name: String) {
-        players.add(Player(name))
-    }
-
     fun startGame() {
+        val playerNames = inputView.readPlayerNames()
+        playerNames.forEach { addPlayer(it) }
+
         dealInitialCards()
         outputView.showInitialCards(players, dealer)
 
@@ -24,6 +23,10 @@ class BlackjackGame(private val inputView: InputView, private val outputView: Ou
         playDealerTurn()
 
         outputView.showGameResult(players, dealer)
+    }
+
+    private fun addPlayer(name: String) {
+        players.add(Player(name))
     }
 
     private fun dealInitialCards() {

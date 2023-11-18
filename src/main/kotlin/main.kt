@@ -1,4 +1,4 @@
-import service.BlackjackGame
+import controller.BlackjackGame
 import view.ConsoleInputView
 import view.ConsoleOutputView
 
