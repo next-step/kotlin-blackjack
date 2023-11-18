@@ -22,7 +22,7 @@ fun Cards.print(): String {
 
 fun Participant.print(): String {
     val cardString = cards.print()
-    val resultString = "결과: ${sumOfCardNumbers()}"
+    val resultString = "결과: ${cards.sumOfCardNumbers()}"
     return "$name 카드: $cardString - $resultString"
 }
 
