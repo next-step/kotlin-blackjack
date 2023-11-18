@@ -4,6 +4,7 @@ abstract class User(
     val hand: Hand
 ) {
     abstract fun hit(card: Card)
+    abstract fun canHit(): Boolean
 
     fun init(cards: List<Card>) {
         require(cards.size == 2) { "처음엔 카드 2장만 받을 수 있습니다." }
@@ -15,6 +16,6 @@ abstract class User(
     }
 
     companion object {
-        private const val BLACKJACK = 21
+        const val BLACKJACK = 21
     }
 }

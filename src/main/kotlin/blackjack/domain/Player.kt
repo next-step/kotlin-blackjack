@@ -12,4 +12,8 @@ class Player(
     override fun hit(card: Card) {
         hand.receive(card)
     }
+
+    override fun canHit(): Boolean {
+        return hand.getSum() < BLACKJACK
+    }
 }

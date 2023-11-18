@@ -5,6 +5,7 @@ import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.data.forAll
 import io.kotest.data.row
+import io.kotest.matchers.shouldBe
 
 class DealerTest : BehaviorSpec({
     Given("17점 이상일 때 카드 한장이 주어진다면") {
@@ -38,6 +39,21 @@ class DealerTest : BehaviorSpec({
                     shouldNotThrowAny {
                         Dealer(Hand(cards)).hit(card)
                     }
+                }
+            }
+        }
+    }
+
+    Given("딜러는 자신이 가진 패로") {
+        When("추가로 Hit 할 수 있는지 없는지를") {
+            Then("판단하여 반환한다.") {
+                forAll(
+                    row(Hand(mutableListOf(Card(CardSuit.SPADE, CardNumber.TEN), Card(CardSuit.CLUB, CardNumber.FIVE))), true),
+                    row(Hand(mutableListOf(Card(CardSuit.SPADE, CardNumber.TEN), Card(CardSuit.CLUB, CardNumber.SIX))), true),
+                    row(Hand(mutableListOf(Card(CardSuit.SPADE, CardNumber.ACE), Card(CardSuit.CLUB, CardNumber.SEVEN))), false),
+                    row(Hand(mutableListOf(Card(CardSuit.SPADE, CardNumber.ACE), Card(CardSuit.CLUB, CardNumber.EIGHT))), false),
+                ) { hand, expected ->
+                    Dealer(hand).canHit() shouldBe expected
                 }
             }
         }

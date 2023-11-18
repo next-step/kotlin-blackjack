@@ -110,4 +110,27 @@ class PlayerTest : BehaviorSpec({
             }
         }
     }
+
+    Given("플레이어는 자신이 가진 패로") {
+        When("추가로 Hit 할 수 있는지 없는지를") {
+            Then("판단하여 반환한다.") {
+                forAll(
+                    row(Hand(mutableListOf(Card(CardSuit.SPADE, CardNumber.TEN), Card(CardSuit.CLUB, CardNumber.TEN))), true),
+                    row(Hand(mutableListOf(Card(CardSuit.SPADE, CardNumber.ACE), Card(CardSuit.CLUB, CardNumber.TEN))), false),
+                    row(
+                        Hand(
+                            mutableListOf(
+                                Card(CardSuit.SPADE, CardNumber.TEN),
+                                Card(CardSuit.CLUB, CardNumber.TEN),
+                                Card(CardSuit.HEART, CardNumber.TWO)
+                            )
+                        ),
+                        false
+                    ),
+                ) { hand, expected ->
+                    Player("yeongun", hand).canHit() shouldBe expected
+                }
+            }
+        }
+    }
 })
