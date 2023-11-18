@@ -1,6 +1,11 @@
 import blackjack.domain.BlackJack
+import blackjack.entity.Card
+import blackjack.entity.CardNumber
+import blackjack.entity.CardShape
+import blackjack.entity.Cards
 import blackjack.entity.ParticipantState
 import blackjack.entity.participantsFromNames
+import blackjack.entity.toCards
 import blackjack.ui.InputView
 import blackjack.ui.OutputView
 import blackjack.ui.print
@@ -12,11 +17,12 @@ fun main() {
     OutputView.printParticipantsName(participantName)
 
     // PHASE 2
-    val participants = participantName.participantsFromNames()
+    val cardDeque = Cards.createCardDeque()
+    val participants = participantName.participantsFromNames(cardDeque)
     OutputView.printParticipantsCard(participants)
 
     // PHASE 3
-    val blackJack = BlackJack()
+    val blackJack = BlackJack(cardDeque)
     val result = participants.map { participant ->
         var resultText = ""
         var temporary = participant

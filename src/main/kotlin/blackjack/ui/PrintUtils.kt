@@ -1,14 +1,20 @@
 package blackjack.ui
 
 import blackjack.entity.Card
+import blackjack.entity.CardNumber
 import blackjack.entity.Cards
 import blackjack.entity.Participant
 
 fun Card.print(): String {
-    val cardNumber = number.number.takeIf { it in MINIMUM_NUMBER_NOT_CHARACTER..MAXIMUM_NUMBER_NOT_CHARACTER }
-        ?: number.name
+    val cardNumber = takeCardNumber()
     return "${cardNumber}${shape.shapeName}"
 }
+
+private fun Card.takeCardNumber() =
+    number.number.takeIf { it in MINIMUM_NUMBER_NOT_CHARACTER..MAXIMUM_NUMBER_NOT_CHARACTER }
+        ?: useNumberIfTen()
+
+private fun Card.useNumberIfTen() = if (number == CardNumber.TEN) number.number else number.name
 
 fun Cards.print(): String {
     return cards.joinToString { card -> card.print() }

@@ -1,7 +1,7 @@
 package blackjack.entity
 
 data class Cards(
-    val cards: List<Card>
+    val cards: ArrayDeque<Card>
 ) : List<Card> by cards {
     val cardsContainACard: Boolean
         get() {
@@ -11,7 +11,20 @@ data class Cards(
     val sumOfCards: Int
         get() = cards.sumOf { it.number.number }
 
-    fun addNewCard(card: Cards): Cards = Cards(cards + card)
+    fun addNewCard(card: Cards): Cards {
+        val cards = (cards + card.cards)
+        return cards.toCards()
+    }
+
+    companion object {
+        fun createCardDeque(): Cards {
+            val cardNumbers = CardNumber.values()
+            val cardShapes = CardShape.values()
+            return cardNumbers.flatMap { cardNumber ->
+                cardShapes.map { cardShape -> Card(number = cardNumber, shape = cardShape) }
+            }.shuffled().toCards()
+        }
+    }
 }
 
-fun List<Card>.toCards() = Cards(this)
+fun List<Card>.toCards() = Cards(ArrayDeque(this))
