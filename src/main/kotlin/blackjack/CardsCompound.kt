@@ -1,18 +1,20 @@
 package blackjack
 
-class CardsCompound private constructor(val set: HashSet<Int>) {
-    fun addNumber(number: CardNumber) {
-        val entries = set.toList()
-        set.clear()
-        for (score in number.getScore().number) {
-            setNewCompound(entries, score)
-        }
+class CardsCompound private constructor(private val set: HashSet<Int>) {
+    fun addNumber(number: CardNumber): CardsCompound {
+        return CardsCompound(
+            HashSet<Int>().apply {
+                for (score in number.getScore().number) {
+                    setNewCompound(set.toList(), score)
+                }
+            }
+        )
     }
 
-    private fun setNewCompound(entries: List<Int>, score: Int) {
+    private fun HashSet<Int>.setNewCompound(entries: List<Int>, score: Int) {
         for (entry in entries) {
             val cardSum = entry + score
-            if (cardSum <= BEST) set.add(cardSum)
+            if (cardSum <= BEST) add(cardSum)
         }
     }
 

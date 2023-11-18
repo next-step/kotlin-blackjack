@@ -1,11 +1,11 @@
 package blackjack
 
 class PlayerCards(private val cards: MutableList<PlayingCard> = mutableListOf()) {
-    private val compound = CardsCompound.get()
+    private var compound = CardsCompound.get()
 
     fun addCard(card: PlayingCard) {
         cards.add(card)
-        compound.addNumber(card.number)
+        compound = compound.addNumber(card.number)
     }
 
     fun isBusted() = compound.isBusted
