@@ -9,9 +9,8 @@ import blackjack.ui.InputView
 import blackjack.ui.ResultView
 
 fun main() {
-    val dealer = Dealer()
     val inputNames = InputView.inputNames()
-    val players = Players.init(dealer, inputNames)
+    val players = Players.init(Dealer(), inputNames)
 
     val deck = RandomDeck.from()
     players.initCard(deck)
