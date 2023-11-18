@@ -15,6 +15,3 @@ class SkillBuilder {
         return skills
     }
 }
-
-fun skills(block: SkillBuilder.() -> Unit): List<Skill> =
-    SkillBuilder().apply(block).build()

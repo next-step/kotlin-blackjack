@@ -14,14 +14,13 @@ class PersonBuilder {
         this.company = company
     }
 
-    fun skills(skills: List<Skill>) {
-        this.skills = skills
+    fun skills(block: SkillBuilder.() -> Unit) {
+        skills = SkillBuilder().apply(block).build()
     }
 
     fun languages(languages: List<Language>) {
         this.languages = languages
     }
-
     fun build(): Person {
         return Person(name, company, skills, languages)
     }
