@@ -1,7 +1,6 @@
 package blackjack.ui
 
 import blackjack.domain.Player
-import blackjack.domain.Players
 
 object InputView {
 
@@ -10,10 +9,9 @@ object InputView {
     private const val HIT_ANSWER = "y"
     private const val STAND_ANSWER = "n"
 
-    fun inputNames(): Players {
+    fun inputNames(): List<String> {
         println(INPUT_PLAYER_NAMES_MESSAGE)
-        val inputNames = readln().split(PLAYER_NAME_DELIMITER)
-        return Players.init(inputNames)
+        return readln().split(PLAYER_NAME_DELIMITER)
     }
 
     fun inputHitOrStand(player: Player): Boolean {

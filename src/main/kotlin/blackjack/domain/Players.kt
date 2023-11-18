@@ -1,10 +1,16 @@
 package blackjack.domain
 
-data class Players(val players: List<Player>) {
+data class Players(
+    val dealer: Dealer,
+    val players: List<Player>
+) {
     fun initCard(deck: Deck) {
+        val dealerInitCards = deck.init()
+        dealer.init(dealerInitCards)
+
         players.forEach {
-            val initCards = deck.init()
-            it.init(initCards)
+            val playerInitCards = deck.init()
+            it.init(playerInitCards)
         }
     }
 
@@ -15,8 +21,8 @@ data class Players(val players: List<Player>) {
     }
 
     companion object {
-        fun init(names: List<String>): Players {
-            return Players(players = names.map { Player(it) })
+        fun init(dealer: Dealer, names: List<String>): Players {
+            return Players(dealer = dealer, players = names.map { Player(it) })
         }
     }
 }
