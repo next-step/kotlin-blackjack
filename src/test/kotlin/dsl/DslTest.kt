@@ -30,13 +30,11 @@ class DslTest {
         val person = introduce {
             name("김호준")
             company("회사")
-            skills(
-                listOf(
-                    Skill("A passion for problem solving", SkillType.SOFT),
-                    Skill("Good communication skills", SkillType.SOFT),
-                    Skill("Kotlin", SkillType.HARD)
-                )
-            )
+            skills {
+                soft("A passion for problem solving")
+                soft("Good communication skills")
+                hard("Kotlin")
+            }
         }
         assertThat(person.name).isEqualTo("김호준")
         assertThat(person.company).isEqualTo("회사")
@@ -54,13 +52,11 @@ class DslTest {
         val person = introduce {
             name("김호준")
             company("회사")
-            skills(
-                listOf(
-                    Skill("A passion for problem solving", SkillType.SOFT),
-                    Skill("Good communication skills", SkillType.SOFT),
-                    Skill("Kotlin", SkillType.HARD)
-                )
-            )
+            skills {
+                soft("A passion for problem solving")
+                soft("Good communication skills")
+                hard("Kotlin")
+            }
             languages(
                 listOf(
                     Language("Korean", 5),
