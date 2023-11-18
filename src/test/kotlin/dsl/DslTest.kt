@@ -10,7 +10,7 @@ class DslTest {
     @ParameterizedTest
     fun introduce(name: String) {
         val person = introduce {
-            it.name = name
+            it.name(name)
         }
         assertThat(person.name).isEqualTo(name)
     }
@@ -18,8 +18,8 @@ class DslTest {
     @Test
     fun company() {
         val person = introduce {
-            it.name = "김호준"
-            it.company = "회사"
+            it.name("김호준")
+            it.company("회사")
         }
         assertThat(person.name).isEqualTo("김호준")
         assertThat(person.company).isEqualTo("회사")
@@ -28,12 +28,14 @@ class DslTest {
     @Test
     fun skill() {
         val person = introduce {
-            it.name = "김호준"
-            it.company = "회사"
-            it.skills = listOf(
-                Skill("A passion for problem solving", SkillType.SOFT),
-                Skill("Good communication skills", SkillType.SOFT),
-                Skill("Kotlin", SkillType.HARD)
+            it.name("김호준")
+            it.company("회사")
+            it.skills(
+                listOf(
+                    Skill("A passion for problem solving", SkillType.SOFT),
+                    Skill("Good communication skills", SkillType.SOFT),
+                    Skill("Kotlin", SkillType.HARD)
+                )
             )
         }
         assertThat(person.name).isEqualTo("김호준")
