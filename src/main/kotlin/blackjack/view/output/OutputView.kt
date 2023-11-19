@@ -12,10 +12,12 @@ object OutputView {
     fun initialDistributionResult(
         players: List<PlayerModel>,
     ) {
+        println()
         println(INITIAL_DISTRIBUTION_MSG.format(extractPlayerNames(players)))
         players.forEach {
             println(PLAYER_STATE_MSG.format(it.name, extractCardsState(it.cards)))
         }
+        println()
     }
 
     fun playerCurrentState(
