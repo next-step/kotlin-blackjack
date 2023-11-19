@@ -11,10 +11,7 @@ object BlackjackController {
         val players = namesInput.map { Player(it) }
         val deck = Deck()
 
-        players.forEach {
-            it.receiveCard(deck.draw())
-            it.receiveCard(deck.draw())
-        }
+        drawInitialCards(players, deck)
 
         BlackjackOutputView.printInitialCards(players)
 
@@ -22,14 +19,25 @@ object BlackjackController {
             if (it.isFinished()) return@forEach
 
             do {
-                val receiveCard = BlackjackInputView.readCardReceiveInput(it.name)
-                if (receiveCard) {
-                    it.receiveCard(deck.draw())
-                }
+                val isHit = BlackjackInputView.readCardReceiveInput(it.name)
+                drawIfHit(it, deck, isHit)
                 BlackjackOutputView.printCards(it)
-            } while (receiveCard && !it.isFinished())
+            } while (isHit && !it.isFinished())
         }
 
         BlackjackOutputView.printResult(players)
+    }
+
+    private fun drawInitialCards(players: List<Player>, deck: Deck) {
+        players.forEach {
+            it.receiveCard(deck.draw())
+            it.receiveCard(deck.draw())
+        }
+    }
+
+    private fun drawIfHit(player: Player, deck: Deck, isHit: Boolean) {
+        if (isHit) {
+            player.receiveCard(deck.draw())
+        }
     }
 }
