@@ -41,6 +41,21 @@ class PlayerTest : BehaviorSpec({
         }
     }
 
+    Given("처음 카드 2장을 받았을 때") {
+        When("합이 21이라면") {
+            Then("상태를 BLACKJACK으로 바꾼다.") {
+                forAll(
+                    row(listOf(Card(CardSuit.HEART, CardNumber.TEN), Card(CardSuit.HEART, CardNumber.ACE)), State.BLACKJACK),
+                    row(listOf(Card(CardSuit.HEART, CardNumber.TEN), Card(CardSuit.HEART, CardNumber.SIX)), State.HIT),
+                ) { cards, expected ->
+                    val player = Player("yeongun")
+                    player.init(cards)
+                    player.state shouldBe expected
+                }
+            }
+        }
+    }
+
     Given("게임을 처음 시작할 때 2장이 아닌 다른 수의 카드가 주어지면") {
         When("플레이어는") {
             Then("에러를 반환한다.") {
