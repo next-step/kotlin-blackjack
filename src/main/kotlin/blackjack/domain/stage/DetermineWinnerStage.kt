@@ -12,7 +12,5 @@ class DetermineWinnerStage(
         game.emitResult(DetermineWinnerResult(game.players))
     }
 
-    override fun nextStage(): Stage {
-        TODO("Not yet implemented")
-    }
+    override fun nextStage(): Stage = EndStage(game)
 }
