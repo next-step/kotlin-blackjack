@@ -1,7 +1,7 @@
 package blackjack.model
 
 class CardDeck {
-    private var cards: List<Card> = initCards()
+    private var cards: List<Card> = INIT_CARDS
 
     fun drawCard(): Card {
         val pickedCard = cards.shuffled().toMutableList()[0];
@@ -9,9 +9,12 @@ class CardDeck {
         return pickedCard
     }
 
-    private fun initCards() = CardValue.VALUES.map { value ->
-        CardSuit.SUITS.map { suit ->
-            Card(CardValue.from(value), CardSuit.from(suit))
-        }
-    }.flatten()
+
+    companion object {
+        val INIT_CARDS = CardValue.VALUES.map { value ->
+            CardSuit.SUITS.map { suit ->
+                Card(CardValue.from(value), CardSuit.from(suit))
+            }
+        }.flatten()
+    }
 }
