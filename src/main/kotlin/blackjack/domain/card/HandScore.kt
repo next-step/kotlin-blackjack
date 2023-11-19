@@ -16,7 +16,7 @@ value class HandScore(
             val ranks = hand.ranks
             val score = ranks.sumOf { it.score() }
             return when {
-                !ranks.hasAce() -> score
+                ranks.hasAce().not() -> score
                 score + ACE_BONUS_SCORE > MAX_SCORE -> score
                 else -> score + ACE_BONUS_SCORE
             }.let(::HandScore)
