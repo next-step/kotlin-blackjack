@@ -14,7 +14,7 @@ class BlackJackGame(
     val players: Players = Players.from(inputProcessor.playerNames())
 ) {
     val dealer: Dealer = Dealer()
-    var stage: Stage = InitialDistributionStage(this)
+    var stage: Stage = InitialDistributionStage()
 
     val isPlayerInTurnScoreOverMax: Boolean
         get() = players.isPlayerInTurnOverMaxScore
@@ -52,15 +52,15 @@ class BlackJackGame(
     }
 
     private fun progressStage() {
-        stage.progress()
+        stage.progress(this)
     }
 
     private fun endStage() {
-        stage.emitResult()
+        stage.emitResult(this)
         setNextStage()
     }
 
     private fun setNextStage() {
-        stage = stage.nextStage()
+        stage = stage.nextStage(this)
     }
 }

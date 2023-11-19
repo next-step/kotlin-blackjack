@@ -1,9 +1,11 @@
 package blackjack.domain.stage
 
+import blackjack.domain.BlackJackGame
+
 interface Stage {
-    fun progress()
+    fun progress(game: BlackJackGame)
 
-    fun emitResult()
+    fun emitResult(game: BlackJackGame)
 
-    fun nextStage(): Stage
+    fun nextStage(game: BlackJackGame): Stage
 }

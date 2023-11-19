@@ -2,12 +2,10 @@ package blackjack.domain.stage
 
 import blackjack.domain.BlackJackGame
 
-class EndStage(
-    private val game: BlackJackGame,
-) : Stage {
-    override fun progress() {}
+class EndStage : Stage {
+    override fun progress(game: BlackJackGame) {}
 
-    override fun emitResult() {}
+    override fun emitResult(game: BlackJackGame) {}
 
-    override fun nextStage(): Stage = this
+    override fun nextStage(game: BlackJackGame): Stage = this
 }
