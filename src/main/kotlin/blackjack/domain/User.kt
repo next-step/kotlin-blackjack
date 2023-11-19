@@ -3,11 +3,10 @@ package blackjack.domain
 abstract class User(
     val hand: Hand
 ) {
-    lateinit var state: State
+    var state = State.HIT
         protected set
 
     abstract fun hit(card: Card)
-    abstract fun canHit(): Boolean
 
     fun init(cards: List<Card>) {
         require(cards.size == 2) { "처음엔 카드 2장만 받을 수 있습니다." }
@@ -16,6 +15,14 @@ abstract class User(
 
     fun isBust(): Boolean {
         return hand.getSum() > BLACKJACK
+    }
+
+    fun stand() {
+        state = State.STAND
+    }
+
+    fun canHit(): Boolean {
+        return state == State.HIT
     }
 
     companion object {

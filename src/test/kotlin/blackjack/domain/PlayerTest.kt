@@ -85,7 +85,25 @@ class PlayerTest : BehaviorSpec({
             player.hit(card)
             Then("주어진 1장의 카드를 패에 추가한다.") {
                 player.hand.cards[0] shouldBe Card(CardSuit.SPADE, CardNumber.TEN)
-                player.state shouldBe State.HIT
+            }
+        }
+    }
+
+    Given("히트할 때마다") {
+        When("플레이어는") {
+            Then("자신이 가진 상태를 바꾼다.") {
+                forAll(
+                    row(Card(CardSuit.SPADE, CardNumber.ACE), State.HIT), // 총합 20점
+                    row(Card(CardSuit.SPADE, CardNumber.TWO), State.HIT), // 총합 21점
+                    row(Card(CardSuit.SPADE, CardNumber.THREE), State.BUST), // 총합 22점
+                    row(Card(CardSuit.SPADE, CardNumber.FOUR), State.BUST), // 총합 23점
+                ) { card, expected ->
+                    val player = Player("yeongun")
+                    player.hit(Card(CardSuit.SPADE, CardNumber.TEN))
+                    player.hit(Card(CardSuit.CLUB, CardNumber.NINE))
+                    player.hit(card)
+                    player.state shouldBe expected
+                }
             }
         }
     }
@@ -116,20 +134,18 @@ class PlayerTest : BehaviorSpec({
         When("추가로 Hit 할 수 있는지 없는지를") {
             Then("판단하여 반환한다.") {
                 forAll(
-                    row(Hand(mutableListOf(Card(CardSuit.SPADE, CardNumber.TEN), Card(CardSuit.CLUB, CardNumber.TEN))), true),
-                    row(Hand(mutableListOf(Card(CardSuit.SPADE, CardNumber.ACE), Card(CardSuit.CLUB, CardNumber.TEN))), false),
+                    row(listOf(Card(CardSuit.SPADE, CardNumber.TEN), Card(CardSuit.CLUB, CardNumber.TEN)), true),
+                    row(listOf(Card(CardSuit.SPADE, CardNumber.ACE), Card(CardSuit.CLUB, CardNumber.TEN)), true),
                     row(
-                        Hand(
-                            mutableListOf(
-                                Card(CardSuit.SPADE, CardNumber.TEN),
-                                Card(CardSuit.CLUB, CardNumber.TEN),
-                                Card(CardSuit.HEART, CardNumber.TWO)
-                            )
-                        ),
+                        listOf(Card(CardSuit.SPADE, CardNumber.TEN), Card(CardSuit.CLUB, CardNumber.TEN), Card(CardSuit.HEART, CardNumber.TWO)),
                         false
-                    ),
-                ) { hand, expected ->
-                    Player("yeongun", hand).canHit() shouldBe expected
+                    )
+                ) { cards, expected ->
+                    val player = Player("yeongun")
+                    cards.forEach {
+                        player.hit(it)
+                    }
+                    player.canHit() shouldBe expected
                 }
             }
         }

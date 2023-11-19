@@ -11,10 +11,10 @@ class Player(
 
     override fun hit(card: Card) {
         hand.receive(card)
-        state = State.HIT
-    }
-
-    override fun canHit(): Boolean {
-        return hand.getSum() < BLACKJACK
+        state = if (hand.getSum() > BLACKJACK) {
+            State.BUST
+        } else {
+            State.HIT
+        }
     }
 }

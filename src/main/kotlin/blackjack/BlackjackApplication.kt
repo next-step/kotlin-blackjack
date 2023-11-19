@@ -24,10 +24,20 @@ fun main() {
 }
 
 private fun play(player: Player, deck: Deck) {
-    while (player.canHit() && InputView.inputHitOrStand(player)) {
-        val card = deck.hit()
-        player.hit(card)
-        ResultView.printPlayerNameAndCard(player)
+    while (player.canHit()) {
+        hitOrStand(player, deck)
+    }
+}
+
+private fun hitOrStand(player: Player, deck: Deck) {
+    when (InputView.inputHitOrStand(player)) {
+        true -> {
+            val card = deck.hit()
+            player.hit(card)
+            ResultView.printPlayerNameAndCard(player)
+        }
+
+        false -> player.stand()
     }
 }
 

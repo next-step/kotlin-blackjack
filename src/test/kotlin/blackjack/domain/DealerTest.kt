@@ -44,16 +44,41 @@ class DealerTest : BehaviorSpec({
         }
     }
 
+    Given("히트할 때마다") {
+        When("딜러는") {
+            Then("자신이 가진 상태를 바꾼다.") {
+                forAll(
+                    row(Card(CardSuit.SPADE, CardNumber.ACE), State.HIT), // 총합 16점
+                    row(Card(CardSuit.SPADE, CardNumber.TWO), State.STAND), // 총합 17점
+                    row(Card(CardSuit.SPADE, CardNumber.THREE), State.STAND), // 총합 18점
+                    row(Card(CardSuit.SPADE, CardNumber.FOUR), State.STAND), // 총합 19점
+                    row(Card(CardSuit.SPADE, CardNumber.FIVE), State.STAND), // 총합 20점
+                    row(Card(CardSuit.SPADE, CardNumber.SIX), State.STAND), // 총합 21점
+                    row(Card(CardSuit.SPADE, CardNumber.SEVEN), State.BUST), // 총합 22점
+                ) { card, expected ->
+                    val dealer = Dealer()
+                    dealer.hit(Card(CardSuit.CLUB, CardNumber.TEN))
+                    dealer.hit(Card(CardSuit.CLUB, CardNumber.FIVE))
+                    dealer.hit(card)
+                    dealer.state shouldBe expected
+                }
+            }
+        }
+    }
+
     Given("딜러는 자신이 가진 패로") {
         When("추가로 Hit 할 수 있는지 없는지를") {
             Then("판단하여 반환한다.") {
                 forAll(
-                    row(Hand(mutableListOf(Card(CardSuit.SPADE, CardNumber.TEN), Card(CardSuit.CLUB, CardNumber.FIVE))), true),
-                    row(Hand(mutableListOf(Card(CardSuit.SPADE, CardNumber.TEN), Card(CardSuit.CLUB, CardNumber.SIX))), true),
-                    row(Hand(mutableListOf(Card(CardSuit.SPADE, CardNumber.ACE), Card(CardSuit.CLUB, CardNumber.SEVEN))), false),
-                    row(Hand(mutableListOf(Card(CardSuit.SPADE, CardNumber.ACE), Card(CardSuit.CLUB, CardNumber.EIGHT))), false),
-                ) { hand, expected ->
-                    Dealer(hand).canHit() shouldBe expected
+                    row(listOf(Card(CardSuit.SPADE, CardNumber.TEN), Card(CardSuit.CLUB, CardNumber.FIVE)), true),
+                    row(listOf(Card(CardSuit.SPADE, CardNumber.TEN), Card(CardSuit.CLUB, CardNumber.SIX)), true),
+                    row(listOf(Card(CardSuit.SPADE, CardNumber.ACE), Card(CardSuit.CLUB, CardNumber.SEVEN)), false),
+                    row(listOf(Card(CardSuit.SPADE, CardNumber.ACE), Card(CardSuit.CLUB, CardNumber.EIGHT)), false),
+                ) { cards, expected ->
+                    val dealer = Dealer()
+                    dealer.hit(cards[0])
+                    dealer.hit(cards[1])
+                    dealer.canHit() shouldBe expected
                 }
             }
         }
