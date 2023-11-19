@@ -2,12 +2,13 @@ package blackjack
 
 import blackjack.model.Participants
 import blackjack.model.Player
+import blackjack.model.pack.ShuffledPack
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
 fun main() {
     val participants = InputView.join()
-    participants.dealing()
+    participants.dealing(ShuffledPack)
     OutputView.dealing(participants)
     OutputView.presentCards(participants)
     while (participants.isContinue()) {
@@ -24,7 +25,7 @@ fun playingBlackJack(participants: Participants) {
 
 private fun Player.hitOrStand() {
     if (InputView.askHit(this)) {
-        this.hit()
+        this.hit(ShuffledPack)
     }
     OutputView.playerCardPresent(this)
 }
