@@ -11,6 +11,5 @@ value class CardValue private constructor(val cardValue: String){
             CardValue(it)
         }
         fun from(cardValue: String) = VALUES_MAP[cardValue] ?: throw IllegalArgumentException("존재하지 않는 카드 입니다")
-        fun getRandom() = from(VALUES.shuffled()[0])
     }
 }
