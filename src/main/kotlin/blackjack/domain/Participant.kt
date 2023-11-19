@@ -29,9 +29,9 @@ data class Participant(
     fun askWantToGetOneMoreCard(
         input: () -> Boolean
     ): Boolean {
-        val noMoreCard = input().not()
-        if (noMoreCard) setParticipantState(ParticipantState.STAND)
-        return noMoreCard
+        val getMoreCard = input()
+        if (getMoreCard.not()) setParticipantState(ParticipantState.STAND)
+        return getMoreCard
     }
 
     companion object {
