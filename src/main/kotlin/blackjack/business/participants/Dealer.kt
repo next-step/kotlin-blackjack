@@ -1,22 +1,16 @@
 package blackjack.business.participants
 
-import blackjack.business.card.Card
 import blackjack.business.card.CardDesk
 import blackjack.business.util.GameResult
 
-class Dealer(dealerCards: PlayerCards = PlayerCards()) {
-    private val _dealerCards: PlayerCards = dealerCards
-    val cards: List<Card>
-        get() = _dealerCards.cards
-    val score: String
-        get() = _dealerCards.sum().toString()
+class Dealer(private val dealerCards: PlayerCards = PlayerCards()) : Player(DEALER_NAME, dealerCards) {
 
-    fun addCard(card: Card) {
-        _dealerCards.add(card)
+    override fun canDrawCard(): Boolean {
+        return dealerCards.sum() < DEALER_DRAW_CONDITION
     }
 
-    fun addCards(cards: List<Card>) {
-        _dealerCards.addAll(cards)
+    override fun isBust(): Boolean {
+        return dealerCards.isBust()
     }
 
     fun getPlayerResult(player: Player): PlayerResult {
@@ -26,7 +20,7 @@ class Dealer(dealerCards: PlayerCards = PlayerCards()) {
         if (player.isBust()) {
             return PlayerResult(player.name, GameResult.LOSE)
         }
-        return when (player.score - _dealerCards.sum()) {
+        return when (player.score - dealerCards.sum()) {
             0 -> PlayerResult(player.name, GameResult.DRAW)
             in 1..Int.MAX_VALUE -> PlayerResult(player.name, GameResult.WIN)
             else -> PlayerResult(player.name, GameResult.LOSE)
@@ -44,10 +38,6 @@ class Dealer(dealerCards: PlayerCards = PlayerCards()) {
         }
     }
 
-    private fun canDrawCard(): Boolean {
-        return _dealerCards.sum() < 17
-    }
-
     private fun getDealerResult(target: Int): GameResult {
         if (isBust()) {
             return GameResult.WIN
@@ -55,14 +45,15 @@ class Dealer(dealerCards: PlayerCards = PlayerCards()) {
         if (target > 21) {
             return GameResult.WIN
         }
-        return when (target - _dealerCards.sum()) {
+        return when (target - dealerCards.sum()) {
             0 -> GameResult.DRAW
             in 1..Int.MAX_VALUE -> GameResult.LOSE
             else -> GameResult.WIN
         }
     }
 
-    private fun isBust(): Boolean {
-        return _dealerCards.isBust()
+    companion object {
+        private const val DEALER_NAME = "딜러"
+        private const val DEALER_DRAW_CONDITION = 17
     }
 }

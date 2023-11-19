@@ -3,7 +3,7 @@ package blackjack.business.participants
 import blackjack.business.card.CardDesk
 import blackjack.business.drawConditionStrategy.DrawConditionStrategy
 
-class Players private constructor(allPlayers: List<Player>) {
+class Players(allPlayers: List<Player>) {
 
     private val _players: List<Player> = allPlayers
 
@@ -41,7 +41,7 @@ class Players private constructor(allPlayers: List<Player>) {
 
     companion object {
         fun from(playerNames: List<String>): Players {
-            return Players(playerNames.map { Player.from(it) })
+            return Players(playerNames.map { Player(it) })
         }
     }
 }

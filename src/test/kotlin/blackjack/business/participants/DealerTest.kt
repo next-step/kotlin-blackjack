@@ -36,7 +36,7 @@ class DealerTest {
         // given
         val dealer = Dealer()
         dealer.addCards(listOf(SPACE_FIVE, target))
-        val player = Player.from("pobi")
+        val player = Player("pobi")
         player.addCard(SPACE_FIVE)
         player.addCard(SPACE_NINE)
 
@@ -51,7 +51,7 @@ class DealerTest {
         dealer.addCard(SPACE_TEN)
         dealer.addCard(SPACE_FIVE)
         dealer.addCard(SPACE_TEN)
-        val player = Player.from("pobi")
+        val player = Player("pobi")
         player.addCard(SPACE_TEN)
         player.addCard(SPACE_FIVE)
         player.addCard(SPACE_TEN)
@@ -65,7 +65,7 @@ class DealerTest {
         // given
         val dealer = Dealer()
         dealer.addCards(listOf(SPACE_FIVE, SPACE_TEN, SPACE_FIVE))
-        val player = Player.from("pobi")
+        val player = Player("pobi")
         player.addCard(SPACE_TEN)
         player.addCard(SPACE_FIVE)
         player.addCard(SPACE_TEN)
@@ -81,7 +81,7 @@ class DealerTest {
         dealer.addCard(SPACE_TEN)
         dealer.addCard(SPACE_FOUR)
         val players = Players.from(listOf("pobi", "crong", "honux"))
-        players.allPlayers.forEach() { player ->
+        players.allPlayers.forEach { player ->
             player.addCard(SPACE_TEN)
             when (player.name) {
                 "pobi" -> player.addCard(SPACE_THREE)

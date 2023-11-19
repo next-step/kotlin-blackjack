@@ -4,6 +4,7 @@ import blackjack.business.card.CardDesk
 import blackjack.business.drawConditionStrategy.DrawConditionStrategy
 import blackjack.business.drawConditionStrategy.UserInputBasedDrawCondition
 import blackjack.business.participants.Dealer
+import blackjack.business.participants.Player
 import blackjack.business.participants.Players
 import blackjack.business.util.PlayerNameParser
 import blackjack.view.ConsoleGameView
@@ -26,7 +27,7 @@ class GameManager(
 
     private fun createPlayers(): Players {
         val playerNames = view.askForPlayerNames()
-        return Players.from(PlayerNameParser.parse(playerNames))
+        return Players(PlayerNameParser.parse(playerNames).map { Player(it) })
     }
 
     private fun dealInitialCards(

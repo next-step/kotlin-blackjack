@@ -16,7 +16,7 @@ class PlayerTest {
     @Test
     fun `플레이어의 카드를 추가한다`() {
         // given
-        val player = Player.from("pobi")
+        val player = Player("pobi")
 
         // when
         player.addCard(SPACE_ACE)
@@ -29,7 +29,7 @@ class PlayerTest {
     @Test
     fun `플레이어가 추가로 카드를 뽑을 수 있는지 확인한다`() {
         // given
-        val player = Player.from("pobi")
+        val player = Player("pobi")
         player.addCard(SPACE_ACE)
         player.addCard(SPACE_EIGHT)
 
@@ -43,7 +43,7 @@ class PlayerTest {
     @Test
     fun `플레이어의 스코어를 확인한다`() {
         // given
-        val player = Player.from("pobi")
+        val player = Player("pobi")
         player.addCard(SPACE_ACE)
         player.addCard(SPACE_EIGHT)
 
@@ -60,7 +60,7 @@ class PlayerTest {
         val playerCards = PlayerCards(listOf(SPACE_ACE, SPACE_EIGHT))
 
         // when
-        val player = Player.from("pobi", playerCards)
+        val player = Player("pobi", playerCards)
 
         // then
         player.score shouldBe 19
@@ -69,7 +69,7 @@ class PlayerTest {
     @Test
     fun `플레이어의 카드의 합이 21을 초과하는지 확인`() {
         // given
-        val player = Player.from("pobi")
+        val player = Player("pobi")
         player.addCard(SPACE_ACE)
         player.addCard(SPACE_ACE)
         player.addCard(SPACE_TEN)
@@ -85,7 +85,7 @@ class PlayerTest {
     @Test
     fun `플레어의 카드의 합이 21을 초과하지 않는지 확인`() {
         // given
-        val player = Player.from("pobi")
+        val player = Player("pobi")
         player.addCard(SPACE_ACE)
         player.addCard(SPACE_TEN)
 
@@ -99,7 +99,7 @@ class PlayerTest {
     @Test
     fun `플레이어의 카드의 합이 21미만이면 이동가능 하다`() {
         // given
-        val player = Player.from("pobi")
+        val player = Player("pobi")
         player.addCard(SPACE_TEN)
         player.addCard(SPACE_TEN)
 
@@ -113,7 +113,7 @@ class PlayerTest {
     @Test
     fun `플레이어의 카드의 합이 21이상이면 이동 할수 없다`() {
         // given
-        val player = Player.from("pobi")
+        val player = Player("pobi")
         player.addCard(SPACE_TEN)
         player.addCard(SPACE_ACE)
 

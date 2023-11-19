@@ -1,39 +1,28 @@
 package blackjack.business.participants
 
 import blackjack.business.card.Card
+import blackjack.business.util.BlackJackConst
 
-class Player private constructor(val name: String, playerCards: PlayerCards) {
-
-    private val _cards: PlayerCards = playerCards
+open class Player(val name: String, private val playerCards: PlayerCards = PlayerCards()) {
 
     val score: Int
-        get() = _cards.sum()
+        get() = playerCards.sum()
     val cards: List<Card>
-        get() = _cards.cards
+        get() = playerCards.cards
 
     fun addCard(card: Card) {
-        _cards.add(card)
+        playerCards.add(card)
     }
 
-    fun canDrawCard(): Boolean {
-        return _cards.sum() < 21
+    open fun canDrawCard(): Boolean {
+        return playerCards.sum() < BlackJackConst.BLACKJACK
     }
 
-    fun addCards(playerCards: List<Card>) {
-        _cards.addAll(playerCards)
+    fun addCards(playerCardsList: List<Card>) {
+        playerCards.addAll(playerCardsList)
     }
 
-    fun isBust(): Boolean {
-        return _cards.isBust()
-    }
-
-    companion object {
-        fun from(mame: String, cards: List<Card> = listOf()): Player {
-            return Player(mame, PlayerCards(cards))
-        }
-
-        fun from(mame: String, cards: PlayerCards): Player {
-            return Player(mame, cards)
-        }
+    open fun isBust(): Boolean {
+        return playerCards.isBust()
     }
 }
