@@ -4,6 +4,7 @@ import blackjack.model.pack.Pack
 
 class Participants(
     val participants: Set<Player>,
+    val dealer :Dealer,
 ) {
     fun count(): Int {
         return participants.size
