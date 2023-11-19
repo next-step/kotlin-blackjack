@@ -19,8 +19,11 @@ class BlackJackGame(
     val isPlayerInTurnScoreOverMax: Boolean
         get() = players.isPlayerInTurnOverMaxScore
 
-    val playerInTurn : Player
+    val playerInTurn: Player
         get() = players.playerInTurn
+
+    val isLastTurn: Boolean
+        get() = players.isLastTurn
 
     fun run() {
         progressStage()
@@ -35,6 +38,10 @@ class BlackJackGame(
 
     fun dealCardToPlayerInTurn() {
         dealer.dealCards(players.playerInTurn, 1)
+    }
+
+    fun passTurnToNextPlayer() {
+        players.changePlayer()
     }
 
     fun askHitOrStand(): PlayerAction = inputProcessor

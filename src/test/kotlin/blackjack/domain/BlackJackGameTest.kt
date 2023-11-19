@@ -8,8 +8,10 @@ import blackjack.domain.player.Player
 import blackjack.domain.player.PlayerName
 import blackjack.domain.player.Players
 import blackjack.mock.InputProcessorMock
+import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
+import java.lang.IllegalArgumentException
 
 class BlackJackGameTest : DescribeSpec({
     describe("게임 생성") {
@@ -109,6 +111,55 @@ class BlackJackGameTest : DescribeSpec({
             )
             it("false 반환") {
                 game.isPlayerInTurnScoreOverMax shouldBe false
+            }
+        }
+    }
+
+    describe("다음 플레이어에게 차례 넘김") {
+        val players = listOf(
+            Player(PlayerName("kim"), Hand()),
+            Player(PlayerName("lee"), Hand()),
+        )
+        val game = BlackJackGame(InputProcessorMock(), players = Players(players))
+
+        context("플레이어 1이 차례인 경우") {
+            game.playerInTurn shouldBe players.first()
+            game.passTurnToNextPlayer()
+            it("플레이어 2에게 차례가 넘어감") {
+                game.playerInTurn shouldBe players.last()
+            }
+        }
+
+        context("플레이어 2가 차례인 경우") {
+            game.playerInTurn shouldBe players.last()
+            it("턴이 넘어갈 수 없다") {
+                shouldThrowExactly<IllegalArgumentException> {
+                    game.passTurnToNextPlayer()
+                }
+            }
+        }
+    }
+
+    describe("마지막 플레이어 턴인지 조회") {
+        val players = listOf(
+            Player(PlayerName("kim"), Hand()),
+            Player(PlayerName("lee"), Hand()),
+        )
+        val game = BlackJackGame(InputProcessorMock(), players = Players(players))
+
+        context("첫번쨰 플레이어 턴이라면") {
+            game.playerInTurn shouldBe players.first()
+            it("false 반환된다") {
+                game.isLastTurn shouldBe false
+            }
+        }
+
+        context("마지막 플레이어 턴이라면") {
+            game.passTurnToNextPlayer()
+            game.playerInTurn shouldBe players.last()
+
+            it("true가 반환된다") {
+                game.isLastTurn shouldBe true
             }
         }
     }

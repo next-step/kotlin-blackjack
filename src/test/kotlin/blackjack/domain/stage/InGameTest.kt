@@ -37,20 +37,85 @@ class InGameTest : DescribeSpec({
         }
     }
 
-    describe("카드 지급시 점수 초과로 인한 게임 종료") {
-        context("플레이어가 카드 한 장을 더 달라고 한 경우") {
-            val score21Cards =
-                mutableListOf(Card(Suit.SPADE, Rank.KING), Card(Suit.SPADE, Rank.KING), Card(Suit.DIAMOND, Rank.ACE))
+    describe("다음 게임 스테이지 처리") {
+        context("플레이어가 아직 게임을 진행하지 않았다면") {
             val players = Players(
                 listOf(
-                    Player(PlayerName("currentPlayer"), Hand(score21Cards)),
-                    Player(PlayerName("anotherPlayer"), Hand(mutableListOf()))
+                    Player(PlayerName("currentPlayer"), Hand()),
+                    Player(PlayerName("anotherPlayer"), Hand()),
+                )
+            )
+            val game = BlackJackGame(InputProcessorMock(playerAction = PlayerAction.HIT), players = players)
+            val stage = InGame(game)
+
+            it("게임의 다음 상태는 현재 플레이어의 InGame이 된다") {
+                stage.nextStage().shouldBeTypeOf<InGame>()
+                game.playerInTurn.name shouldBe PlayerName("currentPlayer")
+            }
+        }
+
+
+        context("플레이어가 카드 한 장을 더 달라고 한 경우") {
+            context("카드를 받은 후 플레이어의 카드의 합이 21이 넘는다면") {
+                val score21Cards =
+                    mutableListOf(Card(Suit.SPADE, Rank.KING), Card(Suit.SPADE, Rank.KING), Card(Suit.DIAMOND, Rank.ACE))
+                val players = Players(
+                    listOf(
+                        Player(PlayerName("currentPlayer"), Hand(score21Cards)),
+                        Player(PlayerName("anotherPlayer"), Hand()),
+                    )
+                )
+
+                val game = BlackJackGame(InputProcessorMock(playerAction = PlayerAction.HIT), players = players)
+                val stage = InGame(game)
+                stage.progress()
+
+                it("게임의 다음 상태는 End가 된다") {
+                    stage.nextStage().shouldBeTypeOf<End>()
+                }
+            }
+
+            context("카드를 받은 후 플레이어 카드의 합이 21이 넘지 않는다면") {
+                val score0Cards = mutableListOf<Card>()
+                val players = Players(
+                    listOf(
+                        Player(PlayerName("currentPlayer"), Hand(score0Cards)),
+                        Player(PlayerName("anotherPlayer"), Hand()),
+                    )
+                )
+
+                val game = BlackJackGame(InputProcessorMock(playerAction = PlayerAction.HIT), players = players)
+                val stage = InGame(game)
+                stage.progress()
+
+                it("게임의 다음 상태는 해당 플레이어가 진행하는 InGame이 된다") {
+                    stage.nextStage().shouldBeTypeOf<InGame>()
+                    game.playerInTurn.name shouldBe PlayerName("currentPlayer")
+                }
+            }
+        }
+
+        context("플레이어가 카드를 안받는다고 한 경우") {
+            val players = Players(
+                listOf(
+                    Player(PlayerName("currentPlayer"), Hand()),
+                    Player(PlayerName("nextPlayer"), Hand())
                 )
             )
 
-            val game = BlackJackGame(InputProcessorMock(playerAction = PlayerAction.HIT), players = players)
+            val game = BlackJackGame(InputProcessorMock(playerAction = PlayerAction.STAND), players = players)
 
-            context("카드를 받은 후 플레이어의 카드의 합이 21이 넘는다면") {
+            context("첫 번째 플레이어가 진행한 경우") {
+                val stage = InGame(game)
+                stage.progress()
+
+                it("게임의 다음 상태는 다음 플레이어가 진행하는 InGame이 된다") {
+                    stage.nextStage().shouldBeTypeOf<InGame>()
+                    game.playerInTurn.name shouldBe PlayerName("nextPlayer")
+                }
+            }
+
+            context("두 번째 플레이어가 진행한 경우") {
                 val stage = InGame(game)
                 stage.progress()
 

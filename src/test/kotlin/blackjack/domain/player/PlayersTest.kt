@@ -4,8 +4,10 @@ import blackjack.domain.card.Card
 import blackjack.domain.card.Hand
 import blackjack.domain.card.Rank
 import blackjack.domain.card.Suit
+import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
+import java.lang.IllegalArgumentException
 
 class PlayersTest : DescribeSpec({
     describe("플레이어들 생성") {
@@ -51,6 +53,56 @@ class PlayersTest : DescribeSpec({
             val players = Players(listOf(playerUnderMaxScore, Player(PlayerName("kim"), Hand())))
             it("false 반환") {
                 players.isPlayerInTurnOverMaxScore shouldBe false
+            }
+        }
+    }
+
+    describe("다음 플레이어에게 차례 넘김") {
+        val playerList = listOf(
+            Player(PlayerName("hong"), Hand()),
+            Player(PlayerName("dong"), Hand()),
+        )
+        val players = Players(playerList)
+
+        context("플레이어 1이 차례인 경우") {
+            players.playerInTurn shouldBe playerList.first()
+            players.changePlayer()
+            it("플레이어 2에게 차례가 넘어감") {
+                players.playerInTurn shouldBe playerList.last()
+            }
+        }
+
+        context("플레이어 2가 차례인 경우") {
+            players.playerInTurn shouldBe playerList.last()
+
+            it("턴이 끝났다는 에러") {
+                shouldThrowExactly<IllegalArgumentException> {
+                    players.changePlayer()
+                }
+            }
+        }
+    }
+
+    describe("마지막 플레이어 차례인지 조회") {
+        val playerList = listOf(
+            Player(PlayerName("hong"), Hand()),
+            Player(PlayerName("dong"), Hand()),
+        )
+        val players = Players(playerList)
+
+        context("플레이어 1이 차례인 경우") {
+            players.playerInTurn shouldBe playerList.first()
+            it("false 반환") {
+                players.isLastTurn shouldBe false
+            }
+        }
+
+        context("플레이어 2가 차례인 경우") {
+            players.changePlayer()
+            players.playerInTurn shouldBe playerList.last()
+
+            it("true 반환") {
+                players.isLastTurn shouldBe true
             }
         }
     }

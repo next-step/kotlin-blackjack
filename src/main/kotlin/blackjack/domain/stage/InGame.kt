@@ -7,14 +7,14 @@ import blackjack.domain.result.InGameResult
 class InGame(
     private val game: BlackJackGame,
 ) : Stage {
-    private val playerChoice by lazy {
-        game.askHitOrStand()
-    }
+    private var playerChoice: PlayerAction? = null
 
     override fun progress() {
-        when (playerChoice) {
-            PlayerAction.HIT -> game.dealCardToPlayerInTurn()
-            else -> TODO()
+        playerChoice = game.askHitOrStand().also {
+            when (it) {
+                PlayerAction.HIT -> game.dealCardToPlayerInTurn()
+                PlayerAction.STAND -> {}
+            }
         }
     }
 
@@ -22,8 +22,15 @@ class InGame(
         game.emitResult(InGameResult(game.playerInTurn))
     }
 
-    override fun nextStage(): Stage {
-        if (game.isPlayerInTurnScoreOverMax) return End(game)
-        return InGame(game)
-    }
+    override fun nextStage(): Stage =
+        when {
+            playerChoice == null -> InGame(game)
+            game.isPlayerInTurnScoreOverMax -> End(game)
+            playerChoice == PlayerAction.HIT -> InGame(game)
+            game.isLastTurn -> End(game)
+            else -> {
+                game.passTurnToNextPlayer()
+                InGame(game)
+            }
+        }
 }
