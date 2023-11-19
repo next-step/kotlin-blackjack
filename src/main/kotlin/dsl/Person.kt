@@ -1,8 +1,8 @@
 package dsl
 
-class Person {
+class PersonBuilder {
     lateinit var name: String
-    lateinit var company: String
+    var company: String = ""
 
     fun name(value: String) {
         name = value
@@ -11,4 +11,11 @@ class Person {
     fun company(value: String) {
         company = value
     }
+
+    fun build(): Person {
+        return Person(name, company)
+    }
+}
+
+class Person(val name: String, val company: String? = "") {
 }
