@@ -10,7 +10,7 @@ abstract class User(
 
     fun init(cards: List<Card>) {
         require(cards.size == 2) { "처음엔 카드 2장만 받을 수 있습니다." }
-        hand.init(cards[0], cards[1])
+        hand.init(cards)
         if (hand.getSum() == BLACKJACK) {
             state = State.BLACKJACK
         }

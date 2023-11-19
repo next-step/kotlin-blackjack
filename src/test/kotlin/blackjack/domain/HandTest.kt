@@ -1,5 +1,6 @@
 package blackjack.domain
 
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.data.forAll
 import io.kotest.data.row
@@ -13,9 +14,31 @@ class HandTest : BehaviorSpec({
         val hand = Hand()
         val initCard = deck.init()
         When("초기화를 하면") {
-            hand.init(initCard[0], initCard[1])
+            hand.init(initCard)
             Then("카드 2장을 새로 가진다.") {
                 hand.cards shouldContainExactly listOf(Card(CardSuit.HEART, CardNumber.TWO), Card(CardSuit.SPADE, CardNumber.EIGHT))
+            }
+        }
+    }
+
+    Given("처음 받은 패가 2장이 아니라면") {
+        When("초기화를 할 때") {
+            Then("에러가 발생한다.") {
+                forAll(
+                    row(listOf(Card(CardSuit.HEART, CardNumber.TWO))),
+                    row(
+                        listOf(
+                            Card(CardSuit.HEART, CardNumber.TWO),
+                            Card(CardSuit.SPADE, CardNumber.ACE),
+                            Card(CardSuit.DIAMOND, CardNumber.TEN)
+                        )
+                    ),
+                ) { cards ->
+                    val hand = Hand()
+                    shouldThrow<IllegalArgumentException> {
+                        hand.init(cards)
+                    }
+                }
             }
         }
     }

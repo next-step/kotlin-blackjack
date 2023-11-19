@@ -6,9 +6,9 @@ class Hand(
     val cards: List<Card>
         get() = _cards
 
-    fun init(card1: Card, card2: Card) {
-        _cards.add(card1)
-        _cards.add(card2)
+    fun init(cards: List<Card>) {
+        require(cards.size == 2) { "처음엔 카드 2장만 받을 수 있습니다." }
+        _cards.addAll(cards)
     }
 
     fun receive(card: Card) {
