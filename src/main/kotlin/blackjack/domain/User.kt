@@ -3,6 +3,9 @@ package blackjack.domain
 abstract class User(
     val hand: Hand
 ) {
+    lateinit var state: State
+        protected set
+
     abstract fun hit(card: Card)
     abstract fun canHit(): Boolean
 

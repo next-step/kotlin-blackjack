@@ -85,6 +85,7 @@ class PlayerTest : BehaviorSpec({
             player.hit(card)
             Then("주어진 1장의 카드를 패에 추가한다.") {
                 player.hand.cards[0] shouldBe Card(CardSuit.SPADE, CardNumber.TEN)
+                player.state shouldBe State.HIT
             }
         }
     }
