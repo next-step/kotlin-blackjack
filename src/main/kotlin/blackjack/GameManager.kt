@@ -63,6 +63,5 @@ class GameManager(
 }
 
 fun main() {
-    val gameManager = GameManager(view = ConsoleGameView())
-    gameManager.start()
+    GameManager(view = ConsoleGameView()).start()
 }

@@ -7,7 +7,7 @@ import blackjack.business.participants.Players
 
 class ConsoleGameView : GameView {
     override fun displayGameStartAnnouncement(playerNames: List<String>) {
-        println("게임을 시작합니다.")
+        println()
         println("${playerNames.joinToString(", ")}에게 2장의 카드를 나누었습니다.")
     }
 
@@ -28,6 +28,7 @@ class ConsoleGameView : GameView {
     }
 
     override fun displayGameResult(dealer: Dealer, players: Players) {
+        println()
         println("## 최종 승패")
         val dealerResult = dealer.getDealerResult(players)
         val result = dealerResult.map { "${it.value}${it.key.message}" }
@@ -36,6 +37,7 @@ class ConsoleGameView : GameView {
     }
 
     override fun displayDealerDrawCardAnnouncement() {
+        println()
         println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
     }
 
