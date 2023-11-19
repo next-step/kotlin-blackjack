@@ -15,7 +15,11 @@ class BlackJackTest : StringSpec({
         listOf(
             Card(CardNumber.J, CardShape.CLOVER),
             Card(CardNumber.TWO, CardShape.HEART),
-            Card(CardNumber.THREE, CardShape.DIAMOND)
+            Card(CardNumber.TWO, CardShape.CLOVER),
+            Card(CardNumber.THREE, CardShape.DIAMOND),
+            Card(CardNumber.THREE, CardShape.HEART),
+            Card(CardNumber.THREE, CardShape.SPADE),
+            Card(CardNumber.THREE, CardShape.CLOVER),
         )
     )
     val deque = ParticipantCards(cardDeque)
@@ -29,11 +33,7 @@ class BlackJackTest : StringSpec({
 
         participants.first().participantCards.size shouldBe initialSize
         val result = participants.map { participant ->
-            blackJack.doBlackJack(
-                printGetOneMoreCard = { "y" },
-                input = { inputY },
-                printNewCard = {},
-            )
+            blackJack.doBlackJack(inputY)
         }
         result.first().participantCards.size shouldBe expectedSize
     }
@@ -45,11 +45,7 @@ class BlackJackTest : StringSpec({
 
         participants.first().participantCards.size shouldBe initialSize
         val result = participants.map { participant ->
-            blackJack.doBlackJack(
-                printGetOneMoreCard = {},
-                input = { inputN },
-                printNewCard = {},
-            )
+            blackJack.doBlackJack(inputN)
         }
         result.first().participantCards.size shouldBe expectedSize
     }

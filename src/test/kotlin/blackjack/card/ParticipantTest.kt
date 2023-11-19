@@ -11,6 +11,7 @@ import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 
 class ParticipantTest : StringSpec({
+    val enterY = true
     "참여자가 가진 카드의 합이 21 이상인 경우 카드를 받을 수 없다" {
         val cardDeque = ArrayDeque<Card>(
             listOf(
@@ -22,11 +23,7 @@ class ParticipantTest : StringSpec({
         val deque = ParticipantCards(cardDeque)
         val participant = "pita".participantsFromNames(deque).participants.first()
         // 블랙잭 진행하여 한장 더 받음
-        val result = BlackJack(deque, participant).doBlackJack(
-            {},
-            { true },
-            {}
-        )
+        val result = BlackJack(deque, participant).doBlackJack(enterY)
         result.participantState shouldBe ParticipantState.BUST
     }
 
@@ -77,9 +74,10 @@ class ParticipantTest : StringSpec({
                 Card(CardNumber.THREE, CardShape.HEART),
             )
         )
+        val enterN = false
         val deque = ParticipantCards(cardDeque)
         val participant = "pita".participantsFromNames(deque).participants.first()
-        participant.setParticipantState(ParticipantState.STAND)
+        participant.askWantToGetOneMoreCard { enterN }
         participant.participantState shouldBe ParticipantState.STAND
     }
 })

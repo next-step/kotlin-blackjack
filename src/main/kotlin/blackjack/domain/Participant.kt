@@ -20,11 +20,19 @@ data class Participant(
         }
     }
 
-    fun setParticipantState(state: ParticipantState.STAND) {
+    private fun setParticipantState(state: ParticipantState.STAND) {
         participantState = state
     }
 
     fun drawCard(card: ParticipantCards): Participant = copy(participantCards = (participantCards + card).toCards())
+
+    fun askWantToGetOneMoreCard(
+        input: () -> Boolean
+    ): Boolean {
+        val noMoreCard = input().not()
+        if (noMoreCard) setParticipantState(ParticipantState.STAND)
+        return noMoreCard
+    }
 
     companion object {
         private const val MINIMUM_HIT_NUMBER = 1

@@ -21,17 +21,30 @@ fun main() {
     val result = participants.map { participant ->
         var resultText = ""
         var temporary = participant
+
+        if (temporary.participantState is ParticipantState.BLACKJACK) {
+            resultText = ParticipantPrinter.print(participant)
+            return
+        }
+
         while (true) {
             val blackJack = BlackJack(cardDeque, temporary)
-            val tempParticipant = blackJack.doBlackJack(
-                printGetOneMoreCard = { OutputView.printGetOneMoreCard(it) },
-                input = { InputView.inputGetMoreCard() },
-                printNewCard = { OutputView.printNewCards(it) }
-            ).also {
-                resultText = ParticipantPrinter.print(it)
-                temporary = it
+
+            if (temporary.participantState !is ParticipantState.HIT) break
+            OutputView.printGetOneMoreCard(participantName = participant.name)
+            val input = participant.askWantToGetOneMoreCard { InputView.inputGetMoreCard() }.not()
+            // 여기 이후로 스탠드일 수 있음
+
+            if (participant.participantState !is ParticipantState.HIT) {
+                resultText = ParticipantPrinter.print(temporary)
+                break
             }
-            if (tempParticipant.participantState !is ParticipantState.HIT) { break }
+            blackJack.doBlackJack(input)
+                .also {
+                    OutputView.printNewCards(it)
+                    resultText = ParticipantPrinter.print(it)
+                    temporary = it
+                }
         }
         resultText
     }
