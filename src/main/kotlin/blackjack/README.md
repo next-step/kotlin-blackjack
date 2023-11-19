@@ -16,10 +16,10 @@ Top Down 형식으로 객체 역할과 책임 정의
     - [x] `Cards`는 `Card`를 섞을 수 있다. 
     - [x] `Cards`는 `Card`를 뽑을 수 있다.
     - [x] `Cards`는 `Card`가 모두 소진되었을 경우 IllegalStateException을 발생시킨다.
-- [ ] `Deck` 객체를 만든다.
-  - [ ] `Deck`은 `Card`를 가진다.
-  - [ ] `Deck`은 `Card`를 섞는다.
-  - [ ] `Deck`은 `Card`를 뽑는다.
+- [x] `Deck` 객체를 만든다.
+  - [x] `Deck`은 `Card`를 가진다.
+  - [x] `Deck`은 `Card`를 섞는다.
+  - [x] `Deck`은 `Card`를 뽑는다.
 - [ ] `PlayerDecision` 객체를 만든다.
   - [ ] `PlayerDecision`은 `Hit`, `Stand`를 가진다.
 - [ ] `Player` 객체를 만든다.
