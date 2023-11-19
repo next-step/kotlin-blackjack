@@ -9,5 +9,6 @@ enum class ErrorMessage(val message: String) {
     EMPTY_CARDS("카드리스트가 비어 있습니다!"),
     WRONG_INPUT("y or n 만 입력 가능합니다."),
     DUPLICATE_CARDS("중복된 카드가 있습니다."),
+    EMPTY_PLAYERS("플레이어가 비어 있습니다.")
     ;
 }
