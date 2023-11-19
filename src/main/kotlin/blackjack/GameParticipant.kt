@@ -19,10 +19,11 @@ sealed class GameParticipant(
         name: String = NAME,
         cards: List<Card> = emptyList()
     ): GameParticipant(name, cards) {
-        override fun isNotAllowedDealing(): Boolean = getScore() > 16
+        override fun isNotAllowedDealing(): Boolean = getScore() > CONTINUE_DEALING_SCORE
 
         companion object {
             private const val NAME = "딜러"
+            private const val CONTINUE_DEALING_SCORE = 16
         }
     }
 

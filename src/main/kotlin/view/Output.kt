@@ -3,9 +3,14 @@ package view
 import blackjack.Card
 import blackjack.GameBlackjack.Companion.PLAYER_NAME_DELIMITER
 import blackjack.GameParticipant
+import blackjack.GameParticipantResult
+import blackjack.GameParticipantResults
 import blackjack.GameParticipants
 import blackjack.Message
 import blackjack.Message.PRINT_CONTINUE_DEAL
+import blackjack.Message.PRINT_DEALER_RESULT_MESSAGE
+import blackjack.Message.PRINT_PLAYER_RESULT_MESSAGE
+import blackjack.Message.PRINT_RESULT_MESSAGE
 
 object Output {
 
@@ -39,4 +44,19 @@ object Output {
 
     private fun getCardsName(cards: List<Card>): String =
         cards.joinToString(PLAYER_NAME_DELIMITER) { "${it.number.print}${it.symbol.kor}" }
+
+    fun printGameParticipantResults(gameParticipantResults: GameParticipantResults) {
+        println(PRINT_RESULT_MESSAGE)
+        printDealerMatchResult(gameParticipantResults.dealer)
+        printPlayersMatchResult(gameParticipantResults.players)
+    }
+
+    private fun printDealerMatchResult(dealer: GameParticipantResult.Dealer) {
+        val (win, loss) = dealer.countByMatchResult()
+        println(PRINT_DEALER_RESULT_MESSAGE.format(dealer.name, win, loss))
+    }
+
+    private fun printPlayersMatchResult(players: List<GameParticipantResult.Player>) {
+        println(players.joinToString("\n") { PRINT_PLAYER_RESULT_MESSAGE.format(it.name, it.matchResult.message) })
+    }
 }

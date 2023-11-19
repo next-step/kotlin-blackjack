@@ -37,13 +37,13 @@ class DefaultGameBlackjackTest : BehaviorSpec({
                                 Card(Card.Symbol.HEART, Card.Number.THREE),
                                 Card(Card.Symbol.HEART, Card.Number.FOUR)
                             )
-                        ),
-                        GameParticipant.Dealer(
-                            name = "딜러",
-                            cards = listOf(
-                                Card(Card.Symbol.HEART, Card.Number.NINE),
-                                Card(Card.Symbol.HEART, Card.Number.SEVEN)
-                            )
+                        )
+                    ),
+                    GameParticipant.Dealer(
+                        name = "딜러",
+                        cards = listOf(
+                            Card(Card.Symbol.HEART, Card.Number.NINE),
+                            Card(Card.Symbol.HEART, Card.Number.SEVEN)
                         )
                     )
                 )

@@ -6,6 +6,7 @@ import blackjack.GameBlackjack
 import blackjack.GameDealer
 import blackjack.GameParticipant
 import blackjack.GameParticipants
+import blackjack.GameScoreCalculator
 import blackjack.Message
 import blackjack.PrintProxyBlackjack
 import view.Input
@@ -31,11 +32,18 @@ fun main() {
     val playing = gameBlackjack.initialDealing(playerNames)
     Output.printParticipantsInitialDealing(playing)
 
-    val updatedPlayers = playing.participants.map {
+    val updatedPlayers = playing.players.map {
         dealing(it, gameBlackjack)
     }
+    val updatedDealer = dealing(playing.dealer, gameBlackjack)
 
-    Output.printParticipantResult(GameParticipants(updatedPlayers))
+    val gameParticipants = GameParticipants(updatedPlayers, updatedDealer)
+    Output.printParticipantResult(gameParticipants)
+
+    val gameScoreCalculator = GameScoreCalculator(gameParticipants)
+    val gameParticipantResults = gameScoreCalculator.getMatchResult()
+
+    Output.printGameParticipantResults(gameParticipantResults)
 }
 
 private fun dealing(participant: GameParticipant, blackjack: GameBlackjack) =
