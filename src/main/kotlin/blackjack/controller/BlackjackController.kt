@@ -29,5 +29,7 @@ object BlackjackController {
                 BlackjackOutputView.printCards(it)
             } while (receiveCard && !it.isFinished())
         }
+
+        BlackjackOutputView.printResult(players)
     }
 }

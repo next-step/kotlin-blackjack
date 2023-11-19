@@ -13,11 +13,21 @@ object BlackjackOutputView {
     }
 
     fun printCards(player: Player) {
-        val playerCards = player.cards
+        println("${player.name}카드: ${getPlayerCards(player)}")
+    }
+
+    fun printResult(players: List<Player>) {
+        println()
+
+        players.forEach {
+            println("${it.name}카드: ${getPlayerCards(it)} - 결과: ${it.cards.calculateScore()}")
+        }
+    }
+
+    private fun getPlayerCards(player: Player): String {
+        return player.cards
             .get()
             .joinToString { it.toOutputString() }
-
-        println("${player.name}카드: $playerCards")
     }
 
     private fun Card.toOutputString(): String {
