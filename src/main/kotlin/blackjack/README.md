@@ -7,7 +7,7 @@ Top Down 형식으로 객체 역할과 책임 정의
     - [x] `Suit`는 `Heart`, `Diamond`, `Spade`, `Clubs`를 가진다.
 - [x] `Denomination` 객체를 만든다.
     - [x] `Denomination`는 `Ace`, `Two`, `Three`, `Four`, `Five`, `Six`, `Seven`, `Eight`, `Nine`, `Ten`, `Jack`, `Queen`, `King`를 가진다.
-    - [ ] `Denomination`는 `Ace`를 가지고 있다면 `Ace`의 숫자를 1 또는 11로 계산할 수 있다.
+    - [x] `Denomination`는 `Ace`를 가지고 있다면 `Ace`의 숫자를 1 또는 11로 계산할 수 있다.
 - [x] `Card` 객체를 만든다.
   - [x] `Card`는 `Suit`와 `Rank`를 가진다.
 - [ ] `Cards` 일급 컬렉션 객체를 만든다.
