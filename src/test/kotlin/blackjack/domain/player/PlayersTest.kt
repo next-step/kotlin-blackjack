@@ -25,6 +25,15 @@ class PlayersTest : DescribeSpec({
                 result.playerInTurn shouldBe Player(name1)
             }
         }
+
+        context("플레이어가 2명이 아닌 경우") {
+            val playerNames = PlayerNames(listOf(PlayerName("홍길동"), PlayerName("베트맨"), PlayerName("아이언맨")))
+            it("플레이어 생성 실패") {
+                shouldThrowExactly<IllegalArgumentException> {
+                    Players.from(playerNames)
+                }
+            }
+        }
     }
 
     describe("현재 플레이어가 최대 점수를 넘었는지 여부 반환") {

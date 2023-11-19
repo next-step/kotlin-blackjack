@@ -3,6 +3,13 @@ package blackjack.domain.player
 data class Players(
     val allPlayers: List<Player>,
 ) {
+
+    init {
+        require(allPlayers.size == 2) {
+            "플레이어는 두 명이어야 합니다"
+        }
+    }
+
     var playerInTurn: Player = allPlayers.first()
         private set
 
