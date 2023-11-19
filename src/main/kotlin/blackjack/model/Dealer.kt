@@ -1,7 +1,5 @@
 package blackjack.model
 
-data class Dealer (
+data class Dealer(
     val cards: Cards = Cards.emptyCards(),
-){
-
-}
+)

@@ -1,5 +1,6 @@
 package blackjack.view
 
+import blackjack.model.Dealer
 import blackjack.model.Participants
 import blackjack.model.Player
 
@@ -13,7 +14,8 @@ object InputView {
             input.split(PLAYER_NAMES_DELIMITER)
                 .asSequence()
                 .map { Player(it) }
-                .toSet()
+                .toSet(),
+            Dealer()
         )
     }
 

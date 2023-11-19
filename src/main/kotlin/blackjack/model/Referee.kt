@@ -5,4 +5,8 @@ object Referee {
     fun isBlackJack(it: Player): Boolean {
         return it.cards.totalScore() == BLACK_JACK_SCORE
     }
+
+    fun blackJackResult(participants: Participants): ParticipantResults {
+        TODO("Not yet implemented")
+    }
 }
