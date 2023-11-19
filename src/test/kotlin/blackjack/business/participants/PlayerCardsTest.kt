@@ -28,7 +28,7 @@ class PlayerCardsTest {
 
         // then
         playerCards.size shouldBe 1
-        playerCards[0] shouldBe SPACE_ACE
+        playerCards.cards[0] shouldBe SPACE_ACE
     }
 
     @ParameterizedTest
@@ -85,8 +85,8 @@ class PlayerCardsTest {
 
         // then
         playerCards.size shouldBe 2
-        playerCards[0] shouldBe SPACE_ACE
-        playerCards[1] shouldBe SPACE_EIGHT
+        playerCards.cards[0] shouldBe SPACE_ACE
+        playerCards.cards[1] shouldBe SPACE_EIGHT
     }
 
     companion object {

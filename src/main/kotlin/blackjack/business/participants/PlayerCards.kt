@@ -17,10 +17,6 @@ class PlayerCards(
     val size: Int
         get() = _cards.size
 
-    operator fun get(i: Int): Card {
-        return _cards[i]
-    }
-
     fun add(card: Card) {
         _cards.add(card)
     }
