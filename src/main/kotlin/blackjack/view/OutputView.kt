@@ -1,6 +1,6 @@
 package blackjack.view
 
-import blackjack.model.CardDeck
+import blackjack.model.CardHand
 import blackjack.model.GameResult
 import blackjack.model.Player
 
@@ -14,7 +14,7 @@ object OutputView {
     fun renderPlayer(player: Player, printer: (Message: Any) -> Unit) {
         printer(
             "${player.name}카드: ${
-                getCardString(player.cardDeck)
+                getCardString(player.cardHand)
             }"
         )
     }
@@ -26,7 +26,7 @@ object OutputView {
         }
     }
 
-    private fun getCardString(cardDeck: CardDeck): String = cardDeck.cards.joinToString(", ") {
+    private fun getCardString(cardHand: CardHand): String = cardHand.cards.joinToString(", ") {
         it.name
     }
 }

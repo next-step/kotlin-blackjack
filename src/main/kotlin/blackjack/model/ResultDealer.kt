@@ -4,10 +4,10 @@ object ResultDealer {
     private const val BLACKJACK = 21
     private const val JQA_SCORE = 10
 
-    private fun getCardValues(cardDeck: CardDeck): List<CardValue> = cardDeck.cards.map { card -> card.cardValue }
+    private fun getCardValues(cardHand: CardHand): List<CardValue> = cardHand.cards.map { card -> card.cardValue }
         .sortedWith(compareBy { if (it.cardValue == "A") Int.MAX_VALUE else 0 })
 
-    fun getTotalScore(cardDeck: CardDeck): Int = getCardValues(cardDeck).fold(0) { total, it ->
+    fun getTotalScore(cardHand: CardHand): Int = getCardValues(cardHand).fold(0) { total, it ->
         when (it.cardValue) {
             "A" -> getAceScore(total)
             "J", "Q", "K" -> total + JQA_SCORE

@@ -8,6 +8,6 @@ value class CardSuit private constructor(val cardSuit: String){
             CardSuit(it)
         }
         private fun from(suit: String) = SUITS_MAP[suit] ?: throw IllegalArgumentException("존재하지 않는 카드 입니다")
-        fun gerRandom() = from(SUITS.shuffled()[0])
+        fun getRandom() = from(SUITS.shuffled()[0])
     }
 }

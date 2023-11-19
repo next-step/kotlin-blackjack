@@ -1,13 +1,13 @@
 package blackjack.model
 
-object CardDealer {
+class CardDealer(val cardDeck: CardDeck) {
     fun getCards(count: Int): List<Card> = (1..count).map {
         getCard()
     }
 
     fun getCard(): Card {
-        val value = CardValue.gerRandom()
-        val suit = CardSuit.gerRandom()
+        val value = CardValue.getRandom()
+        val suit = CardSuit.getRandom()
         return Card("${value.cardValue}${suit.cardSuit}", value)
     }
 }

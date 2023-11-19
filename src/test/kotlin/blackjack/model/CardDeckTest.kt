@@ -5,7 +5,7 @@ import io.kotest.matchers.shouldBe
 
 internal class CardDeckTest : BehaviorSpec({
     Given("카드 덱") {
-        val deck = CardDeck(emptyList());
+        val deck = CardHand(emptyList());
         When("카드를 추가할 때") {
             deck.addCard(CardDealer.getCard())
             Then("카드가 추가된다") {
