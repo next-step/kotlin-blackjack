@@ -29,24 +29,49 @@ class PlayerTest : BehaviorSpec({
         }
     }
 
-    Given("플레이어는 자신이 가진 패로") {
-        When("추가로 Hit 할 수 있는지 없는지를") {
-            Then("판단하여 반환한다.") {
+    Given("게임을 처음 시작할 때 카드 2장이 주어지면") {
+        val cards = listOf(Card(CardSuit.HEART, CardNumber.TWO), Card(CardSuit.SPADE, CardNumber.EIGHT))
+        val player = Player("pobi")
+        When("플레이어는") {
+            player.init(cards)
+            Then("주어진 2장의 카드를 패로 갖게 된다.") {
+                player.hand.cards[0] shouldBe Card(CardSuit.HEART, CardNumber.TWO)
+                player.hand.cards[1] shouldBe Card(CardSuit.SPADE, CardNumber.EIGHT)
+            }
+        }
+    }
+
+    Given("처음 카드 2장을 받았을 때") {
+        When("합이 21이라면") {
+            Then("상태를 BLACKJACK으로 바꾼다.") {
                 forAll(
-                    row(Hand(mutableListOf(Card(CardSuit.SPADE, CardNumber.TEN), Card(CardSuit.CLUB, CardNumber.TEN))), true),
-                    row(Hand(mutableListOf(Card(CardSuit.SPADE, CardNumber.ACE), Card(CardSuit.CLUB, CardNumber.TEN))), false),
+                    row(listOf(Card(CardSuit.HEART, CardNumber.TEN), Card(CardSuit.HEART, CardNumber.ACE)), State.BLACKJACK),
+                    row(listOf(Card(CardSuit.HEART, CardNumber.TEN), Card(CardSuit.HEART, CardNumber.SIX)), State.HIT),
+                ) { cards, expected ->
+                    val player = Player("yeongun")
+                    player.init(cards)
+                    player.state shouldBe expected
+                }
+            }
+        }
+    }
+
+    Given("게임을 처음 시작할 때 2장이 아닌 다른 수의 카드가 주어지면") {
+        When("플레이어는") {
+            Then("에러를 반환한다.") {
+                forAll(
+                    row(listOf(Card(CardSuit.HEART, CardNumber.TWO))),
                     row(
-                        Hand(
-                            mutableListOf(
-                                Card(CardSuit.SPADE, CardNumber.TEN),
-                                Card(CardSuit.CLUB, CardNumber.TEN),
-                                Card(CardSuit.HEART, CardNumber.TWO)
-                            )
-                        ),
-                        false
+                        listOf(
+                            Card(CardSuit.HEART, CardNumber.TWO),
+                            Card(CardSuit.SPADE, CardNumber.ACE),
+                            Card(CardSuit.DIAMOND, CardNumber.TEN)
+                        )
                     ),
-                ) { hand, expected ->
-                    Player("yeongun", hand).canHit() shouldBe expected
+                ) { cards ->
+                    shouldThrow<IllegalArgumentException> {
+                        Player("yeongun").init(cards)
+                    }
                 }
             }
         }
@@ -63,6 +88,79 @@ class PlayerTest : BehaviorSpec({
                     shouldThrow<IllegalArgumentException> {
                         Player(name)
                     }
+                }
+            }
+        }
+    }
+
+    Given("카드 1장이 주어지면") {
+        val card = Card(CardSuit.SPADE, CardNumber.TEN)
+        val player = Player("pobi")
+        When("플레이어는") {
+            player.hit(card)
+            Then("주어진 1장의 카드를 패에 추가한다.") {
+                player.hand.cards[0] shouldBe Card(CardSuit.SPADE, CardNumber.TEN)
+            }
+        }
+    }
+
+    Given("히트할 때마다") {
+        When("플레이어는") {
+            Then("자신이 가진 상태를 바꾼다.") {
+                forAll(
+                    row(Card(CardSuit.SPADE, CardNumber.ACE), State.HIT), // 총합 20점
+                    row(Card(CardSuit.SPADE, CardNumber.TWO), State.HIT), // 총합 21점
+                    row(Card(CardSuit.SPADE, CardNumber.THREE), State.BUST), // 총합 22점
+                    row(Card(CardSuit.SPADE, CardNumber.FOUR), State.BUST), // 총합 23점
+                ) { card, expected ->
+                    val player = Player("yeongun")
+                    player.hit(Card(CardSuit.SPADE, CardNumber.TEN))
+                    player.hit(Card(CardSuit.CLUB, CardNumber.NINE))
+                    player.hit(card)
+                    player.state shouldBe expected
+                }
+            }
+        }
+    }
+
+    Given("플레이어의 패가 버스트 되었는지 판단하고 싶을 때") {
+        When("플레이어는") {
+            Then("가진 패가 21을 넘으면 Bust, 21을 넘지 않으면 Bust가 아니라고 판단하여 반환한다.") {
+                forAll(
+                    row(Hand(mutableListOf(Card(CardSuit.SPADE, CardNumber.TEN), Card(CardSuit.CLUB, CardNumber.TEN))), false),
+                    row(
+                        Hand(
+                            mutableListOf(
+                                Card(CardSuit.SPADE, CardNumber.TEN),
+                                Card(CardSuit.CLUB, CardNumber.TEN),
+                                Card(CardSuit.HEART, CardNumber.TWO)
+                            )
+                        ),
+                        true
+                    ),
+                ) { hand, expected ->
+                    Player("yeongun", hand).isBust() shouldBe expected
+                }
+            }
+        }
+    }
+
+    Given("플레이어는 자신이 가진 패로") {
+        When("추가로 Hit 할 수 있는지 없는지를") {
+            Then("판단하여 반환한다.") {
+                forAll(
+                    row(listOf(Card(CardSuit.SPADE, CardNumber.TEN), Card(CardSuit.CLUB, CardNumber.TEN)), true),
+                    row(listOf(Card(CardSuit.SPADE, CardNumber.ACE), Card(CardSuit.CLUB, CardNumber.TEN)), true),
+                    row(
+                        listOf(Card(CardSuit.SPADE, CardNumber.TEN), Card(CardSuit.CLUB, CardNumber.TEN), Card(CardSuit.HEART, CardNumber.TWO)),
+                        false
+                    )
+                ) { cards, expected ->
+                    val player = Player("yeongun")
+                    cards.forEach {
+                        player.hit(it)
+                    }
+                    player.canHit() shouldBe expected
                 }
             }
         }

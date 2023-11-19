@@ -2,24 +2,19 @@ package blackjack.domain
 
 class Player(
     val name: String,
-    val hand: Hand = Hand()
-) {
+    hand: Hand = Hand()
+) : User(hand) {
 
     init {
         require(name.isNotBlank()) { "플레이어의 이름은 공백일 수 없습니다." }
     }
 
-    fun init(deck: Deck) {
-        val initCards = deck.init()
-        hand.init(initCards[0], initCards[1])
-    }
-
-    fun canHit(): Boolean {
-        return hand.canHit()
-    }
-
-    fun hit(deck: Deck) {
-        val card = deck.hit()
+    override fun hit(card: Card) {
         hand.receive(card)
+        state = if (hand.getSum() > BLACKJACK) {
+            State.BUST
+        } else {
+            State.HIT
+        }
     }
 }
