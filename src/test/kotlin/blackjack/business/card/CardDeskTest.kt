@@ -23,7 +23,7 @@ class CardDeskTest {
     fun `한벌의 카드에서 하나의 카드를 뽑는다`() {
         // given
         val cardSelectionStrategy = FixSelectionStrategy()
-        val cardDesk = CardDesk(cardSelectionStrategy)
+        val cardDesk = CardDesk(cardSelectionStrategy = cardSelectionStrategy)
 
         // when
         val card = cardDesk.draw()
@@ -40,7 +40,7 @@ class CardDeskTest {
         val cardDesk = CardDesk()
 
         // when
-        cardDesk.addCards()
+        cardDesk.addAllNewCards()
 
         // then
         cardDesk.cards.size shouldBe 104

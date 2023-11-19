@@ -64,7 +64,7 @@ class PlayersTest {
         // given
         val playerNames = listOf("pobi", "jason")
         val players = Players.from(playerNames)
-        val cardDesk = CardDesk(FixSelectionStrategy())
+        val cardDesk = CardDesk(cardSelectionStrategy = FixSelectionStrategy())
 
         // when
         players.executeCardDraws(cardDesk, FixDrawConditionStrategy(), { "y" }) { }
