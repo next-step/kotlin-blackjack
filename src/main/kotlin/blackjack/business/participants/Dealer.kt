@@ -1,11 +1,10 @@
 package blackjack.business.participants
 
-import blackjack.business.canDrawCardStrategy.DealerCanDrawCardStrategy
 import blackjack.business.card.Card
 import blackjack.business.card.CardDesk
 import blackjack.business.util.GameResult
 
-class Dealer(dealerCards: PlayerCards = PlayerCards(canDrawCardStrategy = DealerCanDrawCardStrategy())) {
+class Dealer(dealerCards: PlayerCards = PlayerCards()) {
     private val _dealerCards: PlayerCards = dealerCards
     val cards: List<Card>
         get() = _dealerCards.cards
@@ -21,7 +20,7 @@ class Dealer(dealerCards: PlayerCards = PlayerCards(canDrawCardStrategy = Dealer
     }
 
     fun canDrawCard(): Boolean {
-        return _dealerCards.canDrawCard()
+        return _dealerCards.sum() < 17
     }
 
     fun isBust(): Boolean {

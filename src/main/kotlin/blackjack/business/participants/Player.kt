@@ -16,7 +16,7 @@ class Player private constructor(val name: String, playerCards: PlayerCards) {
     }
 
     fun canDrawCard(): Boolean {
-        return _cards.canDrawCard()
+        return _cards.sum() < 21
     }
 
     fun addCards(playerCards: List<Card>) {

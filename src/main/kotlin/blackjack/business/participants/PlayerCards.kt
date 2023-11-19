@@ -1,15 +1,12 @@
 package blackjack.business.participants
 
-import blackjack.business.canDrawCardStrategy.CanDrawCardStrategy
-import blackjack.business.canDrawCardStrategy.PlayerCanDrawCardStrategy
 import blackjack.business.card.Card
 import blackjack.business.card.Rank
 import blackjack.business.util.BlackJackConst.ACE_OFFSET
 import blackjack.business.util.BlackJackConst.BLACKJACK
 
 class PlayerCards(
-    cards: List<Card> = listOf(),
-    private val canDrawCardStrategy: CanDrawCardStrategy = PlayerCanDrawCardStrategy()
+    cards: List<Card> = listOf()
 ) {
 
     private val _cards: MutableList<Card> = cards.toMutableList()
@@ -36,10 +33,6 @@ class PlayerCards(
             aceCount--
         }
         return sum
-    }
-
-    fun canDrawCard(): Boolean {
-        return canDrawCardStrategy.canDrawCard(sum())
     }
 
     fun isBust(): Boolean {

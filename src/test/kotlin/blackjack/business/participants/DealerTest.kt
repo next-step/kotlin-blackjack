@@ -159,6 +159,49 @@ class DealerTest {
         dealer.cards.size shouldBe 3
     }
 
+    @Test
+    fun `딜러의 카드가 17이상이면 카드를 받지 않는다`() {
+        // given
+        val dealer = Dealer()
+        dealer.addCard(SPACE_TEN)
+        dealer.addCard(SPACE_EIGHT)
+        val cardDesk = CardDesk()
+
+        // when
+        dealer.executeCardDraws(cardDesk) {}
+
+        // then
+        dealer.cards.size shouldBe 2
+    }
+
+    @Test
+    fun `딜러의 카드가 16이하이면 이동 할수 있디`() {
+        // given
+        val dealer = Dealer()
+        dealer.addCard(SPACE_FIVE)
+        dealer.addCard(SPACE_ACE)
+
+        // when
+        val actual = dealer.canDrawCard()
+
+        // then
+        actual shouldBe true
+    }
+
+    @Test
+    fun `딜러의 카드가 17이상이면 이동할수 없다`() {
+        // given
+        val dealer = Dealer()
+        dealer.addCard(SPACE_NINE)
+        dealer.addCard(SPACE_EIGHT)
+
+        // when
+        val actual = dealer.canDrawCard()
+
+        // then
+        actual shouldBe false
+    }
+
     companion object {
         @JvmStatic
         private fun providePlayerAndDealerCards() = listOf(
