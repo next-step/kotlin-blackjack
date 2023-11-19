@@ -1,6 +1,7 @@
 package dsl
 
 import org.assertj.core.api.Assertions.assertThat
+import org.assertj.core.api.Assertions.entry
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
@@ -44,5 +45,25 @@ class DslTest {
         assertThat(person.company).isEqualTo("활빈당")
         assertThat(person.softSkills).contains("c++", "kotlin")
         assertThat(person.hardSkills).contains("java")
+    }
+
+    @Test
+    fun languages() {
+        val person = introduce {
+            name("홍길동")
+            company("활빈당")
+            languages {
+                "korean" level 5
+                "english" level 1
+            }
+        }
+
+        assertThat(person.name).isEqualTo("홍길동")
+        assertThat(person.company).isEqualTo("활빈당")
+        assertThat(person.languages)
+            .contains(
+                entry("korean", 5),
+                entry("english", 1),
+            )
     }
 }

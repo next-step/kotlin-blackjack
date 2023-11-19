@@ -7,3 +7,7 @@ fun introduce(block: PersonBuilder.() -> Unit): Person {
 fun PersonBuilder.skills(block: PersonBuilder.() -> Unit): Person {
     return apply(block).build()
 }
+
+fun PersonBuilder.languages(block: PersonBuilder.() -> Unit): Person {
+    return apply(block).build()
+}
