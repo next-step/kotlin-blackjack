@@ -1,5 +1,7 @@
 package blackjack
 
-fun main() {
+import blackjack.controller.BlackjackController
 
+fun main() {
+    BlackjackController.handle()
 }
