@@ -9,4 +9,18 @@ object BlackjackInputView {
         return readln().split(PLAYER_NAME_DELIMITER)
             .map { it.trim() }
     }
+
+    fun readCardReceiveInput(playerName: String): Boolean {
+        println("${playerName}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
+
+        return parseCardReceiveInput(readln())
+    }
+
+    private fun parseCardReceiveInput(input: String): Boolean {
+        return when (input) {
+            "y" -> true
+            "n" -> false
+            else -> throw IllegalArgumentException("Input should be y or n.")
+        }
+    }
 }

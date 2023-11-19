@@ -8,12 +8,16 @@ object BlackjackOutputView {
     fun printInitialCards(players: List<Player>) {
         println("\n${players.joinToString { it.name }}에게 2장의 카드를 나누었습니다.")
 
-        players.forEach { player ->
-            val playerCards = player.cards
-                .get()
-                .joinToString { it.toOutputString() }
-            println("${player.name}카드: $playerCards")
-        }
+        players.forEach { printCards(it) }
+        println()
+    }
+
+    fun printCards(player: Player) {
+        val playerCards = player.cards
+            .get()
+            .joinToString { it.toOutputString() }
+
+        println("${player.name}카드: $playerCards")
     }
 
     private fun Card.toOutputString(): String {
