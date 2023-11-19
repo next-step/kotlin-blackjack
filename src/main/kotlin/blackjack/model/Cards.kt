@@ -28,10 +28,10 @@ class Cards(
 
     private fun scoreWithAce(): Int {
         val simpleSum = simpleSumOfScore()
-        if (simpleSum + ALTERNATIVE_ACE_SCORE_DIFF > HIGHEST_SCORE) {
+        if (simpleSum + ACE_BONUS_SCORE > HIGHEST_SCORE) {
             return simpleSum
         }
-        return simpleSum + ALTERNATIVE_ACE_SCORE_DIFF
+        return simpleSum + ACE_BONUS_SCORE
     }
 
     fun count(): Int {
@@ -40,7 +40,7 @@ class Cards(
 
     companion object {
         private const val HIGHEST_SCORE: Int = 21
-        private const val ALTERNATIVE_ACE_SCORE_DIFF: Int = 11 - 1
+        private const val ACE_BONUS_SCORE: Int = 10
 
         fun emptyCards(): Cards {
             return Cards(mutableListOf())
