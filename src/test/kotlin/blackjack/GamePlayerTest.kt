@@ -1,7 +1,6 @@
 package blackjack
 
 import io.kotest.core.spec.style.BehaviorSpec
-import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 
 class GamePlayerTest : BehaviorSpec({
@@ -53,9 +52,7 @@ class GamePlayerTest : BehaviorSpec({
                         Card(Card.Symbol.SPADE, Card.Number.TWO),
                         Card(Card.Symbol.SPADE, Card.Number.NINE),
                         Card(Card.Symbol.SPADE, Card.Number.KING),
-                    ),
-                    isBust = true,
-                    isSoftHand = false
+                    )
                 )
             }
         }

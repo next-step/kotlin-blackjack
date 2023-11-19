@@ -23,7 +23,7 @@ object Output {
 
     fun printPlayersResult(players: GamePlayers) {
         players.players.forEach {
-            println(Message.PRINT_PLAYER_RESULT.format(it.name, getCardsName(it.cards), getCardsSum(it.cards)))
+            println(Message.PRINT_PLAYER_RESULT.format(it.name, getCardsName(it.cards), it.getScore()))
         }
     }
 
@@ -38,8 +38,5 @@ object Output {
         players.players.joinToString(PLAYER_NAME_DELIMITER) { it.name }
 
     private fun getCardsName(cards: List<Card>): String =
-        cards.joinToString(PLAYER_NAME_DELIMITER) { "${it.number.value}${it.symbol.kor}" }
-
-    private fun getCardsSum(cards: List<Card>): Int =
-        cards.sumOf { it.number.value }
+        cards.joinToString(PLAYER_NAME_DELIMITER) { "${it.number.print}${it.symbol.kor}" }
 }

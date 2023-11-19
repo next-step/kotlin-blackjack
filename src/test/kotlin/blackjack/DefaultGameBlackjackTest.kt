@@ -27,18 +27,14 @@ class DefaultGameBlackjackTest : BehaviorSpec({
                             cards = listOf(
                                 Card(Card.Symbol.HEART, Card.Number.ACE),
                                 Card(Card.Symbol.HEART, Card.Number.TWO)
-                            ),
-                            isBust = false,
-                            isSoftHand = true
+                            )
                         ),
                         GamePlayer(
                             name = "test2",
                             cards = listOf(
                                 Card(Card.Symbol.HEART, Card.Number.THREE),
                                 Card(Card.Symbol.HEART, Card.Number.FOUR)
-                            ),
-                            isBust = false,
-                            isSoftHand = false
+                            )
                         )
                     )
                 )

@@ -39,11 +39,11 @@ fun main() {
 }
 
 tailrec fun dealing(player: GamePlayer, gameBlackjack: GameBlackjack): GamePlayer {
-    if (player.isBust) return player
+    if (player.isBust || player.isBlackjack()) return player
     Output.printPlayerAction(player)
     return when (ContinueDeal.of(Input.getLine())) {
         ContinueDeal.YES -> dealing(gameBlackjack.continueDealing(player), gameBlackjack)
-        ContinueDeal.MISS -> player
+        ContinueDeal.MISS -> dealing(player, gameBlackjack)
         ContinueDeal.NO -> player
     }
 }
