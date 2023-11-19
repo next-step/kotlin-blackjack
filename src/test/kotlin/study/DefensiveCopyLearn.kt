@@ -1,6 +1,5 @@
 package study
 
-import blackjack.view.Console.present
 import io.kotest.core.spec.style.StringSpec
 
 class DefensiveCopyLearn : StringSpec({
@@ -36,7 +35,9 @@ class NonDefensiveClass(
     }
 }
 
-class DefensiveClass {
+class DefensiveClass(
+    strings: List<String>
+) {
     private val _strings: MutableList<String> = strings.toMutableList()
     val strings: List<String> get() = _strings.toList()
 
