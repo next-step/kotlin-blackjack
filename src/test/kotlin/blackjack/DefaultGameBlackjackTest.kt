@@ -11,6 +11,8 @@ class DefaultGameBlackjackTest : BehaviorSpec({
             Card(Card.Symbol.HEART, Card.Number.TWO),
             Card(Card.Symbol.HEART, Card.Number.THREE),
             Card(Card.Symbol.HEART, Card.Number.FOUR),
+            Card(Card.Symbol.HEART, Card.Number.NINE),
+            Card(Card.Symbol.HEART, Card.Number.SEVEN),
         )
     }
     val gameDealer = GameDealer(heartCards)
@@ -19,21 +21,28 @@ class DefaultGameBlackjackTest : BehaviorSpec({
         When("블랙잭을 시작하면") {
             val blackjack = DefaultGameBlackjack(gameDealer)
             val playing = blackjack.initialDealing(names)
-            Then("딜러가 2장의 카드를 각각 배분한다.") {
+            Then("딜러가 2장의 카드를 각각 배분하며 딜러도 포함한다.") {
                 playing shouldBe GameParticipants(
                     listOf(
-                        GamePlayer(
+                        GameParticipant.Player(
                             name = "test1",
                             cards = listOf(
                                 Card(Card.Symbol.HEART, Card.Number.ACE),
                                 Card(Card.Symbol.HEART, Card.Number.TWO)
                             )
                         ),
-                        GamePlayer(
+                        GameParticipant.Player(
                             name = "test2",
                             cards = listOf(
                                 Card(Card.Symbol.HEART, Card.Number.THREE),
                                 Card(Card.Symbol.HEART, Card.Number.FOUR)
+                            )
+                        ),
+                        GameParticipant.Dealer(
+                            name = "딜러",
+                            cards = listOf(
+                                Card(Card.Symbol.HEART, Card.Number.NINE),
+                                Card(Card.Symbol.HEART, Card.Number.SEVEN)
                             )
                         )
                     )
