@@ -3,13 +3,13 @@ package blackjack.business.participants
 import blackjack.business.CardFixture.SPACE_ACE
 import blackjack.business.CardFixture.SPACE_EIGHT
 import blackjack.business.CardFixture.SPACE_FIVE
+import blackjack.business.CardFixture.SPACE_FOUR
 import blackjack.business.CardFixture.SPACE_NINE
 import blackjack.business.CardFixture.SPACE_TEN
+import blackjack.business.CardFixture.SPACE_THREE
 import blackjack.business.CardFixture.SPACE_TWO
 import blackjack.business.card.Card
 import blackjack.business.card.CardDesk
-import blackjack.business.card.Rank
-import blackjack.business.card.Suit
 import blackjack.business.util.GameResult
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
@@ -130,11 +130,15 @@ class DealerTest {
         // given
         val dealer = Dealer()
         dealer.addCard(SPACE_TEN)
-        dealer.addCard(SPACE_FIVE)
+        dealer.addCard(SPACE_FOUR)
         val players = Players.from(listOf("pobi", "crong", "honux"))
-        players.allPlayers.forEachIndexed { index, player ->
+        players.allPlayers.forEach() { player ->
             player.addCard(SPACE_TEN)
-            player.addCard(Card(Suit.CLUB, Rank.from(index + 4)))
+            when (player.name) {
+                "pobi" -> player.addCard(SPACE_THREE)
+                "crong" -> player.addCard(SPACE_FOUR)
+                "honux" -> player.addCard(SPACE_FIVE)
+            }
         }
 
         // when
