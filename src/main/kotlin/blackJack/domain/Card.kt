@@ -8,4 +8,10 @@ class Card(val suit: Suit, val rank: Rank) {
         require(suit in Suit.values()) { ErrorMessage.WRONG_SUIT.message }
         require(rank in Rank.values()) { ErrorMessage.WRONG_RANK.message }
     }
+
+    companion object {
+        fun drawCard(): Card {
+            return Card(Suit.randomizeSuit(), Rank.randomizeRank())
+        }
+    }
 }

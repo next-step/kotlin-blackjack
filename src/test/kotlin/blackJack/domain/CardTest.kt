@@ -8,8 +8,7 @@ class CardTest {
 
     @Test
     fun `카드가 랜덤하게 뽑힌다`() {
-        val dealer = Dealer()
-        val card = dealer.drawCard()
+        val card = Card.drawCard()
         assertNotNull(card)
     }
 

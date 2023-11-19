@@ -10,4 +10,10 @@ object InputView {
 
         return names
     }
+
+    fun answerYesOrNo(): String {
+        val answer = readln()
+        require(answer == "y" || answer == "n") { ErrorMessage.WRONG_INPUT.message }
+        return answer
+    }
 }

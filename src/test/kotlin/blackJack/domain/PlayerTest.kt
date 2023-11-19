@@ -1,6 +1,7 @@
 package blackJack.domain
 
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
 class PlayerTest {
@@ -18,5 +19,16 @@ class PlayerTest {
         val player = Player.initBetting(name)
         assertThat(player.name).isEqualTo(name)
         assertThat(player.cards.cards.size).isEqualTo(2)
+    }
+
+    @Test
+    fun `카드를 계속해서 추가가 가능하다`() {
+        val player = Player("pobi", Cards(INITIAL_CARDS))
+        val addCardPlayer = player.addCard()
+        assertEquals(2, addCardPlayer.cards.cards.size)
+    }
+
+    companion object {
+        private val INITIAL_CARDS = listOf(Card(Suit.SPADE, Rank.ACE))
     }
 }
