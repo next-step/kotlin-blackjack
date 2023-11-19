@@ -4,8 +4,8 @@ import blackjack.ContinueDeal
 import blackjack.DefaultGameBlackjack
 import blackjack.GameBlackjack
 import blackjack.GameDealer
-import blackjack.GamePlayer
-import blackjack.GamePlayers
+import blackjack.GameParticipant
+import blackjack.GameParticipants
 import blackjack.Message
 import blackjack.PrintProxyBlackjack
 import view.Input
@@ -29,21 +29,35 @@ fun main() {
     val gameBlackjack: GameBlackjack = PrintProxyBlackjack(DefaultGameBlackjack(gameDealer))
 
     val playing = gameBlackjack.initialDealing(playerNames)
-    Output.printPlayersInitialDealing(playing)
+    Output.printParticipantsInitialDealing(playing)
 
-    val updatedPlayers = playing.players.map {
+    val updatedPlayers = playing.participants.map {
         dealing(it, gameBlackjack)
     }
 
-    Output.printPlayersResult(GamePlayers(updatedPlayers))
+    Output.printParticipantResult(GameParticipants(updatedPlayers))
 }
 
-tailrec fun dealing(player: GamePlayer, gameBlackjack: GameBlackjack): GamePlayer {
-    if (player.isBust || player.isBlackjack()) return player
-    Output.printPlayerAction(player)
+private fun dealing(participant: GameParticipant, blackjack: GameBlackjack) =
+    when(participant) {
+        is GameParticipant.Dealer -> dealerDealing(participant, blackjack)
+        is GameParticipant.Player -> playerDealing(participant, blackjack)
+    }
+
+private fun dealerDealing(participant: GameParticipant, blackjack: GameBlackjack): GameParticipant {
+    return if(participant.isNotAllowedDealing()) participant
+    else {
+        Output.printMessage(Message.PRINT_DEALER_DEALING)
+        blackjack.continueDealing(participant)
+    }
+}
+
+private tailrec fun playerDealing(participant: GameParticipant, blackjack: GameBlackjack): GameParticipant {
+    if (participant.isNotAllowedDealing()) return participant
+    Output.printParticipantAction(participant)
     return when (ContinueDeal.of(Input.getLine())) {
-        ContinueDeal.YES -> dealing(gameBlackjack.continueDealing(player), gameBlackjack)
-        ContinueDeal.MISS -> dealing(player, gameBlackjack)
-        ContinueDeal.NO -> player
+        ContinueDeal.YES -> playerDealing(blackjack.continueDealing(participant), blackjack)
+        ContinueDeal.MISS -> playerDealing(participant, blackjack)
+        ContinueDeal.NO -> participant
     }
 }

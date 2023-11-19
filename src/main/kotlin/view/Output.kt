@@ -2,8 +2,8 @@ package view
 
 import blackjack.Card
 import blackjack.GameBlackjack.Companion.PLAYER_NAME_DELIMITER
-import blackjack.GamePlayer
-import blackjack.GamePlayers
+import blackjack.GameParticipant
+import blackjack.GameParticipants
 import blackjack.Message
 import blackjack.Message.PRINT_CONTINUE_DEAL
 
@@ -13,29 +13,29 @@ object Output {
         println(message)
     }
 
-    fun printPlayerAction(player: GamePlayer) {
-        println(PRINT_CONTINUE_DEAL.format(player.name))
+    fun printParticipantAction(participant: GameParticipant) {
+        println(PRINT_CONTINUE_DEAL.format(participant.name))
     }
 
-    fun printPlayerCards(player: GamePlayer) {
-        println(Message.PRINT_PLAYER_CARDS.format(player.name, getCardsName(player.cards)))
+    fun printParticipantCards(participant: GameParticipant) {
+        println(Message.PRINT_PLAYER_CARDS.format(participant.name, getCardsName(participant.cards)))
     }
 
-    fun printPlayersResult(players: GamePlayers) {
-        players.players.forEach {
+    fun printParticipantResult(players: GameParticipants) {
+        players.participants.forEach {
             println(Message.PRINT_PLAYER_RESULT.format(it.name, getCardsName(it.cards), it.getScore()))
         }
     }
 
-    fun printPlayersInitialDealing(playing: GamePlayers) {
-        val names = getPlayerNames(playing)
+    fun printParticipantsInitialDealing(playing: GameParticipants) {
+        val names = getParticipantsNames(playing)
         println(Message.PRINT_DEAL_CARDS.format(names))
 
-        playing.players.forEach(::printPlayerCards)
+        playing.participants.forEach(::printParticipantCards)
     }
 
-    private fun getPlayerNames(players: GamePlayers): String =
-        players.players.joinToString(PLAYER_NAME_DELIMITER) { it.name }
+    private fun getParticipantsNames(players: GameParticipants): String =
+        players.participants.joinToString(PLAYER_NAME_DELIMITER) { it.name }
 
     private fun getCardsName(cards: List<Card>): String =
         cards.joinToString(PLAYER_NAME_DELIMITER) { "${it.number.print}${it.symbol.kor}" }

@@ -6,12 +6,14 @@ class PrintProxyBlackjack(
     private val target: GameBlackjack
 ) : GameBlackjack {
 
-    override fun initialDealing(playerNames: String): GamePlayers =
+    override fun initialDealing(playerNames: String): GameParticipants =
         target.initialDealing(playerNames)
 
-    override fun continueDealing(player: GamePlayer): GamePlayer {
-        val updatedPlayer = target.continueDealing(player)
-        Output.printPlayerCards(updatedPlayer)
-        return updatedPlayer
+    override fun continueDealing(player: GameParticipant): GameParticipant {
+        val updatedParticipant = target.continueDealing(player)
+        if(player is GameParticipant.Player) {
+            Output.printParticipantCards(updatedParticipant)
+        }
+        return updatedParticipant
     }
 }

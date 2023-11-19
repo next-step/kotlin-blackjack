@@ -7,4 +7,5 @@ object Message {
     const val PRINT_PLAYER_CARDS = "%s 카드: %s"
     const val PRINT_CONTINUE_DEAL = "%s는 한 장의 카드를 더 받겠습니까?(예 y, 아니오 n)"
     const val PRINT_PLAYER_RESULT = "%s 카드: %s - 결과: %d"
+    const val PRINT_DEALER_DEALING = "딜러는 16이하라 한 장의 카드를 더 받았습니다."
 }

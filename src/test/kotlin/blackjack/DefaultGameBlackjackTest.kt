@@ -20,7 +20,7 @@ class DefaultGameBlackjackTest : BehaviorSpec({
             val blackjack = DefaultGameBlackjack(gameDealer)
             val playing = blackjack.initialDealing(names)
             Then("딜러가 2장의 카드를 각각 배분한다.") {
-                playing shouldBe GamePlayers(
+                playing shouldBe GameParticipants(
                     listOf(
                         GamePlayer(
                             name = "test1",

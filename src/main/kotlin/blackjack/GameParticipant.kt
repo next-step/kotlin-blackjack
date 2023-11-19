@@ -2,17 +2,37 @@ package blackjack
 
 import blackjack.GameBlackjack.Companion.BLACKJACK_MAX_SCORE
 
-class GamePlayer(
+sealed class GameParticipant(
     val name: String,
     val cards: List<Card> = emptyList()
-) {
+){
     val isBust: Boolean = isBust(cards)
+
+    class Player(
+        name: String,
+        cards: List<Card> = emptyList()
+    ): GameParticipant(name, cards) {
+        override fun isNotAllowedDealing(): Boolean = this.isBust || this.isBlackjack()
+    }
+
+    class Dealer(
+        name: String = NAME,
+        cards: List<Card> = emptyList()
+    ): GameParticipant(name, cards) {
+        override fun isNotAllowedDealing(): Boolean = getScore() > 16
+
+        companion object {
+            private const val NAME = "딜러"
+        }
+    }
+
+    abstract fun isNotAllowedDealing(): Boolean
 
     fun isBlackjack(): Boolean = getScore(this.cards) == BLACKJACK_MAX_SCORE
 
-    fun receiveCard(card: Card): GamePlayer {
+    fun receiveCard(card: Card): GameParticipant {
         val updatedCards = mutableListOf(card).apply { this.addAll(cards) }
-        return GamePlayer(
+        return Player(
             name = this.name,
             cards = updatedCards
         )
@@ -36,7 +56,7 @@ class GamePlayer(
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
 
-        other as GamePlayer
+        other as GameParticipant
 
         if (name != other.name) return false
         if (cards != other.cards) return false
@@ -50,11 +70,4 @@ class GamePlayer(
         return result
     }
 
-    companion object {
-        fun of(name: String, cards: List<Card>): GamePlayer =
-            GamePlayer(
-                name = name,
-                cards = cards
-            )
-    }
 }
