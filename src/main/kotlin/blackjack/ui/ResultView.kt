@@ -5,7 +5,6 @@ import blackjack.domain.GameResult
 import blackjack.domain.Player
 import blackjack.domain.Players
 import blackjack.domain.User
-import blackjack.domain.calculateResult
 
 object ResultView {
 
@@ -66,17 +65,11 @@ object ResultView {
         print(" - 결과: ${user.hand.getSum()}")
     }
 
-    fun printGameResult(players: Players) {
+    fun printGameResult(dealerResult: Map<GameResult, Int>, playersResult: Map<String, GameResult>) {
         println()
         println("## 최종 승패")
-        val dealer = players.dealer
-        val dealerResult = players.players
-            .map { it.calculateResult(dealer) }
-            .map { it.reverse() }
-            .groupingBy { it }
-            .eachCount()
         printDealerResult(dealerResult)
-        printPlayersResult(players, dealer)
+        printPlayersResult(playersResult)
     }
 
     private fun printDealerResult(dealerResult: Map<GameResult, Int>) {
@@ -93,11 +86,14 @@ object ResultView {
         println()
     }
 
-    private fun printPlayersResult(players: Players, dealer: Dealer) {
-        players.players
-            .forEach {
-                print("${it.name}: ")
-                println(it.calculateResult(dealer).value)
+    private fun printPlayersResult(players: Map<String, GameResult>) {
+        players.forEach {
+            print("${it.key}: ")
+            when (it.value) {
+                GameResult.WIN -> println("승")
+                GameResult.DRAW -> println("무")
+                GameResult.LOSE -> println("패")
             }
+        }
     }
 }
