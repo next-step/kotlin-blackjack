@@ -10,7 +10,7 @@ class DeckTest : DescribeSpec({
             val cards = listOf(Card(Suit.CLUB, Rank.SEVEN), Card(Suit.DIAMOND, Rank.FOUR))
 
             it("덱 생성") {
-                val result = Deck.of(cards)
+                val result = Deck.from(cards)
 
                 result shouldBe Deck(ArrayDeque(cards))
             }

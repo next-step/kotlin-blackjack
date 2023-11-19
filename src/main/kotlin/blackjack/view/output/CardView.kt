@@ -5,7 +5,7 @@ import blackjack.domain.card.Rank
 import blackjack.domain.card.Suit
 
 object CardView {
-    fun of(card: Card) =
+    fun from(card: Card) =
         extractRank(card.rank) + extractSuit(card.suit)
 
     private fun extractSuit(suit: Suit) = when (suit) {

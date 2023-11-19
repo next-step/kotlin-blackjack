@@ -12,7 +12,7 @@ value class HandScore(
         private const val MAX_SCORE = 21
         private const val ACE_BONUS_SCORE = 10
 
-        fun of(hand: Hand): HandScore {
+        fun from(hand: Hand): HandScore {
             val ranks = hand.ranks
             val score = ranks.sumOf { it.score() }
             return when {

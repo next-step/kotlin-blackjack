@@ -28,7 +28,7 @@ class HandScoreTest : DescribeSpec({
                 ),
             ) { hand, expect ->
                 it("Ace 1개를 11점으로 계산한다") {
-                    HandScore.of(hand) shouldBe HandScore(expect)
+                    HandScore.from(hand) shouldBe HandScore(expect)
                 }
             }
         }
@@ -40,7 +40,7 @@ class HandScoreTest : DescribeSpec({
                 )
             )
             it("Ace를 1점으로 계산한다") {
-                HandScore.of(hand) shouldBe HandScore(21)
+                HandScore.from(hand) shouldBe HandScore(21)
             }
         }
 
@@ -51,7 +51,7 @@ class HandScoreTest : DescribeSpec({
                 )
             )
             it("모든 점수를 그대로 계산") {
-                HandScore.of(hand) shouldBe HandScore(5)
+                HandScore.from(hand) shouldBe HandScore(5)
             }
         }
     }

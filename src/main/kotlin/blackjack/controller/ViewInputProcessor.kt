@@ -8,7 +8,7 @@ import blackjack.view.model.PlayerNameModel
 
 class ViewInputProcessor : InputProcessor {
     override fun playerNames(): PlayerNames =
-        InputView.playerNames().let(PlayerNames::of)
+        InputView.playerNames().let(PlayerNames::from)
 
     override fun playerAction(player: Player): PlayerAction {
         val action = InputView.playerAction(player.let(PlayerNameModel::from))

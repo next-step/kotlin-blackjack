@@ -11,7 +11,7 @@ class PlayerNamesTest : DescribeSpec({
         context("플레이어 이름이 문자열 리스트로 주어지면") {
             val names = listOf("홍길동", "백상어")
 
-            val result = PlayerNames.of(names)
+            val result = PlayerNames.from(names)
 
             it("주어진 문자열로 이름 목록이 생성") {
                 result.value[0].value shouldBe "홍길동"

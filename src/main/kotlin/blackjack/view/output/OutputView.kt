@@ -39,5 +39,5 @@ object OutputView {
         players.joinToString(", ") { it.name }
 
     private fun extractCardsState(cards: List<Card>): String =
-        cards.joinToString(", ") { CardView.of(it) }
+        cards.joinToString(", ") { CardView.from(it) }
 }

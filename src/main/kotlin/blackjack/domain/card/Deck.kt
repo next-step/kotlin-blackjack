@@ -9,6 +9,6 @@ data class Deck(
     fun draw(): Card = _cards.removeLastOrNull() ?: throw IllegalArgumentException("덱에 카드가 없습니다.")
 
     companion object {
-        fun of(cards: List<Card>): Deck = Deck(ArrayDeque(cards))
+        fun from(cards: List<Card>): Deck = Deck(ArrayDeque(cards))
     }
 }

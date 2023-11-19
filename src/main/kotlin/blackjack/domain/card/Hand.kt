@@ -11,7 +11,7 @@ data class Hand(
         get() = _cards.map { it.rank }
 
     val score: HandScore
-        get() = HandScore.of(this)
+        get() = HandScore.from(this)
 
     fun add(card: Card) {
         _cards.add(card)

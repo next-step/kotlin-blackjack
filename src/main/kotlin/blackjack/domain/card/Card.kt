@@ -8,7 +8,7 @@ data class Card(
         fun allShuffled(): Deck =
             Suit.entries.flatMap {
                 allRankInSuit(it)
-            }.shuffled().let(Deck::of)
+            }.shuffled().let(Deck::from)
 
         private fun allRankInSuit(suit: Suit) =
             Rank.entries.map { Card(suit, it) }

@@ -11,7 +11,7 @@ value class PlayerNames(
     }
 
     companion object {
-        fun of(names: List<String>): PlayerNames =
+        fun from(names: List<String>): PlayerNames =
             names.map(::PlayerName).let(::PlayerNames)
     }
 }

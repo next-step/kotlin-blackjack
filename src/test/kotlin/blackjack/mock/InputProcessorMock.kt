@@ -10,7 +10,7 @@ class InputProcessorMock(
     private val playerAction: PlayerAction = PlayerAction.HIT,
 ) : InputProcessor {
 
-    override fun playerNames(): PlayerNames = playerNames.let(PlayerNames::of)
+    override fun playerNames(): PlayerNames = playerNames.let(PlayerNames::from)
 
     override fun playerAction(player: Player): PlayerAction = playerAction
 }
