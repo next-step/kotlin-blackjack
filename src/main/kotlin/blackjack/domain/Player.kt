@@ -10,10 +10,6 @@ class Player(
     }
 
     fun isFinished(): Boolean {
-        return cards.calculateScore(false) >= BLACKJACK_SCORE
-    }
-
-    companion object {
-        private const val BLACKJACK_SCORE = 21
+        return cards.calculateScore() >= Game.BLACKJACK_SCORE
     }
 }

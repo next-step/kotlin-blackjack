@@ -11,16 +11,22 @@ class Cards {
         return cards
     }
 
-    fun calculateScore(useAceAs11: Boolean = false): Int {
-        val sum = cards.sumOf { it.denomination.value }
+    fun calculateScore(): Int {
+        var sum = cards.sumOf { it.denomination.value }
+        var aceCount = countAce()
 
-        if (hasAce() && useAceAs11) {
-            return sum + 10
+        while (aceCount > 0 && sum + ADD_AMOUNT_IF_ACE_11 <= Game.BLACKJACK_SCORE) {
+            sum += ADD_AMOUNT_IF_ACE_11
+            aceCount--
         }
         return sum
     }
 
-    private fun hasAce(): Boolean {
-        return cards.find { it.isAce() } != null
+    private fun countAce(): Int {
+        return cards.count { it.isAce() }
+    }
+
+    companion object {
+        private const val ADD_AMOUNT_IF_ACE_11 = 10
     }
 }

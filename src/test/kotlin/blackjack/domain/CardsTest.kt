@@ -48,26 +48,20 @@ class CardsTest {
     }
 
     @Test
-    fun `useAceAs11이 false면 A는 1로 계산한다`() {
-        val card = Card(Denomination.ACE, Suit.SPADE)
+    fun `A는 1또는 11로 계산할 수 있으며, 21을 넘지 않는 최대 값으로 계산한다`() {
+        val card1 = Card(Denomination.NINE, Suit.SPADE)
+        val card2 = Card(Denomination.ACE, Suit.SPADE)
+        val card3 = Card(Denomination.ACE, Suit.SPADE)
         val cards = Cards()
 
-        cards.add(card)
+        cards.run {
+            add(card1)
+            add(card2)
+            add(card3)
+        }
 
-        val actual = cards.calculateScore(false)
+        val actual = cards.calculateScore()
 
-        assertThat(actual).isEqualTo(1)
-    }
-
-    @Test
-    fun `useAceAs11이 true A는 1로 계산한다`() {
-        val card = Card(Denomination.ACE, Suit.SPADE)
-        val cards = Cards()
-
-        cards.add(card)
-
-        val actual = cards.calculateScore(true)
-
-        assertThat(actual).isEqualTo(11)
+        assertThat(actual).isEqualTo(21)
     }
 }
