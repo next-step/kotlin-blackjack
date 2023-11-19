@@ -144,6 +144,21 @@ class DealerTest {
         actual shouldBe mapOf(GameResult.DRAW to 1, GameResult.WIN to 1, GameResult.LOSE to 1)
     }
 
+    @Test
+    fun `딜러의 카드가 16이하이면 카드를 한장 더 받는다`() {
+        // given
+        val dealer = Dealer()
+        dealer.addCard(SPACE_FIVE)
+        dealer.addCard(SPACE_TEN)
+        val cardDesk = CardDesk()
+
+        // when
+        dealer.executeCardDraws(cardDesk) {}
+
+        // then
+        dealer.cards.size shouldBe 3
+    }
+
     companion object {
         @JvmStatic
         private fun providePlayerAndDealerCards() = listOf(

@@ -1,30 +1,31 @@
 package blackjack
 
 import blackjack.business.card.CardDesk
+import blackjack.business.drawConditionStrategy.DrawConditionStrategy
 import blackjack.business.drawConditionStrategy.UserInputBasedDrawCondition
 import blackjack.business.participants.Dealer
 import blackjack.business.participants.Players
-import blackjack.view.DetailedDealerOutputHandler
-import blackjack.view.DetailedPlayerOutputHandler
-import blackjack.view.GameResultOutputHandler
-import blackjack.view.InputHandler
-import blackjack.view.PlayerNameParser
-import blackjack.view.SimpleDealerCardOutputHandler
-import blackjack.view.SimplePlayerOutputHandler
+import blackjack.business.util.PlayerNameParser
+import blackjack.view.ConsoleGameView
+import blackjack.view.GameView
 
-object GameManager {
+class GameManager(
+    private val view: GameView,
+    private val drawConditionStrategy: DrawConditionStrategy = UserInputBasedDrawCondition()
+) {
+    private val cardDesk = CardDesk()
+    private val players = createPlayers()
+    private val dealer = Dealer()
+
     fun start() {
-        val cardDesk = CardDesk()
-        val players = createPlayers()
-        val dealer = Dealer()
-        val drawConditionStrategy = UserInputBasedDrawCondition()
+        view.displayGameStartAnnouncement(players.getNames())
         dealInitialCards(players, cardDesk, dealer)
         executeCardDraws(players, drawConditionStrategy, cardDesk, dealer)
         displayGameResults(dealer, players)
     }
 
     private fun createPlayers(): Players {
-        val playerNames = InputHandler.askForPlayerNames()
+        val playerNames = view.askForPlayerNames()
         return Players.from(PlayerNameParser.parse(playerNames))
     }
 
@@ -33,36 +34,20 @@ object GameManager {
         cardDesk: CardDesk,
         dealer: Dealer
     ) {
-        println()
-        println("딜러와 ${players.allPlayers.joinToString(", ") { it.name }}에게 2장의 나누었습니다.")
-        val cards = cardDesk.startDraw()
-        dealer.addCards(cards)
-        SimpleDealerCardOutputHandler.print(dealer)
-        players.forEachPlayer {
-            val playerCards = cardDesk.startDraw()
-            it.addCards(playerCards)
-            SimplePlayerOutputHandler.print(it)
-        }
+        dealer.addCards(cardDesk.startDraw())
+        view.displayDealerCards(dealer)
+        players.dealInitialCards(cardDesk) { view.displayPlayerCards(it) }
     }
 
     private fun executeCardDraws(
         players: Players,
-        drawConditionStrategy: UserInputBasedDrawCondition,
+        drawConditionStrategy: DrawConditionStrategy,
         cardDesk: CardDesk,
         dealer: Dealer
     ) {
         println()
-        players.forEachPlayer {
-            while (it.canDrawCard() && drawConditionStrategy.shouldDraw(it.name)) {
-                it.addCard(cardDesk.draw())
-                SimplePlayerOutputHandler.print(it)
-            }
-        }
-        if (dealer.canDrawCard()) {
-            println()
-            println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
-            dealer.addCard(cardDesk.draw())
-        }
+        players.executeCardDraws(cardDesk, drawConditionStrategy, view::askForOneMore, view::displayPlayerCards)
+        dealer.executeCardDraws(cardDesk) { view.displayDealerDrawCardAnnouncement() }
     }
 
     private fun displayGameResults(
@@ -70,12 +55,13 @@ object GameManager {
         players: Players
     ) {
         println()
-        DetailedDealerOutputHandler.print(dealer)
-        players.forEachPlayer(DetailedPlayerOutputHandler::print)
-        GameResultOutputHandler.print(dealer, players)
+        view.displayDealerResult(dealer)
+        players.forEachPlayer(view::displayPlayerResult)
+        view.displayGameResult(dealer, players)
     }
 }
 
 fun main() {
-    GameManager.start()
+    val gameManager = GameManager(view = ConsoleGameView())
+    gameManager.start()
 }

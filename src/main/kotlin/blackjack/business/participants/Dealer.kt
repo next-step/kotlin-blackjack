@@ -2,10 +2,11 @@ package blackjack.business.participants
 
 import blackjack.business.canDrawCardStrategy.DealerCanDrawCardStrategy
 import blackjack.business.card.Card
+import blackjack.business.card.CardDesk
 import blackjack.business.util.GameResult
 
-class Dealer {
-    private val _dealerCards: PlayerCards = PlayerCards(canDrawCardStrategy = DealerCanDrawCardStrategy())
+class Dealer(dealerCards: PlayerCards = PlayerCards(canDrawCardStrategy = DealerCanDrawCardStrategy())) {
+    private val _dealerCards: PlayerCards = dealerCards
     val cards: List<Card>
         get() = _dealerCards.cards
     val score: String
@@ -42,9 +43,14 @@ class Dealer {
     }
 
     fun getDealerResult(target: Players): Map<GameResult, Int> {
-        return target.allPlayers.map { getDealerResult(it.score) }
-            .groupingBy { it }
-            .eachCount()
+        return target.allPlayers.map { getDealerResult(it.score) }.groupingBy { it }.eachCount()
+    }
+
+    fun executeCardDraws(cardDesk: CardDesk, announcer: () -> Unit) {
+        if (canDrawCard()) {
+            announcer()
+            addCard(cardDesk.draw())
+        }
     }
 
     private fun getDealerResult(target: Int): GameResult {
