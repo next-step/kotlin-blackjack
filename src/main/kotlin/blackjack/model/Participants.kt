@@ -3,19 +3,19 @@ package blackjack.model
 import blackjack.model.pack.Pack
 
 class Participants(
-    val participants: Set<Player>,
+    val players: Set<Player>,
     val dealer :Dealer,
 ) {
     fun count(): Int {
-        return participants.size
+        return players.size
     }
 
     fun dealing(pack: Pack) {
-        participants.forEach { it.deal(pack) }
+        players.forEach { it.deal(pack) }
     }
 
     private fun isGameOver(): Boolean {
-        return participants.none { Referee.isBlackJack(it) }
+        return players.none { Referee.isBlackJack(it) }
     }
 
     fun isContinue(): Boolean {
