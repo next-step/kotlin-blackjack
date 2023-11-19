@@ -13,10 +13,6 @@ class CardDesk(
     val cards: List<Card>
         get() = _cards.toList()
 
-    fun addAllNewCards() {
-        _cards.addAll(cardFactory.getCards())
-    }
-
     fun draw(): Card {
         return cardSelectionStrategy.selectCard(_cards).also {
             _cards.remove(it)
@@ -29,5 +25,9 @@ class CardDesk(
             _cards.remove(it)
             if (_cards.isEmpty()) addAllNewCards()
         }
+    }
+
+    private fun addAllNewCards() {
+        _cards.addAll(cardFactory.getCards())
     }
 }

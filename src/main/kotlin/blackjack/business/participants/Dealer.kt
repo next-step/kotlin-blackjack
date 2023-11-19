@@ -19,14 +19,6 @@ class Dealer(dealerCards: PlayerCards = PlayerCards()) {
         _dealerCards.addAll(cards)
     }
 
-    fun canDrawCard(): Boolean {
-        return _dealerCards.sum() < 17
-    }
-
-    fun isBust(): Boolean {
-        return _dealerCards.isBust()
-    }
-
     fun getPlayerResult(player: Player): PlayerResult {
         if (isBust()) {
             return PlayerResult(player.name, GameResult.WIN)
@@ -52,6 +44,10 @@ class Dealer(dealerCards: PlayerCards = PlayerCards()) {
         }
     }
 
+    private fun canDrawCard(): Boolean {
+        return _dealerCards.sum() < 17
+    }
+
     private fun getDealerResult(target: Int): GameResult {
         if (isBust()) {
             return GameResult.WIN
@@ -64,5 +60,9 @@ class Dealer(dealerCards: PlayerCards = PlayerCards()) {
             in 1..Int.MAX_VALUE -> GameResult.LOSE
             else -> GameResult.WIN
         }
+    }
+
+    private fun isBust(): Boolean {
+        return _dealerCards.isBust()
     }
 }
