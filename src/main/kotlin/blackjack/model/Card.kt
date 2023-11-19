@@ -1,3 +1,5 @@
 package blackjack.model
 
-class Card(val name: String, val cardValue: CardValue)
+class Card(val cardValue: CardValue, private val suit: CardSuit){
+    fun getName() = "${cardValue.cardValue}${suit.cardSuit}"
+}

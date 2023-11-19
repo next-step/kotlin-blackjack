@@ -10,7 +10,5 @@ class CardHand(cards: List<Card>) {
         cards = newCards.toList()
     }
 
-    companion object {
-        const val FIRST_CARD_COUNT = 2
-    }
+
 }

@@ -7,25 +7,30 @@ import blackjack.view.OutputView
 
 class BlackJack {
     fun start() {
-        val players = Players(InputView.getPlayerName())
+        val playerNames = InputView.getPlayerName()
+        val cardDeck = CardDeck();
+        val cardDealer = CardDealer(cardDeck);
+
+        val players =
+            Players(playerNames.map { Player(it, CardHand(cardDealer.getCards(CardDealer.FIRST_CARD_COUNT)))})
 
         OutputView.renderPlayers(players.playerList)
 
         players.playerList.forEach {
-            playGameWithEachPlayer(it) { player -> OutputView.renderPlayer(player, ::println) }
+            playGameWithEachPlayer(it, cardDealer)
         }
 
         OutputView.renderResult(getGameResults(players.playerList))
     }
 
     private fun getGameResults(playerList: List<Player>) = playerList.map {
-        GameResult(it, ResultDealer.getTotalScore(it.cardDeck))
+        GameResult(it, ResultDealer.getTotalScore(it.cardHand))
     }
 
-    private fun playGameWithEachPlayer(player: Player, render: (Player) -> Unit) {
+    private fun playGameWithEachPlayer(player: Player, cardDealer: CardDealer) {
         while (getMoreCardOrNot(player.name)) {
-            player.cardDeck.addCard(CardDealer.getCard())
-            render(player)
+            player.cardHand.addCard(cardDealer.getCard())
+            OutputView.renderPlayer(player, ::println)
         }
     }
 

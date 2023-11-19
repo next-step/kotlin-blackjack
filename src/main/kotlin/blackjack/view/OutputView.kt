@@ -27,6 +27,6 @@ object OutputView {
     }
 
     private fun getCardString(cardHand: CardHand): String = cardHand.cards.joinToString(", ") {
-        it.name
+        it.getName()
     }
 }
