@@ -21,10 +21,10 @@ class DefensiveCopyLearn : StringSpec({
         list.add("goodNight")
         list.add("goodMorning")
         list.add("niceYoMeetYou")
-        val nonDefensiveClass = NonDefensiveClass(list)
-        println("BEFORE : ${nonDefensiveClass.present()}")
+        val defensiveClass = DefensiveClass(list.toList())
+        println("BEFORE : ${defensiveClass.present()}")
         list.clear()
-        println("AFTER : ${nonDefensiveClass.present()}")
+        println("AFTER : ${defensiveClass.present()}")
     }
 })
 
