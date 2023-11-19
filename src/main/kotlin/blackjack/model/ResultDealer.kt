@@ -1,15 +1,16 @@
 package blackjack.model
 
 object ResultDealer {
-    private const val GOAL = 21
+    private const val BLACKJACK = 21
+    private const val JQA_SCORE = 10
 
-    fun getCardValues(cardDeck: CardDeck): List<CardValue> = cardDeck.cards.map { card -> card.cardValue }
+    private fun getCardValues(cardDeck: CardDeck): List<CardValue> = cardDeck.cards.map { card -> card.cardValue }
         .sortedWith(compareBy { if (it.cardValue == "A") Int.MAX_VALUE else 0 })
 
-    fun getTotalScore(cardNumbers: List<CardValue>): Int = cardNumbers.fold(0) { total, it ->
+    fun getTotalScore(cardDeck: CardDeck): Int = getCardValues(cardDeck).fold(0) { total, it ->
         when (it.cardValue) {
             "A" -> getAceScore(total)
-            "J", "Q", "K" -> total + 10
+            "J", "Q", "K" -> total + JQA_SCORE
             else -> total + (it.cardValue.toIntOrNull() ?: 0)
         }
     }
@@ -18,10 +19,11 @@ object ResultDealer {
         val highScore = total + CardValue.ACE_HIGH_SCORE
         val lowScore = total + CardValue.ACE_LOW_SCORE
 
-        return if (kotlin.math.abs(GOAL - highScore) < kotlin.math.abs(GOAL - lowScore)) {
+        return if (kotlin.math.abs(BLACKJACK - highScore) < kotlin.math.abs(BLACKJACK - lowScore)) {
             highScore
         } else {
             lowScore
         }
     }
+
 }

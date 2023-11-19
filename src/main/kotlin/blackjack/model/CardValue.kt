@@ -10,7 +10,7 @@ value class CardValue private constructor(val cardValue: String){
         private val VALUES_MAP: Map<String, CardValue> = VALUES.associateWith {
             CardValue(it)
         }
-        private fun from(cardValue: String) = VALUES_MAP[cardValue] ?: throw IllegalArgumentException("존재하지 않는 카드 입니다")
+        fun from(cardValue: String) = VALUES_MAP[cardValue] ?: throw IllegalArgumentException("존재하지 않는 카드 입니다")
         fun gerRandom() = from(VALUES.shuffled()[0])
     }
 }

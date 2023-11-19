@@ -5,6 +5,6 @@ enum class PlayAnswer(val value: String) {
     N("n");
 
     companion object {
-        fun getKey(value: String): PlayAnswer = PlayAnswer.values().find { it.value == value } ?: PlayAnswer.N
+        fun getKey(value: String): PlayAnswer = PlayAnswer.values().find { it.value == value } ?: N
     }
 }
