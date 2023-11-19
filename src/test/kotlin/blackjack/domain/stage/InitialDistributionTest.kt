@@ -10,7 +10,7 @@ class InitialDistributionTest : DescribeSpec({
     val game = BlackJackGame(InputProcessorMock())
     describe("카드 배분 진행") {
         context("카드 배분 스테이지를 진행시키면") {
-            val stage = InitialDistribution(game)
+            val stage = InitialDistributionStage(game)
             stage.progress()
 
             it("플레이어마다 2장의 카드 수령") {
@@ -27,23 +27,23 @@ class InitialDistributionTest : DescribeSpec({
 
     describe("다음 스테이지 반환") {
         context("게임 완료 후 다음 스테이지 요청") {
-            val stage = InitialDistribution(game)
+            val stage = InitialDistributionStage(game)
             stage.progress()
 
             it("게임 진행 스테이지 반환") {
                 val nextStage = stage.nextStage()
 
-                nextStage.shouldBeTypeOf<InGame>()
+                nextStage.shouldBeTypeOf<InGameStage>()
             }
         }
 
         context("게임 진행하지 않은 상태에서 다음 스테이지 요청") {
-            val stage = InitialDistribution(game)
+            val stage = InitialDistributionStage(game)
 
             it("카드 배분 스테이지 반환") {
                 val nextStage = stage.nextStage()
 
-                nextStage.shouldBeTypeOf<InitialDistribution>()
+                nextStage.shouldBeTypeOf<InitialDistributionStage>()
             }
         }
     }

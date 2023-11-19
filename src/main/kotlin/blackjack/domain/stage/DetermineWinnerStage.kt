@@ -2,7 +2,7 @@ package blackjack.domain.stage
 
 import blackjack.domain.BlackJackGame
 
-class End(
+class DetermineWinnerStage(
     private val game: BlackJackGame,
 ) : Stage {
     override fun progress() {

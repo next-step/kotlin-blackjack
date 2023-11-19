@@ -5,7 +5,7 @@ import blackjack.controller.ViewInputProcessor
 import blackjack.domain.BlackJackGame
 
 class BlackJackRunner(
-    val game: BlackJackGame = BlackJackGame(
+    private val game: BlackJackGame = BlackJackGame(
         inputProcessor = ViewInputProcessor(),
         resultProcessor = ResultProcessor(),
     ),

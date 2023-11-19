@@ -4,7 +4,7 @@ import blackjack.domain.BlackJackGame
 import blackjack.domain.PlayerAction
 import blackjack.domain.result.InGameResult
 
-class InGame(
+class InGameStage(
     private val game: BlackJackGame,
 ) : Stage {
     private var playerChoice: PlayerAction? = null
@@ -24,13 +24,13 @@ class InGame(
 
     override fun nextStage(): Stage =
         when {
-            playerChoice == null -> InGame(game)
-            game.isPlayerInTurnScoreOverMax -> End(game)
-            playerChoice == PlayerAction.HIT -> InGame(game)
-            game.isLastTurn -> End(game)
+            playerChoice == null -> InGameStage(game)
+            game.isPlayerInTurnScoreOverMax -> DetermineWinnerStage(game)
+            playerChoice == PlayerAction.HIT -> InGameStage(game)
+            game.isLastTurn -> DetermineWinnerStage(game)
             else -> {
                 game.passTurnToNextPlayer()
-                InGame(game)
+                InGameStage(game)
             }
         }
 }

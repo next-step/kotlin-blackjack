@@ -5,7 +5,7 @@ import blackjack.controller.ResultProcessor
 import blackjack.domain.player.Player
 import blackjack.domain.player.Players
 import blackjack.domain.result.Result
-import blackjack.domain.stage.InitialDistribution
+import blackjack.domain.stage.InitialDistributionStage
 import blackjack.domain.stage.Stage
 
 class BlackJackGame(
@@ -14,7 +14,7 @@ class BlackJackGame(
     val players: Players = Players.from(inputProcessor.playerNames())
 ) {
     val dealer: Dealer = Dealer()
-    var stage: Stage = InitialDistribution(this)
+    var stage: Stage = InitialDistributionStage(this)
 
     val isPlayerInTurnScoreOverMax: Boolean
         get() = players.isPlayerInTurnOverMaxScore

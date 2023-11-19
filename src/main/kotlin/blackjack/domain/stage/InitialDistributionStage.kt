@@ -3,7 +3,7 @@ package blackjack.domain.stage
 import blackjack.domain.BlackJackGame
 import blackjack.domain.result.InitialDistributionResult
 
-class InitialDistribution(
+class InitialDistributionStage(
     private val game: BlackJackGame,
 ) : Stage {
     var isProgressDone = false
@@ -19,7 +19,7 @@ class InitialDistribution(
     }
 
     override fun nextStage(): Stage = when (isProgressDone) {
-        true -> InGame(game)
+        true -> InGameStage(game)
         false -> this
     }
 
