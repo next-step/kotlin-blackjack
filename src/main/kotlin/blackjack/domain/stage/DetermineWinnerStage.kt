@@ -1,16 +1,15 @@
 package blackjack.domain.stage
 
 import blackjack.domain.BlackJackGame
+import blackjack.domain.result.DetermineWinnerResult
 
 class DetermineWinnerStage(
     private val game: BlackJackGame,
 ) : Stage {
-    override fun progress() {
-        TODO("Not yet implemented")
-    }
+    override fun progress() {}
 
     override fun emitResult() {
-        TODO("Not yet implemented")
+        game.emitResult(DetermineWinnerResult(game.players))
     }
 
     override fun nextStage(): Stage {
