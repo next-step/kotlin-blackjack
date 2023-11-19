@@ -2,6 +2,7 @@ package blackjack.domain.player
 
 import blackjack.domain.card.Card
 import blackjack.domain.card.Hand
+import blackjack.domain.card.HandScore
 import blackjack.domain.card.Rank
 import blackjack.domain.card.Suit
 import io.kotest.core.spec.style.DescribeSpec
@@ -68,6 +69,22 @@ class PlayerTest : DescribeSpec({
             )
             it("플레이어 점수 반환") {
                 player.isOverMaxScore shouldBe false
+            }
+        }
+    }
+
+    describe("점수 계산") {
+        val player = Player(
+            PlayerName("kim"), Hand(
+                mutableListOf(
+                    Card(Suit.DIAMOND, Rank.ACE), Card(Suit.HEART, Rank.TEN)
+                )
+            )
+        )
+        context("플레이어의 점수 조회") {
+            val result = player.score
+            it("플레이어 점수 반환") {
+                result shouldBe HandScore(21)
             }
         }
     }
