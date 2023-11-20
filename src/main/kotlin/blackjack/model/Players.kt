@@ -7,7 +7,4 @@ class Players(val values: List<Player>) {
             it.addCards(dealer.dealingTwoCards())
         }
     }
-
-    fun hitablePlayers(): List<Player> =
-        values.filter { it.hit }
 }

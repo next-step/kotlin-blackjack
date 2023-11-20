@@ -2,12 +2,15 @@ package blackjack.model
 
 import blackjack.dto.Card
 import blackjack.dto.Deck
-import blackjack.model.Point.Companion.WINNING_POINT
+import blackjack.dto.GameResult
+import blackjack.dto.Money
+import blackjack.dto.PlayerStatus
 
-class Dealer : Player(DEALER_NAME) {
+class Dealer(name: String, bettingMoney: Money) : Player(name, bettingMoney) {
 
     private val cardSet = Deck.newDeck()
     private var pointer = 0
+    var resultMoney = bettingMoney
 
     fun dealingTwoCards(): List<Card> {
         require(pointer + 2 < cardSet.size) { "카드가 부족합니다." }
@@ -27,40 +30,28 @@ class Dealer : Player(DEALER_NAME) {
 
     fun moreCard(): Boolean {
         var hitted = false
-        if (hit && getPoints() <= DEALER_HIT_POINT) {
+        if (status == PlayerStatus.HIT && getPoints() <= DEALER_HIT_POINT) {
             addCard(dealingOneCard())
             hitted = true
         }
-        noMoreHit()
+        stay()
 
         return hitted
     }
 
-    fun whoseWinner(players: Players) {
-        var winning = 0
-        var losing = 0
-        players.values.forEach {
-            val won = whoseWinner(it)
-            if (won) {
-                winning++
-            } else {
-                losing++
-            }
-        }
+    fun compareWithPlayers(players: Players) {
+        players.values
+            .map { it.compare(this) }
 
-        makeResult(winning, losing)
+        setGameResult(
+            GameResult(getPoints(), PlayerResultStatus.TIE) // 딜러는 상태가 어떻든 상관 없다
+        )
     }
 
-    private fun whoseWinner(player: Player): Boolean {
-        val dealerPoint = getPoints()
-        val playerPoint = player.getPoints()
-
-        player.compare(this)
-        return !(dealerPoint > WINNING_POINT || playerPoint in (dealerPoint + 1)..WINNING_POINT)
-    }
+    override fun getPrice(): Money = resultMoney
 
     companion object {
-        private const val DEALER_NAME = "딜러"
+        const val DEALER_NAME = "딜러"
         private const val DEALER_HIT_POINT = 16
     }
 }
