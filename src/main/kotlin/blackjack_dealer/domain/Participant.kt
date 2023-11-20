@@ -23,7 +23,7 @@ data class Participant(
             return Participant(name = name, cards = initialCards, currentState = initialState)
         }
 
-        private fun initialStateIsBlackJack(initialCards: GamerCards):GamerCurrentState =
+        private fun initialStateIsBlackJack(initialCards: GamerCards): GamerCurrentState =
             if (initialCards.getCurrentScore() == BLACK_JACK) GamerCurrentState.BLACKJACK else GamerCurrentState.HIT
 
         private const val BLACK_JACK = 21

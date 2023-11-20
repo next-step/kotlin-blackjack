@@ -6,8 +6,9 @@ data class Participants(
     val participants: List<Participant>
 ) : List<Participant> by participants {
     companion object {
-        fun newInstance(names: List<String>): Participants {
-            return names.map {  name ->
+        fun newInstance(nameString: String): Participants {
+            val names = nameString.split(',')
+            return names.map { name ->
                 Participant.newInstance(name)
             }.toParticipants()
         }
