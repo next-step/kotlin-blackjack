@@ -128,9 +128,9 @@ class SkillBuilder {
     fun build(): Skills = Skills(soft = soft.toList(), hard = hard.toList())
 }
 
-class LanguagesBuilder {
-    private var languages: List<Language> = emptyList()
-
+class LanguagesBuilder(
+    private var languages: List<Language> = emptyList(),
+) {
     infix fun String.level(value: Int) {
         languages += Language(name = this@level, level = value)
     }
