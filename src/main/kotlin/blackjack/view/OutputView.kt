@@ -47,7 +47,7 @@ object OutputView {
 
     fun writeGameResults(result: GameResult) {
         println("## 최송 승패")
-        println("딜러: ${result.getDealerStats().wins}승 ${result.getDealerStats().losses}패")
+        println("딜러: ${result.dealerStats.wins}승 ${result.dealerStats.losses}패")
         result.playerResults.forEach { (player, outcome) ->
             println("${player.name.value}: ${outcome.name()}")
         }

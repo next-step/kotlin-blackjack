@@ -2,21 +2,18 @@ package blackjack.domain
 
 class GameResult(private val players: List<Player>, private val dealer: Dealer) {
 
-    private var dealerWins = 0
-    private var dealerLosses = 0
-
     private val _playerResults: Map<Player, GameOutcome>
     val playerResults: Map<Player, GameOutcome>
         get() = _playerResults
 
+    val dealerStats: DealerStats
+
     init {
         _playerResults = players.associateWith { calculateOutcome(it) }.toMutableMap()
-        _playerResults.forEach { (_, outcome) ->
-            when (outcome) {
-                GameOutcome.WIN -> dealerLosses++
-                GameOutcome.LOSE -> dealerWins++
-            }
-        }
+        dealerStats = DealerStats(
+            wins = _playerResults.filter { it.value == GameOutcome.LOSE }.count(),
+            losses = _playerResults.filter { it.value == GameOutcome.WIN }.count()
+        )
     }
 
     private fun calculateOutcome(player: Player): GameOutcome {
@@ -30,8 +27,6 @@ class GameResult(private val players: List<Player>, private val dealer: Dealer) 
         }
     }
 
-    fun getDealerStats(): DealerStats = DealerStats(wins = dealerWins, losses = dealerLosses)
-
     companion object {
         private const val BLACKJACK = 21
     }
@@ -40,3 +35,5 @@ class GameResult(private val players: List<Player>, private val dealer: Dealer) 
 enum class GameOutcome {
     WIN, LOSE
 }
+
+data class DealerStats(val wins: Int, val losses: Int)
