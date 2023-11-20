@@ -3,14 +3,14 @@ package dsl
 data class Resume(
     val name: String,
     val company: String,
-    val skills: Skill,
-    val languages: Language
+    val skills: Skills,
+    val languages: Languages
 ) {
     class Builder(
         private var name: String = "",
         private var company: String = "",
-        private var skills: Skill.Builder = Skill.Builder(),
-        private var languages: Language.Builder = Language.Builder()
+        private var skills: Skills.Builder = Skills.Builder(),
+        private var languages: Languages.Builder = Languages.Builder()
     ) {
 
         fun name(name: String) {
@@ -21,11 +21,11 @@ data class Resume(
             this.company = companyName
         }
 
-        fun skills(block: (@Dsl Skill.Builder).() -> Unit) {
+        fun skills(block: (@Dsl Skills.Builder).() -> Unit) {
             skills.block()
         }
 
-        fun languages(block: (@Dsl Language.Builder).() -> Unit) {
+        fun languages(block: (@Dsl Languages.Builder).() -> Unit) {
             languages.block()
         }
 
@@ -35,7 +35,7 @@ data class Resume(
     }
 }
 
-data class Skill(
+data class Skills(
     val softSkills: List<String>,
     val hardSkills: List<String>
 ) {
@@ -52,13 +52,13 @@ data class Skill(
             hardSkills.add(skill)
         }
 
-        internal fun build(): Skill {
-            return Skill(softSkills, hardSkills)
+        internal fun build(): Skills {
+            return Skills(softSkills, hardSkills)
         }
     }
 }
 
-data class Language(
+data class Languages(
     val languages: Map<String, Int>
 ) {
     class Builder(
@@ -69,8 +69,8 @@ data class Language(
             languages[this] = level
         }
 
-        internal fun build(): Language {
-            return Language(languages)
+        internal fun build(): Languages {
+            return Languages(languages)
         }
     }
 }

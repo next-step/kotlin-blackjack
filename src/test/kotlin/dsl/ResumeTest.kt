@@ -22,11 +22,11 @@ class ResumeTest : StringSpec({
         result shouldBe Resume(
             name = "박재성",
             company = "우아한형제들",
-            skills = Skill(
+            skills = Skills(
                 softSkills = listOf("A passion for problem solving", "Good communication skills"),
                 hardSkills = listOf("Kotlin")
             ),
-            languages = Language(
+            languages = Languages(
                 languages = mapOf(
                     "Korean" to 5,
                     "English" to 3
