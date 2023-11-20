@@ -32,5 +32,4 @@ class GameManagerTest {
         assertThat(minScore).isEqualTo(3)
         assertThat(maxScore).isEqualTo(13)
     }
-
 }
