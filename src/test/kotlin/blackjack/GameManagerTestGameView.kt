@@ -3,6 +3,7 @@ package blackjack
 import blackjack.business.participants.Dealer
 import blackjack.business.participants.Player
 import blackjack.business.participants.Players
+import blackjack.business.util.Money
 import blackjack.view.GameView
 
 class GameManagerTestGameView : GameView {
@@ -29,4 +30,7 @@ class GameManagerTestGameView : GameView {
 
     override fun askForPlayerNames(): List<String> = listOf("pobi", "jason")
     override fun printNewLine() = Unit
+    override fun askForBettingMoney(playerName: String): Money {
+        return Money(10000)
+    }
 }

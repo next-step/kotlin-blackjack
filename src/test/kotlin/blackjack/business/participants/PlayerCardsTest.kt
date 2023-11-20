@@ -17,7 +17,7 @@ import org.junit.jupiter.params.provider.MethodSource
 import java.util.stream.Stream
 
 @DisplayName("플레이어 카드")
-class GamePlayerCardsTest {
+class PlayerCardsTest {
 
     @Test
     fun `카드를 추가한다`() {

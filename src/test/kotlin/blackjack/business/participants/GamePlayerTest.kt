@@ -3,6 +3,7 @@ package blackjack.business.participants
 import blackjack.business.CardFixture.SPACE_ACE
 import blackjack.business.CardFixture.SPACE_EIGHT
 import blackjack.business.CardFixture.SPACE_TEN
+import blackjack.business.util.Money
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -119,5 +120,18 @@ class GamePlayerTest {
 
         // then
         actual shouldBe false
+    }
+
+    @Test
+    fun `베팅 금액을 설정한다`() {
+        // given
+        val gamePlayer = GamePlayer("pobi")
+        val bettingMoney = Money(10000)
+
+        // when
+        gamePlayer.setBettingMoney(bettingMoney)
+
+        // then
+        gamePlayer.bettingMoney shouldBe bettingMoney
     }
 }
