@@ -44,8 +44,6 @@ class Resume(
         result = 31 * result + languages.hashCode()
         return result
     }
-
-
 }
 
 class Skill(
@@ -78,8 +76,6 @@ class Skill(
         result = 31 * result + hardSkills.hashCode()
         return result
     }
-
-
 }
 
 class Language(
@@ -102,10 +98,7 @@ class Language(
     override fun hashCode(): Int {
         return languages.hashCode()
     }
-
-
 }
-
 
 fun introduce(block: Resume.() -> Unit): Resume {
     val resume = Resume()
