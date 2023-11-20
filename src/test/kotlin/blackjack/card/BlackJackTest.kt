@@ -32,7 +32,7 @@ class BlackJackTest : StringSpec({
         val expectedSize = 3
 
         participants.first().participantCards.size shouldBe initialSize
-        val result = participants.map { participant ->
+        val result = participants.map { _ ->
             blackJack.doBlackJack(inputY)
         }
         result.first().participantCards.size shouldBe expectedSize
@@ -44,7 +44,7 @@ class BlackJackTest : StringSpec({
         val expectedSize = 2
 
         participants.first().participantCards.size shouldBe initialSize
-        val result = participants.map { participant ->
+        val result = participants.map { _ ->
             blackJack.doBlackJack(inputN)
         }
         result.first().participantCards.size shouldBe expectedSize
