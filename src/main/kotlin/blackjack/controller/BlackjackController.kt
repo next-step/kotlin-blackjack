@@ -18,19 +18,19 @@ class BlackjackController {
         OutputView.printPlayerInitStatus(players)
 
         players.forEach { player ->
-            if (!isBlackJack(player)) {
-                play(player, cards)
+            while (!player.state.isFinished()) {
+                hitOrStay(player, cards)
+                OutputView.printPlayerCards(player)
             }
         }
         OutputView.printResult(players)
     }
 
-    private fun isBlackJack(player: Player) = player.state.isFinished()
-
-    private fun play(player: Player, cards: CardDeck) {
-        while (InputView.inputPlayerChoice(player.name)) {
-            player.draw(cards.get())
-            OutputView.printPlayerCards(player)
+    private fun hitOrStay(player: Player, cards: CardDeck) {
+        val result = InputView.inputPlayerChoice(player.name)
+        when (result) {
+            true -> player.draw(cards.get())
+            false -> player.stay()
         }
     }
 }

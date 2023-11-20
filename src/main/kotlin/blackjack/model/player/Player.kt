@@ -13,6 +13,10 @@ data class Player(val name: String, val cards: CardDeck = CardDeck()) {
         return state
     }
 
+    fun stay(): State {
+        return state.stay()
+    }
+
     fun cards(): List<Card> {
         return state.cards().deck
     }

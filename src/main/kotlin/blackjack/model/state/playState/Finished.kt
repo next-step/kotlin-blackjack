@@ -9,6 +9,10 @@ abstract class Finished(override val cardDeck: CardDeck) : State {
         throw IllegalStateException(ALREADY_FINISH_MESSAGE)
     }
 
+    override fun stay(): State {
+        throw IllegalStateException(ALREADY_FINISH_MESSAGE)
+    }
+
     override fun isFinished(): Boolean {
         return true
     }

@@ -10,10 +10,14 @@ class Hit(override val cardDeck: CardDeck) : Running() {
     override fun draw(card: Card): State {
         cardDeck.add(card)
         return when {
-            cardDeck.size() == 2 && cardDeck.isBlackJack() -> BlackJack(cardDeck)
+            cardDeck.isBlackJack() -> BlackJack(cardDeck)
             cardDeck.isBust() -> Bust(cardDeck)
             else -> Hit(cardDeck)
         }
+    }
+
+    override fun stay(): State {
+        return Stay(cardDeck)
     }
 
     override fun cards(): CardDeck {
