@@ -11,25 +11,25 @@ import java.lang.IllegalArgumentException
 class DeckTest : StringSpec({
     "Deck 은 52장의 중복 없는 카드로 이루어진다" {
         Assertions.assertThatThrownBy {
-            Deck(Cards(mutableListOf(Card(Suit.Spade, Character.Ace))))
+            Deck(DeckCards(mutableListOf(Card(Suit.Spade, Character.Ace))))
         }.isInstanceOf(IllegalArgumentException::class.java)
             .hasMessageContaining("Invalid initial Card count")
 
         Assertions.assertThatThrownBy {
-            val cards = Cards.fullCards()
-            val card = cards.drawTop()
+            val handCards = DeckCards.fullDeckCards()
+            val card = handCards.drawTop()
 
-            cards.add(Card(Suit.values().first { it != card.suit }, Character.Ace))
-            Deck(cards)
+            handCards.add(Card(Suit.values().first { it != card.suit }, Character.Ace))
+            Deck(handCards)
         }.isInstanceOf(IllegalArgumentException::class.java)
             .hasMessageContaining("Invalid suit count")
 
         Assertions.assertThatThrownBy {
-            val cards = Cards.fullCards()
-            val card = cards.drawTop()
+            val handCards = DeckCards.fullDeckCards()
+            val card = handCards.drawTop()
 
-            cards.add(Card(card.suit, Character.values().first { it != card.character }))
-            Deck(cards)
+            handCards.add(Card(card.suit, Character.values().first { it != card.character }))
+            Deck(handCards)
         }.isInstanceOf(IllegalArgumentException::class.java)
             .hasMessageContaining("Duplicate cards")
     }
@@ -46,6 +46,6 @@ class DeckTest : StringSpec({
         val deck = Deck.fullDeck()
         val card = deck.draw()
 
-        deck.cards.cardList.contains(card) shouldBe false
+        deck.deckCards.cardList.contains(card) shouldBe false
     }
 })

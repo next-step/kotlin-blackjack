@@ -1,6 +1,6 @@
 package blackjack.domain.player
 
-import blackjack.domain.card.Cards
+import blackjack.domain.card.HandCards
 import blackjack.model.Card
 import blackjack.model.Character
 import blackjack.model.Suit
@@ -9,14 +9,14 @@ import io.kotest.matchers.shouldBe
 
 class HandTest : StringSpec({
     "Hand 의 sum 은 정확한 값을 반환하야 한다" {
-        val hand = Hand(Cards(mutableListOf(Card(Suit.Spade, Character.Jack), Card(Suit.Clover, Character.Eight))))
+        val hand = Hand(HandCards(mutableListOf(Card(Suit.Spade, Character.Jack), Card(Suit.Clover, Character.Eight))))
 
         hand.valueSum() shouldBe 18
     }
 
     "Hand 의 sum 이 21이면 blackjack 이다" {
         val hand = Hand(
-            Cards(
+            HandCards(
                 mutableListOf(
                     Card(Suit.Spade, Character.Jack),
                     Card(Suit.Clover, Character.Eight),
@@ -32,7 +32,7 @@ class HandTest : StringSpec({
 
     "Hand 의 sum 이 21을 초과하면 bust 이다" {
         val hand = Hand(
-            Cards(
+            HandCards(
                 mutableListOf(
                     Card(Suit.Spade, Character.Jack),
                     Card(Suit.Clover, Character.Eight),
@@ -48,7 +48,7 @@ class HandTest : StringSpec({
 
     "Hand 의 sum 이 21인 Player 는 blackjack 상태가 된다" {
         val hand = Hand(
-            Cards(
+            HandCards(
                 mutableListOf(
                     Card(Suit.Spade, Character.Jack),
                     Card(Suit.Clover, Character.Eight),
@@ -66,7 +66,7 @@ class HandTest : StringSpec({
 
     "Hand 의 sum 이 21을 초과하는 Player 는 bust 상태가 된다" {
         val hand = Hand(
-            Cards(
+            HandCards(
                 mutableListOf(
                     Card(Suit.Spade, Character.Jack),
                     Card(Suit.Clover, Character.Eight),
