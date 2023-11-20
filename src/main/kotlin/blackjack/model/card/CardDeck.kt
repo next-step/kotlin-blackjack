@@ -1,24 +1,51 @@
 package blackjack.model.card
 
-import blackjack.model.strategy.ShuffleStrategy
+class CardDeck(var deck: MutableList<Card> = mutableListOf()) {
 
-class CardDeck(shuffleStrategy: ShuffleStrategy) {
-    private var deck: MutableList<Card> = shuffleStrategy.shuffle(initializedDeck()).toMutableList()
-
-    fun draw(): Card {
+    fun get(): Card {
         check(deck.isNotEmpty()) { NOT_EXIST_CARD_EXCEPTION }
         return deck.removeFirst()
     }
 
-    private fun initializedDeck(): List<Card> {
-        return CardNumber.values().flatMap { number ->
-            CardSuit.values().map { suit ->
-                Card(number, suit)
-            }
-        }
+    fun add(card: Card) {
+        check(!deck.contains(card)) { DUPLICATE_CARD_EXCEPTION }
+        deck.add(card)
     }
+
+    fun isBust(): Boolean {
+        return calculateScore() > BLACKJACK
+    }
+
+    fun isStay(): Boolean {
+        return calculateScore() <= BLACKJACK
+    }
+
+    fun size(): Int {
+        return deck.size
+    }
+
+    fun isBlackJack(): Boolean {
+        return calculateScore() == BLACKJACK && deck.size == BLACKJACK_SIZE
+    }
+
+    fun calculateScore(): Int {
+        var score = deck.sumOf { it.score }
+        var numberOfAces = deck.count { it.number == CardNumber.ACE }
+
+        while (numberOfAces > 0 && isOverThenBlackJackNumber(score)) {
+            score -= 10
+            numberOfAces--
+        }
+
+        return score
+    }
+
+    private fun isOverThenBlackJackNumber(score: Int) = score > BLACKJACK
 
     companion object {
         private const val NOT_EXIST_CARD_EXCEPTION = "더 이상 카드가 존재하지 않습니다."
+        private const val DUPLICATE_CARD_EXCEPTION = "중복된 카드는 추가할 수 없습니다."
+        private const val BLACKJACK = 21
+        private const val BLACKJACK_SIZE = 2
     }
 }

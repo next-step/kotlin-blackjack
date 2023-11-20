@@ -1,7 +1,5 @@
 package blackjack.view
 
-import blackjack.model.state.PlayerState
-
 object InputView {
     private const val DELIMITER = ","
     private const val MINIMUM_PLAYER = 1
@@ -16,7 +14,7 @@ object InputView {
         return validateInputPlayer(readln())
     }
 
-    fun inputPlayerChoice(name: String): PlayerState {
+    fun inputPlayerChoice(name: String): Boolean {
         print("\n$name" + INPUT_PLAYER_CHOICE_MESSAGE)
         return validateChoice(readln())
     }
@@ -27,8 +25,8 @@ object InputView {
         return result
     }
 
-    private fun validateChoice(choice: String): PlayerState {
+    private fun validateChoice(choice: String): Boolean {
         require(choice == "y" || choice == "n") { INVALID_CHOICE_INPUT_EXCEPTION }
-        return if (choice == "y") PlayerState.HIT else PlayerState.STAY
+        return choice == "y"
     }
 }

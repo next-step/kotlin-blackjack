@@ -10,7 +10,19 @@ object OutputView {
     }
 
     fun printPlayerCards(player: Player) {
-        val card = player.cards.joinToString(separator = ", ") { "${it.number.cardName}${it.suit.name}" }
+        val card = getCard(player)
         println("${player.name} 카드 : $card")
     }
+
+    fun printResult(players: List<Player>) {
+        println()
+        players.forEach { player ->
+            val card = getCard(player)
+            val totalScore = player.cards.calculateScore()
+            println("${player.name} 카드 : $card - 결과 : $totalScore")
+        }
+    }
+
+    private fun getCard(player: Player) =
+        player.cards().joinToString(separator = ", ") { "${it.number}${it.suit.name}" }
 }

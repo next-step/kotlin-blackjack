@@ -1,12 +1,18 @@
 package blackjack.model.player
 
+import blackjack.model.card.Card
 import blackjack.model.card.CardDeck
-import blackjack.model.strategy.ShuffleStrategy
+import blackjack.model.state.State
+import blackjack.model.state.playState.gameState.Hit
 
-class Dealer(private val cardDeck: CardDeck) {
-    constructor(strategy: ShuffleStrategy) : this(cardDeck = CardDeck(strategy))
+class Dealer(val name: String, val cards: CardDeck = CardDeck()) {
+    private var state: State = Hit(cards)
 
-    fun receive(player: Player) {
-        player.receiveCard(cardDeck.draw())
+    fun draw(card: Card): State {
+        return state.draw(card)
+    }
+
+    fun cards(): List<Card> {
+        return state.cards().deck
     }
 }

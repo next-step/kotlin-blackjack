@@ -1,27 +1,36 @@
 package blackjack.controller
 
-import blackjack.model.player.Dealer
+import blackjack.model.card.CardDeck
 import blackjack.model.player.Player
-import blackjack.model.state.PlayerState
 import blackjack.model.strategy.RandomStrategy
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
 class BlackjackController {
     fun start() {
-        val dealer = Dealer(RandomStrategy())
+        val cards = CardDeck(RandomStrategy().shuffle())
         val players = InputView.inputPlayers().map(::Player)
         players.forEach { player ->
-            repeat(2) { dealer.receive(player) }
+            repeat(2) {
+                player.draw(cards.get())
+            }
         }
-
         OutputView.printPlayerInitStatus(players)
 
         players.forEach { player ->
-            while (InputView.inputPlayerChoice(player.name) == PlayerState.HIT) {
-                dealer.receive(player)
-                OutputView.printPlayerCards(player)
+            if (!isBlackJack(player)) {
+                play(player, cards)
             }
+        }
+        OutputView.printResult(players)
+    }
+
+    private fun isBlackJack(player: Player) = player.state.isFinished()
+
+    private fun play(player: Player, cards: CardDeck) {
+        while (InputView.inputPlayerChoice(player.name)) {
+            player.draw(cards.get())
+            OutputView.printPlayerCards(player)
         }
     }
 }
