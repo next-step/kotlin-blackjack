@@ -1,9 +1,8 @@
 package blackjack.domain
 
+import blackjack.Player
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
-
-class Player(val name: String)
 
 class PlayerTest {
 

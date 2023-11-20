@@ -1,12 +1,8 @@
 package blackjack.domain
 
+import blackjack.NormalCard
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
-
-class NormalCard(
-    val number: Int,
-    val pattern: String
-)
 
 class CardTest {
 
