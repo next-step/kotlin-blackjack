@@ -1,6 +1,6 @@
 package blackjack.business.participants
 
-import blackjack.business.FixDrawConditionStrategy
+import blackjack.business.AlwaysDrawStrategy
 import blackjack.business.FixSelectionStrategy
 import blackjack.business.card.CardDesk
 import io.kotest.assertions.throwables.shouldThrow
@@ -67,7 +67,7 @@ class PlayersTest {
         val cardDesk = CardDesk(cardSelectionStrategy = FixSelectionStrategy())
 
         // when
-        players.executeCardDraws(cardDesk, FixDrawConditionStrategy(), { "y" }) { }
+        players.executeCardDraws(cardDesk, AlwaysDrawStrategy(), { "y" }) { }
 
         // then
         // pobi: A, 2, 3, 4, 5, 6

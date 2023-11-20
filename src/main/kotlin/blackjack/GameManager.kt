@@ -11,10 +11,10 @@ import blackjack.view.ConsoleGameView
 import blackjack.view.GameView
 
 class GameManager(
-    private val view: GameView,
-    private val drawConditionStrategy: DrawConditionStrategy = UserInputBasedDrawCondition()
+    private val view: GameView = ConsoleGameView(),
+    private val drawConditionStrategy: DrawConditionStrategy = UserInputBasedDrawCondition(),
+    private val cardDesk: CardDesk = CardDesk()
 ) {
-    private val cardDesk = CardDesk()
     private val players = createPlayers()
     private val dealer = Dealer()
 
@@ -63,5 +63,5 @@ class GameManager(
 }
 
 fun main() {
-    GameManager(view = ConsoleGameView()).start()
+    GameManager().start()
 }
