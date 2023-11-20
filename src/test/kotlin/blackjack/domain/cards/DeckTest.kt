@@ -9,27 +9,31 @@ import org.assertj.core.api.Assertions
 import java.lang.IllegalArgumentException
 
 class DeckTest : StringSpec({
-    "Deck 은 52장의 중복 없는 카드로 이루어진다" {
+    "초기 Deck 은 52장의 카드로 이루어진다" {
         Assertions.assertThatThrownBy {
             Deck(DeckCards(mutableListOf(Card(Suit.Spade, Character.Ace))))
         }.isInstanceOf(IllegalArgumentException::class.java)
             .hasMessageContaining("Invalid initial Card count")
+    }
 
+    "초기 Deck 의 각 Suit 카드는 13장씩 있어야 한다" {
         Assertions.assertThatThrownBy {
-            val handCards = DeckCards.fullDeckCards()
-            val card = handCards.drawTop()
+            val deckCards = DeckCards.fullDeckCards()
+            val card = deckCards.drawTop()
 
-            handCards.add(Card(Suit.values().first { it != card.suit }, Character.Ace))
-            Deck(handCards)
+            deckCards.add(Card(Suit.values().first { it != card.suit }, Character.Ace))
+            Deck(deckCards)
         }.isInstanceOf(IllegalArgumentException::class.java)
             .hasMessageContaining("Invalid suit count")
+    }
 
+    "초기 Deck 중복 없는 카드로 이루어져야 한다" {
         Assertions.assertThatThrownBy {
-            val handCards = DeckCards.fullDeckCards()
-            val card = handCards.drawTop()
+            val deckCards = DeckCards.fullDeckCards()
+            val card = deckCards.drawTop()
 
-            handCards.add(Card(card.suit, Character.values().first { it != card.character }))
-            Deck(handCards)
+            deckCards.add(Card(card.suit, Character.values().first { it != card.character }))
+            Deck(deckCards)
         }.isInstanceOf(IllegalArgumentException::class.java)
             .hasMessageContaining("Duplicate cards")
     }
