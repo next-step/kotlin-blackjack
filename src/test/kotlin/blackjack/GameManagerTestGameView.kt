@@ -14,13 +14,9 @@ class GameManagerTestGameView : GameView {
         this.playerNames = playerNames
     }
 
-    override fun displayDealerCards(dealer: Dealer) = Unit
-
     override fun displayPlayerCards(player: Player) = Unit
 
     override fun displayPlayerResult(player: Player) = Unit
-
-    override fun displayDealerResult(dealer: Dealer) = Unit
 
     override fun displayGameResult(dealer: Dealer, players: Players) {
         this.players = players

@@ -4,7 +4,7 @@ import blackjack.business.card.CardDesk
 import blackjack.business.drawConditionStrategy.DrawConditionStrategy
 import blackjack.business.drawConditionStrategy.UserInputBasedDrawCondition
 import blackjack.business.participants.Dealer
-import blackjack.business.participants.Player
+import blackjack.business.participants.GamePlayer
 import blackjack.business.participants.Players
 import blackjack.view.ConsoleGameView
 import blackjack.view.GameView
@@ -26,7 +26,7 @@ class GameManager(
 
     private fun createPlayers(): Players {
         val playerNames = view.askForPlayerNames()
-        return Players(playerNames.map { Player(it) })
+        return Players(playerNames.map { GamePlayer(it) })
     }
 
     private fun dealInitialCards(
@@ -35,7 +35,7 @@ class GameManager(
         dealer: Dealer
     ) {
         dealer.addCards(cardDesk.startDraw())
-        view.displayDealerCards(dealer)
+        view.displayPlayerCards(dealer)
         players.dealInitialCards(cardDesk) { view.displayPlayerCards(it) }
     }
 
@@ -54,7 +54,7 @@ class GameManager(
         dealer: Dealer,
         players: Players
     ) {
-        view.displayDealerResult(dealer)
+        view.displayPlayerResult(dealer)
         players.forEachPlayer(view::displayPlayerResult)
         view.displayGameResult(dealer, players)
     }

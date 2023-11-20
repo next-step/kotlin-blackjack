@@ -34,7 +34,7 @@ class PlayersTest {
         // given
         val playerNames = listOf("pobi", "jason")
         val players = Players.from(playerNames)
-        val target = mutableListOf<Player>()
+        val target = mutableListOf<GamePlayer>()
 
         // when
         players.forEachPlayer { player ->
@@ -42,7 +42,7 @@ class PlayersTest {
         }
 
         // then
-        target shouldBe players.allPlayers
+        target shouldBe players.allGamePlayers
     }
 
     @Test
@@ -56,7 +56,7 @@ class PlayersTest {
         players.dealInitialCards(cardDesk) { }
 
         // then
-        players.allPlayers.forEach { it.cards.size shouldBe 2 }
+        players.allGamePlayers.forEach { it.cards.size shouldBe 2 }
     }
 
     @Test
@@ -71,9 +71,9 @@ class PlayersTest {
 
         // then
         // pobi: A, 2, 3, 4, 5, 6
-        players.allPlayers[0].cards.size shouldBe 6
+        players.allGamePlayers[0].cards.size shouldBe 6
         // jason: 7,8,9
-        players.allPlayers[1].cards.size shouldBe 3
+        players.allGamePlayers[1].cards.size shouldBe 3
     }
 
     @Test

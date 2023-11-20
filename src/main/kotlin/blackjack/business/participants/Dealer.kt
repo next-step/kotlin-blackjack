@@ -3,32 +3,28 @@ package blackjack.business.participants
 import blackjack.business.card.CardDesk
 import blackjack.business.util.GameResult
 
-class Dealer(private val dealerCards: PlayerCards = PlayerCards()) : Player(DEALER_NAME, dealerCards) {
+class Dealer(playerCards: PlayerCards = PlayerCards()) : BasePlayer(DEALER_NAME, playerCards) {
 
     override fun canDrawCard(): Boolean {
-        return dealerCards.sum() < DEALER_DRAW_CONDITION
+        return playerCards.sum() < DEALER_DRAW_CONDITION
     }
 
-    override fun isBust(): Boolean {
-        return dealerCards.isBust()
-    }
-
-    fun getPlayerResult(player: Player): PlayerResult {
+    fun getPlayerResult(gamePlayer: GamePlayer): PlayerResult {
         if (isBust()) {
-            return PlayerResult(player.name, GameResult.WIN)
+            return PlayerResult(gamePlayer.name, GameResult.WIN)
         }
-        if (player.isBust()) {
-            return PlayerResult(player.name, GameResult.LOSE)
+        if (gamePlayer.isBust()) {
+            return PlayerResult(gamePlayer.name, GameResult.LOSE)
         }
-        return when (player.score - dealerCards.sum()) {
-            0 -> PlayerResult(player.name, GameResult.DRAW)
-            in 1..Int.MAX_VALUE -> PlayerResult(player.name, GameResult.WIN)
-            else -> PlayerResult(player.name, GameResult.LOSE)
+        return when (gamePlayer.score - playerCards.sum()) {
+            0 -> PlayerResult(gamePlayer.name, GameResult.DRAW)
+            in 1..Int.MAX_VALUE -> PlayerResult(gamePlayer.name, GameResult.WIN)
+            else -> PlayerResult(gamePlayer.name, GameResult.LOSE)
         }
     }
 
     fun getDealerResult(target: Players): Map<GameResult, Int> {
-        return target.allPlayers.map { getDealerResult(it.score) }.groupingBy { it }.eachCount()
+        return target.allGamePlayers.map { getDealerResult(it.score) }.groupingBy { it }.eachCount()
     }
 
     fun executeCardDraws(cardDesk: CardDesk, announcer: () -> Unit) {
@@ -45,7 +41,7 @@ class Dealer(private val dealerCards: PlayerCards = PlayerCards()) : Player(DEAL
         if (target > 21) {
             return GameResult.WIN
         }
-        return when (target - dealerCards.sum()) {
+        return when (target - playerCards.sum()) {
             0 -> GameResult.DRAW
             in 1..Int.MAX_VALUE -> GameResult.LOSE
             else -> GameResult.WIN

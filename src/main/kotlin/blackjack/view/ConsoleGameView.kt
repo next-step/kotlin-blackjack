@@ -12,21 +12,12 @@ class ConsoleGameView : GameView {
         println("${playerNames.joinToString(", ")}에게 2장의 카드를 나누었습니다.")
     }
 
-    override fun displayDealerCards(dealer: Dealer) {
-        println("딜러: ${dealer.cards.joinToString(", ") { it.toString() }}")
-    }
-
     override fun displayPlayerCards(player: Player) {
         println("${player.name}카드: ${player.cards.joinToString(", ")}")
     }
 
     override fun displayPlayerResult(player: Player) {
         println("${player.name}카드: ${player.cards.joinToString(", ")} - 결과: ${player.score}")
-    }
-
-    override fun displayDealerResult(dealer: Dealer) {
-        println()
-        println("딜러 카드: ${dealer.cards.joinToString(", ")} - 결과: ${dealer.score}")
     }
 
     override fun displayGameResult(dealer: Dealer, players: Players) {

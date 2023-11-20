@@ -36,12 +36,12 @@ class DealerTest {
         // given
         val dealer = Dealer()
         dealer.addCards(listOf(SPACE_FIVE, target))
-        val player = Player("pobi")
-        player.addCard(SPACE_FIVE)
-        player.addCard(SPACE_NINE)
+        val gamePlayer = GamePlayer("pobi")
+        gamePlayer.addCard(SPACE_FIVE)
+        gamePlayer.addCard(SPACE_NINE)
 
         // when,then
-        dealer.getPlayerResult(player).result shouldBe expected
+        dealer.getPlayerResult(gamePlayer).result shouldBe expected
     }
 
     @Test
@@ -51,13 +51,13 @@ class DealerTest {
         dealer.addCard(SPACE_TEN)
         dealer.addCard(SPACE_FIVE)
         dealer.addCard(SPACE_TEN)
-        val player = Player("pobi")
-        player.addCard(SPACE_TEN)
-        player.addCard(SPACE_FIVE)
-        player.addCard(SPACE_TEN)
+        val gamePlayer = GamePlayer("pobi")
+        gamePlayer.addCard(SPACE_TEN)
+        gamePlayer.addCard(SPACE_FIVE)
+        gamePlayer.addCard(SPACE_TEN)
 
         // when,then
-        dealer.getPlayerResult(player).result shouldBe GameResult.WIN
+        dealer.getPlayerResult(gamePlayer).result shouldBe GameResult.WIN
     }
 
     @Test
@@ -65,13 +65,13 @@ class DealerTest {
         // given
         val dealer = Dealer()
         dealer.addCards(listOf(SPACE_FIVE, SPACE_TEN, SPACE_FIVE))
-        val player = Player("pobi")
-        player.addCard(SPACE_TEN)
-        player.addCard(SPACE_FIVE)
-        player.addCard(SPACE_TEN)
+        val gamePlayer = GamePlayer("pobi")
+        gamePlayer.addCard(SPACE_TEN)
+        gamePlayer.addCard(SPACE_FIVE)
+        gamePlayer.addCard(SPACE_TEN)
 
         // when,then
-        dealer.getPlayerResult(player).result shouldBe GameResult.LOSE
+        dealer.getPlayerResult(gamePlayer).result shouldBe GameResult.LOSE
     }
 
     @Test
@@ -81,7 +81,7 @@ class DealerTest {
         dealer.addCard(SPACE_TEN)
         dealer.addCard(SPACE_FOUR)
         val players = Players.from(listOf("pobi", "crong", "honux"))
-        players.allPlayers.forEach { player ->
+        players.allGamePlayers.forEach { player ->
             player.addCard(SPACE_TEN)
             when (player.name) {
                 "pobi" -> player.addCard(SPACE_THREE)
