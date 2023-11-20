@@ -4,6 +4,7 @@ import blackjack.business.participants.Dealer
 import blackjack.business.participants.Player
 import blackjack.business.participants.PlayerResult
 import blackjack.business.participants.Players
+import blackjack.business.util.PlayerNameParser
 
 class ConsoleGameView : GameView {
     override fun displayGameStartAnnouncement(playerNames: List<String>) {
@@ -46,9 +47,11 @@ class ConsoleGameView : GameView {
         return readlnOrNull() ?: throw IllegalArgumentException("잘못된 입력입니다.")
     }
 
-    override fun askForPlayerNames(): String {
+    override fun askForPlayerNames(): List<String> {
         println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)")
-        return readlnOrNull() ?: throw IllegalArgumentException("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)")
+        return PlayerNameParser.parse(
+            readlnOrNull() ?: throw IllegalArgumentException("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)")
+        )
     }
 
     private fun printPlayerResult(playerResult: PlayerResult) {

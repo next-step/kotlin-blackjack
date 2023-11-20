@@ -16,7 +16,7 @@ class GameManagerTest {
     @Test
     fun start() {
         // given
-        val view = TestGameView()
+        val view = GameManagerTestGameView()
         val gameManager = GameManager(
             view,
             AlwaysDrawStrategy(),
@@ -30,7 +30,7 @@ class GameManagerTest {
         expectedResult(view)
     }
 
-    private fun expectedResult(view: TestGameView) {
+    private fun expectedResult(view: GameManagerTestGameView) {
         view.playerNames shouldBe listOf("pobi", "jason")
         view.dealer.cards shouldBe listOf(
             SPACE_ACE, SPACE_THREE, SPACE_FIVE

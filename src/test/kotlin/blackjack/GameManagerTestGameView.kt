@@ -5,7 +5,7 @@ import blackjack.business.participants.Player
 import blackjack.business.participants.Players
 import blackjack.view.GameView
 
-class TestGameView : GameView {
+class GameManagerTestGameView : GameView {
     lateinit var playerNames: List<String>
     lateinit var dealer: Dealer
     lateinit var players: Players
@@ -31,5 +31,5 @@ class TestGameView : GameView {
 
     override fun askForOneMore(playerName: String): String = "n"
 
-    override fun askForPlayerNames(): String = "pobi,jason"
+    override fun askForPlayerNames(): List<String> = listOf("pobi", "jason")
 }

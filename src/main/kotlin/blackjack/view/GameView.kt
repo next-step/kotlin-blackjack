@@ -13,5 +13,5 @@ interface GameView {
     fun displayGameResult(dealer: Dealer, players: Players)
     fun displayDealerDrawCardAnnouncement()
     fun askForOneMore(playerName: String): String
-    fun askForPlayerNames(): String
+    fun askForPlayerNames(): List<String>
 }
