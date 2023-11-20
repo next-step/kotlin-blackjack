@@ -1,5 +1,5 @@
 package blackjack
 
 class AceCard(
-    val pattern: String
+    val pattern: CardPattern
 ) : BlackJackCard

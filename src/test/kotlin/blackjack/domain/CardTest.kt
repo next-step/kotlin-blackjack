@@ -1,6 +1,7 @@
 package blackjack.domain
 
 import blackjack.AceCard
+import blackjack.CardPattern
 import blackjack.NormalCard
 import blackjack.PictureCard
 import io.kotest.matchers.shouldBe
@@ -11,7 +12,7 @@ class CardTest {
     @Test
     fun `카드는 숫자와 무늬를 가진다`() {
         val cardNumber = 1
-        val cardPattern = "Diamond"
+        val cardPattern = CardPattern.DIAMOND
         val card = NormalCard(cardNumber, cardPattern)
 
         card.number shouldBe cardNumber
@@ -28,7 +29,7 @@ class CardTest {
 
     @Test
     fun `무늬를 가지는 Ace 카드가 있다`() {
-        val cardPattern = "Diamond"
+        val cardPattern = CardPattern.CLOVER
         val card = AceCard(cardPattern)
 
         card.pattern shouldBe cardPattern
