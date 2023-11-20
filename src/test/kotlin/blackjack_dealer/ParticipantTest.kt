@@ -8,6 +8,7 @@ import blackjack_dealer.entity.CardShape
 import blackjack_dealer.entity.GamerCards
 import blackjack_dealer.entity.GamerCurrentState
 import io.kotest.core.spec.style.StringSpec
+import io.kotest.matchers.shouldBe
 
 class ParticipantTest : StringSpec({
     CardDeque.create()
@@ -15,19 +16,22 @@ class ParticipantTest : StringSpec({
 
     "처음으로 생성한 참가자의 카드 숫자는 2개이다" {
         val expected = 2
-        participant.getCurrentCardCount shouldBe expected
+        participant.getCurrentCards().count() shouldBe expected
     }
 
     "처음으로 생성한 참가자의 상태는 HIT 이다" {
+        val blackJackCards =
+            GamerCards(listOf(Card(CardNumber.A, CardShape.CLOVER), Card(CardNumber.TWO, CardShape.CLOVER)))
+        val participantWithHit = Participant.newInstance(name = "pita", cards = blackJackCards)
         val expected = GamerCurrentState.HIT
-        participant.getCurrentState shouldBe expected
+        participantWithHit.getCurrentState() shouldBe expected
     }
 
     "처음으로 생성한 참가자의 상태는 운이 좋게도 BLACK_JACK 이다" {
         val blackJackCards =
             GamerCards(listOf(Card(CardNumber.A, CardShape.CLOVER), Card(CardNumber.J, CardShape.CLOVER)))
-        val participantWithBlackJack = Participant("pita", blackJackCards)
+        val participantWithBlackJack = Participant.newInstance(name = "pita", cards = blackJackCards)
         val expected = GamerCurrentState.BLACKJACK
-        participant.getCurrentState shouldBe expected
+        participantWithBlackJack.getCurrentState() shouldBe expected
     }
 })
