@@ -134,4 +134,20 @@ class GamePlayerTest {
         // then
         gamePlayer.bettingMoney shouldBe bettingMoney
     }
+
+    @Test
+    fun `카드를 추가로 뽑아 21을 초과할 경우 베팅 금액을 모두 잃게 된다`() {
+        // given
+        val gamePlayer = GamePlayer(
+            "pobi",
+            PlayerCards(SPACE_TEN, SPACE_TEN)
+        )
+        gamePlayer.setBettingMoney(Money(10000))
+
+        // when
+        gamePlayer.addCard(SPACE_TEN)
+
+        // then
+        gamePlayer.bettingMoney shouldBe Money(-10000)
+    }
 }

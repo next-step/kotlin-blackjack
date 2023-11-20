@@ -41,7 +41,8 @@ class DealerTest {
             )
         )
         val gamePlayer = GamePlayer(
-            "pobi", PlayerCards(
+            "pobi",
+            PlayerCards(
                 SPACE_FIVE, SPACE_NINE
             )
         )
@@ -59,7 +60,8 @@ class DealerTest {
             )
         )
         val gamePlayer = GamePlayer(
-            "pobi", PlayerCards(
+            "pobi",
+            PlayerCards(
                 SPACE_FIVE, SPACE_TEN, SPACE_TEN
             )
         )
@@ -77,7 +79,8 @@ class DealerTest {
             )
         )
         val gamePlayer = GamePlayer(
-            "pobi", PlayerCards(
+            "pobi",
+            PlayerCards(
                 SPACE_TEN, SPACE_FIVE, SPACE_TEN
             )
         )
@@ -97,17 +100,20 @@ class DealerTest {
         val players = Players(
             listOf(
                 GamePlayer(
-                    "pobi", PlayerCards(
+                    "pobi",
+                    PlayerCards(
                         SPACE_TEN, SPACE_THREE
                     )
                 ),
                 GamePlayer(
-                    "crong", PlayerCards(
+                    "crong",
+                    PlayerCards(
                         SPACE_TEN, SPACE_FOUR
                     )
                 ),
                 GamePlayer(
-                    "honux", PlayerCards(
+                    "honux",
+                    PlayerCards(
                         SPACE_TEN, SPACE_FIVE
                     )
                 )
