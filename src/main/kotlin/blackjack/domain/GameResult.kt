@@ -30,7 +30,7 @@ class GameResult(private val players: List<Player>, private val dealer: Dealer) 
         }
     }
 
-    fun getDealerStats(): Pair<Int, Int> = dealerWins to dealerLosses
+    fun getDealerStats(): DealerStats = DealerStats(wins = dealerWins, losses = dealerLosses)
 
     companion object {
         private const val BLACKJACK = 21

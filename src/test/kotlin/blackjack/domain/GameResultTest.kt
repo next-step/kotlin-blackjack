@@ -27,7 +27,7 @@ class GameResultTest : BehaviorSpec({
             }
 
             then("딜러는 1승 0패를 기록한다.") {
-                gameResult.getDealerStats() shouldBe (1 to 0)
+                gameResult.getDealerStats() shouldBe DealerStats(1, 0)
             }
         }
     }
@@ -51,7 +51,7 @@ class GameResultTest : BehaviorSpec({
             }
 
             then("딜러는 0승 1패를 기록한다.") {
-                gameResult.getDealerStats() shouldBe (0 to 1)
+                gameResult.getDealerStats() shouldBe DealerStats(0, 1)
             }
         }
     }
@@ -76,7 +76,7 @@ class GameResultTest : BehaviorSpec({
             }
 
             then("딜러는 0승 1패를 기록한다.") {
-                gameResult.getDealerStats() shouldBe (1 to 0)
+                gameResult.getDealerStats() shouldBe DealerStats(1, 0)
             }
         }
     }
