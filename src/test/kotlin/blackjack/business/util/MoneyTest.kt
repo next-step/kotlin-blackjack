@@ -1,16 +1,18 @@
 package blackjack.business.util
 
-import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
 class MoneyTest {
     @Test
-    fun `금액은 0 이상이여야 한다`() {
+    fun `금액을 잃는 금액으로 변경`() {
         // given
-        val value = -1
+        val money = Money(1000)
 
-        // when,then
-        shouldThrow<IllegalArgumentException> { Money(value) }.message shouldBe "금액은 0 이상이여야 합니다."
+        // when
+        val actual = money.lose()
+
+        // then
+        actual shouldBe Money(-1000)
     }
 }

@@ -49,7 +49,9 @@ class ConsoleGameView : GameView {
 
     override fun askForBettingMoney(playerName: String): Money {
         println("$playerName 의 배팅 금액은?")
-        return Money(readlnOrNull()?.toIntOrNull() ?: throw IllegalArgumentException("배팅 금액은 숫자여야 합니다."))
+        val value = readlnOrNull()?.toIntOrNull() ?: throw IllegalArgumentException("배팅 금액은 숫자여야 합니다.")
+        require(value > 0) { "배팅 금액은 0보다 커야 합니다." }
+        return Money(value)
     }
 
     override fun printNewLine() {
