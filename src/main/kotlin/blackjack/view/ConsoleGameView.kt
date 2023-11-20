@@ -1,9 +1,8 @@
 package blackjack.view
 
-import blackjack.business.participants.Dealer
+import blackjack.business.participants.GameResult
 import blackjack.business.participants.Player
 import blackjack.business.participants.PlayerResult
-import blackjack.business.participants.Players
 import blackjack.business.util.Money
 import blackjack.business.util.PlayerNameParser
 
@@ -21,12 +20,11 @@ class ConsoleGameView : GameView {
         println("${player.name}카드: ${player.cards.joinToString(", ")} - 결과: ${player.score}")
     }
 
-    override fun displayGameResult(dealer: Dealer, players: Players) {
+    override fun displayGameResult(gameResult: GameResult) {
         println()
         println("## 최종 수익")
-        val dealerResult = dealer.getDealerResult(players)
-        println("딜러: $dealerResult")
-        players.forEachPlayer { printPlayerResult(dealer.getPlayerResult(it)) }
+        printPlayerResult(gameResult.dealerResult)
+        gameResult.playerResults.forEach(::printPlayerResult)
     }
 
     override fun displayDealerDrawCardAnnouncement() {
@@ -58,6 +56,6 @@ class ConsoleGameView : GameView {
     }
 
     private fun printPlayerResult(playerResult: PlayerResult) {
-        println("${playerResult.name}: ${playerResult.money}")
+        println("${playerResult.name}: ${playerResult.money.value}")
     }
 }

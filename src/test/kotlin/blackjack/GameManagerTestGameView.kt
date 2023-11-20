@@ -1,15 +1,13 @@
 package blackjack
 
-import blackjack.business.participants.Dealer
+import blackjack.business.participants.GameResult
 import blackjack.business.participants.Player
-import blackjack.business.participants.Players
 import blackjack.business.util.Money
 import blackjack.view.GameView
 
 class GameManagerTestGameView : GameView {
     lateinit var playerNames: List<String>
-    lateinit var dealer: Dealer
-    lateinit var players: Players
+    lateinit var gameResult: GameResult
 
     override fun displayGameStartAnnouncement(playerNames: List<String>) {
         this.playerNames = playerNames
@@ -19,9 +17,8 @@ class GameManagerTestGameView : GameView {
 
     override fun displayPlayerResult(player: Player) = Unit
 
-    override fun displayGameResult(dealer: Dealer, players: Players) {
-        this.players = players
-        this.dealer = dealer
+    override fun displayGameResult(gameResult: GameResult) {
+        this.gameResult = gameResult
     }
 
     override fun displayDealerDrawCardAnnouncement() = Unit

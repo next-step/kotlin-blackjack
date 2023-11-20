@@ -120,13 +120,14 @@ class PlayersTest {
         val dealer = Dealer(PlayerCards(SPACE_FOUR, SPACE_NINE))
 
         // when
-        val result = players.getResult(dealer)
+        val result = players.getGameResult(dealer)
 
         // then
-        result shouldContainExactlyInAnyOrder listOf(
+        result.playerResults shouldContainExactlyInAnyOrder listOf(
             PlayerResult("pobi", Money(-10000)),
             PlayerResult("jason", Money(0)),
             PlayerResult("honux", Money(20000))
         )
+        result.dealerResult shouldBe PlayerResult(Dealer.DEALER_NAME, Money(-10000))
     }
 }

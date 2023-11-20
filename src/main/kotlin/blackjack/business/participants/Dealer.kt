@@ -28,10 +28,6 @@ class Dealer(playerCards: PlayerCards = PlayerCards()) : BasePlayer(DEALER_NAME,
         return PlayerResult(gamePlayer.name, gamePlayer.money * 2.0)
     }
 
-    fun getDealerResult(target: Players): Money {
-        return target.allGamePlayers.map { getDealerResult(it) }.reduce(Money::plus)
-    }
-
     fun executeCardDraws(cardDesk: CardDesk, announcer: () -> Unit) {
         if (canDrawCard()) {
             announcer()
@@ -39,22 +35,8 @@ class Dealer(playerCards: PlayerCards = PlayerCards()) : BasePlayer(DEALER_NAME,
         }
     }
 
-    private fun getDealerResult(player: GamePlayer): Money {
-        if (isBust()) {
-            return player.money.lose()
-        }
-        if (player.score > 21) {
-            return player.money.lose()
-        }
-        return when (player.score - score) {
-            0 -> Money()
-            in 1..Int.MAX_VALUE -> player.money.lose()
-            else -> player.money
-        }
-    }
-
     companion object {
-        private const val DEALER_NAME = "딜러"
+        const val DEALER_NAME = "딜러"
         private const val DEALER_DRAW_CONDITION = 17
     }
 }

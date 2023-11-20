@@ -26,7 +26,14 @@ class GameManager(
 
     private fun createPlayers(): Players {
         val playerNames = view.askForPlayerNames()
-        return Players(playerNames.map { GamePlayer(it) })
+        return Players(
+            playerNames.map {
+                GamePlayer(
+                    name = it,
+                    money = view.askForBettingMoney(it)
+                )
+            }
+        )
     }
 
     private fun dealInitialCards(
@@ -56,7 +63,8 @@ class GameManager(
     ) {
         view.displayPlayerResult(dealer)
         players.forEachPlayer(view::displayPlayerResult)
-        view.displayGameResult(dealer, players)
+        val gameResult = players.getGameResult(dealer)
+        view.displayGameResult(gameResult)
     }
 }
 

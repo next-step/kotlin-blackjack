@@ -1,6 +1,6 @@
 package blackjack.business.util
 
-data class Money(private val value: Int = 0) {
+data class Money(val value: Int = 0) {
     operator fun plus(money: Money): Money {
         return Money(this.value + money.value)
     }

@@ -2,6 +2,7 @@ package blackjack.business.participants
 
 import blackjack.business.card.CardDesk
 import blackjack.business.drawConditionStrategy.DrawConditionStrategy
+import blackjack.business.util.Money
 
 class Players(allGamePlayers: List<GamePlayer>) {
 
@@ -39,7 +40,11 @@ class Players(allGamePlayers: List<GamePlayer>) {
 
     fun getNames(): List<String> = allGamePlayers.map { it.name }
 
-    fun getResult(dealer: Dealer): List<PlayerResult> = allGamePlayers.map(dealer::getPlayerResult)
+    fun getGameResult(dealer: Dealer): GameResult {
+        val playerResults = allGamePlayers.map(dealer::getPlayerResult)
+        val dealerResults = PlayerResult(Dealer.DEALER_NAME, playerResults.map { it.money.lose() }.reduce(Money::plus))
+        return GameResult(dealerResults, playerResults)
+    }
 
     companion object {
         fun from(playerNames: List<String>): Players {

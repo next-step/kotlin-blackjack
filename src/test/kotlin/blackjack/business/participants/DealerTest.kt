@@ -1,11 +1,10 @@
 package blackjack.business.participants
 
+import blackjack.business.CardFixture.SPACE_ACE
 import blackjack.business.CardFixture.SPACE_EIGHT
 import blackjack.business.CardFixture.SPACE_FIVE
-import blackjack.business.CardFixture.SPACE_FOUR
 import blackjack.business.CardFixture.SPACE_NINE
 import blackjack.business.CardFixture.SPACE_TEN
-import blackjack.business.CardFixture.SPACE_THREE
 import blackjack.business.card.Card
 import blackjack.business.card.CardDesk
 import blackjack.business.card.Rank
@@ -55,6 +54,26 @@ class DealerTest {
     }
 
     @Test
+    fun `플레이어의 카드가 21이고 2장이며 딜러의 카드가 21이 아니면 플레이어는 1점5의 돈을 얻는다`() {
+        // given
+        val dealer = Dealer(
+            PlayerCards(
+                SPACE_FIVE, SPACE_FIVE
+            )
+        )
+        val gamePlayer = GamePlayer(
+            "pobi",
+            PlayerCards(
+                SPACE_TEN, SPACE_ACE
+            ),
+            Money(1000)
+        )
+
+        // when,then
+        dealer.getPlayerResult(gamePlayer) shouldBe PlayerResult("pobi", Money(2500))
+    }
+
+    @Test
     fun `딜러가 bust면 플레이어는 무조건 이긴다`() {
         // given
         val dealer = Dealer(
@@ -92,48 +111,6 @@ class DealerTest {
 
         // when,then
         dealer.getPlayerResult(gamePlayer) shouldBe PlayerResult("pobi", Money(-1000))
-    }
-
-    @ParameterizedTest
-    @CsvSource(value = ["2000,3000,4000,-2000", "2000,3000,1000,1000", "2000,1000,3000,-1000"])
-    fun `플레이어들과 비교하여 dealer의 결과를 반환한다`(pobiMoney: Int, crongMoney: Int, honuxMoney: Int, expected: Int) {
-        // given
-        val dealer = Dealer(
-            PlayerCards(
-                SPACE_TEN, SPACE_FOUR
-            )
-        )
-        val players = Players(
-            listOf(
-                GamePlayer(
-                    "pobi",
-                    PlayerCards(
-                        SPACE_TEN, SPACE_THREE
-                    ),
-                    Money(pobiMoney)
-                ),
-                GamePlayer(
-                    "crong",
-                    PlayerCards(
-                        SPACE_TEN, SPACE_FOUR
-                    ),
-                    Money(crongMoney)
-                ),
-                GamePlayer(
-                    "honux",
-                    PlayerCards(
-                        SPACE_TEN, SPACE_FIVE
-                    ),
-                    Money(honuxMoney)
-                )
-            )
-        )
-
-        // when
-        val actual = dealer.getDealerResult(players)
-
-        // then
-        actual shouldBe Money(expected)
     }
 
     @Test
