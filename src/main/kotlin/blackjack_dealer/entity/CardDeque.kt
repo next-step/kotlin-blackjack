@@ -14,7 +14,7 @@ object CardDeque {
                     cardShape = shape
                 )
             }
-        }
+        }.shuffled()
         return CardDeque.apply {
             _cardDeque = ArrayDeque(cardDeque)
         }
