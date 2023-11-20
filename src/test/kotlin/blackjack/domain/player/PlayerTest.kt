@@ -4,6 +4,7 @@ import blackjack.domain.card.Card
 import blackjack.domain.card.CardKind
 import blackjack.domain.card.CardNumber
 import blackjack.domain.card.CardSet
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
@@ -14,6 +15,15 @@ class PlayerTest {
             name("cookie")
         }
         player.name shouldBe "cookie"
+    }
+
+    @Test
+    fun `플레이어의 이름이 없는 경우 예외가 발생한다`() {
+        shouldThrow<IllegalArgumentException> {
+            player {
+                name("")
+            }
+        }
     }
 
     @Test
