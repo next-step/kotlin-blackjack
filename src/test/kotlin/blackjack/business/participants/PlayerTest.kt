@@ -3,9 +3,6 @@ package blackjack.business.participants
 import blackjack.business.CardFixture.SPACE_ACE
 import blackjack.business.CardFixture.SPACE_EIGHT
 import blackjack.business.CardFixture.SPACE_TEN
-import blackjack.business.card.Card
-import blackjack.business.card.Rank
-import blackjack.business.card.Suit
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -23,7 +20,7 @@ class PlayerTest {
 
         // then
         player.cards.size shouldBe 1
-        player.cards[0] shouldBe Card(Suit.SPADE, Rank.ACE)
+        player.cards[0] shouldBe SPACE_ACE
     }
 
     @Test
