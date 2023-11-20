@@ -1,17 +1,21 @@
 package blackjack.domain
 
-enum class CardNumberInfo (val mark: String, val score: List<Int>) {
-    ACE("A", listOf(1, 11)),
-    TWO("2", listOf(2)),
-    THREE("3", listOf(3)),
-    FOUR("4", listOf(4)),
-    FIVE("5", listOf(5)),
-    SIX("6", listOf(6)),
-    SEVEN("7", listOf(7)),
-    EIGHT("8", listOf(8)),
-    NINE("9", listOf(9)),
-    TEN("10", listOf(10)),
-    JACK("J", listOf(10)),
-    QUEEN("Q", listOf(10)),
-    KING("K", listOf(10));
+enum class CardNumberInfo (val mark: String, val score: Int) {
+    ACE("A", 1),
+    TWO("2", 2),
+    THREE("3", 3),
+    FOUR("4", 4),
+    FIVE("5", 5),
+    SIX("6", 6),
+    SEVEN("7", 7),
+    EIGHT("8", 8),
+    NINE("9", 9),
+    TEN("10", 10),
+    JACK("J", 10),
+    QUEEN("Q", 10),
+    KING("K", 10);
+    
+    companion object {
+        const val ACE_UPPER_SCORE = 11
+    }
 }
