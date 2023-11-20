@@ -9,6 +9,7 @@ import blackjack.business.CardFixture.SPACE_THREE
 import blackjack.business.card.Card
 import blackjack.business.card.CardDesk
 import blackjack.business.util.GameResult
+import io.kotest.matchers.collections.shouldContainExactlyInAnyOrder
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
@@ -27,7 +28,7 @@ class DealerTest {
 
         // then
         dealer.cards.size shouldBe 1
-        dealer.cards.contains(card) shouldBe true
+        dealer.cards shouldContainExactlyInAnyOrder listOf(card)
     }
 
     @ParameterizedTest
