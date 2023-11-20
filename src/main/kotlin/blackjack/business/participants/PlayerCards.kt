@@ -5,25 +5,13 @@ import blackjack.business.card.Rank
 import blackjack.business.util.BlackJackConst.ACE_OFFSET
 import blackjack.business.util.BlackJackConst.BLACKJACK
 
-class PlayerCards(
-    cards: List<Card> = listOf()
-) {
-
-    private val _cards: MutableList<Card> = cards.toMutableList()
-
-    val cards: List<Card>
-        get() = _cards.toList()
-
+class PlayerCards(val cards: List<Card> = listOf()) {
     val size: Int
-        get() = _cards.size
-
-    fun add(card: Card) {
-        _cards.add(card)
-    }
+        get() = cards.size
 
     fun sum(): Int {
-        var sum = _cards.sumOf { it.rank.score }
-        var aceCount = _cards.count { it.rank == Rank.ACE }
+        var sum = cards.sumOf { it.rank.score }
+        var aceCount = cards.count { it.rank == Rank.ACE }
         while (sum + ACE_OFFSET <= BLACKJACK && aceCount > 0) {
             sum += ACE_OFFSET
             aceCount--
@@ -31,11 +19,15 @@ class PlayerCards(
         return sum
     }
 
+    fun add(card: Card): PlayerCards {
+        return PlayerCards(cards + card)
+    }
+
     fun isBust(): Boolean {
         return sum() > BLACKJACK
     }
 
-    fun addAll(cards: List<Card>) {
-        _cards.addAll(cards)
+    fun addAll(cards: List<Card>): PlayerCards {
+        return PlayerCards(this.cards + cards)
     }
 }

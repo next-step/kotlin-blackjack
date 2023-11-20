@@ -2,6 +2,7 @@ package blackjack.business.participants
 
 import blackjack.business.CardFixture.SPACE_ACE
 import blackjack.business.CardFixture.SPACE_EIGHT
+import blackjack.business.CardFixture.SPACE_FOUR
 import blackjack.business.CardFixture.SPACE_NINE
 import blackjack.business.CardFixture.SPACE_TEN
 import blackjack.business.CardFixture.SPACE_THREE
@@ -24,11 +25,11 @@ class GamePlayerCardsTest {
         val playerCards = PlayerCards()
 
         // when
-        playerCards.add(SPACE_ACE)
+        val actual = playerCards.add(SPACE_ACE)
 
         // then
-        playerCards.size shouldBe 1
-        playerCards.cards[0] shouldBe SPACE_ACE
+        actual.size shouldBe 1
+        actual.cards[0] shouldBe SPACE_ACE
     }
 
     @ParameterizedTest
@@ -36,10 +37,10 @@ class GamePlayerCardsTest {
     fun `카드의 합을 구한다`(cards: List<Card>, expected: Int) {
         // given
         val playerCards = PlayerCards()
-        cards.forEach { playerCards.add(it) }
+        val target = playerCards.addAll(cards)
 
         // when
-        val actual = playerCards.sum()
+        val actual = target.sum()
 
         // then
         actual shouldBe expected
@@ -49,12 +50,10 @@ class GamePlayerCardsTest {
     fun `카드의 합이 21을 초과하는지 확인`() {
         // given
         val playerCards = PlayerCards()
-        playerCards.add(SPACE_TEN)
-        playerCards.add(SPACE_NINE)
-        playerCards.add(SPACE_THREE)
+        val target = playerCards.addAll(listOf(SPACE_TEN, SPACE_EIGHT, SPACE_FOUR))
 
         // when
-        val actual = playerCards.isBust()
+        val actual = target.isBust()
 
         // then
         actual shouldBe true
@@ -81,12 +80,12 @@ class GamePlayerCardsTest {
         val playerCards = PlayerCards()
 
         // when
-        playerCards.addAll(listOf(SPACE_ACE, SPACE_EIGHT))
+        val actual = playerCards.addAll(listOf(SPACE_ACE, SPACE_EIGHT))
 
         // then
-        playerCards.size shouldBe 2
-        playerCards.cards[0] shouldBe SPACE_ACE
-        playerCards.cards[1] shouldBe SPACE_EIGHT
+        actual.size shouldBe 2
+        actual.cards[0] shouldBe SPACE_ACE
+        actual.cards[1] shouldBe SPACE_EIGHT
     }
 
     companion object {
