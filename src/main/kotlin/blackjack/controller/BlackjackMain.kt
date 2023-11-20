@@ -4,10 +4,7 @@ import blackjack.domain.Dealer
 import blackjack.domain.GameManager
 import blackjack.domain.GameManager.Companion.BLACKJACK_SCORE
 import blackjack.domain.Player
-import blackjack.view.askForDraw
-import blackjack.view.inputNames
-import blackjack.view.printInitialSupply
-import blackjack.view.printUserCardInfo
+import blackjack.view.*
 
 fun main() {
     // 참가자 명단 입력
@@ -25,6 +22,9 @@ fun main() {
 
     // 각 사용자의 추가 draw 진행
     players.forEach { drawWhileUserWants(it, dealer) }
+
+    // 결과 출력
+    printResult(players)
 }
 
 private fun drawWhileUserWants(player: Player, dealer: Dealer) {
