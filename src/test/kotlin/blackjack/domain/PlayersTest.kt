@@ -26,4 +26,36 @@ class PlayersTest : BehaviorSpec({
             }
         }
     }
+
+    Given("게임이 모두 종료되고 나서") {
+        val dealer = Dealer(FixedDeck(), Hand(mutableListOf(Card(CardSuit.CLUB, CardNumber.TEN), Card(CardSuit.SPADE, CardNumber.TEN))))
+        val player1 = Player("player1", Hand(mutableListOf(Card(CardSuit.DIAMOND, CardNumber.TEN), Card(CardSuit.SPADE, CardNumber.NINE))))
+        val player2 = Player("player2", Hand(mutableListOf(Card(CardSuit.DIAMOND, CardNumber.TEN), Card(CardSuit.SPADE, CardNumber.TEN))))
+        val player3 = Player("player3", Hand(mutableListOf(Card(CardSuit.DIAMOND, CardNumber.TEN), Card(CardSuit.SPADE, CardNumber.ACE))))
+        val players = Players(dealer, listOf(player1, player2, player3))
+        When("딜러의 결과를 가져오면") {
+            val dealerResult = players.getDealerResult()
+            Then("승무패가 각각 몇개가 나왔는지 반환한다.") {
+                dealerResult[GameResult.WIN] shouldBe 1
+                dealerResult[GameResult.DRAW] shouldBe 1
+                dealerResult[GameResult.LOSE] shouldBe 1
+            }
+        }
+    }
+
+    Given("게임이 모두 종료된 후") {
+        val dealer = Dealer(FixedDeck(), Hand(mutableListOf(Card(CardSuit.CLUB, CardNumber.TEN), Card(CardSuit.SPADE, CardNumber.TEN))))
+        val player1 = Player("player1", Hand(mutableListOf(Card(CardSuit.DIAMOND, CardNumber.TEN), Card(CardSuit.SPADE, CardNumber.NINE))))
+        val player2 = Player("player2", Hand(mutableListOf(Card(CardSuit.DIAMOND, CardNumber.TEN), Card(CardSuit.SPADE, CardNumber.TEN))))
+        val player3 = Player("player3", Hand(mutableListOf(Card(CardSuit.DIAMOND, CardNumber.TEN), Card(CardSuit.SPADE, CardNumber.ACE))))
+        val players = Players(dealer, listOf(player1, player2, player3))
+        When("플레이어를 결과를 가져오면") {
+            val playerResult = players.getPlayersResult()
+            Then("플레이어 별로 각각의 결과를 반환한다.") {
+                playerResult["player1"] shouldBe GameResult.LOSE
+                playerResult["player2"] shouldBe GameResult.DRAW
+                playerResult["player3"] shouldBe GameResult.WIN
+            }
+        }
+    }
 })

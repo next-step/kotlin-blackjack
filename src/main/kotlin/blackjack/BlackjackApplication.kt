@@ -4,7 +4,6 @@ import blackjack.domain.Dealer
 import blackjack.domain.Player
 import blackjack.domain.Players
 import blackjack.domain.RandomDeck
-import blackjack.domain.getResult
 import blackjack.ui.InputView
 import blackjack.ui.ResultView
 
@@ -51,16 +50,7 @@ private fun dealerPlay(dealer: Dealer) {
 }
 
 private fun printGameResult(players: Players) {
-    val dealer = players.dealer
-    val dealerResult = players.players
-        .map { dealer.getResult(it) }
-        .groupingBy { it }
-        .eachCount()
-
-    val playerResult = players.players
-        .associate {
-            it.name to it.getResult(dealer)
-        }
-
-    ResultView.printGameResult(dealerResult, playerResult)
+    val dealerResult = players.getDealerResult()
+    val playersResult = players.getPlayersResult()
+    ResultView.printGameResult(dealerResult, playersResult)
 }

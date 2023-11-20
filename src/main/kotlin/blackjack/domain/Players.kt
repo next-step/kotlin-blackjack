@@ -20,6 +20,18 @@ data class Players(
         }
     }
 
+    fun getDealerResult(): Map<GameResult, Int> {
+        return players.map { dealer.getResult(it) }
+            .groupingBy { it }
+            .eachCount()
+    }
+
+    fun getPlayersResult(): Map<String, GameResult> {
+        return players.associate {
+            it.name to it.getResult(dealer)
+        }
+    }
+
     companion object {
         fun init(dealer: Dealer, names: List<String>): Players {
             return Players(dealer = dealer, players = names.map { Player(it) })
