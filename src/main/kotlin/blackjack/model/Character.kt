@@ -1,7 +1,7 @@
 package blackjack.model
 
 enum class Character(val value: Int) {
-    Ace(1),
+    Ace(11),
     Two(2),
     Three(3),
     Four(4),
