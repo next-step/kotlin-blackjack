@@ -1,5 +1,6 @@
 package blackjack_dealer
 
+import blackjack_dealer.ui.validateInputValue
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.datatest.withData
@@ -13,7 +14,7 @@ class InputValueTest : FunSpec({
         )
         withData(list) { input ->
             shouldThrow<IllegalArgumentException> {
-
+                input.validateInputValue()
             }
         }
     }
