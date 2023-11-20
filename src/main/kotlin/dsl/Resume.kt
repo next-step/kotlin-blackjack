@@ -21,11 +21,11 @@ data class Resume(
             this.company = companyName
         }
 
-        fun skills(block: Skill.Builder.() -> Unit) {
+        fun skills(block: (@Dsl Skill.Builder).() -> Unit) {
             skills.block()
         }
 
-        fun languages(block: Language.Builder.() -> Unit) {
+        fun languages(block: (@Dsl Language.Builder).() -> Unit) {
             languages.block()
         }
 
@@ -75,7 +75,7 @@ data class Language(
     }
 }
 
-fun introduce(block: Resume.Builder.() -> Unit): Resume {
+fun introduce(block: (@Dsl Resume.Builder).() -> Unit): Resume {
     val builder = Resume.Builder()
     builder.block()
     return builder.build()
