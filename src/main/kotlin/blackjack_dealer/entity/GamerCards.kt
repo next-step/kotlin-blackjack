@@ -1,6 +1,4 @@
-package blackjack_dealer.domain
-
-import blackjack_dealer.entity.Card
+package blackjack_dealer.entity
 
 data class GamerCards(
     val trumpCard: List<Card>
