@@ -34,8 +34,6 @@ data class Player(
         hand.addCard(card)
         state = if (hand.isBust()) {
             PlayerState.Bust
-        } else if (hand.isBlackjack()) {
-            PlayerState.Blackjack
         } else {
             PlayerState.Hit
         }
