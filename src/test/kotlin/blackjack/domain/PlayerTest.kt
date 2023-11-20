@@ -17,7 +17,7 @@ class PlayerTest : BehaviorSpec({
 
             then("총 점수는 11점이다.") {
                 player.receiveCard(dealer.dealCard())
-                player.cards.calculateScore() shouldBe 11
+                player.calculateScore() shouldBe 11
             }
         }
 
@@ -28,7 +28,7 @@ class PlayerTest : BehaviorSpec({
             then("총 점수는 21점이다.") {
                 player.receiveCard(dealer.dealCard())
                 player.receiveCard(dealer.dealCard())
-                player.cards.calculateScore() shouldBe 21
+                player.calculateScore() shouldBe 21
             }
         }
 
@@ -40,7 +40,7 @@ class PlayerTest : BehaviorSpec({
                 player.receiveCard(dealer.dealCard())
                 player.receiveCard(dealer.dealCard())
                 player.receiveCard(dealer.dealCard())
-                player.cards.calculateScore() shouldBe 12
+                player.calculateScore() shouldBe 12
             }
         }
     }
@@ -56,7 +56,7 @@ class PlayerTest : BehaviorSpec({
 
             then("총 점수는 9점이다.") {
                 player.receiveCard(dealer.dealCard())
-                player.cards.calculateScore() shouldBe 9
+                player.calculateScore() shouldBe 9
             }
         }
 
@@ -67,7 +67,7 @@ class PlayerTest : BehaviorSpec({
             then("총 점수는 19점이다.") {
                 player.receiveCard(dealer.dealCard())
                 player.receiveCard(dealer.dealCard())
-                player.cards.calculateScore() shouldBe 19
+                player.calculateScore() shouldBe 19
             }
         }
     }

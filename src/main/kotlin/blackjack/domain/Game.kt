@@ -28,7 +28,7 @@ class Game(
         players.forEach { player ->
             while (shouldHit(player)) {
                 player.receiveCard(dealer.dealCard())
-                if (player.cards.calculateScore() <= PLAYER_MAXIMUM_SCORE) {
+                if (player.calculateScore() <= PLAYER_MAXIMUM_SCORE) {
                     break
                 }
 
@@ -38,7 +38,7 @@ class Game(
     }
 
     fun dealerTurn() {
-        if (dealer.cards.calculateScore() <= DEALER_MINIMUM_SCORE) {
+        if (dealer.calculateScore() <= DEALER_MINIMUM_SCORE) {
             dealer.receiveCard(dealer.dealCard())
             observer.onDealerHits(dealer)
         }

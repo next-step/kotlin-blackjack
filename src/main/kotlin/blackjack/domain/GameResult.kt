@@ -20,8 +20,8 @@ class GameResult(private val players: List<Player>, private val dealer: Dealer) 
     }
 
     private fun calculateOutcome(player: Player): GameOutcome {
-        val playerScore = player.cards.calculateScore()
-        val dealerScore = dealer.cards.calculateScore()
+        val playerScore = player.calculateScore()
+        val dealerScore = dealer.calculateScore()
 
         return when {
             playerScore > BLACKJACK || (dealerScore in playerScore..BLACKJACK) -> GameOutcome.LOSE

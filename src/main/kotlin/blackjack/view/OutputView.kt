@@ -39,7 +39,7 @@ object OutputView {
                     participant.cards.joinToString(SEPARATOR) { card ->
                         "${card.rank.name()}${card.symbol.name()}"
                     }
-                } - 결과: ${participant.cards.calculateScore()}"
+                } - 결과: ${participant.calculateScore()}"
             )
         }
         println()

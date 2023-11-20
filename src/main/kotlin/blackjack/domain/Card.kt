@@ -17,18 +17,6 @@ data class Card(val symbol: Symbol, val rank: Rank) {
     }
 }
 
-fun List<Card>.calculateScore(): Int {
-    var score = this.sumOf { it.rank.score }
-    var countOfAces = this.count { it.rank == Rank.ACE }
-
-    while (score > 21 && countOfAces > 0) {
-        score -= 10
-        countOfAces -= 1
-    }
-
-    return score
-}
-
 infix fun Symbol.withRank(rank: Rank): Card = Card(this, rank)
 
 infix fun Array<Symbol>.withRank(rank: Rank): List<Card> = map { it withRank rank }
