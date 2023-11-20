@@ -39,6 +39,8 @@ class Players(allGamePlayers: List<GamePlayer>) {
 
     fun getNames(): List<String> = allGamePlayers.map { it.name }
 
+    fun getResult(dealer: Dealer): List<PlayerResult> = allGamePlayers.map(dealer::getPlayerResult)
+
     companion object {
         fun from(playerNames: List<String>): Players {
             return Players(playerNames.map { GamePlayer(it) })

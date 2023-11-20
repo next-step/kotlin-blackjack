@@ -1,9 +1,15 @@
 package blackjack.business.participants
 
 import blackjack.business.AlwaysDrawStrategy
+import blackjack.business.CardFixture.SPACE_EIGHT
+import blackjack.business.CardFixture.SPACE_FOUR
+import blackjack.business.CardFixture.SPACE_NINE
+import blackjack.business.CardFixture.SPACE_TEN
 import blackjack.business.FixSelectionStrategy
 import blackjack.business.card.CardDesk
+import blackjack.business.util.Money
 import io.kotest.assertions.throwables.shouldThrow
+import io.kotest.matchers.collections.shouldContainExactlyInAnyOrder
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -87,5 +93,40 @@ class PlayersTest {
 
         // then
         names shouldBe playerNames
+    }
+
+    @Test
+    fun `딜러와 비교하여  플레이별 게임결과를 반환한다`() {
+        // given
+        val players = Players(
+            listOf(
+                GamePlayer(
+                    "pobi",
+                    PlayerCards(SPACE_FOUR, SPACE_EIGHT),
+                    Money(10000)
+                ),
+                GamePlayer(
+                    "jason",
+                    PlayerCards(SPACE_FOUR, SPACE_NINE),
+                    Money(10000)
+                ),
+                GamePlayer(
+                    "honux",
+                    PlayerCards(SPACE_FOUR, SPACE_TEN),
+                    Money(10000)
+                )
+            )
+        )
+        val dealer = Dealer(PlayerCards(SPACE_FOUR, SPACE_NINE))
+
+        // when
+        val result = players.getResult(dealer)
+
+        // then
+        result shouldContainExactlyInAnyOrder listOf(
+            PlayerResult("pobi", Money(-10000)),
+            PlayerResult("jason", Money(0)),
+            PlayerResult("honux", Money(20000))
+        )
     }
 }
