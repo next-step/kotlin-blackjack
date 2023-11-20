@@ -15,3 +15,4 @@ dependencyResolutionManagement {
 }
 rootProject.name = "kotlin-blackjack"
 include("domain")
+include("presenter")

@@ -4,9 +4,9 @@ import blackjack.card.Card
 import blackjack.card.CardRank
 
 data class Hand(
-    private val cards: List<Card>
+    val cards: List<Card> = emptyList()
 ) {
-    fun addCard(card: Card): Hand = Hand(cards + card)
+    fun addCard(card: Card): Hand = copy(cards = cards + card)
 
     fun calculateBestValue(): Int {
         val sumWithoutAces = cards.filter { it.rank != CardRank.ACE }.sumOf { cardValue(it) }
