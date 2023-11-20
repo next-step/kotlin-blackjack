@@ -1,10 +1,20 @@
 package blackjack.domain
 
 data class Cards(
-    var value: MutableList<Card>
+    var value: MutableList<Card> = mutableListOf()
 ) {
+    fun add(card: Card): Cards {
+        value.add(card)
+        return this
+    }
+
     fun shuffle(): Cards {
-        value.shuffled()
+        value = value.shuffled().toMutableList()
+        return this
+    }
+
+    fun clear(): Cards {
+        value.clear()
         return this
     }
 
@@ -13,13 +23,15 @@ data class Cards(
         return value.removeFirst()
     }
 
+    fun getFull(): Cards {
+        return Cards(
+            Suit.values().flatMap { suit -> Denomination.values().map { denomination -> Card(suit, denomination) } }
+                .toMutableList()
+        )
+    }
+
     companion object {
-        const val SIZE = 52
-        fun of(): Cards {
-            return Cards(
-                Suit.values().flatMap { suit -> Denomination.values().map { denomination -> Card(suit, denomination) } }
-                    .toMutableList()
-            )
-        }
+        const val INITIAL_DEAL_SIZE = 2
+        const val TOTAL_SIZE = 52
     }
 }
