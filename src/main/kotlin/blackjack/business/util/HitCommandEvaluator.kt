@@ -1,4 +1,4 @@
-package blackjack.business
+package blackjack.business.util
 
 object HitCommandEvaluator {
 

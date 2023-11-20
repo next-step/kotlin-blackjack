@@ -1,4 +1,4 @@
-package blackjack.business
+package blackjack.business.util
 
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.DisplayName

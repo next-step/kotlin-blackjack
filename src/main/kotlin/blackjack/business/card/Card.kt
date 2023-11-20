@@ -1,4 +1,4 @@
-package blackjack.business
+package blackjack.business.card
 
 data class Card(val suit: Suit, val rank: Rank) {
     override fun toString(): String {

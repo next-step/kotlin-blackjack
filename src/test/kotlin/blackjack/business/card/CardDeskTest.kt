@@ -1,4 +1,4 @@
-package blackjack.business
+package blackjack.business.card
 
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.DisplayName
@@ -8,25 +8,27 @@ import org.junit.jupiter.api.Test
 class CardDeskTest {
 
     @Test
-    fun `52장의 다른 카드를 가지고 있다`() {
-        // given,when
+    fun `카드가 모두 소진시 새로운 카드 한벌을 추가한다`() {
+        // give
         val cardDesk = CardDesk()
+
+        // when
+        repeat(52) { cardDesk.draw() }
 
         // then
         cardDesk.cards.size shouldBe 52
-        cardDesk.cards.toSet().size shouldBe 52
     }
 
     @Test
-    fun `52장의 카드에서 랜덤으로 카드를 뽑는다`() {
+    fun `시작시 카드를 두장씩 나눠준다`() {
         // given
         val cardDesk = CardDesk()
 
         // when
-        val card = cardDesk.draw()
+        val playerCards = cardDesk.startDraw()
 
         // then
-        cardDesk.cards.size shouldBe 51
-        cardDesk.cards.contains(card) shouldBe false
+        playerCards.size shouldBe 2
+        cardDesk.cards.size shouldBe 50
     }
 }
