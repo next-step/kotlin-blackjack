@@ -1,6 +1,13 @@
 package blackjack.domain.card
 
-class CardSet(private val cards: List<Card>) {
+class CardSet(val cards: List<Card>) {
+
+    fun addCard(card: Card): CardSet {
+        val newCards = cards.toMutableList()
+        newCards.add(card)
+        return CardSet(newCards)
+    }
+
     companion object {
         private val EMPTY_CARD_SET = CardSet(emptyList())
 
