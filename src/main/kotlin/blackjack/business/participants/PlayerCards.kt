@@ -6,6 +6,9 @@ import blackjack.business.util.BlackJackConst.ACE_OFFSET
 import blackjack.business.util.BlackJackConst.BLACKJACK
 
 class PlayerCards(val cards: List<Card> = listOf()) {
+
+    constructor(vararg cards: Card) : this(cards.toList())
+
     val size: Int
         get() = cards.size
 

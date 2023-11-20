@@ -35,11 +35,16 @@ class DealerTest {
     @MethodSource("providePlayerAndDealerCards")
     fun `딜러의 카드와 플레이어의 카드를 비교한다`(target: Card, expected: GameResult) {
         // given
-        val dealer = Dealer()
-        dealer.addCards(listOf(SPACE_FIVE, target))
-        val gamePlayer = GamePlayer("pobi")
-        gamePlayer.addCard(SPACE_FIVE)
-        gamePlayer.addCard(SPACE_NINE)
+        val dealer = Dealer(
+            PlayerCards(
+                SPACE_FIVE, target
+            )
+        )
+        val gamePlayer = GamePlayer(
+            "pobi", PlayerCards(
+                SPACE_FIVE, SPACE_NINE
+            )
+        )
 
         // when,then
         dealer.getPlayerResult(gamePlayer).result shouldBe expected
@@ -48,14 +53,16 @@ class DealerTest {
     @Test
     fun `딜러가 bust면 플레이어는 무조건 이긴다`() {
         // given
-        val dealer = Dealer()
-        dealer.addCard(SPACE_TEN)
-        dealer.addCard(SPACE_FIVE)
-        dealer.addCard(SPACE_TEN)
-        val gamePlayer = GamePlayer("pobi")
-        gamePlayer.addCard(SPACE_TEN)
-        gamePlayer.addCard(SPACE_FIVE)
-        gamePlayer.addCard(SPACE_TEN)
+        val dealer = Dealer(
+            PlayerCards(
+                SPACE_TEN, SPACE_FIVE, SPACE_TEN
+            )
+        )
+        val gamePlayer = GamePlayer(
+            "pobi", PlayerCards(
+                SPACE_FIVE, SPACE_TEN, SPACE_TEN
+            )
+        )
 
         // when,then
         dealer.getPlayerResult(gamePlayer).result shouldBe GameResult.WIN
@@ -64,12 +71,16 @@ class DealerTest {
     @Test
     fun `딜러가 bust아닐 때 플레이어가 bust면 플레이어는 무조건 진다`() {
         // given
-        val dealer = Dealer()
-        dealer.addCards(listOf(SPACE_FIVE, SPACE_TEN, SPACE_FIVE))
-        val gamePlayer = GamePlayer("pobi")
-        gamePlayer.addCard(SPACE_TEN)
-        gamePlayer.addCard(SPACE_FIVE)
-        gamePlayer.addCard(SPACE_TEN)
+        val dealer = Dealer(
+            PlayerCards(
+                SPACE_FIVE, SPACE_TEN, SPACE_FIVE
+            )
+        )
+        val gamePlayer = GamePlayer(
+            "pobi", PlayerCards(
+                SPACE_TEN, SPACE_FIVE, SPACE_TEN
+            )
+        )
 
         // when,then
         dealer.getPlayerResult(gamePlayer).result shouldBe GameResult.LOSE
@@ -78,18 +89,30 @@ class DealerTest {
     @Test
     fun `플레이어들과 비교하여 dealer의 결과를 반환한다`() {
         // given
-        val dealer = Dealer()
-        dealer.addCard(SPACE_TEN)
-        dealer.addCard(SPACE_FOUR)
-        val players = Players.from(listOf("pobi", "crong", "honux"))
-        players.allGamePlayers.forEach { player ->
-            player.addCard(SPACE_TEN)
-            when (player.name) {
-                "pobi" -> player.addCard(SPACE_THREE)
-                "crong" -> player.addCard(SPACE_FOUR)
-                "honux" -> player.addCard(SPACE_FIVE)
-            }
-        }
+        val dealer = Dealer(
+            PlayerCards(
+                SPACE_TEN, SPACE_FOUR
+            )
+        )
+        val players = Players(
+            listOf(
+                GamePlayer(
+                    "pobi", PlayerCards(
+                        SPACE_TEN, SPACE_THREE
+                    )
+                ),
+                GamePlayer(
+                    "crong", PlayerCards(
+                        SPACE_TEN, SPACE_FOUR
+                    )
+                ),
+                GamePlayer(
+                    "honux", PlayerCards(
+                        SPACE_TEN, SPACE_FIVE
+                    )
+                )
+            )
+        )
 
         // when
         val actual = dealer.getDealerResult(players)
@@ -101,9 +124,11 @@ class DealerTest {
     @Test
     fun `딜러의 카드가 16이하이면 카드를 한장 더 받는다`() {
         // given
-        val dealer = Dealer()
-        dealer.addCard(SPACE_FIVE)
-        dealer.addCard(SPACE_TEN)
+        val dealer = Dealer(
+            PlayerCards(
+                SPACE_TEN, SPACE_FIVE
+            )
+        )
         val cardDesk = CardDesk()
 
         // when
@@ -116,9 +141,11 @@ class DealerTest {
     @Test
     fun `딜러의 카드가 17이상이면 카드를 받지 않는다`() {
         // given
-        val dealer = Dealer()
-        dealer.addCard(SPACE_TEN)
-        dealer.addCard(SPACE_EIGHT)
+        val dealer = Dealer(
+            PlayerCards(
+                SPACE_TEN, SPACE_EIGHT
+            )
+        )
         val cardDesk = CardDesk()
 
         // when
