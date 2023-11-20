@@ -45,7 +45,7 @@ class GameManager(
         cardDesk: CardDesk,
         dealer: Dealer
     ) {
-        println()
+        view.printNewLine()
         players.executeCardDraws(cardDesk, drawConditionStrategy, view::askForOneMore, view::displayPlayerCards)
         dealer.executeCardDraws(cardDesk) { view.displayDealerDrawCardAnnouncement() }
     }
@@ -54,7 +54,6 @@ class GameManager(
         dealer: Dealer,
         players: Players
     ) {
-        println()
         view.displayDealerResult(dealer)
         players.forEachPlayer(view::displayPlayerResult)
         view.displayGameResult(dealer, players)

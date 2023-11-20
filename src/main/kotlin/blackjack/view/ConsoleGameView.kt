@@ -25,6 +25,7 @@ class ConsoleGameView : GameView {
     }
 
     override fun displayDealerResult(dealer: Dealer) {
+        println()
         println("딜러 카드: ${dealer.cards.joinToString(", ")} - 결과: ${dealer.score}")
     }
 
@@ -52,6 +53,10 @@ class ConsoleGameView : GameView {
         return PlayerNameParser.parse(
             readlnOrNull() ?: throw IllegalArgumentException("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)")
         )
+    }
+
+    override fun printNewLine() {
+        println()
     }
 
     private fun printPlayerResult(playerResult: PlayerResult) {

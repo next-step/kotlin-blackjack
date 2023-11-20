@@ -32,4 +32,5 @@ class GameManagerTestGameView : GameView {
     override fun askForOneMore(playerName: String): String = "n"
 
     override fun askForPlayerNames(): List<String> = listOf("pobi", "jason")
+    override fun printNewLine() = Unit
 }
