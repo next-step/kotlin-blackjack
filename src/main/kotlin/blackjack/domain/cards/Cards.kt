@@ -1,8 +1,8 @@
-package blackjack.domain.card
+package blackjack.domain.cards
 
-import blackjack.model.Card
-import blackjack.model.Character
-import blackjack.model.Suit
+import blackjack.domain.card.Card
+import blackjack.domain.card.Character
+import blackjack.domain.card.Suit
 
 abstract class Cards(private val _cardList: MutableList<Card>) {
     val cardList get() = _cardList.toList()

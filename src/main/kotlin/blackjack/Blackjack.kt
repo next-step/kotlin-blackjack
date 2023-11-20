@@ -1,7 +1,7 @@
 package blackjack
 
-import blackjack.domain.card.Deck
-import blackjack.domain.card.HandCards
+import blackjack.domain.cards.Deck
+import blackjack.domain.cards.HandCards
 import blackjack.domain.player.Hand
 import blackjack.domain.player.Player
 import blackjack.domain.player.PlayerState

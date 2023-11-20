@@ -1,5 +1,5 @@
-package blackjack.domain.card
+package blackjack.domain.cards
 
-import blackjack.model.Card
+import blackjack.domain.card.Card
 
 data class HandCards(private val _cardList: MutableList<Card>) : Cards(_cardList)

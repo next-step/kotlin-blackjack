@@ -1,6 +1,6 @@
-package blackjack.domain.card
+package blackjack.domain.cards
 
-import blackjack.model.Card
+import blackjack.domain.card.Card
 
 data class DeckCards(private val _cardList: MutableList<Card>) : Cards(_cardList) {
     fun shuffle() {

@@ -1,4 +1,4 @@
-package blackjack.model
+package blackjack.domain.card
 
 enum class Character(val value: Int) {
     Ace(11),
