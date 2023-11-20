@@ -5,11 +5,11 @@ import blackjack.model.card.CardNumber
 import blackjack.model.card.CardSuit
 
 class RandomStrategy : ShuffleStrategy {
-    override fun shuffle(): MutableList<Card> {
+    override fun shuffle(): List<Card> {
         return CardNumber.values().flatMap { number ->
             CardSuit.values().map { suit ->
                 Card(number, suit)
             }
-        }.shuffled().toMutableList()
+        }.shuffled()
     }
 }
