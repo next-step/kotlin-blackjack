@@ -14,6 +14,11 @@ class ParticipantTest : StringSpec({
     CardDeque.create()
     val participant = Participant.newInstance("pita")
 
+    "생성한 이름이 잘 나온다" {
+        val expected = "pita"
+        participant.getParticipantName() shouldBe expected
+    }
+
     "처음으로 생성한 참가자의 카드 숫자는 2개이다" {
         val expected = 2
         participant.getCurrentCards().count() shouldBe expected

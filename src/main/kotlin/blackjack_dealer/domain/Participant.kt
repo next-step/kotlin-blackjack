@@ -9,6 +9,7 @@ data class Participant(
     private val cards: GamerCards,
     private val currentState: GamerCurrentState = GamerCurrentState.INITIAL,
 ) {
+    fun getParticipantName(): String = name
     fun getCurrentCards(): GamerCards = cards
     fun getCurrentState(): GamerCurrentState = currentState
 

@@ -9,5 +9,5 @@ fun main() {
     CardDeque.create()
 
     val participants = Participants.newInstance(participantsName)
-    println(participants)
+    OutputView.printParticipantInformation(participants)
 }
