@@ -1,107 +1,82 @@
 package dsl
 
-class Resume(
-    var name: String = "",
-    var company: String = "",
-    var skills: Skill = Skill(),
-    var languages: Language = Language()
+data class Resume(
+    val name: String,
+    val company: String,
+    val skills: Skill,
+    val languages: Language
 ) {
+    class Builder(
+        private var name: String = "",
+        private var company: String = "",
+        private var skills: Skill.Builder = Skill.Builder(),
+        private var languages: Language.Builder = Language.Builder()
+    ) {
 
-    fun name(name: String) {
-        this.name = name
-    }
+        fun name(name: String) {
+            this.name = name
+        }
 
-    fun company(companyName: String) {
-        this.company = companyName
-    }
+        fun company(companyName: String) {
+            this.company = companyName
+        }
 
-    fun skills(block: Skill.() -> Unit) {
-        skills.block()
-    }
+        fun skills(block: Skill.Builder.() -> Unit) {
+            skills.block()
+        }
 
-    fun languages(block: Language.() -> Unit) {
-        languages.block()
-    }
+        fun languages(block: Language.Builder.() -> Unit) {
+            languages.block()
+        }
 
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-
-        other as Resume
-
-        if (name != other.name) return false
-        if (company != other.company) return false
-        if (skills != other.skills) return false
-        if (languages != other.languages) return false
-
-        return true
-    }
-
-    override fun hashCode(): Int {
-        var result = name.hashCode()
-        result = 31 * result + company.hashCode()
-        result = 31 * result + skills.hashCode()
-        result = 31 * result + languages.hashCode()
-        return result
+        internal fun build(): Resume {
+            return Resume(name, company, skills.build(), languages.build())
+        }
     }
 }
 
-class Skill(
-    val softSkills: MutableList<String> = mutableListOf(),
-    val hardSkills: MutableList<String> = mutableListOf()
+data class Skill(
+    val softSkills: List<String>,
+    val hardSkills: List<String>
 ) {
+    class Builder(
+        private val softSkills: MutableList<String> = mutableListOf(),
+        private val hardSkills: MutableList<String> = mutableListOf()
+    ) {
 
-    fun soft(skill: String) {
-        softSkills.add(skill)
-    }
+        fun soft(skill: String) {
+            softSkills.add(skill)
+        }
 
-    fun hard(skill: String) {
-        hardSkills.add(skill)
-    }
+        fun hard(skill: String) {
+            hardSkills.add(skill)
+        }
 
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-
-        other as Skill
-
-        if (softSkills != other.softSkills) return false
-        if (hardSkills != other.hardSkills) return false
-
-        return true
-    }
-
-    override fun hashCode(): Int {
-        var result = softSkills.hashCode()
-        result = 31 * result + hardSkills.hashCode()
-        return result
+        internal fun build(): Skill {
+            return Skill(softSkills, hardSkills)
+        }
     }
 }
 
-class Language(
-    val languages: MutableMap<String, Int> = mutableMapOf()
+data class Language(
+    val languages: Map<String, Int>
 ) {
+    class Builder(
+        private val languages: MutableMap<String, Int> = mutableMapOf()
+    ) {
 
-    infix fun String.level(level: Int) {
-        languages[this] = level
-    }
+        infix fun String.level(level: Int) {
+            languages[this] = level
+        }
 
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (javaClass != other?.javaClass) return false
-
-        other as Language
-
-        return languages == other.languages
-    }
-
-    override fun hashCode(): Int {
-        return languages.hashCode()
+        internal fun build(): Language {
+            return Language(languages)
+        }
     }
 }
 
-fun introduce(block: Resume.() -> Unit): Resume {
-    val resume = Resume()
-    resume.block()
-    return resume
+fun introduce(block: Resume.Builder.() -> Unit): Resume {
+    val builder = Resume.Builder()
+    builder.block()
+    return builder.build()
 }
