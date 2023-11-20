@@ -17,6 +17,13 @@ class Dealer(
         }
     }
 
+    override fun init(cards: List<Card>) {
+        super.init(cards)
+        if (hand.getSum() > 16) {
+            state = State.STAND
+        }
+    }
+
     fun drawInitCards(): List<Card> {
         return deck.init()
     }

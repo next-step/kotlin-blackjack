@@ -17,4 +17,11 @@ class Player(
             State.HIT
         }
     }
+
+    override fun init(cards: List<Card>) {
+        super.init(cards)
+        if (hand.getSum() == BLACKJACK) {
+            state = State.BLACKJACK
+        }
+    }
 }

@@ -45,10 +45,10 @@ class DealerTest : BehaviorSpec({
     }
 
     Given("처음 카드 2장을 받았을 때") {
-        When("합이 21이라면") {
-            Then("상태를 BLACKJACK으로 바꾼다.") {
+        When("합이 17 이상이라면") {
+            Then("상태를 STAND로 바꾼다.") {
                 forAll(
-                    row(listOf(Card(CardSuit.HEART, CardNumber.TEN), Card(CardSuit.HEART, CardNumber.ACE)), State.BLACKJACK),
+                    row(listOf(Card(CardSuit.HEART, CardNumber.TEN), Card(CardSuit.HEART, CardNumber.SEVEN)), State.STAND),
                     row(listOf(Card(CardSuit.HEART, CardNumber.TEN), Card(CardSuit.HEART, CardNumber.SIX)), State.HIT),
                 ) { cards, expected ->
                     val dealer = Dealer(FixedDeck())
