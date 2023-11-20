@@ -9,7 +9,7 @@ data class Money(private val value: Int = 0) {
         return Money(-value)
     }
 
-    operator fun times(value: Int): Money {
-        return Money(this.value * value)
+    operator fun times(value: Double): Money {
+        return Money((this.value * value).toInt())
     }
 }

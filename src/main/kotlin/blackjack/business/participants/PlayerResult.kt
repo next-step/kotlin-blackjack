@@ -1,5 +1,5 @@
 package blackjack.business.participants
 
-import blackjack.business.util.GameResult
+import blackjack.business.util.Money
 
-data class PlayerResult(val name: String, val result: GameResult)
+data class PlayerResult(val name: String, val money: Money)

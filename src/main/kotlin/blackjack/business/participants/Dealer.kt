@@ -1,7 +1,6 @@
 package blackjack.business.participants
 
 import blackjack.business.card.CardDesk
-import blackjack.business.util.GameResult
 import blackjack.business.util.Money
 
 class Dealer(playerCards: PlayerCards = PlayerCards()) : BasePlayer(DEALER_NAME, playerCards) {
@@ -11,17 +10,22 @@ class Dealer(playerCards: PlayerCards = PlayerCards()) : BasePlayer(DEALER_NAME,
     }
 
     fun getPlayerResult(gamePlayer: GamePlayer): PlayerResult {
-        if (isBust()) {
-            return PlayerResult(gamePlayer.name, GameResult.WIN)
-        }
         if (gamePlayer.isBust()) {
-            return PlayerResult(gamePlayer.name, GameResult.LOSE)
+            return PlayerResult(gamePlayer.name, gamePlayer.money.lose())
         }
-        return when (gamePlayer.score - playerCards.sum()) {
-            0 -> PlayerResult(gamePlayer.name, GameResult.DRAW)
-            in 1..Int.MAX_VALUE -> PlayerResult(gamePlayer.name, GameResult.WIN)
-            else -> PlayerResult(gamePlayer.name, GameResult.LOSE)
+        if (isBust()) {
+            return PlayerResult(gamePlayer.name, gamePlayer.money * 2.0)
         }
+        if (gamePlayer.score - score == 0) {
+            return PlayerResult(gamePlayer.name, Money())
+        }
+        if (gamePlayer.score - score < 0) {
+            return PlayerResult(gamePlayer.name, gamePlayer.money.lose())
+        }
+        if (gamePlayer.score - score > 0 && gamePlayer.cards.size == 2 && gamePlayer.score == 21) {
+            return PlayerResult(gamePlayer.name, gamePlayer.money * 2.5)
+        }
+        return PlayerResult(gamePlayer.name, gamePlayer.money * 2.0)
     }
 
     fun getDealerResult(target: Players): Money {

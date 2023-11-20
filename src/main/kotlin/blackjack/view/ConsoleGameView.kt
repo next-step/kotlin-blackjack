@@ -23,7 +23,7 @@ class ConsoleGameView : GameView {
 
     override fun displayGameResult(dealer: Dealer, players: Players) {
         println()
-        println("## 최종 승패")
+        println("## 최종 수익")
         val dealerResult = dealer.getDealerResult(players)
         println("딜러: $dealerResult")
         players.forEachPlayer { printPlayerResult(dealer.getPlayerResult(it)) }
@@ -58,6 +58,6 @@ class ConsoleGameView : GameView {
     }
 
     private fun printPlayerResult(playerResult: PlayerResult) {
-        println("${playerResult.name}: ${playerResult.result.message}")
+        println("${playerResult.name}: ${playerResult.money}")
     }
 }

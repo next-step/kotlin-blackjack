@@ -8,14 +8,14 @@ import blackjack.business.CardFixture.SPACE_TEN
 import blackjack.business.CardFixture.SPACE_THREE
 import blackjack.business.card.Card
 import blackjack.business.card.CardDesk
-import blackjack.business.util.GameResult
+import blackjack.business.card.Rank
+import blackjack.business.card.Suit
 import blackjack.business.util.Money
 import io.kotest.matchers.collections.shouldContainExactlyInAnyOrder
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
-import org.junit.jupiter.params.provider.MethodSource
 
 class DealerTest {
     @Test
@@ -34,23 +34,24 @@ class DealerTest {
     }
 
     @ParameterizedTest
-    @MethodSource("providePlayerAndDealerCards")
-    fun `딜러의 카드와 플레이어의 카드를 비교한다`(target: Card, expected: GameResult) {
+    @CsvSource(value = ["EIGHT,2000", "NINE,0", "TEN,-1000"])
+    fun `딜러의 카드와 플레이어의 카드를 비교한다`(target: Rank, expected: Int) {
         // given
         val dealer = Dealer(
             PlayerCards(
-                SPACE_FIVE, target
+                SPACE_FIVE, Card.of(Suit.CLUB, target)
             )
         )
         val gamePlayer = GamePlayer(
             "pobi",
             PlayerCards(
                 SPACE_FIVE, SPACE_NINE
-            )
+            ),
+            Money(1000)
         )
 
         // when,then
-        dealer.getPlayerResult(gamePlayer).result shouldBe expected
+        dealer.getPlayerResult(gamePlayer) shouldBe PlayerResult("pobi", Money(expected))
     }
 
     @Test
@@ -64,12 +65,13 @@ class DealerTest {
         val gamePlayer = GamePlayer(
             "pobi",
             PlayerCards(
-                SPACE_FIVE, SPACE_TEN, SPACE_TEN
-            )
+                SPACE_TEN, SPACE_TEN
+            ),
+            Money(1000)
         )
 
         // when,then
-        dealer.getPlayerResult(gamePlayer).result shouldBe GameResult.WIN
+        dealer.getPlayerResult(gamePlayer) shouldBe PlayerResult("pobi", Money(2000))
     }
 
     @Test
@@ -84,11 +86,12 @@ class DealerTest {
             "pobi",
             PlayerCards(
                 SPACE_TEN, SPACE_FIVE, SPACE_TEN
-            )
+            ),
+            Money(1000)
         )
 
         // when,then
-        dealer.getPlayerResult(gamePlayer).result shouldBe GameResult.LOSE
+        dealer.getPlayerResult(gamePlayer) shouldBe PlayerResult("pobi", Money(-1000))
     }
 
     @ParameterizedTest
@@ -165,14 +168,5 @@ class DealerTest {
 
         // then
         dealer.cards.size shouldBe 2
-    }
-
-    companion object {
-        @JvmStatic
-        private fun providePlayerAndDealerCards() = listOf(
-            arrayOf(SPACE_NINE, GameResult.DRAW),
-            arrayOf(SPACE_TEN, GameResult.LOSE),
-            arrayOf(SPACE_EIGHT, GameResult.WIN)
-        )
     }
 }
