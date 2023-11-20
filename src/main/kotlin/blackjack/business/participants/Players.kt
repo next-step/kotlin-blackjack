@@ -47,8 +47,6 @@ class Players(allGamePlayers: List<GamePlayer>) {
     }
 
     companion object {
-        fun from(playerNames: List<String>): Players {
-            return Players(playerNames.map { GamePlayer(it) })
-        }
+        fun from(playerNames: List<String>): Players = Players(playerNames.map { GamePlayer(it) })
     }
 }

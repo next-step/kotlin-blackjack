@@ -5,28 +5,24 @@ import blackjack.business.util.Money
 
 class Dealer(playerCards: PlayerCards = PlayerCards()) : BasePlayer(DEALER_NAME, playerCards) {
 
-    override fun canDrawCard(): Boolean {
-        return playerCards.sum() < DEALER_DRAW_CONDITION
-    }
+    override fun canDrawCard(): Boolean = playerCards.sum() < DEALER_DRAW_CONDITION
 
     fun getPlayerResult(gamePlayer: GamePlayer): PlayerResult {
-        if (gamePlayer.isBust()) {
-            return PlayerResult(gamePlayer.name, gamePlayer.money.lose())
+        val scoreDifference = gamePlayer.score - score
+        val resultMoney = when {
+            gamePlayer.isBust() -> gamePlayer.money.lose()
+            isBust() -> gamePlayer.money * 2.0
+            isDraw(scoreDifference) -> Money()
+            isLose(scoreDifference) -> gamePlayer.money.lose()
+            gamePlayer.isNaturalBlackJack() -> gamePlayer.money * 2.5
+            else -> gamePlayer.money * 2.0
         }
-        if (isBust()) {
-            return PlayerResult(gamePlayer.name, gamePlayer.money * 2.0)
-        }
-        if (gamePlayer.score - score == 0) {
-            return PlayerResult(gamePlayer.name, Money())
-        }
-        if (gamePlayer.score - score < 0) {
-            return PlayerResult(gamePlayer.name, gamePlayer.money.lose())
-        }
-        if (gamePlayer.score - score > 0 && gamePlayer.cards.size == 2 && gamePlayer.score == 21) {
-            return PlayerResult(gamePlayer.name, gamePlayer.money * 2.5)
-        }
-        return PlayerResult(gamePlayer.name, gamePlayer.money * 2.0)
+        return PlayerResult(gamePlayer.name, resultMoney)
     }
+
+    private fun isLose(scoreDifference: Int) = scoreDifference < 0
+
+    private fun isDraw(scoreDifference: Int) = scoreDifference == 0
 
     fun executeCardDraws(cardDesk: CardDesk, announcer: () -> Unit) {
         if (canDrawCard()) {

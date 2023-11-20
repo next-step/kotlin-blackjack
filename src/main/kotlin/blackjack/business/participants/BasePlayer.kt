@@ -23,7 +23,6 @@ abstract class BasePlayer(override val name: String, playerCards: PlayerCards = 
         playerCardsRef.updateAndGet { it.addAll(playerCardsList) }
     }
 
-    override fun isBust(): Boolean {
-        return playerCards.isBust()
-    }
+    override fun isBust(): Boolean = playerCards.isBust()
+    override fun isNaturalBlackJack(): Boolean = playerCards.isNaturalBlackJack()
 }

@@ -22,15 +22,10 @@ class PlayerCards(val cards: List<Card> = listOf()) {
         return sum
     }
 
-    fun add(card: Card): PlayerCards {
-        return PlayerCards(cards + card)
-    }
+    fun add(card: Card): PlayerCards = PlayerCards(cards + card)
 
-    fun isBust(): Boolean {
-        return sum() > BLACKJACK
-    }
+    fun isBust(): Boolean = sum() > BLACKJACK
 
-    fun addAll(cards: List<Card>): PlayerCards {
-        return PlayerCards(this.cards + cards)
-    }
+    fun addAll(cards: List<Card>): PlayerCards = PlayerCards(this.cards + cards)
+    fun isNaturalBlackJack(): Boolean = cards.size == 2 && sum() == BLACKJACK
 }

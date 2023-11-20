@@ -10,9 +10,7 @@ class GamePlayer(name: String, playerCards: PlayerCards = PlayerCards(), money: 
     val money: Money
         get() = _money.copy()
 
-    override fun canDrawCard(): Boolean {
-        return playerCards.sum() < BlackJackConst.BLACKJACK
-    }
+    override fun canDrawCard(): Boolean = playerCards.sum() < BlackJackConst.BLACKJACK
 
     fun setBettingMoney(money: Money) {
         this._money = money

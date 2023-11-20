@@ -4,7 +4,5 @@ object PlayerNameParser {
 
     private const val DELIMITER = ","
 
-    fun parse(input: String): List<String> {
-        return input.split(DELIMITER)
-    }
+    fun parse(input: String): List<String> = input.split(DELIMITER)
 }

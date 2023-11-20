@@ -10,4 +10,5 @@ interface Player {
     fun isBust(): Boolean
     fun addCard(card: Card)
     fun addCards(playerCardsList: List<Card>)
+    fun isNaturalBlackJack(): Boolean
 }

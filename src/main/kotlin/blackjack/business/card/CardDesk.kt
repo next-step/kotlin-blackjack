@@ -13,11 +13,9 @@ class CardDesk(
     val cards: List<Card>
         get() = _cards.toList()
 
-    fun draw(): Card {
-        return cardSelectionStrategy.selectCard(_cards).also {
-            _cards.remove(it)
-            if (_cards.isEmpty()) addAllNewCards()
-        }
+    fun draw(): Card = cardSelectionStrategy.selectCard(_cards).also {
+        _cards.remove(it)
+        if (_cards.isEmpty()) addAllNewCards()
     }
 
     fun startDraw(): List<Card> = (1..2).map {

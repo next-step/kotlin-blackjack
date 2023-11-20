@@ -88,6 +88,42 @@ class PlayerCardsTest {
         actual.cards[1] shouldBe SPACE_EIGHT
     }
 
+    @Test
+    fun `카드가 2장이고 합이 21이면 NaturalBlackJack가 맞다`() {
+        // given
+        val playerCards = PlayerCards(SPACE_ACE, SPACE_TEN)
+
+        // when
+        val actual = playerCards.isNaturalBlackJack()
+
+        // then
+        actual shouldBe true
+    }
+
+    @Test
+    fun `카드가 2장이고 합이 21이 아니면 NaturalBlackJack가 아니다`() {
+        // given
+        val playerCards = PlayerCards(SPACE_ACE, SPACE_EIGHT)
+
+        // when
+        val actual = playerCards.isNaturalBlackJack()
+
+        // then
+        actual shouldBe false
+    }
+
+    @Test
+    fun `카드가 3장이고 합이 21이여도 NaturalBlackJack가 아니다`() {
+        // given
+        val playerCards = PlayerCards(SPACE_ACE, SPACE_EIGHT, SPACE_TWO)
+
+        // when
+        val actual = playerCards.isNaturalBlackJack()
+
+        // then
+        actual shouldBe false
+    }
+
     companion object {
         @JvmStatic
         fun provideCards(): Stream<Arguments> {
