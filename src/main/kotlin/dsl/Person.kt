@@ -1,10 +1,11 @@
 package dsl
 
-class PersonBuilder {
-    private lateinit var name: String
+class PersonBuilder(
+    private var name: String
+) {
     private var company: String? = null
-    private var skills: Skills? = null
-    private var languages: Languages? = null
+    private var skills: Skills = Skills.empty()
+    private var languages: Languages = Languages.empty()
 
     fun name(value: String) {
         name = value
@@ -32,6 +33,6 @@ class PersonBuilder {
 data class Person(
     val name: String,
     val company: String?,
-    val skills: Skills?,
-    val languages: Languages?,
+    val skills: Skills,
+    val languages: Languages,
 )
