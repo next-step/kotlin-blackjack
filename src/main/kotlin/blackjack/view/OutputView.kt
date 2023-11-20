@@ -2,7 +2,8 @@ package blackjack.view
 
 object OutputView {
     fun printCardDealingHeader(
-        nicknames: String, numOfCards: Int
+        nicknames: String,
+        numOfCards: Int
     ) {
         println("\n${nicknames}에게 ${numOfCards}장의 나누었습니다.")
     }

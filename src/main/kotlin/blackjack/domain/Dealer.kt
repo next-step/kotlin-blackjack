@@ -4,7 +4,6 @@ class Dealer {
     var deck = Deck()
         private set
 
-
     fun ready() {
         deck.ready()
     }

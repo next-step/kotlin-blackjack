@@ -29,7 +29,8 @@ class BlackjackGame {
         players.values.forEach {
             OutputView.printCardDealing(
                 it.name,
-                it.cards.value.joinToString(", ") { card -> card.toString() })
+                it.cards.value.joinToString(", ") { card -> card.toString() }
+            )
         }
 
         process(dealer, players)

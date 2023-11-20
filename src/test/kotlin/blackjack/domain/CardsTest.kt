@@ -70,6 +70,6 @@ class CardsTest {
         // when
         fullCards.dec()
         // then
-        assertEquals(Cards.TOTAL_SIZE-1, fullCards.value.size)
+        assertEquals(Cards.TOTAL_SIZE - 1, fullCards.value.size)
     }
 }
