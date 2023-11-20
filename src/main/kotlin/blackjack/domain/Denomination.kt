@@ -3,12 +3,12 @@ package blackjack.domain
 enum class Denomination(
     val symbol: String,
     val score: Int,
-    val aceScore: Int? = null
+    val aceScore: Int = 0
 ) {
     TWO("2", 2),
     THREE("3", 3),
     FOUR("4", 4),
-    FIVE("", 5),
+    FIVE("5", 5),
     SIX("6", 6),
     SEVEN("7", 7),
     EIGHT("8", 8),
@@ -17,5 +17,5 @@ enum class Denomination(
     JACK("J", 10),
     QUEEN("Q", 10),
     KING("K", 10),
-    ACE("A", 1, 11);
+    ACE("A", 11, 1);
 }

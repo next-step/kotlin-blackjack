@@ -11,16 +11,17 @@ class DeckTest {
         // given, when
         val deck = Deck()
         // then
-        assertEquals(Cards.SIZE, deck.cards.value.size)
+        assertEquals(Cards.TOTAL_SIZE, deck.cards.value.size)
     }
 
     @Test
     fun `Deck에 준비된 카드가 모두 소진된 경우 IllegalStateException이 발생한다`() {
         // given
         val deck = Deck()
-        repeat(Cards.SIZE) {
+        repeat(Cards.TOTAL_SIZE) {
             deck.draw()
         }
+
         assertThrows<IllegalStateException> { // then
             deck.draw() // when
         }
