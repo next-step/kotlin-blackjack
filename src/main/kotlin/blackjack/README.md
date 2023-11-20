@@ -20,12 +20,22 @@ Top Down 형식으로 객체 역할과 책임 정의
   - [x] `Deck`은 `Card`를 가진다.
   - [x] `Deck`은 `Card`를 섞는다.
   - [x] `Deck`은 `Card`를 뽑는다.
-- [ ] `PlayerDecision` 객체를 만든다.
-  - [ ] `PlayerDecision`은 `Hit`, `Stand`를 가진다.
-- [ ] `Player` 객체를 만든다.
-  - [ ] `Player`는 `Card`를 가진다.
-  - [ ] `Player`는 `Card`를 받는다.
-- [ ] `Dealer` 객체를 만든다.
-  - [ ] `Dealer`는 `Card`를 가진다.
-  - [ ] `Dealer`는 `Card`를 지급한다.
-
+- [x] `Dealer` 객체를 만든다.
+  - [x] `Dealer`는 `Deck`을 가진다.
+  - [x] `Dealer`는 `Deck`을 통해 `Card`를 지급한다.
+- [x] `PlayerDecision` 객체를 만든다.
+  - [x] `PlayerDecision`은 `Hit`, `Stand`를 가진다.
+- [x] `Player` 객체를 만든다.
+  - [x] `Player`는 `Card`를 가진다.
+  - [x] `Player`는 `Card`를 받는다.
+  - [x] `Player`는 `Card`를 받을 때 `PlayerDecision`을 할 수 있다.
+  - [x] `Player`는 `Bust` 상황에서 `Hit`에서 `Stand`로 `Decision`을 변경해야 한다. 
+  - [x] `Player`는 가진 카드로부터 점수를 계산할 수 있다.  
+- [x] `Players` 객체를 만든다.
+  - [x] `Players`는 `List<Player>`를 가지는 일급 컬렉션이다.
+  - [x] `Hit` 결정을 한 `Player`들을 반환한다.
+- [x] BlackjackGame 컨트롤러 객체를 생성한다.
+  - [x] `BlackjackGame`은 `Dealer`, `Players`를 가진다.
+  - [x] 게임 초기화시 `Dealer`와 `Player`와 `Deck`을 세팅한다.
+  - [x] 게임이 시작되면 `Player`에게 두장의 카드를 제공하고, 게임을 진행한다. 이후 `Player`별 결과를 반환한다.
+- [x] 입출력 조건에 맞게 `InputView`, `OutputView`를 생성한다.
