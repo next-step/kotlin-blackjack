@@ -1,5 +1,6 @@
 package blackjack.domain
 
+import blackjack.AceCard
 import blackjack.NormalCard
 import blackjack.PictureCard
 import io.kotest.matchers.shouldBe
@@ -19,8 +20,16 @@ class CardTest {
 
     @Test
     fun `King, Queen, Jack이라는 숫자를 가지지 않는 카드가 있다`() {
-        val cardPattern = "King"
-        val card = PictureCard(cardPattern)
+        val picture = "King"
+        val card = PictureCard(picture)
+
+        card.picture shouldBe picture
+    }
+
+    @Test
+    fun `무늬를 가지는 Ace 카드가 있다`() {
+        val cardPattern = "Diamond"
+        val card = AceCard(cardPattern)
 
         card.pattern shouldBe cardPattern
     }

@@ -1,5 +1,5 @@
 package blackjack
 
 class PictureCard(
-    val pattern: String
+    val picture: String
 ) : BlackJackCard
