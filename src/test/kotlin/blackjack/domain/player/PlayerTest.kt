@@ -1,13 +1,35 @@
 package blackjack.domain.player
 
+import blackjack.domain.card.Card
+import blackjack.domain.card.CardKind
+import blackjack.domain.card.CardNumber
+import blackjack.domain.card.CardSet
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
 class PlayerTest {
     @Test
     fun `플레이어는 이름을 가진다`() {
-        val player = Player("cookie")
+        val player = player {
+            name("cookie")
+        }
         player.name shouldBe "cookie"
+    }
+
+    @Test
+    fun `플레이어는 여러장의 카드를 가진다`() {
+        val cardSet = CardSet(
+            listOf(
+                Card(CardKind.DIAMOND, CardNumber.ACE),
+                Card(CardKind.DIAMOND, CardNumber.ACE)
+            )
+        )
+
+        val player = player {
+            name("cookie")
+            cardSet(cardSet)
+        }
+        player.cardSet shouldBe cardSet
     }
 }
 
