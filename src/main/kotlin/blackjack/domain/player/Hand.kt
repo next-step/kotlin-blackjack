@@ -9,13 +9,13 @@ data class Hand(val handCards: HandCards) {
     }
     fun valueSum(): Int = handCards.cardList.sumOf { it.character.value }
 
-    fun isBlackjack() = valueSum() == blackjack
+    fun isBlackjack() = valueSum() == BLACK_JACK
 
-    fun isBust() = valueSum() > blackjack
+    fun isBust() = valueSum() > BLACK_JACK
 
     override fun toString(): String = "$handCards - 결과 : ${valueSum()}"
 
     companion object {
-        const val blackjack = 21
+        private const val BLACK_JACK = 21
     }
 }
