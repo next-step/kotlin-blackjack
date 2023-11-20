@@ -9,10 +9,12 @@ import blackjack.business.CardFixture.SPACE_THREE
 import blackjack.business.card.Card
 import blackjack.business.card.CardDesk
 import blackjack.business.util.GameResult
+import blackjack.business.util.Money
 import io.kotest.matchers.collections.shouldContainExactlyInAnyOrder
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.CsvSource
 import org.junit.jupiter.params.provider.MethodSource
 
 class DealerTest {
@@ -89,8 +91,9 @@ class DealerTest {
         dealer.getPlayerResult(gamePlayer).result shouldBe GameResult.LOSE
     }
 
-    @Test
-    fun `플레이어들과 비교하여 dealer의 결과를 반환한다`() {
+    @ParameterizedTest
+    @CsvSource(value = ["2000,3000,4000,-2000", "2000,3000,1000,1000", "2000,1000,3000,-1000"])
+    fun `플레이어들과 비교하여 dealer의 결과를 반환한다`(pobiMoney: Int, crongMoney: Int, honuxMoney: Int, expected: Int) {
         // given
         val dealer = Dealer(
             PlayerCards(
@@ -103,19 +106,22 @@ class DealerTest {
                     "pobi",
                     PlayerCards(
                         SPACE_TEN, SPACE_THREE
-                    )
+                    ),
+                    Money(pobiMoney)
                 ),
                 GamePlayer(
                     "crong",
                     PlayerCards(
                         SPACE_TEN, SPACE_FOUR
-                    )
+                    ),
+                    Money(crongMoney)
                 ),
                 GamePlayer(
                     "honux",
                     PlayerCards(
                         SPACE_TEN, SPACE_FIVE
-                    )
+                    ),
+                    Money(honuxMoney)
                 )
             )
         )
@@ -124,7 +130,7 @@ class DealerTest {
         val actual = dealer.getDealerResult(players)
 
         // then
-        actual shouldBe mapOf(GameResult.DRAW to 1, GameResult.WIN to 1, GameResult.LOSE to 1)
+        actual shouldBe Money(expected)
     }
 
     @Test

@@ -2,6 +2,7 @@ package blackjack.business.participants
 
 import blackjack.business.card.CardDesk
 import blackjack.business.util.GameResult
+import blackjack.business.util.Money
 
 class Dealer(playerCards: PlayerCards = PlayerCards()) : BasePlayer(DEALER_NAME, playerCards) {
 
@@ -23,8 +24,8 @@ class Dealer(playerCards: PlayerCards = PlayerCards()) : BasePlayer(DEALER_NAME,
         }
     }
 
-    fun getDealerResult(target: Players): Map<GameResult, Int> {
-        return target.allGamePlayers.map { getDealerResult(it.score) }.groupingBy { it }.eachCount()
+    fun getDealerResult(target: Players): Money {
+        return target.allGamePlayers.map { getDealerResult(it) }.reduce(Money::plus)
     }
 
     fun executeCardDraws(cardDesk: CardDesk, announcer: () -> Unit) {
@@ -34,17 +35,17 @@ class Dealer(playerCards: PlayerCards = PlayerCards()) : BasePlayer(DEALER_NAME,
         }
     }
 
-    private fun getDealerResult(target: Int): GameResult {
+    private fun getDealerResult(player: GamePlayer): Money {
         if (isBust()) {
-            return GameResult.WIN
+            return player.money.lose()
         }
-        if (target > 21) {
-            return GameResult.WIN
+        if (player.score > 21) {
+            return player.money.lose()
         }
-        return when (target - playerCards.sum()) {
-            0 -> GameResult.DRAW
-            in 1..Int.MAX_VALUE -> GameResult.LOSE
-            else -> GameResult.WIN
+        return when (player.score - score) {
+            0 -> Money()
+            in 1..Int.MAX_VALUE -> player.money.lose()
+            else -> player.money
         }
     }
 

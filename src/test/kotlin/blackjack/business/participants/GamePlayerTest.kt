@@ -132,7 +132,7 @@ class GamePlayerTest {
         gamePlayer.setBettingMoney(bettingMoney)
 
         // then
-        gamePlayer.bettingMoney shouldBe bettingMoney
+        gamePlayer.money shouldBe bettingMoney
     }
 
     @Test
@@ -148,6 +148,6 @@ class GamePlayerTest {
         gamePlayer.addCard(SPACE_TEN)
 
         // then
-        gamePlayer.bettingMoney shouldBe Money(-10000)
+        gamePlayer.money shouldBe Money(-10000)
     }
 }

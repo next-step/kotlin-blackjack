@@ -4,11 +4,12 @@ import blackjack.business.card.Card
 import blackjack.business.util.BlackJackConst
 import blackjack.business.util.Money
 
-class GamePlayer(name: String, playerCards: PlayerCards = PlayerCards()) : BasePlayer(name, playerCards) {
-    private var money: Money = Money(MIN_BETTING_MONEY)
+class GamePlayer(name: String, playerCards: PlayerCards = PlayerCards(), money: Money = Money(MIN_BETTING_MONEY)) :
+    BasePlayer(name, playerCards) {
+    private var _money: Money = money
 
-    val bettingMoney: Money
-        get() = money
+    val money: Money
+        get() = _money.copy()
 
     override fun canDrawCard(): Boolean {
         return playerCards.sum() < BlackJackConst.BLACKJACK
@@ -17,12 +18,12 @@ class GamePlayer(name: String, playerCards: PlayerCards = PlayerCards()) : BaseP
     override fun addCard(card: Card) {
         super.addCard(card)
         if (playerCards.isBust()) {
-            setBettingMoney(bettingMoney.lose())
+            setBettingMoney(money.lose())
         }
     }
 
     fun setBettingMoney(money: Money) {
-        this.money = money
+        this._money = money
     }
 
     companion object {

@@ -25,14 +25,17 @@ class ConsoleGameView : GameView {
         println()
         println("## 최종 승패")
         val dealerResult = dealer.getDealerResult(players)
-        val result = dealerResult.map { "${it.value}${it.key.message}" }
-        println("딜러: ${result.joinToString(", ")}")
+        println("딜러: $dealerResult")
         players.forEachPlayer { printPlayerResult(dealer.getPlayerResult(it)) }
     }
 
     override fun displayDealerDrawCardAnnouncement() {
         println()
         println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
+    }
+
+    override fun printNewLine() {
+        println()
     }
 
     override fun askForOneMore(playerName: String): String {
@@ -52,10 +55,6 @@ class ConsoleGameView : GameView {
         val value = readlnOrNull()?.toIntOrNull() ?: throw IllegalArgumentException("배팅 금액은 숫자여야 합니다.")
         require(value > 0) { "배팅 금액은 0보다 커야 합니다." }
         return Money(value)
-    }
-
-    override fun printNewLine() {
-        println()
     }
 
     private fun printPlayerResult(playerResult: PlayerResult) {
