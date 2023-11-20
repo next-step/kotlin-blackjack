@@ -4,12 +4,12 @@ data class Players(
     val dealer: Dealer,
     val players: List<Player>
 ) {
-    fun initCard(deck: Deck) {
-        val dealerInitCards = deck.init()
+    fun initCard() {
+        val dealerInitCards = dealer.drawInitCards()
         dealer.init(dealerInitCards)
 
         players.forEach {
-            val playerInitCards = deck.init()
+            val playerInitCards = dealer.drawInitCards()
             it.init(playerInitCards)
         }
     }

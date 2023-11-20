@@ -10,45 +10,36 @@ class ResultCalculatorTest : BehaviorSpec({
         When("플레이어는") {
             Then("게임의 결과를 반환한다.") {
                 forAll(
-                    row( // 딜러 Bust
-                        Dealer(
-                            Hand(
-                                mutableListOf(
-                                    Card(CardSuit.SPADE, CardNumber.TEN), Card(CardSuit.SPADE, CardNumber.TEN), Card(CardSuit.SPADE, CardNumber.TWO)
-                                )
-                            )
-                        ),
-                        Player("yeongun", Hand(mutableListOf(Card(CardSuit.SPADE, CardNumber.TEN), Card(CardSuit.SPADE, CardNumber.EIGHT)))),
-                        GameResult.WIN
-                    ),
-                    row( // 플레이어 Bust
-                        Dealer(Hand(mutableListOf(Card(CardSuit.SPADE, CardNumber.TEN), Card(CardSuit.SPADE, CardNumber.NINE)))),
-                        Player(
-                            "yeongun",
-                            Hand(
-                                mutableListOf(
-                                    Card(CardSuit.SPADE, CardNumber.TEN), Card(CardSuit.SPADE, CardNumber.TEN), Card(CardSuit.SPADE, CardNumber.TWO)
-                                )
-                            )
-                        ),
-                        GameResult.LOSE
-                    ),
                     row(
-                        Dealer(Hand(mutableListOf(Card(CardSuit.SPADE, CardNumber.TEN), Card(CardSuit.SPADE, CardNumber.NINE)))),
-                        Player("yeongun", Hand(mutableListOf(Card(CardSuit.SPADE, CardNumber.TEN), Card(CardSuit.SPADE, CardNumber.EIGHT)))),
-                        GameResult.LOSE
-                    ),
-                    row(
-                        Dealer(Hand(mutableListOf(Card(CardSuit.SPADE, CardNumber.TEN), Card(CardSuit.SPADE, CardNumber.NINE)))),
-                        Player("yeongun", Hand(mutableListOf(Card(CardSuit.SPADE, CardNumber.TEN), Card(CardSuit.SPADE, CardNumber.TEN)))),
+                        // 딜러 Bust
+                        mutableListOf(Card(CardSuit.CLUB, CardNumber.TEN), Card(CardSuit.CLUB, CardNumber.TEN), Card(CardSuit.CLUB, CardNumber.TWO)),
+                        mutableListOf(Card(CardSuit.SPADE, CardNumber.TEN), Card(CardSuit.SPADE, CardNumber.EIGHT)),
                         GameResult.WIN
                     ),
                     row(
-                        Dealer(Hand(mutableListOf(Card(CardSuit.SPADE, CardNumber.TEN), Card(CardSuit.SPADE, CardNumber.NINE)))),
-                        Player("yeongun", Hand(mutableListOf(Card(CardSuit.SPADE, CardNumber.TEN), Card(CardSuit.SPADE, CardNumber.NINE)))),
+                        // 플레이어 Bust
+                        mutableListOf(Card(CardSuit.SPADE, CardNumber.TEN), Card(CardSuit.SPADE, CardNumber.NINE)),
+                        mutableListOf(Card(CardSuit.CLUB, CardNumber.TEN), Card(CardSuit.CLUB, CardNumber.TEN), Card(CardSuit.CLUB, CardNumber.TWO)),
+                        GameResult.LOSE
+                    ),
+                    row(
+                        mutableListOf(Card(CardSuit.SPADE, CardNumber.TEN), Card(CardSuit.SPADE, CardNumber.NINE)),
+                        mutableListOf(Card(CardSuit.SPADE, CardNumber.TEN), Card(CardSuit.SPADE, CardNumber.EIGHT)),
+                        GameResult.LOSE
+                    ),
+                    row(
+                        mutableListOf(Card(CardSuit.SPADE, CardNumber.TEN), Card(CardSuit.SPADE, CardNumber.NINE)),
+                        mutableListOf(Card(CardSuit.SPADE, CardNumber.TEN), Card(CardSuit.SPADE, CardNumber.TEN)),
+                        GameResult.WIN
+                    ),
+                    row(
+                        mutableListOf(Card(CardSuit.SPADE, CardNumber.TEN), Card(CardSuit.SPADE, CardNumber.NINE)),
+                        mutableListOf(Card(CardSuit.SPADE, CardNumber.TEN), Card(CardSuit.SPADE, CardNumber.NINE)),
                         GameResult.DRAW
                     ),
-                ) { dealer, player, expected ->
+                ) { dealerCards, playerCards, expected ->
+                    val dealer = Dealer(FixedDeck(), Hand(dealerCards))
+                    val player = Player("yeongun", Hand(playerCards))
                     player.getResult(dealer) shouldBe expected
                 }
             }
@@ -60,44 +51,33 @@ class ResultCalculatorTest : BehaviorSpec({
             Then("게임의 결과를 반환한다.") {
                 forAll(
                     row( // 딜러 Bust
-                        Dealer(
-                            Hand(
-                                mutableListOf(
-                                    Card(CardSuit.SPADE, CardNumber.TEN), Card(CardSuit.SPADE, CardNumber.TEN), Card(CardSuit.SPADE, CardNumber.TWO)
-                                )
-                            )
-                        ),
-                        Player("yeongun", Hand(mutableListOf(Card(CardSuit.SPADE, CardNumber.TEN), Card(CardSuit.SPADE, CardNumber.EIGHT)))),
+                        mutableListOf(Card(CardSuit.CLUB, CardNumber.TEN), Card(CardSuit.CLUB, CardNumber.TEN), Card(CardSuit.CLUB, CardNumber.TWO)),
+                        mutableListOf(Card(CardSuit.SPADE, CardNumber.TEN), Card(CardSuit.SPADE, CardNumber.EIGHT)),
                         GameResult.LOSE
                     ),
                     row( // 플레이어 Bust
-                        Dealer(Hand(mutableListOf(Card(CardSuit.SPADE, CardNumber.TEN), Card(CardSuit.SPADE, CardNumber.NINE)))),
-                        Player(
-                            "yeongun",
-                            Hand(
-                                mutableListOf(
-                                    Card(CardSuit.SPADE, CardNumber.TEN), Card(CardSuit.SPADE, CardNumber.TEN), Card(CardSuit.SPADE, CardNumber.TWO)
-                                )
-                            )
-                        ),
+                        mutableListOf(Card(CardSuit.SPADE, CardNumber.TEN), Card(CardSuit.SPADE, CardNumber.NINE)),
+                        mutableListOf(Card(CardSuit.CLUB, CardNumber.TEN), Card(CardSuit.CLUB, CardNumber.TEN), Card(CardSuit.CLUB, CardNumber.TWO)),
                         GameResult.WIN
                     ),
                     row(
-                        Dealer(Hand(mutableListOf(Card(CardSuit.SPADE, CardNumber.TEN), Card(CardSuit.SPADE, CardNumber.NINE)))),
-                        Player("yeongun", Hand(mutableListOf(Card(CardSuit.SPADE, CardNumber.TEN), Card(CardSuit.SPADE, CardNumber.EIGHT)))),
+                        mutableListOf(Card(CardSuit.SPADE, CardNumber.TEN), Card(CardSuit.SPADE, CardNumber.NINE)),
+                        mutableListOf(Card(CardSuit.SPADE, CardNumber.TEN), Card(CardSuit.SPADE, CardNumber.EIGHT)),
                         GameResult.WIN
                     ),
                     row(
-                        Dealer(Hand(mutableListOf(Card(CardSuit.SPADE, CardNumber.TEN), Card(CardSuit.SPADE, CardNumber.NINE)))),
-                        Player("yeongun", Hand(mutableListOf(Card(CardSuit.SPADE, CardNumber.TEN), Card(CardSuit.SPADE, CardNumber.TEN)))),
+                        mutableListOf(Card(CardSuit.SPADE, CardNumber.TEN), Card(CardSuit.SPADE, CardNumber.NINE)),
+                        mutableListOf(Card(CardSuit.SPADE, CardNumber.TEN), Card(CardSuit.SPADE, CardNumber.TEN)),
                         GameResult.LOSE
                     ),
                     row(
-                        Dealer(Hand(mutableListOf(Card(CardSuit.SPADE, CardNumber.TEN), Card(CardSuit.SPADE, CardNumber.NINE)))),
-                        Player("yeongun", Hand(mutableListOf(Card(CardSuit.SPADE, CardNumber.TEN), Card(CardSuit.SPADE, CardNumber.NINE)))),
+                        mutableListOf(Card(CardSuit.SPADE, CardNumber.TEN), Card(CardSuit.SPADE, CardNumber.NINE)),
+                        mutableListOf(Card(CardSuit.SPADE, CardNumber.TEN), Card(CardSuit.SPADE, CardNumber.NINE)),
                         GameResult.DRAW
                     ),
-                ) { dealer, player, expected ->
+                ) { dealerCards, playerCards, expected ->
+                    val dealer = Dealer(FixedDeck(), Hand(dealerCards))
+                    val player = Player("yeongun", Hand(playerCards))
                     dealer.getResult(player) shouldBe expected
                 }
             }

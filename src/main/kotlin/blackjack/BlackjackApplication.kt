@@ -1,7 +1,6 @@
 package blackjack
 
 import blackjack.domain.Dealer
-import blackjack.domain.Deck
 import blackjack.domain.Player
 import blackjack.domain.Players
 import blackjack.domain.RandomDeck
@@ -10,31 +9,31 @@ import blackjack.ui.InputView
 import blackjack.ui.ResultView
 
 fun main() {
+    val dealer = Dealer(RandomDeck.from())
     val inputNames = InputView.inputNames()
-    val players = Players.init(Dealer(), inputNames)
+    val players = Players.init(dealer, inputNames)
 
-    val deck = RandomDeck.from()
-    players.initCard(deck)
+    players.initCard()
     ResultView.printInitPlayers(players)
 
     players.players
-        .forEach { play(it, deck) }
-    dealerPlay(players.dealer, deck)
+        .forEach { play(dealer, it) }
+    dealerPlay(dealer)
     ResultView.printCardResult(players)
 
     printGameResult(players)
 }
 
-private fun play(player: Player, deck: Deck) {
+private fun play(dealer: Dealer, player: Player) {
     while (player.canHit()) {
-        hitOrStand(player, deck)
+        hitOrStand(dealer, player)
     }
 }
 
-private fun hitOrStand(player: Player, deck: Deck) {
+private fun hitOrStand(dealer: Dealer, player: Player) {
     when (InputView.inputHitOrStand(player)) {
         true -> {
-            val card = deck.hit()
+            val card = dealer.draw()
             player.hit(card)
             ResultView.printPlayerNameAndCard(player)
         }
@@ -43,9 +42,9 @@ private fun hitOrStand(player: Player, deck: Deck) {
     }
 }
 
-private fun dealerPlay(dealer: Dealer, deck: Deck) {
+private fun dealerPlay(dealer: Dealer) {
     while (dealer.canHit()) {
-        val card = deck.hit()
+        val card = dealer.draw()
         dealer.hit(card)
         ResultView.printDealerHitMessage()
     }

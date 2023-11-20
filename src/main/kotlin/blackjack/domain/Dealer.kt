@@ -1,6 +1,7 @@
 package blackjack.domain
 
 class Dealer(
+    private val deck: Deck,
     hand: Hand = Hand()
 ) : User(hand) {
     override fun hit(card: Card) {
@@ -14,5 +15,13 @@ class Dealer(
         } else {
             State.HIT
         }
+    }
+
+    fun drawInitCards(): List<Card> {
+        return deck.init()
+    }
+
+    fun draw(): Card {
+        return deck.hit()
     }
 }
