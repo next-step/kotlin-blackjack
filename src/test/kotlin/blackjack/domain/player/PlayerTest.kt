@@ -10,11 +10,11 @@ import org.assertj.core.api.Assertions
 import java.lang.RuntimeException
 
 class PlayerTest : StringSpec({
-    "Player 는 Idle 일 때 hit 할 수 있다" {
+    "Player 는 Hit 일 때 hit 할 수 있다" {
         val hand = Hand(HandCards(mutableListOf(Card(Suit.Spade, Character.Jack), Card(Suit.Clover, Character.Eight))))
         val idlePlayer = Player("aaa", hand)
 
-        idlePlayer.state shouldBe PlayerState.Idle
+        idlePlayer.state shouldBe PlayerState.Hit
         idlePlayer.hit()
         idlePlayer.state shouldBe PlayerState.Hit
     }
@@ -82,20 +82,6 @@ class PlayerTest : StringSpec({
 
         Assertions.assertThatThrownBy {
             stayPlayer.hit()
-        }.isInstanceOf(RuntimeException::class.java)
-            .hasMessageContaining("Invalid state transition")
-    }
-
-    "Player 가 hit 상태가 되면 hit 할 수 없다" {
-        val hand = Hand(HandCards(mutableListOf(Card(Suit.Spade, Character.Jack), Card(Suit.Clover, Character.Eight))))
-        val idlePlayer = Player("aaa", hand)
-
-        idlePlayer.state shouldBe PlayerState.Idle
-        idlePlayer.hit()
-        idlePlayer.state shouldBe PlayerState.Hit
-
-        Assertions.assertThatThrownBy {
-            idlePlayer.hit()
         }.isInstanceOf(RuntimeException::class.java)
             .hasMessageContaining("Invalid state transition")
     }

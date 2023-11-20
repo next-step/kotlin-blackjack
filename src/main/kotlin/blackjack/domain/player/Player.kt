@@ -6,7 +6,7 @@ import java.lang.RuntimeException
 data class Player(
     val name: String,
     val hand: Hand,
-    var state: PlayerState = PlayerState.Idle
+    var state: PlayerState = PlayerState.Hit
 ) {
     init {
         if (hand.isBlackjack()) {
@@ -16,14 +16,14 @@ data class Player(
         }
     }
     fun hit() {
-        require(state == PlayerState.Idle) {
+        require(state == PlayerState.Hit) {
             RuntimeException("Invalid state transition: $state -> ${PlayerState.Hit}")
         }
         state = PlayerState.Hit
     }
 
     fun stay() {
-        require(state == PlayerState.Idle)
+        require(state == PlayerState.Hit)
         state = PlayerState.Stay
     }
 
@@ -37,7 +37,7 @@ data class Player(
         } else if (hand.isBlackjack()) {
             PlayerState.Blackjack
         } else {
-            PlayerState.Idle
+            PlayerState.Hit
         }
     }
 }

@@ -23,7 +23,7 @@ fun main() {
     }
 
     players.forEach { player ->
-        while (player.state == PlayerState.Idle) {
+        while (player.state == PlayerState.Hit) {
             println("${player.name}은 한 장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
             val command = readln().trim()
             if (command == "y") {
