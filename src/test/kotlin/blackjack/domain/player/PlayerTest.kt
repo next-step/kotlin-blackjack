@@ -35,9 +35,8 @@ class PlayerTest : StringSpec({
         val bustHand = Hand(
             HandCards(
                 mutableListOf(
-                    Card(Suit.Spade, Character.Jack),
-                    Card(Suit.Clover, Character.Eight),
-                    Card(Suit.Clover, Character.Five),
+                    Card(Suit.Spade, Character.Ace),
+                    Card(Suit.Clover, Character.Ace),
                 )
             )
         )
@@ -57,8 +56,7 @@ class PlayerTest : StringSpec({
             HandCards(
                 mutableListOf(
                     Card(Suit.Spade, Character.Jack),
-                    Card(Suit.Clover, Character.Eight),
-                    Card(Suit.Clover, Character.Three),
+                    Card(Suit.Clover, Character.Ace),
                 )
             )
         )
