@@ -1,6 +1,5 @@
 package blackjack
 
-class NormalCard(
-    val number: Int,
+class PictureCard(
     val pattern: String
 ) : BlackJackCard
