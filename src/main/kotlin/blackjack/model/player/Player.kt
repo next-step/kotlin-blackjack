@@ -8,13 +8,12 @@ import blackjack.model.state.playState.gameState.Hit
 data class Player(val name: String, val cards: CardDeck = CardDeck()) {
     var state: State = Hit(cards)
 
-    fun draw(card: Card): State {
+    fun draw(card: Card) {
         this.state = state.draw(card)
-        return state
     }
 
-    fun stay(): State {
-        return state.stay()
+    fun stay() {
+        this.state = state.stay()
     }
 
     fun cards(): List<Card> {
