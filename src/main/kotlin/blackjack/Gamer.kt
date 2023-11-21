@@ -1,9 +1,10 @@
 package blackjack
 
-open class Player(val name: String) {
+abstract class Gamer(val name: String) {
     val playerCards: PlayerCards = PlayerCards()
 
     val isBusted get() = playerCards.isBusted()
+    val isBlackjack get() = playerCards.isBlackjack()
 
     fun getInitialCards(cards: List<PlayingCard>) {
         for (card in cards) {
@@ -14,4 +15,11 @@ open class Player(val name: String) {
     fun hit(card: PlayingCard) {
         playerCards.addCard(card)
     }
+
+    fun setInitialDeck(cardDeck: CardDeck, showCards: (t: Gamer) -> Unit) {
+        getInitialCards(cardDeck.drawInitialCards())
+        showCards(this)
+    }
+
+    abstract val canGetCard: Boolean
 }
