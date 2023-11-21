@@ -25,7 +25,7 @@ data class Participant(
         setCurrentState()
     }
 
-    fun doStand() {
+    fun changeStateToStand() {
         _currentState = GamerCurrentState.STAND
     }
 

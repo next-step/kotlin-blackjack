@@ -19,7 +19,7 @@ class BlackJack(
                     OutputView.printParticipantInformation(participant)
                     if (participant.canJoinGame().not()) break
                 } else {
-                    participant.doStand()
+                    participant.changeStateToStand()
                     break
                 }
             }
