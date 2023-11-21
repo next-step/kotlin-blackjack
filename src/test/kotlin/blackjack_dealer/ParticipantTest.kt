@@ -1,5 +1,6 @@
 package blackjack_dealer
 
+import blackjack_dealer.domain.Dealer
 import blackjack_dealer.domain.Participant
 import blackjack_dealer.entity.Card
 import blackjack_dealer.entity.CardDeque
@@ -61,9 +62,11 @@ class ParticipantTest : StringSpec({
 
     "블랙잭 수행중 n 을 입력하면 현재 state가 stand가 된다." {
         val deque = CardDeque.create()
-        val card = listOf(deque.cardDeque.removeLast(), deque.cardDeque.removeLast())
-        val pita = Participant.newInstance("pita", card.toGamerCards())
-        val blackJack = BlackJack(deque, Participants(listOf(pita)))
+        val participantCard = listOf(deque.cardDeque.removeLast(), deque.cardDeque.removeLast()).toGamerCards()
+        val dealerCard = listOf(deque.cardDeque.removeLast(), deque.cardDeque.removeLast()).toGamerCards()
+        val pita = Participant.newInstance("pita", participantCard)
+        val dealer = Dealer.newInstance(dealerCard)
+        val blackJack = BlackJack(deque, dealer, Participants(listOf(pita)))
         // 블랙잭 수행
         blackJack.doGame {
             false

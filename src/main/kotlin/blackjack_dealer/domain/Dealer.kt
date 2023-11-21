@@ -14,26 +14,24 @@ data class Dealer(
 
     fun getDealerName(): String = name
     fun getCurrentCards(): GamerCards = gamerCards
-    fun getCurrentGamerState(): GamerCurrentState = currentState
     fun canKeepPlayingGame(): Boolean = currentState is GamerCurrentState.HIT
 
     fun getOneMoreCardIfHit(cardDeque: CardDeque) {
-        if (currentState is GamerCurrentState.HIT) {
-            gamerCards = gamerCards.plus(listOf(CardGenerator.generateSingleCard(cardDeque))).toGamerCards()
-        }
+        gamerCards = gamerCards.plus(listOf(CardGenerator.generateSingleCard(cardDeque))).toGamerCards()
+        currentState = findDealerMatchedState(gamerCards)
     }
 
     companion object {
         private const val DEALER_NAME = "딜러"
         fun newInstance(cards: GamerCards): Dealer {
-            val initialState = findDealerInitialState(cards)
+            val initialState = findDealerMatchedState(cards)
             return Dealer().apply {
                 gamerCards = cards
                 currentState = initialState
             }
         }
 
-        private fun findDealerInitialState(cards: GamerCards): GamerCurrentState {
+        private fun findDealerMatchedState(cards: GamerCards): GamerCurrentState {
             val cardScores = cards.getCurrentScore()
             return when (cardScores) {
                 in 4..16 -> GamerCurrentState.HIT

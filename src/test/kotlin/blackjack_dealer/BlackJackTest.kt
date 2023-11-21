@@ -1,5 +1,6 @@
 package blackjack_dealer
 
+import blackjack_dealer.domain.Dealer
 import blackjack_dealer.domain.Participant
 import blackjack_dealer.entity.Card
 import blackjack_dealer.entity.CardDeque
@@ -20,10 +21,12 @@ class BlackJackTest : StringSpec({
 
         val customCards =
             listOf(Card(CardNumber.J, CardShape.HEART), Card(CardNumber.J, CardShape.CLOVER)).toGamerCards()
+        val dealerCards = listOf(cardDeque.cardDeque.removeLast(), cardDeque.cardDeque.removeLast()).toGamerCards()
 
         val participant = Participant.newInstance("pita", customCards)
+        val dealer = Dealer.newInstance(dealerCards)
         val expected = 3
-        val blackJack = BlackJack(cardDeque, Participants(listOf(participant)))
+        val blackJack = BlackJack(cardDeque, dealer, Participants(listOf(participant)))
         // 블랙잭 수행
         blackJack.doGame {
             true
@@ -34,8 +37,10 @@ class BlackJackTest : StringSpec({
 
     "블랙잭을 수행하여 한장 더 안받기 선택시에 카드의 숫자가 개수가 동일하다" {
         val participant = Participant.newInstance("pita", cards)
+        val dealerCards = listOf(cardDeque.cardDeque.removeLast(), cardDeque.cardDeque.removeLast()).toGamerCards()
+        val dealer = Dealer.newInstance(dealerCards)
         val expected = 2
-        val blackJack = BlackJack(cardDeque, Participants(listOf(participant)))
+        val blackJack = BlackJack(cardDeque, dealer, Participants(listOf(participant)))
         // 블랙잭 수행
         blackJack.doGame {
             false

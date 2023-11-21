@@ -18,8 +18,8 @@ fun main() {
     OutputView.printGamersInformation(dealer, participants)
 
     val canJoinParticipants = participants.getParticipantsCanPlayGame()
-    val blackJack = BlackJack(cardDeque = cardDeque, participants = canJoinParticipants)
+    val blackJack = BlackJack(cardDeque = cardDeque, dealer = dealer, participants = canJoinParticipants)
     blackJack.doGame { InputView.inputGetOneMoreCard() }
 
-    OutputView.printResult(participants)
+    OutputView.printResult(dealer, participants)
 }

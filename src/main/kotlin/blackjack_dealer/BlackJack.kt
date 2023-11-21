@@ -1,11 +1,14 @@
 package blackjack_dealer
 
+import blackjack_dealer.domain.Dealer
 import blackjack_dealer.entity.CardDeque
+import blackjack_dealer.entity.GamerCurrentState
 import blackjack_dealer.entity.Participants
 import blackjack_dealer.ui.OutputView
 
 class BlackJack(
     private val cardDeque: CardDeque,
+    private val dealer: Dealer,
     private val participants: Participants,
 ) {
     fun doGame(
@@ -23,6 +26,10 @@ class BlackJack(
                     break
                 }
             }
+        }
+        while (dealer.canKeepPlayingGame()) {
+            OutputView.printGetOneMoreCardForDealer()
+            dealer.getOneMoreCardIfHit(cardDeque)
         }
     }
 }
