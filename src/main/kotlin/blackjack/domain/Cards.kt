@@ -11,7 +11,7 @@ value class Cards(val value: List<Card>) {
             SoftAcePointStrategy().getPoint(card.rank)
         }
 
-        return softAcePointStrategy.takeIf { it <= 21 } ?: hardAcePoint
+        return softAcePointStrategy.takeIf { it <= BlackJack.BlackJackedNumber } ?: hardAcePoint
     }
 
     operator fun plus(other: Card): Cards {
