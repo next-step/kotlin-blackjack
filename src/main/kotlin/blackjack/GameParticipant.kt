@@ -5,20 +5,20 @@ import blackjack.GameBlackjack.Companion.BLACKJACK_MAX_SCORE
 sealed class GameParticipant(
     val name: String,
     val cards: List<Card> = emptyList()
-){
+) {
     val isBust: Boolean = isBust(cards)
 
     class Player(
         name: String,
         cards: List<Card> = emptyList()
-    ): GameParticipant(name, cards) {
+    ) : GameParticipant(name, cards) {
         override fun isNotAllowedDealing(): Boolean = this.isBust || this.isBlackjack()
     }
 
     class Dealer(
         name: String = NAME,
         cards: List<Card> = emptyList()
-    ): GameParticipant(name, cards) {
+    ) : GameParticipant(name, cards) {
         override fun isNotAllowedDealing(): Boolean = getScore() > CONTINUE_DEALING_SCORE
 
         companion object {
@@ -70,5 +70,4 @@ sealed class GameParticipant(
         result = 31 * result + isBust.hashCode()
         return result
     }
-
 }

@@ -11,7 +11,7 @@ class PrintProxyBlackjack(
 
     override fun continueDealing(player: GameParticipant): GameParticipant {
         val updatedParticipant = target.continueDealing(player)
-        if(player is GameParticipant.Player) {
+        if (player is GameParticipant.Player) {
             Output.printParticipantCards(updatedParticipant)
         }
         return updatedParticipant

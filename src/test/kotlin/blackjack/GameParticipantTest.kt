@@ -1,6 +1,7 @@
 package blackjack
 
-import blackjack.Card.*
+import blackjack.Card.Number
+import blackjack.Card.Symbol
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 
@@ -8,14 +9,14 @@ class GameParticipantTest : BehaviorSpec({
 
     val cardShuffleStrategy = CardShuffleStrategy {
         listOf(
-            Card(Symbol.SPADE, Card.Number.THREE),
-            Card(Symbol.SPADE, Card.Number.ACE)
+            Card(Symbol.SPADE, Number.THREE),
+            Card(Symbol.SPADE, Number.ACE)
         )
     }
     Given("플레이어가 딜러에게 카드를 추가로 받는다면") {
         val cards = listOf(
-            Card(Symbol.SPADE, Card.Number.TEN),
-            Card(Symbol.SPADE, Card.Number.TWO),
+            Card(Symbol.SPADE, Number.TEN),
+            Card(Symbol.SPADE, Number.TWO),
         )
         val gamePlayer = GameParticipant.Player(
             "test",
@@ -27,9 +28,9 @@ class GameParticipantTest : BehaviorSpec({
             updatedPlayer shouldBe GameParticipant.Player(
                 "test",
                 listOf(
-                    Card(Symbol.SPADE, Card.Number.THREE),
-                    Card(Symbol.SPADE, Card.Number.TEN),
-                    Card(Symbol.SPADE, Card.Number.TWO)
+                    Card(Symbol.SPADE, Number.THREE),
+                    Card(Symbol.SPADE, Number.TEN),
+                    Card(Symbol.SPADE, Number.TWO)
                 )
             )
         }
@@ -38,9 +39,9 @@ class GameParticipantTest : BehaviorSpec({
             val bustPlayer = GameParticipant.Player(
                 "test",
                 listOf(
-                    Card(Symbol.SPADE, Card.Number.TWO),
-                    Card(Symbol.SPADE, Card.Number.NINE),
-                    Card(Symbol.SPADE, Card.Number.KING),
+                    Card(Symbol.SPADE, Number.TWO),
+                    Card(Symbol.SPADE, Number.NINE),
+                    Card(Symbol.SPADE, Number.KING),
                 )
             )
             val bustDealer = GameDealer(cardShuffleStrategy)
@@ -49,10 +50,10 @@ class GameParticipantTest : BehaviorSpec({
                 updatedPlayer shouldBe GameParticipant.Player(
                     name = "test",
                     cards = listOf(
-                        Card(Symbol.SPADE, Card.Number.THREE),
-                        Card(Symbol.SPADE, Card.Number.TWO),
-                        Card(Symbol.SPADE, Card.Number.NINE),
-                        Card(Symbol.SPADE, Card.Number.KING),
+                        Card(Symbol.SPADE, Number.THREE),
+                        Card(Symbol.SPADE, Number.TWO),
+                        Card(Symbol.SPADE, Number.NINE),
+                        Card(Symbol.SPADE, Number.KING),
                     )
                 )
             }
@@ -64,17 +65,17 @@ class GameParticipantTest : BehaviorSpec({
             val same = GameParticipant.Player(
                 "test",
                 listOf(
-                    Card(Symbol.HEART, Card.Number.NINE),
-                    Card(Symbol.HEART, Card.Number.KING),
-                    Card(Symbol.HEART, Card.Number.TWO),
+                    Card(Symbol.HEART, Number.NINE),
+                    Card(Symbol.HEART, Number.KING),
+                    Card(Symbol.HEART, Number.TWO),
                 )
             )
             val exceeded = GameParticipant.Player(
                 "test",
                 listOf(
-                    Card(Symbol.HEART, Card.Number.NINE),
-                    Card(Symbol.HEART, Card.Number.KING),
-                    Card(Symbol.HEART, Card.Number.JACK),
+                    Card(Symbol.HEART, Number.NINE),
+                    Card(Symbol.HEART, Number.KING),
+                    Card(Symbol.HEART, Number.JACK),
                 )
             )
             Then("카드를 추가 받을 수 없다.") {
@@ -87,8 +88,8 @@ class GameParticipantTest : BehaviorSpec({
             val exceeded = GameParticipant.Dealer(
                 "test",
                 listOf(
-                    Card(Symbol.HEART, Card.Number.NINE),
-                    Card(Symbol.HEART, Card.Number.KING)
+                    Card(Symbol.HEART, Number.NINE),
+                    Card(Symbol.HEART, Number.KING)
                 )
             )
             Then("카드를 추가 받을 수 없다.") {

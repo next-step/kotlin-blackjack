@@ -47,13 +47,13 @@ fun main() {
 }
 
 private fun dealing(participant: GameParticipant, blackjack: GameBlackjack) =
-    when(participant) {
+    when (participant) {
         is GameParticipant.Dealer -> dealerDealing(participant, blackjack)
         is GameParticipant.Player -> playerDealing(participant, blackjack)
     }
 
 private fun dealerDealing(participant: GameParticipant, blackjack: GameBlackjack): GameParticipant {
-    return if(participant.isNotAllowedDealing()) participant
+    return if (participant.isNotAllowedDealing()) participant
     else {
         Output.printMessage(Message.PRINT_DEALER_DEALING)
         blackjack.continueDealing(participant)

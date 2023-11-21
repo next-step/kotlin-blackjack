@@ -1,6 +1,6 @@
 package blackjack
 
-typealias CompareScore= (Int, Int) -> Boolean
+typealias CompareScore = (Int, Int) -> Boolean
 enum class MatchResult(
     val message: String,
     private val compare: CompareScore
@@ -14,7 +14,7 @@ enum class MatchResult(
             ?: throw RuntimeException()
 
         fun reverse(matchResult: MatchResult) =
-            when(matchResult) {
+            when (matchResult) {
                 WIN -> LOSS
                 LOSS -> WIN
                 DRAW -> DRAW

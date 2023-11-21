@@ -6,7 +6,7 @@ class GameScoreCalculator(
 
     fun getMatchResult(): GameParticipantResults {
         val (players, dealer) = gameParticipants.let { it.players to it.dealer }
-        if(dealer.isBust) {
+        if (dealer.isBust) {
             val playersResult = players.map { GameParticipantResult.Player(it.name, MatchResult.WIN) }
             val dealerResult = GameParticipantResult.Dealer(dealer.name, playersResult.map { MatchResult.LOSS })
             return GameParticipantResults(playersResult, dealerResult)
