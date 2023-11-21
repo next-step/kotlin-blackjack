@@ -15,14 +15,14 @@ class GameManager(
     private val drawConditionStrategy: DrawConditionStrategy = UserInputBasedDrawCondition(),
     private val cardDesk: CardDesk = CardDesk()
 ) {
-    private val players = createPlayers()
-    private val dealer = Dealer()
+    private var players = createPlayers()
+    private var dealer = Dealer()
 
     fun start() {
         view.displayGameStartAnnouncement(players.getNames())
-        dealInitialCards(players, cardDesk, dealer)
-        executeCardDraws(players, drawConditionStrategy, cardDesk, dealer)
-        displayGameResults(dealer, players)
+        dealInitialCards()
+        executeCardDraws()
+        displayGameResults()
     }
 
     private fun createPlayers(): Players {
@@ -30,31 +30,20 @@ class GameManager(
         return Players(playerNames.map { GamePlayer(it, PlayerCards(), view.askForBettingMoney(it)) })
     }
 
-    private fun dealInitialCards(
-        players: Players,
-        cardDesk: CardDesk,
-        dealer: Dealer
-    ) {
-        dealer.addCards(cardDesk.startDraw())
+    private fun dealInitialCards() {
+        dealer = dealer.addCards(cardDesk.startDraw())
         view.displayPlayerCards(dealer)
-        players.dealInitialCards(cardDesk) { view.displayPlayerCards(it) }
+        players = players.dealInitialCards(cardDesk) { view.displayPlayerCards(it) }
     }
 
-    private fun executeCardDraws(
-        players: Players,
-        drawConditionStrategy: DrawConditionStrategy,
-        cardDesk: CardDesk,
-        dealer: Dealer
-    ) {
+    private fun executeCardDraws() {
         view.printNewLine()
         players.executeCardDraws(cardDesk, drawConditionStrategy, view::askForOneMore, view::displayPlayerCards)
-        dealer.executeCardDraws(cardDesk) { view.displayDealerDrawCardAnnouncement() }
+            .also { players = it }
+        dealer.executeCardDraws(cardDesk) { view.displayDealerDrawCardAnnouncement() }.also { dealer = it }
     }
 
-    private fun displayGameResults(
-        dealer: Dealer,
-        players: Players
-    ) {
+    private fun displayGameResults() {
         view.displayPlayerResult(dealer)
         players.forEachPlayer(view::displayPlayerResult)
         view.displayGameResult(players.getGameResult(dealer))

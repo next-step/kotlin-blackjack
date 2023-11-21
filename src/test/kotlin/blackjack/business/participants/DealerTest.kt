@@ -25,11 +25,11 @@ class DealerTest {
         val card = cardDesk.draw()
 
         // when
-        dealer.addCard(card)
+        val actualDeal = dealer.addCard(card)
 
         // then
-        dealer.cards.size shouldBe 1
-        dealer.cards shouldContainExactlyInAnyOrder listOf(card)
+        actualDeal.cards.size shouldBe 1
+        actualDeal.cards shouldContainExactlyInAnyOrder listOf(card)
     }
 
     @ParameterizedTest
@@ -124,10 +124,10 @@ class DealerTest {
         val cardDesk = CardDesk()
 
         // when
-        dealer.executeCardDraws(cardDesk) {}
+        val actualDealer = dealer.executeCardDraws(cardDesk) {}
 
         // then
-        dealer.cards.size shouldBe 3
+        actualDealer.cards.size shouldBe 3
     }
 
     @Test
@@ -141,9 +141,9 @@ class DealerTest {
         val cardDesk = CardDesk()
 
         // when
-        dealer.executeCardDraws(cardDesk) {}
+        val actualDealer = dealer.executeCardDraws(cardDesk) {}
 
         // then
-        dealer.cards.size shouldBe 2
+        actualDealer.cards.size shouldBe 2
     }
 }

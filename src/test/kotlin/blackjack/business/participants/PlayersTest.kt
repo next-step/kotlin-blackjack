@@ -59,10 +59,10 @@ class PlayersTest {
         val cardDesk = CardDesk()
 
         // when
-        players.dealInitialCards(cardDesk) { }
+        val actualPlayers = players.dealInitialCards(cardDesk) { }
 
         // then
-        players.allGamePlayers.forEach { it.cards.size shouldBe 2 }
+        actualPlayers.allGamePlayers.forEach { it.cards.size shouldBe 2 }
     }
 
     @Test
@@ -73,13 +73,13 @@ class PlayersTest {
         val cardDesk = CardDesk(cardSelectionStrategy = FirstCardSelectionStrategy())
 
         // when
-        players.executeCardDraws(cardDesk, AlwaysDrawStrategy(), { "y" }) { }
+        val actualPlayers = players.executeCardDraws(cardDesk, AlwaysDrawStrategy(), { "y" }) { }
 
         // then
         // pobi: A, 2, 3, 4, 5, 6
-        players.allGamePlayers[0].cards.size shouldBe 6
+        actualPlayers.allGamePlayers[0].cards.size shouldBe 6
         // jason: 7,8,9
-        players.allGamePlayers[1].cards.size shouldBe 3
+        actualPlayers.allGamePlayers[1].cards.size shouldBe 3
     }
 
     @Test

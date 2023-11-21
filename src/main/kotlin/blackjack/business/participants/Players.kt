@@ -3,11 +3,7 @@ package blackjack.business.participants
 import blackjack.business.card.CardDesk
 import blackjack.business.drawConditionStrategy.DrawConditionStrategy
 
-class Players(allGamePlayers: List<GamePlayer>) {
-
-    private val _gamePlayers: List<GamePlayer> = allGamePlayers
-
-    val allGamePlayers: List<GamePlayer> = _gamePlayers.toList()
+class Players(val allGamePlayers: List<GamePlayer>) {
 
     init {
         require(allGamePlayers.size > 1) { "플레이어는 2명 이상이여야 가능합니다." }
@@ -15,12 +11,10 @@ class Players(allGamePlayers: List<GamePlayer>) {
 
     fun forEachPlayer(onPlayerAction: (GamePlayer) -> Unit) = allGamePlayers.forEach(onPlayerAction)
 
-    fun dealInitialCards(cardDesk: CardDesk, onPlayerAction: (GamePlayer) -> Unit) {
-        forEachPlayer {
-            val playerCards = cardDesk.startDraw()
-            it.addCards(playerCards)
-            onPlayerAction(it)
-        }
+    fun dealInitialCards(cardDesk: CardDesk, onPlayerAction: (GamePlayer) -> Unit): Players {
+        val players = allGamePlayers.map { it.addCards(cardDesk.startDraw()) }
+        players.forEach(onPlayerAction)
+        return Players(players)
     }
 
     fun executeCardDraws(
@@ -28,13 +22,16 @@ class Players(allGamePlayers: List<GamePlayer>) {
         conditionStrategy: DrawConditionStrategy,
         getCommand: (String) -> String,
         onPlayerAction: (GamePlayer) -> Unit
-    ) {
-        forEachPlayer {
-            while (it.canDrawCard() && conditionStrategy.shouldDraw(it.name, getCommand)) {
-                it.addCard(cardDesk.draw())
-                onPlayerAction(it)
+    ): Players {
+        val players = allGamePlayers.map {
+            var gamePlayer = it
+            while (gamePlayer.canDrawCard() && conditionStrategy.shouldDraw(gamePlayer.name, getCommand)) {
+                gamePlayer = gamePlayer.addCard(cardDesk.draw())
+                onPlayerAction(gamePlayer)
             }
+            gamePlayer
         }
+        return Players(players)
     }
 
     fun getNames(): List<String> = allGamePlayers.map { it.name }

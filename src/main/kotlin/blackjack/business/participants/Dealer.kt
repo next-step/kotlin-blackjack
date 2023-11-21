@@ -1,10 +1,13 @@
 package blackjack.business.participants
 
+import blackjack.business.card.Card
 import blackjack.business.card.CardDesk
 
 class Dealer(playerCards: PlayerCards = PlayerCards()) : Player(DEALER_NAME, playerCards) {
 
+    override fun addCard(card: Card): Dealer = Dealer(playerCards.add(card))
     override fun canDrawCard(): Boolean = playerCards.canDrawCardWithValueLimit(DEALER_DRAW_CONDITION)
+    override fun addCards(playerCardsList: List<Card>): Dealer = Dealer(playerCards.addAll(playerCardsList))
 
     fun getPlayerResult(gamePlayer: GamePlayer): PlayerResult {
         val scoreDifference = gamePlayer.getScoreDifferent(score)
@@ -26,11 +29,12 @@ class Dealer(playerCards: PlayerCards = PlayerCards()) : Player(DEALER_NAME, pla
 
     private fun isDraw(scoreDifference: Int) = scoreDifference == NO_SCORE_DIFFERENCE
 
-    fun executeCardDraws(cardDesk: CardDesk, announcer: () -> Unit) {
+    fun executeCardDraws(cardDesk: CardDesk, announcer: () -> Unit): Dealer {
         if (canDrawCard()) {
             announcer()
-            addCard(cardDesk.draw())
+            return addCard(cardDesk.draw())
         }
+        return this
     }
 
     companion object {
