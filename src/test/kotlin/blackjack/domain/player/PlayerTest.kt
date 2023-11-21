@@ -30,8 +30,8 @@ class PlayerTest {
     fun `플레이어는 여러장의 카드를 가진다`() {
         val cardSet = CardSet(
             listOf(
-                Card(CardKind.DIAMOND, CardNumber.ACE),
-                Card(CardKind.DIAMOND, CardNumber.TWO)
+                Card.of(CardKind.DIAMOND, CardNumber.ACE),
+                Card.of(CardKind.DIAMOND, CardNumber.TWO)
             )
         )
 
