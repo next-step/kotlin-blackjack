@@ -2,7 +2,7 @@ package blackjack
 
 import blackjack.business.AlwaysDrawStrategy
 import blackjack.business.CardFixture
-import blackjack.business.FixSelectionStrategy
+import blackjack.business.FirstCardSelectionStrategy
 import blackjack.business.card.Card
 import blackjack.business.card.CardDesk
 import blackjack.business.participants.PlayerResult
@@ -29,7 +29,7 @@ class GameManagerTest {
         val gameManager = GameManager(
             view,
             AlwaysDrawStrategy(),
-            CardDesk(getCards(), FixSelectionStrategy())
+            CardDesk(presetDealerAndPlayersCards(), FirstCardSelectionStrategy())
         )
 
         // when
@@ -66,7 +66,7 @@ class MainTest {
         val gameManager = GameManager(
             MainTestGameView(),
             AlwaysDrawStrategy(),
-            CardDesk(getCards(), FixSelectionStrategy())
+            CardDesk(presetDealerAndPlayersCards(), FirstCardSelectionStrategy())
         )
 
         // when
@@ -99,11 +99,11 @@ class MainTest {
             pobi: 20000
             jason: -10000
             
-            """.trimIndent()
+        """.trimIndent()
     }
 }
 
-private fun getCards(): List<Card> {
+private fun presetDealerAndPlayersCards(): List<Card> {
     return listOf(
         // dealer
         CardFixture.SPACE_ACE, CardFixture.SPACE_THREE,

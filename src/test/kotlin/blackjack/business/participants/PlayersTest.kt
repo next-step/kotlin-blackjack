@@ -5,7 +5,7 @@ import blackjack.business.CardFixture.SPACE_EIGHT
 import blackjack.business.CardFixture.SPACE_FOUR
 import blackjack.business.CardFixture.SPACE_NINE
 import blackjack.business.CardFixture.SPACE_TEN
-import blackjack.business.FixSelectionStrategy
+import blackjack.business.FirstCardSelectionStrategy
 import blackjack.business.card.CardDesk
 import blackjack.business.util.Money
 import io.kotest.assertions.throwables.shouldThrow
@@ -70,7 +70,7 @@ class PlayersTest {
         // given
         val playerNames = listOf("pobi", "jason")
         val players = Players.from(playerNames)
-        val cardDesk = CardDesk(cardSelectionStrategy = FixSelectionStrategy())
+        val cardDesk = CardDesk(cardSelectionStrategy = FirstCardSelectionStrategy())
 
         // when
         players.executeCardDraws(cardDesk, AlwaysDrawStrategy(), { "y" }) { }
@@ -98,25 +98,7 @@ class PlayersTest {
     @Test
     fun `딜러와 비교하여  플레이별 게임결과를 반환한다`() {
         // given
-        val players = Players(
-            listOf(
-                GamePlayer(
-                    "pobi",
-                    PlayerCards(SPACE_FOUR, SPACE_EIGHT),
-                    Money(10000)
-                ),
-                GamePlayer(
-                    "jason",
-                    PlayerCards(SPACE_FOUR, SPACE_NINE),
-                    Money(10000)
-                ),
-                GamePlayer(
-                    "honux",
-                    PlayerCards(SPACE_FOUR, SPACE_TEN),
-                    Money(10000)
-                )
-            )
-        )
+        val players = createTestPlayers()
         val dealer = Dealer(PlayerCards(SPACE_FOUR, SPACE_NINE))
 
         // when
@@ -130,4 +112,24 @@ class PlayersTest {
         )
         result.dealerResult shouldBe PlayerResult(Dealer.DEALER_NAME, Money(-10000))
     }
+
+    private fun createTestPlayers() = Players(
+        listOf(
+            GamePlayer(
+                "pobi",
+                PlayerCards(SPACE_FOUR, SPACE_EIGHT),
+                Money(10000)
+            ),
+            GamePlayer(
+                "jason",
+                PlayerCards(SPACE_FOUR, SPACE_NINE),
+                Money(10000)
+            ),
+            GamePlayer(
+                "honux",
+                PlayerCards(SPACE_FOUR, SPACE_TEN),
+                Money(10000)
+            )
+        )
+    )
 }
