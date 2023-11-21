@@ -9,24 +9,43 @@ import blackjack_dealer.entity.state.ParticipantResultState
 
 object BlackJackResultBoard {
     fun getBlackJackResult(dealer: Dealer, participants: Participants): TotalResult {
-        val participantsResult = participants.map { participant ->
-            val participantState = ParticipantResultState.of(dealer, participant)
-            ParticipantResult(name = participant.getGamerName(), resultState = participantState)
-        }
+        val participantsResult = mapParticipantsToParticipantsResult(participants, dealer)
 
-        val groupingByParticipantResult = participantsResult
-            .groupingBy { it.resultState }
-            .eachCount()
+        val groupingByParticipantResult = groupingAndCountParticipantsResult(participantsResult)
 
-        val participantResultCounts =
-            ParticipantResultState.values().associateWith { groupingByParticipantResult.getOrDefault(it, 0) }
+        val participantResultCounts = getParticipantResultStateGroup(groupingByParticipantResult)
 
-        val dealerResult = DealerResult(
-            winCount = participantResultCounts.getOrDefault(ParticipantResultState.LOSE, 0),
-            loseCount = participantResultCounts.getOrDefault(ParticipantResultState.WIN, 0),
-            drawCount = participantResultCounts.getOrDefault(ParticipantResultState.DRAW, 0)
-        )
+        val dealerResult = createDealerResult(participantResultCounts)
 
         return TotalResult(dealerResult = dealerResult, participantsResult = participantsResult)
     }
+
+    private fun mapParticipantsToParticipantsResult(
+        participants: Participants,
+        dealer: Dealer
+    ): List<ParticipantResult> {
+        return participants.map { participant ->
+            val participantState = ParticipantResultState.of(dealer, participant)
+            ParticipantResult(name = participant.getGamerName(), resultState = participantState)
+        }
+    }
+
+    private fun groupingAndCountParticipantsResult(participantsResult: List<ParticipantResult>) =
+        participantsResult
+            .groupingBy { it.resultState }
+            .eachCount()
+
+    private fun getParticipantResultStateGroup(groupingByParticipantResult: Map<ParticipantResultState, Int>) =
+        ParticipantResultState.values()
+            .associateWith { groupingByParticipantResult.getOrDefault(it, DEFAULT_VALUE) }
+
+    private fun createDealerResult(participantResultCounts: Map<ParticipantResultState, Int>) =
+        DealerResult(
+            winCount = participantResultCounts.getOrDefault(ParticipantResultState.LOSE, DEFAULT_VALUE),
+            loseCount = participantResultCounts.getOrDefault(ParticipantResultState.WIN, DEFAULT_VALUE),
+            drawCount = participantResultCounts.getOrDefault(ParticipantResultState.DRAW, DEFAULT_VALUE)
+        )
+
+
+    private const val DEFAULT_VALUE = 0
 }
