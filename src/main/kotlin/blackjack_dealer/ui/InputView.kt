@@ -6,4 +6,9 @@ object InputView {
         participants.validateInputValue()
         return participants
     }
+
+    fun inputGetOneMoreCard(): Boolean {
+        val input = readln()
+        return input == "y"
+    }
 }

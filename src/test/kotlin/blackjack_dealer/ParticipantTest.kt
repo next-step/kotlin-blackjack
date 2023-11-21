@@ -11,8 +11,8 @@ import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 
 class ParticipantTest : StringSpec({
-    CardDeque.create()
-    val participant = Participant.newInstance("pita")
+    val cardDeque = CardDeque.create()
+    val participant = Participant.newInstance("pita", cardDeque)
 
     "생성한 이름이 잘 나온다" {
         val expected = "pita"
@@ -29,7 +29,7 @@ class ParticipantTest : StringSpec({
             GamerCards(listOf(Card(CardNumber.A, CardShape.CLOVER), Card(CardNumber.TWO, CardShape.CLOVER)))
         val participantWithHit = Participant.newInstance(name = "pita", cards = blackJackCards)
         val expected = GamerCurrentState.HIT
-        participantWithHit.getCurrentState() shouldBe expected
+        participantWithHit.getCurrentGamerState() shouldBe expected
     }
 
     "처음으로 생성한 참가자의 상태는 운이 좋게도 BLACK_JACK 이다" {
@@ -37,6 +37,6 @@ class ParticipantTest : StringSpec({
             GamerCards(listOf(Card(CardNumber.A, CardShape.CLOVER), Card(CardNumber.J, CardShape.CLOVER)))
         val participantWithBlackJack = Participant.newInstance(name = "pita", cards = blackJackCards)
         val expected = GamerCurrentState.BLACKJACK
-        participantWithBlackJack.getCurrentState() shouldBe expected
+        participantWithBlackJack.getCurrentGamerState() shouldBe expected
     }
 })

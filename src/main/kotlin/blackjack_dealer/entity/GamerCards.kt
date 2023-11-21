@@ -32,3 +32,5 @@ data class GamerCards(
         private const val SUPER_A_PLUS_NUMBER = 10
     }
 }
+
+fun List<Card>.toGamerCards() = GamerCards(this)
