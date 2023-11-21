@@ -2,11 +2,6 @@ package blackjack.model.card
 
 class CardDeck(var deck: MutableList<Card> = mutableListOf()) {
 
-    constructor(
-        cards: List<Card>,
-        @Suppress("UNUSED_PARAMETER") dummy: Any? = null
-    ) : this(deck = cards.toMutableList())
-
     fun get(): Card {
         check(deck.isNotEmpty()) { NOT_EXIST_CARD_EXCEPTION }
         return deck.removeFirst()
