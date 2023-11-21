@@ -3,8 +3,7 @@ package blackjack.domain.stage
 import blackjack.domain.BlackJackGame
 import blackjack.domain.result.InitialDistributionResult
 
-class InitialDistributionStage(
-) : Stage {
+class InitialDistributionStage: Stage {
     var isProgressDone = false
         private set
 
