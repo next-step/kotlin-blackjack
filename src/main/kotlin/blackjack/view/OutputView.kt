@@ -1,28 +1,30 @@
 package blackjack.view
 
-import blackjack.domain.*
+import blackjack.domain.Dealer
+import blackjack.domain.GameOutcome
+import blackjack.domain.GameResult
+import blackjack.domain.Participant
+import blackjack.domain.Player
+import blackjack.domain.Rank
+import blackjack.domain.Symbol
+import blackjack.domain.calculateScore
 
 object OutputView {
 
     private const val SEPARATOR = ", "
 
     fun writePlayerNames(participants: List<Participant>) {
-        println(
-            "딜러와 ${
-                participants.filterIsInstance<Player>().joinToString(SEPARATOR) { it.name.value }
-            }에게 2장의 나누었습니다."
-        )
+        val nicknames = participants.filterIsInstance<Player>().joinToString(SEPARATOR) { it.name.value }
+        println("딜러와 $nicknames 에게 2장의 나누었습니다.")
     }
 
     fun writeParticipantCards(participants: List<Participant>) {
         participants.forEach {
-            println(
-                "${it.name.value}카드: ${
-                    it.cards.joinToString(SEPARATOR) { card ->
-                        "${card.rank.name()}${card.symbol.name()}"
-                    }
-                }"
-            )
+            val nickname = it.name.value
+            val cards = it.cards.joinToString(SEPARATOR) { card ->
+                "${card.rank.name()}${card.symbol.name()}"
+            }
+            println("${nickname}카드: $cards")
         }
         println()
     }
@@ -32,20 +34,16 @@ object OutputView {
         println()
     }
 
-    fun writeParticipantResults(participants: List<Participant>) {
+    fun writeGameResults(participants: List<Participant>, result: GameResult) {
         participants.forEach { participant ->
-            println(
-                "${participant.name.value}카드: ${
-                    participant.cards.joinToString(SEPARATOR) { card ->
-                        "${card.rank.name()}${card.symbol.name()}"
-                    }
-                } - 결과: ${participant.calculateScore()}"
-            )
+            val nickname = participant.name.value
+            val cards = participant.cards.joinToString(SEPARATOR) { card ->
+                "${card.rank.name()}${card.symbol.name()}"
+            }
+            println("${nickname}카드: $cards - 결과: ${participant.calculateScore()}")
         }
         println()
-    }
 
-    fun writeGameResults(result: GameResult) {
         println("## 최송 승패")
         println("딜러: ${result.dealerStats.wins}승 ${result.dealerStats.losses}패")
         result.playerResults.forEach { (player, outcome) ->

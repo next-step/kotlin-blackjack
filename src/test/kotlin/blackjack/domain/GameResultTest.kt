@@ -18,7 +18,6 @@ class GameResultTest : BehaviorSpec({
             receiveCard(Card(Symbol.SPADE, Rank.TEN))
         }
 
-
         `when`("게임 결과를 계산하면") {
             val gameResult = GameResult(listOf(player), dealer)
 

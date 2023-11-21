@@ -19,6 +19,23 @@ class Game(
         participant.receiveCard(dealer.dealCard())
     }
 
+    fun dealerTurn(): Boolean {
+        if (dealer.canDraw()) {
+            dealer.receiveCard(dealer.dealCard())
+            return true
+        }
+
+        return false
+    }
+
+    fun playerTurn(player: Player, decision: PlayerDecision): Boolean {
+        if (player.canDraw() && decision == PlayerDecision.HIT) {
+            player.receiveCard(dealer.dealCard())
+            return true
+        }
+
+        return false
+    }
 
     fun getResults(): GameResult = GameResult(players, dealer)
 

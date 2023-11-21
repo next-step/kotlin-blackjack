@@ -22,4 +22,10 @@ class Dealer(private val deck: Deck) : Participant {
 
         return deck.draw()
     }
+
+    override fun canDraw(): Boolean = calculateScore() <= DRAW_CONDITION
+
+    companion object {
+        private const val DRAW_CONDITION = 16
+    }
 }

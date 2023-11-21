@@ -9,9 +9,9 @@ data class Player(override val name: Nickname) : Participant {
         _cards.add(card)
     }
 
-    fun canHit(): Boolean = calculateScore() < PLAYER_MAXIMUM_SCORE
+    override fun canDraw(): Boolean = calculateScore() < DRAW_CONDITION
 
     companion object {
-        private const val PLAYER_MAXIMUM_SCORE = 21
+        private const val DRAW_CONDITION = 21
     }
 }
