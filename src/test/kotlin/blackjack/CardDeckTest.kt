@@ -48,6 +48,6 @@ class CardDeckTest {
     @Test
     fun `카드덱에서 초반 카드를 나눠줄 때 2개의 카드를 준다`() {
         val cardDeck = CardDeck()
-        assertThat(cardDeck.drawIntialCards().size).isEqualTo(2)
+        assertThat(cardDeck.drawInitialCards().size).isEqualTo(2)
     }
 }

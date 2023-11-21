@@ -11,5 +11,5 @@ class CardDeck(
     }
 
     fun drawCard(): PlayingCard = cardDeck.pop()
-    fun drawIntialCards(): List<PlayingCard> = listOf(cardDeck.pop(), cardDeck.pop())
+    fun drawInitialCards(): List<PlayingCard> = listOf(drawCard(), drawCard())
 }
