@@ -16,4 +16,9 @@ class CardBundleTest {
 
         assertThat(cardBundle.draw()).isNull()
     }
+
+    @Test
+    fun `카드를 1장 뽑는다`() {
+        assertThat(CardBundle.getBundle().draw()).isInstanceOf(Card::class.java)
+    }
 }
