@@ -12,10 +12,12 @@ class Deck {
     }
 
     private fun setupDeck(): List<Card> {
-        return Suit.values().flatMap { suit ->
-            Rank.values().map { rank ->
-                Card(suit, rank)
+        return Suit.values()
+            .flatMap { suit ->
+                Rank.values().map { rank ->
+                    Card(suit, rank)
+                }
             }
-        }
+            .shuffled()
     }
 }
