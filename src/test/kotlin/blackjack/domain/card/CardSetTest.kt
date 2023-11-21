@@ -1,5 +1,6 @@
 package blackjack.domain.card
 
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
@@ -12,5 +13,21 @@ class CardSetTest {
         newCardSet.cards shouldBe listOf(
             Card(CardKind.DIAMOND, CardNumber.EIGHT)
         )
+    }
+
+    @Test
+    fun `카드 뭉치에 중복된 카드가 있으면 예외가 발생한다`() {
+        shouldThrow<IllegalArgumentException> {
+            CardSet.of(
+                Card(CardKind.DIAMOND, CardNumber.EIGHT),
+                Card(CardKind.DIAMOND, CardNumber.EIGHT)
+            )
+        }
+    }
+
+    @Test
+    fun `카드 뭉치에 중복된 카드를 추가하면 예외가 발생한다`() {
+        val cardSet = CardSet.of(Card(CardKind.DIAMOND, CardNumber.EIGHT))
+        shouldThrow<IllegalArgumentException> { cardSet.addCard(Card(CardKind.DIAMOND, CardNumber.EIGHT)) }
     }
 }

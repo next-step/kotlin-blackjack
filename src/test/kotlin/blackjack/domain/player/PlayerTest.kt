@@ -31,7 +31,7 @@ class PlayerTest {
         val cardSet = CardSet(
             listOf(
                 Card(CardKind.DIAMOND, CardNumber.ACE),
-                Card(CardKind.DIAMOND, CardNumber.ACE)
+                Card(CardKind.DIAMOND, CardNumber.TWO)
             )
         )
 
