@@ -29,6 +29,7 @@ fun main() {
                 }
 
                 onGoingPlayer = blackJack.hit(onGoingPlayer)
+                OutputView.printCards(onGoingPlayer)
             }
 
             onGoingPlayer
