@@ -15,8 +15,6 @@ enum class ParticipantResultState(val state: String) {
             val participantScore = participant.getCurrentCards().getCurrentScore()
             if (dealerScore > BLACK_JACK) return WIN
             if (participant.getCurrentGamerState() == GamerCurrentState.BUST) return LOSE
-            println(participant.getCurrentGamerState())
-            println(participant.getCurrentCards().getCurrentScore())
             return when {
                 dealerScore - participantScore > 0 -> LOSE
                 dealerScore - participantScore < 0 -> WIN

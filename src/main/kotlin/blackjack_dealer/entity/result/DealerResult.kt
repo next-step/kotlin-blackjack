@@ -18,9 +18,11 @@ data class DealerResult(
             return newInstance(
                 winCount = participantResultCounts.getOrDefault(
                     ParticipantResultState.LOSE, DEFAULT_VALUE
-                ), loseCount = participantResultCounts.getOrDefault(
+                ),
+                loseCount = participantResultCounts.getOrDefault(
                     ParticipantResultState.WIN, DEFAULT_VALUE
-                ), drawCount = participantResultCounts.getOrDefault(
+                ),
+                drawCount = participantResultCounts.getOrDefault(
                     ParticipantResultState.DRAW, DEFAULT_VALUE
                 )
             )
