@@ -124,6 +124,30 @@ class PlayerCardsTest {
         actual shouldBe false
     }
 
+    @Test
+    fun `리미트 값보다 합이 작으면 카드를 더 뽑을 수 있다`() {
+        // given
+        val playerCards = PlayerCards(SPACE_ACE, SPACE_EIGHT)
+
+        // when
+        val actual = playerCards.canDrawCardWithValueLimit(20)
+
+        // then
+        actual shouldBe true
+    }
+
+    @Test
+    fun `리미트 값보다 합이 크면 카드를 더 뽑을 수 없다`() {
+        // given
+        val playerCards = PlayerCards(SPACE_ACE, SPACE_EIGHT)
+
+        // when
+        val actual = playerCards.canDrawCardWithValueLimit(19)
+
+        // then
+        actual shouldBe false
+    }
+
     companion object {
         @JvmStatic
         fun provideCards(): Stream<Arguments> {

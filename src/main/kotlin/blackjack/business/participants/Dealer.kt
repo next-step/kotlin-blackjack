@@ -4,17 +4,20 @@ import blackjack.business.card.CardDesk
 
 class Dealer(playerCards: PlayerCards = PlayerCards()) : Player(DEALER_NAME, playerCards) {
 
-    override fun canDrawCard(): Boolean = playerCards.sum() < DEALER_DRAW_CONDITION
+    override fun canDrawCard(): Boolean = playerCards.canDrawCardWithValueLimit(DEALER_DRAW_CONDITION)
 
     fun getPlayerResult(gamePlayer: GamePlayer): PlayerResult {
-        val scoreDifference = gamePlayer.score - score
+        val scoreDifference = gamePlayer.getScoreDifferent(score)
         val profitOrLoss = when {
-            gamePlayer.isBust() -> gamePlayer.money.lose()
-            isBust() -> (gamePlayer.money.value * BUST_MULTIPLIER).toInt()
+            gamePlayer.isBust() -> gamePlayer.lose()
+            isBust() -> gamePlayer.calculateMultiplierResult(BUST_MULTIPLIER)
             isDraw(scoreDifference) -> DRAW_RESULT
-            isLose(scoreDifference) -> gamePlayer.money.lose()
-            gamePlayer.isNaturalBlackJack() -> (gamePlayer.money.value * NATURAL_BLACKJACK_MULTIPLIER).toInt()
-            else -> (gamePlayer.money.value * BUST_MULTIPLIER).toInt()
+            isLose(scoreDifference) -> gamePlayer.lose()
+            gamePlayer.isNaturalBlackJack() -> gamePlayer.calculateMultiplierResult(
+                NATURAL_BLACKJACK_MULTIPLIER
+            )
+
+            else -> gamePlayer.calculateMultiplierResult(BUST_MULTIPLIER)
         }
         return PlayerResult(gamePlayer.name, profitOrLoss)
     }

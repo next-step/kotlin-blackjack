@@ -23,9 +23,8 @@ class PlayerCards(val cards: List<Card> = listOf()) {
     }
 
     fun add(card: Card): PlayerCards = PlayerCards(cards + card)
-
     fun isBust(): Boolean = sum() > BLACKJACK
-
+    fun canDrawCardWithValueLimit(valueLimit: Int): Boolean = sum() < valueLimit
     fun addAll(cards: List<Card>): PlayerCards = PlayerCards(this.cards + cards)
     fun isNaturalBlackJack(): Boolean = cards.size == 2 && sum() == BLACKJACK
 
