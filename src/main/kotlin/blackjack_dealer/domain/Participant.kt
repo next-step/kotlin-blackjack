@@ -33,15 +33,23 @@ data class Participant(
     companion object {
         private const val MINIMUM_HIT_NUMBER = 1
         private const val MAXIMUM_HIT_NUMBER = 20
+        private const val BLACK_JACK = 21
+
         fun newInstance(name: String, cards: GamerCards): Participant {
-            val initialState = initialStateIsBlackJack(cards)
+            val initialState = findMatchedInitialState(cards)
             return Participant(name = name).apply {
                 gamerCards = cards
                 currentState = initialState
             }
         }
 
-        private fun initialStateIsBlackJack(initialCards: GamerCards): GamerCurrentState =
-            if (initialCards.getCurrentScore() == BLACK_JACK) GamerCurrentState.BLACKJACK else GamerCurrentState.HIT
+        private fun findMatchedInitialState(initialCards: GamerCards): GamerCurrentState {
+            val currentScore = initialCards.getCurrentScore()
+            return when (currentScore) {
+                in MINIMUM_HIT_NUMBER..MAXIMUM_HIT_NUMBER -> GamerCurrentState.HIT
+                BLACK_JACK -> GamerCurrentState.BLACKJACK
+                else -> GamerCurrentState.BUST
+            }
+        }
     }
 }

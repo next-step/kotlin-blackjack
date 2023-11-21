@@ -52,6 +52,22 @@ class ResultBoardTest : BehaviorSpec({
                 totalResult.participantsResult.first().resultState.state shouldBe expected
             }
         }
+
+        When("참가자가 패배인 경우 : 참가자 24") {
+            val participantCard =
+                listOf(
+                    Card(CardNumber.J, CardShape.CLOVER),
+                    Card(CardNumber.J, CardShape.HEART),
+                    Card(CardNumber.FOUR, CardShape.CLOVER)
+                ).toGamerCards()
+            val participant = Participant.newInstance("pita", participantCard)
+            val expected = "패"
+            Then("결과는 패로 나온다") {
+                val totalResult = BlackJackResultBoard.getBlackJackResult(dealer, Participants(listOf(participant)))
+                println(totalResult)
+                totalResult.participantsResult.first().resultState.state shouldBe expected
+            }
+        }
     }
 
     Given("딜러가 21이 넘는다면") {
