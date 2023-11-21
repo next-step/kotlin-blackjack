@@ -11,18 +11,18 @@ class Dealer(playerCards: PlayerCards = PlayerCards()) : Player(DEALER_NAME, pla
         val scoreDifference = gamePlayer.score - score
         val resultMoney = when {
             gamePlayer.isBust() -> gamePlayer.money.lose()
-            isBust() -> gamePlayer.money * 2.0
+            isBust() -> gamePlayer.money * BUST_MULTIPLIER
             isDraw(scoreDifference) -> Money()
             isLose(scoreDifference) -> gamePlayer.money.lose()
-            gamePlayer.isNaturalBlackJack() -> gamePlayer.money * 2.5
-            else -> gamePlayer.money * 2.0
+            gamePlayer.isNaturalBlackJack() -> gamePlayer.money * NATURAL_BLACKJACK_MULTIPLIER
+            else -> gamePlayer.money * BUST_MULTIPLIER
         }
         return PlayerResult(gamePlayer.name, resultMoney)
     }
 
-    private fun isLose(scoreDifference: Int) = scoreDifference < 0
+    private fun isLose(scoreDifference: Int) = scoreDifference < NO_SCORE_DIFFERENCE
 
-    private fun isDraw(scoreDifference: Int) = scoreDifference == 0
+    private fun isDraw(scoreDifference: Int) = scoreDifference == NO_SCORE_DIFFERENCE
 
     fun executeCardDraws(cardDesk: CardDesk, announcer: () -> Unit) {
         if (canDrawCard()) {
@@ -33,6 +33,9 @@ class Dealer(playerCards: PlayerCards = PlayerCards()) : Player(DEALER_NAME, pla
 
     companion object {
         const val DEALER_NAME = "딜러"
+        const val BUST_MULTIPLIER = 2.0
+        const val NATURAL_BLACKJACK_MULTIPLIER = 2.5
+        const val NO_SCORE_DIFFERENCE = 0
         private const val DEALER_DRAW_CONDITION = 17
     }
 }

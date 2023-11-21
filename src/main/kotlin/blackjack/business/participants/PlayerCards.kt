@@ -15,7 +15,7 @@ class PlayerCards(val cards: List<Card> = listOf()) {
     fun sum(): Int {
         var sum = cards.sumOf { it.rank.score }
         var aceCount = cards.count { it.rank == Rank.ACE }
-        while (sum + ACE_OFFSET <= BLACKJACK && aceCount > 0) {
+        while (sum + ACE_OFFSET <= BLACKJACK && aceCount > INITIAL_ACE_COUNT) {
             sum += ACE_OFFSET
             aceCount--
         }
@@ -28,4 +28,8 @@ class PlayerCards(val cards: List<Card> = listOf()) {
 
     fun addAll(cards: List<Card>): PlayerCards = PlayerCards(this.cards + cards)
     fun isNaturalBlackJack(): Boolean = cards.size == 2 && sum() == BLACKJACK
+
+    companion object {
+        const val INITIAL_ACE_COUNT = 0
+    }
 }
