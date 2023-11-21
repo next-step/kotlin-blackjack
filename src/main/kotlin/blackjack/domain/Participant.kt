@@ -1,6 +1,5 @@
 package blackjack.domain
 
-private const val BLACKJACK = 21
 private const val ACE_LOW_VALUE = 1
 private const val ACE_HIGH_VALUE = 11
 

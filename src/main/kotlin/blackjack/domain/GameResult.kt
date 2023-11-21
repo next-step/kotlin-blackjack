@@ -1,18 +1,17 @@
 package blackjack.domain
 
-class GameResult(private val players: List<Player>, private val dealer: Dealer) {
+const val BLACKJACK = 21
 
-    private val _playerResults: Map<Player, GameOutcome>
+class GameResult(players: List<Player>, private val dealer: Dealer) {
+
     val playerResults: Map<Player, GameOutcome>
-        get() = _playerResults
-
     val dealerStats: DealerStats
 
     init {
-        _playerResults = players.associateWith { calculateOutcome(it) }.toMutableMap()
+        playerResults = players.associateWith { player -> calculateOutcome(player) }.toMutableMap()
         dealerStats = DealerStats(
-            wins = _playerResults.filter { it.value == GameOutcome.LOSE }.count(),
-            losses = _playerResults.filter { it.value == GameOutcome.WIN }.count()
+            wins = playerResults.filter { it.value == GameOutcome.LOSE }.count(),
+            losses = playerResults.filter { it.value == GameOutcome.WIN }.count()
         )
     }
 
@@ -25,10 +24,6 @@ class GameResult(private val players: List<Player>, private val dealer: Dealer) 
             dealerScore > BLACKJACK || (playerScore in (dealerScore + 1)..BLACKJACK) -> GameOutcome.WIN
             else -> throw IllegalStateException("게임 점수가 올바르지 않습니다.")
         }
-    }
-
-    companion object {
-        private const val BLACKJACK = 21
     }
 }
 
