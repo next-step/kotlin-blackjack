@@ -1,19 +1,18 @@
 package blackjack.player
 
-import blackjack.deck.Deck
+import blackjack.card.Card
 import blackjack.hand.Hand
 
 data class Player(
     val name: String,
     private val hand: Hand,
 ) {
-    val cards
+    val cards: List<Card>
         get() = hand.cards
 
-    fun canDrawCard(): Boolean = hand.calculateBestValue() <= 21
-    fun drawCard(deck: Deck): Player {
-        check(deck.isEmpty().not()) { "덱에 카드가 없으면 카드를 뽑을 수 없습니다." }
-        return copy(hand = hand.addCard(deck.drawCard()))
+    fun canReceiveCard(): Boolean = hand.calculateBestValue() <= 21
+    fun receiveCard(card: Card): Player {
+        return copy(hand = hand.addCard(card))
     }
     fun calculateBestValue(): Int = hand.calculateBestValue()
 }

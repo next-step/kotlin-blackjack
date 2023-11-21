@@ -18,8 +18,4 @@ class Deck(
         check(cards.isNotEmpty()) { "덱이 비어 있어서 카드를 뽑을 수 없습니다." }
         return cards.pop()
     }
-
-    fun isEmpty(): Boolean {
-        return cards.isEmpty()
-    }
 }

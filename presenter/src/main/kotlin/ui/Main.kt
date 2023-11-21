@@ -29,7 +29,7 @@ fun playBlackjack(deck: Deck, players: List<Player>, inputView: InputView, resul
 }
 
 fun handlePlayerTurn(deck: Deck, player: Player, inputView: InputView, resultView: ResultView) {
-    while (player.canDrawCard()) {
+    while (player.canReceiveCard()) {
         if (!inputView.askForAdditionalCard(player.name)) {
             return
         }

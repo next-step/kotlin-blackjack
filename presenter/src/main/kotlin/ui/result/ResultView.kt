@@ -11,7 +11,7 @@ class ResultView {
     }
 
     fun showInitialCards(deck: Deck, players: List<Player>): List<Player> {
-        val resultPlayers = players.take(2).map { it.drawCard(deck).drawCard(deck) }
+        val resultPlayers = players.take(2).map { it.receiveCard(deck.drawCard()).receiveCard(deck.drawCard()) }
 
         println("${resultPlayers.joinToString(", ") { it.name }}에게 2장의 나누었습니다.")
         resultPlayers.forEach(this::showCardsForPlayer)
