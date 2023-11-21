@@ -6,7 +6,7 @@ class OnGoingPlayer(
 ) : Player {
     companion object {
         fun of(name: String, cards: Cards): Player {
-            val hardAcePoint = cards.getPoints(HardAcePointStrategy())
+            val hardAcePoint = cards.getPoints()
 
             return if (hardAcePoint == BlackJack.BlackJackedNumber) {
                 BlackJackedPlayer(name, cards)

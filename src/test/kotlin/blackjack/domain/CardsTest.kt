@@ -5,8 +5,7 @@ import org.junit.jupiter.api.Test
 
 class CardsTest {
     @Test
-    fun `모든 카드의 점수 총 합을 구할 수 있다`() {
-        val pointStrategy = CardPointStrategy { it.value }
+    fun `Ace는 카드의 총 합이 21을 넘지 않으면 11으로 활용한다`() {
         val cards = Cards(
             listOf(
                 Card(Suit.Spade, Rank.Ace),
@@ -14,8 +13,23 @@ class CardsTest {
             )
         )
 
-        val totalPoint = cards.getPoints(pointStrategy)
+        val totalPoint = cards.getPoints()
 
-        assertThat(totalPoint).isEqualTo(3)
+        assertThat(totalPoint).isEqualTo(13)
+    }
+
+    @Test
+    fun `Ace를 11로 사용해서 카드의 총 합이 21을 넘는 경우 1로 활용한다`() {
+        val cards = Cards(
+            listOf(
+                Card(Suit.Spade, Rank.Ace),
+                Card(Suit.Spade, Rank.Two),
+                Card(Suit.Spade, Rank.Ten),
+            )
+        )
+
+        val totalPoint = cards.getPoints()
+
+        assertThat(totalPoint).isEqualTo(13)
     }
 }

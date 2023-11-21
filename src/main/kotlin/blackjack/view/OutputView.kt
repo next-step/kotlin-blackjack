@@ -11,9 +11,7 @@ object OutputView {
     fun printResult(player: Player) {
         println(
             "${player.name}카드: ${player.cards.value.joinToString { "${it.rank.value}${it.suit.value}" }} - 결과: ${
-                player.cards.getPoints(
-                    HardAcePointStrategy()
-                )
+                player.cards.getPoints()
             }"
         )
     }
