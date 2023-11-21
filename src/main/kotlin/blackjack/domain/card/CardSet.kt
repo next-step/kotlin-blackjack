@@ -13,6 +13,12 @@ class CardSet(val cards: List<Card>) {
         return CardSet(newCards)
     }
 
+    fun addCard(cardSet: CardSet): CardSet {
+        val newCards = cards.toMutableList()
+        newCards.addAll(cardSet.cards)
+        return CardSet(newCards)
+    }
+
     companion object {
         private val EMPTY_CARD_SET = CardSet(emptyList())
 

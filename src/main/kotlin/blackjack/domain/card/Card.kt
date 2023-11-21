@@ -1,6 +1,6 @@
 package blackjack.domain.card
 
-class Card private constructor(val kind: CardKind, val number: CardNumber) {
+data class Card(val kind: CardKind, val number: CardNumber) {
     companion object {
         const val TOTAL_COUNT = 52
 
