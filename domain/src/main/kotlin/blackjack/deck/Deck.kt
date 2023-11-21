@@ -15,7 +15,7 @@ class Deck(
         get() = cards.size
 
     fun drawCard(): Card {
-        check(cards.isNotEmpty()) { "덱이 비어 있어서 카드를 뽑을 수 없습니다." }
+        check(cards.isNotEmpty()) { "덱에 카드가 없으면 카드를 뽑을 수 없습니다." }
         return cards.pop()
     }
 }
