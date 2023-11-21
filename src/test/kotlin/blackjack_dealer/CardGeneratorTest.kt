@@ -11,4 +11,11 @@ class CardGeneratorTest : StringSpec({
         CardGenerator.generateSingleCard(cardDeque)
         cardDeque.cardDeque.count() shouldBe expected
     }
+
+    "CardGenerator 의 두장 생성 함수가 잘 작동한다" {
+        val cardDeque = CardDeque.create()
+        val expected = 50
+        CardGenerator.generateDoubleCard(cardDeque)
+        cardDeque.cardDeque.count() shouldBe expected
+    }
 })

@@ -1,5 +1,6 @@
 import blackjack_dealer.BlackJack
-import blackjack_dealer.entity.Card
+import blackjack_dealer.CardGenerator
+import blackjack_dealer.domain.Dealer
 import blackjack_dealer.entity.CardDeque
 import blackjack_dealer.entity.Participants
 import blackjack_dealer.ui.InputView
@@ -10,11 +11,8 @@ fun main() {
     val participantsName = InputView.inputParticipantsName()
     val cardDeque = CardDeque.create()
 
-    val participants = Participants.newInstance(participantsName) {
-        val initialFirstCard = cardDeque.cardDeque.removeLast()
-        val initialSecondCard = cardDeque.cardDeque.removeLast()
-        return@newInstance listOf<Card>(initialFirstCard, initialSecondCard)
-    }
+    val participants = Participants.newInstance(participantsName) { CardGenerator.generateDoubleCard(cardDeque) }
+    val dealer = Dealer.newInstance(CardGenerator.generateDoubleCard(cardDeque))
 
     OutputView.printParticipantsInformation(participants)
 
