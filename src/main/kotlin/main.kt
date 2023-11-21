@@ -1,4 +1,5 @@
 import blackjack_dealer.BlackJack
+import blackjack_dealer.BlackJackResultBoard
 import blackjack_dealer.CardGenerator
 import blackjack_dealer.domain.Dealer
 import blackjack_dealer.entity.CardDeque
@@ -22,4 +23,9 @@ fun main() {
     blackJack.doGame { InputView.inputGetOneMoreCard() }
 
     OutputView.printResult(dealer, participants)
+
+    OutputView.printFinalResultBoard()
+    val totalResult = BlackJackResultBoard.getBlackJackResult(dealer, participants)
+    OutputView.printFinalDealerResult(totalResult.dealerResult)
+    OutputView.printFinalParticipantsResult(totalResult.participantsResult)
 }

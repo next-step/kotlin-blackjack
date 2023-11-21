@@ -5,8 +5,11 @@ import blackjack_dealer.domain.Participant
 import blackjack_dealer.entity.Card
 import blackjack_dealer.entity.CardNumber
 import blackjack_dealer.entity.CardShape
+import blackjack_dealer.entity.ParticipantResultState
+import blackjack_dealer.entity.Participants
 import blackjack_dealer.entity.toGamerCards
 import io.kotest.core.spec.style.BehaviorSpec
+import io.kotest.matchers.shouldBe
 
 class ResultBoardTest : BehaviorSpec({
     // 승무패 확
@@ -21,8 +24,8 @@ class ResultBoardTest : BehaviorSpec({
             val expected = "승"
 
             Then("결과는 승으로 나온다") {
-                val result = ResultBoard.calculateResult(dealer, participant)
-                result 어쩌구 ~ 는 승
+                val totalResult = BlackJackResultBoard.getBlackJackResult(dealer, Participants(listOf(participant)))
+                totalResult.participantsResult.first().resultState.state shouldBe expected
             }
         }
 
@@ -30,11 +33,11 @@ class ResultBoardTest : BehaviorSpec({
             val participantCard =
                 listOf(Card(CardNumber.J, CardShape.CLOVER), Card(CardNumber.SEVEN, CardShape.CLOVER)).toGamerCards()
             val participant = Participant.newInstance("pita", participantCard)
-            val expected = "무승부"
+            val expected = "무"
 
             Then("결과는 무승부로 나온다") {
-                val result = ResultBoard.calculateResult(dealer, participant)
-                result 어쩌구 ~ 는 무승부
+                val totalResult = BlackJackResultBoard.getBlackJackResult(dealer, Participants(listOf(participant)))
+                totalResult.participantsResult.first().resultState.state shouldBe expected
             }
         }
 
@@ -45,8 +48,45 @@ class ResultBoardTest : BehaviorSpec({
             val expected = "패"
 
             Then("결과는 무승부로 나온다") {
-                val result = ResultBoard.calculateResult(dealer, participant)
-                result 어쩌구 ~ 는 패
+                val totalResult = BlackJackResultBoard.getBlackJackResult(dealer, Participants(listOf(participant)))
+                totalResult.participantsResult.first().resultState.state shouldBe expected
+            }
+        }
+    }
+
+    Given("딜러가 21이 넘는다면") {
+        val cards =
+            listOf(
+                Card(CardNumber.J, CardShape.CLOVER),
+                Card(CardNumber.SEVEN, CardShape.CLOVER),
+                Card(CardNumber.Q, CardShape.CLOVER)
+            ).toGamerCards()
+        val dealer = Dealer.newInstance(cards)
+        When("참가자의 카드 값과 상관없이") {
+            // 승
+            val winningParticipantCard =
+                listOf(Card(CardNumber.J, CardShape.CLOVER), Card(CardNumber.EIGHT, CardShape.CLOVER)).toGamerCards()
+            val winningParticipant = Participant.newInstance("pita", winningParticipantCard)
+            // 무
+            val drawParticipantCard =
+                listOf(Card(CardNumber.J, CardShape.CLOVER), Card(CardNumber.SEVEN, CardShape.CLOVER)).toGamerCards()
+            val drawParticipant = Participant.newInstance("pita", drawParticipantCard)
+            // 패
+            val losingParticipantCard =
+                listOf(Card(CardNumber.J, CardShape.CLOVER), Card(CardNumber.SIX, CardShape.CLOVER)).toGamerCards()
+            val losingParticipant = Participant.newInstance("pita", losingParticipantCard)
+
+            val expected = 3
+            Then("승리로 기록된다.") {
+                val totalResult = BlackJackResultBoard.getBlackJackResult(
+                    dealer, Participants(
+                        listOf(
+                            winningParticipant, losingParticipant, drawParticipant
+                        )
+                    )
+                )
+                totalResult.participantsResult.filter { it.resultState == ParticipantResultState.WIN }
+                    .count() shouldBe expected
             }
         }
     }
