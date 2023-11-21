@@ -2,7 +2,7 @@ package blackjack.domain
 
 import blackjack.domain.CardNumberInfo.Companion.ACE_UPPER_SCORE
 
-object GameManager {
+object BlackjackUtil {
     const val INITIAL_CARD_COUNT = 2
     const val BLACKJACK_SCORE = 21
 

@@ -1,8 +1,9 @@
 package blackjack.controller
 
+import blackjack.domain.BlackjackUtil
+import blackjack.domain.BlackjackUtil.BLACKJACK_SCORE
+import blackjack.domain.BlackjackUtil.INITIAL_CARD_COUNT
 import blackjack.domain.Dealer
-import blackjack.domain.GameManager
-import blackjack.domain.GameManager.BLACKJACK_SCORE
 import blackjack.domain.Player
 import blackjack.view.askForDraw
 import blackjack.view.inputNames
@@ -16,12 +17,12 @@ fun main() {
 
     // 딜러 생성, 초기카드 분배
     val dealer = Dealer()
-    repeat(GameManager.INITIAL_CARD_COUNT) {
+    repeat(INITIAL_CARD_COUNT) {
         players.forEach { dealer.supplyCard(it) }
     }
 
     // 초기 카드 분배결과 출력
-    printInitialSupply(players, GameManager.INITIAL_CARD_COUNT)
+    printInitialSupply(players, INITIAL_CARD_COUNT)
     players.forEach { printUserCardInfo(it) }
 
     // 각 사용자의 추가 draw 진행
@@ -33,7 +34,7 @@ fun main() {
 
 private fun drawWhileUserWants(player: Player, dealer: Dealer) {
     var isPrinted = false
-    var minScore = GameManager.computeScore(player.getCards()).first
+    var minScore = BlackjackUtil.computeScore(player.getCards()).first
 
     // 점수 합계가 21을 넘지 않는다면 추가 draw 가능
     while (minScore <= BLACKJACK_SCORE && askForDraw(player.name)) {
@@ -41,7 +42,7 @@ private fun drawWhileUserWants(player: Player, dealer: Dealer) {
 
         dealer.supplyCard(player)
         printUserCardInfo(player)
-        minScore = GameManager.computeScore(player.getCards()).first
+        minScore = BlackjackUtil.computeScore(player.getCards()).first
     }
 
     // 추가 draw로 인한 현황 출력이 없었다면 한번 출력

@@ -1,7 +1,7 @@
 package blackjack.view
 
+import blackjack.domain.BlackjackUtil
 import blackjack.domain.Card
-import blackjack.domain.GameManager
 import blackjack.domain.Player
 
 fun printInitialSupply(players: List<Player>, cardNum: Int) {
@@ -24,7 +24,7 @@ private fun cardToString(card: Card): String {
 fun printResult(players: List<Player>) {
     println()
     players.forEach {
-        val score = GameManager.computeScore(it.getCards()).second
+        val score = BlackjackUtil.computeScore(it.getCards()).second
         val result = "${playerCardStatus(it)} - 결과: $score"
         println(result)
     }

@@ -3,7 +3,7 @@ package blackjack.domain
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class GameManagerTest {
+class BlackjackUtilTest {
 
     @Test
     fun `카드 목록을 받아 점수 합계를 반환한다`() {
@@ -13,7 +13,7 @@ class GameManagerTest {
             Card(CardSuitInfo.DIAMOND, CardNumberInfo.TEN),
         )
 
-        val (minScore, maxScore) = GameManager.computeScore(cards)
+        val (minScore, maxScore) = BlackjackUtil.computeScore(cards)
 
         assertThat(minScore).isEqualTo(30)
         assertThat(maxScore).isEqualTo(30)
@@ -27,7 +27,7 @@ class GameManagerTest {
             Card(CardSuitInfo.DIAMOND, CardNumberInfo.ACE),
         )
 
-        val (minScore, maxScore) = GameManager.computeScore(cards)
+        val (minScore, maxScore) = BlackjackUtil.computeScore(cards)
 
         assertThat(minScore).isEqualTo(3)
         assertThat(maxScore).isEqualTo(13)
