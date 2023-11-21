@@ -9,12 +9,12 @@ class BlackJack(
     private val participants: Participants,
 ) {
     fun doGame(
-        input: () -> Boolean,
+        getOneMoreCardInput: () -> Boolean,
     ) {
         participants.forEach { participant ->
             while (true) {
                 OutputView.askGetOneMoreCard(participant)
-                if (input.invoke()) {
+                if (getOneMoreCardInput.invoke()) {
                     participant.drawCard(cardDeque)
                     OutputView.printParticipantInformation(participant)
                     if (participant.canJoinGame().not()) break

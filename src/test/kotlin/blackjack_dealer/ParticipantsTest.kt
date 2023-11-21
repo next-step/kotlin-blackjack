@@ -15,6 +15,7 @@ class ParticipantsTest : StringSpec({
         CardDeque.create()
         Participants.newInstance(
             nameString = input,
-            cardDeque = { listOf(Card(CardNumber.TWO, CardShape.CLOVER)) }).size shouldBe expected
+            cardDeque = { listOf(Card(CardNumber.TWO, CardShape.CLOVER)) }
+        ).size shouldBe expected
     }
 })

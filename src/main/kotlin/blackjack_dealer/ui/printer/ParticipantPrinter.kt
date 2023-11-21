@@ -12,4 +12,3 @@ value class ParticipantPrinter(val printer: String) {
         }
     }
 }
-
