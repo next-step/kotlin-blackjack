@@ -1,9 +1,10 @@
 package blackjack.domain
 
-import blackjack.AceCard
-import blackjack.CardPattern
-import blackjack.NormalCard
-import blackjack.PictureCard
+import blackjack.card.AceCard
+import blackjack.card.CardPattern
+import blackjack.card.CardPicture
+import blackjack.card.NormalCard
+import blackjack.card.PictureCard
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
@@ -21,8 +22,8 @@ class CardTest {
 
     @Test
     fun `King, Queen, Jack이라는 숫자를 가지지 않는 카드가 있다`() {
-        val picture = "King"
-        val card = PictureCard(picture)
+        val picture = CardPicture.KING
+        val card = PictureCard(picture, CardPattern.DIAMOND)
 
         card.picture shouldBe picture
     }

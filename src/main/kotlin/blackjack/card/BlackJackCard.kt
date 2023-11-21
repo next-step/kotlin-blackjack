@@ -1,3 +1,3 @@
-package blackjack
+package blackjack.card
 
 sealed interface BlackJackCard
