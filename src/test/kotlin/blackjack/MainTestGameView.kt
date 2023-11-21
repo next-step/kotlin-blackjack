@@ -55,6 +55,6 @@ class MainTestGameView : GameView {
     }
 
     private fun printPlayerResult(playerResult: PlayerResult) {
-        println("${playerResult.name}: ${playerResult.money.value}")
+        println("${playerResult.name}: ${playerResult.profitOrLoss}")
     }
 }

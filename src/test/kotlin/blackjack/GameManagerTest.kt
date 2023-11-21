@@ -6,7 +6,6 @@ import blackjack.business.FirstCardSelectionStrategy
 import blackjack.business.card.Card
 import blackjack.business.card.CardDesk
 import blackjack.business.participants.PlayerResult
-import blackjack.business.util.Money
 import io.kotest.matchers.collections.shouldContainExactlyInAnyOrder
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.AfterEach
@@ -37,10 +36,10 @@ class GameManagerTest {
 
         // then
         view.playerNames shouldBe listOf("pobi", "jason")
-        view.gameResult.dealerResult shouldBe PlayerResult("딜러", Money(-10000))
+        view.gameResult.dealerResult shouldBe PlayerResult("딜러", -10000)
         view.gameResult.playerResults shouldContainExactlyInAnyOrder listOf(
-            PlayerResult("pobi", Money(20000)),
-            PlayerResult("jason", Money(-10000))
+            PlayerResult("pobi", 20000),
+            PlayerResult("jason", -10000)
         )
     }
 }

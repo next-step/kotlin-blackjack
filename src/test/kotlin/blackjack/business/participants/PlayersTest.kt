@@ -106,11 +106,11 @@ class PlayersTest {
 
         // then
         result.playerResults shouldContainExactlyInAnyOrder listOf(
-            PlayerResult("pobi", Money(-10000)),
-            PlayerResult("jason", Money(0)),
-            PlayerResult("honux", Money(20000))
+            PlayerResult("pobi", -10000),
+            PlayerResult("jason", 0),
+            PlayerResult("honux", 20000)
         )
-        result.dealerResult shouldBe PlayerResult(Dealer.DEALER_NAME, Money(-10000))
+        result.dealerResult shouldBe PlayerResult(Dealer.DEALER_NAME, -10000)
     }
 
     private fun createTestPlayers() = Players(

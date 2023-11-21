@@ -1,10 +1,14 @@
 package blackjack.business.util
 
-data class Money(val value: Int = 0) {
+data class Money(val value: Int = MIN_VALUE) {
 
-    operator fun plus(money: Money): Money = Money(this.value + money.value)
+    init {
+        require(value >= MIN_VALUE) { "돈은 최소값보다 작을 수 없습니다." }
+    }
 
-    fun lose(): Money = Money(-value)
+    fun lose(): Int = -value
 
-    operator fun times(value: Double): Money = Money((this.value * value).toInt())
+    companion object {
+        const val MIN_VALUE = 0
+    }
 }

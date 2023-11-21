@@ -2,7 +2,6 @@ package blackjack.business.participants
 
 import blackjack.business.card.CardDesk
 import blackjack.business.drawConditionStrategy.DrawConditionStrategy
-import blackjack.business.util.Money
 
 class Players(allGamePlayers: List<GamePlayer>) {
 
@@ -42,7 +41,7 @@ class Players(allGamePlayers: List<GamePlayer>) {
 
     fun getGameResult(dealer: Dealer): GameResult {
         val playerResults = allGamePlayers.map(dealer::getPlayerResult)
-        val dealerResults = PlayerResult(Dealer.DEALER_NAME, playerResults.map { it.money.lose() }.reduce(Money::plus))
+        val dealerResults = PlayerResult(Dealer.DEALER_NAME, playerResults.sumOf { -it.profitOrLoss })
         return GameResult(dealerResults, playerResults)
     }
 

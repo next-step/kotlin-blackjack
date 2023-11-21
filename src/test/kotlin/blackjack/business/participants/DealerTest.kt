@@ -50,7 +50,7 @@ class DealerTest {
         )
 
         // when,then
-        dealer.getPlayerResult(gamePlayer) shouldBe PlayerResult("pobi", Money(expected))
+        dealer.getPlayerResult(gamePlayer) shouldBe PlayerResult("pobi", expected)
     }
 
     @Test
@@ -70,7 +70,7 @@ class DealerTest {
         )
 
         // when,then
-        dealer.getPlayerResult(gamePlayer) shouldBe PlayerResult("pobi", Money(2500))
+        dealer.getPlayerResult(gamePlayer) shouldBe PlayerResult("pobi", 2500)
     }
 
     @Test
@@ -90,7 +90,7 @@ class DealerTest {
         )
 
         // when,then
-        dealer.getPlayerResult(gamePlayer) shouldBe PlayerResult("pobi", Money(2000))
+        dealer.getPlayerResult(gamePlayer) shouldBe PlayerResult("pobi", 2000)
     }
 
     @Test
@@ -110,7 +110,7 @@ class DealerTest {
         )
 
         // when,then
-        dealer.getPlayerResult(gamePlayer) shouldBe PlayerResult("pobi", Money(-1000))
+        dealer.getPlayerResult(gamePlayer) shouldBe PlayerResult("pobi", -1000)
     }
 
     @Test
