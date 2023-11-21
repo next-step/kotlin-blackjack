@@ -5,12 +5,10 @@ import blackjack_dealer.domain.Participant
 import blackjack_dealer.entity.Participants
 import blackjack_dealer.entity.result.DealerResult
 import blackjack_dealer.entity.result.ParticipantResult
-import blackjack_dealer.ui.printer.DealerPrinter
-import blackjack_dealer.ui.printer.ParticipantPrinter
+import blackjack_dealer.ui.printer.GamerPrinter
 import blackjack_dealer.ui.printer.board.DealerResultBoardPrinter
 import blackjack_dealer.ui.printer.board.ParticipantResultBoardPrinter
-import blackjack_dealer.ui.printer.result.DealerResultPrinter
-import blackjack_dealer.ui.printer.result.ParticipantResultPrinter
+import blackjack_dealer.ui.printer.result.GamerResultPrinter
 
 object OutputView {
     fun enterParticipantsName() {
@@ -18,12 +16,12 @@ object OutputView {
     }
 
     fun printDivideCardsToGamer(dealer: Dealer, participants: Participants) {
-        val participantsName = participants.joinToString { it.getParticipantName() }
-        println(DIVIDE_CARDS_TO_GAMERS.format(dealer.getDealerName(), participantsName))
+        val participantsName = participants.joinToString { it.getGamerName() }
+        println(DIVIDE_CARDS_TO_GAMERS.format(dealer.getGamerName(), participantsName))
     }
 
     fun printGamersInformation(dealer: Dealer, participants: Participants) {
-        println(DealerPrinter.print(dealer))
+        println(GamerPrinter.print(dealer))
         participants.forEach { participant ->
             printParticipantInformation(participant)
         }
@@ -32,19 +30,19 @@ object OutputView {
 
     fun printParticipantInformation(participant: Participant) {
         println(
-            ParticipantPrinter.print(participant)
+            GamerPrinter.print(participant)
         )
     }
 
     fun askGetOneMoreCard(participant: Participant) {
-        println(ASK_GET_MORE_ONE_CARD.format(participant.getParticipantName()))
+        println(ASK_GET_MORE_ONE_CARD.format(participant.getGamerName()))
     }
 
     fun printResult(dealer: Dealer, participants: Participants) {
         println()
-        println(DealerResultPrinter.print(dealer))
+        println(GamerResultPrinter.print(dealer))
         participants.forEach { participant ->
-            println(ParticipantResultPrinter.print(participant))
+            println(GamerResultPrinter.print(participant))
         }
         println()
     }

@@ -23,7 +23,7 @@ class DealerTest : BehaviorSpec({
         val dealer = Dealer.newInstance(cards = customCards)
         Then("이름은 딜러이다") {
             val expected = "딜러"
-            dealer.getDealerName() shouldBe expected
+            dealer.getGamerName() shouldBe expected
         }
 
         When("카드 두장을 받고 받은 두장의 합계가 16 이하면") {

@@ -11,7 +11,7 @@ object BlackJackResultBoard {
     fun getBlackJackResult(dealer: Dealer, participants: Participants): TotalResult {
         val participantsResult = participants.map { participant ->
             val participantState = ParticipantResultState.of(dealer, participant)
-            ParticipantResult(name = participant.getParticipantName(), resultState = participantState)
+            ParticipantResult(name = participant.getGamerName(), resultState = participantState)
         }
 
         val groupingByParticipantResult = participantsResult

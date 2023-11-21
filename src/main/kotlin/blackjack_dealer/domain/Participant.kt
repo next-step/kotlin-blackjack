@@ -7,16 +7,10 @@ import blackjack_dealer.entity.state.GamerCurrentState
 import blackjack_dealer.entity.toGamerCards
 
 data class Participant(
-    private val name: String,
-) {
-    private lateinit var gamerCards: GamerCards
-
-    private var currentState: GamerCurrentState = GamerCurrentState.INITIAL
-
-    fun getParticipantName(): String = name
-    fun getCurrentCards(): GamerCards = gamerCards
-    fun getCurrentGamerState(): GamerCurrentState = currentState
+    override val name: String,
+) : Gamer(name) {
     fun canJoinGame(): Boolean = currentState is GamerCurrentState.HIT
+    fun getCurrentGamerState(): GamerCurrentState = currentState
 
     fun drawCard(cardDeque: CardDeque) {
         gamerCards = gamerCards.trumpCard.plus(CardGenerator.generateSingleCard(cardDeque)).toGamerCards()
@@ -30,13 +24,15 @@ data class Participant(
     private fun setCurrentState() {
         val currentScore = gamerCards.getCurrentScore()
         currentState = when (currentScore) {
-            in 1..20 -> GamerCurrentState.HIT
-            21 -> GamerCurrentState.BLACKJACK
+            in MINIMUM_HIT_NUMBER..MAXIMUM_HIT_NUMBER -> GamerCurrentState.HIT
+            BLACK_JACK -> GamerCurrentState.BLACKJACK
             else -> GamerCurrentState.BUST
         }
     }
 
     companion object {
+        private const val MINIMUM_HIT_NUMBER = 1
+        private const val MAXIMUM_HIT_NUMBER = 20
         fun newInstance(name: String, cards: GamerCards): Participant {
             val initialState = initialStateIsBlackJack(cards)
             return Participant(name = name).apply {
@@ -47,7 +43,5 @@ data class Participant(
 
         private fun initialStateIsBlackJack(initialCards: GamerCards): GamerCurrentState =
             if (initialCards.getCurrentScore() == BLACK_JACK) GamerCurrentState.BLACKJACK else GamerCurrentState.HIT
-
-        private const val BLACK_JACK = 21
     }
 }

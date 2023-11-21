@@ -7,15 +7,8 @@ import blackjack_dealer.entity.state.GamerCurrentState
 import blackjack_dealer.entity.toGamerCards
 
 data class Dealer(
-    private val name: String = DEALER_NAME
-) {
-    private lateinit var gamerCards: GamerCards
-    private var currentState: GamerCurrentState = GamerCurrentState.INITIAL
-
-    fun getDealerName(): String = name
-    fun getCurrentCards(): GamerCards = gamerCards
-    fun canKeepPlayingGame(): Boolean = currentState is GamerCurrentState.HIT
-
+    override val name: String = DEALER_NAME
+) : Gamer(name) {
     fun getOneMoreCardIfHit(cardDeque: CardDeque) {
         gamerCards = gamerCards.plus(listOf(CardGenerator.generateSingleCard(cardDeque))).toGamerCards()
         currentState = findDealerMatchedState(gamerCards)
@@ -23,6 +16,11 @@ data class Dealer(
 
     companion object {
         private const val DEALER_NAME = "딜러"
+        private const val MINIMUM_HIT_NUMBER = 4
+        private const val MAXIMUM_HIT_NUMBER = 16
+        private const val MINIMUM_STAND_NUMBER = 17
+        private const val MAXIMUM_STAND_NUMBER = 20
+
         fun newInstance(cards: GamerCards): Dealer {
             val initialState = findDealerMatchedState(cards)
             return Dealer().apply {
@@ -34,9 +32,9 @@ data class Dealer(
         private fun findDealerMatchedState(cards: GamerCards): GamerCurrentState {
             val cardScores = cards.getCurrentScore()
             return when (cardScores) {
-                in 4..16 -> GamerCurrentState.HIT
-                in 17..20 -> GamerCurrentState.STAND
-                21 -> GamerCurrentState.BLACKJACK
+                in MINIMUM_HIT_NUMBER..MAXIMUM_HIT_NUMBER -> GamerCurrentState.HIT
+                in MINIMUM_STAND_NUMBER..MAXIMUM_STAND_NUMBER -> GamerCurrentState.STAND
+                BLACK_JACK -> GamerCurrentState.BLACKJACK
                 else -> GamerCurrentState.BUST
             }
         }
