@@ -4,11 +4,11 @@ import blackjack.business.cardSelectionStrategy.CardSelectionStrategy
 import blackjack.business.cardSelectionStrategy.RandomCardSelectionStrategy
 
 class CardDesk(
-    private val cardFactory: CardFactory = DefaultCardFactory(),
+    cards: List<Card> = Card.allCards,
     private val cardSelectionStrategy: CardSelectionStrategy = RandomCardSelectionStrategy()
 ) {
 
-    private val _cards = cardFactory.getCards().toMutableList()
+    private val _cards = cards.toMutableList()
 
     val cards: List<Card>
         get() = _cards.toList()
@@ -26,6 +26,6 @@ class CardDesk(
     }
 
     private fun addAllNewCards() {
-        _cards.addAll(cardFactory.getCards())
+        _cards.addAll(Card.allCards)
     }
 }

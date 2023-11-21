@@ -1,7 +1,9 @@
 package blackjack
 
 import blackjack.business.AlwaysDrawStrategy
+import blackjack.business.CardFixture
 import blackjack.business.FixSelectionStrategy
+import blackjack.business.card.Card
 import blackjack.business.card.CardDesk
 import blackjack.business.participants.PlayerResult
 import blackjack.business.util.Money
@@ -27,7 +29,7 @@ class GameManagerTest {
         val gameManager = GameManager(
             view,
             AlwaysDrawStrategy(),
-            CardDesk(GameManagerTestCardFactory(), FixSelectionStrategy())
+            CardDesk(getCards(), FixSelectionStrategy())
         )
 
         // when
@@ -64,7 +66,7 @@ class MainTest {
         val gameManager = GameManager(
             MainTestGameView(),
             AlwaysDrawStrategy(),
-            CardDesk(GameManagerTestCardFactory(), FixSelectionStrategy())
+            CardDesk(getCards(), FixSelectionStrategy())
         )
 
         // when
@@ -99,4 +101,21 @@ class MainTest {
             
             """.trimIndent()
     }
+}
+
+private fun getCards(): List<Card> {
+    return listOf(
+        // dealer
+        CardFixture.SPACE_ACE, CardFixture.SPACE_THREE,
+        // pobi
+        CardFixture.SPACE_NINE, CardFixture.SPACE_THREE,
+        // jason
+        CardFixture.SPACE_TEN, CardFixture.SPACE_THREE,
+        // pobi
+        CardFixture.SPACE_NINE,
+        // jason
+        CardFixture.SPACE_TEN,
+        // dealer
+        CardFixture.SPACE_FIVE
+    )
 }

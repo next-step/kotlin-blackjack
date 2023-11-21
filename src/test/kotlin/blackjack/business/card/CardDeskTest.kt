@@ -25,7 +25,7 @@ class CardDeskTest {
     @Test
     fun `시작시 카드를 두장씩 나눠준다`() {
         // given
-        val cardDesk = CardDesk(cardFactory = CardDeskTestCardFactory())
+        val cardDesk = CardDesk(listOf(SPACE_ACE, SPACE_EIGHT))
 
         // when
         val playerCards = cardDesk.startDraw()
@@ -33,15 +33,5 @@ class CardDeskTest {
         // then
         playerCards.size shouldBe 2
         playerCards shouldContainExactlyInAnyOrder listOf(SPACE_EIGHT, SPACE_ACE)
-    }
-
-    class CardDeskTestCardFactory : CardFactory {
-
-        override fun getCards(): List<Card> {
-            return listOf(
-                SPACE_ACE,
-                SPACE_EIGHT,
-            )
-        }
     }
 }
