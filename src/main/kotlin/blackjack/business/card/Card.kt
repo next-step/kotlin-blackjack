@@ -1,6 +1,6 @@
 package blackjack.business.card
 
-data class Card private constructor(val suit: Suit, val rank: Rank) {
+class Card private constructor(val suit: Suit, val rank: Rank) {
 
     override fun toString(): String = "${rank.printName}${suit.printName}"
 
