@@ -9,4 +9,8 @@ data class Dealer(
         cards.totalScore() > 17
         TODO()
     }
+
+    fun countOfCards(): Int {
+        return cards.count()
+    }
 }
