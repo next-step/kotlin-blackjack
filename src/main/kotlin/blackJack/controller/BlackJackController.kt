@@ -2,6 +2,8 @@ package blackJack.controller
 
 import blackJack.model.Dealer
 import blackJack.model.Player
+import blackJack.model.askMoreCard
+import blackJack.model.checkDrawCardIsAllowedFor
 import blackJack.view.InputView
 import blackJack.view.OutputView
 
@@ -28,9 +30,9 @@ class BlackJackController {
             if (req == "n") {
                 break
             }
-            player.askMoreCard(dealer)
+            player askMoreCard dealer
 
-            if (dealer.isDrawCardAllowedFor(player).not()) {
+            if ((dealer checkDrawCardIsAllowedFor player).not()) {
                 break
             }
             OutputView.printPlayerState(player)
