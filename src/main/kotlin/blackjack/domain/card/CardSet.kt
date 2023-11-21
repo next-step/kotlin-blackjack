@@ -1,6 +1,8 @@
 package blackjack.domain.card
 
 class CardSet(val cards: List<Card>) {
+    val size = cards.size
+
     init {
         val distinct = cards.distinct()
         require(distinct.size == cards.size) { "카드뭉치에는 중복된 카드를 허용하지 않습니다." }

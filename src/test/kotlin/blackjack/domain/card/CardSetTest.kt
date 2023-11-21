@@ -46,4 +46,10 @@ class CardSetTest {
         val cardSet = CardSet.of(Card.of(CardKind.DIAMOND, CardNumber.EIGHT))
         shouldThrow<IllegalArgumentException> { cardSet.addCard(Card.of(CardKind.DIAMOND, CardNumber.EIGHT)) }
     }
+
+    @Test
+    fun `카드 뭉치에 몇 장의 카드가 들어있는지 알 수 있다`() {
+        val cardSet = CardSet.of(Card.of(CardKind.DIAMOND, CardNumber.EIGHT))
+        cardSet.size shouldBe 1
+    }
 }
