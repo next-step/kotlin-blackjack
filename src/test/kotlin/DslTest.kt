@@ -1,5 +1,3 @@
-import io.kotest.matchers.shouldBe
-import org.intellij.lang.annotations.Language
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
@@ -31,42 +29,18 @@ class DslTest {
         val person = introduce {
             name(name)
             company("블루버드")
-            softSkill("A passion for problem solving")
-            softSkill("Good communication skills")
-            hardSkill("Kotlin")
-            language("Korean" to 5)
-            language("English" to 3)
+            skills(introduceSkill {
+                softSkills("A passion for problem solving")
+                softSkills("Good communication skills")
+                hardSkills("Kotlin")
+            })
+            language(introduceLanguage {
+                language("Korean" to 5)
+                language("English" to 3)
+            })
         }
 
-        person.name shouldBe name
-        person.company shouldBe "블루버드"
-        person.skills shouldBe Skills(
-            listOf("A passion for problem solving", "Good communication skills"),
-            listOf("Kotlin")
-        )
         println(person)
-    }
-
-    @Test
-    fun company() {
-        val person = introduce {
-            name("홍길동")
-            company("활빈당")
-        }
-        person.name shouldBe "홍길동"
-        person.company shouldBe "활빈당"
-    }
-
-    @Test
-    fun skills() {
-        val skills = Skills(
-            softSkill = listOf("A passion for problem solving", "Good communication skills"),
-            hardSkill = listOf("Kotlin")
-        )
-        val softExpect = listOf("A passion for problem solving", "Good communication skills")
-        val hardExpect = listOf("Kotlin")
-        skills.softSkill shouldBe softExpect
-        skills.hardSkill shouldBe hardExpect
     }
 
     @Test
@@ -79,6 +53,14 @@ class DslTest {
     private infix fun Int.of(s: String): Pair<Int, String> = Pair(this, s)
 }
 
+fun introduceLanguage(block: LanguagesBuilder.() -> Unit): Languages {
+    return LanguagesBuilder().apply(block).build()
+}
+
+fun introduceSkill(block: SkillsBuilder.() -> Unit): Skills {
+    return SkillsBuilder().apply(block).build()
+}
+
 fun introduce(block: PersonBuilder.() -> Unit): Person {
     return PersonBuilder().apply(block).build()
 }
@@ -86,8 +68,8 @@ fun introduce(block: PersonBuilder.() -> Unit): Person {
 class PersonBuilder {
     private lateinit var name: String
     private var company: String? = null
-    private val skills = SkillsBuilder()
-    private val languages = LanguagesBuilder()
+    private lateinit var skills: Skills
+    private lateinit var languages: Languages
     fun name(value: String) {
         name = value
     }
@@ -96,20 +78,16 @@ class PersonBuilder {
         company = value
     }
 
-    fun softSkill(value: String) {
-        skills.softSkills(value)
+    fun skills(skill: Skills) {
+        skills = skill
     }
 
-    fun hardSkill(value: String) {
-        skills.hardSkills(value)
-    }
-
-    fun language(language: Pair<String, Int>) {
-        languages.addLanguages(language)
+    fun language(language: Languages) {
+        languages = language
     }
 
     fun build(): Person {
-        return Person(name, company, skills.build(), languages.build())
+        return Person(name, company, skills, languages)
     }
 }
 

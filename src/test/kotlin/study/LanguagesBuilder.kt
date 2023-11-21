@@ -5,7 +5,7 @@ class LanguagesBuilder {
     val languages: List<Pair<String, Int>>
         get() = _languages
 
-    fun addLanguages(language: Pair<String, Int>) {
+    fun language(language: Pair<String, Int>) {
         _languages.add(language)
     }
 
