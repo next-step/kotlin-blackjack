@@ -20,4 +20,6 @@ fun main() {
     val canJoinParticipants = participants.getParticipantsCanPlayGame()
     val blackJack = BlackJack(cardDeque = cardDeque, participants = canJoinParticipants)
     blackJack.doGame { InputView.inputGetOneMoreCard()}
+
+    OutputView.printResult(participants)
 }

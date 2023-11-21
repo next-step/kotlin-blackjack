@@ -3,6 +3,7 @@ package blackjack_dealer.ui
 import blackjack_dealer.domain.Participant
 import blackjack_dealer.entity.Participants
 import blackjack_dealer.ui.printer.ParticipantPrinter
+import blackjack_dealer.ui.printer.ParticipantResultPrinter
 
 object OutputView {
     fun enterParticipantsName() {
@@ -13,6 +14,7 @@ object OutputView {
         participants.forEach { participant ->
             printParticipantInformation(participant)
         }
+        println()
     }
 
     fun printParticipantInformation(participant: Participant) {
@@ -23,6 +25,13 @@ object OutputView {
 
     fun askGetOneMoreCard(participant: Participant) {
         println(ASK_GET_MORE_ONE_CARD.format(participant.getParticipantName()))
+    }
+
+    fun printResult(participants: Participants) {
+        println()
+        participants.forEach { participant ->
+            println(ParticipantResultPrinter.print(participant))
+        }
     }
 
     private const val ENTER_PARTICIPANTS_NAME = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)"
