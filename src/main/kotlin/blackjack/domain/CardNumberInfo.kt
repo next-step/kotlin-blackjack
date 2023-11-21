@@ -1,6 +1,6 @@
 package blackjack.domain
 
-enum class CardNumberInfo (val mark: String, val score: Int) {
+enum class CardNumberInfo(val mark: String, val score: Int) {
     ACE("A", 1),
     TWO("2", 2),
     THREE("3", 3),
@@ -14,7 +14,7 @@ enum class CardNumberInfo (val mark: String, val score: Int) {
     JACK("J", 10),
     QUEEN("Q", 10),
     KING("K", 10);
-    
+
     companion object {
         const val ACE_UPPER_SCORE = 11
     }
