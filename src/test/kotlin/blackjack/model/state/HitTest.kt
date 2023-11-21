@@ -14,30 +14,42 @@ class HitTest {
 
     @Test
     fun `블랙잭인 경우 블랙잭을 반환한다`() {
+        // given
         val playState = Hit(CardDeck())
         playState.draw(Card(CardNumber.ACE, CardSuit.다이아몬드))
+
+        // when
         val result = playState.draw(Card(CardNumber.KING, CardSuit.다이아몬드))
 
+        // then
         result.shouldBeInstanceOf<BlackJack>()
     }
 
     @Test
     fun `버스트인 경우 버스트를 반환한다`() {
+        // given
         val playState = Hit(CardDeck())
         playState.draw(Card(CardNumber.KING, CardSuit.다이아몬드))
         playState.draw(Card(CardNumber.KING, CardSuit.스페이드))
+
+        // when
         val result = playState.draw(Card(CardNumber.KING, CardSuit.클럽))
 
+        // then
         result.shouldBeInstanceOf<Bust>()
     }
 
     @Test
     fun `히트인 경우 히트를 반환한다`() {
+        // given
         val playState = Hit(CardDeck())
         playState.draw(Card(CardNumber.TWO, CardSuit.다이아몬드))
         playState.draw(Card(CardNumber.THREE, CardSuit.스페이드))
+
+        // when
         val result = playState.draw(Card(CardNumber.KING, CardSuit.클럽))
 
+        // then
         result.shouldBeInstanceOf<Hit>()
     }
 }

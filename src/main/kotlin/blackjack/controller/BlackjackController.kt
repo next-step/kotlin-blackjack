@@ -12,7 +12,7 @@ class BlackjackController {
         val players = InputView.inputPlayers().map(::Player)
         players.forEach { player ->
             repeat(2) {
-                player.draw(cards.get())
+                player.draw(cards.pop())
             }
         }
         OutputView.printPlayerInitStatus(players)
@@ -27,9 +27,8 @@ class BlackjackController {
     }
 
     private fun hitOrStay(player: Player, cards: CardDeck) {
-        val result = InputView.inputPlayerChoice(player.name)
-        when (result) {
-            true -> player.draw(cards.get())
+        when (InputView.inputPlayerChoice(player.name)) {
+            true -> player.draw(cards.pop())
             false -> player.stay()
         }
     }
