@@ -8,6 +8,8 @@ enum class ParticipantResultState(val state: String) {
 
     companion object {
         private const val BLACK_JACK = 21
+        private const val DEFAULT_VALUE = 0
+
         fun of(dealer: Dealer, participant: Participant): ParticipantResultState {
             val dealerScore = dealer.getCurrentCards().getCurrentScore()
             val participantScore = participant.getCurrentCards().getCurrentScore()
@@ -18,5 +20,8 @@ enum class ParticipantResultState(val state: String) {
                 else -> DRAW
             }
         }
+
+        fun getParticipantResultStateGroup(groupingByParticipantResult: Map<ParticipantResultState, Int>) =
+            values().associateWith { groupingByParticipantResult.getOrDefault(it, DEFAULT_VALUE) }
     }
 }
