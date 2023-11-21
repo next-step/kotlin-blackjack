@@ -1,8 +1,8 @@
 package blackjack.controller
 
 import blackjack.domain.BlackjackUtil
-import blackjack.domain.BlackjackUtil.BLACKJACK_SCORE
 import blackjack.domain.BlackjackUtil.INITIAL_CARD_COUNT
+import blackjack.domain.BlackjackUtil.isBust
 import blackjack.domain.Dealer
 import blackjack.domain.Player
 import blackjack.view.askForDraw
@@ -37,7 +37,7 @@ private fun drawWhileUserWants(player: Player, dealer: Dealer) {
     var minScore = BlackjackUtil.computeScore(player.getCards()).first
 
     // 점수 합계가 21을 넘지 않는다면 추가 draw 가능
-    while (minScore <= BLACKJACK_SCORE && askForDraw(player.name)) {
+    while (!isBust(minScore) && askForDraw(player.name)) {
         isPrinted = true
 
         dealer.supplyCard(player)

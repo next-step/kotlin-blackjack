@@ -17,4 +17,6 @@ object BlackjackUtil {
             Pair(minScore, minScore)
         }
     }
+
+    fun isBust(score: Int): Boolean = score > BLACKJACK_SCORE
 }

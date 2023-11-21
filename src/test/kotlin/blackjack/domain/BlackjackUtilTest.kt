@@ -2,6 +2,8 @@ package blackjack.domain
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.CsvSource
 
 class BlackjackUtilTest {
 
@@ -31,5 +33,11 @@ class BlackjackUtilTest {
 
         assertThat(minScore).isEqualTo(3)
         assertThat(maxScore).isEqualTo(13)
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = ["20,false", "21,false", "22,true"])
+    fun `점수가 21점을 초과하는지 확인한다`(score: Int, expected: Boolean) {
+        assertThat(BlackjackUtil.isBust(score)).isEqualTo(expected)
     }
 }
