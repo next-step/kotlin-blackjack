@@ -1,8 +1,8 @@
 package blackjack.view.output
 
 import blackjack.domain.card.Card
-import blackjack.view.model.FinalPlayerStateModel
-import blackjack.view.model.PlayerModel
+import blackjack.view.dto.FinalPlayerStateDto
+import blackjack.view.dto.PlayerDto
 
 object OutputView {
     private const val INITIAL_DISTRIBUTION_MSG = "%s에게 2장씩 나누었습니다."
@@ -10,7 +10,7 @@ object OutputView {
     private const val RESULT_MSG = "%s카드: %s - 결과: %d"
 
     fun initialDistributionResult(
-        players: List<PlayerModel>,
+        players: List<PlayerDto>,
     ) {
         println()
         println(INITIAL_DISTRIBUTION_MSG.format(extractPlayerNames(players)))
@@ -21,13 +21,13 @@ object OutputView {
     }
 
     fun playerCurrentState(
-        player: PlayerModel,
+        player: PlayerDto,
     ) {
         println(PLAYER_STATE_MSG.format(player.name, extractCardsState(player.cards)))
     }
 
     fun playerFinalStates(
-        players: List<FinalPlayerStateModel>,
+        players: List<FinalPlayerStateDto>,
     ) {
         println()
         players.forEach {
@@ -35,7 +35,7 @@ object OutputView {
         }
     }
 
-    private fun extractPlayerNames(players: List<PlayerModel>): String =
+    private fun extractPlayerNames(players: List<PlayerDto>): String =
         players.joinToString(", ") { it.name }
 
     private fun extractCardsState(cards: List<Card>): String =

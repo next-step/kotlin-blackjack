@@ -1,6 +1,6 @@
 package blackjack.view.input
 
-import blackjack.view.model.PlayerNameModel
+import blackjack.view.dto.PlayerNameDto
 import java.lang.IllegalArgumentException
 
 object InputView {
@@ -12,7 +12,7 @@ object InputView {
         return readInput().let(InputParser::intoPlayerNames)
     }
 
-    fun playerAction(player: PlayerNameModel): String {
+    fun playerAction(player: PlayerNameDto): String {
         println(PLAYER_ACTION_MESSAGE.format(player.name))
         return readInput()
     }

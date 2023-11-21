@@ -4,14 +4,14 @@ import blackjack.domain.PlayerAction
 import blackjack.domain.player.Player
 import blackjack.domain.player.PlayerNames
 import blackjack.view.input.InputView
-import blackjack.view.model.PlayerNameModel
+import blackjack.view.dto.PlayerNameDto
 
 class ViewInputProcessor : InputProcessor {
     override fun playerNames(): PlayerNames =
         InputView.playerNames().let(PlayerNames::from)
 
     override fun playerAction(player: Player): PlayerAction {
-        val action = InputView.playerAction(player.let(PlayerNameModel::from))
+        val action = InputView.playerAction(player.let(PlayerNameDto::from))
         return toPlayerAction(action)
     }
 

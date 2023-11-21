@@ -4,7 +4,7 @@ import blackjack.domain.BlackJackGame
 import blackjack.domain.PlayerAction
 import blackjack.domain.result.InGameResult
 
-class InGameStage : Stage {
+class InGameStage: Stage {
     private var playerChoice: PlayerAction? = null
 
     override fun progress(game: BlackJackGame) {
