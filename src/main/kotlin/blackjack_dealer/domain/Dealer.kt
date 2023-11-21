@@ -7,4 +7,6 @@ data class Dealer(
     val name: String,
     val cards: GamerCards,
     val currentState: GamerCurrentState,
-)
+) {
+
+}

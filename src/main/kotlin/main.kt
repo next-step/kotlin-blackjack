@@ -15,6 +15,7 @@ fun main() {
         val initialSecondCard = cardDeque.cardDeque.removeLast()
         return@newInstance listOf<Card>(initialFirstCard, initialSecondCard)
     }
+
     OutputView.printParticipantsInformation(participants)
 
     val canJoinParticipants = participants.getParticipantsCanPlayGame()
