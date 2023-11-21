@@ -36,3 +36,4 @@
 - 상속을 활용해 중복을 제거해본다.
 
 ## 질문 목록
+Participant 클래스의 gamerCards가 초기값이 없어서 lateinit var로 사용했는데 더 좋은 방법이 있을까?
