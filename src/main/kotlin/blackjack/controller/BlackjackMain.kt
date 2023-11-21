@@ -2,9 +2,13 @@ package blackjack.controller
 
 import blackjack.domain.Dealer
 import blackjack.domain.GameManager
-import blackjack.domain.GameManager.Companion.BLACKJACK_SCORE
+import blackjack.domain.GameManager.BLACKJACK_SCORE
 import blackjack.domain.Player
-import blackjack.view.*
+import blackjack.view.askForDraw
+import blackjack.view.inputNames
+import blackjack.view.printInitialSupply
+import blackjack.view.printResult
+import blackjack.view.printUserCardInfo
 
 fun main() {
     // 참가자 명단 입력
