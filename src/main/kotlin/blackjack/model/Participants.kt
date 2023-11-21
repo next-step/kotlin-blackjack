@@ -6,12 +6,10 @@ class Participants(
     val players: Set<Player>,
     val dealer: Dealer,
 ) {
-    fun count(): Int {
-        return players.size
-    }
 
     fun dealing(pack: Pack) {
         players.forEach { it.deal(pack) }
+        dealer.play(pack)
     }
 
     private fun isGameOver(): Boolean {

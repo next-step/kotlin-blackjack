@@ -15,8 +15,8 @@ class DealerTest : StringSpec({
                 )
             )
         )
-        dealer.run(ShuffledPack)
-        dealer.cards.count() shouldBe 3
+        dealer.play(ShuffledPack)
+        dealer.countOfCards() shouldBe 3
     }
 
     "딜러는 카드의 점수 합계가 17점 이상이면 추가로 받을 수 없다" {
@@ -28,7 +28,7 @@ class DealerTest : StringSpec({
                 )
             )
         )
-        dealer.run(ShuffledPack)
+        dealer.play(ShuffledPack)
         dealer.countOfCards() shouldBe 2
     }
 })
