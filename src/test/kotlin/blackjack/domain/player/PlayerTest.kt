@@ -41,6 +41,24 @@ class PlayerTest {
         }
         player.cardSet shouldBe cardSet
     }
+
+    @Test
+    fun `플레이어는 카드를 지급받을 수 있다`() {
+        val player = player {
+            name("cookie")
+        }
+
+        val cardSet = CardSet(
+            listOf(
+                Card.of(CardKind.DIAMOND, CardNumber.ACE),
+                Card.of(CardKind.DIAMOND, CardNumber.TWO)
+            )
+        )
+
+        val actual = player.receiveCard(cardSet)
+
+        actual.cardSet shouldBe cardSet
+    }
 }
 
 
