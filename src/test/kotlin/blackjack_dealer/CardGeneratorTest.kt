@@ -8,7 +8,7 @@ class CardGeneratorTest : StringSpec({
     "CardGenerator 의 한장 생성 함수가 잘 작동 한다" {
         val cardDeque = CardDeque.create()
         val expected = 51
-        CardGenerator.generateSingleCard()
+        CardGenerator.generateSingleCard(cardDeque)
         cardDeque.cardDeque.count() shouldBe expected
     }
 })

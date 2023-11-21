@@ -7,12 +7,14 @@ import blackjack_dealer.entity.CardNumber
 import blackjack_dealer.entity.CardShape
 import blackjack_dealer.entity.GamerCards
 import blackjack_dealer.entity.GamerCurrentState
+import blackjack_dealer.entity.toGamerCards
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 
 class ParticipantTest : StringSpec({
     val cardDeque = CardDeque.create()
-    val participant = Participant.newInstance("pita", cardDeque)
+    val cards = listOf(cardDeque.cardDeque.removeLast(), cardDeque.cardDeque.removeLast())
+    val participant = Participant.newInstance("pita", cards.toGamerCards())
 
     "생성한 이름이 잘 나온다" {
         val expected = "pita"
