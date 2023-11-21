@@ -3,12 +3,13 @@ package blackjack.domain.stage
 import blackjack.domain.BlackJackGame
 import blackjack.domain.result.InitialDistributionResult
 
-class InitialDistributionStage: Stage {
+class InitialDistribution: Stage {
     var isProgressDone = false
         private set
 
-    override fun progress(game: BlackJackGame) {
+    override fun dealCards(game: BlackJackGame) {
         game.dealCardsToAllPlayers(INITIAL_DISTRIBUTION_COUNT)
+        game.dealCardToDealer(INITIAL_DISTRIBUTION_COUNT)
         isProgressDone = true
     }
 

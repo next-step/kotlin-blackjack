@@ -11,7 +11,6 @@ import blackjack.mock.InputProcessorMock
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
-import java.lang.IllegalArgumentException
 
 class BlackJackGameTest : DescribeSpec({
     describe("게임 생성") {
@@ -44,6 +43,22 @@ class BlackJackGameTest : DescribeSpec({
 
             it("덱에서는 카드 제거") {
                 game.dealer.deck.cards.size shouldBe 52 - count * 2
+            }
+        }
+    }
+
+    describe("dealCardsToDealer") {
+        val game = BlackJackGame(InputProcessorMock())
+        val count = 2
+        context("카드 ${count}장 배분") {
+            game.dealCardToDealer(count)
+
+            it("딜러 카드 ${count}장 수령") {
+                game.dealer.hand.cards.size shouldBe count
+            }
+
+            it("덱에서는 카드 ${count}장 제거") {
+                game.dealer.deck.cards.size shouldBe 52 - count
             }
         }
     }

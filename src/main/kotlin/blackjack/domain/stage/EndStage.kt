@@ -3,7 +3,7 @@ package blackjack.domain.stage
 import blackjack.domain.BlackJackGame
 
 class EndStage : Stage {
-    override fun progress(game: BlackJackGame) {}
+    override fun dealCards(game: BlackJackGame) {}
 
     override fun emitResult(game: BlackJackGame) {}
 

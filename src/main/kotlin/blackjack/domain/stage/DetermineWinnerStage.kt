@@ -4,7 +4,7 @@ import blackjack.domain.BlackJackGame
 import blackjack.domain.result.DetermineWinnerResult
 
 class DetermineWinnerStage: Stage {
-    override fun progress(game: BlackJackGame) {}
+    override fun dealCards(game: BlackJackGame) {}
 
     override fun emitResult(game: BlackJackGame) {
         game.emitResult(DetermineWinnerResult(game.players))

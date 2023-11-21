@@ -24,7 +24,7 @@ class InGameTest : DescribeSpec({
 
             context("게임 진행 스테이지를 진행시키면") {
                 val stage = InGameStage()
-                stage.progress(game)
+                stage.dealCards(game)
 
                 it("플레이어의 카드는 증가") {
                     game.players.playerInTurn.hand.cards.size shouldBe handCount + 1
@@ -68,7 +68,7 @@ class InGameTest : DescribeSpec({
 
                 val game = BlackJackGame(InputProcessorMock(playerAction = PlayerAction.HIT), players = players)
                 val stage = InGameStage()
-                stage.progress(game)
+                stage.dealCards(game)
 
                 it("게임의 다음 상태는 DetermineWinnerStage가 된다") {
                     stage.nextStage(game).shouldBeTypeOf<DetermineWinnerStage>()
@@ -86,7 +86,7 @@ class InGameTest : DescribeSpec({
 
                 val game = BlackJackGame(InputProcessorMock(playerAction = PlayerAction.HIT), players = players)
                 val stage = InGameStage()
-                stage.progress(game)
+                stage.dealCards(game)
 
                 it("게임의 다음 상태는 해당 플레이어가 진행하는 InGame이 된다") {
                     stage.nextStage(game).shouldBeTypeOf<InGameStage>()
@@ -107,7 +107,7 @@ class InGameTest : DescribeSpec({
 
             context("첫 번째 플레이어가 진행한 경우") {
                 val stage = InGameStage()
-                stage.progress(game)
+                stage.dealCards(game)
 
                 it("게임의 다음 상태는 다음 플레이어가 진행하는 InGame이 된다") {
                     stage.nextStage(game).shouldBeTypeOf<InGameStage>()
@@ -117,7 +117,7 @@ class InGameTest : DescribeSpec({
 
             context("두 번째 플레이어가 진행한 경우") {
                 val stage = InGameStage()
-                stage.progress(game)
+                stage.dealCards(game)
 
                 it("게임의 다음 상태는 DetermineWinnerStage가 된다") {
                     stage.nextStage(game).shouldBeTypeOf<DetermineWinnerStage>()

@@ -7,7 +7,7 @@ import blackjack.domain.result.InGameResult
 class InGameStage: Stage {
     private var playerChoice: PlayerAction? = null
 
-    override fun progress(game: BlackJackGame) {
+    override fun dealCards(game: BlackJackGame) {
         playerChoice = game.askHitOrStand().also {
             when (it) {
                 PlayerAction.HIT -> game.dealCardToPlayerInTurn()
