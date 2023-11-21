@@ -16,6 +16,10 @@ data class Player(val name: String, val cards: CardDeck = CardDeck()) {
         this.state = state.stay()
     }
 
+    fun isFinished(): Boolean {
+        return state.isFinished()
+    }
+
     fun cards(): List<Card> {
         return state.cards().deck
     }
