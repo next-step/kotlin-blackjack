@@ -13,8 +13,9 @@ fun main() {
 
     val participants = Participants.newInstance(participantsName) { CardGenerator.generateDoubleCard(cardDeque) }
     val dealer = Dealer.newInstance(CardGenerator.generateDoubleCard(cardDeque))
+    OutputView.printDivideCardsToGamer(dealer, participants)
 
-    OutputView.printParticipantsInformation(participants)
+    OutputView.printGamersInformation(dealer, participants)
 
     val canJoinParticipants = participants.getParticipantsCanPlayGame()
     val blackJack = BlackJack(cardDeque = cardDeque, participants = canJoinParticipants)
