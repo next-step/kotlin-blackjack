@@ -1,7 +1,7 @@
 package blackjack_dealer.ui.printer
 
-import blackjack_dealer.entity.Card
-import blackjack_dealer.entity.CardNumber
+import blackjack_dealer.entity.card.Card
+import blackjack_dealer.entity.card.CardNumber
 
 @JvmInline
 value class CardPrinter(val printer: String) {

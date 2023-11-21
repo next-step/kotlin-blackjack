@@ -1,6 +1,6 @@
-package blackjack_dealer.ui.printer
+package blackjack_dealer.ui.printer.board
 
-import blackjack_dealer.entity.DealerResult
+import blackjack_dealer.entity.result.DealerResult
 
 @JvmInline
 value class DealerResultBoardPrinter(private val printer: String) {
@@ -11,4 +11,3 @@ value class DealerResultBoardPrinter(private val printer: String) {
         }
     }
 }
-

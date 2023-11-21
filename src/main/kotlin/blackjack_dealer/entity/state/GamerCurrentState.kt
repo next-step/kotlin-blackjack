@@ -1,4 +1,4 @@
-package blackjack_dealer.entity
+package blackjack_dealer.entity.state
 
 sealed class GamerCurrentState {
     object INITIAL : GamerCurrentState()

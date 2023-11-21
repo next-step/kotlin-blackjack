@@ -2,7 +2,6 @@ package blackjack_dealer
 
 import blackjack_dealer.domain.Dealer
 import blackjack_dealer.entity.CardDeque
-import blackjack_dealer.entity.GamerCurrentState
 import blackjack_dealer.entity.Participants
 import blackjack_dealer.ui.OutputView
 

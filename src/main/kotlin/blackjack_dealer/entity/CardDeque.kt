@@ -1,5 +1,9 @@
 package blackjack_dealer.entity
 
+import blackjack_dealer.entity.card.Card
+import blackjack_dealer.entity.card.CardNumber
+import blackjack_dealer.entity.card.CardShape
+
 object CardDeque {
     private var _cardDeque: ArrayDeque<Card> = ArrayDeque()
     val cardDeque get() = _cardDeque

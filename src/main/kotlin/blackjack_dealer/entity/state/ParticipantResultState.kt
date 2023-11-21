@@ -1,4 +1,4 @@
-package blackjack_dealer.entity
+package blackjack_dealer.entity.state
 
 import blackjack_dealer.domain.Dealer
 import blackjack_dealer.domain.Participant

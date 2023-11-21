@@ -1,5 +1,8 @@
 package blackjack_dealer.entity
 
+import blackjack_dealer.entity.card.Card
+import blackjack_dealer.entity.card.CardNumber
+
 data class GamerCards(
     val trumpCard: List<Card>
 ) : List<Card> by trumpCard {

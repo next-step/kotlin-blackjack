@@ -1,10 +1,10 @@
 package blackjack_dealer
 
 import blackjack_dealer.domain.Dealer
-import blackjack_dealer.entity.Card
 import blackjack_dealer.entity.CardDeque
-import blackjack_dealer.entity.CardNumber
-import blackjack_dealer.entity.CardShape
+import blackjack_dealer.entity.card.Card
+import blackjack_dealer.entity.card.CardNumber
+import blackjack_dealer.entity.card.CardShape
 import blackjack_dealer.entity.toGamerCards
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.ints.shouldBeGreaterThanOrEqual
@@ -57,7 +57,8 @@ class DealerTest : BehaviorSpec({
             val dealerGreaterThanSixteen = Dealer.newInstance(customCardsGreaterThanSixteen)
 
             Then("추가로 받을 수 없다 (17 이상인지도 체크)") {
-                dealerGreaterThanSixteen.getCurrentCards().getCurrentScore() shouldBeGreaterThanOrEqual moreThanScoreExpected
+                dealerGreaterThanSixteen.getCurrentCards()
+                    .getCurrentScore() shouldBeGreaterThanOrEqual moreThanScoreExpected
                 dealerGreaterThanSixteen.getCurrentCards().count() shouldBe cardCountExpected
             }
         }

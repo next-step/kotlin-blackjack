@@ -1,6 +1,7 @@
 package blackjack_dealer.entity
 
 import blackjack_dealer.domain.Participant
+import blackjack_dealer.entity.card.Card
 
 data class Participants(
     val participants: List<Participant>

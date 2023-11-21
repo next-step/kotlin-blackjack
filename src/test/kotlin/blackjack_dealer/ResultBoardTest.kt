@@ -2,11 +2,11 @@ package blackjack_dealer
 
 import blackjack_dealer.domain.Dealer
 import blackjack_dealer.domain.Participant
-import blackjack_dealer.entity.Card
-import blackjack_dealer.entity.CardNumber
-import blackjack_dealer.entity.CardShape
-import blackjack_dealer.entity.ParticipantResultState
 import blackjack_dealer.entity.Participants
+import blackjack_dealer.entity.card.Card
+import blackjack_dealer.entity.card.CardNumber
+import blackjack_dealer.entity.card.CardShape
+import blackjack_dealer.entity.state.ParticipantResultState
 import blackjack_dealer.entity.toGamerCards
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
@@ -79,7 +79,8 @@ class ResultBoardTest : BehaviorSpec({
             val expected = 3
             Then("승리로 기록된다.") {
                 val totalResult = BlackJackResultBoard.getBlackJackResult(
-                    dealer, Participants(
+                    dealer,
+                    Participants(
                         listOf(
                             winningParticipant, losingParticipant, drawParticipant
                         )

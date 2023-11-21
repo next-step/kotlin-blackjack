@@ -2,15 +2,15 @@ package blackjack_dealer.ui
 
 import blackjack_dealer.domain.Dealer
 import blackjack_dealer.domain.Participant
-import blackjack_dealer.entity.DealerResult
-import blackjack_dealer.entity.ParticipantResult
 import blackjack_dealer.entity.Participants
+import blackjack_dealer.entity.result.DealerResult
+import blackjack_dealer.entity.result.ParticipantResult
 import blackjack_dealer.ui.printer.DealerPrinter
-import blackjack_dealer.ui.printer.DealerResultBoardPrinter
-import blackjack_dealer.ui.printer.DealerResultPrinter
 import blackjack_dealer.ui.printer.ParticipantPrinter
-import blackjack_dealer.ui.printer.ParticipantResultBoardPrinter
-import blackjack_dealer.ui.printer.ParticipantResultPrinter
+import blackjack_dealer.ui.printer.board.DealerResultBoardPrinter
+import blackjack_dealer.ui.printer.board.ParticipantResultBoardPrinter
+import blackjack_dealer.ui.printer.result.DealerResultPrinter
+import blackjack_dealer.ui.printer.result.ParticipantResultPrinter
 
 object OutputView {
     fun enterParticipantsName() {

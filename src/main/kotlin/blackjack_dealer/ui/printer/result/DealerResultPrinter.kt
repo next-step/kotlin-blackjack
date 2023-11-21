@@ -1,6 +1,7 @@
-package blackjack_dealer.ui.printer
+package blackjack_dealer.ui.printer.result
 
 import blackjack_dealer.domain.Dealer
+import blackjack_dealer.ui.printer.ParticipantCardsPrinter
 
 @JvmInline
 value class DealerResultPrinter(private val printer: String) {

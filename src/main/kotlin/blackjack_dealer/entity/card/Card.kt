@@ -1,4 +1,4 @@
-package blackjack_dealer.entity
+package blackjack_dealer.entity.card
 
 data class Card(
     val cardNumber: CardNumber,

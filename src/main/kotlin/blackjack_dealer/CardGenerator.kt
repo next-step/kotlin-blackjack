@@ -1,8 +1,8 @@
 package blackjack_dealer
 
-import blackjack_dealer.entity.Card
 import blackjack_dealer.entity.CardDeque
 import blackjack_dealer.entity.GamerCards
+import blackjack_dealer.entity.card.Card
 import blackjack_dealer.entity.toGamerCards
 
 object CardGenerator {

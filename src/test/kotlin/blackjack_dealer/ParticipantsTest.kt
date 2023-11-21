@@ -1,10 +1,10 @@
 package blackjack_dealer
 
-import blackjack_dealer.entity.Card
 import blackjack_dealer.entity.CardDeque
-import blackjack_dealer.entity.CardNumber
-import blackjack_dealer.entity.CardShape
 import blackjack_dealer.entity.Participants
+import blackjack_dealer.entity.card.Card
+import blackjack_dealer.entity.card.CardNumber
+import blackjack_dealer.entity.card.CardShape
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 

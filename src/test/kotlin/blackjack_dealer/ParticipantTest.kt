@@ -2,13 +2,13 @@ package blackjack_dealer
 
 import blackjack_dealer.domain.Dealer
 import blackjack_dealer.domain.Participant
-import blackjack_dealer.entity.Card
 import blackjack_dealer.entity.CardDeque
-import blackjack_dealer.entity.CardNumber
-import blackjack_dealer.entity.CardShape
 import blackjack_dealer.entity.GamerCards
-import blackjack_dealer.entity.GamerCurrentState
 import blackjack_dealer.entity.Participants
+import blackjack_dealer.entity.card.Card
+import blackjack_dealer.entity.card.CardNumber
+import blackjack_dealer.entity.card.CardShape
+import blackjack_dealer.entity.state.GamerCurrentState
 import blackjack_dealer.entity.toGamerCards
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe

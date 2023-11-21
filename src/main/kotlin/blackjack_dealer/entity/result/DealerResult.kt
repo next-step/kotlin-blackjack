@@ -1,4 +1,4 @@
-package blackjack_dealer.entity
+package blackjack_dealer.entity.result
 
 data class DealerResult(
     val name: String = "딜러",
