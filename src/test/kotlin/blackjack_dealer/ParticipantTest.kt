@@ -7,6 +7,7 @@ import blackjack_dealer.entity.CardNumber
 import blackjack_dealer.entity.CardShape
 import blackjack_dealer.entity.GamerCards
 import blackjack_dealer.entity.GamerCurrentState
+import blackjack_dealer.entity.Participants
 import blackjack_dealer.entity.toGamerCards
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
@@ -40,5 +41,33 @@ class ParticipantTest : StringSpec({
         val participantWithBlackJack = Participant.newInstance(name = "pita", cards = blackJackCards)
         val expected = GamerCurrentState.BLACKJACK
         participantWithBlackJack.getCurrentGamerState() shouldBe expected
+    }
+
+    "처음으로 생성한 참가자의 상태는 canJoinGame은 true 이다" {
+        val blackJackCards =
+            GamerCards(listOf(Card(CardNumber.A, CardShape.CLOVER), Card(CardNumber.TWO, CardShape.CLOVER)))
+        val participantWithHit = Participant.newInstance(name = "pita", cards = blackJackCards)
+        val expected = true
+        participantWithHit.canJoinGame() shouldBe expected
+    }
+
+    "draw card 이후 현재 카드 개수 + 1이 된다." {
+        participant.drawCard(cardDeque)
+        val result = participant.getCurrentCards().count()
+        val expected = 3
+
+        result shouldBe expected
+    }
+
+    "블랙잭 수행중 n 을 입력하면 현재 state가 stand가 된다." {
+        val deque = CardDeque.create()
+        val card = listOf(deque.cardDeque.removeLast(), deque.cardDeque.removeLast())
+        val pita = Participant.newInstance("pita", card.toGamerCards())
+        val blackJack = BlackJack(deque, Participants(listOf(pita)))
+        // 블랙잭 수행
+        blackJack.doGame {
+            false
+        }
+        pita.getCurrentGamerState() shouldBe GamerCurrentState.STAND
     }
 })
