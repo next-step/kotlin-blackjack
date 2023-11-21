@@ -1,6 +1,13 @@
 package blackjack
 
-import blackjack.domain.*
+import blackjack.domain.Card
+import blackjack.domain.Dealer
+import blackjack.domain.Game
+import blackjack.domain.Player
+import blackjack.domain.PlayerDecision
+import blackjack.domain.RandomShuffleStrategy
+import blackjack.domain.calculateScore
+import blackjack.domain.deck
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
@@ -10,28 +17,25 @@ fun main(args: Array<String>) {
     val nicknames = InputView.readNicknames()
     val players = nicknames.map { Player(it) }
 
-    val game = Game(players, dealer, object : GameObserver {
-        override fun onGameStarted(participants: List<Participant>) {
-            OutputView.writePlayerNames(participants)
-            OutputView.writeParticipantCards(*participants.toTypedArray())
-        }
-
-        override fun onPlayerHits(player: Player) {
-            OutputView.writeParticipantCards(player)
-        }
-
-        override fun onDealerHits(dealer: Dealer) {
-            OutputView.writeDealer(dealer)
-        }
-
-        override fun onGameEnded(participants: List<Participant>) {
-            OutputView.writeParticipantResults(participants)
-        }
-    })
+    val game = Game(players, dealer)
 
     game.startGame()
-    game.playerTurn { player -> InputView.readHitOrStand(player.name) == PlayerDecision.HIT }
-    game.dealerTurn()
+    OutputView.writePlayerNames(game.participants)
+    OutputView.writeParticipantCards(game.participants)
+
+    players.forEach { player ->
+        while (player.canHit() && InputView.readHitOrStand(player.name) == PlayerDecision.HIT) {
+            player.receiveCard(dealer.dealCard())
+            OutputView.writeParticipantCards(listOf(player))
+        }
+    }
+
+    if (dealer.calculateScore() <= 16) {
+        dealer.receiveCard(dealer.dealCard())
+        OutputView.writeDealer(dealer)
+    }
+
+    OutputView.writeParticipantResults(game.participants)
 
     val results = game.getResults()
     OutputView.writeGameResults(results)

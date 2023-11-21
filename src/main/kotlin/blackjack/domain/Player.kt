@@ -8,4 +8,10 @@ data class Player(override val name: Nickname) : Participant {
     override fun receiveCard(card: Card) {
         _cards.add(card)
     }
+
+    fun canHit(): Boolean = calculateScore() < PLAYER_MAXIMUM_SCORE
+
+    companion object {
+        private const val PLAYER_MAXIMUM_SCORE = 21
+    }
 }

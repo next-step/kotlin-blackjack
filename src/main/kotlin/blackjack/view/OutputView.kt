@@ -14,7 +14,7 @@ object OutputView {
         )
     }
 
-    fun writeParticipantCards(vararg participants: Participant) {
+    fun writeParticipantCards(participants: List<Participant>) {
         participants.forEach {
             println(
                 "${it.name.value}카드: ${
