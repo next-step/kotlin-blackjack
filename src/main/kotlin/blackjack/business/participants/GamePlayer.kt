@@ -4,7 +4,7 @@ import blackjack.business.util.BlackJackConst
 import blackjack.business.util.Money
 
 class GamePlayer(name: String, playerCards: PlayerCards = PlayerCards(), money: Money = Money(MIN_BETTING_MONEY)) :
-    BasePlayer(name, playerCards) {
+    Player(name, playerCards) {
     private var _money: Money = money
 
     val money: Money
