@@ -48,7 +48,7 @@ class DealToPlayerTest : DescribeSpec({
                 val players = Players(
                     listOf(
                         Player(PlayerName("currentPlayer"), Hand(score21Cards)),
-                        Player(PlayerName("anotherPlayer"), Hand()),
+                        Player(PlayerName("nextPlayer"), Hand()),
                     )
                 )
 
@@ -57,8 +57,9 @@ class DealToPlayerTest : DescribeSpec({
                 game.setDistributor(dealToPlayer)
                 dealToPlayer(game)
 
-                it("게임 배분 종료") {
-                    game.dealCards.shouldBeTypeOf<DistributionEnd>()
+                it("게임의 다음 상태는 해당 플레이어 배분 차례") {
+                    game.dealCards.shouldBeTypeOf<DealToPlayer>()
+                    game.playerInTurn.name shouldBe PlayerName("nextPlayer")
                 }
             }
 

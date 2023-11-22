@@ -10,7 +10,9 @@ class DealToPlayer : CardDistributor {
             when (it) {
                 PlayerAction.HIT -> {
                     game.dealCardToPlayerInTurn()
-                    if (game.isPlayerInTurnScoreOverMax) game.setDistributor(DistributionEnd())
+                    if (game.isPlayerInTurnScoreOverMax) {
+                        game.passTurnToNextPlayer()
+                    }
                 }
 
                 PlayerAction.STAND -> when (game.isLastTurn) {
