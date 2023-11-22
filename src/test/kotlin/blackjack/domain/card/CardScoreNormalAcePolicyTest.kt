@@ -28,4 +28,11 @@ class CardScoreNormalAcePolicyTest : FunSpec({
             CardScoreNormalAcePolicy.getScore(card) shouldBe CardScore(score)
         }
     }
+
+    context("King, Queen, Jack은 10으로 계산한다.") {
+        withData(CardNumber.JACK, CardNumber.QUEEN, CardNumber.KING) { cardNumber ->
+            val card = Card(CardKind.DIAMOND, cardNumber)
+            CardScoreNormalAcePolicy.getScore(card) shouldBe CardScore(10)
+        }
+    }
 })
