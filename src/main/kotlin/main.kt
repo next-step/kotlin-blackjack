@@ -2,6 +2,7 @@ import blackjack_dealer.BlackJack
 import blackjack_dealer.BlackJackResultBoard
 import blackjack_dealer.CardGenerator
 import blackjack_dealer.domain.Dealer
+import blackjack_dealer.entity.BlackJackGamer
 import blackjack_dealer.entity.CardDeque
 import blackjack_dealer.entity.Participants
 import blackjack_dealer.ui.InputView
@@ -19,7 +20,8 @@ fun main() {
     OutputView.printGamersInformation(dealer, participants)
 
     val canJoinParticipants = participants.getParticipantsCanPlayGame()
-    val blackJack = BlackJack(cardDeque = cardDeque, dealer = dealer, participants = canJoinParticipants)
+    val blackJackGamer = BlackJackGamer(dealer = dealer, participants = canJoinParticipants)
+    val blackJack = BlackJack(cardDeque = cardDeque, blackJackGamer = blackJackGamer)
     blackJack.doGame { InputView.inputGetOneMoreCard() }
 
     OutputView.printResult(dealer, participants)

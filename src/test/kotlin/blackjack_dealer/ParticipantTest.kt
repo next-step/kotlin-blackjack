@@ -2,6 +2,7 @@ package blackjack_dealer
 
 import blackjack_dealer.domain.Dealer
 import blackjack_dealer.domain.Participant
+import blackjack_dealer.entity.BlackJackGamer
 import blackjack_dealer.entity.CardDeque
 import blackjack_dealer.entity.GamerCards
 import blackjack_dealer.entity.Participants
@@ -64,13 +65,14 @@ class ParticipantTest : StringSpec({
         val deque = CardDeque.create()
         val participantCard = mutableListOf(deque.cardDeque.removeLast(), deque.cardDeque.removeLast()).toGamerCards()
         val dealerCard = mutableListOf(deque.cardDeque.removeLast(), deque.cardDeque.removeLast()).toGamerCards()
-        val pita = Participant.newInstance("pita", participantCard)
+        val participants = Participants.newInstance("pita") { participantCard }
         val dealer = Dealer.newInstance(dealerCard)
-        val blackJack = BlackJack(deque, dealer, Participants(listOf(pita)))
+        val blackjackGamer = BlackJackGamer(dealer, participants)
+        val blackJack = BlackJack(deque, blackjackGamer)
         // 블랙잭 수행
         blackJack.doGame {
             false
         }
-        pita.getCurrentGamerState() shouldBe GamerCurrentState.STAND
+        blackjackGamer.participants.first().getCurrentGamerState() shouldBe GamerCurrentState.STAND
     }
 })

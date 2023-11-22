@@ -2,6 +2,7 @@ package blackjack_dealer
 
 import blackjack_dealer.domain.Dealer
 import blackjack_dealer.domain.Participant
+import blackjack_dealer.entity.BlackJackGamer
 import blackjack_dealer.entity.CardDeque
 import blackjack_dealer.entity.Participants
 import blackjack_dealer.entity.card.Card
@@ -23,29 +24,31 @@ class BlackJackTest : StringSpec({
             mutableListOf(Card(CardNumber.J, CardShape.HEART), Card(CardNumber.J, CardShape.CLOVER)).toGamerCards()
         val dealerCards = mutableListOf(cardDeque.cardDeque.removeLast(), cardDeque.cardDeque.removeLast()).toGamerCards()
 
-        val participant = Participant.newInstance("pita", customCards)
+        val participant = Participants.newInstance("pita") { customCards }
         val dealer = Dealer.newInstance(dealerCards)
+        val blackjackGamer = BlackJackGamer(dealer, participant)
         val expected = 3
-        val blackJack = BlackJack(cardDeque, dealer, Participants(listOf(participant)))
+        val blackJack = BlackJack(cardDeque, blackjackGamer)
         // 블랙잭 수행
         blackJack.doGame {
             true
         }
         // 한장만 더 받기
-        participant.getCurrentCards().count() shouldBe expected
+        blackjackGamer.participants.first().getCurrentCards().count() shouldBe expected
     }
 
     "블랙잭을 수행하여 한장 더 안받기 선택시에 카드의 숫자가 개수가 동일하다" {
-        val participant = Participant.newInstance("pita", cards)
+        val participants = Participants.newInstance("pita") { cards }
         val dealerCards = mutableListOf(cardDeque.cardDeque.removeLast(), cardDeque.cardDeque.removeLast()).toGamerCards()
         val dealer = Dealer.newInstance(dealerCards)
+        val blackjackGamer = BlackJackGamer(dealer, participants)
         val expected = 2
-        val blackJack = BlackJack(cardDeque, dealer, Participants(listOf(participant)))
+        val blackJack = BlackJack(cardDeque, blackjackGamer)
         // 블랙잭 수행
         blackJack.doGame {
             false
         }
         // 한장만 더 안 받기
-        participant.getCurrentCards().count() shouldBe expected
+        blackjackGamer.participants.first().getCurrentCards().count() shouldBe expected
     }
 })
