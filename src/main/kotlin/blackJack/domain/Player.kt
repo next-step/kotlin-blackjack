@@ -1,24 +1,18 @@
 package blackJack.domain
 
-import blackJack.domain.Answer.*
-import blackJack.domain.Status.*
 import blackJack.error.ErrorMessage
 
-class Player(val name: String, val cards: Cards, private var status: Status) {
+class Player(val name: String, val cards: Cards) {
 
     init {
         require(name.isNotEmpty()) { ErrorMessage.EMPTY_NAME.message }
+        require(cards.cards.isNotEmpty()) { ErrorMessage.EMPTY_CARD.message }
     }
 
-    fun isHit(): Boolean = status == HIT
-
-    fun addCard(dealer: Dealer, answer: Answer) {
-        if (answer == n) return
-
-        Status.addCardValidation(status)
-        val card = dealer.cardDeck.addCard()
-        cards.cards.add(card)
-        status = Status.calculateStatus(cards.calculateTotalScore(), answer)
+    fun addCard(): Player {
+        val dealer = Dealer()
+        val newCards = dealer.addDrawCard(cards)
+        return Player(name, newCards)
     }
 
     companion object {
@@ -26,10 +20,9 @@ class Player(val name: String, val cards: Cards, private var status: Status) {
             return inputNames.split(",").map { it.trim() }.toList()
         }
 
-        fun createPlayer(name: String, dealer: Dealer): Player {
-            val cards = dealer.initialCards()
-            val score = cards.calculateTotalScore()
-            return Player(name, cards, Status.calculateStatus(score))
+        fun initBetting(name: String): Player {
+            val dealer = Dealer()
+            return Player(name, dealer.betting())
         }
     }
 }

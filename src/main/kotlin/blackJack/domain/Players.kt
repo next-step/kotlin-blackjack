@@ -8,13 +8,9 @@ class Players(val players: List<Player>) {
         require(players.isNotEmpty()) { ErrorMessage.EMPTY_PLAYERS.message }
     }
 
-//    fun playGame(): Players {
-//        players.map { it.playGame() }
-//    }
-
     companion object {
-        fun createPlayers(playerList: List<String>, dealer: Dealer): Players {
-            val players = playerList.map { Player.createPlayer(it, dealer) }
+        fun initBettings(names: List<String>): Players {
+            val players = names.map { Player.initBetting(it) }
             return Players(players)
         }
     }

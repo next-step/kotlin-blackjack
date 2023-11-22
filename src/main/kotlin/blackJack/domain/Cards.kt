@@ -1,18 +1,22 @@
 package blackJack.domain
 
+import blackJack.domain.Card.Companion.drawCard
 import blackJack.error.ErrorMessage
 
-class Cards(val cards: MutableList<Card>) {
+class Cards(val cards: List<Card>) {
     init {
         require(cards.isNotEmpty()) { ErrorMessage.EMPTY_CARDS.message }
+        require(cards.distinct().size == cards.size) { ErrorMessage.DUPLICATE_CARDS.message }
     }
 
-    fun addCard(): Card {
-        require(cards.isNotEmpty()) { ErrorMessage.EMPTY_CARDS.message }
-        return cards.removeAt(0)
+    fun drawUniqueCard(): Card {
+        var newCard = drawCard()
+        while (isDuplicate(newCard)) {
+            newCard = drawCard()
+        }
+
+        return newCard
     }
 
-    fun calculateTotalScore(): Int {
-        return cards.sumOf { it.rank.score }
-    }
+    private fun isDuplicate(newCard: Card) = cards.any { it == newCard }
 }
