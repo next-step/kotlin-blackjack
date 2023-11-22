@@ -85,9 +85,11 @@ class DealerTest : DescribeSpec({
 
     describe("score") {
         val dealer = Dealer(
-            hand = Hand(
-                mutableListOf(
-                    Card(Suit.HEART, Rank.ACE), Card(Suit.DIAMOND, Rank.QUEEN)
+            player = Player(
+                PlayerName.dealerName(), Hand(
+                    mutableListOf(
+                        Card(Suit.HEART, Rank.ACE), Card(Suit.DIAMOND, Rank.QUEEN)
+                    )
                 )
             )
         )
@@ -102,7 +104,7 @@ class DealerTest : DescribeSpec({
 
     describe("isScoreGreaterThan") {
         val score20cards = mutableListOf(Card(Suit.HEART, Rank.QUEEN), Card(Suit.DIAMOND, Rank.QUEEN))
-        val dealer = Dealer(hand = Hand(score20cards))
+        val dealer = Player(name = PlayerName.dealerName(), hand = Hand(score20cards))
         context("딜러보다 낮은 점수로 비교하면") {
             val result = dealer.isScoreGreaterThan(16)
 

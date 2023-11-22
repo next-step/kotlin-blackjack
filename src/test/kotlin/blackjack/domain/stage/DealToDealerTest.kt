@@ -6,6 +6,8 @@ import blackjack.domain.card.Card
 import blackjack.domain.card.Hand
 import blackjack.domain.card.Rank
 import blackjack.domain.card.Suit
+import blackjack.domain.player.Player
+import blackjack.domain.player.PlayerName
 import blackjack.mock.InputProcessorMock
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
@@ -18,7 +20,7 @@ class DealToDealerTest : DescribeSpec({
                 Card(Suit.SPADE, Rank.TWO),
                 Card(Suit.SPADE, Rank.THREE),
             )
-            val dealer = Dealer(hand = Hand(under16ScoreCards))
+            val dealer = Dealer(player = Player(PlayerName.dealerName(), Hand(under16ScoreCards)))
             val game = BlackJackGame(InputProcessorMock(), dealer = dealer)
 
             val dealToDealer = DealToDealer()
@@ -43,7 +45,7 @@ class DealToDealerTest : DescribeSpec({
                 Card(Suit.SPADE, Rank.QUEEN),
                 Card(Suit.SPADE, Rank.QUEEN),
             )
-            val dealer = Dealer(hand = Hand(under16ScoreCards))
+            val dealer = Dealer(player = Player(PlayerName.dealerName(), Hand(under16ScoreCards)))
             val game = BlackJackGame(InputProcessorMock(), dealer = dealer)
 
             val dealToDealer = DealToDealer()
