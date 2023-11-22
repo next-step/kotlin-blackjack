@@ -6,14 +6,12 @@ import blackjack.domain.card.CardNumber
 import blackjack.domain.card.CardSet
 import blackjack.domain.player.player
 import blackjack.domain.player.playerGroup
+import io.kotest.core.spec.style.FunSpec
 import io.kotest.inspectors.forAll
 import io.kotest.matchers.shouldBe
-import org.junit.jupiter.api.Test
 
-class BlackJackGameTest {
-    @Test
-    fun `블랙잭 카드 게임이 시작하면 2장의 카드를 플레이어게 지급한다`() {
-        val blackJackGame = BlackJackGame()
+class BlackJackGameTest : FunSpec({
+    test("블랙잭 카드 게임이 시작하면 2장의 카드를 플레이어게 지급한다") {
         val playerGroup = playerGroup {
             players(player { name("jack") }, player { name("john") })
         }
@@ -28,10 +26,11 @@ class BlackJackGameTest {
                 )
             }
         }
+        val blackJackGame = BlackJackGame(playerGroup, cardDealer)
 
-        val actual = blackJackGame.dealCard(cardDealer, playerGroup, BlackJackGame.START_CARD_COUNT)
+        val actual = blackJackGame.start()
         actual.players.forAll {
             it.cardSet.size shouldBe 2
         }
     }
-}
+})

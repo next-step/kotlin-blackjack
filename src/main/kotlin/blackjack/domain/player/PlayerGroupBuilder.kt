@@ -1,7 +1,5 @@
 package blackjack.domain.player
 
-import dsl.SkillBuilder
-
 class PlayerGroupBuilder {
     private val players: MutableList<Player> = ArrayList()
 
