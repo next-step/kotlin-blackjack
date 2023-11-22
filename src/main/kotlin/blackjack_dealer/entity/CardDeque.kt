@@ -35,6 +35,10 @@ class CardDeque {
         return cardDeque.count()
     }
 
+    fun containCardRemainCards(card: Card): Boolean {
+        return cardDeque.contains(card)
+    }
+
     fun generateDoubleCard(): GamerCards {
         val initialFirstCard = generateSingleCard()
         val initialSecondCard = generateSingleCard()
