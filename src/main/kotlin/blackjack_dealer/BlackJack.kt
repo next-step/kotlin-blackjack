@@ -12,12 +12,11 @@ class BlackJack(
         getOneMoreCardInput: () -> Boolean,
     ) {
         blackJackGamer.participants.forEach { participant ->
-            while (true) {
+            while (participant.canKeepPlayingGame()) {
                 OutputView.askGetOneMoreCard(participant)
                 if (getOneMoreCardInput.invoke()) {
                     participant.drawCard(cardDeque)
                     OutputView.printParticipantInformation(participant)
-                    if (participant.canKeepPlayingGame().not()) break
                 } else {
                     participant.changeStateToStand()
                     break
