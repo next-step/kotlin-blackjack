@@ -36,9 +36,9 @@ class DslTest {
         }
         person.name shouldBe "전성모"
         person.company shouldBe "회사"
-        person.skills?.soft?.shouldContain("A passion for problem solving")
-        person.skills?.soft?.shouldContain("Good communication skills")
-        person.skills?.hard?.shouldContain("Kotlin")
+        person.skills[0] shouldBe SoftSkill("A passion for problem solving")
+        person.skills[1] shouldBe SoftSkill("Good communication skills")
+        person.skills[2] shouldBe HardSkill("Kotlin")
     }
 
     @Test
@@ -51,8 +51,8 @@ class DslTest {
             }
         }
         person.name shouldBe "전성모"
-        person.languages?.values?.shouldContain(Language("Korean", 5))
-        person.languages?.values?.shouldContain(Language("English", 3))
+        person.languages.values.shouldContain(Language("Korean", 5))
+        person.languages.values.shouldContain(Language("English", 3))
     }
 
     @Test
@@ -72,10 +72,10 @@ class DslTest {
         }
         person.name shouldBe "전성모"
         person.company shouldBe "회사"
-        person.skills?.soft?.shouldContain("A passion for problem solving")
-        person.skills?.soft?.shouldContain("Good communication skills")
-        person.skills?.hard?.shouldContain("Kotlin")
-        person.languages?.values?.shouldContain(Language("Korean", 5))
-        person.languages?.values?.shouldContain(Language("English", 3))
+        person.skills[0] shouldBe SoftSkill("A passion for problem solving")
+        person.skills[1] shouldBe SoftSkill("Good communication skills")
+        person.skills[2] shouldBe HardSkill("Kotlin")
+        person.languages.values.shouldContain(Language("Korean", 5))
+        person.languages.values.shouldContain(Language("English", 3))
     }
 }

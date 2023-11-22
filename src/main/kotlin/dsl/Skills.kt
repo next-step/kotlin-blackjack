@@ -1,3 +1,3 @@
 package dsl
 
-data class Skills(val soft: List<String>, val hard: List<String>)
+data class Skills(val skills: List<Skill>): List<Skill> by skills
