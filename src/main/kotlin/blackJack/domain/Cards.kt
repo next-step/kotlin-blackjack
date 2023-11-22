@@ -7,7 +7,7 @@ class Cards(val cards: MutableList<Card>) {
         require(cards.isNotEmpty()) { ErrorMessage.EMPTY_CARDS.message }
     }
 
-    fun drawCard(): Card {
+    fun addCard(): Card {
         require(cards.isNotEmpty()) { ErrorMessage.EMPTY_CARDS.message }
         return cards.removeAt(0)
     }
@@ -15,6 +15,4 @@ class Cards(val cards: MutableList<Card>) {
     fun calculateTotalScore(): Int {
         return cards.sumOf { it.rank.score }
     }
-
-    fun addCard(card: Card) = cards.add(card)
 }

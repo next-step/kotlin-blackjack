@@ -9,7 +9,7 @@ class Dealer(val cardDeck: Cards) {
     }
 
     fun initialCards(): Cards {
-        return Cards(MutableList(INIT_CARD_COUNT) { cardDeck.drawCard() })
+        return Cards(MutableList(INIT_CARD_COUNT) { cardDeck.addCard() })
     }
 
     companion object {
