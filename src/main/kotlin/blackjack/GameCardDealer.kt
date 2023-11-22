@@ -2,7 +2,7 @@ package blackjack
 
 import java.lang.IllegalArgumentException
 
-class GameDealer(
+class GameCardDealer(
     cardShuffleStrategy: CardShuffleStrategy
 ) {
 

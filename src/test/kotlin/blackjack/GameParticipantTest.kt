@@ -22,15 +22,15 @@ class GameParticipantTest : BehaviorSpec({
             "test",
             cards
         )
-        val dealer1 = GameDealer(cardShuffleStrategy)
+        val dealer1 = GameCardDealer(cardShuffleStrategy)
         Then("카드가 한 장 추가된다.") {
             val updatedPlayer = gamePlayer.receiveCard(dealer1.deal())
             updatedPlayer shouldBe GameParticipant.Player(
                 "test",
                 listOf(
-                    Card(Symbol.SPADE, Number.THREE),
                     Card(Symbol.SPADE, Number.TEN),
-                    Card(Symbol.SPADE, Number.TWO)
+                    Card(Symbol.SPADE, Number.TWO),
+                    Card(Symbol.SPADE, Number.THREE)
                 )
             )
         }
@@ -44,16 +44,16 @@ class GameParticipantTest : BehaviorSpec({
                     Card(Symbol.SPADE, Number.KING),
                 )
             )
-            val bustDealer = GameDealer(cardShuffleStrategy)
+            val bustDealer = GameCardDealer(cardShuffleStrategy)
             Then("버스트가 된다") {
                 val updatedPlayer = bustPlayer.receiveCard(bustDealer.deal())
                 updatedPlayer shouldBe GameParticipant.Player(
                     name = "test",
                     cards = listOf(
-                        Card(Symbol.SPADE, Number.THREE),
                         Card(Symbol.SPADE, Number.TWO),
                         Card(Symbol.SPADE, Number.NINE),
                         Card(Symbol.SPADE, Number.KING),
+                        Card(Symbol.SPADE, Number.THREE)
                     )
                 )
             }

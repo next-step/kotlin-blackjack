@@ -3,9 +3,10 @@ package view
 import blackjack.Card
 import blackjack.GameBlackjack.Companion.PLAYER_NAME_DELIMITER
 import blackjack.GameParticipant
-import blackjack.GameParticipantResult
+import blackjack.GameParticipantPlayerResult
 import blackjack.GameParticipantResults
 import blackjack.GameParticipants
+import blackjack.MatchResult
 import blackjack.Message
 import blackjack.Message.PRINT_CONTINUE_DEAL
 import blackjack.Message.PRINT_DEALER_RESULT_MESSAGE
@@ -47,16 +48,23 @@ object Output {
 
     fun printGameParticipantResults(gameParticipantResults: GameParticipantResults) {
         println(PRINT_RESULT_MESSAGE)
-        printDealerMatchResult(gameParticipantResults.dealer)
-        printPlayersMatchResult(gameParticipantResults.players)
+        printParticipantResults(gameParticipantResults.players)
     }
 
-    private fun printDealerMatchResult(dealer: GameParticipantResult.Dealer) {
-        val (win, loss) = dealer.countByMatchResult()
-        println(PRINT_DEALER_RESULT_MESSAGE.format(dealer.name, win, loss))
-    }
+    private fun printParticipantResults(players: List<GameParticipantPlayerResult>) {
+        var win = 0
+        var loss = 0
 
-    private fun printPlayersMatchResult(players: List<GameParticipantResult.Player>) {
-        println(players.joinToString("\n") { PRINT_PLAYER_RESULT_MESSAGE.format(it.name, it.matchResult.message) })
+        val playersMessage = players.joinToString("\n") {
+            if (it.matchResult == MatchResult.WIN) {
+                loss++
+            } else {
+                win++
+            }
+            PRINT_PLAYER_RESULT_MESSAGE.format(it.name, it.matchResult.message)
+        }
+        val dealerMessage = PRINT_DEALER_RESULT_MESSAGE.format(GameParticipant.Dealer.NAME, win, loss)
+        println(dealerMessage)
+        printMessage(playersMessage)
     }
 }
