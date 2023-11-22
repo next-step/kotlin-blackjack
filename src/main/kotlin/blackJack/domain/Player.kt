@@ -1,28 +1,44 @@
 package blackJack.domain
 
+import blackJack.domain.Answer.n
+import blackJack.domain.Status.HIT
 import blackJack.error.ErrorMessage
 
-class Player(val name: String, val cards: Cards) {
+class Player(val name: String, val cards: Cards, private var status: Status) {
 
     init {
         require(name.isNotEmpty()) { ErrorMessage.EMPTY_NAME.message }
-        require(cards.cards.isNotEmpty()) { ErrorMessage.EMPTY_CARD.message }
     }
 
-    fun addCard(): Player {
-        val dealer = Dealer()
-        val newCards = dealer.addDrawCard(cards)
-        return Player(name, newCards)
+    fun isHit(): Boolean = status == HIT
+
+    fun addCard(dealer: Dealer, answer: String) {
+        if (checkAnswer(answer)) return
+
+        Status.addCardValidation(status)
+        val card = dealer.cardDeck.drawCard()
+        cards.addCard(card)
+        status = Status.calculateStatus(cards.calculateTotalScore(), Answer.valueOf(answer))
     }
+
+    private fun checkAnswer(answer: String): Boolean {
+        Answer.validateAnswer(answer)
+        val answerValue = Answer.valueOf(answer)
+        return answerValue == n
+    }
+
+//    fun playGame(dealer: Dealer): Player {
+//    }
 
     companion object {
         fun splitNames(inputNames: String): List<String> {
             return inputNames.split(",").map { it.trim() }.toList()
         }
 
-        fun initBetting(name: String): Player {
-            val dealer = Dealer()
-            return Player(name, dealer.betting())
+        fun createPlayer(name: String, dealer: Dealer): Player {
+            val cards = dealer.initialCards()
+            val score = cards.calculateTotalScore()
+            return Player(name, cards, Status.calculateStatus(score))
         }
     }
 }
