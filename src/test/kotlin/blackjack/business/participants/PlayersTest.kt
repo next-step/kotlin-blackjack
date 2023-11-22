@@ -1,9 +1,15 @@
 package blackjack.business.participants
 
-import blackjack.business.FixDrawConditionStrategy
-import blackjack.business.FixSelectionStrategy
+import blackjack.business.AlwaysDrawStrategy
+import blackjack.business.CardFixture.SPACE_EIGHT
+import blackjack.business.CardFixture.SPACE_FOUR
+import blackjack.business.CardFixture.SPACE_NINE
+import blackjack.business.CardFixture.SPACE_TEN
+import blackjack.business.FirstCardSelectionStrategy
 import blackjack.business.card.CardDesk
+import blackjack.business.util.Money
 import io.kotest.assertions.throwables.shouldThrow
+import io.kotest.matchers.collections.shouldContainExactlyInAnyOrder
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -34,7 +40,7 @@ class PlayersTest {
         // given
         val playerNames = listOf("pobi", "jason")
         val players = Players.from(playerNames)
-        val target = mutableListOf<Player>()
+        val target = mutableListOf<GamePlayer>()
 
         // when
         players.forEachPlayer { player ->
@@ -42,7 +48,7 @@ class PlayersTest {
         }
 
         // then
-        target shouldBe players.allPlayers
+        target shouldBe players.allGamePlayers
     }
 
     @Test
@@ -53,10 +59,10 @@ class PlayersTest {
         val cardDesk = CardDesk()
 
         // when
-        players.dealInitialCards(cardDesk) { }
+        val actualPlayers = players.dealInitialCards(cardDesk) { }
 
         // then
-        players.allPlayers.forEach { it.cards.size shouldBe 2 }
+        actualPlayers.allGamePlayers.forEach { it.cards.size shouldBe 2 }
     }
 
     @Test
@@ -64,16 +70,16 @@ class PlayersTest {
         // given
         val playerNames = listOf("pobi", "jason")
         val players = Players.from(playerNames)
-        val cardDesk = CardDesk(cardSelectionStrategy = FixSelectionStrategy())
+        val cardDesk = CardDesk(cardSelectionStrategy = FirstCardSelectionStrategy())
 
         // when
-        players.executeCardDraws(cardDesk, FixDrawConditionStrategy(), { "y" }) { }
+        val actualPlayers = players.executeCardDraws(cardDesk, AlwaysDrawStrategy(), { "y" }) { }
 
         // then
         // pobi: A, 2, 3, 4, 5, 6
-        players.allPlayers[0].cards.size shouldBe 6
+        actualPlayers.allGamePlayers[0].cards.size shouldBe 6
         // jason: 7,8,9
-        players.allPlayers[1].cards.size shouldBe 3
+        actualPlayers.allGamePlayers[1].cards.size shouldBe 3
     }
 
     @Test
@@ -88,4 +94,42 @@ class PlayersTest {
         // then
         names shouldBe playerNames
     }
+
+    @Test
+    fun `딜러와 비교하여  플레이별 게임결과를 반환한다`() {
+        // given
+        val players = createTestPlayers()
+        val dealer = Dealer(PlayerCards(SPACE_FOUR, SPACE_NINE))
+
+        // when
+        val result = players.getGameResult(dealer)
+
+        // then
+        result.playerResults shouldContainExactlyInAnyOrder listOf(
+            PlayerResult("pobi", -10000),
+            PlayerResult("jason", 0),
+            PlayerResult("honux", 20000)
+        )
+        result.dealerResult shouldBe PlayerResult(Dealer.DEALER_NAME, -10000)
+    }
+
+    private fun createTestPlayers() = Players(
+        listOf(
+            GamePlayer(
+                "pobi",
+                PlayerCards(SPACE_FOUR, SPACE_EIGHT),
+                Money(10000)
+            ),
+            GamePlayer(
+                "jason",
+                PlayerCards(SPACE_FOUR, SPACE_NINE),
+                Money(10000)
+            ),
+            GamePlayer(
+                "honux",
+                PlayerCards(SPACE_FOUR, SPACE_TEN),
+                Money(10000)
+            )
+        )
+    )
 }

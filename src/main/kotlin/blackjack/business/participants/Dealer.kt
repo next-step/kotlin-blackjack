@@ -1,59 +1,48 @@
 package blackjack.business.participants
 
+import blackjack.business.card.Card
 import blackjack.business.card.CardDesk
-import blackjack.business.util.GameResult
 
-class Dealer(private val dealerCards: PlayerCards = PlayerCards()) : Player(DEALER_NAME, dealerCards) {
+class Dealer(playerCards: PlayerCards = PlayerCards()) : Player(DEALER_NAME, playerCards) {
 
-    override fun canDrawCard(): Boolean {
-        return dealerCards.sum() < DEALER_DRAW_CONDITION
-    }
+    override fun addCard(card: Card): Dealer = Dealer(playerCards.add(card))
+    override fun canDrawCard(): Boolean = playerCards.canDrawCardWithValueLimit(DEALER_DRAW_CONDITION)
+    override fun addCards(playerCardsList: List<Card>): Dealer = Dealer(playerCards.addAll(playerCardsList))
 
-    override fun isBust(): Boolean {
-        return dealerCards.isBust()
-    }
+    fun getPlayerResult(gamePlayer: GamePlayer): PlayerResult {
+        val scoreDifference = gamePlayer.getScoreDifferent(score)
+        val profitOrLoss = when {
+            gamePlayer.isBust() -> gamePlayer.lose()
+            isBust() -> gamePlayer.calculateMultiplierResult(BUST_MULTIPLIER)
+            isDraw(scoreDifference) -> DRAW_RESULT
+            isLose(scoreDifference) -> gamePlayer.lose()
+            gamePlayer.isNaturalBlackJack() -> gamePlayer.calculateMultiplierResult(
+                NATURAL_BLACKJACK_MULTIPLIER
+            )
 
-    fun getPlayerResult(player: Player): PlayerResult {
-        if (isBust()) {
-            return PlayerResult(player.name, GameResult.WIN)
+            else -> gamePlayer.calculateMultiplierResult(BUST_MULTIPLIER)
         }
-        if (player.isBust()) {
-            return PlayerResult(player.name, GameResult.LOSE)
-        }
-        return when (player.score - dealerCards.sum()) {
-            0 -> PlayerResult(player.name, GameResult.DRAW)
-            in 1..Int.MAX_VALUE -> PlayerResult(player.name, GameResult.WIN)
-            else -> PlayerResult(player.name, GameResult.LOSE)
-        }
+        return PlayerResult(gamePlayer.name, profitOrLoss)
     }
 
-    fun getDealerResult(target: Players): Map<GameResult, Int> {
-        return target.allPlayers.map { getDealerResult(it.score) }.groupingBy { it }.eachCount()
-    }
+    private fun isLose(scoreDifference: Int) = scoreDifference < NO_SCORE_DIFFERENCE
 
-    fun executeCardDraws(cardDesk: CardDesk, announcer: () -> Unit) {
+    private fun isDraw(scoreDifference: Int) = scoreDifference == NO_SCORE_DIFFERENCE
+
+    fun executeCardDraws(cardDesk: CardDesk, announcer: () -> Unit): Dealer {
         if (canDrawCard()) {
             announcer()
-            addCard(cardDesk.draw())
+            return addCard(cardDesk.draw())
         }
-    }
-
-    private fun getDealerResult(target: Int): GameResult {
-        if (isBust()) {
-            return GameResult.WIN
-        }
-        if (target > 21) {
-            return GameResult.WIN
-        }
-        return when (target - dealerCards.sum()) {
-            0 -> GameResult.DRAW
-            in 1..Int.MAX_VALUE -> GameResult.LOSE
-            else -> GameResult.WIN
-        }
+        return this
     }
 
     companion object {
-        private const val DEALER_NAME = "딜러"
+        const val DEALER_NAME = "딜러"
+        const val DRAW_RESULT = 0
+        const val BUST_MULTIPLIER = 2.0
+        const val NATURAL_BLACKJACK_MULTIPLIER = 2.5
+        const val NO_SCORE_DIFFERENCE = 0
         private const val DEALER_DRAW_CONDITION = 17
     }
 }

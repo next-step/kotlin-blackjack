@@ -1,5 +1,8 @@
 package blackjack.business.card
 
+import blackjack.business.CardFixture.SPACE_ACE
+import blackjack.business.CardFixture.SPACE_EIGHT
+import io.kotest.matchers.collections.shouldContainExactlyInAnyOrder
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -22,13 +25,13 @@ class CardDeskTest {
     @Test
     fun `시작시 카드를 두장씩 나눠준다`() {
         // given
-        val cardDesk = CardDesk()
+        val cardDesk = CardDesk(listOf(SPACE_ACE, SPACE_EIGHT))
 
         // when
         val playerCards = cardDesk.startDraw()
 
         // then
         playerCards.size shouldBe 2
-        cardDesk.cards.size shouldBe 50
+        playerCards shouldContainExactlyInAnyOrder listOf(SPACE_EIGHT, SPACE_ACE)
     }
 }

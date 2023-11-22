@@ -1,12 +1,12 @@
-package blackjack.view
+package blackjack
 
 import blackjack.business.participants.GameResult
 import blackjack.business.participants.Player
 import blackjack.business.participants.PlayerResult
 import blackjack.business.util.Money
-import blackjack.business.util.PlayerNameParser
+import blackjack.view.GameView
 
-class ConsoleGameView : GameView {
+class MainTestGameView : GameView {
     override fun displayGameStartAnnouncement(playerNames: List<String>) {
         println()
         println("${playerNames.joinToString(", ")}에게 2장의 카드를 나누었습니다.")
@@ -38,21 +38,20 @@ class ConsoleGameView : GameView {
 
     override fun askForOneMore(playerName: String): String {
         println("$playerName 는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
-        return readlnOrNull() ?: throw IllegalArgumentException("잘못된 입력입니다.")
+        println("y")
+        return "y"
     }
 
     override fun askForPlayerNames(): List<String> {
         println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)")
-        return PlayerNameParser.parse(
-            readlnOrNull() ?: throw IllegalArgumentException("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)")
-        )
+        println("pobi, jason")
+        return listOf("pobi", "jason")
     }
 
     override fun askForBettingMoney(playerName: String): Money {
         println("$playerName 의 배팅 금액은?")
-        val value = readlnOrNull()?.toIntOrNull() ?: throw IllegalArgumentException("배팅 금액은 숫자여야 합니다.")
-        require(value > 0) { "배팅 금액은 0보다 커야 합니다." }
-        return Money(value)
+        println(10000)
+        return Money(10000)
     }
 
     private fun printPlayerResult(playerResult: PlayerResult) {

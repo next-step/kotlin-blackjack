@@ -1,28 +1,22 @@
 package blackjack.business.participants
 
 import blackjack.business.card.Card
-import blackjack.business.util.BlackJackConst
 
-open class Player(val name: String, private val playerCards: PlayerCards = PlayerCards()) {
+abstract class Player(val name: String, val playerCards: PlayerCards = PlayerCards()) {
 
+    val cardsCount: Int
+        get() = playerCards.size
     val score: Int
         get() = playerCards.sum()
     val cards: List<Card>
         get() = playerCards.cards
 
-    fun addCard(card: Card) {
-        playerCards.add(card)
-    }
+    abstract fun addCard(card: Card): Player
 
-    open fun canDrawCard(): Boolean {
-        return playerCards.sum() < BlackJackConst.BLACKJACK
-    }
+    abstract fun canDrawCard(): Boolean
 
-    fun addCards(playerCardsList: List<Card>) {
-        playerCards.addAll(playerCardsList)
-    }
+    abstract fun addCards(playerCardsList: List<Card>): Player
 
-    open fun isBust(): Boolean {
-        return playerCards.isBust()
-    }
+    fun isBust(): Boolean = playerCards.isBust()
+    fun isNaturalBlackJack(): Boolean = playerCards.isNaturalBlackJack()
 }

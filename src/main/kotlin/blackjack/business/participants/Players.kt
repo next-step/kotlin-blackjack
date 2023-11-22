@@ -3,45 +3,46 @@ package blackjack.business.participants
 import blackjack.business.card.CardDesk
 import blackjack.business.drawConditionStrategy.DrawConditionStrategy
 
-class Players(allPlayers: List<Player>) {
-
-    private val _players: List<Player> = allPlayers
-
-    val allPlayers: List<Player> = _players.toList()
+class Players(val allGamePlayers: List<GamePlayer>) {
 
     init {
-        require(allPlayers.size > 1) { "플레이어는 2명 이상이여야 가능합니다." }
+        require(allGamePlayers.size > 1) { "플레이어는 2명 이상이여야 가능합니다." }
     }
 
-    fun forEachPlayer(onPlayerAction: (Player) -> Unit) = allPlayers.forEach(onPlayerAction)
+    fun forEachPlayer(onPlayerAction: (GamePlayer) -> Unit) = allGamePlayers.forEach(onPlayerAction)
 
-    fun dealInitialCards(cardDesk: CardDesk, onPlayerAction: (Player) -> Unit) {
-        forEachPlayer {
-            val playerCards = cardDesk.startDraw()
-            it.addCards(playerCards)
-            onPlayerAction(it)
-        }
+    fun dealInitialCards(cardDesk: CardDesk, onPlayerAction: (GamePlayer) -> Unit): Players {
+        val players = allGamePlayers.map { it.addCards(cardDesk.startDraw()) }
+        players.forEach(onPlayerAction)
+        return Players(players)
     }
 
     fun executeCardDraws(
         cardDesk: CardDesk,
         conditionStrategy: DrawConditionStrategy,
         getCommand: (String) -> String,
-        onPlayerAction: (Player) -> Unit
-    ) {
-        forEachPlayer {
-            while (it.canDrawCard() && conditionStrategy.shouldDraw(it.name, getCommand)) {
-                it.addCard(cardDesk.draw())
-                onPlayerAction(it)
+        onPlayerAction: (GamePlayer) -> Unit
+    ): Players {
+        val players = allGamePlayers.map {
+            var gamePlayer = it
+            while (gamePlayer.canDrawCard() && conditionStrategy.shouldDraw(gamePlayer.name, getCommand)) {
+                gamePlayer = gamePlayer.addCard(cardDesk.draw())
+                onPlayerAction(gamePlayer)
             }
+            gamePlayer
         }
+        return Players(players)
     }
 
-    fun getNames(): List<String> = allPlayers.map { it.name }
+    fun getNames(): List<String> = allGamePlayers.map { it.name }
+
+    fun getGameResult(dealer: Dealer): GameResult {
+        val playerResults = allGamePlayers.map(dealer::getPlayerResult)
+        val dealerResults = PlayerResult(Dealer.DEALER_NAME, playerResults.sumOf { -it.profitOrLoss })
+        return GameResult(dealerResults, playerResults)
+    }
 
     companion object {
-        fun from(playerNames: List<String>): Players {
-            return Players(playerNames.map { Player(it) })
-        }
+        fun from(playerNames: List<String>): Players = Players(playerNames.map { GamePlayer(it) })
     }
 }
