@@ -35,4 +35,21 @@ class CardScoreSpecialAcePolicyTest : FunSpec({
             CardScoreSpecialAcePolicy.getScore(card) shouldBe CardScore(10)
         }
     }
+
+    test("Ace를 11로 계산하여 카드의 합계를 구할 수 있다.") {
+        val cardSet = CardSet.of(
+            Card(CardKind.DIAMOND, CardNumber.ACE),
+            Card(CardKind.DIAMOND, CardNumber.EIGHT)
+        )
+        cardSet.sum(CardScoreSpecialAcePolicy) shouldBe CardScore(19)
+    }
+
+    test("JACK, QUEEN, KING을 10으로 계산하여 카드의 합계를 구할 수 있다.") {
+        val cardSet = CardSet.of(
+            Card(CardKind.DIAMOND, CardNumber.JACK),
+            Card(CardKind.DIAMOND, CardNumber.QUEEN),
+            Card(CardKind.DIAMOND, CardNumber.KING)
+        )
+        cardSet.sum(CardScoreSpecialAcePolicy) shouldBe CardScore(30)
+    }
 })
