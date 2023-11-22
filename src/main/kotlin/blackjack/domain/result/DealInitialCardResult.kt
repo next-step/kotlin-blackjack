@@ -2,6 +2,6 @@ package blackjack.domain.result
 
 import blackjack.domain.player.Players
 
-data class InitialDistributionResult(
+data class DealInitialCardResult(
     val players: Players
 ) : Result()

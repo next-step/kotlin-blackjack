@@ -4,9 +4,11 @@ import blackjack.controller.InputProcessor
 import blackjack.controller.ResultProcessor
 import blackjack.domain.player.Player
 import blackjack.domain.player.Players
+import blackjack.domain.result.GameResult
 import blackjack.domain.result.Result
-import blackjack.domain.stage.InitialDistribution
-import blackjack.domain.stage.Stage
+import blackjack.domain.stage.DealInitialCards
+import blackjack.domain.stage.CardDistributor
+import blackjack.domain.stage.DistributionEnd
 
 class BlackJackGame(
     private val inputProcessor: InputProcessor,
@@ -14,7 +16,7 @@ class BlackJackGame(
     val players: Players = Players.from(inputProcessor.playerNames())
 ) {
     val dealer: Dealer = Dealer()
-    var stage: Stage = InitialDistribution()
+    var dealCards: CardDistributor = DealInitialCards()
 
     val isPlayerInTurnScoreOverMax: Boolean
         get() = players.isPlayerInTurnOverMaxScore
@@ -26,8 +28,10 @@ class BlackJackGame(
         get() = players.isLastTurn
 
     fun run() {
-        progressStage()
-        endStage()
+        while (dealCards !is DistributionEnd) {
+            dealCards()
+        }
+        emitResult(GameResult(players))
     }
 
     fun dealCardsToAllPlayers(count: Int) {
@@ -51,20 +55,16 @@ class BlackJackGame(
     fun askHitOrStand(): PlayerAction = inputProcessor
         .playerAction(players.playerInTurn)
 
-    fun emitResult(result: Result) {
+    private fun emitResult(result: Result) {
         resultProcessor.handle(result)
     }
 
-    private fun progressStage() {
-        stage.dealCards(this)
+    fun setDistributor(distributor: CardDistributor) {
+        this.dealCards = distributor
     }
 
-    private fun endStage() {
-        stage.emitResult(this)
-        setNextStage()
-    }
-
-    private fun setNextStage() {
-        stage = stage.nextStage(this)
+    private fun dealCards() {
+        val result = dealCards(this)
+        resultProcessor.handle(result)
     }
 }
