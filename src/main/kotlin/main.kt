@@ -10,7 +10,7 @@ import blackjack_dealer.ui.OutputView
 fun main() {
     OutputView.enterParticipantsName()
     val participantsName = InputView.inputParticipantsName()
-    val cardDeque = CardDeque.create()
+    val cardDeque = CardDeque().create()
 
     val participants = Participants.newInstance(participantsName) { cardDeque.generateDoubleCard() }
     val dealer = Dealer.newInstance(cardDeque.generateDoubleCard())

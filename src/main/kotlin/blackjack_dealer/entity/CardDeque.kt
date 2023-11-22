@@ -4,14 +4,13 @@ import blackjack_dealer.entity.card.Card
 import blackjack_dealer.entity.card.CardNumber
 import blackjack_dealer.entity.card.CardShape
 
-object CardDeque {
-    private var _cardDeque: ArrayDeque<Card> = ArrayDeque()
-    val cardDeque get() = _cardDeque
+class CardDeque {
+    private var cardDeque: ArrayDeque<Card> = ArrayDeque()
 
     fun create(): CardDeque {
         val cardNumber = CardNumber.values()
         val cardShapes = CardShape.values()
-        val cardDeque = cardNumber.flatMap { number ->
+        val createCardDeque = cardNumber.flatMap { number ->
             cardShapes.map { shape ->
                 Card(
                     cardNumber = number,
@@ -19,13 +18,21 @@ object CardDeque {
                 )
             }
         }.shuffled()
-        return CardDeque.apply {
-            _cardDeque = ArrayDeque(cardDeque)
+        return CardDeque().apply {
+            cardDeque = ArrayDeque(createCardDeque)
         }
     }
 
     fun generateSingleCard(): Card {
         return cardDeque.removeLast()
+    }
+
+    fun removeCustomCard(card: Card) {
+        cardDeque.removeIf { it == card }
+    }
+
+    fun getRemainCardsCount(): Int {
+        return cardDeque.count()
     }
 
     fun generateDoubleCard(): GamerCards {
