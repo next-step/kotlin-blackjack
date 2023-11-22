@@ -1,4 +1,4 @@
-package blackjack.model
+package blackjack.model.game
 
 import blackjack.model.card.CardDeck
 import blackjack.model.player.Dealer
@@ -42,8 +42,12 @@ class BlackjackGame(
         }
     }
 
-    fun result(printResult: (Dealer, List<Player>) -> Unit) {
+    fun result(
+        printResult: (Dealer, List<Player>) -> Unit,
+        printMatchResult: (MatchResult) -> Unit
+    ) {
         printResult(dealer, players)
+        printMatchResult(MatchResult.toResult(dealer, players))
     }
 
     private fun hitOrStay(player: Player, inputPlayerChoice: (String) -> Boolean) {

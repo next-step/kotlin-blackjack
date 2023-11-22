@@ -1,7 +1,7 @@
 package blackjack.controller
 
-import blackjack.model.BlackjackGame
 import blackjack.model.card.CardDeck
+import blackjack.model.game.BlackjackGame
 import blackjack.model.player.Dealer
 import blackjack.model.player.Player
 import blackjack.model.strategy.RandomStrategy
@@ -17,7 +17,7 @@ class BlackjackController {
         game.initDraw(OutputView::printInitStatus)
         game.play(InputView::inputPlayerChoice, OutputView::printPlayerCards)
         game.playDealer(OutputView::printDealerPop)
-        game.result(OutputView::printResult)
+        game.result(OutputView::printResult, OutputView::printMatchResult)
     }
 }
 
