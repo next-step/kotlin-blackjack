@@ -11,6 +11,10 @@ class CardSet(val cards: List<Card>) {
 
     }
 
+    fun isFull(cardPolicyGroup: CardScorePolicyGroup): Boolean {
+        return CARD_SUM_LIMIT <= sumOfMin(cardPolicyGroup).score
+    }
+
     fun addCard(card: Card): CardSet {
         val newCards = cards.toMutableList()
         newCards.add(card)
@@ -36,6 +40,7 @@ class CardSet(val cards: List<Card>) {
     }
 
     companion object {
+        private const val CARD_SUM_LIMIT = 21
         private val EMPTY_CARD_SET = CardSet(emptyList())
 
         fun of(vararg card: Card): CardSet {

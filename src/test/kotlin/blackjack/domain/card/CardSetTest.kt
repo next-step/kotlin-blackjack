@@ -2,6 +2,8 @@ package blackjack.domain.card
 
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FunSpec
+import io.kotest.data.row
+import io.kotest.datatest.withData
 import io.kotest.matchers.shouldBe
 
 class CardSetTest : FunSpec({
@@ -90,5 +92,28 @@ class CardSetTest : FunSpec({
         val actual = cardSet.sumOfMin(cardScorePolicyGroup)
 
         actual shouldBe CardScore(9)
+    }
+
+    context("카드 뭉치의 합이 21이 넘는지 알 수 있다.") {
+        withData(
+            row(
+                CardSet.of(
+                    Card.of(CardKind.DIAMOND, CardNumber.ACE),
+                    Card.of(CardKind.DIAMOND, CardNumber.NINE),
+                    Card.of(CardKind.DIAMOND, CardNumber.JACK),
+                ), false
+            ),
+            row(
+                CardSet.of(
+                    Card.of(CardKind.SPADE, CardNumber.TWO),
+                    Card.of(CardKind.DIAMOND, CardNumber.JACK),
+                    Card.of(CardKind.DIAMOND, CardNumber.QUEEN)
+                ), true
+            )
+        ) { (cardSet, expect) ->
+            val cardScorePolicyGroup = CardScorePolicyGroup(listOf(CardScoreNormalAcePolicy, CardScoreSpecialAcePolicy))
+
+            cardSet.isFull(cardScorePolicyGroup) shouldBe expect
+        }
     }
 })
