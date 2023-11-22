@@ -22,32 +22,29 @@ fun main() {
     val playersDto = PlayersDto(players)
     OutputView.printPlayerCards(playersDto)
 
-//    val finishGamePlayers = players.players.map { player ->
-//        playGame(player, dealer)
-//    }
-
-//    val playersResult = PlayersDto(Players(finishGamePlayers))
-//    OutputView.printResult(playersResult)
-}
-
-// private fun playGame(player: Player, dealer: Dealer): Player {
-//    var currentPlayer = player
-//
-//    while (isContinueGame(currentPlayer)) {
-//        currentPlayer.addCard(dealer)
-//        OutputView.printPlayerCard(PlayerDto(currentPlayer))
-//    }
-//    OutputView.printPlayerCard(PlayerDto(currentPlayer))
-//    return currentPlayer
-// }
-
-private fun isContinueGame(currentPlayer: Player): Boolean {
-    if (!currentPlayer.isHit()) {
-        return false
+    val finishGamePlayers = players.players.map { player ->
+        playGame(player, dealer)
     }
 
-    val playerDto = PlayerDto(currentPlayer)
-    OutputView.printQuestionYesOrNo(playerDto)
-    val answer = InputView.answerYesOrNo()
-    return answer == "y"
+    val playersResult = PlayersDto(Players(finishGamePlayers))
+    OutputView.printResult(playersResult)
+}
+
+private fun playGame(player: Player, dealer: Dealer): Player {
+    var currentPlayer = player
+
+    while (currentPlayer.isHit()) {
+        val playerDto = PlayerDto(currentPlayer)
+        OutputView.printQuestionYesOrNo(playerDto)
+        val answer = InputView.answerYesOrNo()
+
+        if (answer == "n") {
+            OutputView.printPlayerCard(PlayerDto(currentPlayer))
+            break
+        }
+
+        currentPlayer.addCard(dealer, answer)
+        OutputView.printPlayerCard(PlayerDto(currentPlayer))
+    }
+    return currentPlayer
 }

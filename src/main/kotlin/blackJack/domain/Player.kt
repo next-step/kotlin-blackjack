@@ -2,7 +2,10 @@ package blackJack.domain
 
 import blackJack.domain.Answer.*
 import blackJack.domain.Status.*
+import blackJack.dto.PlayerDto
 import blackJack.error.ErrorMessage
+import blackJack.view.InputView
+import blackJack.view.OutputView
 
 class Player(val name: String, val cards: Cards, private var status: Status) {
 
@@ -12,14 +15,23 @@ class Player(val name: String, val cards: Cards, private var status: Status) {
 
     fun isHit(): Boolean = status == HIT
 
-    fun addCard(dealer: Dealer, answer: Answer) {
-        if (answer == n) return
+    fun addCard(dealer: Dealer, answer: String) {
+        if (checkAnswer(answer)) return
 
         Status.addCardValidation(status)
         val card = dealer.cardDeck.addCard()
         cards.cards.add(card)
-        status = Status.calculateStatus(cards.calculateTotalScore(), answer)
+        status = Status.calculateStatus(cards.calculateTotalScore(), Answer.valueOf(answer))
     }
+
+    private fun checkAnswer(answer: String): Boolean {
+        Answer.validateAnswer(answer)
+        val answerValue = Answer.valueOf(answer)
+        return answerValue == n
+    }
+
+//    fun playGame(dealer: Dealer): Player {
+//    }
 
     companion object {
         fun splitNames(inputNames: String): List<String> {
