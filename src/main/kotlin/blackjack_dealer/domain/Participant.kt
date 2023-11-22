@@ -9,11 +9,9 @@ import blackjack_dealer.entity.toGamerCards
 data class Participant(
     override val name: String,
 ) : Gamer(name) {
-    fun canJoinGame(): Boolean = currentState is GamerCurrentState.HIT
-    fun getCurrentGamerState(): GamerCurrentState = currentState
 
-    fun drawCard(cardDeque: CardDeque) {
-        gamerCards = gamerCards.trumpCard.plus(CardGenerator.generateSingleCard(cardDeque)).toGamerCards()
+    override fun drawCard(cardDeque: CardDeque) {
+        super.drawCard(cardDeque)
         setCurrentState()
     }
 
@@ -33,16 +31,16 @@ data class Participant(
     companion object {
         private const val MINIMUM_HIT_NUMBER = 1
         private const val MAXIMUM_HIT_NUMBER = 20
+
         private const val BLACK_JACK = 21
 
         fun newInstance(name: String, cards: GamerCards): Participant {
             val initialState = findMatchedInitialState(cards)
             return Participant(name = name).apply {
-                gamerCards = cards
+                initializeCard(cards)
                 currentState = initialState
             }
         }
-
         private fun findMatchedInitialState(initialCards: GamerCards): GamerCurrentState {
             val currentScore = initialCards.getCurrentScore()
             return when (currentScore) {

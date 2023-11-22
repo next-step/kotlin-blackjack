@@ -4,8 +4,8 @@ import blackjack_dealer.entity.card.Card
 import blackjack_dealer.entity.card.CardNumber
 
 data class GamerCards(
-    val trumpCard: List<Card>
-) : List<Card> by trumpCard {
+    val trumpCard: MutableList<Card> = mutableListOf()
+) : MutableList<Card> by trumpCard {
     private val cardsContainACard: Boolean
         get() {
             return trumpCard.any { card -> card.cardNumber == CardNumber.A }
@@ -36,4 +36,4 @@ data class GamerCards(
     }
 }
 
-fun List<Card>.toGamerCards() = GamerCards(this)
+fun MutableList<Card>.toGamerCards() = GamerCards(this)

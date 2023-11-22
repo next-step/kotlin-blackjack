@@ -4,13 +4,12 @@ import blackjack_dealer.CardGenerator
 import blackjack_dealer.entity.CardDeque
 import blackjack_dealer.entity.GamerCards
 import blackjack_dealer.entity.state.GamerCurrentState
-import blackjack_dealer.entity.toGamerCards
 
 data class Dealer(
     override val name: String = DEALER_NAME
 ) : Gamer(name) {
-    fun getOneMoreCardIfHit(cardDeque: CardDeque) {
-        gamerCards = gamerCards.plus(listOf(CardGenerator.generateSingleCard(cardDeque))).toGamerCards()
+    override fun drawCard(cardDeque: CardDeque) {
+        super.drawCard(cardDeque)
         currentState = findDealerMatchedState(gamerCards)
     }
 
@@ -24,7 +23,7 @@ data class Dealer(
         fun newInstance(cards: GamerCards): Dealer {
             val initialState = findDealerMatchedState(cards)
             return Dealer().apply {
-                gamerCards = cards
+                initializeCard(cards)
                 currentState = initialState
             }
         }

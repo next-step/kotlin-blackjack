@@ -7,12 +7,12 @@ data class Participants(
     val participants: List<Participant>
 ) : List<Participant> by participants {
 
-    fun getParticipantsCanPlayGame(): Participants = participants.filter { it.canJoinGame() }.toParticipants()
+    fun getParticipantsCanPlayGame(): Participants = participants.filter { it.canKeepPlayingGame() }.toParticipants()
     companion object {
         fun newInstance(nameString: String, cardDeque: () -> List<Card>): Participants {
             val names = nameString.split(',')
             return names.map { name ->
-                Participant.newInstance(name = name, cards = GamerCards(cardDeque()))
+                Participant.newInstance(name = name, cards = GamerCards(cardDeque().toMutableList()))
             }.toParticipants()
         }
     }

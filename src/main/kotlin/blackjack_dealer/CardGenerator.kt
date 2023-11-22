@@ -13,6 +13,6 @@ object CardGenerator {
     fun generateDoubleCard(cardDeque: CardDeque): GamerCards {
         val initialFirstCard = generateSingleCard(cardDeque)
         val initialSecondCard = generateSingleCard(cardDeque)
-        return listOf(initialFirstCard, initialSecondCard).toGamerCards()
+        return mutableListOf(initialFirstCard, initialSecondCard).toGamerCards()
     }
 }

@@ -19,7 +19,7 @@ class BlackJack(
                 if (getOneMoreCardInput.invoke()) {
                     participant.drawCard(cardDeque)
                     OutputView.printParticipantInformation(participant)
-                    if (participant.canJoinGame().not()) break
+                    if (participant.canKeepPlayingGame().not()) break
                 } else {
                     participant.changeStateToStand()
                     break
@@ -28,7 +28,7 @@ class BlackJack(
         }
         while (dealer.canKeepPlayingGame()) {
             OutputView.printGetOneMoreCardForDealer()
-            dealer.getOneMoreCardIfHit(cardDeque)
+            dealer.drawCard(cardDeque)
         }
     }
 }
