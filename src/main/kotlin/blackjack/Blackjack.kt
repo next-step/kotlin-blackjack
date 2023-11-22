@@ -5,41 +5,70 @@ import blackjack.domain.cards.HandCards
 import blackjack.domain.player.Hand
 import blackjack.domain.player.Player
 import blackjack.domain.player.PlayerState
+import blackjack.view.InputView
+import blackjack.view.ResultView
+import blackjack.view.UserInputView
 
-class Blackjack
+class Blackjack(
+    private val inputView: InputView,
+    private val resultView: ResultView,
+) {
+    private val deck = Deck.fullDeck()
 
-fun main() {
-    val deck = Deck.fullDeck()
-    deck.shuffle()
-
-    println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)")
-    val playerNames = readln().split(",").map { it.trim() }
-    val players = playerNames.map { Player(it, Hand(HandCards(mutableListOf(deck.draw(), deck.draw())))) }
-
-    println("${players.joinToString(",") { it.name }} 에게 2 장의 카드 나누었습니다.")
-
-    players.forEach { player ->
-        println("${player.name}: ${player.hand.handCards}")
+    init {
+        deck.shuffle()
     }
 
-    players.forEach { player ->
-        while (player.state == PlayerState.Hit) {
-            println("${player.name}은 한 장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
-            val command = readln().trim()
+    fun simulate() {
+        val playerNames = inputView.getPlayerNames()
+
+        val players = createPlayers(playerNames)
+
+        players.forEach { player ->
+            player.play()
+        }
+
+        resultView.printResult(players)
+    }
+
+    private fun createPlayers(playerNames: List<String>): List<Player> {
+        val players = playerNames.map { Player(it, Hand(HandCards(mutableListOf(deck.draw(), deck.draw())))) }
+
+        println("${players.joinToString(",") { it.name }} 에게 2 장의 카드 나누었습니다.")
+
+        players.forEach { player ->
+            println("${player.name}: ${player.hand.handCards}")
+        }
+
+        return players
+    }
+
+    private fun Player.play() {
+
+        fun processCommand(command: String) {
             if (command == "y") {
-                player.hit()
+                hit()
                 val card = deck.draw()
-                player.addCard(card)
-                println("${player.name}: ${player.hand.handCards}")
+                addCard(card)
+                println("$name: ${hand.handCards}")
             } else {
-                player.stay()
+                stay()
             }
         }
-        println("${player.name}: ${player.hand.handCards}")
-        println("${player.state}")
-    }
 
-    players.forEach { player ->
-        println("${player.name}: ${player.hand}")
+        while (state == PlayerState.Hit) {
+            println("${name}은 한 장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
+            val command = readln().trim()
+            processCommand(command)
+        }
+        println("$name: ${hand.handCards}")
+        println("$state")
     }
+}
+
+fun main() {
+    Blackjack(
+        UserInputView(),
+        ResultView(),
+    ).simulate()
 }
