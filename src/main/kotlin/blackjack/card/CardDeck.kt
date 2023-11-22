@@ -14,6 +14,10 @@ class CardDeck {
         return deck.size
     }
 
+    fun draw(drawNumber: Int): List<BlackJackCard> {
+        return (1..drawNumber).map { deck.pop() }.toList()
+    }
+
     companion object {
         private val deck: ArrayDeque<BlackJackCard> = ArrayDeque()
         private fun initNormalCard() {
