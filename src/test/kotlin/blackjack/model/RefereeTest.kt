@@ -67,12 +67,7 @@ class RefereeTest : StringSpec({
         actual.dealerResult().winning shouldBe 0
         actual.dealerResult().losing shouldBe 2
 
-        actual.findPlayerResult(player1).point shouldBe 21
-        actual.findPlayerResult(player1).winning shouldBe 1
-        actual.findPlayerResult(player1).losing shouldBe 0
-
-        actual.findPlayerResult(player2).point shouldBe 20
-        actual.findPlayerResult(player2).winning shouldBe 1
-        actual.findPlayerResult(player2).losing shouldBe 0
+        actual.playerResult(player1) shouldBe PlayerResult.WIN
+        actual.playerResult(player2) shouldBe PlayerResult.WIN
     }
 })
