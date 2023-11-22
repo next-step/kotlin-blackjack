@@ -13,16 +13,16 @@ import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 
 class BlackJackTest : StringSpec({
-    val cardDeque = CardDeque.create()
-    val cards = mutableListOf(cardDeque.cardDeque.removeLast(), cardDeque.cardDeque.removeLast()).toGamerCards()
+    val cardDeque = CardDeque().create()
+    val cards = cardDeque.generateDoubleCard()
     "블랙잭을 수행하여 한장 더 받기를 선택시에 카드의 숫자가 한장 증가한다" {
         // 카드덱에서 j 하트, j 클로버 제거
-        cardDeque.cardDeque.removeIf { it == Card(CardNumber.J, CardShape.HEART) }
-        cardDeque.cardDeque.removeIf { it == Card(CardNumber.J, CardShape.CLOVER) }
+        cardDeque.removeCustomCard(Card(CardNumber.J, CardShape.HEART))
+        cardDeque.removeCustomCard(Card(CardNumber.J, CardShape.CLOVER))
 
         val customCards =
             mutableListOf(Card(CardNumber.J, CardShape.HEART), Card(CardNumber.J, CardShape.CLOVER)).toGamerCards()
-        val dealerCards = mutableListOf(cardDeque.cardDeque.removeLast(), cardDeque.cardDeque.removeLast()).toGamerCards()
+        val dealerCards = cardDeque.generateDoubleCard()
 
         val participant = Participants.newInstance("pita") { customCards }
         val dealer = Dealer.newInstance(dealerCards)
@@ -39,7 +39,7 @@ class BlackJackTest : StringSpec({
 
     "블랙잭을 수행하여 한장 더 안받기 선택시에 카드의 숫자가 개수가 동일하다" {
         val participants = Participants.newInstance("pita") { cards }
-        val dealerCards = mutableListOf(cardDeque.cardDeque.removeLast(), cardDeque.cardDeque.removeLast()).toGamerCards()
+        val dealerCards = cardDeque.generateDoubleCard()
         val dealer = Dealer.newInstance(dealerCards)
         val blackjackGamer = BlackJackGamer(dealer, participants)
         val expected = 2

@@ -13,9 +13,9 @@ import io.kotest.matchers.shouldBe
 
 class DealerTest : BehaviorSpec({
     Given("딜러가 생성되면") {
-        val cardDeque = CardDeque.create()
-        cardDeque.cardDeque.removeIf { it == Card(CardNumber.J, CardShape.HEART) }
-        cardDeque.cardDeque.removeIf { it == Card(CardNumber.FIVE, CardShape.CLOVER) }
+        val cardDeque = CardDeque().create()
+        cardDeque.removeCustomCard(Card(CardNumber.J, CardShape.HEART))
+        cardDeque.removeCustomCard(Card(CardNumber.FIVE, CardShape.CLOVER))
 
         val customCards =
             mutableListOf(Card(CardNumber.J, CardShape.HEART), Card(CardNumber.J, CardShape.CLOVER)).toGamerCards()
@@ -27,9 +27,9 @@ class DealerTest : BehaviorSpec({
         }
 
         When("카드 두장을 받고 받은 두장의 합계가 16 이하면") {
-            val cardDequeLessThanSixteen = CardDeque.create()
-            cardDequeLessThanSixteen.cardDeque.removeIf { it == Card(CardNumber.J, CardShape.HEART) }
-            cardDequeLessThanSixteen.cardDeque.removeIf { it == Card(CardNumber.FIVE, CardShape.CLOVER) }
+            val cardDequeLessThanSixteen = CardDeque().create()
+            cardDequeLessThanSixteen.removeCustomCard(Card(CardNumber.J, CardShape.HEART))
+            cardDequeLessThanSixteen.removeCustomCard(Card(CardNumber.FIVE, CardShape.CLOVER))
 
             val customCardsLessThanSixteen =
                 mutableListOf(Card(CardNumber.J, CardShape.HEART), Card(CardNumber.FIVE, CardShape.CLOVER)).toGamerCards()
@@ -46,9 +46,9 @@ class DealerTest : BehaviorSpec({
         }
 
         When("카드 두장을 받고 받은 두장의 합계가 17 이상이면 추가로 받을 수 없다") {
-            val cardDequeGreaterThanSixteen = CardDeque.create()
-            cardDequeGreaterThanSixteen.cardDeque.removeIf { it == Card(CardNumber.J, CardShape.HEART) }
-            cardDequeGreaterThanSixteen.cardDeque.removeIf { it == Card(CardNumber.SEVEN, CardShape.CLOVER) }
+            val cardDequeGreaterThanSixteen = CardDeque().create()
+            cardDequeGreaterThanSixteen.removeCustomCard(Card(CardNumber.J, CardShape.HEART))
+            cardDequeGreaterThanSixteen.removeCustomCard(Card(CardNumber.SEVEN, CardShape.CLOVER))
 
             val customCardsGreaterThanSixteen =
                 mutableListOf(Card(CardNumber.J, CardShape.HEART), Card(CardNumber.SEVEN, CardShape.CLOVER)).toGamerCards()

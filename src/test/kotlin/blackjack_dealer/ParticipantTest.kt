@@ -15,8 +15,8 @@ import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 
 class ParticipantTest : StringSpec({
-    val cardDeque = CardDeque.create()
-    val cards = mutableListOf(cardDeque.cardDeque.removeLast(), cardDeque.cardDeque.removeLast())
+    val cardDeque = CardDeque().create()
+    val cards = cardDeque.generateDoubleCard()
     val participant = Participant.newInstance("pita", cards.toGamerCards())
 
     "생성한 이름이 잘 나온다" {
@@ -62,9 +62,9 @@ class ParticipantTest : StringSpec({
     }
 
     "블랙잭 수행중 n 을 입력하면 현재 state가 stand가 된다." {
-        val deque = CardDeque.create()
-        val participantCard = mutableListOf(deque.cardDeque.removeLast(), deque.cardDeque.removeLast()).toGamerCards()
-        val dealerCard = mutableListOf(deque.cardDeque.removeLast(), deque.cardDeque.removeLast()).toGamerCards()
+        val deque = CardDeque().create()
+        val participantCard = cardDeque.generateDoubleCard()
+        val dealerCard = cardDeque.generateDoubleCard()
         val participants = Participants.newInstance("pita") { participantCard }
         val dealer = Dealer.newInstance(dealerCard)
         val blackjackGamer = BlackJackGamer(dealer, participants)

@@ -12,7 +12,7 @@ class ParticipantsTest : StringSpec({
     "전달한 이름의 수만큼 참가자를 생성했다" {
         val input = "pita,haero,sery"
         val expected = 3
-        CardDeque.create()
+        CardDeque().create()
         Participants.newInstance(
             nameString = input,
             cardDeque = { listOf(Card(CardNumber.TWO, CardShape.CLOVER)) }
