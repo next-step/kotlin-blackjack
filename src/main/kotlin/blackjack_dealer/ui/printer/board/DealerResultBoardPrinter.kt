@@ -6,7 +6,8 @@ import blackjack_dealer.entity.result.DealerResult
 value class DealerResultBoardPrinter(private val printer: String) {
     companion object {
         fun print(dealer: DealerResult): String {
-            val result = "${dealer.name}: ${dealer.winCount}승 ${dealer.drawCount}무 ${dealer.loseCount}패"
+            val result =
+                "${dealer.name}: ${dealer.dealerResultCount.win}승 ${dealer.dealerResultCount.draw}무 ${dealer.dealerResultCount.lose}패"
             return DealerResultBoardPrinter(result).printer
         }
     }
