@@ -2,10 +2,7 @@ package blackJack.domain
 
 import blackJack.domain.Answer.*
 import blackJack.domain.Status.*
-import blackJack.dto.PlayerDto
 import blackJack.error.ErrorMessage
-import blackJack.view.InputView
-import blackJack.view.OutputView
 
 class Player(val name: String, val cards: Cards, private var status: Status) {
 
@@ -19,8 +16,8 @@ class Player(val name: String, val cards: Cards, private var status: Status) {
         if (checkAnswer(answer)) return
 
         Status.addCardValidation(status)
-        val card = dealer.cardDeck.addCard()
-        cards.cards.add(card)
+        val card = dealer.cardDeck.drawCard()
+        cards.addCard(card)
         status = Status.calculateStatus(cards.calculateTotalScore(), Answer.valueOf(answer))
     }
 

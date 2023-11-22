@@ -33,7 +33,7 @@ class CardsTest {
         val drawnCards = mutableSetOf<Card>()
 
         repeat(TOTAL_CARDS_COUNT) {
-            val card = cardDeck.addCard()
+            val card = cardDeck.drawCard()
             drawnCards.add(card)
         }
         assertEquals(52, drawnCards.size)
@@ -43,7 +43,7 @@ class CardsTest {
     fun `모든 카드를 뽑으면 IllegalArgumentException 이 발생 한다`() {
         val exception = assertThrows<IllegalArgumentException> {
             repeat(OVERFLOW_CARDS_COUNT) {
-                cardDeck.addCard()
+                cardDeck.drawCard()
             }
         }
         assertEquals(ErrorMessage.EMPTY_CARDS.message, exception.message)
