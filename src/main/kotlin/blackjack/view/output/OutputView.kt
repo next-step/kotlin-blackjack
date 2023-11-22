@@ -1,6 +1,7 @@
 package blackjack.view.output
 
 import blackjack.domain.card.Card
+import blackjack.view.dto.DealerHitDto
 import blackjack.view.dto.FinalPlayerStateDto
 import blackjack.view.dto.PlayerDto
 
@@ -8,6 +9,8 @@ object OutputView {
     private const val INITIAL_DISTRIBUTION_MSG = "딜러와 %s에게 2장씩 나누었습니다."
     private const val DEALER_STATE_MSG = "딜러: %s"
     private const val PLAYER_STATE_MSG = "%s카드: %s"
+    private const val DEALER_HIT_MSG = "딜러는 16이하라 한 장의 카드를 더 받았습니다."
+    private const val DEALER_STAND_MSG = "딜러는 17이상이라 카드를 받지 않았습니다."
     private const val RESULT_MSG = "%s카드: %s - 결과: %d"
 
     fun initialDistributionResult(
@@ -27,6 +30,16 @@ object OutputView {
         player: PlayerDto,
     ) {
         println(PLAYER_STATE_MSG.format(player.name, extractCardsState(player.cards)))
+    }
+
+    fun dealerHitStatus(
+        dealerHit: DealerHitDto,
+    ) {
+        println()
+        when (dealerHit.isHit) {
+            true -> println(DEALER_HIT_MSG)
+            false -> println(DEALER_STAND_MSG)
+        }
     }
 
     fun playerFinalStates(

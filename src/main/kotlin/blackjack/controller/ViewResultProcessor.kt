@@ -1,8 +1,10 @@
 package blackjack.controller
 
-import blackjack.domain.result.GameResult
-import blackjack.domain.result.DealToPlayerResult
 import blackjack.domain.result.DealInitialCardResult
+import blackjack.domain.result.DealToDealerResult
+import blackjack.domain.result.DealToPlayerResult
+import blackjack.domain.result.GameResult
+import blackjack.view.dto.DealerHitDto
 import blackjack.view.dto.FinalPlayerStateDto
 import blackjack.view.dto.PlayerDto
 import blackjack.view.output.OutputView
@@ -17,6 +19,10 @@ object ViewResultProcessor {
     fun drawPlayerState(result: DealToPlayerResult) {
         val model = result.player.let { PlayerDto(it.name.value, it.hand.cards) }
         OutputView.playerCurrentState(model)
+    }
+
+    fun drawDealerState(result: DealToDealerResult) {
+        OutputView.dealerHitStatus(DealerHitDto(result.isHit))
     }
 
     fun drawGameResult(result: GameResult) {

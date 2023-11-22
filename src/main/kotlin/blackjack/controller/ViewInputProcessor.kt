@@ -3,8 +3,8 @@ package blackjack.controller
 import blackjack.domain.PlayerAction
 import blackjack.domain.player.Player
 import blackjack.domain.player.PlayerNames
-import blackjack.view.input.InputView
 import blackjack.view.dto.PlayerNameDto
+import blackjack.view.input.InputView
 
 class ViewInputProcessor : InputProcessor {
     override fun playerNames(): PlayerNames =
