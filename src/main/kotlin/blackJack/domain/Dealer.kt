@@ -1,13 +1,15 @@
 package blackJack.domain
 
-class Dealer {
-    fun betting(): Cards {
-        return Cards(List(INIT_CARD_COUNT) { Card.drawCard() })
+import blackJack.error.ErrorMessage
+
+class Dealer(val cardDeck: Cards) {
+
+    init {
+        require(cardDeck.cards.size == 52) { ErrorMessage.CARD_DECK_SIZE.message }
     }
 
-    fun addDrawCard(cards: Cards): Cards {
-        val newCard = cards.drawUniqueCard()
-        return Cards(cards.cards + newCard)
+    fun initialCards(): Cards {
+        return Cards(MutableList(INIT_CARD_COUNT) { cardDeck.drawCard() })
     }
 
     companion object {
