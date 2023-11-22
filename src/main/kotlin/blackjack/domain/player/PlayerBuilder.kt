@@ -1,5 +1,6 @@
 package blackjack.domain.player
 
+import blackjack.domain.card.Card
 import blackjack.domain.card.CardSet
 
 class PlayerBuilder {
@@ -13,6 +14,11 @@ class PlayerBuilder {
     fun cardSet(cardSet: CardSet) {
         this.cardSet = cardSet
     }
+
+    fun cardSet(vararg cards: Card) {
+        this.cardSet = CardSet(cards.toList())
+    }
+
 
     fun build(): Player {
         return Player(name, cardSet)
