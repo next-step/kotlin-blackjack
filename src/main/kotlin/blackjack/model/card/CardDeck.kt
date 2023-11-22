@@ -41,7 +41,7 @@ class CardDeck(var deck: MutableList<Card> = mutableListOf()) {
     companion object {
         private const val NOT_EXIST_CARD_EXCEPTION = "더 이상 카드가 존재하지 않습니다."
         private const val DUPLICATE_CARD_EXCEPTION = "중복된 카드는 추가할 수 없습니다."
-        private const val BLACKJACK_NUMBER = 21
+        const val BLACKJACK_NUMBER = 21
         private const val BLACKJACK_SIZE = 2
     }
 }

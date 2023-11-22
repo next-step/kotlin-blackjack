@@ -9,13 +9,18 @@ class BlackjackGame(
     val players: List<Player>,
     val cards: CardDeck,
 ) {
-    fun initDraw(printPlayerInitStatus: (List<Player>) -> Unit) {
+    fun initDraw(printInitStatus: (Dealer, List<Player>) -> Unit) {
+        repeat(2) {
+            dealer.draw(cards.pop())
+        }
+
         players.forEach { player ->
             repeat(2) {
                 player.draw(cards.pop())
             }
         }
-        printPlayerInitStatus(players)
+
+        printInitStatus(dealer, players)
     }
 
     fun play(
@@ -30,8 +35,15 @@ class BlackjackGame(
         }
     }
 
-    fun result(printResult: (List<Player>) -> Unit) {
-        printResult(players)
+    fun playDealer(printDealerPop: () -> Unit) {
+        if (dealer.isOverSixTeen()) {
+            dealer.draw(cards.pop())
+            printDealerPop()
+        }
+    }
+
+    fun result(printResult: (Dealer, List<Player>) -> Unit) {
+        printResult(dealer, players)
     }
 
     private fun hitOrStay(player: Player, inputPlayerChoice: (String) -> Boolean) {

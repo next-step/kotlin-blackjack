@@ -5,7 +5,7 @@ import blackjack.model.card.CardDeck
 import blackjack.model.state.State
 import blackjack.model.state.playState.gameState.Hit
 
-class Dealer(val name: String, val cards: CardDeck = CardDeck()) {
+data class Dealer(val cards: CardDeck = CardDeck()) {
     private var state: State = Hit(cards)
 
     fun draw(card: Card) {
@@ -16,7 +16,13 @@ class Dealer(val name: String, val cards: CardDeck = CardDeck()) {
         this.state = state.stay()
     }
 
+    fun isOverSixTeen() = cards.calculateScore() <= SIXTEEN
+
     fun cards(): List<Card> {
         return state.cards().deck
+    }
+
+    companion object {
+        private const val SIXTEEN = 16
     }
 }

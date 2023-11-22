@@ -13,9 +13,10 @@ class BlackjackController {
         val cards = CardDeck(RandomStrategy().shuffle())
         val players = InputView.inputPlayers().map(::Player)
 
-        val game = BlackjackGame(dealer = Dealer("딜러"), players = players, cards = cards)
-        game.initDraw(OutputView::printPlayerInitStatus)
+        val game = BlackjackGame(dealer = Dealer(), players = players, cards = cards)
+        game.initDraw(OutputView::printInitStatus)
         game.play(InputView::inputPlayerChoice, OutputView::printPlayerCards)
+        game.playDealer(OutputView::printDealerPop)
         game.result(OutputView::printResult)
     }
 }
