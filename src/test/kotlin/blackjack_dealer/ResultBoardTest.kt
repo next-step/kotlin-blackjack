@@ -15,11 +15,11 @@ class ResultBoardTest : BehaviorSpec({
     // 승무패 확
     Given("딜러의 점수가 17점일 때") {
         val cards =
-            listOf(Card(CardNumber.J, CardShape.CLOVER), Card(CardNumber.SEVEN, CardShape.CLOVER)).toGamerCards()
+            mutableListOf(Card(CardNumber.J, CardShape.CLOVER), Card(CardNumber.SEVEN, CardShape.CLOVER)).toGamerCards()
         val dealer = Dealer.newInstance(cards)
         When("참가자가 승인 경우 : 참가자 18") {
             val participantCard =
-                listOf(Card(CardNumber.J, CardShape.CLOVER), Card(CardNumber.EIGHT, CardShape.CLOVER)).toGamerCards()
+                mutableListOf(Card(CardNumber.J, CardShape.CLOVER), Card(CardNumber.EIGHT, CardShape.CLOVER)).toGamerCards()
             val participant = Participant.newInstance("pita", participantCard)
             val expected = "승"
 
@@ -31,7 +31,7 @@ class ResultBoardTest : BehaviorSpec({
 
         When("참가자와 무승부인 경우 : 참가자 17") {
             val participantCard =
-                listOf(Card(CardNumber.J, CardShape.CLOVER), Card(CardNumber.SEVEN, CardShape.CLOVER)).toGamerCards()
+                mutableListOf(Card(CardNumber.J, CardShape.CLOVER), Card(CardNumber.SEVEN, CardShape.CLOVER)).toGamerCards()
             val participant = Participant.newInstance("pita", participantCard)
             val expected = "무"
 
@@ -43,7 +43,7 @@ class ResultBoardTest : BehaviorSpec({
 
         When("참가자가 패배인 경우 : 참가자 16") {
             val participantCard =
-                listOf(Card(CardNumber.J, CardShape.CLOVER), Card(CardNumber.SIX, CardShape.CLOVER)).toGamerCards()
+                mutableListOf(Card(CardNumber.J, CardShape.CLOVER), Card(CardNumber.SIX, CardShape.CLOVER)).toGamerCards()
             val participant = Participant.newInstance("pita", participantCard)
             val expected = "패"
 
@@ -55,7 +55,7 @@ class ResultBoardTest : BehaviorSpec({
 
         When("참가자가 패배인 경우 : 참가자 24") {
             val participantCard =
-                listOf(
+                mutableListOf(
                     Card(CardNumber.J, CardShape.CLOVER),
                     Card(CardNumber.J, CardShape.HEART),
                     Card(CardNumber.FOUR, CardShape.CLOVER)
@@ -72,7 +72,7 @@ class ResultBoardTest : BehaviorSpec({
 
     Given("딜러가 21이 넘는다면") {
         val cards =
-            listOf(
+            mutableListOf(
                 Card(CardNumber.J, CardShape.CLOVER),
                 Card(CardNumber.SEVEN, CardShape.CLOVER),
                 Card(CardNumber.Q, CardShape.CLOVER)
@@ -81,15 +81,15 @@ class ResultBoardTest : BehaviorSpec({
         When("참가자의 카드 값과 상관없이") {
             // 승
             val winningParticipantCard =
-                listOf(Card(CardNumber.J, CardShape.CLOVER), Card(CardNumber.EIGHT, CardShape.CLOVER)).toGamerCards()
+                mutableListOf(Card(CardNumber.J, CardShape.CLOVER), Card(CardNumber.EIGHT, CardShape.CLOVER)).toGamerCards()
             val winningParticipant = Participant.newInstance("pita", winningParticipantCard)
             // 무
             val drawParticipantCard =
-                listOf(Card(CardNumber.J, CardShape.CLOVER), Card(CardNumber.SEVEN, CardShape.CLOVER)).toGamerCards()
+                mutableListOf(Card(CardNumber.J, CardShape.CLOVER), Card(CardNumber.SEVEN, CardShape.CLOVER)).toGamerCards()
             val drawParticipant = Participant.newInstance("pita", drawParticipantCard)
             // 패
             val losingParticipantCard =
-                listOf(Card(CardNumber.J, CardShape.CLOVER), Card(CardNumber.SIX, CardShape.CLOVER)).toGamerCards()
+                mutableListOf(Card(CardNumber.J, CardShape.CLOVER), Card(CardNumber.SIX, CardShape.CLOVER)).toGamerCards()
             val losingParticipant = Participant.newInstance("pita", losingParticipantCard)
 
             val expected = 3

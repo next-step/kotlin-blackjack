@@ -18,7 +18,7 @@ class DealerTest : BehaviorSpec({
         cardDeque.cardDeque.removeIf { it == Card(CardNumber.FIVE, CardShape.CLOVER) }
 
         val customCards =
-            listOf(Card(CardNumber.J, CardShape.HEART), Card(CardNumber.J, CardShape.CLOVER)).toGamerCards()
+            mutableListOf(Card(CardNumber.J, CardShape.HEART), Card(CardNumber.J, CardShape.CLOVER)).toGamerCards()
 
         val dealer = Dealer.newInstance(cards = customCards)
         Then("이름은 딜러이다") {
@@ -32,7 +32,7 @@ class DealerTest : BehaviorSpec({
             cardDequeLessThanSixteen.cardDeque.removeIf { it == Card(CardNumber.FIVE, CardShape.CLOVER) }
 
             val customCardsLessThanSixteen =
-                listOf(Card(CardNumber.J, CardShape.HEART), Card(CardNumber.FIVE, CardShape.CLOVER)).toGamerCards()
+                mutableListOf(Card(CardNumber.J, CardShape.HEART), Card(CardNumber.FIVE, CardShape.CLOVER)).toGamerCards()
             val lessThanScoreExpected = 16
             val cardCountExpected = 3
             val dealerLessThanSixteen = Dealer.newInstance(customCardsLessThanSixteen)
@@ -40,7 +40,7 @@ class DealerTest : BehaviorSpec({
             Then("1장을 더 받는다 (16이하인지도 체크)") {
                 dealerLessThanSixteen.getCurrentCards().getCurrentScore() shouldBeLessThanOrEqual lessThanScoreExpected
 
-                dealerLessThanSixteen.getOneMoreCardIfHit(cardDequeLessThanSixteen)
+                dealerLessThanSixteen.drawCard(cardDequeLessThanSixteen)
                 dealerLessThanSixteen.getCurrentCards().count() shouldBe cardCountExpected
             }
         }
@@ -51,7 +51,7 @@ class DealerTest : BehaviorSpec({
             cardDequeGreaterThanSixteen.cardDeque.removeIf { it == Card(CardNumber.SEVEN, CardShape.CLOVER) }
 
             val customCardsGreaterThanSixteen =
-                listOf(Card(CardNumber.J, CardShape.HEART), Card(CardNumber.SEVEN, CardShape.CLOVER)).toGamerCards()
+                mutableListOf(Card(CardNumber.J, CardShape.HEART), Card(CardNumber.SEVEN, CardShape.CLOVER)).toGamerCards()
             val moreThanScoreExpected = 17
             val cardCountExpected = 2
             val dealerGreaterThanSixteen = Dealer.newInstance(customCardsGreaterThanSixteen)

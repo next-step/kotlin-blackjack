@@ -15,7 +15,7 @@ import io.kotest.matchers.shouldBe
 
 class ParticipantTest : StringSpec({
     val cardDeque = CardDeque.create()
-    val cards = listOf(cardDeque.cardDeque.removeLast(), cardDeque.cardDeque.removeLast())
+    val cards = mutableListOf(cardDeque.cardDeque.removeLast(), cardDeque.cardDeque.removeLast())
     val participant = Participant.newInstance("pita", cards.toGamerCards())
 
     "생성한 이름이 잘 나온다" {
@@ -30,7 +30,7 @@ class ParticipantTest : StringSpec({
 
     "처음으로 생성한 참가자의 상태는 HIT 이다" {
         val blackJackCards =
-            GamerCards(listOf(Card(CardNumber.A, CardShape.CLOVER), Card(CardNumber.TWO, CardShape.CLOVER)))
+            GamerCards(mutableListOf(Card(CardNumber.A, CardShape.CLOVER), Card(CardNumber.TWO, CardShape.CLOVER)))
         val participantWithHit = Participant.newInstance(name = "pita", cards = blackJackCards)
         val expected = GamerCurrentState.HIT
         participantWithHit.getCurrentGamerState() shouldBe expected
@@ -38,18 +38,18 @@ class ParticipantTest : StringSpec({
 
     "처음으로 생성한 참가자의 상태는 운이 좋게도 BLACK_JACK 이다" {
         val blackJackCards =
-            GamerCards(listOf(Card(CardNumber.A, CardShape.CLOVER), Card(CardNumber.J, CardShape.CLOVER)))
+            GamerCards(mutableListOf(Card(CardNumber.A, CardShape.CLOVER), Card(CardNumber.J, CardShape.CLOVER)))
         val participantWithBlackJack = Participant.newInstance(name = "pita", cards = blackJackCards)
         val expected = GamerCurrentState.BLACKJACK
         participantWithBlackJack.getCurrentGamerState() shouldBe expected
     }
 
-    "처음으로 생성한 참가자의 상태는 canJoinGame은 true 이다" {
+    "처음으로 생성한 참가자의 상태는 canKeepPlayingGame은 true 이다" {
         val blackJackCards =
-            GamerCards(listOf(Card(CardNumber.A, CardShape.CLOVER), Card(CardNumber.TWO, CardShape.CLOVER)))
+            GamerCards(mutableListOf(Card(CardNumber.A, CardShape.CLOVER), Card(CardNumber.TWO, CardShape.CLOVER)))
         val participantWithHit = Participant.newInstance(name = "pita", cards = blackJackCards)
         val expected = true
-        participantWithHit.canJoinGame() shouldBe expected
+        participantWithHit.canKeepPlayingGame() shouldBe expected
     }
 
     "draw card 이후 현재 카드 개수 + 1이 된다." {
@@ -62,8 +62,8 @@ class ParticipantTest : StringSpec({
 
     "블랙잭 수행중 n 을 입력하면 현재 state가 stand가 된다." {
         val deque = CardDeque.create()
-        val participantCard = listOf(deque.cardDeque.removeLast(), deque.cardDeque.removeLast()).toGamerCards()
-        val dealerCard = listOf(deque.cardDeque.removeLast(), deque.cardDeque.removeLast()).toGamerCards()
+        val participantCard = mutableListOf(deque.cardDeque.removeLast(), deque.cardDeque.removeLast()).toGamerCards()
+        val dealerCard = mutableListOf(deque.cardDeque.removeLast(), deque.cardDeque.removeLast()).toGamerCards()
         val pita = Participant.newInstance("pita", participantCard)
         val dealer = Dealer.newInstance(dealerCard)
         val blackJack = BlackJack(deque, dealer, Participants(listOf(pita)))
