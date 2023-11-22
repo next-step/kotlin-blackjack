@@ -1,6 +1,5 @@
 package blackjack.controller
 
-import blackjack.domain.BlackjackUtil
 import blackjack.domain.BlackjackUtil.INITIAL_CARD_COUNT
 import blackjack.domain.BlackjackUtil.isBust
 import blackjack.domain.Dealer
@@ -34,15 +33,13 @@ fun main() {
 
 private fun drawWhileUserWants(player: Player, dealer: Dealer) {
     var isPrinted = false
-    var minScore = BlackjackUtil.computeScore(player.getCards()).first
 
     // 점수 합계가 21을 넘지 않는다면 추가 draw 가능
-    while (!isBust(minScore) && askForDraw(player.name)) {
+    while (!isBust(player.hand.sumOf()) && askForDraw(player.name)) {
         isPrinted = true
 
         dealer.supplyCard(player)
         printUserCardInfo(player)
-        minScore = BlackjackUtil.computeScore(player.getCards()).first
     }
 
     // 추가 draw로 인한 현황 출력이 없었다면 한번 출력

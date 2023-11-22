@@ -5,6 +5,6 @@ class Dealer : Player("딜러") {
 
     fun supplyCard(player: Player) {
         val card = stack.draw() ?: throw IllegalStateException("카드가 부족합니다.")
-        player.addCard(card)
+        player.hand.add(card)
     }
 }
