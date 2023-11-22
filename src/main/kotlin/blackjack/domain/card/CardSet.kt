@@ -21,6 +21,10 @@ class CardSet(val cards: List<Card>) {
         return CardSet(newCards)
     }
 
+    fun sum(cardScorePolicy: CardScorePolicy): CardScore {
+        return CardScore(cards.map { cardScorePolicy.getScore(it) }.sumOf { it.score })
+    }
+
     companion object {
         private val EMPTY_CARD_SET = CardSet(emptyList())
 

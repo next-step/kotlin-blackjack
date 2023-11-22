@@ -52,4 +52,25 @@ class CardSetTest {
         val cardSet = CardSet.of(Card.of(CardKind.DIAMOND, CardNumber.EIGHT))
         cardSet.size shouldBe 1
     }
+
+    @Test
+    fun `카드 뭉치의 점수를 합산 할 수 있다`() {
+        val cardSet = CardSet.of(
+            Card.of(CardKind.DIAMOND, CardNumber.EIGHT),
+            Card.of(CardKind.DIAMOND, CardNumber.NINE)
+        )
+
+        val cardScorePolicy = object : CardScorePolicy {
+            override fun getScore(card: Card): CardScore {
+                return CardScore(
+                    when (card.number) {
+                        CardNumber.EIGHT -> 8
+                        CardNumber.NINE -> 9
+                        else -> 0
+                    }
+                )
+            }
+        }
+        cardSet.sum(cardScorePolicy) shouldBe CardScore(17)
+    }
 }
