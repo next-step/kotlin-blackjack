@@ -1,4 +1,4 @@
-package step2.blackjack.model.vo
+package step2.blackjack.model
 
 /**
  * 이름
