@@ -78,4 +78,17 @@ class CardSetTest : FunSpec({
 
         actual shouldBe CardScore(19)
     }
+
+    test("카드 뭉치의 합을 계산하는 여러가지 방법 중 가장 작은 값을 계산할 수 있다.") {
+        val cardSet = CardSet.of(
+            Card.of(CardKind.DIAMOND, CardNumber.ACE),
+            Card.of(CardKind.DIAMOND, CardNumber.EIGHT)
+        )
+
+        val cardScorePolicyGroup = CardScorePolicyGroup(listOf(CardScoreNormalAcePolicy, CardScoreSpecialAcePolicy))
+
+        val actual = cardSet.sumOfMin(cardScorePolicyGroup)
+
+        actual shouldBe CardScore(9)
+    }
 })

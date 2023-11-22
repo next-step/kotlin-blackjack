@@ -31,6 +31,10 @@ class CardSet(val cards: List<Card>) {
         return cardPolicyGroup.policies.map { sum(it) }.minBy { abs(targetNumber - it.score) }
     }
 
+    fun sumOfMin(cardPolicyGroup: CardScorePolicyGroup): CardScore {
+        return cardPolicyGroup.policies.map { sum(it) }.minBy { it.score }
+    }
+
     companion object {
         private val EMPTY_CARD_SET = CardSet(emptyList())
 
