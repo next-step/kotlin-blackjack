@@ -1,7 +1,7 @@
 package blackJack.domain
 
-import blackJack.domain.Answer.*
-import blackJack.domain.Status.*
+import blackJack.domain.Answer.n
+import blackJack.domain.Status.HIT
 import blackJack.error.ErrorMessage
 
 class Player(val name: String, val cards: Cards, private var status: Status) {
