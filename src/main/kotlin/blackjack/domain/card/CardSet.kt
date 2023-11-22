@@ -1,5 +1,7 @@
 package blackjack.domain.card
 
+import kotlin.math.abs
+
 class CardSet(val cards: List<Card>) {
     val size = cards.size
 
@@ -23,6 +25,10 @@ class CardSet(val cards: List<Card>) {
 
     fun sum(cardScorePolicy: CardScorePolicy): CardScore {
         return CardScore(cards.map { cardScorePolicy.getScore(it) }.sumOf { it.score })
+    }
+
+    fun sumOfBest(cardPolicyGroup: CardScorePolicyGroup, targetNumber: Int): CardScore {
+        return cardPolicyGroup.policies.map { sum(it) }.minBy { abs(targetNumber - it.score) }
     }
 
     companion object {

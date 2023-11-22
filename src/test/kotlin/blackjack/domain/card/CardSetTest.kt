@@ -65,4 +65,17 @@ class CardSetTest : FunSpec({
         }
         cardSet.sum(cardScorePolicy) shouldBe CardScore(17)
     }
+
+    test("카드 뭉치의 합을 계산하는 방법 중 21에 가장 가까울 때의 값을 계산할 수 있다.") {
+        val cardSet = CardSet.of(
+            Card.of(CardKind.DIAMOND, CardNumber.ACE),
+            Card.of(CardKind.DIAMOND, CardNumber.EIGHT)
+        )
+
+        val cardScorePolicyGroup = CardScorePolicyGroup(listOf(CardScoreNormalAcePolicy, CardScoreSpecialAcePolicy))
+
+        val actual = cardSet.sumOfBest(cardScorePolicyGroup, 21)
+
+        actual shouldBe CardScore(19)
+    }
 })
