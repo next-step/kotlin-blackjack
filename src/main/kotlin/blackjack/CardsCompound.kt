@@ -1,6 +1,6 @@
 package blackjack
 
-class CardsCompound private constructor(private val set: HashSet<Int>) {
+class CardsCompound private constructor(private val set: Set<Int>) {
     fun addNumber(number: CardNumber): CardsCompound {
         return CardsCompound(
             HashSet<Int>().apply {
@@ -23,7 +23,7 @@ class CardsCompound private constructor(private val set: HashSet<Int>) {
 
     companion object {
         const val BEST = 21
-        const val BUSTED = -1
+        const val BUSTED = 22
 
         fun get(): CardsCompound = CardsCompound(hashSetOf(0))
     }
