@@ -5,5 +5,9 @@ import blackjack.card.BlackJackCard
 class Player(
     val name: String,
 ) {
-    private val cars: MutableList<BlackJackCard> = mutableListOf()
+    val cards: MutableList<BlackJackCard> = mutableListOf()
+
+    fun drawCard(cards: List<BlackJackCard>) {
+        this.cards.addAll(cards)
+    }
 }
