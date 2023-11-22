@@ -71,4 +71,26 @@ class HandScoreTest : DescribeSpec({
             }
         }
     }
+
+    describe("isGreaterThan") {
+        val score = HandScore(16)
+        context("보다 작은 점수를 비교") {
+            val result = score.isGreaterThan(15)
+            it("참을 반환") {
+                result shouldBe true
+            }
+        }
+        context("보다 큰 점수를 비교") {
+            val result = score.isGreaterThan(20)
+            it("거짓을 반환") {
+                result shouldBe false
+            }
+        }
+        context("같은 점수를 비교") {
+            val result = score.isGreaterThan(16)
+            it("거짓을 반환") {
+                result shouldBe false
+            }
+        }
+    }
 })

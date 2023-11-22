@@ -112,8 +112,8 @@ class DealToPlayerTest : DescribeSpec({
             game.setDistributor(dealToPlayer)
             dealToPlayer(game)
 
-            it("게임 카드 배분 종료") {
-                game.dealCards.shouldBeTypeOf<DistributionEnd>()
+            it("딜러 카드 배분 차례") {
+                game.dealCards.shouldBeTypeOf<DealToDealer>()
             }
         }
     }

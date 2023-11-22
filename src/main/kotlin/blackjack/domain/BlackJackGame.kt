@@ -6,16 +6,16 @@ import blackjack.domain.player.Player
 import blackjack.domain.player.Players
 import blackjack.domain.result.GameResult
 import blackjack.domain.result.Result
-import blackjack.domain.stage.DealInitialCards
 import blackjack.domain.stage.CardDistributor
+import blackjack.domain.stage.DealInitialCards
 import blackjack.domain.stage.DistributionEnd
 
 class BlackJackGame(
     private val inputProcessor: InputProcessor,
     private val resultProcessor: ResultProcessor = ResultProcessor(),
-    val players: Players = Players.from(inputProcessor.playerNames())
-) {
+    val players: Players = Players.from(inputProcessor.playerNames()),
     val dealer: Dealer = Dealer()
+) {
     var dealCards: CardDistributor = DealInitialCards()
 
     val isPlayerInTurnScoreOverMax: Boolean

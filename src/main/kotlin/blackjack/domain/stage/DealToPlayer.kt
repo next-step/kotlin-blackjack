@@ -16,7 +16,7 @@ class DealToPlayer : CardDistributor {
                 }
 
                 PlayerAction.STAND -> when (game.isLastTurn) {
-                    true -> game.setDistributor(DistributionEnd())
+                    true -> game.setDistributor(DealToDealer())
                     false -> game.passTurnToNextPlayer()
                 }
             }

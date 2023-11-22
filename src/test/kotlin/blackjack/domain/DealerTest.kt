@@ -82,4 +82,47 @@ class DealerTest : DescribeSpec({
             }
         }
     }
+
+    describe("score") {
+        val dealer = Dealer(
+            hand = Hand(
+                mutableListOf(
+                    Card(Suit.HEART, Rank.ACE), Card(Suit.DIAMOND, Rank.QUEEN)
+                )
+            )
+        )
+        context("딜러가 가진 카드의 점수 조회") {
+            val result = dealer.score
+
+            it("계산된 점수 반환") {
+                result.value shouldBe 21
+            }
+        }
+    }
+
+    describe("isScoreGreaterThan") {
+        val score20cards = mutableListOf(Card(Suit.HEART, Rank.QUEEN), Card(Suit.DIAMOND, Rank.QUEEN))
+        val dealer = Dealer(hand = Hand(score20cards))
+        context("딜러보다 낮은 점수로 비교하면") {
+            val result = dealer.isScoreGreaterThan(16)
+
+            it("참을 반환") {
+                result shouldBe true
+            }
+        }
+        context("딜러보다 높은 점수로 비교하면") {
+            val result = dealer.isScoreGreaterThan(21)
+
+            it("거짓을 반환") {
+                result shouldBe false
+            }
+        }
+        context("딜러와 같은 점수로 비교하면") {
+            val result = dealer.isScoreGreaterThan(20)
+
+            it("거짓을 반환") {
+                result shouldBe false
+            }
+        }
+    }
 })

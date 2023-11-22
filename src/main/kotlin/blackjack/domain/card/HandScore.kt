@@ -4,9 +4,10 @@ package blackjack.domain.card
 value class HandScore(
     val value: Int,
 ) {
-
     val isOverMaxScore: Boolean
         get() = value > MAX_SCORE
+
+    fun isGreaterThan(score: Int) = value > score
 
     companion object {
         private const val MAX_SCORE = 21
