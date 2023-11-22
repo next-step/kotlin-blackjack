@@ -2,9 +2,10 @@ package blackjack.model
 
 import blackjack.model.pack.Pack
 
-data class Dealer(
-    val cards: Cards = Cards.emptyCards(),
-) {
+class Dealer(
+    val cards: Cards = Cards(),
+) : Playable {
+
     fun play(pack: Pack) {
         if (isDealerHit()) {
             cards.add(pack.pickCard())
@@ -20,6 +21,10 @@ data class Dealer(
     }
 
     companion object {
-        private const val DEALER_PICK_THRESHOLD = 16;
+        private const val DEALER_PICK_THRESHOLD = 16
+    }
+
+    override fun score(): Int {
+        return cards.totalScore()
     }
 }

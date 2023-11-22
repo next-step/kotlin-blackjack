@@ -2,10 +2,10 @@ package blackjack.model
 
 import blackjack.model.pack.Pack
 
-data class Player(
+class Player(
     val name: String,
     val cards: Cards = Cards.emptyCards(),
-) {
+) : Playable {
     fun deal(pack: Pack) {
         cards.add(pack.pickCard())
         cards.add(pack.pickCard())
@@ -13,5 +13,9 @@ data class Player(
 
     fun hit(pack: Pack) {
         cards.add(pack.pickCard())
+    }
+
+    override fun score(): Int {
+        return this.cards.totalScore()
     }
 }
