@@ -5,15 +5,18 @@ import blackjack.view.dto.FinalPlayerStateDto
 import blackjack.view.dto.PlayerDto
 
 object OutputView {
-    private const val INITIAL_DISTRIBUTION_MSG = "%s에게 2장씩 나누었습니다."
+    private const val INITIAL_DISTRIBUTION_MSG = "딜러와 %s에게 2장씩 나누었습니다."
+    private const val DEALER_STATE_MSG = "딜러: %s"
     private const val PLAYER_STATE_MSG = "%s카드: %s"
     private const val RESULT_MSG = "%s카드: %s - 결과: %d"
 
     fun initialDistributionResult(
         players: List<PlayerDto>,
+        dealer: PlayerDto,
     ) {
         println()
         println(INITIAL_DISTRIBUTION_MSG.format(extractPlayerNames(players)))
+        println(DEALER_STATE_MSG.format(extractCardsState(dealer.cards)))
         players.forEach {
             println(PLAYER_STATE_MSG.format(it.name, extractCardsState(it.cards)))
         }

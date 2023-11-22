@@ -9,8 +9,9 @@ import blackjack.view.output.OutputView
 
 object ViewResultProcessor {
     fun drawInitialDistribution(result: DealInitialCardResult) {
-        val model = result.players.allPlayers.map { PlayerDto(it.name.value, it.hand.cards) }
-        OutputView.initialDistributionResult(model)
+        val players = result.players.allPlayers.map { PlayerDto(it.name.value, it.hand.cards) }
+        val dealer = PlayerDto("딜러", result.dealer.hand.cards.subList(0, 1))
+        OutputView.initialDistributionResult(players, dealer)
     }
 
     fun drawPlayerState(result: DealToPlayerResult) {

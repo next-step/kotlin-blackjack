@@ -9,7 +9,7 @@ class DealInitialCards: CardDistributor {
         game.dealCardsToAllPlayers(INITIAL_DISTRIBUTION_COUNT)
         game.dealCardToDealer(INITIAL_DISTRIBUTION_COUNT)
         game.setDistributor(DealToPlayer())
-        return DealInitialCardResult(game.players)
+        return DealInitialCardResult(game.dealer, game.players)
     }
 
     companion object {
