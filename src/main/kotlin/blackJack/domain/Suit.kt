@@ -6,10 +6,4 @@ enum class Suit {
     DIAMOND,
     CLUB,
     ;
-
-    companion object {
-        fun randomizeSuit(): Suit {
-            return values().random()
-        }
-    }
 }

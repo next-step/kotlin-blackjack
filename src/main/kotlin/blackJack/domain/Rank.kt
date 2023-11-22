@@ -15,10 +15,4 @@ enum class Rank(val score: Int) {
     QUEEN(10),
     KING(10),
     ;
-
-    companion object {
-        fun randomizeRank(): Rank {
-            return values().random()
-        }
-    }
 }
