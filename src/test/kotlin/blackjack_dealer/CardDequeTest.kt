@@ -10,4 +10,18 @@ class CardDequeTest : StringSpec({
         val expected = 52
         cardDeque.cardDeque.count() shouldBe expected
     }
+
+    "CardGenerator 의 한장 생성 함수가 잘 작동 한다" {
+        val cardDeque = CardDeque.create()
+        val expected = 51
+        cardDeque.generateSingleCard()
+        cardDeque.cardDeque.count() shouldBe expected
+    }
+
+    "CardGenerator 의 두장 생성 함수가 잘 작동한다" {
+        val cardDeque = CardDeque.create()
+        val expected = 50
+        cardDeque.generateDoubleCard()
+        cardDeque.cardDeque.count() shouldBe expected
+    }
 })

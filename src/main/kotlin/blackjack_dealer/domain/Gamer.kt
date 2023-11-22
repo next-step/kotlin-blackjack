@@ -1,6 +1,5 @@
 package blackjack_dealer.domain
 
-import blackjack_dealer.CardGenerator
 import blackjack_dealer.entity.CardDeque
 import blackjack_dealer.entity.GamerCards
 import blackjack_dealer.entity.state.GamerCurrentState
@@ -19,7 +18,7 @@ abstract class Gamer(
     fun getCurrentGamerState(): GamerCurrentState = currentState
 
     open fun drawCard(cardDeque: CardDeque) {
-        val newCard = CardGenerator.generateSingleCard(cardDeque)
+        val newCard = cardDeque.generateSingleCard()
         gamerCards.add(newCard)
     }
 

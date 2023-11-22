@@ -23,4 +23,14 @@ object CardDeque {
             _cardDeque = ArrayDeque(cardDeque)
         }
     }
+
+    fun generateSingleCard(): Card {
+        return cardDeque.removeLast()
+    }
+
+    fun generateDoubleCard(): GamerCards {
+        val initialFirstCard = generateSingleCard()
+        val initialSecondCard = generateSingleCard()
+        return mutableListOf(initialFirstCard, initialSecondCard).toGamerCards()
+    }
 }
