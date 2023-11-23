@@ -11,13 +11,11 @@ class Player(val name: String, val cards: Cards = Cards(mutableListOf()), var st
 
     fun isHit(): Boolean = status == HIT
 
-    fun addCard(dealer: Dealer, answer: String) {
-        if (answer == "y") {
-            Status.validationAddCard(status)
-            val card = dealer.cardDeck.drawCard()
-            cards.addCard(card)
-            status = Status.calculateStatus(cards.calculateTotalScore(), cards.cardSize)
-        }
+    fun addCard(cardDeck: Cards) {
+        Status.validationAddCard(status)
+        val card = cardDeck.drawCard()
+        cards.addCard(card)
+        status = Status.calculateStatus(cards.calculateTotalScore(), cards.cardSize)
     }
 
     fun receiveInitialCards(initialCards: Cards) {

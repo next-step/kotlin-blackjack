@@ -1,9 +1,6 @@
 package blackJack.controller
 
-import blackJack.domain.CardDeck
-import blackJack.domain.Dealer
-import blackJack.domain.Player
-import blackJack.domain.Players
+import blackJack.domain.*
 import blackJack.dto.PlayerDto
 import blackJack.dto.PlayersDto
 import blackJack.view.InputView
@@ -24,14 +21,14 @@ fun main() {
     OutputView.printPlayerCards(playersDto)
 
     val finishGamePlayers = players.players.map { player ->
-        playGame(player, dealer)
+        playGame(player, dealer.cardDeck)
     }
 
     val playersResult = PlayersDto(Players(finishGamePlayers))
     OutputView.printResult(playersResult)
 }
 
-private fun playGame(player: Player, dealer: Dealer): Player {
+private fun playGame(player: Player, cardDeck: Cards): Player {
     var currentPlayer = player
 
     while (currentPlayer.isHit()) {
@@ -44,7 +41,7 @@ private fun playGame(player: Player, dealer: Dealer): Player {
             break
         }
 
-        currentPlayer.addCard(dealer, answer)
+        currentPlayer.addCard(cardDeck)
         OutputView.printPlayerCard(PlayerDto(currentPlayer))
     }
     return currentPlayer
