@@ -1,7 +1,7 @@
 package blackJack.domain
 
-enum class Rank(val score: Int) {
-    ACE(1),
+enum class Rank(val score: Int, val otherScore: Int = 0) {
+    ACE(1, 11),
     TWO(2),
     THREE(3),
     FOUR(4),

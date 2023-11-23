@@ -1,8 +1,7 @@
 package blackJack.domain
 
-import blackJack.domain.Rank.ACE
-import blackJack.domain.Rank.TWO
-import blackJack.domain.Suit.SPADE
+import blackJack.domain.Rank.*
+import blackJack.domain.Suit.*
 import blackJack.error.ErrorMessage
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
@@ -51,8 +50,26 @@ class CardsTest {
 
     @Test
     fun `카드 스코어의 합을 출력한다`() {
-        val cards = Cards(mutableListOf(Card(SPADE, ACE), Card(SPADE, TWO)))
-        assertEquals(3, cards.calculateTotalScore())
+        val cards = Cards(mutableListOf(Card(SPADE, THREE), Card(SPADE, TWO)))
+        assertEquals(5, cards.calculateTotalScore())
+    }
+
+    @Test
+    fun `카드 스코어의 합을 출력할 때 ACE가 1의 값을 가져야 하는 경우`() {
+        val aceOneCards = Cards(mutableListOf(Card(SPADE, ACE), Card(SPADE, QUEEN), Card(SPADE, KING)))
+        assertEquals(21, aceOneCards.calculateTotalScore())
+    }
+
+    @Test
+    fun `카드 스코어의 합을 출력할 때 ACE가 11의 값을 가져야 하는 경우`() {
+        val aceElevenCards = Cards(mutableListOf(Card(SPADE, ACE), Card(SPADE, TWO)))
+        assertEquals(13, aceElevenCards.calculateTotalScore())
+    }
+
+    @Test
+    fun `카드 스코어의 합을 출력할 때 여러 개의 ACE가 있는 경우`() {
+        val multipleAcesCards = Cards(mutableListOf(Card(SPADE, ACE), Card(HEART, ACE), Card(DIAMOND, ACE), Card(CLUB, ACE)))
+        assertEquals(14, multipleAcesCards.calculateTotalScore())
     }
 
     companion object {
