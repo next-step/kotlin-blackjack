@@ -5,7 +5,7 @@ import blackJack.error.ErrorMessage
 class Dealer(val cardDeck: Cards) {
 
     init {
-        require(cardDeck.cards.size == 52) { ErrorMessage.CARD_DECK_SIZE.message }
+        require(cardDeck.cardSize == 52) { ErrorMessage.CARD_DECK_SIZE.message }
     }
 
     fun initialCards(): Cards {
@@ -13,6 +13,6 @@ class Dealer(val cardDeck: Cards) {
     }
 
     companion object {
-        private const val INIT_CARD_COUNT = 2
+        const val INIT_CARD_COUNT = 2
     }
 }

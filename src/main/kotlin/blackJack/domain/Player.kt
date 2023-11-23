@@ -1,6 +1,5 @@
 package blackJack.domain
 
-import blackJack.domain.Answer.n
 import blackJack.domain.Status.HIT
 import blackJack.error.ErrorMessage
 
@@ -13,22 +12,13 @@ class Player(val name: String, val cards: Cards, private var status: Status) {
     fun isHit(): Boolean = status == HIT
 
     fun addCard(dealer: Dealer, answer: String) {
-        if (checkAnswer(answer)) return
-
-        Status.addCardValidation(status)
-        val card = dealer.cardDeck.drawCard()
-        cards.addCard(card)
-        status = Status.calculateStatus(cards.calculateTotalScore(), Answer.valueOf(answer))
+        if (answer == "y") {
+            Status.validationAddCard(status)
+            val card = dealer.cardDeck.drawCard()
+            cards.addCard(card)
+            status = Status.calculateStatus(cards.calculateTotalScore(), cards.cardSize)
+        }
     }
-
-    private fun checkAnswer(answer: String): Boolean {
-        Answer.validateAnswer(answer)
-        val answerValue = Answer.valueOf(answer)
-        return answerValue == n
-    }
-
-//    fun playGame(dealer: Dealer): Player {
-//    }
 
     companion object {
         fun splitNames(inputNames: String): List<String> {
@@ -38,7 +28,7 @@ class Player(val name: String, val cards: Cards, private var status: Status) {
         fun createPlayer(name: String, dealer: Dealer): Player {
             val cards = dealer.initialCards()
             val score = cards.calculateTotalScore()
-            return Player(name, cards, Status.calculateStatus(score))
+            return Player(name, cards, Status.calculateStatus(score, Dealer.INIT_CARD_COUNT))
         }
     }
 }

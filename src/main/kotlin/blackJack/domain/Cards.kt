@@ -12,6 +12,9 @@ class Cards(cards: MutableList<Card>) {
     val cards: List<Card>
         get() = _cards.toList()
 
+    val cardSize: Int
+        get() = _cards.size
+
     fun drawCard(): Card {
         require(_cards.isNotEmpty()) { ErrorMessage.EMPTY_CARDS.message }
         return _cards.removeAt(0)
