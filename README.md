@@ -41,5 +41,5 @@
 - 상속을 활용해 중복을 제거해본다.
 
 ## 질문 목록
-Participant 클래스의 gamerCards가 초기값이 없어서 lateinit var로 사용했는데 더 좋은 방법이 있을까?
-딜러가 처음에 21인 경우에는 어떻게 보는지? A,J가 나오면 딜러는 총합이 11로 보는지? 
+CardDeque 클래스에 removeCustomCard(), getRemainCardsCount(), containCardRemainCards() 와 같이 테스트에서만 사용하는
+함수들이 있는데, 이렇게 존재해도 괜찮은가? 좋은 방법이 있을지...
