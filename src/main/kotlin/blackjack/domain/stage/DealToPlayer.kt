@@ -9,11 +9,11 @@ class DealToPlayer : CardDistributor {
         table: GameTable,
         decideDistributor: (distributor: CardDistributor) -> Unit
     ): DealToPlayerResult {
-        when (table.playerInTurn.hitOrStand()) {
+        when (table.playerInTurnAction) {
             Action.HIT -> table.dealToPlayerInTurn(DISTRIBUTION_COUNT)
             Action.STAND -> when (table.isLastPlayerTurn) {
                 true -> decideDistributor(DealToDealer())
-                false -> table.passTurn()
+                false -> table.passPlayerTurn()
             }
         }
         return DealToPlayerResult(table.playerInTurn)

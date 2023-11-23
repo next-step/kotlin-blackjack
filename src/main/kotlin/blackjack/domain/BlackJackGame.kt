@@ -14,12 +14,11 @@ class BlackJackGame(
     private val resultProcessor: ResultProcessor = ResultProcessor(),
     val table: GameTable = GameTable(
         Dealer(),
-        Players.of(inputProcessor.playerNames()) { player ->
-            inputProcessor.playerAction(player)
-        }
+        Players.of(inputProcessor.playerNames()) { player -> inputProcessor.playerAction(player) }
     ),
 ) {
     var dealCards: CardDistributor = DealInitialCards()
+        private set
 
     fun run() {
         while (dealCards !is DistributionEnd) {

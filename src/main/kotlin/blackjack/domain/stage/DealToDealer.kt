@@ -9,10 +9,10 @@ class DealToDealer : CardDistributor {
         table: GameTable,
         decideDistributor: (distributor: CardDistributor) -> Unit
     ): DealToDealerResult {
-        val action = table.dealer.hitOrStand()
-        if (action == Action.HIT) table.dealer.dealToSelf(COUNT_TO_DEAL)
+        val isHit = table.dealerAction == Action.HIT
+        if (isHit) table.dealToDealer(COUNT_TO_DEAL)
         decideDistributor(DistributionEnd())
-        return DealToDealerResult(action == Action.HIT)
+        return DealToDealerResult(isHit)
     }
 
     companion object {

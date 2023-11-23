@@ -13,6 +13,12 @@ data class GameTable(
     val playerInTurn: Player
         get() = players.inTurn
 
+    val playerInTurnAction: Action
+        get() = playerInTurn.hitOrStand()
+
+    val dealerAction: Action
+        get() = dealer.hitOrStand()
+
     fun dealToAll(count: Int) {
         dealer.dealCards(count, *players.all.toTypedArray())
         dealer.dealToSelf(count)
@@ -26,7 +32,7 @@ data class GameTable(
         dealer.dealToSelf(count)
     }
 
-    fun passTurn() {
+    fun passPlayerTurn() {
         players.changePlayer()
     }
 }

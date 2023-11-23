@@ -39,7 +39,8 @@ class PlayersTest : DescribeSpec({
     describe("현재 플레이어가 최대 점수를 넘었는지 여부 반환") {
         context("현재 플레이어가 최대 점수를 넘었을 경우") {
             val playerOverMaxScore = Player(
-                PlayerName("kim"), { Action.HIT }, Hand(
+                PlayerName("kim"), { Action.HIT },
+                Hand(
                     mutableListOf(
                         Card(Suit.DIAMOND, Rank.THREE), Card(Suit.HEART, Rank.TEN), Card(Suit.HEART, Rank.TEN)
                     )
@@ -53,7 +54,8 @@ class PlayersTest : DescribeSpec({
 
         context("현재 플레이어가 최대 점수를 넘지 않았을 경우") {
             val playerUnderMaxScore = Player(
-                PlayerName("kim"), { Action.HIT }, Hand(
+                PlayerName("kim"), { Action.HIT },
+                Hand(
                     mutableListOf(
                         Card(Suit.DIAMOND, Rank.ACE), Card(Suit.HEART, Rank.TEN)
                     )

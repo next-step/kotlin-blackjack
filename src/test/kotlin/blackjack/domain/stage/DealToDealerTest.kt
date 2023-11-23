@@ -19,10 +19,6 @@ import io.kotest.matchers.types.shouldBeTypeOf
 
 class DealToDealerTest : DescribeSpec({
     describe("DealToDealer") {
-        val under16ScoreCards = mutableListOf(
-            Card(Suit.SPADE, Rank.TWO),
-            Card(Suit.SPADE, Rank.THREE),
-        )
         val players = Players(
             listOf(
                 Player(PlayerName("kim"), { Action.HIT }, Hand()),
@@ -30,6 +26,10 @@ class DealToDealerTest : DescribeSpec({
             )
         )
         context("딜러가 HIT을 하면") {
+            val under16ScoreCards = mutableListOf(
+                Card(Suit.SPADE, Rank.TWO),
+                Card(Suit.SPADE, Rank.THREE),
+            )
             val dealer = Dealer(dealerPlayer = DealerPlayer(Hand(under16ScoreCards)))
             val game = BlackJackGame(InputProcessorMock(), table = GameTable(dealer, players))
             val dealToDealer = DealToDealer()
@@ -52,11 +52,11 @@ class DealToDealerTest : DescribeSpec({
         }
 
         context("딜러가 STAND를 하면") {
-            val under16ScoreCards = mutableListOf(
+            val over16ScoreCards = mutableListOf(
                 Card(Suit.SPADE, Rank.QUEEN),
                 Card(Suit.SPADE, Rank.QUEEN),
             )
-            val dealer = Dealer(dealerPlayer = DealerPlayer(Hand(under16ScoreCards)))
+            val dealer = Dealer(dealerPlayer = DealerPlayer(Hand(over16ScoreCards)))
             val game = BlackJackGame(InputProcessorMock(), table = GameTable(dealer, players))
             val dealToDealer = DealToDealer()
             game.setDistributor(dealToDealer)

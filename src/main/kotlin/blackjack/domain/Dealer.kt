@@ -20,7 +20,7 @@ class Dealer(
         }
     }
 
-    fun dealCards(count: Int, player: Player) {
+    private fun dealCards(count: Int, player: Player) {
         repeat(count) {
             player.addCard(drawCard())
         }

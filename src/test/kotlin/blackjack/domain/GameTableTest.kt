@@ -5,6 +5,7 @@ import blackjack.domain.card.Deck
 import blackjack.domain.card.Hand
 import blackjack.domain.card.Rank
 import blackjack.domain.card.Suit
+import blackjack.domain.player.DealerPlayer
 import blackjack.domain.player.Player
 import blackjack.domain.player.PlayerName
 import blackjack.domain.player.Players
@@ -60,7 +61,7 @@ class GameTableTest : DescribeSpec({
         }
     }
 
-    describe("passTurn") {
+    describe("passPlayerTurn") {
         val players = listOf(
             Player(PlayerName("kim"), { Action.HIT }, Hand()),
             Player(PlayerName("lee"), { Action.HIT }, Hand()),
@@ -70,7 +71,7 @@ class GameTableTest : DescribeSpec({
         context("플레이어 1이 차례인 경우") {
             players.inTurn shouldBe players.all.first()
 
-            table.passTurn()
+            table.passPlayerTurn()
 
             it("플레이어 2에게 차례가 넘어감") {
                 players.inTurn shouldBe players.all.last()
@@ -82,7 +83,7 @@ class GameTableTest : DescribeSpec({
 
             it("턴이 넘어갈 수 없다") {
                 shouldThrowExactly<IllegalArgumentException> {
-                    table.passTurn()
+                    table.passPlayerTurn()
                 }
             }
         }
@@ -134,7 +135,7 @@ class GameTableTest : DescribeSpec({
             }
         }
         context("마지막 플레이어 턴") {
-            table.passTurn()
+            table.passPlayerTurn()
             table.players.inTurn shouldBe players.last()
 
             it("true 반환") {
@@ -157,11 +158,81 @@ class GameTableTest : DescribeSpec({
             }
         }
         context("마지막 플레이어 턴") {
-            table.passTurn()
+            table.passPlayerTurn()
             table.players.inTurn shouldBe players.last()
 
             it("두 번째 플레이어 반환") {
                 table.playerInTurn shouldBe players.last()
+            }
+        }
+    }
+
+    describe("playerInTurnAction") {
+        context("이번 턴의 플레이어가 HIT를 하면") {
+            val players = listOf(
+                Player(PlayerName("kim"), { Action.HIT }, Hand()),
+                Player(PlayerName("lee"), { Action.HIT }, Hand()),
+            )
+            val table = GameTable(Dealer(), Players(players))
+            table.playerInTurn shouldBe players.first()
+
+            it("HIT 반환") {
+                val result = table.playerInTurnAction
+
+                result shouldBe Action.HIT
+            }
+        }
+
+        context("이번 턴의 플레이어가 STAND를 하면") {
+            val players = listOf(
+                Player(PlayerName("kim"), { Action.STAND }, Hand()),
+                Player(PlayerName("lee"), { Action.HIT }, Hand()),
+            )
+            val table = GameTable(Dealer(), Players(players))
+            table.playerInTurn shouldBe players.first()
+
+            it("STAND 반환") {
+                val result = table.playerInTurnAction
+
+                result shouldBe Action.STAND
+            }
+        }
+    }
+
+    describe("dealerAction") {
+        val players = listOf(
+            Player(PlayerName("kim"), { Action.HIT }, Hand()),
+            Player(PlayerName("lee"), { Action.HIT }, Hand()),
+        )
+        context("딜러가 HIT를 하면") {
+            val under16ScoreCards = mutableListOf(
+                Card(Suit.SPADE, Rank.TWO),
+                Card(Suit.SPADE, Rank.THREE),
+            )
+            val dealer = Dealer(dealerPlayer = DealerPlayer(Hand(under16ScoreCards)))
+            val table = GameTable(dealer, Players(players))
+            dealer.hitOrStand() shouldBe Action.HIT
+
+            it("HIT 반환") {
+                val result = table.dealerAction
+
+                result shouldBe Action.HIT
+            }
+        }
+
+        context("딜러가 STAND를 하면") {
+            val over16ScoreCards = mutableListOf(
+                Card(Suit.SPADE, Rank.QUEEN),
+                Card(Suit.SPADE, Rank.QUEEN),
+            )
+            val dealer = Dealer(dealerPlayer = DealerPlayer(Hand(over16ScoreCards)))
+            val table = GameTable(dealer, Players(players))
+            dealer.hitOrStand() shouldBe Action.STAND
+
+            it("STAND 반환") {
+                val result = table.dealerAction
+
+                result shouldBe Action.STAND
             }
         }
     }
