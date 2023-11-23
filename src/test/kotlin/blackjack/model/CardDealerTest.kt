@@ -14,7 +14,7 @@ internal class CardDealerTest : BehaviorSpec({
                 cards.size shouldBe 2
             }
             Then("카드덱은 사이즈가 2 줄어든다") {
-                cards.size shouldBe initSize - 2
+                cardDeck.cards.size shouldBe initSize - 2
             }
         }
     }

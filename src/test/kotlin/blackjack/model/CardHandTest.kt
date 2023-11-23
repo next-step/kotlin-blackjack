@@ -4,13 +4,11 @@ import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 
 internal class CardHandTest : BehaviorSpec({
-    Given("번호가 K와 1을 가지고 있는 카드 핸드") {
-        val cardDeck = CardDeck()
-        val cardDealer = CardDealer(cardDeck)
+    Given("번호가 K와 2을 가지고 있는 카드 핸드") {
         val cardHand = CardHand(
             listOf(
-                Card(CardValue.from("K"), CardSuit.SPADES),
-                Card(CardValue.from("2"), CardSuit.SPADES)
+                Card(CardValue.K, CardSuit.SPADES),
+                Card(CardValue.TWO, CardSuit.SPADES)
             )
         )
         When("점수를 계산") {
@@ -19,10 +17,47 @@ internal class CardHandTest : BehaviorSpec({
                 score shouldBe 12
             }
         }
-        When("카드를 추가할 때") {
-            cardHand.addCard(cardDealer.getCard())
-            Then("카드가 추가된다") {
-                cardDeck.cards.size shouldBe 51
+    }
+    Given("번호가 A와 2을 가지고 있는 카드 핸드") {
+        val cardHand = CardHand(
+            listOf(
+                Card(CardValue.A, CardSuit.SPADES),
+                Card(CardValue.TWO, CardSuit.SPADES)
+            )
+        )
+        When("점수를 계산") {
+            val score = cardHand.getTotalScore()
+            Then("13") {
+                score shouldBe 13
+            }
+        }
+    }
+    Given("번호가 A와 K을 가지고 있는 카드 핸드(소프트 케이스)") {
+        val cardHand = CardHand(
+            listOf(
+                Card(CardValue.A, CardSuit.SPADES),
+                Card(CardValue.K, CardSuit.SPADES)
+            )
+        )
+        When("점수를 계산") {
+            val score = cardHand.getTotalScore()
+            Then("21") {
+                score shouldBe 21
+            }
+        }
+    }
+    Given("번호가 A와 K와 2을 가지고 있는 카드 핸드(소프트 케이스)") {
+        val cardHand = CardHand(
+            listOf(
+                Card(CardValue.A, CardSuit.SPADES),
+                Card(CardValue.K, CardSuit.SPADES),
+                Card(CardValue.TWO, CardSuit.SPADES),
+            )
+        )
+        When("점수를 계산") {
+            val score = cardHand.getTotalScore()
+            Then("13") {
+                score shouldBe 13
             }
         }
     }

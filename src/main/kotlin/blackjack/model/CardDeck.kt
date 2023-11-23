@@ -11,9 +11,9 @@ class CardDeck {
     }
 
     companion object {
-        val INIT_CARDS = CardValue.VALUES.map { value ->
+        val INIT_CARDS = CardValue.values().map { value ->
             CardSuit.values().map { suit ->
-                Card(CardValue.from(value), suit)
+                Card(value, suit)
             }
         }.flatten()
     }

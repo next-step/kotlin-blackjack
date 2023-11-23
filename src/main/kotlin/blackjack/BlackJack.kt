@@ -8,11 +8,8 @@ import blackjack.view.OutputView
 class BlackJack {
     fun start() {
         val playerNames = InputView.getPlayerName()
-        val cardDeck = CardDeck();
-        val cardDealer = CardDealer(cardDeck);
-
-        val players =
-            Players(playerNames.map { Player(it, CardHand(cardDealer.getCards(CardDealer.FIRST_CARD_COUNT))) })
+        val cardDealer = CardDealer(CardDeck());
+        val players = Players(playerNames.toPlayerList(cardDealer))
 
         OutputView.renderPlayers(players.playerList)
 
@@ -28,14 +25,12 @@ class BlackJack {
     }
 
     private fun playGameWithEachPlayer(player: Player, cardDealer: CardDealer) {
-        while (getMoreCardOrNot(player.name) && player.cardHand.getTotalScore() < CardHand.BLACKJACK) {
+        while (player.cardHand.isSameOrSmallerThanBlackJack() && player.moreCardOrNot(InputView::askGetCardMore)) {
             player.cardHand.addCard(cardDealer.getCard())
             OutputView.renderPlayer(player, ::println)
         }
     }
 
-    private fun getMoreCardOrNot(name: String) = when (InputView.askGetCardMore(name)) {
-        PlayAnswer.Y -> true
-        PlayAnswer.N -> false
-    }
+    private fun List<String>.toPlayerList(cardDealer: CardDealer) =
+        this.map { Player(it, CardHand(cardDealer.getCards())) }
 }
