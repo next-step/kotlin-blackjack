@@ -24,6 +24,8 @@ class Blackjack(
 
         val players = createPlayers(playerNames)
 
+        resultView.printInitialState(players)
+
         players.forEach { player ->
             player.play()
         }
@@ -32,15 +34,7 @@ class Blackjack(
     }
 
     private fun createPlayers(playerNames: List<String>): List<Player> {
-        val players = playerNames.map { Player(it, Hand(HandCards(mutableListOf(deck.draw(), deck.draw())))) }
-
-        println("${players.joinToString(",") { it.name }} 에게 2 장의 카드 나누었습니다.")
-
-        players.forEach { player ->
-            println("${player.name}: ${player.hand.handCards}")
-        }
-
-        return players
+        return playerNames.map { Player(it, Hand(HandCards(mutableListOf(deck.draw(), deck.draw())))) }
     }
 
     private fun Player.play() {
