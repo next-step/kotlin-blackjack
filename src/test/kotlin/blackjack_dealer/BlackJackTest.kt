@@ -1,7 +1,6 @@
 package blackjack_dealer
 
 import blackjack_dealer.domain.Dealer
-import blackjack_dealer.domain.Participant
 import blackjack_dealer.entity.BlackJackGamer
 import blackjack_dealer.entity.CardDeque
 import blackjack_dealer.entity.Participants
