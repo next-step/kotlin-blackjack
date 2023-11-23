@@ -3,7 +3,7 @@ package blackjack.domain
 private const val ACE_LOW_VALUE = 1
 private const val ACE_HIGH_VALUE = 11
 
-interface Participant {
+sealed interface Participant {
     val name: Nickname
     val cards: List<Card>
 

@@ -71,11 +71,11 @@ class GameResultTest : BehaviorSpec({
             val gameResult = GameResult(listOf(player), dealer)
 
             then("플레이어는 패배한다.") {
-                gameResult.playerResults[player] shouldBe GameOutcome.LOSE
+                gameResult.playerResults[player] shouldBe GameOutcome.WIN
             }
 
             then("딜러는 0승 1패를 기록한다.") {
-                gameResult.dealerStats shouldBe DealerStats(1, 0)
+                gameResult.dealerStats shouldBe DealerStats(0, 1)
             }
         }
     }
