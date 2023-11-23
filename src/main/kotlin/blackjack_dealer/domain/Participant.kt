@@ -29,8 +29,22 @@ data class Participant(
     }
 
     fun createParticipantResult(dealer: Dealer): ParticipantResult {
-        val participantState = ParticipantResultState.of(dealer, this@Participant)
+        val participantState = createParticipantResultState(dealer)
         return ParticipantResult(name = getGamerName(), resultState = participantState)
+    }
+
+    private fun createParticipantResultState(dealer: Dealer): ParticipantResultState {
+        val dealerScore = dealer.getCurrentCards().getCurrentScore()
+        val participantScore = getCurrentCards().getCurrentScore()
+
+        if (dealerScore > BLACK_JACK) return ParticipantResultState.WIN
+        if (getCurrentGamerState() == GamerCurrentState.BUST) return ParticipantResultState.LOSE
+
+        return when {
+            dealerScore - participantScore > 0 -> ParticipantResultState.LOSE
+            dealerScore - participantScore < 0 -> ParticipantResultState.WIN
+            else -> ParticipantResultState.DRAW
+        }
     }
 
     companion object {
@@ -46,6 +60,7 @@ data class Participant(
                 currentState = initialState
             }
         }
+
         private fun findMatchedInitialState(initialCards: GamerCards): GamerCurrentState {
             val currentScore = initialCards.getCurrentScore()
             return when (currentScore) {
