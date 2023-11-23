@@ -11,6 +11,10 @@ class Player(
         cards.add(pack.pickCard())
     }
 
+    override fun playing(playingStrategy: PlayingStrategy, pack: Pack): PlayableReaction {
+        TODO("Not yet implemented")
+    }
+
     fun hit(pack: Pack) {
         cards.add(pack.pickCard())
     }
