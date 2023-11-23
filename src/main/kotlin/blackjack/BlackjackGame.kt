@@ -20,16 +20,13 @@ class BlackjackGame {
 
     fun start() {
         repeat(Cards.INITIAL_DEAL_SIZE) {
-            players.values.forEach {
-                it.getCard(dealer.dealCard())
-            }
+            val cards = (1..players.size).map { dealer.dealCard() }
+            players.receiveCards(cards)
         }
         OutputView.printCardDealingHeader(nicknames.joinToString(", "), Cards.INITIAL_DEAL_SIZE)
-        players.values.forEach {
-            OutputView.printCardDealing(
-                it.name,
-                it.cards.value.joinToString(", ") { card -> card.toString() }
-            )
+
+        players.getPlayerNamesAndCards().forEach { (nickname, cards) ->
+            OutputView.printCardDealing(nickname, cards.joinToString(", ") { card -> card.toString() })
         }
     }
 
