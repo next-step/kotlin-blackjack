@@ -16,13 +16,10 @@ object BlackjackController {
         BlackjackOutputView.printInitialCards(players)
 
         players.forEach {
-            if (it.isFinished()) return@forEach
-
-            do {
-                val isHit = BlackjackInputView.readCardReceiveInput(it.name)
-                drawIfHit(it, deck, isHit)
+            while (!it.isFinished() && it.isHit()) {
+                it.receiveCard(deck.draw())
                 BlackjackOutputView.printCards(it)
-            } while (isHit && !it.isFinished())
+            }
         }
 
         BlackjackOutputView.printResult(players)
@@ -35,9 +32,7 @@ object BlackjackController {
         }
     }
 
-    private fun drawIfHit(player: Player, deck: Deck, isHit: Boolean) {
-        if (isHit) {
-            player.receiveCard(deck.draw())
-        }
+    private fun Player.isHit(): Boolean {
+        return BlackjackInputView.readCardReceiveInput(this.name)
     }
 }
