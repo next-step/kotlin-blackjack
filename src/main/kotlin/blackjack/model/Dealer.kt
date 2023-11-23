@@ -23,7 +23,6 @@ class Dealer(
         return cards.count()
     }
 
-
     fun playing(pack: Pack): Boolean {
         if (isDealerHit()) {
             cards.add(pack.pickCard())

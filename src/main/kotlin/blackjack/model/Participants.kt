@@ -8,8 +8,8 @@ class Participants(
 ) {
 
     fun dealing(pack: Pack) {
-        players.deal(pack)
-        dealer.playing(pack)
+        players.dealing(pack)
+        dealer.dealing(pack)
     }
 
     private fun isGameOver(): Boolean {

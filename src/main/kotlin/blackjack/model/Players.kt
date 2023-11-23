@@ -7,8 +7,8 @@ class Players(
 ) {
     constructor(vararg players: Player) : this(players.toSet())
 
-    fun deal(pack: Pack) {
-        values.forEach { it.deal(pack) }
+    fun dealing(pack: Pack) {
+        values.forEach { it.dealing(pack) }
     }
 
     fun isGameOver(): Boolean {

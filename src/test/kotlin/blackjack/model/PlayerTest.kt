@@ -9,7 +9,7 @@ class PlayerTest : StringSpec({
     "플레이어는 dealing 시 2장의 카드를 받을 수 있다" {
         shouldNotThrow<IllegalArgumentException> {
             val player = Player("구글")
-            player.deal(ShuffledPack)
+            player.dealing(ShuffledPack)
             player.cards.count() shouldBe 2
         }
     }
