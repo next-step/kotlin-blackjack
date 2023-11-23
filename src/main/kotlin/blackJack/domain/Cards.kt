@@ -26,8 +26,9 @@ class Cards(val cards: MutableList<Card>) {
         return sumWithoutAces + aceScore
     }
 
-    private fun isExtraAceScore(aceCount: Int, sumWithoutAces: Int, additionalAceScore: Int) =
-        aceCount > 0 && sumWithoutAces + additionalAceScore <= MAX_SCORE
+    private fun isExtraAceScore(aceCount: Int, sumWithoutAces: Int, additionalAceScore: Int): Boolean {
+        return aceCount > 0 && sumWithoutAces + additionalAceScore <= MAX_SCORE
+    }
 
     fun addCard(card: Card) = cards.add(card)
 
