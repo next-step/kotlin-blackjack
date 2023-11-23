@@ -15,6 +15,14 @@ enum class CardValue(private val score: Int) {
     K(10),
     A(1);
 
+    fun getName() = when(this){
+        J -> "J"
+        Q -> "Q"
+        K -> "K"
+        A -> "A"
+        else -> score.toString()
+    }
+
     fun getScore(total: Int = 0) = when (this) {
         A -> getAceScore(total)
         else -> score
