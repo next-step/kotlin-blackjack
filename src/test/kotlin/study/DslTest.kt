@@ -1,7 +1,6 @@
 package study
 
 import io.kotest.matchers.shouldBe
-import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 import org.junit.jupiter.params.provider.ValueSource
@@ -44,26 +43,3 @@ class DslTest {
         person.company shouldBe company
     }
 }
-
-fun introduce(block: PersonBuilder.() -> Unit): Person {
-    // also, apply, run, let, with
-    return PersonBuilder().apply(block).build()
-}
-
-class PersonBuilder() {
-    private var name: String = ""
-    private var company: String = ""
-    fun name(value: String) {
-        name = value
-    }
-
-    fun company(value: String) {
-        company = value
-    }
-
-    fun build(): Person {
-        return Person(name, company)
-    }
-}
-
-data class Person(val name: String, val company: String)
