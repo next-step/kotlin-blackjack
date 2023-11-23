@@ -26,10 +26,10 @@ class BlackJackGameTest : FunSpec({
         val playerGroup = playerGroup {
             players(player { name("jack") }, player { name("john") })
         }
-        val blackJackGame = BlackJackGame(playerGroup, mockDealer)
+        val blackJackGame = BlackJackGame(mockDealer)
 
-        val actual = blackJackGame.dealCardToEveryOne()
-        actual.playerGroup[0].cardSet.size shouldBe 2
+        val actual = blackJackGame.dealCardToEveryOne(playerGroup)
+        actual[0].cardSet.size shouldBe 2
     }
 
     test("카드 합이 21이 초과하는 인원에게 카드를 지급할 수 없다.") {
@@ -43,10 +43,10 @@ class BlackJackGameTest : FunSpec({
                 )
             })
         }
-        val blackJackGame = BlackJackGame(playerGroup, mockDealer)
+        val blackJackGame = BlackJackGame(mockDealer)
 
-        val actual = blackJackGame.dealCardTo(playerGroup[0])
-        actual.playerGroup[0].cardSet.size shouldBe 3
+        val actual = blackJackGame.dealCardTo(playerGroup, playerGroup[0])
+        actual[0].cardSet.size shouldBe 3
     }
 
     test("카드 합이 21 이하의 인원에게 카드를 지급한다.") {
@@ -56,10 +56,10 @@ class BlackJackGameTest : FunSpec({
                 cardSet(Card(CardKind.CLOVER, CardNumber.QUEEN), Card(CardKind.HEART, CardNumber.KING))
             })
         }
-        val blackJackGame = BlackJackGame(playerGroup, mockDealer)
+        val blackJackGame = BlackJackGame(mockDealer)
 
-        val actual = blackJackGame.dealCardTo(playerGroup[0])
-        actual.playerGroup[0].cardSet.size shouldBe 3
+        val actual = blackJackGame.dealCardTo(playerGroup, playerGroup[0])
+        actual[0].cardSet.size shouldBe 3
     }
 
     test("블랙잭 게임이 끝나면 누가 어떤 카드를 받았었는지, 점수가 얼마인지 계산한다.") {
@@ -75,7 +75,7 @@ class BlackJackGameTest : FunSpec({
                 },
             )
         }
-        val blackJackGameResult = BlackJackGame(playerGroup).end()
+        val blackJackGameResult = BlackJackGame().end(playerGroup)
         blackJackGameResult shouldBe BlackJackGameResult(
             listOf(
                 PlayerScore(playerGroup[0], CardScore(16)),

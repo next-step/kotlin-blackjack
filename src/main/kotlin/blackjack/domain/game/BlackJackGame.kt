@@ -8,7 +8,6 @@ import blackjack.domain.player.PlayerGroup
 import blackjack.domain.player.PlayerScore
 
 class BlackJackGame(
-    val playerGroup: PlayerGroup,
     private val cardDealer: CardDealer = RandomCardDealer(),
     private val cardScorePolicyGroup: CardScorePolicyGroup = CardScorePolicyGroup(
         listOf(
@@ -17,17 +16,16 @@ class BlackJackGame(
         )
     )
 ) {
-    fun dealCardToEveryOne(): BlackJackGame {
-        val playerGroup = PlayerGroup(
+    fun dealCardToEveryOne(playerGroup: PlayerGroup): PlayerGroup {
+        return PlayerGroup(
             playerGroup.players.map {
                 it.receiveCard(cardDealer.selectCard(START_CARD_COUNT))
             }
         )
-        return BlackJackGame(playerGroup, cardDealer)
     }
 
-    fun dealCardTo(player: Player): BlackJackGame {
-        val c = PlayerGroup(
+    fun dealCardTo(playerGroup: PlayerGroup, player: Player): PlayerGroup {
+        return PlayerGroup(
             playerGroup.players.map {
                 if (it == player && !it.cardSet.isFull(cardScorePolicyGroup)) {
                     it.receiveCard(cardDealer.selectCard(DEFAULT_CARD_COUNT))
@@ -36,10 +34,9 @@ class BlackJackGame(
                 }
             }
         )
-        return BlackJackGame(c, cardDealer)
     }
 
-    fun end(): BlackJackGameResult {
+    fun end(playerGroup: PlayerGroup): BlackJackGameResult {
         return BlackJackGameResult(playerGroup.players.map {
             PlayerScore(
                 it,
