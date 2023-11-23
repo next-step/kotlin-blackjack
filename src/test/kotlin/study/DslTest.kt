@@ -57,4 +57,16 @@ class DslTest {
         }
         person.skills.invoke() shouldHaveSize 3
     }
+
+    @Test
+    fun language() {
+        val person = introduce {
+            languages {
+                "Korean" level 5
+                "English" level 3
+            }
+        }
+
+        person.languages.invoke() shouldHaveSize 3
+    }
 }
