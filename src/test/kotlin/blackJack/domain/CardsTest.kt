@@ -20,14 +20,6 @@ class CardsTest {
     }
 
     @Test
-    fun `cards 는 비어 있을 수 없다`() {
-        val exception = assertThrows<IllegalArgumentException> {
-            Cards(mutableListOf())
-        }
-        assertEquals(ErrorMessage.EMPTY_CARDS.message, exception.message)
-    }
-
-    @Test
     fun `52장의 카드가 모두 다른 카드가 뽑힌다`() {
         val drawnCards = mutableSetOf<Card>()
 

@@ -3,9 +3,6 @@ package blackJack.domain
 import blackJack.error.ErrorMessage
 
 class Cards(cards: MutableList<Card>) {
-    init {
-        require(cards.isNotEmpty()) { ErrorMessage.EMPTY_CARDS.message }
-    }
 
     private val _cards: MutableList<Card> = cards.toMutableList()
 

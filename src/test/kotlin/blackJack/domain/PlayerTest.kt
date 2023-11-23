@@ -1,8 +1,10 @@
 package blackJack.domain
 
+import blackJack.domain.Rank.*
 import blackJack.domain.Status.BLACKJACK
 import blackJack.domain.Status.BUST
 import blackJack.domain.Status.HIT
+import blackJack.domain.Suit.*
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
@@ -28,11 +30,10 @@ class PlayerTest {
     }
 
     @Test
-    fun `Player 이름을 입력하면 정상적으로 카드를 가져 온다`() {
+    fun `이름을 입력하면 정상적으로 Player 가 만들어 진다`() {
         val name = "pobi"
-        val player = Player.createPlayer(name, dealer)
+        val player = Player.createPlayer(name)
         assertThat(player.name).isEqualTo(name)
-        assertThat(player.cards.cards.size).isEqualTo(2)
     }
 
     @Test
@@ -63,5 +64,16 @@ class PlayerTest {
         assertThrows<IllegalArgumentException> {
             player.addCard(dealer, "y")
         }
+    }
+
+    @Test
+    fun `player 에게 초기 카드를 전달하면 정상적으로 player 손에 들어가야 한다`() {
+        val player = Player("pobi")
+        val initialCards = Cards(mutableListOf(Card(DIAMOND, KING), Card(DIAMOND, QUEEN)))
+
+        player.receiveInitialCards(initialCards)
+
+        assertEquals(2, player.cards.cardSize)
+        assertEquals(HIT, player.status)
     }
 }

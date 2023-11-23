@@ -3,7 +3,7 @@ package blackJack.domain
 import blackJack.domain.Status.HIT
 import blackJack.error.ErrorMessage
 
-class Player(val name: String, val cards: Cards, private var status: Status) {
+class Player(val name: String, val cards: Cards = Cards(mutableListOf()), var status: Status = HIT) {
 
     init {
         require(name.isNotEmpty()) { ErrorMessage.EMPTY_NAME.message }
@@ -20,15 +20,19 @@ class Player(val name: String, val cards: Cards, private var status: Status) {
         }
     }
 
+    fun receiveInitialCards(initialCards: Cards) {
+        cards.addCard(initialCards.drawCard())
+        cards.addCard(initialCards.drawCard())
+        status = Status.calculateStatus(cards.calculateTotalScore(), cards.cardSize)
+    }
+
     companion object {
         fun splitNames(inputNames: String): List<String> {
             return inputNames.split(",").map { it.trim() }.toList()
         }
 
-        fun createPlayer(name: String, dealer: Dealer): Player {
-            val cards = dealer.initialCards()
-            val score = cards.calculateTotalScore()
-            return Player(name, cards, Status.calculateStatus(score, Dealer.INIT_CARD_COUNT))
+        fun createPlayer(name: String): Player {
+            return Player(name)
         }
     }
 }
