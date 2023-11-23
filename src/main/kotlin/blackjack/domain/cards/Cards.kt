@@ -17,13 +17,11 @@ abstract class Cards(private val _cardList: MutableList<Card>) {
     companion object {
         @JvmStatic
         protected fun fullCardList(): List<Card> {
-            val mutableList = mutableListOf<Card>()
-            Suit.values().forEach { suit ->
-                Character.values().forEach { character ->
-                    mutableList.add(Card(suit, character))
+            return Suit.values().flatMap { suit ->
+                Character.values().map { character ->
+                    Card(suit, character)
                 }
             }
-            return mutableList.toList()
         }
     }
 }
