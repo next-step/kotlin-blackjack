@@ -3,29 +3,29 @@ package blackjack.domain.player
 import blackjack.domain.Action
 
 data class Players(
-    val allPlayers: List<Player>,
+    val all: List<Player>,
 ) {
 
     init {
-        require(allPlayers.size == 2) {
+        require(all.size == 2) {
             "플레이어는 두 명이어야 합니다"
         }
     }
 
-    var playerInTurn: Player = allPlayers.first()
+    var inTurn: Player = all.first()
         private set
 
     val isPlayerInTurnOverMaxScore: Boolean
-        get() = playerInTurn.isOverMaxScore
+        get() = inTurn.isOverMaxScore
 
     val isLastTurn: Boolean
-        get() = allPlayers.indexOf(playerInTurn) == allPlayers.lastIndex
+        get() = all.indexOf(inTurn) == all.lastIndex
 
     fun changePlayer() {
-        require(playerInTurn == allPlayers.first()) {
+        require(inTurn == all.first()) {
             "플레이어 모두의 차례가 한 번씩 돌아갔습니다."
         }
-        playerInTurn = allPlayers.last()
+        inTurn = all.last()
     }
 
     companion object {

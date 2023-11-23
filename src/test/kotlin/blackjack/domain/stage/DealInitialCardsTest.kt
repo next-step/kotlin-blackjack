@@ -6,21 +6,22 @@ import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeTypeOf
 
-class InitialDistributionTest : DescribeSpec({
+class DealInitialCardsTest : DescribeSpec({
     val game = BlackJackGame(InputProcessorMock())
+    val table = BlackJackGame(InputProcessorMock()).table
     describe("dealCards") {
         context("첫 카드 배분 스테이지를 진행시키면") {
             val dealCards = DealInitialCards()
-            dealCards(game)
+            dealCards(game, table)
 
             it("플레이어마다 2장의 카드 수령") {
-                game.players.allPlayers.forEach { player ->
+                table.players.all.forEach { player ->
                     player.hand.cards.size shouldBe 2
                 }
             }
 
             it("딜러도 2장의 카드 수령") {
-                game.dealer.hand.cards.size shouldBe 2
+                table.dealer.hand.cards.size shouldBe 2
             }
 
             it("다음 카드 배분은 플레이어에게 카드 배분") {

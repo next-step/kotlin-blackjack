@@ -14,7 +14,8 @@ class HandScoreTest : DescribeSpec({
                         mutableListOf(
                             Card(Suit.SPADE, Rank.TWO), Card(Suit.CLUB, Rank.ACE)
                         )
-                    ), 13
+                    ),
+                    13
                 ),
                 row(
                     Hand(
@@ -24,7 +25,8 @@ class HandScoreTest : DescribeSpec({
                             Card(Suit.DIAMOND, Rank.FIVE),
                             Card(Suit.CLUB, Rank.ACE)
                         )
-                    ), 21
+                    ),
+                    21
                 ),
             ) { hand, expect ->
                 it("Ace 1개를 11점으로 계산한다") {

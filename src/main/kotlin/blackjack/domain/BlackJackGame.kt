@@ -2,7 +2,6 @@ package blackjack.domain
 
 import blackjack.controller.InputProcessor
 import blackjack.controller.ResultProcessor
-import blackjack.domain.player.Player
 import blackjack.domain.player.Players
 import blackjack.domain.result.GameResult
 import blackjack.domain.result.Result
@@ -13,43 +12,20 @@ import blackjack.domain.stage.DistributionEnd
 class BlackJackGame(
     private val inputProcessor: InputProcessor,
     private val resultProcessor: ResultProcessor = ResultProcessor(),
-    val players: Players = Players.of(inputProcessor.playerNames()) { player -> inputProcessor.playerAction(player) },
-    val dealer: Dealer = Dealer()
+    val table: GameTable = GameTable(
+        Dealer(),
+        Players.of(inputProcessor.playerNames()) { player ->
+            inputProcessor.playerAction(player)
+        }
+    ),
 ) {
     var dealCards: CardDistributor = DealInitialCards()
-
-    val isPlayerInTurnScoreOverMax: Boolean
-        get() = players.isPlayerInTurnOverMaxScore
-
-    val playerInTurn: Player
-        get() = players.playerInTurn
-
-    val isLastTurn: Boolean
-        get() = players.isLastTurn
 
     fun run() {
         while (dealCards !is DistributionEnd) {
             dealCards()
         }
-        emitResult(GameResult(players))
-    }
-
-    fun dealCardsToAllPlayers(count: Int) {
-        players.allPlayers.forEach { player ->
-            dealer.dealCards(player, count)
-        }
-    }
-
-    fun dealCardToDealer(count: Int) {
-        dealer.dealToSelf(count)
-    }
-
-    fun dealCardToPlayerInTurn() {
-        dealer.dealCards(players.playerInTurn, 1)
-    }
-
-    fun passTurnToNextPlayer() {
-        players.changePlayer()
+        emitResult(GameResult(table.players))
     }
 
     private fun emitResult(result: Result) {
@@ -61,7 +37,7 @@ class BlackJackGame(
     }
 
     private fun dealCards() {
-        val result = dealCards(this)
+        val result = dealCards(this, table)
         resultProcessor.handle(result)
     }
 }

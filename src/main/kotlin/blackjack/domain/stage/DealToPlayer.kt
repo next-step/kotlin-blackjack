@@ -2,17 +2,22 @@ package blackjack.domain.stage
 
 import blackjack.domain.Action
 import blackjack.domain.BlackJackGame
+import blackjack.domain.GameTable
 import blackjack.domain.result.DealToPlayerResult
 
 class DealToPlayer : CardDistributor {
-    override fun invoke(game: BlackJackGame): DealToPlayerResult {
-        when (game.playerInTurn.hitOrStand()) {
-            Action.HIT -> game.dealCardToPlayerInTurn()
-            Action.STAND -> when (game.isLastTurn) {
+    override fun invoke(game: BlackJackGame, table: GameTable): DealToPlayerResult {
+        when (game.table.playerInTurn.hitOrStand()) {
+            Action.HIT -> table.dealToPlayerInTurn(DISTRIBUTION_COUNT)
+            Action.STAND -> when (game.table.isLastPlayerTurn) {
                 true -> game.setDistributor(DealToDealer())
-                false -> game.passTurnToNextPlayer()
+                false -> table.passTurn()
             }
         }
-        return DealToPlayerResult(game.playerInTurn)
+        return DealToPlayerResult(game.table.playerInTurn)
+    }
+
+    companion object {
+        private const val DISTRIBUTION_COUNT = 1
     }
 }

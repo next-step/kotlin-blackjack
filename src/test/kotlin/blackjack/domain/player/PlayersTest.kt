@@ -18,11 +18,11 @@ class PlayersTest : DescribeSpec({
 
             val result = Players.of(names) { Action.HIT }
             it("주어진 이름 순서대로 플레이어들 생성") {
-                result.allPlayers[0] shouldBe Player(name1, { Action.HIT })
-                result.allPlayers[1] shouldBe Player(name2, { Action.HIT })
+                result.all[0] shouldBe Player(name1, { Action.HIT })
+                result.all[1] shouldBe Player(name2, { Action.HIT })
             }
             it("첫 이름의 플레이어가 첫 순번") {
-                result.playerInTurn shouldBe Player(name1, { Action.HIT })
+                result.inTurn shouldBe Player(name1, { Action.HIT })
             }
         }
 
@@ -74,15 +74,15 @@ class PlayersTest : DescribeSpec({
         val players = Players(playerList)
 
         context("플레이어 1이 차례인 경우") {
-            players.playerInTurn shouldBe playerList.first()
+            players.inTurn shouldBe playerList.first()
             players.changePlayer()
             it("플레이어 2에게 차례가 넘어감") {
-                players.playerInTurn shouldBe playerList.last()
+                players.inTurn shouldBe playerList.last()
             }
         }
 
         context("플레이어 2가 차례인 경우") {
-            players.playerInTurn shouldBe playerList.last()
+            players.inTurn shouldBe playerList.last()
 
             it("턴이 끝났다는 에러") {
                 shouldThrowExactly<IllegalArgumentException> {
@@ -100,7 +100,7 @@ class PlayersTest : DescribeSpec({
         val players = Players(playerList)
 
         context("플레이어 1이 차례인 경우") {
-            players.playerInTurn shouldBe playerList.first()
+            players.inTurn shouldBe playerList.first()
             it("false 반환") {
                 players.isLastTurn shouldBe false
             }
@@ -108,7 +108,7 @@ class PlayersTest : DescribeSpec({
 
         context("플레이어 2가 차례인 경우") {
             players.changePlayer()
-            players.playerInTurn shouldBe playerList.last()
+            players.inTurn shouldBe playerList.last()
 
             it("true 반환") {
                 players.isLastTurn shouldBe true

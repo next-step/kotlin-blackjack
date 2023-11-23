@@ -13,19 +13,18 @@ import io.kotest.matchers.shouldBe
 
 class DealerTest : DescribeSpec({
     describe("dealCards") {
-        val cards = mutableListOf(
-            Card(Suit.CLUB, Rank.ACE),
-            Card(Suit.CLUB, Rank.TWO),
-            Card(Suit.DIAMOND, Rank.THREE),
-            Card(Suit.DIAMOND, Rank.FOUR),
-        )
-        val dealer = Dealer(Deck(ArrayDeque(cards)))
-
         val count = 2
-        context("플레이어에게 ${count}장 카드 배분") {
+        context("플레이어 1명에게 ${count}장 카드 배분") {
+            val cards = mutableListOf(
+                Card(Suit.CLUB, Rank.ACE),
+                Card(Suit.CLUB, Rank.TWO),
+                Card(Suit.DIAMOND, Rank.THREE),
+                Card(Suit.DIAMOND, Rank.FOUR),
+            )
+            val dealer = Dealer(Deck(ArrayDeque(cards)))
             val player = Player(PlayerName("홍길동"), { Action.HIT })
 
-            dealer.dealCards(player, count)
+            dealer.dealCards(count, player)
 
             it("플레이어에게 카드 전달") {
                 player.hand shouldBe Hand(
@@ -45,6 +44,33 @@ class DealerTest : DescribeSpec({
                         )
                     )
                 )
+            }
+        }
+
+        context("플레이어 2명에게 ${count}장씩 카드 배분") {
+            val cards = mutableListOf(
+                Card(Suit.CLUB, Rank.ACE),
+                Card(Suit.CLUB, Rank.TWO),
+                Card(Suit.DIAMOND, Rank.THREE),
+                Card(Suit.DIAMOND, Rank.FOUR),
+                Card(Suit.HEART, Rank.FIVE),
+                Card(Suit.HEART, Rank.SIX),
+            )
+            val dealer = Dealer(Deck(ArrayDeque(cards)))
+            val players = listOf(
+                Player(PlayerName("홍길동"), { Action.HIT }),
+                Player(PlayerName("김길동"), { Action.HIT }),
+            )
+
+            dealer.dealCards(count, *players.toTypedArray())
+
+            it("플레이어에게 카드 전달") {
+                players[0].hand.cards.size shouldBe 2
+                players[1].hand.cards.size shouldBe 2
+            }
+
+            it("덱에서 카드에서 제거") {
+                dealer.deck.cards.size shouldBe 2
             }
         }
     }
@@ -86,7 +112,7 @@ class DealerTest : DescribeSpec({
 
     describe("score") {
         val dealer = Dealer(
-            player = DealerPlayer(Hand(mutableListOf(Card(Suit.HEART, Rank.ACE), Card(Suit.DIAMOND, Rank.QUEEN))))
+            dealerPlayer = DealerPlayer(Hand(mutableListOf(Card(Suit.HEART, Rank.ACE), Card(Suit.DIAMOND, Rank.QUEEN))))
         )
         context("딜러가 가진 카드의 점수 조회") {
             val result = dealer.score
@@ -121,5 +147,9 @@ class DealerTest : DescribeSpec({
                 result shouldBe false
             }
         }
+    }
+
+    describe("dealCardToDealer") {
+
     }
 })
