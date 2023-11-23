@@ -8,6 +8,6 @@ class Player(val name: String, val cardSet: CardSet) {
     }
 
     fun receiveCard(cardSet: CardSet): Player {
-        return Player(name, cardSet)
+        return Player(name, this.cardSet + cardSet)
     }
 }
