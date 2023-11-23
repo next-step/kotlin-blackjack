@@ -45,14 +45,14 @@ class DslTest {
     }
 }
 
-fun introduce(block: Person.() -> Unit): Person {
+fun introduce(block: PersonBuilder.() -> Unit): Person {
     // also, apply, run, let, with
-    return Person().apply(block)
+    return PersonBuilder().apply(block).build()
 }
 
-class Person() {
-    lateinit var name: String
-    lateinit var company: String
+class PersonBuilder() {
+    private var name: String = ""
+    private var company: String = ""
     fun name(value: String) {
         name = value
     }
@@ -60,4 +60,10 @@ class Person() {
     fun company(value: String) {
         company = value
     }
+
+    fun build(): Person {
+        return Person(name, company)
+    }
 }
+
+data class Person(val name: String, val company: String)
