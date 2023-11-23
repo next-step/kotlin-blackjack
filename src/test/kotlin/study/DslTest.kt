@@ -55,7 +55,7 @@ class DslTest {
                 hard("Kotlin")
             }
         }
-        person.skills.invoke() shouldHaveSize 3
+        person.skills() shouldHaveSize 3
     }
 
     @Test
@@ -67,6 +67,6 @@ class DslTest {
             }
         }
 
-        person.languages.invoke() shouldHaveSize 2
+        person.languages() shouldHaveSize 2
     }
 }

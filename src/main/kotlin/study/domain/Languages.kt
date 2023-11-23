@@ -8,5 +8,5 @@ class Languages {
         return this@Languages
     }
 
-    operator fun invoke(): List<Language> = languages.toList()
+    operator fun invoke() = languages.toList()
 }

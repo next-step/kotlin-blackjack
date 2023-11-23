@@ -13,5 +13,5 @@ class Skills {
         return this
     }
 
-    operator fun invoke(): List<Skill> = list.toList()
+    operator fun invoke() = list.toList()
 }
