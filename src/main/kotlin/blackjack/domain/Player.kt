@@ -9,6 +9,9 @@ class Player(
         if (isFinished()) {
             return false
         }
+        if (Dealer.isFinished()) {
+            return true
+        }
         return true
     }
 }

@@ -67,4 +67,26 @@ class PlayerTest {
 
         assertThat(actual).isFalse()
     }
+
+    @Test
+    fun `딜러가 21을 초과하면 그 시점까지 남아 있던 플레이어들은 가지고 있는 패에 상관없이 승리한다`() {
+        val card1 = Card(Denomination.TEN, Suit.SPADE)
+        val card2 = Card(Denomination.TEN, Suit.DIAMOND)
+        val card3 = Card(Denomination.TWO, Suit.SPADE)
+        val player = Player("a")
+
+        player.run {
+            receiveCard(card1)
+            receiveCard(card2)
+        }
+        Dealer.run {
+            receiveCard(card1)
+            receiveCard(card2)
+            receiveCard(card3)
+        }
+
+        val actual = player.isWin()
+
+        assertThat(actual).isTrue()
+    }
 }
