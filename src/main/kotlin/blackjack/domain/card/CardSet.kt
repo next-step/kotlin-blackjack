@@ -2,8 +2,8 @@ package blackjack.domain.card
 
 import kotlin.math.abs
 
-class CardSet(val cards: List<Card>) {
-    val size = cards.size
+@JvmInline
+value class CardSet(val cards: List<Card>) : List<Card> by cards {
 
     init {
         val distinct = cards.distinct()
@@ -15,13 +15,13 @@ class CardSet(val cards: List<Card>) {
         return CARD_SUM_LIMIT <= sumOfMin(cardPolicyGroup).score
     }
 
-    fun addCard(card: Card): CardSet {
+    operator fun plus(card: Card): CardSet {
         val newCards = cards.toMutableList()
         newCards.add(card)
         return CardSet(newCards)
     }
 
-    fun addCard(cardSet: CardSet): CardSet {
+    operator fun plus(cardSet: CardSet): CardSet {
         val newCards = cards.toMutableList()
         newCards.addAll(cardSet.cards)
         return CardSet(newCards)
