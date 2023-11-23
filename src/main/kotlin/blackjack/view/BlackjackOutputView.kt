@@ -1,6 +1,8 @@
 package blackjack.view
 
 import blackjack.domain.Card
+import blackjack.domain.Dealer
+import blackjack.domain.Game
 import blackjack.domain.Participant
 import blackjack.domain.Suit
 
@@ -14,6 +16,10 @@ object BlackjackOutputView {
 
     fun printCards(participant: Participant) {
         println("${participant.name} 카드: ${getCardsString(participant)}")
+    }
+
+    fun printDealerReceiveCard() {
+        println("\n${Dealer.name}는 ${Game.DEALER_RECEIVE_CARD_SCORE}이하라 한장의 카드를 더 받았습니다.")
     }
 
     fun printResult(participants: List<Participant>) {

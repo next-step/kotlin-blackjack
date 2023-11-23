@@ -14,10 +14,14 @@ object BlackjackController {
         val participants = listOf(Dealer) + players
 
         drawInitialCards(participants)
-
         BlackjackOutputView.printInitialCards(participants)
 
         players.forEach { action(it) }
+
+        if (Dealer.shouldReceiveCard()) {
+            Dealer.receiveCard(Deck.draw())
+            BlackjackOutputView.printDealerReceiveCard()
+        }
 
         BlackjackOutputView.printResult(participants)
     }
