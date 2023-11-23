@@ -1,6 +1,8 @@
 package blackJack.domain
 
 import blackJack.error.ErrorMessage
+import java.util.LinkedList
+import java.util.Queue
 
 class Dealer(val cardDeck: Cards) {
 
@@ -8,8 +10,8 @@ class Dealer(val cardDeck: Cards) {
         require(cardDeck.cardSize == 52) { ErrorMessage.CARD_DECK_SIZE.message }
     }
 
-    fun initialCards(): Cards {
-        return Cards(MutableList(INIT_CARD_COUNT) { cardDeck.drawCard() })
+    fun initialCards(playerSize: Int): Queue<Cards> {
+        return LinkedList(List(playerSize) { Cards(MutableList(INIT_CARD_COUNT) { cardDeck.drawCard() }) })
     }
 
     companion object {

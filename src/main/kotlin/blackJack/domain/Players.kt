@@ -1,14 +1,15 @@
 package blackJack.domain
 
 import blackJack.error.ErrorMessage
+import java.util.*
 
 class Players(val players: List<Player>) {
     init {
         require(players.isNotEmpty()) { ErrorMessage.EMPTY_PLAYERS.message }
     }
 
-    fun receiveInitialCards(initialCards: Cards) {
-        players.forEach { it.receiveInitialCards(initialCards) }
+    fun receiveInitialCards(cardDecks: Queue<Cards>) {
+        players.forEach { it.receiveInitialCards(cardDecks.poll()) }
     }
 
     companion object {

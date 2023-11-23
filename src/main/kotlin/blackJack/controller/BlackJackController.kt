@@ -16,7 +16,9 @@ fun main() {
     OutputView.printPlayer(playerList)
 
     val players: Players = Players.createPlayers(playerList)
-    players.receiveInitialCards(dealer.initialCards())
+    val initialCards = dealer.initialCards(playerList.size)
+    players.receiveInitialCards(initialCards)
+
     val playersDto = PlayersDto(players)
     OutputView.printPlayerCards(playersDto)
 
