@@ -1,11 +1,12 @@
 package study
 
-import io.kotest.matchers.collections.shouldBeIn
+import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 import org.junit.jupiter.params.provider.ValueSource
+import study.dsl.introduce
 
 /**
  * introduce {
@@ -54,6 +55,6 @@ class DslTest {
                 hard("Kotlin")
             }
         }
-        person.skills shouldHaveSize 3
+        person.skills.invoke() shouldHaveSize 3
     }
 }
