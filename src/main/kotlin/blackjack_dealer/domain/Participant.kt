@@ -2,7 +2,9 @@ package blackjack_dealer.domain
 
 import blackjack_dealer.entity.CardDeque
 import blackjack_dealer.entity.GamerCards
+import blackjack_dealer.entity.result.ParticipantResult
 import blackjack_dealer.entity.state.GamerCurrentState
+import blackjack_dealer.entity.state.ParticipantResultState
 
 data class Participant(
     override val name: String,
@@ -24,6 +26,11 @@ data class Participant(
             BLACK_JACK -> GamerCurrentState.BLACKJACK
             else -> GamerCurrentState.BUST
         }
+    }
+
+    fun createParticipantResult(dealer: Dealer): ParticipantResult {
+        val participantState = ParticipantResultState.of(dealer, this@Participant)
+        return ParticipantResult(name = getGamerName(), resultState = participantState)
     }
 
     companion object {

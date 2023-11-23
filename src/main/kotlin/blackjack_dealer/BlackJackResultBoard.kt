@@ -9,7 +9,7 @@ import blackjack_dealer.entity.state.ParticipantResultState
 
 object BlackJackResultBoard {
     fun getBlackJackResult(dealer: Dealer, participants: Participants): TotalResult {
-        val participantsResult = ParticipantResult.createParticipantResults(participants, dealer)
+        val participantsResult = participants.map { participant -> participant.createParticipantResult(dealer) }
 
         val groupingByParticipantResult = ParticipantResult.groupingAndCountParticipantsResult(participantsResult)
 

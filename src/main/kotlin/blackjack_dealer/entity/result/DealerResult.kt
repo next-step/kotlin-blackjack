@@ -8,7 +8,7 @@ data class DealerResult(
 ) {
     companion object {
         private const val DEFAULT_VALUE = 0
-        fun newInstance(dealerResultCount: DealerResultCount): DealerResult {
+        private fun newInstance(dealerResultCount: DealerResultCount): DealerResult {
             return DealerResult(dealerResultCount = dealerResultCount)
         }
 
