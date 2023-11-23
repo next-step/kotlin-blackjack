@@ -22,6 +22,6 @@ data class DeckCards(private val _cardList: MutableList<Card>) : Cards(_cardList
     companion object {
         private val INITIAL_CARD_COUNT = Suit.values().size * Character.values().size
         fun fullDeckCards() = DeckCards(fullCardList().toMutableList())
-        private fun fullCardList() = Cards.fullCardList()
+        private fun fullCardList() = Card.fullCardList()
     }
 }
