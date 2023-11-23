@@ -41,6 +41,8 @@ class HandTest : StringSpec({
             )
         )
 
+        hand.addCard(Card(Suit.Diamond, Character.Jack))
+
         hand.valueSum() shouldBe 21
         hand.isBlackjack() shouldBe true
         hand.isBust() shouldBe false
@@ -50,11 +52,12 @@ class HandTest : StringSpec({
         val hand = Hand(
             HandCards(
                 mutableListOf(
-                    Card(Suit.Spade, Character.Ace),
-                    Card(Suit.Clover, Character.Ace),
+                    Card(Suit.Spade, Character.Jack),
+                    Card(Suit.Clover, Character.Jack),
                 )
             )
         )
+        hand.addCard(Card(Suit.Diamond, Character.Two))
 
         hand.valueSum() shouldBe 22
         hand.isBlackjack() shouldBe false
@@ -72,6 +75,8 @@ class HandTest : StringSpec({
         )
         val player = Player("aaa", hand)
 
+        player.addCard(Card(Suit.Diamond, Character.Jack))
+
         hand.valueSum() shouldBe 21
         hand.isBlackjack() shouldBe true
         hand.isBust() shouldBe false
@@ -82,12 +87,15 @@ class HandTest : StringSpec({
         val hand = Hand(
             HandCards(
                 mutableListOf(
-                    Card(Suit.Spade, Character.Ace),
-                    Card(Suit.Clover, Character.Ace),
+                    Card(Suit.Spade, Character.Two),
+                    Card(Suit.Clover, Character.Jack),
                 )
             )
         )
+
         val player = Player("aaa", hand)
+
+        player.addCard(Card(Suit.Diamond, Character.Jack))
 
         hand.valueSum() shouldBe 22
         hand.isBlackjack() shouldBe false

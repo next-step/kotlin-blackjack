@@ -1,7 +1,6 @@
 package blackjack.domain.player
 
 import blackjack.domain.card.Card
-import java.lang.RuntimeException
 
 data class Player(
     val name: String,
@@ -13,25 +12,28 @@ data class Player(
             state = PlayerState.Blackjack
         }
     }
+
     fun hit() {
-        require(state == PlayerState.Hit) {
-            RuntimeException("Invalid state transition: $state -> ${PlayerState.Hit}")
+        check(state == PlayerState.Hit) {
+            "Invalid state transition: $state -> ${PlayerState.Hit}"
         }
         state = PlayerState.Hit
     }
 
     fun stay() {
-        require(state == PlayerState.Hit)
+        check(state == PlayerState.Hit)
         state = PlayerState.Stay
     }
 
     fun addCard(card: Card) {
-        require(state == PlayerState.Hit) {
-            RuntimeException("Invalid state transition: $state -> ${PlayerState.Hit}")
+        check(state == PlayerState.Hit) {
+            "Invalid state transition: $state -> ${PlayerState.Hit}"
         }
         hand.addCard(card)
         state = if (hand.isBust()) {
             PlayerState.Bust
+        } else if (hand.isBlackjack()) {
+            PlayerState.Blackjack
         } else {
             PlayerState.Hit
         }

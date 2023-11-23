@@ -35,19 +35,21 @@ class PlayerTest : StringSpec({
         val bustHand = Hand(
             HandCards(
                 mutableListOf(
-                    Card(Suit.Spade, Character.Ace),
-                    Card(Suit.Clover, Character.Ace),
+                    Card(Suit.Spade, Character.Three),
+                    Card(Suit.Clover, Character.Jack),
                 )
             )
         )
         val bustPlayer = Player("bust", bustHand)
+
+        bustPlayer.addCard(Card(Suit.Diamond, Character.Nine))
 
         bustHand.isBust() shouldBe true
         bustPlayer.state shouldBe PlayerState.Bust
 
         Assertions.assertThatThrownBy {
             bustPlayer.hit()
-        }.isInstanceOf(RuntimeException::class.java)
+        }.isInstanceOf(IllegalStateException::class.java)
             .hasMessageContaining("Invalid state transition")
     }
 
@@ -61,6 +63,8 @@ class PlayerTest : StringSpec({
             )
         )
         val blackjackPlayer = Player("bj", blackjackHand)
+
+        blackjackPlayer.addCard(Card(Suit.Diamond, Character.Ten))
 
         blackjackHand.isBlackjack() shouldBe true
         blackjackPlayer.state shouldBe PlayerState.Blackjack
