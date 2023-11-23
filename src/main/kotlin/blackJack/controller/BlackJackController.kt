@@ -26,11 +26,12 @@ fun main() {
     val playersDto = PlayersDto(players)
     OutputView.printPlayerCards(playersDto)
 
-    val finishGamePlayers = players.players.map { player ->
-        playGame(player, dealer.cardDeck)
-    }
-
-    val playersResult = PlayersDto(Players(finishGamePlayers))
+    val finishGamePlayers = players.players
+        .map {
+            val player = playGame(it, dealer.cardDeck)
+            PlayerDto(player, player.getTotalScore())
+        }
+    val playersResult = PlayersDto(finishGamePlayers)
     OutputView.printResult(playersResult)
 }
 

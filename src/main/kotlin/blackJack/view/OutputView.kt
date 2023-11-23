@@ -35,7 +35,7 @@ object OutputView {
     fun printResult(players: PlayersDto) {
         players.playerDtos.forEach { player ->
             val cardsInfo = player.cardsDto.cardDtos.joinToString(", ") { "${it.rank} ${it.suit}" }
-            println("${player.name}카드: $cardsInfo - 결과: ${player.cardsDto.cardDtos.sumOf { it.rank }}")
+            println("${player.name}카드: $cardsInfo - 결과: ${player.totalScore}")
         }
         println()
     }
