@@ -2,14 +2,13 @@ package study.builder
 
 import study.domain.Languages
 import study.domain.Person
-import study.domain.Skill
 import study.domain.Skills
 
 class PersonBuilder() {
     private var name: String = ""
     private var company: String = ""
-    var skills: Skills = Skills()
-    var languages: Languages = Languages()
+    private var skills: Skills = Skills()
+    private var languages: Languages = Languages()
     fun name(value: String) {
         name = value
     }
