@@ -31,20 +31,20 @@ fun main() {
 }
 
 private fun playGame(player: Player, cardDeck: Cards): Player {
-    var currentPlayer = player
+    var answer = promptForAction(player)
 
-    while (currentPlayer.isHit()) {
-        val playerDto = PlayerDto(currentPlayer)
-        OutputView.printQuestionYesOrNo(playerDto)
-        val answer = InputView.answerYesOrNo()
-
-        if (answer == "n") {
-            OutputView.printPlayerCard(PlayerDto(currentPlayer))
-            break
-        }
-
-        currentPlayer.addCard(cardDeck)
-        OutputView.printPlayerCard(PlayerDto(currentPlayer))
+    while (player.isFinished(answer)) {
+        player.addCard(cardDeck)
+        OutputView.printPlayerCard(PlayerDto(player))
+        answer = promptForAction(player)
     }
-    return currentPlayer
+
+    OutputView.printPlayerCard(PlayerDto(player))
+    return player
+}
+
+private fun promptForAction(player: Player): String {
+    val playerDto = PlayerDto(player)
+    OutputView.printQuestionYesOrNo(playerDto)
+    return InputView.answerYesOrNo()
 }

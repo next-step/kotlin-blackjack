@@ -9,8 +9,6 @@ class Player(val name: String, val cards: Cards = Cards(mutableListOf()), var st
         require(name.isNotEmpty()) { ErrorMessage.EMPTY_NAME.message }
     }
 
-    fun isHit(): Boolean = status == HIT
-
     fun addCard(cardDeck: Cards) {
         Status.validationAddCard(status)
         val card = cardDeck.drawCard()
@@ -22,6 +20,10 @@ class Player(val name: String, val cards: Cards = Cards(mutableListOf()), var st
         cards.addCard(initialCards.drawCard())
         cards.addCard(initialCards.drawCard())
         status = Status.calculateStatus(cards.calculateTotalScore(), cards.cardSize)
+    }
+
+    fun isFinished(answer: String): Boolean {
+        return answer != "n"
     }
 
     companion object {
