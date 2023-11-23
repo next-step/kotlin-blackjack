@@ -15,6 +15,6 @@ class DealerTest {
         }
 
         // then
-        assertEquals(0, dealer.deck.cards.value.size)
+        assertEquals(0, dealer.deck.cardSize)
     }
 }

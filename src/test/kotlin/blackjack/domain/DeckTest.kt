@@ -11,7 +11,7 @@ class DeckTest {
         // given, when
         val deck = Deck()
         // then
-        assertEquals(Cards.TOTAL_SIZE, deck.cards.value.size)
+        assertEquals(Cards.TOTAL_SIZE, deck.cardSize)
     }
 
     @Test
