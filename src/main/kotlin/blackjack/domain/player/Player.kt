@@ -11,8 +11,6 @@ data class Player(
     init {
         if (hand.isBlackjack()) {
             state = PlayerState.Blackjack
-        } else if (hand.isBust()) {
-            state = PlayerState.Bust
         }
     }
     fun hit() {
