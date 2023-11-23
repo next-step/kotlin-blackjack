@@ -1,10 +1,11 @@
 package blackJack.domain
 
-import blackJack.domain.Rank.*
+import blackJack.domain.Rank.KING
+import blackJack.domain.Rank.QUEEN
 import blackJack.domain.Status.BLACKJACK
 import blackJack.domain.Status.BUST
 import blackJack.domain.Status.HIT
-import blackJack.domain.Suit.*
+import blackJack.domain.Suit.DIAMOND
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
@@ -38,31 +39,24 @@ class PlayerTest {
 
     @Test
     fun `Status 가 HIT 이고 Answer 가 'y' 이면 카드를 계속해서 추가가 가능하다`() {
-        val player = Player("pobi", dealer.initialCards(), HIT)
-        player.addCard(dealer, "y")
+        val player = Player("pobi", dealer.initialCards(1).poll(), HIT)
+        player.addCard(dealer.cardDeck)
         assertEquals(3, player.cards.cards.size)
     }
 
     @Test
-    fun `Answer 가 'n' 이면 카드를 계속해서 추가가 되면 안된다`() {
-        val player = Player("pobi", dealer.initialCards(), HIT)
-        player.addCard(dealer, "n")
-        assertEquals(2, player.cards.cards.size)
-    }
-
-    @Test
     fun `Status 가 BUST 이고 Answer 가 'y' 이면 카드를 계속해서 추가가 불가능하다`() {
-        val player = Player("pobi", dealer.initialCards(), BUST)
+        val player = Player("pobi", dealer.initialCards(1).poll(), BUST)
         assertThrows<IllegalArgumentException> {
-            player.addCard(dealer, "y")
+            player.addCard(dealer.cardDeck)
         }
     }
 
     @Test
     fun `Status 가 BLACKJACK 이고 Answer 가 'y' 이면 카드를 계속해서 추가가 불가능하다`() {
-        val player = Player("pobi", dealer.initialCards(), BLACKJACK)
+        val player = Player("pobi", dealer.initialCards(1).poll(), BLACKJACK)
         assertThrows<IllegalArgumentException> {
-            player.addCard(dealer, "y")
+            player.addCard(dealer.cardDeck)
         }
     }
 

@@ -1,7 +1,6 @@
 package blackJack.domain
 
 import blackJack.domain.Status.HIT
-import blackJack.dto.CardsDto
 import blackJack.error.ErrorMessage
 
 class Player(val name: String, val cards: Cards = Cards(mutableListOf()), var status: Status = HIT) {
@@ -23,11 +22,9 @@ class Player(val name: String, val cards: Cards = Cards(mutableListOf()), var st
         status = Status.calculateStatus(cards.calculateTotalScore(), cards.cardSize)
     }
 
-    fun isFinished(answer: String): Boolean {
-        return answer != "n"
-    }
+    fun isFinished(answer: String) = answer != "n"
 
-    fun getTotalScore(): Int = cards.calculateTotalScore();
+    fun getTotalScore(): Int = cards.calculateTotalScore()
 
     companion object {
         fun splitNames(inputNames: String): List<String> {
