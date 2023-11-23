@@ -1,5 +1,6 @@
 package blackjack.domain.player
 
+import blackjack.domain.Action
 import blackjack.domain.card.Card
 import blackjack.domain.card.Hand
 import blackjack.domain.card.Rank
@@ -7,7 +8,6 @@ import blackjack.domain.card.Suit
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
-import java.lang.IllegalArgumentException
 
 class PlayersTest : DescribeSpec({
     describe("플레이어들 생성") {
@@ -16,13 +16,13 @@ class PlayersTest : DescribeSpec({
             val name2 = PlayerName("베트맨")
             val names = PlayerNames(listOf(name1, name2))
 
-            val result = Players.from(names)
+            val result = Players.of(names) { Action.HIT }
             it("주어진 이름 순서대로 플레이어들 생성") {
-                result.allPlayers[0] shouldBe Player(name1)
-                result.allPlayers[1] shouldBe Player(name2)
+                result.allPlayers[0] shouldBe Player(name1, { Action.HIT })
+                result.allPlayers[1] shouldBe Player(name2, { Action.HIT })
             }
             it("첫 이름의 플레이어가 첫 순번") {
-                result.playerInTurn shouldBe Player(name1)
+                result.playerInTurn shouldBe Player(name1, { Action.HIT })
             }
         }
 
@@ -30,7 +30,7 @@ class PlayersTest : DescribeSpec({
             val playerNames = PlayerNames(listOf(PlayerName("홍길동"), PlayerName("베트맨"), PlayerName("아이언맨")))
             it("플레이어 생성 실패") {
                 shouldThrowExactly<IllegalArgumentException> {
-                    Players.from(playerNames)
+                    Players.of(playerNames) { Action.HIT }
                 }
             }
         }
@@ -39,13 +39,13 @@ class PlayersTest : DescribeSpec({
     describe("현재 플레이어가 최대 점수를 넘었는지 여부 반환") {
         context("현재 플레이어가 최대 점수를 넘었을 경우") {
             val playerOverMaxScore = Player(
-                PlayerName("kim"), Hand(
+                PlayerName("kim"), { Action.HIT }, Hand(
                     mutableListOf(
                         Card(Suit.DIAMOND, Rank.THREE), Card(Suit.HEART, Rank.TEN), Card(Suit.HEART, Rank.TEN)
                     )
                 )
             )
-            val players = Players(listOf(playerOverMaxScore, Player(PlayerName("kim"), Hand())))
+            val players = Players(listOf(playerOverMaxScore, Player(PlayerName("kim"), { Action.HIT }, Hand())))
             it("true 반환") {
                 players.isPlayerInTurnOverMaxScore shouldBe true
             }
@@ -53,13 +53,13 @@ class PlayersTest : DescribeSpec({
 
         context("현재 플레이어가 최대 점수를 넘지 않았을 경우") {
             val playerUnderMaxScore = Player(
-                PlayerName("kim"), Hand(
+                PlayerName("kim"), { Action.HIT }, Hand(
                     mutableListOf(
                         Card(Suit.DIAMOND, Rank.ACE), Card(Suit.HEART, Rank.TEN)
                     )
                 )
             )
-            val players = Players(listOf(playerUnderMaxScore, Player(PlayerName("kim"), Hand())))
+            val players = Players(listOf(playerUnderMaxScore, Player(PlayerName("kim"), { Action.HIT }, Hand())))
             it("false 반환") {
                 players.isPlayerInTurnOverMaxScore shouldBe false
             }
@@ -68,8 +68,8 @@ class PlayersTest : DescribeSpec({
 
     describe("다음 플레이어에게 차례 넘김") {
         val playerList = listOf(
-            Player(PlayerName("hong"), Hand()),
-            Player(PlayerName("dong"), Hand()),
+            Player(PlayerName("hong"), { Action.HIT }, Hand()),
+            Player(PlayerName("dong"), { Action.HIT }, Hand()),
         )
         val players = Players(playerList)
 
@@ -94,8 +94,8 @@ class PlayersTest : DescribeSpec({
 
     describe("마지막 플레이어 차례인지 조회") {
         val playerList = listOf(
-            Player(PlayerName("hong"), Hand()),
-            Player(PlayerName("dong"), Hand()),
+            Player(PlayerName("hong"), { Action.HIT }, Hand()),
+            Player(PlayerName("dong"), { Action.HIT }, Hand()),
         )
         val players = Players(playerList)
 

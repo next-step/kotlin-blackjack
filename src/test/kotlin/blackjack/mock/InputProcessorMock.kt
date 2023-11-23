@@ -1,16 +1,16 @@
 package blackjack.mock
 
 import blackjack.controller.InputProcessor
-import blackjack.domain.PlayerAction
+import blackjack.domain.Action
 import blackjack.domain.player.Player
 import blackjack.domain.player.PlayerNames
 
 class InputProcessorMock(
     private val playerNames: List<String> = listOf("kim", "lee"),
-    private val playerAction: PlayerAction = PlayerAction.HIT,
+    private val action: Action = Action.HIT,
 ) : InputProcessor {
 
     override fun playerNames(): PlayerNames = playerNames.let(PlayerNames::from)
 
-    override fun playerAction(player: Player): PlayerAction = playerAction
+    override fun playerAction(player: Player): Action = action
 }

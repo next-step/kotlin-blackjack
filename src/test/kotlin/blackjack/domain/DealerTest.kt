@@ -5,6 +5,7 @@ import blackjack.domain.card.Deck
 import blackjack.domain.card.Hand
 import blackjack.domain.card.Rank
 import blackjack.domain.card.Suit
+import blackjack.domain.player.DealerPlayer
 import blackjack.domain.player.Player
 import blackjack.domain.player.PlayerName
 import io.kotest.core.spec.style.DescribeSpec
@@ -22,7 +23,7 @@ class DealerTest : DescribeSpec({
 
         val count = 2
         context("플레이어에게 ${count}장 카드 배분") {
-            val player = Player(PlayerName("홍길동"))
+            val player = Player(PlayerName("홍길동"), { Action.HIT })
 
             dealer.dealCards(player, count)
 
@@ -85,13 +86,7 @@ class DealerTest : DescribeSpec({
 
     describe("score") {
         val dealer = Dealer(
-            player = Player(
-                PlayerName.dealerName(), Hand(
-                    mutableListOf(
-                        Card(Suit.HEART, Rank.ACE), Card(Suit.DIAMOND, Rank.QUEEN)
-                    )
-                )
-            )
+            player = DealerPlayer(Hand(mutableListOf(Card(Suit.HEART, Rank.ACE), Card(Suit.DIAMOND, Rank.QUEEN))))
         )
         context("딜러가 가진 카드의 점수 조회") {
             val result = dealer.score
@@ -104,7 +99,7 @@ class DealerTest : DescribeSpec({
 
     describe("isScoreGreaterThan") {
         val score20cards = mutableListOf(Card(Suit.HEART, Rank.QUEEN), Card(Suit.DIAMOND, Rank.QUEEN))
-        val dealer = Player(name = PlayerName.dealerName(), hand = Hand(score20cards))
+        val dealer = DealerPlayer(Hand(score20cards))
         context("딜러보다 낮은 점수로 비교하면") {
             val result = dealer.isScoreGreaterThan(16)
 

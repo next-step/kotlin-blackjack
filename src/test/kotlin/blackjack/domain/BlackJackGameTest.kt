@@ -24,7 +24,12 @@ class BlackJackGameTest : DescribeSpec({
             )
 
             it("전달된 이름으로 플레이어 세팅") {
-                game.players shouldBe Players(listOf(Player(PlayerName(name1)), Player(PlayerName(name2))))
+                game.players shouldBe Players(
+                    listOf(
+                        Player(PlayerName(name1), { Action.HIT }),
+                        Player(PlayerName(name2), { Action.HIT })
+                    )
+                )
             }
         }
     }
@@ -84,7 +89,9 @@ class BlackJackGameTest : DescribeSpec({
         context("현재 플레어가 최대 점수 21점을 초과했다면") {
             val playerOverMax =
                 Player(
-                    PlayerName("currentPlayer"), Hand(
+                    PlayerName("currentPlayer"),
+                    { Action.HIT },
+                    Hand(
                         mutableListOf(
                             Card(Suit.DIAMOND, Rank.TEN),
                             Card(Suit.DIAMOND, Rank.TEN),
@@ -93,10 +100,11 @@ class BlackJackGameTest : DescribeSpec({
                     )
                 )
             val game = BlackJackGame(
-                InputProcessorMock(), players = Players(
+                InputProcessorMock(),
+                players = Players(
                     listOf(
                         playerOverMax,
-                        Player(PlayerName("otherPlayer"), Hand()),
+                        Player(PlayerName("otherPlayer"), { Action.HIT }, Hand()),
                     )
                 )
             )
@@ -109,7 +117,9 @@ class BlackJackGameTest : DescribeSpec({
         context("현재 플레어가 최대 점수를 초과하지 않았다면") {
             val playerUnderMax =
                 Player(
-                    PlayerName("currentPlayer"), Hand(
+                    PlayerName("currentPlayer"),
+                    { Action.HIT },
+                    Hand(
                         mutableListOf(
                             Card(Suit.DIAMOND, Rank.ACE),
                             Card(Suit.DIAMOND, Rank.TEN),
@@ -117,10 +127,11 @@ class BlackJackGameTest : DescribeSpec({
                     )
                 )
             val game = BlackJackGame(
-                InputProcessorMock(), players = Players(
+                InputProcessorMock(),
+                players = Players(
                     listOf(
                         playerUnderMax,
-                        Player(PlayerName("otherPlayer"), Hand()),
+                        Player(PlayerName("otherPlayer"), { Action.HIT }, Hand()),
                     )
                 )
             )
@@ -132,8 +143,8 @@ class BlackJackGameTest : DescribeSpec({
 
     describe("다음 플레이어에게 차례 넘김") {
         val players = listOf(
-            Player(PlayerName("kim"), Hand()),
-            Player(PlayerName("lee"), Hand()),
+            Player(PlayerName("kim"), { Action.HIT }, Hand()),
+            Player(PlayerName("lee"), { Action.HIT }, Hand()),
         )
         val game = BlackJackGame(InputProcessorMock(), players = Players(players))
 
@@ -157,8 +168,8 @@ class BlackJackGameTest : DescribeSpec({
 
     describe("마지막 플레이어 턴인지 조회") {
         val players = listOf(
-            Player(PlayerName("kim"), Hand()),
-            Player(PlayerName("lee"), Hand()),
+            Player(PlayerName("kim"), { Action.HIT }, Hand()),
+            Player(PlayerName("lee"), { Action.HIT }, Hand()),
         )
         val game = BlackJackGame(InputProcessorMock(), players = Players(players))
 

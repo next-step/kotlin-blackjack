@@ -1,5 +1,7 @@
 package blackjack.domain.player
 
+import blackjack.domain.Action
+
 data class Players(
     val allPlayers: List<Player>,
 ) {
@@ -27,10 +29,12 @@ data class Players(
     }
 
     companion object {
-        fun from(names: PlayerNames) =
-            names.value.map { name -> createPlayer(name) }.let(::Players)
+        fun of(
+            names: PlayerNames,
+            actionOf: (player: Player) -> Action,
+        ) = names.value.map { name -> createPlayer(name, actionOf) }.let(::Players)
 
-        private fun createPlayer(name: PlayerName) =
-            Player(name)
+        private fun createPlayer(name: PlayerName, actionOf: (player: Player) -> Action) =
+            Player(name, actionOf)
     }
 }

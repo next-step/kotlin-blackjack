@@ -1,23 +1,33 @@
 package blackjack.domain.player
 
-import blackjack.domain.card.Card
+import blackjack.domain.Action
 import blackjack.domain.card.Hand
-import blackjack.domain.card.HandScore
 
-data class Player(
+class Player(
     val name: PlayerName,
+    val actionOf: (player: Player) -> Action,
     override val hand: Hand = Hand(),
 ) : CardHolder {
-    override val score: HandScore
-        get() = hand.score
+    override fun hitOrStand(): Action {
+        if (hand.score.isOverMaxScore) return Action.STAND
+        return actionOf(this)
+    }
 
-    override val isOverMaxScore: Boolean
-        get() = hand.score.isOverMaxScore
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
 
-    override fun isScoreGreaterThan(other: Int): Boolean =
-        this.score.isGreaterThan(other)
+        other as Player
 
-    override fun addCard(card: Card) {
-        hand.add(card)
+        if (name != other.name) return false
+        if (hand != other.hand) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = name.hashCode()
+        result = 31 * result + hand.hashCode()
+        return result
     }
 }

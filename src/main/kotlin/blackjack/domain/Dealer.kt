@@ -3,12 +3,12 @@ package blackjack.domain
 import blackjack.domain.card.Card
 import blackjack.domain.card.Deck
 import blackjack.domain.player.CardHolder
+import blackjack.domain.player.DealerPlayer
 import blackjack.domain.player.Player
-import blackjack.domain.player.PlayerName
 
 class Dealer(
     val deck: Deck = Card.allShuffled(),
-    val player: Player = Player(PlayerName.dealerName()),
+    val player: DealerPlayer = DealerPlayer(),
 ) : CardHolder by player {
     fun dealCards(player: Player, count: Int) {
         repeat(count) {

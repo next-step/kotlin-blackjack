@@ -5,4 +5,3 @@ import blackjack.domain.player.Player
 data class DealToPlayerResult(
     val player: Player
 ) : Result()
-

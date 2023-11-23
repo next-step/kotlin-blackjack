@@ -3,7 +3,7 @@ package blackjack.domain.stage
 import blackjack.domain.BlackJackGame
 import blackjack.domain.result.DealInitialCardResult
 
-class DealInitialCards: CardDistributor {
+class DealInitialCards : CardDistributor {
 
     override fun invoke(game: BlackJackGame): DealInitialCardResult {
         game.dealCardsToAllPlayers(INITIAL_DISTRIBUTION_COUNT)

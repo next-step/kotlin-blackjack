@@ -13,7 +13,7 @@ import blackjack.domain.stage.DistributionEnd
 class BlackJackGame(
     private val inputProcessor: InputProcessor,
     private val resultProcessor: ResultProcessor = ResultProcessor(),
-    val players: Players = Players.from(inputProcessor.playerNames()),
+    val players: Players = Players.of(inputProcessor.playerNames()) { player -> inputProcessor.playerAction(player) },
     val dealer: Dealer = Dealer()
 ) {
     var dealCards: CardDistributor = DealInitialCards()
@@ -51,9 +51,6 @@ class BlackJackGame(
     fun passTurnToNextPlayer() {
         players.changePlayer()
     }
-
-    fun askHitOrStand(): PlayerAction = inputProcessor
-        .playerAction(players.playerInTurn)
 
     private fun emitResult(result: Result) {
         resultProcessor.handle(result)
