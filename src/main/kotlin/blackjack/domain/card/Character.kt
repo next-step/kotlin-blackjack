@@ -1,7 +1,7 @@
 package blackjack.domain.card
 
 enum class Character(val value: Int) {
-    Ace(11),
+    Ace(1),
     Two(2),
     Three(3),
     Four(4),
