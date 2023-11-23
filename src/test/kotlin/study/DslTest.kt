@@ -3,6 +3,7 @@ package study
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.CsvSource
 import org.junit.jupiter.params.provider.ValueSource
 
 /**
@@ -31,15 +32,16 @@ class DslTest {
         person.name shouldBe name
     }
 
-    @Test
-    fun company() {
+    @ParameterizedTest
+    @CsvSource(value = ["홍길동, 활빈당", "신지훈, 넥스트스텝"])
+    fun company(name: String, company: String) {
         val person = introduce {
-            name("홍길동")
-            company("활빈당")
+            name(name)
+            company(company)
         }
 
-        person.name shouldBe "홍길동"
-        person.company shouldBe "활빈당"
+        person.name shouldBe name
+        person.company shouldBe company
     }
 }
 
