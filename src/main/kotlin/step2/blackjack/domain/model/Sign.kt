@@ -1,4 +1,4 @@
-package step2.blackjack.model
+package step2.blackjack.domain.model
 
 enum class Sign(val sign: String, val number: Int, val secretNumber: Int) {
     ACE("A", 1, 11),
