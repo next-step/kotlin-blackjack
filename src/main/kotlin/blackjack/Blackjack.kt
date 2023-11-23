@@ -27,36 +27,32 @@ class Blackjack(
         resultView.printInitialState(players)
 
         players.forEach { player ->
-            player.play()
+            processPlayerTurn(player)
         }
 
         resultView.printResult(players)
+    }
+
+    private fun processPlayerTurn(player: Player) {
+        while (player.state == PlayerState.Hit) {
+            val command = inputView.getPlayerCommand(player.name)
+            player.play(command == "y")
+        }
     }
 
     private fun createPlayers(playerNames: List<String>): List<Player> {
         return playerNames.map { Player(it, Hand(HandCards(mutableListOf(deck.draw(), deck.draw())))) }
     }
 
-    private fun Player.play() {
-
-        fun processCommand(command: String) {
-            if (command == "y") {
-                hit()
-                val card = deck.draw()
-                addCard(card)
-                println("$name: ${hand.handCards}")
-            } else {
-                stay()
-            }
+    private fun Player.play(isHit: Boolean) {
+        if (isHit) {
+            hit()
+            val card = deck.draw()
+            addCard(card)
+            println("$name: ${hand.handCards}")
+        } else {
+            stay()
         }
-
-        while (state == PlayerState.Hit) {
-            println("${name}은 한 장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
-            val command = readln().trim()
-            processCommand(command)
-        }
-        println("$name: ${hand.handCards}")
-        println("$state")
     }
 }
 
