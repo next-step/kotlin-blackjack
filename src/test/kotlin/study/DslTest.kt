@@ -1,6 +1,8 @@
 package study
 
+import io.kotest.matchers.collections.shouldBeIn
 import io.kotest.matchers.shouldBe
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 import org.junit.jupiter.params.provider.ValueSource
@@ -41,5 +43,17 @@ class DslTest {
 
         person.name shouldBe name
         person.company shouldBe company
+    }
+
+    @Test
+    fun skills() {
+        val person = introduce {
+            skills {
+                soft("A passion for problem solving")
+                soft("Good communication skills")
+                hard("Kotlin")
+            }
+        }
+        person.skills shouldHaveSize 3
     }
 }
