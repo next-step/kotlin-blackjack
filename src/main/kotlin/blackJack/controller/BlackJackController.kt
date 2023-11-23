@@ -38,13 +38,17 @@ fun main() {
 private fun playGame(player: Player, cardDeck: Cards): Player {
     var answer = promptForAction(player)
 
-    while (player.isFinished(answer)) {
+    if (answer == "n") {
+        OutputView.printPlayerCard(PlayerDto(player))
+        return player
+    }
+
+    while (player.isContinued(answer)) {
         player.addCard(cardDeck)
         OutputView.printPlayerCard(PlayerDto(player))
         answer = promptForAction(player)
     }
 
-    OutputView.printPlayerCard(PlayerDto(player))
     return player
 }
 

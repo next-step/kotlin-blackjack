@@ -22,7 +22,7 @@ class Player(val name: String, val cards: Cards = Cards(mutableListOf()), var st
         status = Status.calculateStatus(cards.calculateTotalScore(), cards.cardSize)
     }
 
-    fun isFinished(answer: String) = answer != "n"
+    fun isContinued(answer: String) = answer == "y"
 
     fun getTotalScore(): Int = cards.calculateTotalScore()
 
