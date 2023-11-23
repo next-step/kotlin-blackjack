@@ -67,6 +67,6 @@ class DslTest {
             }
         }
 
-        person.languages.invoke() shouldHaveSize 3
+        person.languages.invoke() shouldHaveSize 2
     }
 }

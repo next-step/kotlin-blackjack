@@ -7,4 +7,6 @@ class Languages {
         languages.add(Language(this, level))
         return this@Languages
     }
+
+    operator fun invoke(): List<Language> = languages.toList()
 }
