@@ -10,6 +10,7 @@ import blackjack_dealer.entity.card.Card
 import blackjack_dealer.entity.card.CardNumber
 import blackjack_dealer.entity.card.CardShape
 import blackjack_dealer.entity.state.GamerCurrentState
+import blackjack_dealer.entity.state.ParticipantResultState
 import blackjack_dealer.entity.toGamerCards
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
@@ -74,5 +75,27 @@ class ParticipantTest : StringSpec({
             false
         }
         blackjackGamer.participants.first().getCurrentGamerState() shouldBe GamerCurrentState.STAND
+    }
+
+    "승 무 패가 잘 출력된다" {
+        // 참가자는 13, 14, 15
+        val blackJackCardsThirteen =
+            GamerCards(mutableListOf(Card(CardNumber.A, CardShape.CLOVER), Card(CardNumber.TWO, CardShape.CLOVER)))
+        val participantWithThirteen = Participant.newInstance(name = "pita", cards = blackJackCardsThirteen)
+        val blackJackCardsFourteen =
+            GamerCards(mutableListOf(Card(CardNumber.A, CardShape.CLOVER), Card(CardNumber.THREE, CardShape.CLOVER)))
+        val participantWithFourteen = Participant.newInstance(name = "haero", cards = blackJackCardsFourteen)
+        val blackJackCardsFifteen =
+            GamerCards(mutableListOf(Card(CardNumber.A, CardShape.CLOVER), Card(CardNumber.FOUR, CardShape.CLOVER)))
+        val participantWithFifteen = Participant.newInstance(name = "wan", cards = blackJackCardsFifteen)
+
+        // 딜런느 14
+        val dealerCardsFourteen =
+            GamerCards(mutableListOf(Card(CardNumber.A, CardShape.CLOVER), Card(CardNumber.THREE, CardShape.CLOVER)))
+        val dealer = Dealer.newInstance(dealerCardsFourteen)
+
+        participantWithThirteen.createParticipantResult(dealer).resultState shouldBe ParticipantResultState.LOSE
+        participantWithFourteen.createParticipantResult(dealer).resultState shouldBe ParticipantResultState.DRAW
+        participantWithFifteen.createParticipantResult(dealer).resultState shouldBe ParticipantResultState.WIN
     }
 })
