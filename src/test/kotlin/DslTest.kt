@@ -29,15 +29,19 @@ class DslTest {
         val person = introduce {
             name(name)
             company("블루버드")
-            skills(introduceSkill {
-                softSkills("A passion for problem solving")
-                softSkills("Good communication skills")
-                hardSkills("Kotlin")
-            })
-            language(introduceLanguage {
-                language("Korean" to 5)
-                language("English" to 3)
-            })
+            skills(
+                introduceSkill {
+                    softSkills("A passion for problem solving")
+                    softSkills("Good communication skills")
+                    hardSkills("Kotlin")
+                }
+            )
+            language(
+                introduceLanguage {
+                    language("Korean" to 5)
+                    language("English" to 3)
+                }
+            )
         }
 
         println(person)
