@@ -18,7 +18,7 @@ private fun playerCardStatus(player: Player): String {
 }
 
 private fun cardToString(card: Card): String {
-    return "${card.num.mark}${card.suit.inKorean}"
+    return "${card.num}${card.suit.inKorean}"
 }
 
 fun printResult(players: List<Player>) {
