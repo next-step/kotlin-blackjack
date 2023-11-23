@@ -4,10 +4,6 @@ import blackjack.domain.card.Card
 import blackjack.domain.cards.HandCards
 
 data class Hand(val handCards: HandCards) {
-    init {
-        require(handCards.size == 2) { "Hand should be initialized with 2 cards" }
-    }
-
     fun addCard(card: Card) {
         handCards.add(card)
     }
