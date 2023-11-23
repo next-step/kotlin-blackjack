@@ -1,13 +1,12 @@
 import blackjack.Card
 import blackjack.CardShuffleStrategy
-import blackjack.ContinueDeal
 import blackjack.DefaultGameBlackjack
 import blackjack.GameBlackjack
-import blackjack.GameDealer
-import blackjack.GamePlayer
-import blackjack.GamePlayers
+import blackjack.GameCardDealer
+import blackjack.GameParticipants
 import blackjack.Message
-import blackjack.PrintProxyBlackjack
+import blackjack.InputOutputProxyBlackjack
+import blackjack.InputOutputStrategy
 import view.Input
 import view.Output
 
@@ -22,28 +21,27 @@ fun main() {
             }
             .shuffled()
     }
-    val gameDealer = GameDealer(cardShuffleStrategy)
+    val gameCardDealer = GameCardDealer(cardShuffleStrategy)
 
     Output.printMessage(Message.INPUT_PLAYER_NAMES)
     val playerNames = Input.getLine()
-    val gameBlackjack: GameBlackjack = PrintProxyBlackjack(DefaultGameBlackjack(gameDealer))
+    val gameBlackjack: GameBlackjack = InputOutputProxyBlackjack(
+        DefaultGameBlackjack(gameCardDealer),
+        InputOutputStrategy()
+    )
 
     val playing = gameBlackjack.initialDealing(playerNames)
-    Output.printPlayersInitialDealing(playing)
+    Output.printParticipantsInitialDealing(playing)
 
     val updatedPlayers = playing.players.map {
-        dealing(it, gameBlackjack)
+        gameBlackjack.continueDealing(it)
     }
+    val updatedDealer = gameBlackjack.continueDealing(playing.dealer)
 
-    Output.printPlayersResult(GamePlayers(updatedPlayers))
-}
+    val gameParticipants = GameParticipants(updatedPlayers, updatedDealer)
+    Output.printParticipantResult(gameParticipants)
 
-tailrec fun dealing(player: GamePlayer, gameBlackjack: GameBlackjack): GamePlayer {
-    if (player.isBust) return player
-    Output.printPlayerAction(player)
-    return when (ContinueDeal.of(Input.getLine())) {
-        ContinueDeal.YES -> dealing(gameBlackjack.continueDealing(player), gameBlackjack)
-        ContinueDeal.MISS -> player
-        ContinueDeal.NO -> player
-    }
+    val gameParticipantResults = gameParticipants.calcMatchResult()
+
+    Output.printGameParticipantResults(gameParticipantResults)
 }

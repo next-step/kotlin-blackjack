@@ -103,6 +103,7 @@ class SkillsBuilder {
     fun soft(name: String) {
         soft.add(Skill.Soft(name))
     }
+
     fun hard(name: String) {
         hard.add(Skill.Hard(name))
     }
@@ -114,10 +115,12 @@ data class Skills(
     val soft: List<Skill>,
     val hard: List<Skill>
 )
+
 sealed class Skill {
     data class Hard(val name: String) : Skill()
     data class Soft(val name: String) : Skill()
 }
+
 data class Languages(val languages: List<Language>)
 data class Language(val name: String, val level: Int)
 data class Person(val name: String, val company: String?, val skills: Skills?, val languages: Languages?)
