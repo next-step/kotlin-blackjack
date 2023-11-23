@@ -1,14 +1,12 @@
 package blackjack.model
 
 import blackjack.model.pack.Pack
-import blackjack.view.InputView
-import blackjack.view.OutputView
 
 class Player(
     val name: String,
     val cards: Cards = Cards.emptyCards(),
 ) : Playable {
-    fun deal(pack: Pack) {
+    override fun dealing(pack: Pack) {
         cards.add(pack.pickCard())
         cards.add(pack.pickCard())
     }
@@ -21,10 +19,10 @@ class Player(
         return this.cards.totalScore()
     }
 
-    fun playing(pack: Pack) {
-        if (InputView.askHit(this)) {
-            this.hit(pack)
-        }
-        OutputView.playerCardPresent(this)
-    }
+//    fun playing(pack: Pack) {
+//        if (InputView.askHit(this)) {
+//            this.hit(pack)
+//        }
+//        OutputView.playerCardPresent(this)
+//    }
 }

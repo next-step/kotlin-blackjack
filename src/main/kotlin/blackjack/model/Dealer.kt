@@ -6,6 +6,15 @@ class Dealer(
     val cards: Cards = Cards(),
 ) : Playable {
 
+    override fun score(): Int {
+        return cards.totalScore()
+    }
+
+    override fun dealing(pack: Pack) {
+        this.cards.add(pack.pickCard())
+        this.cards.add(pack.pickCard())
+    }
+
     private fun isDealerHit(): Boolean {
         return cards.totalScore() <= DEALER_PICK_THRESHOLD
     }
@@ -14,9 +23,6 @@ class Dealer(
         return cards.count()
     }
 
-    override fun score(): Int {
-        return cards.totalScore()
-    }
 
     fun playing(pack: Pack): Boolean {
         if (isDealerHit()) {
