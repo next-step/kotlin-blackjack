@@ -16,6 +16,7 @@ class GameManager(
         players.forEach { it.drawCard(cardDeck.draw(FIRST_DRAW)) }
 
         outputManager.printFirstTurn(players)
+        outputManager.printPlayersCards(players)
     }
 
     private fun joinPlayers() {

@@ -1,13 +1,15 @@
 package blackjack.card
 
-import java.util.ArrayDeque
-
 class CardDeck {
+    private var deck: ArrayDeque<BlackJackCard>
     init {
-        initNormalCard()
-        initPictureCard()
-        initAceCard()
-        deck.shuffled()
+        val list = mutableListOf<BlackJackCard>()
+        initNormalCard(list)
+        initPictureCard(list)
+        initAceCard(list)
+
+        list.shuffle()
+        deck = ArrayDeque(list)
     }
 
     fun getSize(): Int {
@@ -15,26 +17,27 @@ class CardDeck {
     }
 
     fun draw(drawNumber: Int): List<BlackJackCard> {
-        return (1..drawNumber).map { deck.pop() }.toList()
+        require(deck.size >= drawNumber) { EMPTY_DECK_ERROR_MESSAGE }
+        return (1..drawNumber).map { deck.removeFirst() }.toList()
     }
 
     companion object {
-        private val deck: ArrayDeque<BlackJackCard> = ArrayDeque()
-        private fun initNormalCard() {
+        private const val EMPTY_DECK_ERROR_MESSAGE: String = "카드 덱이 모두 소진되었습니다."
+        private fun initNormalCard(list: MutableList<BlackJackCard>) {
             CardPattern.values().forEach {
-                (2..10).forEach { number -> deck.add(NormalCard(number, it)) }
+                (2..10).forEach { number -> list.add(NormalCard(number, it)) }
             }
         }
 
-        private fun initPictureCard() {
+        private fun initPictureCard(list: MutableList<BlackJackCard>) {
             CardPattern.values().forEach {
-                CardPicture.values().forEach { picture -> deck.add(PictureCard(picture, it)) }
+                CardPicture.values().forEach { picture -> list.add(PictureCard(picture, it)) }
             }
         }
 
-        private fun initAceCard() {
+        private fun initAceCard(list: MutableList<BlackJackCard>) {
             CardPattern.values().forEach {
-                deck.add(AceCard(it))
+                list.add(AceCard(it))
             }
         }
     }
