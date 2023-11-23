@@ -18,12 +18,7 @@ object BlackjackController {
 
         BlackjackOutputView.printInitialCards(participants)
 
-        players.forEach {
-            while (!it.isFinished() && it.isHit()) {
-                it.receiveCard(deck.draw())
-                BlackjackOutputView.printCards(it)
-            }
-        }
+        players.forEach { action(it, deck) }
 
         BlackjackOutputView.printResult(participants)
     }
@@ -32,6 +27,13 @@ object BlackjackController {
         participants.forEach {
             it.receiveCard(deck.draw())
             it.receiveCard(deck.draw())
+        }
+    }
+
+    private fun action(player: Player, deck: Deck) {
+        while (!player.isFinished() && player.isHit()) {
+            player.receiveCard(deck.draw())
+            BlackjackOutputView.printCards(player)
         }
     }
 
