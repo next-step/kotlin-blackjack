@@ -15,17 +15,19 @@ class Cards(val cards: MutableList<Card>) {
     fun calculateTotalScore(): Int {
         val sumWithoutAces = cards.filter { it.rank != Rank.ACE }.sumOf { it.rank.score }
         val aceCount = cards.count { it.rank == Rank.ACE }
-        // 하나의 ACE를 11로 계산했을 때의 추가 점수
-        val additionalAceScore = Rank.ACE.otherScore + (aceCount - 1) * Rank.ACE.score
+        val extraAceScore = Rank.ACE.otherScore + (aceCount - 1) * Rank.ACE.score
 
-        val aceScore = if (aceCount > 0 && sumWithoutAces + additionalAceScore <= MAX_SCORE) {
-            additionalAceScore
+        val aceScore = if (isExtraAceScore(aceCount, sumWithoutAces, extraAceScore)) {
+            extraAceScore
         } else {
             aceCount * Rank.ACE.score
         }
 
         return sumWithoutAces + aceScore
     }
+
+    private fun isExtraAceScore(aceCount: Int, sumWithoutAces: Int, additionalAceScore: Int) =
+        aceCount > 0 && sumWithoutAces + additionalAceScore <= MAX_SCORE
 
     fun addCard(card: Card) = cards.add(card)
 
