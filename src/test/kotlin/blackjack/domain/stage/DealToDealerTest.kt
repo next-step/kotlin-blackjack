@@ -36,7 +36,7 @@ class DealToDealerTest : DescribeSpec({
             game.setDistributor(dealToDealer)
             dealer.hitOrStand() shouldBe Action.HIT
 
-            val result = dealToDealer(game, game.table)
+            val result = dealToDealer(game.table) { distributor -> game.setDistributor(distributor) }
 
             it("딜러는 카드 한 장을 더 받는다") {
                 game.table.dealer.hand.cards.size shouldBe 3
@@ -62,7 +62,7 @@ class DealToDealerTest : DescribeSpec({
             game.setDistributor(dealToDealer)
             dealer.hitOrStand() shouldBe Action.STAND
 
-            val result = dealToDealer(game, game.table)
+            val result = dealToDealer(game.table) { distributor -> game.setDistributor(distributor) }
 
             it("딜러는 카드를 받지 않는다") {
                 game.table.dealer.hand.cards.size shouldBe 2

@@ -7,12 +7,12 @@ import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeTypeOf
 
 class DealInitialCardsTest : DescribeSpec({
-    val game = BlackJackGame(InputProcessorMock())
-    val table = BlackJackGame(InputProcessorMock()).table
     describe("dealCards") {
         context("첫 카드 배분 스테이지를 진행시키면") {
-            val dealCards = DealInitialCards()
-            dealCards(game, table)
+            val game = BlackJackGame(InputProcessorMock())
+            val table = game.table
+            val dealInitialCards = DealInitialCards()
+            dealInitialCards(table) { distributor -> game.setDistributor(distributor) }
 
             it("플레이어마다 2장의 카드 수령") {
                 table.players.all.forEach { player ->

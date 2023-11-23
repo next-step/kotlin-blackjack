@@ -5,5 +5,5 @@ import blackjack.domain.player.Players
 
 data class DealInitialCardResult(
     val dealer: Dealer,
-    val players: Players
+    val players: Players,
 ) : Result()

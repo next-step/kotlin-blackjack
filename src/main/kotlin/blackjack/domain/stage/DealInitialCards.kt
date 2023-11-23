@@ -1,15 +1,17 @@
 package blackjack.domain.stage
 
-import blackjack.domain.BlackJackGame
 import blackjack.domain.GameTable
 import blackjack.domain.result.DealInitialCardResult
 
 class DealInitialCards : CardDistributor {
 
-    override fun invoke(game: BlackJackGame, table: GameTable): DealInitialCardResult {
+    override fun invoke(
+        table: GameTable,
+        decideDistributor: (distributor: CardDistributor) -> Unit
+    ): DealInitialCardResult {
         table.dealToAll(INITIAL_DISTRIBUTION_COUNT)
-        game.setDistributor(DealToPlayer())
-        return DealInitialCardResult(game.table.dealer, game.table.players)
+        decideDistributor(DealToPlayer())
+        return DealInitialCardResult(table.dealer, table.players)
     }
 
     companion object {

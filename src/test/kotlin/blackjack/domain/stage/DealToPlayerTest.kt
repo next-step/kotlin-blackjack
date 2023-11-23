@@ -26,7 +26,7 @@ class DealToPlayerTest : DescribeSpec({
 
             val dealToPlayer = DealToPlayer()
             game.setDistributor(dealToPlayer)
-            dealToPlayer(game, game.table)
+            dealToPlayer(game.table) { distributor -> game.setDistributor(distributor) }
 
             it("플레이어의 카드는 증가") {
                 game.table.players.inTurn.hand.cards.size shouldBe handCount + 1
@@ -52,7 +52,7 @@ class DealToPlayerTest : DescribeSpec({
             context("카드 배분시 첫번째 플레이어가 STAND을 한 경우") {
                 val dealToPlayer = DealToPlayer()
                 game.setDistributor(dealToPlayer)
-                dealToPlayer(game, game.table)
+                dealToPlayer(game.table) { distributor -> game.setDistributor(distributor) }
 
                 it("게임의 다음 상태는 다음 플레이어 배분 차례") {
                     game.dealCards.shouldBeTypeOf<DealToPlayer>()
@@ -64,11 +64,11 @@ class DealToPlayerTest : DescribeSpec({
                 }
             }
 
-            context("카드 배분시 첫번째 플레이어가 STAND을 한 경우") {
+            context("카드 배분시 두 번째 플레이어가 STAND을 한 경우") {
                 game.table.players.inTurn.name shouldBe PlayerName("nextPlayer")
                 val dealToPlayer = DealToPlayer()
                 game.setDistributor(dealToPlayer)
-                dealToPlayer(game, game.table)
+                dealToPlayer(game.table) { distributor -> game.setDistributor(distributor) }
 
                 it("딜러 카드 배분 차례") {
                     game.dealCards.shouldBeTypeOf<DealToDealer>()

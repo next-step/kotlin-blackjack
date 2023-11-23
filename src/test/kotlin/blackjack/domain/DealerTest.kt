@@ -148,8 +148,4 @@ class DealerTest : DescribeSpec({
             }
         }
     }
-
-    describe("dealCardToDealer") {
-
-    }
 })
