@@ -8,7 +8,7 @@ abstract class Participant {
         cards.add(card)
     }
 
-    fun isFinished(): Boolean {
+    fun isBust(): Boolean {
         return cards.calculateScore() >= Game.BLACKJACK_SCORE
     }
 }

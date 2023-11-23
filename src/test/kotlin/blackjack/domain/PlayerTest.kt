@@ -29,7 +29,7 @@ class PlayerTest {
             receiveCard(card3)
         }
 
-        val actual = player.isFinished()
+        val actual = player.isBust()
 
         assertThat(actual).isTrue()
     }
@@ -45,7 +45,7 @@ class PlayerTest {
             receiveCard(card2)
         }
 
-        val actual = player.isFinished()
+        val actual = player.isBust()
 
         assertThat(actual).isFalse()
     }

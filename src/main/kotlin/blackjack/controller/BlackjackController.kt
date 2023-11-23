@@ -34,7 +34,7 @@ object BlackjackController {
     }
 
     private fun action(player: Player) {
-        while (!player.isFinished() && player.isHit()) {
+        while (!player.isBust() && player.isHit()) {
             player.receiveCard(Deck.draw())
             BlackjackOutputView.printCards(player)
         }

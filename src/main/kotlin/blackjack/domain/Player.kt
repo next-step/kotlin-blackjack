@@ -6,10 +6,10 @@ class Player(
     override val cards: Cards = Cards()
 
     fun isWin(): Boolean {
-        if (isFinished()) {
+        if (isBust()) {
             return false
         }
-        if (Dealer.isFinished()) {
+        if (Dealer.isBust()) {
             return true
         }
         return true
