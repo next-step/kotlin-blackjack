@@ -1,31 +1,31 @@
 package blackjack.view
 
 import blackjack.domain.Card
-import blackjack.domain.Player
+import blackjack.domain.Participant
 import blackjack.domain.Suit
 
 object BlackjackOutputView {
-    fun printInitialCards(players: List<Player>) {
-        println("\n${players.joinToString { it.name }}에게 2장의 카드를 나누었습니다.")
+    fun printInitialCards(participants: List<Participant>) {
+        println("\n${participants.joinToString { it.name }}에게 2장의 카드를 나누었습니다.")
 
-        players.forEach { printCards(it) }
+        participants.forEach { printCards(it) }
         println()
     }
 
-    fun printCards(player: Player) {
-        println("${player.name}카드: ${getPlayerCards(player)}")
+    fun printCards(participant: Participant) {
+        println("${participant.name} 카드: ${getCardsString(participant)}")
     }
 
-    fun printResult(players: List<Player>) {
+    fun printResult(participants: List<Participant>) {
         println()
 
-        players.forEach {
-            println("${it.name}카드: ${getPlayerCards(it)} - 결과: ${it.cards.calculateScore()}")
+        participants.forEach {
+            println("${it.name} 카드: ${getCardsString(it)} - 결과: ${it.cards.calculateScore()}")
         }
     }
 
-    private fun getPlayerCards(player: Player): String {
-        return player.cards
+    private fun getCardsString(participant: Participant): String {
+        return participant.cards
             .get()
             .joinToString { it.toOutputString() }
     }

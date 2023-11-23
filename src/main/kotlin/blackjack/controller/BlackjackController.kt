@@ -1,6 +1,8 @@
 package blackjack.controller
 
+import blackjack.domain.Dealer
 import blackjack.domain.Deck
+import blackjack.domain.Participant
 import blackjack.domain.Player
 import blackjack.view.BlackjackInputView
 import blackjack.view.BlackjackOutputView
@@ -9,11 +11,12 @@ object BlackjackController {
     fun handle() {
         val namesInput = BlackjackInputView.readPlayerNamesInput()
         val players = namesInput.map { Player(it) }
+        val participants = listOf(Dealer) + players
         val deck = Deck()
 
-        drawInitialCards(players, deck)
+        drawInitialCards(participants, deck)
 
-        BlackjackOutputView.printInitialCards(players)
+        BlackjackOutputView.printInitialCards(participants)
 
         players.forEach {
             while (!it.isFinished() && it.isHit()) {
@@ -22,11 +25,11 @@ object BlackjackController {
             }
         }
 
-        BlackjackOutputView.printResult(players)
+        BlackjackOutputView.printResult(participants)
     }
 
-    private fun drawInitialCards(players: List<Player>, deck: Deck) {
-        players.forEach {
+    private fun drawInitialCards(participants: List<Participant>, deck: Deck) {
+        participants.forEach {
             it.receiveCard(deck.draw())
             it.receiveCard(deck.draw())
         }
