@@ -8,7 +8,7 @@ import org.junit.jupiter.params.provider.ValueSource
 class PersonTest {
     @ParameterizedTest
     @ValueSource(strings = ["홍길동", "김철수"])
-    fun introduce(name: String){
+    fun introduce(name: String) {
         val person = introduce {
             name(name)
         }
