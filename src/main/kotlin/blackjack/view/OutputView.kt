@@ -12,6 +12,10 @@ object OutputView {
         println("${nickname}카드: $cards")
     }
 
+    fun printEmptyLine() {
+        println()
+    }
+
     fun printGameScore(
         nickname: String,
         cards: String,

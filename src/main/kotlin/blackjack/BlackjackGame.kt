@@ -8,7 +8,6 @@ import blackjack.view.InputView
 import blackjack.view.OutputView
 
 class BlackjackGame {
-
     private var dealer: Dealer
     private var players: Players
     private var nicknames: List<String> = InputView.getNicknames()
@@ -32,9 +31,17 @@ class BlackjackGame {
                 it.cards.value.joinToString(", ") { card -> card.toString() }
             )
         }
+    }
 
-        process(dealer, players)
+    fun process() {
+        OutputView.printEmptyLine()
+        while (players.withHit().isNotEmpty()) {
+            players.withHit().first().playGame(dealer)
+        }
+    }
 
+    fun showResult() {
+        OutputView.printEmptyLine()
         players.values.forEach {
             OutputView.printGameScore(
                 nickname = it.name,
@@ -42,14 +49,6 @@ class BlackjackGame {
                 score = it.getScore()
             )
         }
-    }
-
-    private fun process(dealer: Dealer, players: Players) {
-        println()
-        while (players.withHit().isNotEmpty()) {
-            players.withHit().first().playGame(dealer)
-        }
-        println()
     }
 
     private fun Player.playGame(dealer: Dealer) {
@@ -63,5 +62,8 @@ class BlackjackGame {
 }
 
 fun main() {
-    BlackjackGame().start()
+    val game = BlackjackGame()
+    game.start()
+    game.process()
+    game.showResult()
 }
