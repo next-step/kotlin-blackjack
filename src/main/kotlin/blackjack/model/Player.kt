@@ -1,6 +1,8 @@
 package blackjack.model
 
 import blackjack.model.pack.Pack
+import blackjack.view.InputView
+import blackjack.view.OutputView
 
 class Player(
     val name: String,
@@ -17,5 +19,12 @@ class Player(
 
     override fun score(): Int {
         return this.cards.totalScore()
+    }
+
+    override fun playing(pack: Pack) {
+        if (InputView.askHit(this)) {
+            this.hit(pack)
+        }
+        OutputView.playerCardPresent(this)
     }
 }

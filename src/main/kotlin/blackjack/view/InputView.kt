@@ -3,6 +3,7 @@ package blackjack.view
 import blackjack.model.Dealer
 import blackjack.model.Participants
 import blackjack.model.Player
+import blackjack.model.Players
 
 object InputView {
     private const val PLAYER_NAMES_DELIMITER: String = ","
@@ -11,10 +12,12 @@ object InputView {
 
     private fun joinPlayers(input: String): Participants {
         return Participants(
-            input.split(PLAYER_NAMES_DELIMITER)
-                .asSequence()
-                .map { Player(it) }
-                .toSet(),
+            Players(
+                input.split(PLAYER_NAMES_DELIMITER)
+                    .asSequence()
+                    .map { Player(it) }
+                    .toSet()
+            ),
             Dealer()
         )
     }

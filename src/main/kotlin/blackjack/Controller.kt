@@ -18,7 +18,7 @@ fun main() {
 }
 
 fun playingBlackJack(participants: Participants) {
-    participants.players.forEach {
+    participants.players.values.forEach {
         it.hitOrStand()
     }
 }

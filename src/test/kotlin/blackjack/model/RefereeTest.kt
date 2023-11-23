@@ -60,7 +60,7 @@ class RefereeTest : StringSpec({
                 )
             )
         )
-        val participants = Participants(setOf(player1, player2), dealer)
+        val participants = Participants(Players(player1, player2), dealer)
         val actual = Referee.blackJackResult(participants)
 
         actual.dealerResult().point shouldBe 22

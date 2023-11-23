@@ -15,7 +15,7 @@ class DealerTest : StringSpec({
                 )
             )
         )
-        dealer.play(ShuffledPack)
+        dealer.playing(ShuffledPack)
         dealer.countOfCards() shouldBe 3
     }
 
@@ -28,7 +28,7 @@ class DealerTest : StringSpec({
                 )
             )
         )
-        dealer.play(ShuffledPack)
+        dealer.playing(ShuffledPack)
         dealer.countOfCards() shouldBe 2
     }
 })

@@ -8,27 +8,50 @@ object Referee {
         return playable.score() >= BLACK_JACK_SCORE
     }
 
-
     fun blackJackResult(participants: Participants): ParticipantResults {
         if (isBlackJackScoreOver(participants.dealer)) {
             // 1) 딜러가 21을 넘어 모든 플레이어가 승리한 상황
-            ParticipantResults.ofDealerLose(participants)
+            return ParticipantResults.ofDealerLose(participants)
         }
-        if (isWinDealer()) {
-            // 2) 딜러가 승리한 상황
-            //return ParticipantResults
-            TODO("딜러가 이긴상황")
-        }
+        val playerResults = getPlayerResults(participants)
+        return ParticipantResults(
+            playerResults = playerResults,
+            dealerDealerResult = getDealerResult(participants, playerResults)
+        )
+        // 2) 딜러가 승리한 상황
         // 3) 플레이어중 하나가 승리하고, 딜러가 패배한 상황
-        TODO("플레이어가 이긴상황")
-        //return ParticipantResults.of(participants)
+        // 4) 플러이어중 하나 승리, 하나 비긴, 하나 패배 딜러
     }
 
-    private fun isWinDealer(): Boolean {
-        TODO("Not yet implemented")
+    private fun getDealerResult(
+        participants: Participants,
+        playerResults: PlayersResults
+    ): Pair<Dealer, DealerResult> {
+        val dealerScore = participants.dealer.score()
+        return participants.dealer to DealerResult(
+            dealerScore,
+            playerResults.winningCount(),
+            playerResults.drawingCount(),
+            playerResults.loseCount()
+        )
+    }
+
+    private fun getPlayerResults(participants: Participants): PlayersResults {
+        val dealerScore = participants.dealer.score()
+        return PlayersResults(participants.players.scoreBattle(dealerScore))
     }
 
     private fun isBlackJackScoreOver(dealer: Dealer): Boolean {
         return dealer.score() > BLACK_JACK_SCORE
+    }
+
+    fun playerResult(player: Player, dealerScore: Int): PlayerResult {
+        if (player.score() == dealerScore) {
+            return PlayerResult.DRAW
+        }
+        if (player.score() > dealerScore) {
+            return PlayerResult.WIN
+        }
+        return PlayerResult.LOSE
     }
 }

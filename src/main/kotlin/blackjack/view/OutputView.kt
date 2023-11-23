@@ -29,13 +29,13 @@ object OutputView {
 }
 
 private fun Participants.present(): String {
-    return this.players.joinToString(separator = "\n") { it.present() }
+    return this.players.values.joinToString(separator = "\n") { it.present() }
 }
 
 private fun Participants.presentWithScore(): String {
-    return this.players.joinToString(separator = "\n") { "${it.present()} - 결과: ${it.cards.totalScore()}" }
+    return this.players.values.joinToString(separator = "\n") { "${it.present()} - 결과: ${it.cards.totalScore()}" }
 }
 
 private fun Participants.names(): String {
-    return players.joinToString(separator = InputView.PARTICIPANTS_PRESENT_SEPARATOR) { it.name }
+    return players.values.joinToString(separator = InputView.PARTICIPANTS_PRESENT_SEPARATOR) { it.name }
 }
