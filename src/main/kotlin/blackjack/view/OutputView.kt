@@ -1,39 +1,59 @@
 package blackjack.view
 
+import blackjack.model.ParticipantResults
 import blackjack.model.Participants
 import blackjack.model.Player
-import blackjack.view.Console.present
+import blackjack.view.Console.presentDealers
+import blackjack.view.Console.presentPlayers
 
 object OutputView {
 
     fun presentCards(participants: Participants) {
-        println(participants.present())
+        println(participants.presentDealer())
+        println(participants.presentPlayers())
     }
 
-    fun result(participants: Participants) {
+    fun presentScores(participants: Participants) {
         presentCardsWitScore(participants)
     }
 
     private fun presentCardsWitScore(participants: Participants) {
-        println()
-        println(participants.presentWithScore())
+        print(System.lineSeparator())
+        println(participants.presentDealerWithScore())
+        println(participants.presentPlayerWithScore())
     }
 
     fun dealing(participants: Participants) {
-        println("${participants.names()} 에게 2 장씩 나누었습니다.")
+        println("딜러와 ${participants.names()} 에게 2 장씩 나누었습니다.")
     }
 
     fun playerCardPresent(it: Player) {
-        println(it.present())
+        println(it.presentPlayers())
+    }
+
+    fun presentResult(blackJackResult: ParticipantResults) {
+        println("## 최종 승패")
+        println("딜러 ${blackJackResult.dealerWinCount()}승 ${blackJackResult.dealerLoseCount()}패")
+        blackJackResult.playerResults
+            .playerResult()
+            .forEach { println("${it.first}: ${it.second}") }
     }
 }
 
-private fun Participants.present(): String {
-    return this.players.values.joinToString(separator = "\n") { it.present() }
+private fun Participants.presentPlayers(): String {
+    return this.players.values.joinToString(separator = "\n") { it.presentPlayers() }
 }
 
-private fun Participants.presentWithScore(): String {
-    return this.players.values.joinToString(separator = "\n") { "${it.present()} - 결과: ${it.cards.totalScore()}" }
+private fun Participants.presentDealer(): String {
+    return this.dealer.presentDealers()
+}
+
+private fun Participants.presentDealerWithScore(): String {
+    return "${this.dealer.presentDealers()} - 결과: ${this.dealer.score()}"
+}
+
+private fun Participants.presentPlayerWithScore(): String {
+    return this.players.values.joinToString(separator = "\n") { "${it.presentPlayers()} - 결과: ${it.cards.totalScore()}" }
 }
 
 private fun Participants.names(): String {

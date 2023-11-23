@@ -12,6 +12,14 @@ class ParticipantResults(
         return playerResults.resultOfPlayer(player)
     }
 
+    fun dealerWinCount(): Int {
+        return this.dealerDealerResult.second.winning
+    }
+
+    fun dealerLoseCount(): Int {
+        return this.dealerDealerResult.second.losing
+    }
+
     companion object {
         fun ofDealerLose(participants: Participants): ParticipantResults {
             return ParticipantResults(

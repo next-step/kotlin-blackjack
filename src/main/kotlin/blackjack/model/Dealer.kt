@@ -18,10 +18,12 @@ class Dealer(
         return cards.totalScore()
     }
 
-    override fun playing(pack: Pack) {
+    fun playing(pack: Pack): Boolean {
         if (isDealerHit()) {
             cards.add(pack.pickCard())
+            return true
         }
+        return false
     }
 
     companion object {

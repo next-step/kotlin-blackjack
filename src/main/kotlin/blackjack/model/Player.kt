@@ -21,7 +21,7 @@ class Player(
         return this.cards.totalScore()
     }
 
-    override fun playing(pack: Pack) {
+    fun playing(pack: Pack) {
         if (InputView.askHit(this)) {
             this.hit(pack)
         }
