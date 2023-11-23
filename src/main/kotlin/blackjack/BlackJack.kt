@@ -4,14 +4,15 @@ import blackjack.model.*
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
-
 class BlackJack {
     fun start() {
         val playerNames = InputView.getPlayerName()
         val cardDealer = CardDealer(CardDeck());
         val players = Players(playerNames.toPlayerList(cardDealer))
+        val gameDealer = GameDealer(CardHand(cardDealer.getCards()))
 
-        OutputView.renderPlayers(players.playerList)
+        OutputView.renderInitMessage(playerNames)
+        OutputView.renderPlayers(players.playerList + gameDealer)
 
         players.playerList.forEach {
             playGameWithEachPlayer(it, cardDealer)

@@ -1,20 +1,24 @@
 package blackjack.view
 
+import blackjack.CardHolder
 import blackjack.model.CardHand
 import blackjack.model.GameResult
 import blackjack.model.Player
 
 object OutputView {
-    fun renderPlayers(players: List<Player>) {
-        players.forEach {
+    fun renderInitMessage(playerNames: List<String>) {
+        println("딜러와 ${playerNames.joinToString(", ")}에게 2장의 나누었습니다.")
+    }
+    fun renderPlayers(holders: List<CardHolder>) {
+        holders.forEach {
             renderPlayer(it, ::println)
         }
     }
 
-    fun renderPlayer(player: Player, printer: (Message: Any) -> Unit) {
+    fun renderPlayer(holder: CardHolder, printer: (message: Any) -> Unit) {
         printer(
-            "${player.name}카드: ${
-                getCardString(player.cardHand)
+            "${holder.name}카드: ${
+                getCardString(holder.cardHand)
             }"
         )
     }
