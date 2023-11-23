@@ -1,6 +1,8 @@
 package blackjack
 
+import blackjack.model.DealerStrategy
 import blackjack.model.Participants
+import blackjack.model.PlayableReaction
 import blackjack.model.Player
 import blackjack.model.Referee
 import blackjack.model.pack.ShuffledPack
@@ -21,17 +23,18 @@ fun main() {
 
 fun playingBlackJack(participants: Participants) {
     participants.players.values.forEach {
-        it.hitOrStand()
+        it.playing(InputView.askHit(it), ShuffledPack)
     }
-    when (participants.dealer.playing(ShuffledPack)) {
-        true -> println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
-        false -> println("딜러는 17이상이라 카드를 받지 않았습니다.")
+    when (participants.dealer.playing(DealerStrategy(participants.dealer.score()), ShuffledPack)) {
+        PlayableReaction.HIT -> println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
+        PlayableReaction.STAND -> println("딜러는 17이상이라 카드를 받지 않았습니다.")
     }
 }
 
 private fun Player.hitOrStand() {
-    if (InputView.askHit(this)) {
-        this.hit(ShuffledPack)
-    }
-    OutputView.playerCardPresent(this)
+
+//    if () {
+//        this.hit(ShuffledPack)
+//    }
+//    OutputView.playerCardPresent(this)
 }

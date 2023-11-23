@@ -12,7 +12,11 @@ class Player(
     }
 
     override fun playing(playingStrategy: PlayingStrategy, pack: Pack): PlayableReaction {
-        TODO("Not yet implemented")
+        if (playingStrategy.isHit()) {
+            this.hit(pack)
+            return PlayableReaction.HIT
+        }
+        return PlayableReaction.STAND
     }
 
     fun hit(pack: Pack) {
@@ -22,11 +26,4 @@ class Player(
     override fun score(): Int {
         return this.cards.totalScore()
     }
-
-//    fun playing(pack: Pack) {
-//        if (InputView.askHit(this)) {
-//            this.hit(pack)
-//        }
-//        OutputView.playerCardPresent(this)
-//    }
 }

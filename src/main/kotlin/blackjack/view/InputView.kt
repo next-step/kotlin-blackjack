@@ -4,6 +4,9 @@ import blackjack.model.Dealer
 import blackjack.model.Participants
 import blackjack.model.Player
 import blackjack.model.Players
+import blackjack.model.PlayingStrategy
+import blackjack.model.playable.HitStrategy
+import blackjack.model.playable.StandStrategy
 
 object InputView {
     private const val PLAYER_NAMES_DELIMITER: String = ","
@@ -31,8 +34,11 @@ object InputView {
         return (readlnOrNull() ?: "") == HIT_COMMAND
     }
 
-    fun askHit(it: Player): Boolean {
+    fun askHit(it: Player): PlayingStrategy {
         println("${it.name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
-        return this.isHitInput()
+        if (this.isHitInput()) {
+            return HitStrategy
+        }
+        return StandStrategy
     }
 }

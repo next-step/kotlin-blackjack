@@ -15,28 +15,17 @@ class Dealer(
         this.cards.add(pack.pickCard())
     }
 
-
-
     fun countOfCards(): Int {
         return cards.count()
     }
 
     override fun playing(playingStrategy: PlayingStrategy, pack: Pack): PlayableReaction {
-        TODO("Not yet implemented")
-
-    }
-    private fun isDealerHit(): Boolean {
-        return cards.totalScore() <= DEALER_PICK_THRESHOLD
-    }
-    fun playing(pack: Pack): Boolean {
-        if (isDealerHit()) {
+        if (playingStrategy.isHit()) {
             cards.add(pack.pickCard())
-            return true
+            return PlayableReaction.HIT
         }
-        return false
+        return PlayableReaction.STAND
     }
-    ///
-
 
     companion object {
         private const val DEALER_PICK_THRESHOLD = 16
