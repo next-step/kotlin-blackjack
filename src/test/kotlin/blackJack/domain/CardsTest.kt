@@ -1,7 +1,14 @@
 package blackJack.domain
 
-import blackJack.domain.Rank.*
-import blackJack.domain.Suit.*
+import blackJack.domain.Rank.ACE
+import blackJack.domain.Rank.KING
+import blackJack.domain.Rank.QUEEN
+import blackJack.domain.Rank.THREE
+import blackJack.domain.Rank.TWO
+import blackJack.domain.Suit.CLUB
+import blackJack.domain.Suit.DIAMOND
+import blackJack.domain.Suit.HEART
+import blackJack.domain.Suit.SPADE
 import blackJack.error.ErrorMessage
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
