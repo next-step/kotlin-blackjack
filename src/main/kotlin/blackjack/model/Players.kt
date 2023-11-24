@@ -1,6 +1,8 @@
 package blackjack.model
 
 import blackjack.model.pack.Pack
+import blackjack.model.playable.impl.Player
+import blackjack.model.result.PlayerResult
 
 class Players(
     val values: Set<Player>,

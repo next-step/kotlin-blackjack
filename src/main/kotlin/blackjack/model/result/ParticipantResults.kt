@@ -1,4 +1,8 @@
-package blackjack.model
+package blackjack.model.result
+
+import blackjack.model.Participants
+import blackjack.model.playable.impl.Dealer
+import blackjack.model.playable.impl.Player
 
 class ParticipantResults(
     val playerResults: PlayersResults,

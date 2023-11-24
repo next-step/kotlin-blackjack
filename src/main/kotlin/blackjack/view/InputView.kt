@@ -1,12 +1,12 @@
 package blackjack.view
 
-import blackjack.model.Dealer
 import blackjack.model.Participants
-import blackjack.model.Player
 import blackjack.model.Players
-import blackjack.model.PlayingStrategy
-import blackjack.model.playable.HitStrategy
-import blackjack.model.playable.StandStrategy
+import blackjack.model.playable.impl.Dealer
+import blackjack.model.playable.impl.Player
+import blackjack.model.playblestrategy.PlayingStrategy
+import blackjack.model.playblestrategy.impl.HitStrategy
+import blackjack.model.playblestrategy.impl.StandStrategy
 
 object InputView {
     private const val PLAYER_NAMES_DELIMITER: String = ","

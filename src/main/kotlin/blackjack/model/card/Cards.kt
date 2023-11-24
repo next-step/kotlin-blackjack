@@ -1,4 +1,4 @@
-package blackjack.model
+package blackjack.model.card
 
 class Cards(
     cards: List<Card> = emptyList(),

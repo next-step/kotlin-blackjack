@@ -1,4 +1,4 @@
-package blackjack.model
+package blackjack.model.card
 
 @JvmInline
 value class Trump(

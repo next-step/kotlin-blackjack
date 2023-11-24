@@ -1,4 +1,6 @@
-package blackjack.model
+package blackjack.model.playblestrategy.impl
+
+import blackjack.model.playblestrategy.PlayingStrategy
 
 class DealerStrategy(
     private val currentScore: Int,

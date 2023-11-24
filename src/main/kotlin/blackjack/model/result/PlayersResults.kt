@@ -1,4 +1,6 @@
-package blackjack.model
+package blackjack.model.result
+
+import blackjack.model.playable.impl.Player
 
 class PlayersResults(
     private val value: Map<Player, PlayerResult>,

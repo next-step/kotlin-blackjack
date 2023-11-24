@@ -1,8 +1,8 @@
 package blackjack.model.pack
 
-import blackjack.model.Card
-import blackjack.model.CardRank
-import blackjack.model.Suit
+import blackjack.model.card.Card
+import blackjack.model.card.CardRank
+import blackjack.model.card.Suit
 import kotlin.random.Random
 
 object ShuffledPack : Pack {

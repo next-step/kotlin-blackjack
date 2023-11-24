@@ -1,8 +1,8 @@
 package blackjack.view
 
-import blackjack.model.ParticipantResults
 import blackjack.model.Participants
-import blackjack.model.Player
+import blackjack.model.playable.impl.Player
+import blackjack.model.result.ParticipantResults
 import blackjack.view.Console.presentDealers
 import blackjack.view.Console.presentPlayers
 

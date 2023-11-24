@@ -1,6 +1,7 @@
-package blackjack.model
+package blackjack.model.playable
 
 import blackjack.model.pack.Pack
+import blackjack.model.playblestrategy.PlayingStrategy
 
 interface Playable {
     fun score(): Int

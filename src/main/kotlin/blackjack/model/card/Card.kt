@@ -1,4 +1,4 @@
-package blackjack.model
+package blackjack.model.card
 
 class Card private constructor(
     val suit: Suit,
@@ -14,7 +14,7 @@ class Card private constructor(
         }
 
         fun of(suit: Suit, cardRank: CardRank): Card {
-            return requireNotNull(this.CARDS[Trump(suit to cardRank)]) { "입력된 suit=[$suit] , cardRank=[$cardRank] 는 찾을수 없습니다" }
+            return requireNotNull(CARDS[Trump(suit to cardRank)]) { "입력된 suit=[$suit] , cardRank=[$cardRank] 는 찾을수 없습니다" }
         }
     }
 }

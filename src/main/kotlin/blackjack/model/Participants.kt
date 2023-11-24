@@ -1,6 +1,7 @@
 package blackjack.model
 
 import blackjack.model.pack.Pack
+import blackjack.model.playable.impl.Dealer
 
 class Participants(
     val players: Players,

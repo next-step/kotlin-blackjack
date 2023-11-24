@@ -1,4 +1,4 @@
-package blackjack.model
+package blackjack.model.result
 
 data class DealerResult(
     val point: Int,
