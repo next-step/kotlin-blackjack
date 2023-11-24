@@ -11,11 +11,13 @@ import blackjack.view.printResult
 import blackjack.view.printUserCardInfo
 
 fun main() {
-    // 참가자 명단 입력
-    val players = inputNames().map { Player(it) }
-
-    // 딜러 생성, 초기카드 분배
+    // 딜러 생성
     val dealer = Dealer()
+
+    // 참가자 명단 입력
+    val players = listOf(dealer) + inputNames().map { Player(it) }
+
+    // 초기 카드 분배
     repeat(INITIAL_CARD_COUNT) {
         players.forEach { dealer.supplyCard(it) }
     }
