@@ -24,14 +24,14 @@ class DefaultGameBlackjackTest : BehaviorSpec({
             Then("딜러가 2장의 카드를 각각 배분하며 딜러도 포함한다.") {
                 playing shouldBe GameParticipants(
                     listOf(
-                        GameParticipant.Player(
+                        GameParticipantPlayer(
                             name = "test1",
                             cards = listOf(
                                 Card(Card.Symbol.HEART, Card.Number.ACE),
                                 Card(Card.Symbol.HEART, Card.Number.TWO)
                             )
                         ),
-                        GameParticipant.Player(
+                        GameParticipantPlayer(
                             name = "test2",
                             cards = listOf(
                                 Card(Card.Symbol.HEART, Card.Number.THREE),
@@ -39,7 +39,7 @@ class DefaultGameBlackjackTest : BehaviorSpec({
                             )
                         )
                     ),
-                    GameParticipant.Dealer(
+                    GameParticipantDealer(
                         name = "딜러",
                         cards = listOf(
                             Card(Card.Symbol.HEART, Card.Number.NINE),

@@ -18,14 +18,14 @@ class GameParticipantTest : BehaviorSpec({
             Card(Symbol.SPADE, Number.TEN),
             Card(Symbol.SPADE, Number.TWO),
         )
-        val gamePlayer = GameParticipant.Player(
+        val gamePlayer = GameParticipantPlayer(
             "test",
             cards
         )
         val dealer1 = GameCardDealer(cardShuffleStrategy)
         Then("카드가 한 장 추가된다.") {
             val updatedPlayer = gamePlayer.receiveCard(dealer1.deal())
-            updatedPlayer shouldBe GameParticipant.Player(
+            updatedPlayer shouldBe GameParticipantPlayer(
                 "test",
                 listOf(
                     Card(Symbol.SPADE, Number.TEN),
@@ -36,7 +36,7 @@ class GameParticipantTest : BehaviorSpec({
         }
 
         When("카드의 합이 21을 초과한다면") {
-            val bustPlayer = GameParticipant.Player(
+            val bustPlayer = GameParticipantPlayer(
                 "test",
                 listOf(
                     Card(Symbol.SPADE, Number.TWO),
@@ -47,7 +47,7 @@ class GameParticipantTest : BehaviorSpec({
             val bustDealer = GameCardDealer(cardShuffleStrategy)
             Then("버스트가 된다") {
                 val updatedPlayer = bustPlayer.receiveCard(bustDealer.deal())
-                updatedPlayer shouldBe GameParticipant.Player(
+                updatedPlayer shouldBe GameParticipantPlayer(
                     name = "test",
                     cards = listOf(
                         Card(Symbol.SPADE, Number.TWO),
@@ -62,7 +62,7 @@ class GameParticipantTest : BehaviorSpec({
 
     Given("참가자에는 플레이어와 딜러가 있으며") {
         When("플레이어는 21점과 동일하거나 초과하면") {
-            val same = GameParticipant.Player(
+            val same = GameParticipantPlayer(
                 "test",
                 listOf(
                     Card(Symbol.HEART, Number.NINE),
@@ -70,7 +70,7 @@ class GameParticipantTest : BehaviorSpec({
                     Card(Symbol.HEART, Number.TWO),
                 )
             )
-            val exceeded = GameParticipant.Player(
+            val exceeded = GameParticipantPlayer(
                 "test",
                 listOf(
                     Card(Symbol.HEART, Number.NINE),
@@ -85,7 +85,7 @@ class GameParticipantTest : BehaviorSpec({
         }
 
         When("딜러는 16점을 초과하면") {
-            val exceeded = GameParticipant.Dealer(
+            val exceeded = GameParticipantDealer(
                 "test",
                 listOf(
                     Card(Symbol.HEART, Number.NINE),

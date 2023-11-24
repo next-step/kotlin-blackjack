@@ -8,33 +8,25 @@ class InputOutputProxyBlackjack(
     override fun initialDealing(playerNames: String): GameParticipants =
         target.initialDealing(playerNames)
 
-    override fun continueDealing(player: GameParticipant): GameParticipant {
-        val updatedParticipant = when (player) {
-            is GameParticipant.Dealer -> dealerDealing(player)
-            is GameParticipant.Player -> playerDealing(player)
+    override fun continueDealing(player: GameParticipantPlayer): GameParticipantPlayer =
+        playerDealing(player).also {
+            inputOutputStrategy.printParticipantCards(it)
         }
 
-        if (player is GameParticipant.Player) {
-            inputOutputStrategy.printParticipantCards(updatedParticipant)
-        }
-        return updatedParticipant
-    }
-
-    private fun dealerDealing(participant: GameParticipant): GameParticipant {
-        return if (participant.isNotAllowedDealing()) participant
+    override fun continueDealing(dealer: GameParticipantDealer): GameParticipantDealer =
+        if (dealer.isNotAllowedDealing()) dealer
         else {
             inputOutputStrategy.printDealerDealing()
-            target.continueDealing(participant)
+            target.continueDealing(dealer)
         }
-    }
 
-    private tailrec fun playerDealing(participant: GameParticipant): GameParticipant {
-        if (participant.isNotAllowedDealing()) return participant
-        inputOutputStrategy.printParticipantAction(participant)
+    private tailrec fun playerDealing(player: GameParticipantPlayer): GameParticipantPlayer {
+        if (player.isNotAllowedDealing()) return player
+        inputOutputStrategy.printParticipantAction(player)
         return when (ContinueDeal.of(inputOutputStrategy.getLine())) {
-            ContinueDeal.YES -> playerDealing(target.continueDealing(participant))
-            ContinueDeal.MISS -> playerDealing(participant)
-            ContinueDeal.NO -> participant
+            ContinueDeal.YES -> playerDealing(target.continueDealing(player))
+            ContinueDeal.MISS -> playerDealing(player)
+            ContinueDeal.NO -> player
         }
     }
 }

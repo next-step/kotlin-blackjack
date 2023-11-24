@@ -2,46 +2,23 @@ package blackjack
 
 import blackjack.GameBlackjack.Companion.BLACKJACK_MAX_SCORE
 
-sealed class GameParticipant(
+abstract class GameParticipant(
     val name: String,
     val cards: List<Card> = emptyList()
 ) {
     val isBust: Boolean
         get() = getScore() > BLACKJACK_MAX_SCORE
 
-    class Player(
-        name: String,
-        cards: List<Card> = emptyList()
-    ) : GameParticipant(name, cards) {
-        override fun isNotAllowedDealing(): Boolean = this.isBust || this.isBlackjack() || this.isSameMaxScore()
-    }
-
-    class Dealer(
-        name: String = NAME,
-        cards: List<Card> = emptyList()
-    ) : GameParticipant(name, cards) {
-        override fun isNotAllowedDealing(): Boolean = getScore() > CONTINUE_DEALING_SCORE
-
-        companion object {
-            const val NAME = "딜러"
-            private const val CONTINUE_DEALING_SCORE = 16
-        }
-    }
-
     operator fun compareTo(other: GameParticipant) = this.getScore() - other.getScore()
 
     abstract fun isNotAllowedDealing(): Boolean
+
+    abstract fun receiveCard(card: Card): GameParticipant
 
     fun isBlackjack(): Boolean =
         cards.size == 2 && cards.any { it.number == Card.Number.ACE } && cards.any { it.number.value == Card.Number.TEN.value }
 
     fun isSameMaxScore() = getScore() == BLACKJACK_MAX_SCORE
-
-    fun receiveCard(card: Card): GameParticipant =
-        Player(
-            name = this.name,
-            cards = this.cards + card
-        )
 
     fun getScore(): Int = if (isContainsAce()) getSoftScore() else getHardScore()
 
@@ -71,5 +48,35 @@ sealed class GameParticipant(
         result = 31 * result + cards.hashCode()
         result = 31 * result + isBust.hashCode()
         return result
+    }
+}
+
+
+class GameParticipantPlayer(
+    name: String,
+    cards: List<Card> = emptyList()
+) : GameParticipant(name, cards) {
+    override fun isNotAllowedDealing(): Boolean = this.isBust || this.isBlackjack() || this.isSameMaxScore()
+
+    override fun receiveCard(card: Card): GameParticipantPlayer = GameParticipantPlayer(
+        name = this.name,
+        cards = this.cards + card
+    )
+}
+
+class GameParticipantDealer(
+    name: String = NAME,
+    cards: List<Card> = emptyList()
+) : GameParticipant(name, cards) {
+    override fun isNotAllowedDealing(): Boolean = getScore() > CONTINUE_DEALING_SCORE
+
+    override fun receiveCard(card: Card): GameParticipantDealer = GameParticipantDealer(
+        name = this.name,
+        cards = this.cards + card
+    )
+
+    companion object {
+        const val NAME = "딜러"
+        private const val CONTINUE_DEALING_SCORE = 16
     }
 }

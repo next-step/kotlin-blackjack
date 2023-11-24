@@ -3,6 +3,7 @@ package view
 import blackjack.Card
 import blackjack.GameBlackjack.Companion.PLAYER_NAME_DELIMITER
 import blackjack.GameParticipant
+import blackjack.GameParticipantDealer
 import blackjack.GameParticipantPlayerResult
 import blackjack.GameParticipantResults
 import blackjack.GameParticipants
@@ -63,7 +64,7 @@ object Output {
             }
             PRINT_PLAYER_RESULT_MESSAGE.format(it.name, it.matchResult.message)
         }
-        val dealerMessage = PRINT_DEALER_RESULT_MESSAGE.format(GameParticipant.Dealer.NAME, win, loss)
+        val dealerMessage = PRINT_DEALER_RESULT_MESSAGE.format(GameParticipantDealer.NAME, win, loss)
         println(dealerMessage)
         printMessage(playersMessage)
     }

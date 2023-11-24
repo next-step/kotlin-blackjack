@@ -1,8 +1,8 @@
 package blackjack
 
 data class GameParticipants(
-    val players: List<GameParticipant>,
-    val dealer: GameParticipant
+    val players: List<GameParticipantPlayer>,
+    val dealer: GameParticipantDealer
 ) {
     val participants = players + dealer
 

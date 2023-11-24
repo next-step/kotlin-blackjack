@@ -7,14 +7,14 @@ class GameParticipantsTest : BehaviorSpec({
 
     Given("플레이어 2명과 딜러가 존재하고") {
         val players = listOf(
-            GameParticipant.Player(
+            GameParticipantPlayer(
                 "winner",
                 listOf(
                     Card(Card.Symbol.HEART, Card.Number.JACK),
                     Card(Card.Symbol.HEART, Card.Number.KING)
                 )
             ),
-            GameParticipant.Player(
+            GameParticipantPlayer(
                 "loser",
                 listOf(
                     Card(Card.Symbol.SPADE, Card.Number.TWO),
@@ -23,7 +23,7 @@ class GameParticipantsTest : BehaviorSpec({
             ),
         )
         When("딜러가 두 명의 플레이어에게 각각 이기고 진다면") {
-            val dealer = GameParticipant.Dealer(
+            val dealer = GameParticipantDealer(
                 "dealer",
                 listOf(
                     Card(Card.Symbol.DIAMOND, Card.Number.JACK),
@@ -39,7 +39,7 @@ class GameParticipantsTest : BehaviorSpec({
             }
         }
         When("딜러가 버스트한다면") {
-            val dealer = GameParticipant.Dealer(
+            val dealer = GameParticipantDealer(
                 "dealer",
                 listOf(
                     Card(Card.Symbol.DIAMOND, Card.Number.JACK),

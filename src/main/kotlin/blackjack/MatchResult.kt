@@ -1,6 +1,6 @@
 package blackjack
 
-typealias CompareScore = (GameParticipant, GameParticipant) -> Boolean
+typealias CompareScore = (GameParticipantPlayer, GameParticipantDealer) -> Boolean
 
 enum class MatchResult(
     val message: String,
@@ -11,8 +11,8 @@ enum class MatchResult(
     ;
 
     companion object {
-        fun of(player: GameParticipant, other: GameParticipant) =
-            MatchResult.values().find { it.compare(player, other) }
+        fun of(player: GameParticipantPlayer, dealer: GameParticipantDealer) =
+            MatchResult.values().find { it.compare(player, dealer) }
                 ?: throw RuntimeException()
     }
 }
