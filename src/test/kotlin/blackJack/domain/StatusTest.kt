@@ -24,10 +24,10 @@ class StatusTest {
     }
 
     @Test
-    fun `점수가 21 이고 카드 갯수가 2개가 아니면 HIT 상태를 반환`() {
+    fun `점수가 21 이고 카드 갯수가 2개가 아니면 STAND 상태를 반환`() {
         val cards = Cards(mutableListOf(Card(DIAMOND, ACE ), Card(HEART, EIGHT), Card(CLUB, TWO)))
         val status = Status.calculateStatus(cards.calculateTotalScore(), cards.cardSize)
-        assertEquals(HIT, status)
+        assertEquals(STAND, status)
     }
 
     @Test

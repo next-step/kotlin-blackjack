@@ -12,6 +12,7 @@ enum class Status {
             return when {
                 score > 21 -> BUST
                 score == 21 && cardSize == 2 -> BLACKJACK
+                score == 21 -> STAND
                 else -> HIT
             }
         }

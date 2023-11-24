@@ -39,24 +39,27 @@ class PlayerTest {
 
     @Test
     fun `Status 가 HIT 이고 Answer 가 'y' 이면 카드를 계속해서 추가가 가능하다`() {
-        val player = Player("pobi", dealer.initialCards(1).poll(), HIT)
-        player.addCard(dealer.cardDeck)
+        val player = Player("pobi", dealer.initialCards(), HIT)
+        val card = dealer.drawCard()
+        player.addCard(card)
         assertEquals(3, player.cards.cards.size)
     }
 
     @Test
     fun `Status 가 BUST 이고 Answer 가 'y' 이면 카드를 계속해서 추가가 불가능하다`() {
-        val player = Player("pobi", dealer.initialCards(1).poll(), BUST)
+        val player = Player("pobi", dealer.initialCards(), BUST)
         assertThrows<IllegalArgumentException> {
-            player.addCard(dealer.cardDeck)
+            val card = dealer.drawCard()
+            player.addCard(card)
         }
     }
 
     @Test
     fun `Status 가 BLACKJACK 이고 Answer 가 'y' 이면 카드를 계속해서 추가가 불가능하다`() {
-        val player = Player("pobi", dealer.initialCards(1).poll(), BLACKJACK)
+        val player = Player("pobi", dealer.initialCards(), BLACKJACK)
         assertThrows<IllegalArgumentException> {
-            player.addCard(dealer.cardDeck)
+            val card = dealer.drawCard()
+            player.addCard(card)
         }
     }
 
@@ -69,5 +72,12 @@ class PlayerTest {
 
         assertEquals(2, player.cards.cardSize)
         assertEquals(HIT, player.status)
+    }
+
+    @Test
+    fun `stop() 을 호출하면 status 가 STAND 로 바뀐다`() {
+        val player = Player(name = "pobi", status = HIT)
+        player.gameStop()
+        assertEquals(Status.STAND, player.status)
     }
 }

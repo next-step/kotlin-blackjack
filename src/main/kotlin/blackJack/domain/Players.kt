@@ -8,8 +8,8 @@ class Players(val players: List<Player>) {
         require(players.isNotEmpty()) { ErrorMessage.EMPTY_PLAYERS.message }
     }
 
-    fun receiveInitialCards(cardDecks: Queue<Cards>) {
-        players.forEach { it.receiveInitialCards(cardDecks.poll()) }
+    fun receiveInitialCards(initialCards: () -> Cards) {
+        players.forEach { it.receiveInitialCards(initialCards.invoke()) }
     }
 
     companion object {

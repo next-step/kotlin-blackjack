@@ -9,9 +9,8 @@ class Player(val name: String, val cards: Cards = Cards(mutableListOf()), var st
         require(name.isNotEmpty()) { ErrorMessage.EMPTY_NAME.message }
     }
 
-    fun addCard(cardDeck: Cards) {
+    fun addCard(card: Card) {
         Status.validationAddCard(status)
-        val card = cardDeck.drawCard()
         cards.addCard(card)
         status = Status.calculateStatus(cards.calculateTotalScore(), cards.cardSize)
     }
@@ -22,9 +21,11 @@ class Player(val name: String, val cards: Cards = Cards(mutableListOf()), var st
         status = Status.calculateStatus(cards.calculateTotalScore(), cards.cardSize)
     }
 
-    fun isContinued(answer: String) = answer == "y"
+    fun isContinued() = status == HIT
 
     fun getTotalScore(): Int = cards.calculateTotalScore()
+
+    fun gameStop() { status = Status.STAND }
 
     companion object {
         fun splitNames(inputNames: String): List<String> {

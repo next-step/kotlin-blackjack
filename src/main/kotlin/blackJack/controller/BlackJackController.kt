@@ -1,7 +1,6 @@
 package blackJack.controller
 
 import blackJack.domain.CardDeck
-import blackJack.domain.Cards
 import blackJack.domain.Dealer
 import blackJack.domain.Player
 import blackJack.domain.Players
@@ -20,40 +19,38 @@ fun main() {
     OutputView.printPlayer(playerList)
 
     val players: Players = Players.createPlayers(playerList)
-    val initialCards = dealer.initialCards(playerList.size)
-    players.receiveInitialCards(initialCards)
+    players.receiveInitialCards { dealer.initialCards() }
 
     val playersDto = PlayersDto(players)
     OutputView.printPlayerCards(playersDto)
 
-    val finishGamePlayers = players.players
-        .map {
-            val player = playGame(it, dealer.cardDeck)
-            PlayerDto(player, player.getTotalScore())
-        }
+    val finishGamePlayers = players.players.map {
+        playGame(it, dealer)
+        PlayerDto(it, it.getTotalScore())
+    }
     val playersResult = PlayersDto(finishGamePlayers)
     OutputView.printResult(playersResult)
 }
 
-private fun playGame(player: Player, cardDeck: Cards): Player {
-    var answer = promptForAction(player)
-
-    if (answer == "n") {
+private fun playGame(player: Player, dealer: Dealer) {
+    while (player.isContinued()) {
+        val isContinue = isReadyPlayer(player)
+        continueGame(isContinue, player, dealer)
         OutputView.printPlayerCard(PlayerDto(player))
-        return player
     }
-
-    while (player.isContinued(answer)) {
-        player.addCard(cardDeck)
-        OutputView.printPlayerCard(PlayerDto(player))
-        answer = promptForAction(player)
-    }
-
-    return player
 }
 
-private fun promptForAction(player: Player): String {
+private fun isReadyPlayer(player: Player): Boolean {
     val playerDto = PlayerDto(player)
     OutputView.printQuestionYesOrNo(playerDto)
-    return InputView.answerYesOrNo()
+    return InputView.answerYesOrNo() == "y"
+}
+
+private fun continueGame(isContinue: Boolean, player: Player, dealer: Dealer) {
+    if (isContinue) {
+        val card = dealer.drawCard()
+        player.addCard(card)
+    } else {
+        player.gameStop()
+    }
 }
