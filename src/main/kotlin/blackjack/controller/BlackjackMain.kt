@@ -7,7 +7,8 @@ import blackjack.view.askForDraw
 import blackjack.view.inputNames
 import blackjack.view.printDealerDrawsMore
 import blackjack.view.printInitialSupply
-import blackjack.view.printResult
+import blackjack.view.printResults
+import blackjack.view.printScores
 import blackjack.view.printUserCardInfo
 
 fun main() {
@@ -27,13 +28,24 @@ fun main() {
     players.forEach { printUserCardInfo(it, true) }
 
     // 각 사용자의 추가 draw 진행
-    players.forEach { if (it !is Dealer) drawWhileUserWants(it, dealer) }
+    players.filter { it !is Dealer }
+        .forEach { drawWhileUserWants(it, dealer) }
 
     // 딜러의 추가 draw 진행
     drawForDealer(dealer)
 
-    // 결과 출력
-    printResult(players)
+    // 최종점수 계산
+    players.forEach { it.setFinalScore() }
+
+    // 점수 출력
+    printScores(players)
+
+    // 플레이어 승패 계산
+    players.filter { it !is Dealer }
+        .forEach { it.setResult(dealer.getFinalScore()) }
+
+    // 승자 출력
+    printResults(dealer, players.filter { it !is Dealer })
 }
 
 private fun drawForDealer(dealer: Dealer) {
