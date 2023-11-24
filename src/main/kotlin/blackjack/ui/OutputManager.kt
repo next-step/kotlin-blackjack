@@ -17,6 +17,14 @@ class OutputManager {
         }
     }
 
+    fun printPlayerCards(player: Player) {
+        println("${player.name}: ${parsingCardsToString(player.cards)}")
+    }
+
+    fun printPlayerResultGame(player: Player, score: Int ) {
+        println("${player.name} 카드: ${parsingCardsToString(player.cards)} - 결과: ${score}")
+    }
+
     private fun parsingCardsToString(cards: List<BlackJackCard>): String {
         return cards.joinToString(", ") { it.toString() }
     }
