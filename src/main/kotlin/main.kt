@@ -1,54 +1,32 @@
-import blackjack.BlackJack
-import blackjack.entity.ParticipantCards
-import blackjack.entity.ParticipantState
-import blackjack.entity.participantsFromNames
-import blackjack.ui.InputView
-import blackjack.ui.OutputView
-import blackjack.ui.printer.ParticipantPrinter
+import blackjack_dealer.BlackJack
+import blackjack_dealer.BlackJackResultBoard
+import blackjack_dealer.domain.Dealer
+import blackjack_dealer.entity.BlackJackGamer
+import blackjack_dealer.entity.CardDeque
+import blackjack_dealer.entity.Participants
+import blackjack_dealer.ui.InputView
+import blackjack_dealer.ui.OutputView
 
 fun main() {
-    // PHASE 1
-    OutputView.printEnterParticipantsName()
-    val participantName = InputView.inputParticipantName()
-    OutputView.printParticipantsName(participantName)
+    OutputView.enterParticipantsName()
+    val participantsName = InputView.inputParticipantsName()
+    val cardDeque = CardDeque().create()
 
-    // PHASE 2
-    val cardDeque = ParticipantCards.createCardDeque()
-    val participants = participantName.participantsFromNames(cardDeque)
-    OutputView.printParticipantsCard(participants)
+    val participants = Participants.newInstance(participantsName) { cardDeque.generateDoubleCard() }
+    val dealer = Dealer.newInstance(cardDeque.generateDoubleCard())
+    OutputView.printDivideCardsToGamer(dealer, participants)
 
-    // PHASE 3
-    val result = participants.map { participant ->
-        var resultText = ""
-        var temporary = participant
+    OutputView.printGamersInformation(dealer, participants)
 
-        // 처음 상태에서 BUST, STAND 일 순 없다. BLACK JACK이면 다음 map 으로
-        if (temporary.participantState is ParticipantState.BLACKJACK) {
-            resultText = ParticipantPrinter.print(participant)
-            return
-        }
+    val canJoinParticipants = participants.getParticipantsCanPlayGame()
+    val blackJackGamer = BlackJackGamer(dealer = dealer, participants = canJoinParticipants)
+    val blackJack = BlackJack(cardDeque = cardDeque, blackJackGamer = blackJackGamer)
+    blackJack.doGame { InputView.inputGetOneMoreCard() }
 
-        while (true) {
-            val blackJack = BlackJack(cardDeque, temporary)
+    OutputView.printResult(dealer, participants)
 
-            // while문 한바퀴 돈 이후 체크하여 게임 끝낸다
-            if (temporary.participantState !is ParticipantState.HIT) break
-            OutputView.printGetOneMoreCard(participantName = participant.name)
-            val input = participant.askWantToGetOneMoreCard { InputView.inputGetMoreCard() }
-
-            // 여기 이후로 스탠드일 수 있음. 스탠드를 고르면 게임 끝
-            if (participant.participantState is ParticipantState.STAND) {
-                resultText = ParticipantPrinter.print(temporary)
-                break
-            }
-            blackJack.doBlackJack(input)
-                .also {
-                    OutputView.printNewCards(it)
-                    resultText = ParticipantPrinter.print(it)
-                    temporary = it
-                }
-        }
-        resultText
-    }
-    OutputView.printResult(result)
+    OutputView.printFinalResultBoard()
+    val totalResult = BlackJackResultBoard.getBlackJackResult(dealer, participants)
+    OutputView.printFinalDealerResult(totalResult.dealerResult)
+    OutputView.printFinalParticipantsResult(totalResult.participantsResult)
 }

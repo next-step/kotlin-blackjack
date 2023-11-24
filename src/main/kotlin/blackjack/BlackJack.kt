@@ -13,7 +13,6 @@ class BlackJack(
         return if (canKeepGoing) participant.drawCard(newCard) else participant
     }
 
-
     companion object {
         private const val GENERATE_SINGLE_CARD = 1
     }
