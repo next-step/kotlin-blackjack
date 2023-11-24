@@ -24,7 +24,7 @@ object BlackjackController {
         }
 
         BlackjackOutputView.printCardResult(participants)
-        BlackjackOutputView.printGameResult(Dealer, players)
+        BlackjackOutputView.printGameResult(players)
     }
 
     private fun drawInitialCards(participants: List<Participant>) {

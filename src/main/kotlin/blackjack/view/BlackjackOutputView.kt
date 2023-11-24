@@ -32,7 +32,7 @@ object BlackjackOutputView {
         }
     }
 
-    fun printGameResult(dealer: Dealer, players: List<Player>) {
+    fun printGameResult(players: List<Player>) {
         println("\n## 최종 승패")
 
         val playerResults = players.map {
