@@ -1,9 +1,12 @@
-package blackJack.domain
+package blackJack.domain.player
 
-import blackJack.domain.Status.HIT
+import blackJack.domain.card.Card
+import blackJack.domain.card.Cards
+import blackJack.domain.enums.Status
+import blackJack.domain.enums.Status.HIT
 import blackJack.error.ErrorMessage
 
-class Player(val name: String, val cards: Cards = Cards(mutableListOf()), var status: Status = HIT) {
+class Player(val name: String, val cards: Cards = Cards(emptyList()), var status: Status = HIT){
 
     init {
         require(name.isNotEmpty()) { ErrorMessage.EMPTY_NAME.message }

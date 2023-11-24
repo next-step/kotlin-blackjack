@@ -1,5 +1,6 @@
-package blackJack.domain
+package blackJack.domain.player
 
+import blackJack.domain.card.Cards
 import blackJack.error.ErrorMessage
 
 class Players(val players: List<Player>) {

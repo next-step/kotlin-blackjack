@@ -1,5 +1,7 @@
-package blackJack.domain
+package blackJack.domain.card
 
+import blackJack.domain.enums.Rank
+import blackJack.domain.enums.Suit
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 

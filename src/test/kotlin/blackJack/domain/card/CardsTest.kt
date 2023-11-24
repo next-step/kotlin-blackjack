@@ -1,14 +1,15 @@
-package blackJack.domain
+package blackJack.domain.card
 
-import blackJack.domain.Rank.ACE
-import blackJack.domain.Rank.KING
-import blackJack.domain.Rank.QUEEN
-import blackJack.domain.Rank.THREE
-import blackJack.domain.Rank.TWO
-import blackJack.domain.Suit.CLUB
-import blackJack.domain.Suit.DIAMOND
-import blackJack.domain.Suit.HEART
-import blackJack.domain.Suit.SPADE
+import blackJack.domain.enums.Rank.ACE
+import blackJack.domain.enums.Rank.KING
+import blackJack.domain.enums.Rank.QUEEN
+import blackJack.domain.enums.Rank.THREE
+import blackJack.domain.enums.Rank.TWO
+import blackJack.domain.enums.Suit.CLUB
+import blackJack.domain.enums.Suit.DIAMOND
+import blackJack.domain.enums.Suit.HEART
+import blackJack.domain.enums.Suit.SPADE
+import blackJack.domain.player.Dealer
 import blackJack.error.ErrorMessage
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
@@ -23,7 +24,7 @@ class CardsTest {
     @BeforeEach
     fun setUp() {
         cardDeck = CardDeck.createShuffledDeck()
-        dealer = Dealer(cardDeck)
+        dealer = Dealer("Dealer")
     }
 
     @Test

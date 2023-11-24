@@ -1,4 +1,4 @@
-package blackJack.domain
+package blackJack.domain.enums
 
 enum class Rank(val shape: String, val score: Int, val otherScore: Int = 0) {
     ACE("A", 1, 11),

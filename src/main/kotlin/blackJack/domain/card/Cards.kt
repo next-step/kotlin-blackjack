@@ -1,5 +1,6 @@
-package blackJack.domain
+package blackJack.domain.card
 
+import blackJack.domain.enums.Rank
 import blackJack.error.ErrorMessage
 
 class Cards(cards: List<Card>) {
@@ -15,6 +16,10 @@ class Cards(cards: List<Card>) {
     fun drawCard(): Card {
         require(_cards.isNotEmpty()) { ErrorMessage.EMPTY_CARDS.message }
         return _cards.removeAt(0)
+    }
+
+    fun initialCards(): Cards {
+        return Cards(List(CardDeck.INIT_CARD_COUNT) { drawCard() })
     }
 
     fun calculateTotalScore(): Int {

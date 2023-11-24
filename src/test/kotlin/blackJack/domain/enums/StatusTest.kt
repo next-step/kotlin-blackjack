@@ -1,8 +1,10 @@
-package blackJack.domain
+package blackJack.domain.enums
 
-import blackJack.domain.Rank.*
-import blackJack.domain.Status.*
-import blackJack.domain.Suit.*
+import blackJack.domain.card.Card
+import blackJack.domain.card.Cards
+import blackJack.domain.enums.Rank.*
+import blackJack.domain.enums.Status.*
+import blackJack.domain.enums.Suit.*
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows

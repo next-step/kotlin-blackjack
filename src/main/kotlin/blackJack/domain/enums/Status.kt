@@ -1,4 +1,4 @@
-package blackJack.domain
+package blackJack.domain.enums
 
 enum class Status {
     HIT,
