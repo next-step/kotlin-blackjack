@@ -1,8 +1,6 @@
 package blackJack.domain
 
 import blackJack.error.ErrorMessage
-import java.util.LinkedList
-import java.util.Queue
 
 class Dealer(val cardDeck: Cards) {
 

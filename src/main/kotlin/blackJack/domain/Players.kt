@@ -1,7 +1,6 @@
 package blackJack.domain
 
 import blackJack.error.ErrorMessage
-import java.util.Queue
 
 class Players(val players: List<Player>) {
     init {

@@ -37,7 +37,7 @@ class Cards(cards: List<Card>) {
 
     fun addCard(card: Card) = _cards.add(card)
 
-    fun addAllCard(cards: Cards) = cards._cards.forEach{ _cards.add(it) }
+    fun addAllCard(cards: Cards) = cards._cards.forEach { _cards.add(it) }
 
     companion object {
         const val MAX_SCORE = 21
