@@ -48,25 +48,25 @@ class CardsTest {
     }
 
     @Test
-    fun `카드 스코어의 합을 출력한다`() {
+    fun `3카드와 2카드를 합하면 5 가 출력되어야 한다`() {
         val cards = Cards(mutableListOf(Card(SPADE, THREE), Card(SPADE, TWO)))
         assertEquals(5, cards.calculateTotalScore())
     }
 
     @Test
-    fun `카드 스코어의 합을 출력할 때 ACE가 1의 값을 가져야 하는 경우`() {
+    fun `카드 스코어의 합을 출력할 때 ACE 가 1의 값을 가져야 하는 경우`() {
         val aceOneCards = Cards(mutableListOf(Card(SPADE, ACE), Card(SPADE, QUEEN), Card(SPADE, KING)))
         assertEquals(21, aceOneCards.calculateTotalScore())
     }
 
     @Test
-    fun `카드 스코어의 합을 출력할 때 ACE가 11의 값을 가져야 하는 경우`() {
+    fun `카드 스코어의 합을 출력할 때 ACE 가 11의 값을 가져야 하는 경우`() {
         val aceElevenCards = Cards(mutableListOf(Card(SPADE, ACE), Card(SPADE, TWO)))
         assertEquals(13, aceElevenCards.calculateTotalScore())
     }
 
     @Test
-    fun `카드 스코어의 합을 출력할 때 여러 개의 ACE가 있는 경우`() {
+    fun `카드 스코어의 합을 출력할 때 여러 개의 ACE 가 있는 경우 하나의 ACE 만 11의 값을 가져야 한다`() {
         val multipleAcesCards = Cards(mutableListOf(Card(SPADE, ACE), Card(HEART, ACE), Card(DIAMOND, ACE), Card(CLUB, ACE)))
         assertEquals(14, multipleAcesCards.calculateTotalScore())
     }
