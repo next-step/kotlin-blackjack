@@ -3,10 +3,24 @@
 package blackjack.domain
 
 import io.mockk.every
+import io.mockk.mockkObject
+import io.mockk.unmockkObject
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 class PlayerTest {
+    @BeforeEach
+    fun setUp() {
+        mockkObject(Dealer)
+    }
+
+    @AfterEach
+    fun tearDown() {
+        unmockkObject(Dealer)
+    }
+
     @Test
     fun `플레이어는 카드를 받을 수 있다`() {
         val card = Card(Denomination.ACE, Suit.SPADE)
@@ -85,5 +99,59 @@ class PlayerTest {
         val actual = player.getResult()
 
         assertThat(actual).isEqualTo(PlayerResult.WIN)
+    }
+
+    @Test
+    fun `플레이어의 점수가 딜러의 점수보다 높으면 플레이어가 승리한다`() {
+        val card1 = Card(Denomination.TEN, Suit.SPADE)
+        val card2 = Card(Denomination.TEN, Suit.DIAMOND)
+        val player = Player("a")
+
+        every { Dealer.cards.calculateScore() } returns 19
+
+        player.run {
+            receiveCard(card1)
+            receiveCard(card2)
+        }
+
+        val actual = player.getResult()
+
+        assertThat(actual).isEqualTo(PlayerResult.WIN)
+    }
+
+    @Test
+    fun `플레이어의 점수가 딜러의 점수와 같으면 무승부이다`() {
+        val card1 = Card(Denomination.TEN, Suit.SPADE)
+        val card2 = Card(Denomination.TEN, Suit.DIAMOND)
+        val player = Player("a")
+
+        every { Dealer.cards.calculateScore() } returns 20
+
+        player.run {
+            receiveCard(card1)
+            receiveCard(card2)
+        }
+
+        val actual = player.getResult()
+
+        assertThat(actual).isEqualTo(PlayerResult.DRAW)
+    }
+
+    @Test
+    fun `플레이어의 점수가 딜러의 점수보다 낮으면 플레이어가 패배한다`() {
+        val card1 = Card(Denomination.TEN, Suit.SPADE)
+        val card2 = Card(Denomination.TEN, Suit.DIAMOND)
+        val player = Player("a")
+
+        every { Dealer.cards.calculateScore() } returns 21
+
+        player.run {
+            receiveCard(card1)
+            receiveCard(card2)
+        }
+
+        val actual = player.getResult()
+
+        assertThat(actual).isEqualTo(PlayerResult.LOSE)
     }
 }

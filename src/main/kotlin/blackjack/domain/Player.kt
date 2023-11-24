@@ -5,13 +5,21 @@ class Player(
 ) : Participant() {
     override val cards: Cards = Cards()
 
-    fun isWin(): Boolean {
+    fun getResult(): PlayerResult {
         if (isBust()) {
-            return false
+            return PlayerResult.LOSE
         }
         if (Dealer.isBust()) {
-            return true
+            return PlayerResult.WIN
         }
-        return true
+
+        val playerScore = cards.calculateScore()
+        val dealerScore = Dealer.cards.calculateScore()
+
+        return when {
+            playerScore > dealerScore -> PlayerResult.WIN
+            playerScore == dealerScore -> PlayerResult.DRAW
+            else -> PlayerResult.LOSE
+        }
     }
 }
