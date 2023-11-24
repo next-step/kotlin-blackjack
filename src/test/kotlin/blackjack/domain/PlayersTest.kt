@@ -56,7 +56,6 @@ class PlayersTest {
         assertEquals(expected, playerNames)
     }
 
-
     @Test
     fun `플레이어 중 hit 의사결정을 내린 사람들만 필터링한다`() {
         // given

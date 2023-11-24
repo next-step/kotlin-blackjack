@@ -1,6 +1,8 @@
 package blackjack
 
-import blackjack.domain.*
+import blackjack.domain.Deck
+import blackjack.domain.Player
+import blackjack.domain.Players
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
@@ -40,7 +42,7 @@ class BlackjackGame {
     }
 
     private fun showGameResult() {
-        players.forEach{
+        players.forEach {
             OutputView.printGameScore(it, it.getScore())
         }
     }
