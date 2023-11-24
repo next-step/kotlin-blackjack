@@ -7,24 +7,36 @@ import org.junit.jupiter.api.assertThrows
 
 class CardsTest {
     @Test
-    fun `add 메서드 호출 시 Card 리스트에 특정 카드가 추가되었는지 확인한다`() {
+    fun `addCard 메서드 호출 시 특정 카드가 추가된 새로운 Cards 객체가 생성되는지 확인한다`() {
         // given
-        val cards = Cards()
-        val newCards = Card(
+        val cards = Cards.from()
+        val newCard = Card(
             denomination = Denomination.ACE,
             suit = Suit.SPADES
         )
+
         // when
-        cards.add(newCards)
+        val newCards = cards.addCard(newCard)
+
         // then
-        assertThat(cards.value.contains(newCards))
-        assertEquals(1, cards.value.size)
+        assertThat(newCards.contains(newCard))
+        assertEquals(1, newCards.size)
     }
 
     @Test
-    fun `clear 메서드 호출시 기존 Card 리스트가 모두 비워지는지 확인한다`() {
+    fun `준비된 카드가 모두 소진되었을 경우 dec 메서드 호출시 IllegalStateException이 발생하는지 확인한다`() {
         // given
-        val cards = Cards()
+        val cards = Cards.from()
+
+        assertThrows<IllegalStateException> { // then
+            cards.dec() // when
+        }
+    }
+
+    @Test
+    fun `준비된 카드 한 장의 카드를 뽑아 반환한다`() {
+        // given
+        val cards = Cards.from()
         cards.add(
             Card(
                 denomination = Denomination.ACE,
@@ -37,39 +49,13 @@ class CardsTest {
                 suit = Suit.CLUBS
             )
         )
+
         // when
-        cards.clear()
+        val removedCard = cards.dec()
+
         // then
-        assertEquals(0, cards.value.size)
-    }
-
-    @Test
-    fun `준비된 카드가 모두 소진되었을 경우 dec 메서드 호출시 IllegalStateException이 발생하는지 확인한다`() {
-        // given
-        val cards = Cards()
-
-        assertThrows<IllegalStateException> { // then
-            cards.dec() // when
-        }
-    }
-
-    @Test
-    fun `getFull 메서드 호출 시 52장의 카드가 생성되었는지 확인한다`() {
-        // given
-        val cards = Cards()
-        // when
-        val fullCards = cards.getFull()
-        // then
-        assertEquals(Cards.TOTAL_SIZE, fullCards.value.size)
-    }
-
-    @Test
-    fun `52장의 카드 중 한 장을 뽑으면 51장의 카드가 남는다`() {
-        // given
-        val fullCards = Cards().getFull()
-        // when
-        fullCards.dec()
-        // then
-        assertEquals(Cards.TOTAL_SIZE - 1, fullCards.value.size)
+        assertEquals(1, cards.size)
+        assertEquals(Denomination.ACE, removedCard.denomination)
+        assertEquals(Suit.SPADES, removedCard.suit)
     }
 }

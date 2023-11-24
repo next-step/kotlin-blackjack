@@ -5,7 +5,33 @@ import org.junit.jupiter.api.Test
 
 class PlayersTest {
     @Test
-    fun `player들의 이름과 받은 카드 정보를 반환한다`() {
+    fun `player들은 받은 카드를 나눠가지게 된다`() {
+        // given
+        val players = Players(
+            listOf(
+                Player("player1"),
+                Player("player2"),
+                Player("player3")
+            )
+        )
+
+        // when
+        players.receiveCards(
+            listOf(
+                Card(Suit.SPADES, Denomination.ACE),
+                Card(Suit.HEARTS, Denomination.TEN),
+                Card(Suit.CLUBS, Denomination.TWO),
+            )
+        )
+
+        // then
+        assertEquals("A스페이드", players[0].cards.toString())
+        assertEquals("10하트", players[1].cards.toString())
+        assertEquals("2클로버", players[2].cards.toString())
+    }
+
+    @Test
+    fun `getNames 메서드 호출시 player 닉네임 리스트를 반환한다`() {
         // given
         val players = Players(
             listOf(
@@ -21,23 +47,13 @@ class PlayersTest {
                 Card(Suit.CLUBS, Denomination.TWO),
             )
         )
-        val expected = mapOf(
-            "player1" to listOf(
-                Card(Suit.SPADES, Denomination.ACE)
-            ),
-            "player2" to listOf(
-                Card(Suit.HEARTS, Denomination.TEN)
-            ),
-            "player3" to listOf(
-                Card(Suit.CLUBS, Denomination.TWO)
-            )
-        )
+        val expected = listOf("player1", "player2", "player3")
 
         // when
-        val playerNamesAndCards = players.getPlayerNamesAndCards()
+        val playerNames = players.getNames()
 
         // then
-        assertEquals(expected, playerNamesAndCards)
+        assertEquals(expected, playerNames)
     }
 
 
@@ -53,7 +69,7 @@ class PlayersTest {
         )
 
         // when
-        players.values[0].turnStand()
+        players[0].turnStand()
 
         // then
         assertEquals(2, players.withHit().size)

@@ -1,59 +1,47 @@
 package blackjack
 
-import blackjack.domain.Cards
-import blackjack.domain.Dealer
-import blackjack.domain.Player
-import blackjack.domain.Players
+import blackjack.domain.*
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
 class BlackjackGame {
-    private var dealer: Dealer
-    private var players: Players
-    private var nicknames: List<String> = InputView.getNicknames()
-
-    init {
-        players = Players(nicknames.map { Player(it) })
-        dealer = Dealer()
-        dealer.ready()
-    }
+    private val deck = Deck.of()
+    private val players = Players(
+        InputView.getNicknames().map(::Player)
+    )
 
     fun start() {
-        repeat(Cards.INITIAL_DEAL_SIZE) {
-            val cards = (1..players.size).map { dealer.dealCard() }
+        dealCards()
+        process()
+        showGameResult()
+    }
+
+    private fun dealCards() {
+        repeat(Deck.INITIAL_DEAL_SIZE) {
+            val cards = deck.draw(players.size)
             players.receiveCards(cards)
         }
-        OutputView.printCardDealingHeader(nicknames.joinToString(", "), Cards.INITIAL_DEAL_SIZE)
-
-        players.getPlayerNamesAndCards().forEach { (nickname, cards) ->
-            OutputView.printCardDealing(nickname, cards.joinToString(", ") { card -> card.toString() })
-        }
+        OutputView.printPlayerStates(players, Deck.INITIAL_DEAL_SIZE)
     }
 
-    fun process() {
-        OutputView.printEmptyLine()
+    private fun process() {
         while (players.withHit().isNotEmpty()) {
-            players.withHit().first().playGame(dealer)
+            players.withHit().first().playGame(deck)
         }
     }
 
-    fun showResult() {
-        OutputView.printEmptyLine()
-        players.values.forEach {
-            OutputView.printGameScore(
-                nickname = it.name,
-                cards = it.cards.value.joinToString(", ") { card -> card.toString() },
-                score = it.getScore()
-            )
-        }
-    }
-
-    private fun Player.playGame(dealer: Dealer) {
+    private fun Player.playGame(deck: Deck) {
         if (InputView.askHitOrStand(this.name)) {
-            this.getCard(dealer.dealCard())
-            OutputView.printCardDealing(this.name, this.cards.value.joinToString(",") { card -> card.toString() })
+            this.getCard(deck.draw())
+            OutputView.printPlayerState(this)
         } else {
             this.turnStand()
+        }
+    }
+
+    private fun showGameResult() {
+        players.forEach{
+            OutputView.printGameScore(it, it.getScore())
         }
     }
 }
@@ -61,6 +49,4 @@ class BlackjackGame {
 fun main() {
     val game = BlackjackGame()
     game.start()
-    game.process()
-    game.showResult()
 }

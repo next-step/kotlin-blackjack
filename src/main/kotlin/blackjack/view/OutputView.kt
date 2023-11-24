@@ -1,26 +1,23 @@
 package blackjack.view
 
+import blackjack.domain.Player
+import blackjack.domain.Players
+
 object OutputView {
-    fun printCardDealingHeader(
-        nicknames: String,
-        numOfCards: Int
-    ) {
-        println("\n${nicknames}에게 ${numOfCards}장의 나누었습니다.")
-    }
-
-    fun printCardDealing(nickname: String, cards: String) {
-        println("${nickname}카드: $cards")
-    }
-
-    fun printEmptyLine() {
+    fun printPlayerStates(players: Players, initialDealSize: Int) {
+        val playerNames = players.getNames().joinToString(", ")
+        println("\n${playerNames}에게 ${initialDealSize}장의 나누었습니다.po")
+        players.forEach {
+            printPlayerState(it)
+        }
         println()
     }
 
-    fun printGameScore(
-        nickname: String,
-        cards: String,
-        score: Int
-    ) {
-        println("${nickname}카드: $cards - 결과: $score")
+    fun printPlayerState(player: Player) {
+        println("${player.name}카드: ${player.cards}")
+    }
+
+    fun printGameScore(player: Player, score: Int) {
+        print("\n${player.name}카드: ${player.cards} - 결과: $score")
     }
 }

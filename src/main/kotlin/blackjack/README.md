@@ -12,17 +12,13 @@ Top Down 형식으로 객체 역할과 책임 정의
   - [x] `Card`는 `Suit`와 `Rank`를 가진다.
 - [X] `Cards` 일급 컬렉션 객체를 만든다.
     - [x] `Cards`는 `List<Card>`를 가진다.
-    - [x] `Cards`가 초기화되었을 경우 52 조합의 `Card`를 생성한다.
-    - [x] `Cards`는 `Card`를 섞을 수 있다. 
+    - [x] `Card`가 추가되었을 경우 새로운 `Cards` 객체를 생성해 불변성을 보장한다.
     - [x] `Cards`는 `Card`를 뽑을 수 있다.
     - [x] `Cards`는 `Card`가 모두 소진되었을 경우 IllegalStateException을 발생시킨다.
 - [x] `Deck` 객체를 만든다.
   - [x] `Deck`은 `Card`를 가진다.
-  - [x] `Deck`은 `Card`를 섞는다.
   - [x] `Deck`은 `Card`를 뽑는다.
-- [x] `Dealer` 객체를 만든다.
-  - [x] `Dealer`는 `Deck`을 가진다.
-  - [x] `Dealer`는 `Deck`을 통해 `Card`를 지급한다.
+  - [x] `Deck`이 초기화되었을 경우 52 조합의 `Card`를 생성한다.
 - [x] `PlayerDecision` 객체를 만든다.
   - [x] `PlayerDecision`은 `Hit`, `Stand`를 가진다.
 - [x] `Player` 객체를 만든다.
