@@ -1,25 +1,34 @@
 package blackjack
 
-import blackjack.domain.*
+import blackjack.domain.Card
+import blackjack.domain.Dealer
+import blackjack.domain.Game
+import blackjack.domain.Player
+import blackjack.domain.RandomShuffleStrategy
+import blackjack.domain.deck
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
 fun main(args: Array<String>) {
+    val players = InputView.readNicknames().map { Player(it) }
     val dealer = Dealer(deck(RandomShuffleStrategy) { Card.ALL_CARDS.map { +it } })
 
-    val nicknames = InputView.readNicknames()
-    val players = nicknames.map { Player(it, dealer) }
+    val game = Game(players, dealer)
+    game.startGame()
 
-    players.map { player -> repeat(2) { player.receiveCard() } }
-    OutputView.writePlayerNames(players)
-    OutputView.writePlayerCards(*players.toTypedArray())
+    OutputView.writePlayerNames(game.participants)
+    OutputView.writeParticipantCards(game.participants)
 
-    players.map { player ->
-        while (InputView.readHitOrStand(player.name) == PlayerDecision.HIT) {
-            player.receiveCard()
-            OutputView.writePlayerCards(player)
+    players.forEach { player ->
+        while (game.playerTurn(player, InputView.readHitOrStand(player.name))) {
+            OutputView.writeParticipantCards(listOf(player))
         }
     }
 
-    OutputView.writePlayerResults(players)
+    if (game.dealerTurn()) {
+        OutputView.writeDealer(dealer)
+    }
+
+    val results = game.getResults()
+    OutputView.writeGameResults(game.participants, results)
 }

@@ -1,9 +1,17 @@
 package blackjack.domain
 
-class Dealer(private val deck: Deck) {
+class Dealer(private val deck: Deck) : Participant {
+
+    private val _cards = mutableListOf<Card>()
+    override val cards: List<Card> = _cards
+    override val name: Nickname = Nickname("딜러")
 
     init {
         deck.shuffle()
+    }
+
+    override fun receiveCard(card: Card) {
+        _cards.add(card)
     }
 
     fun dealCard(): Card {
@@ -13,5 +21,11 @@ class Dealer(private val deck: Deck) {
         }
 
         return deck.draw()
+    }
+
+    override fun canDraw(): Boolean = calculateScore() <= DRAW_CONDITION
+
+    companion object {
+        private const val DRAW_CONDITION = 16
     }
 }
