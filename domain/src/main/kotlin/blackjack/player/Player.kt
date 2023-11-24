@@ -1,18 +1,27 @@
 package blackjack.player
 
+import action.BlackJackAction
+import blackjack.BlackjackParticipant
 import blackjack.card.Card
 import blackjack.hand.Hand
 
 data class Player(
     val name: String,
-    private val hand: Hand,
-) {
-    val cards: List<Card>
-        get() = hand.cards
+    override val hand: Hand,
+) : BlackjackParticipant {
 
-    fun canReceiveCard(): Boolean = hand.calculateBestValue() <= 21
-    fun receiveCard(card: Card): Player {
+    val cards: List<Card>
+        get() = hand.cards.toList()
+
+    fun canHit(): BlackJackAction = if (hand.calculateMinValue() <= 21) {
+        BlackJackAction.HIT
+    } else {
+        BlackJackAction.STAND
+    }
+
+    override fun receiveCard(card: Card): Player {
         return copy(hand = hand.addCard(card))
     }
-    fun calculateBestValue(): Int = hand.calculateBestValue()
+
+    override fun calculateBestValue(): Int = hand.calculateBestValue()
 }

@@ -8,8 +8,8 @@ import io.kotest.matchers.shouldBe
 
 class HandTest : FunSpec({
     test("손패가 Ace, 10으로 이뤄져 있다면 21로 계산한다.") {
-        val hand = Hand(
-            cards = listOf(
+        val hand = StandardHand(
+            cards = setOf(
                 Card(suit = CardSuit.CLUBS, rank = CardRank.ACE),
                 Card(suit = CardSuit.HEARTS, rank = CardRank.TEN)
             )
@@ -19,8 +19,8 @@ class HandTest : FunSpec({
     }
 
     test("손패가 Ace, 10, 2으로 이뤄져 있다면 13으로 계산한다.") {
-        val hand = Hand(
-            cards = listOf(
+        val hand = StandardHand(
+            cards = setOf(
                 Card(suit = CardSuit.CLUBS, rank = CardRank.ACE),
                 Card(suit = CardSuit.HEARTS, rank = CardRank.TEN),
                 Card(suit = CardSuit.HEARTS, rank = CardRank.TWO),

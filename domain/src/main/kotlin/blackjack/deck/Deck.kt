@@ -11,6 +11,9 @@ class Deck(
         addAll(cardShuffler.shuffle(cardProvider.provideCards()))
     }
 
+    val remainingCards: List<Card>
+        get() = cards.toList()
+
     val size
         get() = cards.size
 

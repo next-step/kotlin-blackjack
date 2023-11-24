@@ -1,7 +1,7 @@
 package ui
 
 import blackjack.deck.Deck
-import blackjack.hand.Hand
+import blackjack.hand.StandardHand
 import blackjack.player.Player
 import ui.input.InputView
 import ui.result.ResultView
@@ -12,7 +12,7 @@ fun main() {
     val playerNames = inputView.inputPlayerNames()
 
     val deck = Deck()
-    val players = playerNames.map { Player(it, Hand()) }
+    val players = playerNames.map { Player(it, StandardHand()) }
 
     playBlackjack(deck, players, inputView, resultView)
 }
@@ -29,7 +29,7 @@ fun playBlackjack(deck: Deck, players: List<Player>, inputView: InputView, resul
 }
 
 fun handlePlayerTurn(deck: Deck, player: Player, inputView: InputView, resultView: ResultView) {
-    while (player.canReceiveCard()) {
+    while (player.decideAction()) {
         if (!inputView.askForAdditionalCard(player.name)) {
             return
         }
