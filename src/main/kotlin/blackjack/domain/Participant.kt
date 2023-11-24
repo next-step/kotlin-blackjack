@@ -9,6 +9,6 @@ abstract class Participant {
     }
 
     fun isBust(): Boolean {
-        return cards.calculateScore() >= Game.BLACKJACK_SCORE
+        return cards.calculateScore() > Game.BLACKJACK_SCORE
     }
 }
