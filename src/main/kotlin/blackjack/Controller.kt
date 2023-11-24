@@ -2,9 +2,8 @@ package blackjack
 
 import blackjack.model.Participants
 import blackjack.model.Referee
-import blackjack.model.pack.ShuffledPack
+import blackjack.model.pack.impl.ShuffledPack
 import blackjack.model.playable.PlayableReaction
-import blackjack.model.playable.impl.Player
 import blackjack.model.playblestrategy.impl.DealerStrategy
 import blackjack.view.InputView
 import blackjack.view.OutputView
