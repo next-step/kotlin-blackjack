@@ -25,7 +25,7 @@ object OutputView {
 
     fun renderResult(results: List<GameResult>) {
         results.forEach {
-            renderPlayer(it.player, ::print)
+            renderPlayer(it.cardHolder, ::print)
             println("- 결과: ${it.resultCount}")
         }
     }

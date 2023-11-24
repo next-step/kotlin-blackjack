@@ -5,8 +5,10 @@ class CardDeck {
         private set
 
     fun drawCard(): Card {
-        val pickedCard = cards.shuffled().toMutableList()[0];
-        cards = cards.filter { it != pickedCard }
+        val shuffledCards = cards.shuffled();
+        val pickedCard = shuffledCards.first();
+        cards = shuffledCards.drop(1)
+
         return pickedCard
     }
 

@@ -15,20 +15,29 @@ class BlackJack {
         OutputView.renderPlayers(players.playerList + gameDealer)
 
         players.playerList.forEach {
-            playGameWithEachPlayer(it, cardDealer)
+            playGameOfEachPlayer(it, cardDealer)
         }
 
-        OutputView.renderResult(getGameResults(players.playerList))
+        playGameOfDealer(gameDealer, cardDealer)
+
+        OutputView.renderResult(getGameResults(listOf(gameDealer) + players.playerList))
     }
 
-    private fun getGameResults(playerList: List<Player>) = playerList.map {
-        GameResult(it, it.cardHand.getTotalScore())
+    private fun getGameResults(cardHolders: List<CardHolder>) = cardHolders.map {
+        GameResult(it, it.cardHand.totalScore)
     }
 
-    private fun playGameWithEachPlayer(player: Player, cardDealer: CardDealer) {
-        while (player.cardHand.isSameOrSmallerThanBlackJack() && player.moreCardOrNot(InputView::askGetCardMore)) {
+    private fun playGameOfEachPlayer(player: Player, cardDealer: CardDealer) {
+        while (player.cardHand.isSameOrSmallerThanBlackJack && player.moreCardOrNot(InputView::askGetCardMore)) {
             player.cardHand.addCard(cardDealer.getCard())
             OutputView.renderPlayer(player, ::println)
+        }
+    }
+
+    private fun playGameOfDealer(gameDealer: GameDealer, cardDealer: CardDealer) {
+        while (gameDealer.isDealerShouldMoreCard) {
+            println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
+            gameDealer.cardHand.addCard(cardDealer.getCard())
         }
     }
 

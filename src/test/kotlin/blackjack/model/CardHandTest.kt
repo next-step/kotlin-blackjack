@@ -12,7 +12,7 @@ internal class CardHandTest : BehaviorSpec({
             )
         )
         When("점수를 계산") {
-            val score = cardHand.getTotalScore()
+            val score = cardHand.totalScore
             Then("12") {
                 score shouldBe 12
             }
@@ -26,7 +26,7 @@ internal class CardHandTest : BehaviorSpec({
             )
         )
         When("점수를 계산") {
-            val score = cardHand.getTotalScore()
+            val score = cardHand.totalScore
             Then("13") {
                 score shouldBe 13
             }
@@ -40,7 +40,7 @@ internal class CardHandTest : BehaviorSpec({
             )
         )
         When("점수를 계산") {
-            val score = cardHand.getTotalScore()
+            val score = cardHand.totalScore
             Then("21") {
                 score shouldBe 21
             }
@@ -55,7 +55,7 @@ internal class CardHandTest : BehaviorSpec({
             )
         )
         When("점수를 계산") {
-            val score = cardHand.getTotalScore()
+            val score = cardHand.totalScore
             Then("13") {
                 score shouldBe 13
             }
