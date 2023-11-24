@@ -2,12 +2,11 @@ package blackjack.domain
 
 class Deck {
 
-    private val cards: MutableList<Card> = mutableListOf()
-
-    init {
-        reset(cards)
-        cards.shuffle()
-    }
+    private val cards: MutableList<Card> = CardShape.values().map { shape ->
+        CardCharacter.values().map { character ->
+            Card(character, shape)
+        }
+    }.flatten().shuffled().toMutableList()
 
     fun draw(): Card {
         if (cards.isEmpty()) {
@@ -23,14 +22,5 @@ class Deck {
 
     companion object {
         const val MAX_CARD_SIZE = 52
-
-        fun reset(cards: MutableList<Card>) {
-            cards.clear()
-            CardShape.values().forEach { shape ->
-                CardCharacter.values().forEach { character ->
-                    cards.add(Card(character, shape))
-                }
-            }
-        }
     }
 }
