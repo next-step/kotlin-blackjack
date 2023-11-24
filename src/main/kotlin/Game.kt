@@ -5,7 +5,6 @@ import blackjack.GameBlackjack
 import blackjack.GameCardDealer
 import blackjack.GameParticipants
 import blackjack.Message
-import blackjack.InputOutputProxyBlackjack
 import blackjack.InputOutputStrategy
 import view.Input
 import view.Output
@@ -25,10 +24,7 @@ fun main() {
 
     Output.printMessage(Message.INPUT_PLAYER_NAMES)
     val playerNames = Input.getLine()
-    val gameBlackjack: GameBlackjack = InputOutputProxyBlackjack(
-        DefaultGameBlackjack(gameCardDealer),
-        InputOutputStrategy()
-    )
+    val gameBlackjack: GameBlackjack = DefaultGameBlackjack(gameCardDealer, InputOutputStrategy())
 
     val playing = gameBlackjack.initialDealing(playerNames)
     Output.printParticipantsInitialDealing(playing)
