@@ -6,25 +6,34 @@ import blackjack.view.OutputView
 
 class BlackJack {
     fun start() {
+        /*
+        * 초기화
+        * */
         val playerNames = InputView.getPlayerName()
         val cardDealer = CardDealer(CardDeck());
+        val gameDealer = GameDealer(IdGenerator.holderId, CardHand(cardDealer.getCards()))
         val players = Players(playerNames.toPlayerList(cardDealer))
-        val gameDealer = GameDealer(CardHand(cardDealer.getCards()))
 
         OutputView.renderInitMessage(playerNames)
-        OutputView.renderPlayers(players.playerList + gameDealer)
+        OutputView.renderPlayers(listOf(gameDealer) + players.playerList)
 
+
+        /*
+        * 게임 플레이
+        * */
         players.playerList.forEach {
             playGameOfEachPlayer(it, cardDealer)
         }
-
         playGameOfDealer(gameDealer, cardDealer)
 
-        OutputView.renderResult(getGameResults(listOf(gameDealer) + players.playerList))
-    }
 
-    private fun getGameResults(cardHolders: List<CardHolder>) = cardHolders.map {
-        GameResult(it, it.cardHand.totalScore)
+        /*
+        * 결과 도출 및 출력
+        * */
+        OutputView.renderResult(listOf(gameDealer) + players.playerList)
+        OutputView.renderResolved(
+            GameResult(gameDealer, players).resolveGame()
+        )
     }
 
     private fun playGameOfEachPlayer(player: Player, cardDealer: CardDealer) {
@@ -42,5 +51,5 @@ class BlackJack {
     }
 
     private fun List<String>.toPlayerList(cardDealer: CardDealer) =
-        this.map { Player(it, CardHand(cardDealer.getCards())) }
+        this.map { Player(IdGenerator.holderId, it, CardHand(cardDealer.getCards())) }
 }
