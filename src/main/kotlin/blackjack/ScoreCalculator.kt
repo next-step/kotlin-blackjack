@@ -8,29 +8,36 @@ import kotlin.math.abs
 
 class ScoreCalculator {
     fun calcScore(card: List<BlackJackCard>): Int {
-        var score = card.sumOf {
-            when (it) {
-                is NormalCard -> it.number
-                is PictureCard -> PICTURE_CARD_SCORE
-                else -> 0
-            }
-        }
+        var score = calcScoreToNormalAndPictureCard(card)
 
         card.filter { it is AceCard }
-            .forEach {
-                val plusMin = score + MIN_ACE_SCORE
-                val plusMax = score + MAX_ACE_SCORE
-                println(abs(plusMin - BEST_SCORE))
-                println(abs(plusMax - BEST_SCORE))
-
-                score += when {
-                    (abs(plusMin - BEST_SCORE) < abs(plusMax - BEST_SCORE)) -> MIN_ACE_SCORE
-                    (abs(plusMin - BEST_SCORE) > abs(plusMax - BEST_SCORE)) -> MAX_ACE_SCORE
-                    else -> MIN_ACE_SCORE
-                }
+            .forEach { _ ->
+                score = calcScore(score)
             }
 
         return score
+    }
+
+    private fun calcScore(score: Int): Int {
+        var totalScore = score
+        val plusMin = totalScore + MIN_ACE_SCORE
+        val plusMax = totalScore + MAX_ACE_SCORE
+
+        totalScore += when {
+            (abs(plusMin - BEST_SCORE) < abs(plusMax - BEST_SCORE)) -> MIN_ACE_SCORE
+            (abs(plusMin - BEST_SCORE) > abs(plusMax - BEST_SCORE)) -> MAX_ACE_SCORE
+            else -> MIN_ACE_SCORE
+        }
+
+        return totalScore
+    }
+
+    private fun calcScoreToNormalAndPictureCard(card: List<BlackJackCard>) = card.sumOf {
+        when (it) {
+            is NormalCard -> it.number
+            is PictureCard -> PICTURE_CARD_SCORE
+            else -> 0
+        }
     }
 
     companion object {
