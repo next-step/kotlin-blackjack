@@ -64,4 +64,3 @@ class DslTest {
         person.languages[1].level shouldBe 3
     }
 }
-
