@@ -30,4 +30,25 @@ class PlayerTest {
         assertThat(player.hand.size()).isEqualTo(allCards.size)
         assertThat(player.initialCards()).isEqualTo(allCards.take(INITIAL_CARD_NUM))
     }
+
+    @Test
+    fun `손패 점수 최소값을 토대로 카드를 더 뽑을 수 있는지 반환`() {
+        val player = Player("test")
+
+        // bust 아닐시 (10점)
+        player.hand.add(Card(CardSuitInfo.SPADE, CardNumberInfo.TEN))
+        assertThat(player.canDrawMore()).isTrue()
+
+        // blackjack 가능 (11점 / 21점)
+        player.hand.add(Card(CardSuitInfo.SPADE, CardNumberInfo.ACE))
+        assertThat(player.canDrawMore()).isTrue()
+
+        // bust 가능 (13점 / 23점)
+        player.hand.add(Card(CardSuitInfo.SPADE, CardNumberInfo.TWO))
+        assertThat(player.canDrawMore()).isTrue()
+
+        // 항상 bust (23점 / 33점)
+        player.hand.add(Card(CardSuitInfo.SPADE, CardNumberInfo.KING))
+        assertThat(player.canDrawMore()).isFalse()
+    }
 }

@@ -26,4 +26,21 @@ class DealerTest {
         Assertions.assertThat(player.hand.size()).isEqualTo(allCards.size)
         Assertions.assertThat(player.initialCards()).isEqualTo(allCards.take(DEALER_OPEN_CARD_NUM))
     }
+
+    @Test
+    fun `딜러용 손패 점수 계산으로 카드를 더 뽑을 수 있는지 반환`() {
+        val player = Dealer()
+
+        // 16점 이하 (11점)
+        player.hand.add(Card(CardSuitInfo.SPADE, CardNumberInfo.ACE))
+        Assertions.assertThat(player.canDrawMore()).isTrue()
+
+        // 16점 이하 (16점)
+        player.hand.add(Card(CardSuitInfo.SPADE, CardNumberInfo.FIVE))
+        Assertions.assertThat(player.canDrawMore()).isTrue()
+
+        // 16점 초과 (18점)
+        player.hand.add(Card(CardSuitInfo.SPADE, CardNumberInfo.TWO))
+        Assertions.assertThat(player.canDrawMore()).isFalse()
+    }
 }

@@ -1,11 +1,11 @@
 package blackjack.controller
 
 import blackjack.domain.BlackjackUtil.INITIAL_CARD_NUM
-import blackjack.domain.BlackjackUtil.isBust
 import blackjack.domain.Dealer
 import blackjack.domain.Player
 import blackjack.view.askForDraw
 import blackjack.view.inputNames
+import blackjack.view.printDealerDrawsMore
 import blackjack.view.printInitialSupply
 import blackjack.view.printResult
 import blackjack.view.printUserCardInfo
@@ -27,17 +27,27 @@ fun main() {
     players.forEach { printUserCardInfo(it, true) }
 
     // 각 사용자의 추가 draw 진행
-    players.forEach { drawWhileUserWants(it, dealer) }
+    players.forEach { if (it !is Dealer) drawWhileUserWants(it, dealer) }
+
+    // 딜러의 추가 draw 진행
+    drawForDealer(dealer)
 
     // 결과 출력
     printResult(players)
+}
+
+private fun drawForDealer(dealer: Dealer) {
+    while (dealer.canDrawMore()) {
+        dealer.supplyCard(dealer)
+        printDealerDrawsMore()
+    }
 }
 
 private fun drawWhileUserWants(player: Player, dealer: Dealer) {
     var isPrinted = false
 
     // 점수 합계가 21을 넘지 않는다면 추가 draw 가능
-    while (!isBust(player.hand.sumOf()) && askForDraw(player.name)) {
+    while (player.canDrawMore() && askForDraw(player.name)) {
         isPrinted = true
 
         dealer.supplyCard(player)
