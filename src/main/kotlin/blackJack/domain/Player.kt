@@ -16,8 +16,7 @@ class Player(val name: String, val cards: Cards = Cards(mutableListOf()), var st
     }
 
     fun receiveInitialCards(initialCards: Cards) {
-        cards.addCard(initialCards.drawCard())
-        cards.addCard(initialCards.drawCard())
+        cards.addAllCard(initialCards)
         status = Status.calculateStatus(cards.calculateTotalScore(), cards.cardSize)
     }
 

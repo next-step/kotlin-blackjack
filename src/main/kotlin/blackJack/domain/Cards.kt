@@ -2,7 +2,7 @@ package blackJack.domain
 
 import blackJack.error.ErrorMessage
 
-class Cards(cards: MutableList<Card>) {
+class Cards(cards: List<Card>) {
 
     private val _cards: MutableList<Card> = cards.toMutableList()
 
@@ -36,6 +36,8 @@ class Cards(cards: MutableList<Card>) {
     }
 
     fun addCard(card: Card) = _cards.add(card)
+
+    fun addAllCard(cards: Cards) = cards._cards.forEach{ _cards.add(it) }
 
     companion object {
         const val MAX_SCORE = 21
