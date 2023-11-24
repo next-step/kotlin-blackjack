@@ -1,13 +1,7 @@
 package domain
 
-class Player(val name: String) : CardHolder {
-    private val hand = Cards()
+import enum.GameResult
 
-    override fun receiveCard(card: Card) {
-        hand.add(card)
-    }
-
-    fun calculateScore(): Int = hand.calculateScore()
-
-    override fun showHand(): List<Card> = hand.showHand()
+class Player(val name: String) : AbstractCardHolder() {
+    var result: GameResult = GameResult.DRAW
 }

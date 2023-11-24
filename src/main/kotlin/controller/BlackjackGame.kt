@@ -4,6 +4,7 @@ import domain.BlackjackRules
 import domain.Dealer
 import domain.Deck
 import domain.Player
+import enum.GameResult
 import view.InputView
 import view.OutputView
 
@@ -13,16 +14,35 @@ class BlackjackGame(private val inputView: InputView, private val outputView: Ou
     private val dealer = Dealer()
 
     fun startGame() {
+        initializeGame()
+        conductGame()
+        concludeGame()
+    }
+
+    private fun initializeGame() {
         val playerNames = inputView.readPlayerNames()
         playerNames.forEach { addPlayer(it) }
-
         dealInitialCards()
         outputView.showInitialCards(players, dealer)
+    }
 
+    private fun conductGame() {
         playPlayersTurn()
         playDealerTurn()
+    }
 
-        outputView.showGameResult(players, dealer)
+    private fun concludeGame() {
+        determineResults()
+        outputView.showPlayerResults(players, dealer)
+        outputView.showFinalResults(players, dealer)
+    }
+
+    private fun determineResults() {
+        val dealerScore = dealer.calculateScore()
+        players.forEach { player ->
+            val playerScore = player.calculateScore()
+            player.result = GameResult.determine(playerScore, dealerScore, BlackjackRules.MAXIMUM_SCORE)
+        }
     }
 
     private fun addPlayer(name: String) {

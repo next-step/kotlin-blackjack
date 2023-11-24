@@ -1,13 +1,9 @@
 package domain
 
-class Dealer : CardHolder {
-    private val hand = Cards()
-
-    override fun receiveCard(card: Card) {
-        hand.add(card)
+class Dealer : AbstractCardHolder() {
+    fun playDealerTurn(deck: Deck) {
+        while (calculateScore() < BlackjackRules.DEALER_HIT_THRESHOLD) {
+            deck.drawCard()?.let { receiveCard(it) }
+        }
     }
-
-    fun calculateScore(): Int = hand.calculateScore()
-
-    override fun showHand(): List<Card> = hand.showHand()
 }
