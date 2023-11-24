@@ -19,12 +19,10 @@ import org.junit.jupiter.api.assertThrows
 class CardsTest {
 
     private lateinit var cardDeck: Cards
-    private lateinit var dealer: Dealer
 
     @BeforeEach
     fun setUp() {
         cardDeck = CardDeck.createShuffledDeck()
-        dealer = Dealer("Dealer")
     }
 
     @Test
