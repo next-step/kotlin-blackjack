@@ -22,27 +22,33 @@ fun main() {
 
     val playersOfWantedEndGame: MutableSet<Player> = mutableSetOf()
     while (playersOfWantedEndGame.size < players.size) {
-        players.forEach {
-            if (it.canDraw().not()) {
-                ConsoleResult.notifyPlayerCannotDraw(it)
-                playersOfWantedEndGame.add(it)
-            }
-
-            if (playersOfWantedEndGame.contains(it)) {
-                return@forEach
-            }
-
-            val drawOneMoreCard = ConsoleInput.inputGettingOneMoreCard(it)
-            if (drawOneMoreCard && it.canDraw()) {
-                it.draw(deck)
-                ConsoleResult.printCardsOfPlayer(it)
-            }
-
-            if (!drawOneMoreCard) {
-                playersOfWantedEndGame.add(it)
-            }
-        }
+        players.forEach { playGame(it, playersOfWantedEndGame, deck) }
     }
 
     ConsoleResult.printCardsAndTotalScoreOfPlayers(players)
+}
+
+private fun playGame(
+    it: Player,
+    playersOfWantedEndGame: MutableSet<Player>,
+    deck: Deck
+) {
+    if (it.canDraw().not()) {
+        ConsoleResult.notifyPlayerCannotDraw(it)
+        playersOfWantedEndGame.add(it)
+    }
+
+    if (playersOfWantedEndGame.contains(it)) {
+        return
+    }
+
+    val drawOneMoreCard = ConsoleInput.inputGettingOneMoreCard(it)
+    if (drawOneMoreCard && it.canDraw()) {
+        it.draw(deck)
+        ConsoleResult.printCardsOfPlayer(it)
+    }
+
+    if (!drawOneMoreCard) {
+        playersOfWantedEndGame.add(it)
+    }
 }
