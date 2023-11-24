@@ -30,11 +30,3 @@ fun playingBlackJack(participants: Participants) {
         PlayableReaction.STAND -> println("딜러는 17이상이라 카드를 받지 않았습니다.")
     }
 }
-
-private fun Player.hitOrStand() {
-
-//    if () {
-//        this.hit(ShuffledPack)
-//    }
-//    OutputView.playerCardPresent(this)
-}
