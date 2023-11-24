@@ -22,7 +22,7 @@ object BlackjackOutputView {
         println("\n${Dealer.name}는 ${Game.DEALER_RECEIVE_CARD_SCORE}이하라 한장의 카드를 더 받았습니다.")
     }
 
-    fun printResult(participants: List<Participant>) {
+    fun printCardResult(participants: List<Participant>) {
         println()
 
         participants.forEach {
