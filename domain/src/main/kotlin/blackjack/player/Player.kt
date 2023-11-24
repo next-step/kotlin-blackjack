@@ -6,7 +6,7 @@ import blackjack.card.Card
 import blackjack.hand.Hand
 import blackjack.hand.StandardHand
 
-data class Player(
+class Player(
     val name: String,
     override val hand: Hand = StandardHand(),
 ) : BlackjackParticipant {
@@ -21,7 +21,7 @@ data class Player(
     }
 
     override fun receiveCard(card: Card): Player {
-        return copy(hand = hand.addCard(card))
+        return Player(name, hand = hand.addCard(card))
     }
 
     override fun calculateBestValue(): Int = hand.calculateBestValue()

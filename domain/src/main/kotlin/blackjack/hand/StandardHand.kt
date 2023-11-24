@@ -2,6 +2,10 @@ package blackjack.hand
 
 import blackjack.card.Card
 import blackjack.card.CardRank
+import blackjack.hand.Hand.Companion.ACE_HIGH_VALUE
+import blackjack.hand.Hand.Companion.ACE_LOW_VALUE
+import blackjack.hand.Hand.Companion.FACE_CARD_VALUE
+import blackjack.hand.Hand.Companion.MAX_HAND_VALUE
 
 internal class StandardHand(
     override val cards: Set<Card> = emptySet()
@@ -39,12 +43,5 @@ internal class StandardHand(
             sum += ACE_LOW_VALUE
         }
         return sum
-    }
-
-    companion object {
-        private const val FACE_CARD_VALUE = 10
-        private const val MAX_HAND_VALUE = 21
-        private const val ACE_HIGH_VALUE = 11
-        private const val ACE_LOW_VALUE = 1
     }
 }

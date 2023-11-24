@@ -5,16 +5,17 @@ import blackjack.BlackjackParticipant
 import blackjack.card.Card
 import blackjack.deck.Deck
 import blackjack.hand.Hand
+import blackjack.hand.StandardHand
 
-data class Dealer(
-    override val hand: Hand,
+class Dealer(
+    override val hand: Hand = StandardHand(),
     private val dealerStrategy: DealerStrategy = DefaultDealerStrategy()
 ) : BlackjackParticipant {
 
     val cards: List<Card>
         get() = hand.cards.toList()
 
-    override fun receiveCard(card: Card): Dealer = copy(hand = hand.addCard(card))
+    override fun receiveCard(card: Card): Dealer = Dealer(hand.addCard(card))
 
     override fun calculateBestValue(): Int = hand.calculateBestValue()
 
