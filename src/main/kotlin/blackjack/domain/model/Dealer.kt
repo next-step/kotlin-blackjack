@@ -1,13 +1,17 @@
 package blackjack.domain.model
 
-@JvmInline
-value class Dealer private constructor(private val deck: Deck) {
+import blackjack.domain.interfaces.Drawable
 
-    fun handsOutAll(gamblers: Gamblers) = gamblers.forEach { gambler -> handsOut(gambler) }
+data class Dealer(
+    val name: Name,
+    val cards: Cards
+): Drawable {
+    override fun draw(card: Card) = cards + card
+    fun shouldDraw(maxNumber: Int): Boolean = cards.sum(maxNumber).value < Score.from(maxNumber).value
 
-    fun handsOut(gambler: Gambler) = gambler.receive(deck.peek())
+    fun isBust() = cards.sum().value < Score.from().value
 
     companion object {
-        fun hire(deck: Deck = Deck.all()): Dealer = Dealer(deck)
+        fun from(name: Name, cards: Cards = Cards.empty()): Dealer = Dealer(name, cards)
     }
 }

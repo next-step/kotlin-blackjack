@@ -12,7 +12,7 @@ class Cards private constructor(cards: Set<Card>) {
         return card
     }
 
-    fun sum(target: Int): Score {
+    fun sum(target: Int = DEFAULT_TARGET_NUMBER): Score {
         val (aces, normals) = cards.partition { card -> card.sign == Sign.ACE }
         val normalSum = normals.sumOf { card -> card.sign.number }
         val totalSum = aces.foldIndexed(normalSum) { index, acc, card ->
@@ -34,6 +34,7 @@ class Cards private constructor(cards: Set<Card>) {
     }
 
     companion object {
+        private const val DEFAULT_TARGET_NUMBER = 21
         fun from(cards: Set<Card>) = Cards(cards)
         fun empty() = Cards(emptySet())
     }

@@ -106,7 +106,6 @@ DSL(Domain-specific language) ↔ 범용 프로그래밍 언어
 - 게임을 완료한 후 각 플레이어별로 승패를 출력한다.
 
 ### 기능 목록
-### 기능 목록
 - [x] 이름은 1 ~ 10자 이내이여야 한다.
   - 이름에 빈 문자열이 들어올 경우 IllegalArgumentException 예외를 던진다.
   - 이름에 공백, 개행, 탭이동 문자만 들어올 경우 IllegalArgumentException 예외를 던진다.
@@ -146,3 +145,6 @@ DSL(Domain-specific language) ↔ 범용 프로그래밍 언어
 - 함수(또는 메서드)의 길이가 15라인을 넘어가지 않도록 구현한다.
 - 기능을 구현하기 전에 README.md 파일에 구현할 기능 목록을 정리해 추가한다.
 - git의 commit 단위는 앞 단계에서 README.md 파일에 정리한 기능 목록 단위로 추가한다.
+
+### 힌트
+- 상속을 활용해 중복을 제거해 본다.

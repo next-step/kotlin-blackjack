@@ -1,9 +1,12 @@
 package blackjack.domain.model
 
+import blackjack.domain.interfaces.Drawable
+
 @JvmInline
 value class Deck private constructor(private val cards: Cards) {
 
-    fun peek(): Card = cards.peek()
+    fun peek(drawable: Drawable) = drawable.draw(cards.peek())
+    fun peek(drawables: List<Drawable>) = drawables.forEach { drawable -> peek(drawable) }
 
     fun size(): Int = cards.cards.size
 

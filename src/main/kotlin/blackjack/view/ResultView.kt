@@ -1,15 +1,18 @@
 package blackjack.view
 
 import blackjack.domain.model.Cards
+import blackjack.domain.model.Dealer
 import blackjack.domain.model.Gambler
 import blackjack.domain.model.Gamblers
 import blackjack.domain.model.Pattern
 
 object ResultView {
 
+    private const val DEALER_STATUS_FORMAT = "%s: %s"
+    private const val DEALER_STATUS_RESULT_FORMAT = "%s 카드: %s - 결과: %d"
     private const val GAMBLER_STATUS_FORMAT = "%s카드: %s"
     private const val GAMBLER_STATUS_RESULT_FORMAT = "%s카드: %s - 결과: %d"
-    private const val DEAL_CARD_DESCRIPTION = "%s에게 %d장의 나누었습니다."
+    private const val DEAL_CARD_DESCRIPTION = "딜러와 %s에게 %d장의 나누었습니다."
     private const val DEAL_CARD_COUNT = 1
 
     fun drawDealCardDescription(gamblers: Gamblers, dealCardCount: Int = DEAL_CARD_COUNT) {
@@ -17,15 +20,19 @@ object ResultView {
         println(DEAL_CARD_DESCRIPTION.format(userNameListText, dealCardCount))
     }
 
-    fun drawGamblerStatus(gamblers: Gamblers) {
-        gamblers.forEach { user ->
-            drawGamblerStatus(user)
+    fun drawGamblersStatus(gamblers: Gamblers) {
+        gamblers.forEach { gambler ->
+            drawGamblerStatus(gambler)
         }
         println()
     }
 
     fun drawGamblerStatus(gambler: Gambler) {
         println(GAMBLER_STATUS_FORMAT.format(gambler.name, drawCardsStatus(gambler.cards)))
+    }
+
+    fun drawDealerStatus(dealer: Dealer) {
+        println(DEALER_STATUS_FORMAT.format(dealer.name, drawCardsStatus(dealer.cards)))
     }
 
     private fun drawCardsStatus(cards: Cards): String {
@@ -42,11 +49,11 @@ object ResultView {
     fun drawGamblersStatusResult(gamblers: Gamblers, target: Int) {
         println()
         gamblers.forEach { gambler ->
-            drawUserStatusResult(gambler, target)
+            drawGamblerStatusResult(gambler, target)
         }
     }
 
-    private fun drawUserStatusResult(gambler: Gambler, target: Int) {
+    private fun drawGamblerStatusResult(gambler: Gambler, target: Int) {
         println(
             GAMBLER_STATUS_RESULT_FORMAT.format(
                 gambler.name,
@@ -54,5 +61,18 @@ object ResultView {
                 gambler.cards.sum(target).value
             )
         )
+    }
+    fun drawDealerStatusResult(dealer: Dealer, target: Int) {
+        println(
+            DEALER_STATUS_RESULT_FORMAT.format(
+                dealer.name,
+                dealer.cards.cards.joinToString { card -> "${card.sign.sign}${drawPattern(card.pattern)}" },
+                dealer.cards.sum(target).value
+            )
+        )
+    }
+
+    fun drawVictoryResult() {
+
     }
 }
