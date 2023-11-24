@@ -4,10 +4,11 @@ import action.BlackJackAction
 import blackjack.BlackjackParticipant
 import blackjack.card.Card
 import blackjack.hand.Hand
+import blackjack.hand.StandardHand
 
 data class Player(
     val name: String,
-    override val hand: Hand,
+    override val hand: Hand = StandardHand(),
 ) : BlackjackParticipant {
 
     val cards: List<Card>
