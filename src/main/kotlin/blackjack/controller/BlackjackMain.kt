@@ -1,6 +1,6 @@
 package blackjack.controller
 
-import blackjack.domain.BlackjackUtil.INITIAL_CARD_COUNT
+import blackjack.domain.BlackjackUtil.INITIAL_CARD_NUM
 import blackjack.domain.BlackjackUtil.isBust
 import blackjack.domain.Dealer
 import blackjack.domain.Player
@@ -18,13 +18,13 @@ fun main() {
     val players = listOf(dealer) + inputNames().map { Player(it) }
 
     // 초기 카드 분배
-    repeat(INITIAL_CARD_COUNT) {
+    repeat(INITIAL_CARD_NUM) {
         players.forEach { dealer.supplyCard(it) }
     }
 
     // 초기 카드 분배결과 출력
-    printInitialSupply(players, INITIAL_CARD_COUNT)
-    players.forEach { printUserCardInfo(it) }
+    printInitialSupply(players, INITIAL_CARD_NUM)
+    players.forEach { printUserCardInfo(it, true) }
 
     // 각 사용자의 추가 draw 진행
     players.forEach { drawWhileUserWants(it, dealer) }

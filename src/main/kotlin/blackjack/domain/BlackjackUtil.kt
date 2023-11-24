@@ -3,7 +3,8 @@ package blackjack.domain
 import blackjack.domain.CardNumberInfo.Companion.ACE_UPPER_SCORE
 
 object BlackjackUtil {
-    const val INITIAL_CARD_COUNT = 2
+    const val INITIAL_CARD_NUM = 2
+    const val DEALER_OPEN_CARD_NUM = 1
     private const val BLACKJACK_SCORE = 21
 
     fun computeScore(hand: Hand): Pair<Int, Int> {

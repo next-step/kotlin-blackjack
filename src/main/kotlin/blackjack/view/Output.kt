@@ -9,12 +9,18 @@ fun printInitialSupply(players: List<Player>, cardNum: Int) {
     println("${players.joinToString(", ") { it.name }}에게 ${cardNum}장씩 나누었습니다.")
 }
 
-fun printUserCardInfo(player: Player) {
-    println(playerCardStatus(player))
+fun printUserCardInfo(player: Player, forInitial: Boolean = false) {
+    val cards = if (forInitial) {
+        player.initialCards()
+    } else {
+        player.hand.toList()
+    }
+
+    println(playerCardStatus(player.name, cards))
 }
 
-private fun playerCardStatus(player: Player): String {
-    return "${player.name}카드: ${player.hand.toList().joinToString(", ") { cardToString(it) }}"
+private fun playerCardStatus(name: String, cards: List<Card>): String {
+    return "${name}카드: ${cards.joinToString(", ") { cardToString(it) }}"
 }
 
 private fun cardToString(card: Card): String {
@@ -25,7 +31,7 @@ fun printResult(players: List<Player>) {
     println()
     players.forEach {
         val score = BlackjackUtil.computeScore(it.hand).second
-        val result = "${playerCardStatus(it)} - 결과: $score"
+        val result = "${playerCardStatus(it.name, it.hand.toList())} - 결과: $score"
         println(result)
     }
 }
