@@ -1,7 +1,6 @@
 package blackjack
 
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 
@@ -17,21 +16,13 @@ class BlackjackTest {
         assertThat(actual).isEqualTo(expect)
     }
 
-    @Test
-    fun `King은 10으로 계산`() {
-        val cards = Cards("K", "5")
+    @ParameterizedTest
+    @CsvSource(value = ["K, 5, 15", "J, 3, 13", "Q, 8, 18"])
+    fun `문자 카드는 10으로 계산`(card1: String, card2: String, expect: Int) {
+        val cards = Cards(card1, card2)
 
         val actual = cards.sum()
 
-        assertThat(actual).isEqualTo(15)
-    }
-
-    @Test
-    fun `Jack은 10으로 계산`() {
-        val cards = Cards("J", "3")
-
-        val actual = cards.sum()
-
-        assertThat(actual).isEqualTo(13)
+        assertThat(actual).isEqualTo(expect)
     }
 }

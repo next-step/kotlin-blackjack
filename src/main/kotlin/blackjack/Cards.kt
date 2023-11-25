@@ -11,6 +11,6 @@ class Cards(val card1: String, val card2: String) {
     }
 
     private fun isCharacterCard(card: String): Boolean {
-        return card.equals("K") || card.equals("J")
+        return card.equals("K") || card.equals("J") || card.equals("Q")
     }
 }
