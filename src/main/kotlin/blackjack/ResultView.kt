@@ -50,15 +50,15 @@ object ResultView {
         return bestScore.toString()
     }
 
+    fun showInitialCards(gamer: Gamer) {
+        println("${gamer.name} 카드: ${gamer.initialPublicCards.cardsToString()}")
+    }
+
     private fun PlayerCards.cardsToString(): String {
         return cards.joinToString { it.cardToString() }
     }
 
     private fun PlayingCard.cardToString(): String {
         return "${number.numberName}${suit.korean}"
-    }
-
-    fun showDealerCard(dealer: Gamer) {
-        println("딜러 카드: ${dealer.playerCards.cards.first().cardToString()}")
     }
 }

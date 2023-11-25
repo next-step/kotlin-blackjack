@@ -33,4 +33,18 @@ class DealerTest {
         }
         assertThat(score23Dealer.canGetCard).isEqualTo(false)
     }
+
+    @Test
+    fun `딜러는 초기 카드 중 첫번째 카드가 비공개되며, 두번째 카드만 공개된다`() {
+        val dealer = Dealer()
+        dealer.getInitialCards(
+            listOf(
+                PlayingCard(Suits.DIAMOND, CardNumber.KING),
+                PlayingCard(Suits.CLOVER, CardNumber.KING)
+            )
+        )
+
+        assertThat(dealer.initialPublicCards.cards.size).isEqualTo(1)
+        assertThat(dealer.initialPublicCards.cards[0]).isEqualTo(PlayingCard(Suits.CLOVER, CardNumber.KING))
+    }
 }

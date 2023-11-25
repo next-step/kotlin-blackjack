@@ -6,9 +6,9 @@ fun main() {
     val dealer = Dealer()
 
     ResultView.showCardShare(players)
-    dealer.setInitialDeck(cardDeck, ResultView::showDealerCard)
+    dealer.setInitialDeck(cardDeck, ResultView::showInitialCards)
     for (player in players) {
-        player.setInitialDeck(cardDeck, ResultView::showPlayerCards)
+        player.setInitialDeck(cardDeck, ResultView::showInitialCards)
     }
 
     for (player in players) {

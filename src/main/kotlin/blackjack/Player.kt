@@ -4,6 +4,8 @@ class Player(name: String) : Gamer(name) {
     override val canGetCard: Boolean
         get() = !isBusted
 
+    override fun getInitialPublicCards(playerCards: PlayerCards): PlayerCards = playerCards
+
     infix fun vs(dealer: Dealer): MatchResult {
         val dealerCards = dealer.playerCards
 
