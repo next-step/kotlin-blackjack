@@ -40,7 +40,7 @@ class ResultCalculatorTest : BehaviorSpec({
                     ),
                 ) { dealerCards, playerCards, expected ->
                     val dealer = Dealer(FixedDeck(), Hit(Hand(dealerCards)))
-                    val player = Player("yeongun", Hand(playerCards))
+                    val player = Player("yeongun", Hit(Hand(playerCards)))
                     player.getResult(dealer) shouldBe expected
                 }
             }
@@ -78,7 +78,7 @@ class ResultCalculatorTest : BehaviorSpec({
                     ),
                 ) { dealerCards, playerCards, expected ->
                     val dealer = Dealer(FixedDeck(), Hit(Hand(dealerCards)))
-                    val player = Player("yeongun", Hand(playerCards))
+                    val player = Player("yeongun", Hit(Hand(playerCards)))
                     dealer.getResult(player) shouldBe expected
                 }
             }

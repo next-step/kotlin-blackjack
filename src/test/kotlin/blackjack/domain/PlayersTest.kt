@@ -30,9 +30,9 @@ class PlayersTest : BehaviorSpec({
 
     Given("게임이 모두 종료되고 나서") {
         val dealer = Dealer(FixedDeck(), Hit(Hand(mutableListOf(Card(CardSuit.CLUB, CardNumber.TEN), Card(CardSuit.SPADE, CardNumber.TEN)))))
-        val player1 = Player("player1", Hand(mutableListOf(Card(CardSuit.DIAMOND, CardNumber.TEN), Card(CardSuit.SPADE, CardNumber.NINE))))
-        val player2 = Player("player2", Hand(mutableListOf(Card(CardSuit.DIAMOND, CardNumber.TEN), Card(CardSuit.SPADE, CardNumber.TEN))))
-        val player3 = Player("player3", Hand(mutableListOf(Card(CardSuit.DIAMOND, CardNumber.TEN), Card(CardSuit.SPADE, CardNumber.ACE))))
+        val player1 = Player("player1", Hit(Hand(mutableListOf(Card(CardSuit.DIAMOND, CardNumber.TEN), Card(CardSuit.SPADE, CardNumber.NINE)))))
+        val player2 = Player("player2", Hit(Hand(mutableListOf(Card(CardSuit.DIAMOND, CardNumber.TEN), Card(CardSuit.SPADE, CardNumber.TEN)))))
+        val player3 = Player("player3", Hit(Hand(mutableListOf(Card(CardSuit.DIAMOND, CardNumber.TEN), Card(CardSuit.SPADE, CardNumber.ACE)))))
         val players = Players(dealer, listOf(player1, player2, player3))
         When("딜러의 결과를 가져오면") {
             val dealerResult = players.getDealerResult()
@@ -46,9 +46,9 @@ class PlayersTest : BehaviorSpec({
 
     Given("게임이 모두 종료된 후") {
         val dealer = Dealer(FixedDeck(), Hit(Hand(mutableListOf(Card(CardSuit.CLUB, CardNumber.TEN), Card(CardSuit.SPADE, CardNumber.TEN)))))
-        val player1 = Player("player1", Hand(mutableListOf(Card(CardSuit.DIAMOND, CardNumber.TEN), Card(CardSuit.SPADE, CardNumber.NINE))))
-        val player2 = Player("player2", Hand(mutableListOf(Card(CardSuit.DIAMOND, CardNumber.TEN), Card(CardSuit.SPADE, CardNumber.TEN))))
-        val player3 = Player("player3", Hand(mutableListOf(Card(CardSuit.DIAMOND, CardNumber.TEN), Card(CardSuit.SPADE, CardNumber.ACE))))
+        val player1 = Player("player1", Hit(Hand(mutableListOf(Card(CardSuit.DIAMOND, CardNumber.TEN), Card(CardSuit.SPADE, CardNumber.NINE)))))
+        val player2 = Player("player2", Hit(Hand(mutableListOf(Card(CardSuit.DIAMOND, CardNumber.TEN), Card(CardSuit.SPADE, CardNumber.TEN)))))
+        val player3 = Player("player3", Hit(Hand(mutableListOf(Card(CardSuit.DIAMOND, CardNumber.TEN), Card(CardSuit.SPADE, CardNumber.ACE)))))
         val players = Players(dealer, listOf(player1, player2, player3))
         When("플레이어를 결과를 가져오면") {
             val playerResult = players.getPlayersResult()

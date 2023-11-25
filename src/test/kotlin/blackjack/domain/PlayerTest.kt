@@ -25,7 +25,7 @@ class PlayerTest : BehaviorSpec({
         val name = "pobi"
         val hand = Hand(mutableListOf(Card(CardSuit.HEART, CardNumber.TWO), Card(CardSuit.SPADE, CardNumber.EIGHT)))
         When("플레이어는") {
-            val player = Player(name, hand)
+            val player = Player(name, Hit(hand))
             Then("주어진 이름과 패를 갖는 플레이어가 생성된다.") {
                 player.name shouldBe name
                 player.hand shouldBe hand
@@ -179,7 +179,7 @@ class PlayerTest : BehaviorSpec({
                         true
                     ),
                 ) { hand, expected ->
-                    Player("yeongun", hand).isBust() shouldBe expected
+                    Player("yeongun", Hit(hand)).isBust() shouldBe expected
                 }
             }
         }
