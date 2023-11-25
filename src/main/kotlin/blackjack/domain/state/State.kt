@@ -17,5 +17,7 @@ interface State {
 
     fun isFinished(): Boolean
 
+    fun isBust(): Boolean
+
     fun isBlackjack(): Boolean
 }

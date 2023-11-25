@@ -167,19 +167,20 @@ class PlayerTest : BehaviorSpec({
         When("플레이어는") {
             Then("가진 패가 21을 넘으면 Bust, 21을 넘지 않으면 Bust가 아니라고 판단하여 반환한다.") {
                 forAll(
-                    row(Hand(mutableListOf(Card(CardSuit.SPADE, CardNumber.TEN), Card(CardSuit.CLUB, CardNumber.TEN))), false),
+                    row(listOf(Card(CardSuit.SPADE, CardNumber.TEN), Card(CardSuit.CLUB, CardNumber.TEN)), false),
                     row(
-                        Hand(
-                            mutableListOf(
-                                Card(CardSuit.SPADE, CardNumber.TEN),
-                                Card(CardSuit.CLUB, CardNumber.TEN),
-                                Card(CardSuit.HEART, CardNumber.TWO)
-                            )
+                        listOf(
+                            Card(CardSuit.SPADE, CardNumber.TEN),
+                            Card(CardSuit.CLUB, CardNumber.TEN),
+                            Card(CardSuit.HEART, CardNumber.TWO)
                         ),
                         true
                     ),
-                ) { hand, expected ->
-                    Player("yeongun", Hit(hand)).isBust() shouldBe expected
+                ) { cards, expected ->
+                    val player = Player("yeongun")
+                    cards.forEach { player.hit(it) }
+
+                    player.isBust() shouldBe expected
                 }
             }
         }

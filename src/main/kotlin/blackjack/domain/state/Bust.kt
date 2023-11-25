@@ -18,6 +18,10 @@ class Bust(
         return true
     }
 
+    override fun isBust(): Boolean {
+        return true
+    }
+
     override fun isBlackjack(): Boolean {
         return false
     }

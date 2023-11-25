@@ -18,6 +18,10 @@ class Stay(
         return true
     }
 
+    override fun isBust(): Boolean {
+        return false
+    }
+
     override fun isBlackjack(): Boolean {
         return false
     }

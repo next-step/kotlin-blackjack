@@ -18,6 +18,10 @@ class Blackjack(
         return true
     }
 
+    override fun isBust(): Boolean {
+        return false
+    }
+
     override fun isBlackjack(): Boolean {
         return true
     }
