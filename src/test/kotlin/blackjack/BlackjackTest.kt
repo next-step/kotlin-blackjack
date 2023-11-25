@@ -39,6 +39,15 @@ class BlackjackTest {
         assertThat(actual).isEqualTo(21)
     }
 
+    @Test
+    fun `Ace를 1로 계산`() {
+        val cards = Cards("A", "9", "J")
+
+        val actual = cards.sum()
+
+        assertThat(actual).isEqualTo(20)
+    }
+
     companion object {
         @JvmStatic
         fun cardsAndExpectSum(): Stream<Arguments> {
