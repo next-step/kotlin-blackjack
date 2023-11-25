@@ -13,4 +13,8 @@ class Blackjack(
     override fun stay(): State2 {
         throw IllegalArgumentException("BLACKJACK 상태라면 Stay 할 수 없습니다.")
     }
+
+    override fun isFinished(): Boolean {
+        return true
+    }
 }

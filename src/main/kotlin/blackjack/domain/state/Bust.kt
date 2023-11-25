@@ -13,4 +13,8 @@ class Bust(
     override fun stay(): State2 {
         throw IllegalArgumentException("버스트 되었다면 카드를 더이상 Stay 할 수 없습니다.")
     }
+
+    override fun isFinished(): Boolean {
+        return true
+    }
 }

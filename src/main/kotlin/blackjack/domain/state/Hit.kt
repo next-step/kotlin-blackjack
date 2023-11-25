@@ -21,4 +21,7 @@ class Hit(
         return Stay(hand)
     }
 
+    override fun isFinished(): Boolean {
+        return false
+    }
 }

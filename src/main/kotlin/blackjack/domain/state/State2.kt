@@ -16,4 +16,6 @@ interface State2 {
     fun receive(card: Card)
 
     fun cards(): Hand
+
+    fun isFinished(): Boolean
 }
