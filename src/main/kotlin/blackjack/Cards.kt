@@ -1,40 +1,26 @@
 package blackjack
 
 class Cards(
-    vararg cards: String,
+    vararg cards: Card,
 ) {
     private val cards = cards.toList()
 
     fun sum(): Int {
-        val minimum = sumOfMinimum()
-        val maximum = sumOfMaximum()
-
-        if (BLACKJACK < maximum) {
-            return minimum
+        if (BLACKJACK < sumOfMaximum()) {
+            return sumOfMinimum()
         }
-        return maximum
+        return sumOfMaximum()
     }
 
     private fun sumOfMaximum(): Int {
-        if (cards.any { it.equals("A") }) {
+        if (cards.any { it.isAce }) {
             return sumOfMinimum() + 10
         }
         return sumOfMinimum()
     }
 
     private fun sumOfMinimum(): Int {
-        return cards.sumOf { cardValue(it) }
-    }
-
-    private fun cardValue(card: String): Int {
-        if (card.equals("A")) {
-            return 1
-        }
-        return if (isCharacterCard(card)) 10 else card.toInt()
-    }
-
-    private fun isCharacterCard(card: String): Boolean {
-        return card.equals("K") || card.equals("J") || card.equals("Q")
+        return cards.sumOf { it.value }
     }
 
     companion object {
