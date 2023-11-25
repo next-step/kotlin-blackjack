@@ -6,5 +6,5 @@ interface ScoringRule {
 
     fun sumAll(cards: List<Card>): Int
 
-    fun isOverThreshold(score: Int): Boolean
+    fun isOverThreshold(score: Int, threshold: Int): Boolean
 }

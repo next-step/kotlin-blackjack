@@ -125,15 +125,15 @@ class ScoringRuleTest {
     }
 
     @Test
-    fun `총 점수가 21점을 넘으면 한계 점수를 넘었다고 판단`() {
+    fun `총 점수가 특정 점수를 넘으면 한계 점수를 넘었다고 판단`() {
         val scoringRule = DefaultScoringRule()
 
-        for (score in 1..21) {
-            scoringRule.isOverThreshold(score) shouldBe false
+        for (score in 1..DefaultScoringRule.THRESHOLD_SCORE) {
+            scoringRule.isOverThreshold(score, DefaultScoringRule.THRESHOLD_SCORE) shouldBe false
         }
 
-        for (score in 22..30) {
-            scoringRule.isOverThreshold(score) shouldBe true
+        for (score in DefaultScoringRule.THRESHOLD_SCORE + 1..30) {
+            scoringRule.isOverThreshold(score, DefaultScoringRule.THRESHOLD_SCORE) shouldBe true
         }
     }
 }

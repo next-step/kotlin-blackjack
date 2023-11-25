@@ -1,6 +1,7 @@
 package blackjack.domain.player
 
 import blackjack.domain.card.Deck
+import blackjack.domain.rule.DefaultScoringRule
 import blackjack.domain.rule.ScoringRule
 
 class Participant(val name: String, private val scoringRule: ScoringRule) : Player(scoringRule) {
@@ -14,7 +15,7 @@ class Participant(val name: String, private val scoringRule: ScoringRule) : Play
     }
 
     override fun canDraw(): Boolean {
-        return scoringRule.isOverThreshold(totalScore).not()
+        return scoringRule.isOverThreshold(totalScore, DefaultScoringRule.THRESHOLD_SCORE).not()
     }
 
     override fun equals(other: Any?): Boolean {
