@@ -8,8 +8,10 @@ import blackjack.hand.Hand.Companion.FACE_CARD_VALUE
 import blackjack.hand.Hand.Companion.MAX_HAND_VALUE
 
 internal class StandardHand(
-    override val cards: Set<Card> = emptySet()
+    val cards: Set<Card> = emptySet()
 ) : Hand {
+    override fun cards(): List<Card> = cards.toList()
+
     override fun addCard(card: Card): StandardHand = StandardHand(cards = cards + card)
 
     override fun calculateBestValue(): Int {

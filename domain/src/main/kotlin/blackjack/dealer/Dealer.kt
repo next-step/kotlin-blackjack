@@ -7,13 +7,12 @@ import blackjack.deck.Deck
 import blackjack.hand.Hand
 import blackjack.hand.StandardHand
 
-class Dealer(
-    override val hand: Hand = StandardHand(),
-    private val dealerStrategy: DealerStrategy = DefaultDealerStrategy()
+data class Dealer(
+    val hand: Hand = StandardHand(),
+    val dealerStrategy: DealerStrategy = DefaultDealerStrategy()
 ) : BlackjackParticipant {
 
-    val cards: List<Card>
-        get() = hand.cards.toList()
+    val cards: List<Card> = hand.cards()
 
     override fun receiveCard(card: Card): Dealer = Dealer(hand.addCard(card))
 
