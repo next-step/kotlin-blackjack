@@ -41,5 +41,5 @@
 - 상속을 활용해 중복을 제거해본다.
 
 ## 질문 목록
-CardDeque 클래스에 removeCustomCard(), getRemainCardsCount(), containCardRemainCards() 와 같이 테스트에서만 사용하는
-함수들이 있는데, 이렇게 존재해도 괜찮은가? 좋은 방법이 있을지...
+지난 리뷰를 통해 테스트용 함수는 제거하고, 주생성자 + delegate + test code 안에서 함수(전달한 카드 제거용)를 이용해 리팩토링 해봤습니다.
+테스트용 코드는 테스트 코드에 만들었는데, 괜찮을까요~?

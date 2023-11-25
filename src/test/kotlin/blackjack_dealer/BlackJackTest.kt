@@ -15,13 +15,10 @@ class BlackJackTest : StringSpec({
     val cardDeque = CardDeque().create()
     val cards = cardDeque.generateDoubleCard()
     "블랙잭을 수행하여 한장 더 받기를 선택시에 카드의 숫자가 한장 증가한다" {
-        // 카드덱에서 j 하트, j 클로버 제거
-        cardDeque.removeCustomCard(Card(CardNumber.J, CardShape.HEART))
-        cardDeque.removeCustomCard(Card(CardNumber.J, CardShape.CLOVER))
-
         val customCards =
             mutableListOf(Card(CardNumber.J, CardShape.HEART), Card(CardNumber.J, CardShape.CLOVER)).toGamerCards()
-        val dealerCards = cardDeque.generateDoubleCard()
+        val dealerCards =
+            mutableListOf(Card(CardNumber.J, CardShape.SPADE), Card(CardNumber.THREE, CardShape.CLOVER)).toGamerCards()
 
         val participant = Participants.newInstance("pita") { customCards }
         val dealer = Dealer.newInstance(dealerCards)

@@ -4,9 +4,9 @@ import blackjack_dealer.entity.card.Card
 import blackjack_dealer.entity.card.CardNumber
 import blackjack_dealer.entity.card.CardShape
 
-class CardDeque {
-    private var cardDeque: ArrayDeque<Card> = ArrayDeque()
-
+class CardDeque(
+    private val cardDeque: ArrayDeque<Card> = ArrayDeque()
+) : List<Card> by cardDeque {
     fun create(): CardDeque {
         val cardNumber = CardNumber.values()
         val cardShapes = CardShape.values()
@@ -18,9 +18,7 @@ class CardDeque {
                 )
             }
         }.shuffled()
-        return CardDeque().apply {
-            cardDeque = ArrayDeque(createCardDeque)
-        }
+        return CardDeque(ArrayDeque(createCardDeque))
     }
 
     fun generateSingleCard(): Card {
@@ -31,20 +29,5 @@ class CardDeque {
         val initialFirstCard = generateSingleCard()
         val initialSecondCard = generateSingleCard()
         return mutableListOf(initialFirstCard, initialSecondCard).toGamerCards()
-    }
-
-    /**
-     * 아래 함수들은 테스트 클래스에서만 사용됩니다
-     */
-    fun removeCustomCard(card: Card) {
-        cardDeque.removeIf { it == card }
-    }
-
-    fun getRemainCardsCount(): Int {
-        return cardDeque.count()
-    }
-
-    fun containCardRemainCards(card: Card): Boolean {
-        return cardDeque.contains(card)
     }
 }
