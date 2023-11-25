@@ -24,10 +24,10 @@ class ProfitCalculator(private val inputNameAndBets: Map<String, BettingMoney>) 
             return -bettingMoney.value
         }
 
-        if (player.hand.getSum() > dealer.hand.getSum()) {
+        if (player.state.getSum() > dealer.state.getSum()) {
             return bettingMoney.value
         }
-        if (player.hand.getSum() < dealer.hand.getSum()) {
+        if (player.state.getSum() < dealer.state.getSum()) {
             return -bettingMoney.value
         }
         return 0

@@ -55,14 +55,15 @@ object ResultView {
     }
 
     private fun printCard(user: User) {
-        val playerCards = user.hand
+        val playerCards = user.state
+            .cards()
             .cards
             .joinToString { "${it.num.symbol}${it.suit.value}" }
         print(playerCards)
     }
 
     private fun printSum(user: User) {
-        print(" - 결과: ${user.hand.getSum()}")
+        print(" - 결과: ${user.state.getSum()}")
     }
 
     fun printGameResult(dealerResult: Map<GameResult, Int>, playersResult: Map<String, GameResult>) {

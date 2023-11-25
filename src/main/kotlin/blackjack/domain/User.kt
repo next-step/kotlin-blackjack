@@ -6,8 +6,6 @@ import blackjack.domain.state.State
 abstract class User(
     var state: State,
 ) {
-    val hand: Hand
-        get() = state.cards()
 
     open fun hit(card: Card) {
         state = state.draw(card)

@@ -28,7 +28,7 @@ class PlayerTest : BehaviorSpec({
             val player = Player(name, Hit(hand))
             Then("주어진 이름과 패를 갖는 플레이어가 생성된다.") {
                 player.name shouldBe name
-                player.hand shouldBe hand
+                player.state.cards() shouldBe hand
             }
         }
     }
@@ -39,8 +39,8 @@ class PlayerTest : BehaviorSpec({
         When("플레이어는") {
             player.init(cards)
             Then("주어진 2장의 카드를 패로 갖게 된다.") {
-                player.hand.cards[0] shouldBe Card(CardSuit.HEART, CardNumber.TWO)
-                player.hand.cards[1] shouldBe Card(CardSuit.SPADE, CardNumber.EIGHT)
+                player.state.cards().cards[0] shouldBe Card(CardSuit.HEART, CardNumber.TWO)
+                player.state.cards().cards[1] shouldBe Card(CardSuit.SPADE, CardNumber.EIGHT)
             }
         }
     }
@@ -119,7 +119,7 @@ class PlayerTest : BehaviorSpec({
         When("플레이어는") {
             player.hit(card)
             Then("주어진 1장의 카드를 패에 추가한다.") {
-                player.hand.cards[0] shouldBe Card(CardSuit.SPADE, CardNumber.TEN)
+                player.state.cards().cards[0] shouldBe Card(CardSuit.SPADE, CardNumber.TEN)
             }
         }
     }

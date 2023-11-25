@@ -8,10 +8,10 @@ fun Player.getResult(dealer: Dealer): GameResult {
         return GameResult.LOSE
     }
 
-    if (hand.getSum() > dealer.hand.getSum()) {
+    if (state.getSum() > dealer.state.getSum()) {
         return GameResult.WIN
     }
-    if (hand.getSum() < dealer.hand.getSum()) {
+    if (state.getSum() < dealer.state.getSum()) {
         return GameResult.LOSE
     }
     return GameResult.DRAW
@@ -25,10 +25,10 @@ fun Dealer.getResult(player: Player): GameResult {
         return GameResult.WIN
     }
 
-    if (hand.getSum() > player.hand.getSum()) {
+    if (state.getSum() > player.state.getSum()) {
         return GameResult.WIN
     }
-    if (hand.getSum() < player.hand.getSum()) {
+    if (state.getSum() < player.state.getSum()) {
         return GameResult.LOSE
     }
     return GameResult.DRAW
