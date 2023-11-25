@@ -13,8 +13,6 @@ interface State2 {
 
     fun init(cards: List<Card>)
 
-    fun receive(card: Card)
-
     fun cards(): Hand
 
     fun isFinished(): Boolean

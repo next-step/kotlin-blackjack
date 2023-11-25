@@ -11,10 +11,6 @@ abstract class Started(
         return hand.getSum()
     }
 
-    override fun receive(card: Card) {
-        hand.receive(card)
-    }
-
     override fun init(cards: List<Card>) {
         hand.init(cards)
     }
