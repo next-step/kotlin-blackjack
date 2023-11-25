@@ -1,5 +1,6 @@
-package blackjack.domain
+package blackjack.domain.player
 
+import blackjack.domain.card.Deck
 import blackjack.domain.rule.DefaultScoringRule
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.ints.shouldBeGreaterThan

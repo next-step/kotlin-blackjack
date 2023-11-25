@@ -1,5 +1,8 @@
-package blackjack.domain
+package blackjack.domain.player
 
+import blackjack.domain.card.Card
+import blackjack.domain.card.Deck
+import blackjack.domain.card.DrewCards
 import blackjack.domain.rule.ScoringRule
 
 class Player(val name: String, private val scoringRule: ScoringRule) {

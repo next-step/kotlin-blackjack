@@ -1,4 +1,4 @@
-package blackjack.domain
+package blackjack.domain.card
 
 enum class CardCharacter(val mark: String) {
     ACE("A"),

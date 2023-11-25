@@ -1,7 +1,7 @@
 package blackjack.controller
 
-import blackjack.domain.Deck
-import blackjack.domain.Player
+import blackjack.domain.card.Deck
+import blackjack.domain.player.Player
 import blackjack.domain.rule.DefaultScoringRule
 import blackjack.view.ConsoleInput
 import blackjack.view.ConsoleResult

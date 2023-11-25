@@ -1,7 +1,7 @@
 package blackjack.domain.rule
 
-import blackjack.domain.Card
-import blackjack.domain.CardCharacter
+import blackjack.domain.card.Card
+import blackjack.domain.card.CardCharacter
 
 class DefaultScoringRule : ScoringRule {
 
