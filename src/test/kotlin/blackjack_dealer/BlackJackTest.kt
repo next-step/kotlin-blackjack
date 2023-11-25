@@ -8,7 +8,6 @@ import blackjack_dealer.entity.card.Card
 import blackjack_dealer.entity.card.CardNumber
 import blackjack_dealer.entity.card.CardShape
 import blackjack_dealer.entity.toGamerCards
-import blackjack_dealer.ui.InputView
 import blackjack_dealer.ui.OutputView
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe

@@ -3,7 +3,6 @@ package blackjack_dealer.domain
 import blackjack_dealer.entity.CardDeque
 import blackjack_dealer.entity.GamerCards
 import blackjack_dealer.entity.state.GamerCurrentState
-import blackjack_dealer.entity.toGamerCards
 
 abstract class Gamer(
     open val name: String,
