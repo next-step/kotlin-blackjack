@@ -4,7 +4,6 @@ import blackjack_dealer.domain.Dealer
 import blackjack_dealer.domain.Participant
 import blackjack_dealer.entity.BlackJackGamer
 import blackjack_dealer.entity.CardDeque
-import blackjack_dealer.entity.GamerCards
 import blackjack_dealer.entity.Participants
 import blackjack_dealer.entity.card.Card
 import blackjack_dealer.entity.card.CardNumber
@@ -12,6 +11,7 @@ import blackjack_dealer.entity.card.CardShape
 import blackjack_dealer.entity.state.GamerCurrentState
 import blackjack_dealer.entity.state.ParticipantResultState
 import blackjack_dealer.entity.toGamerCards
+import blackjack_dealer.ui.OutputView
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 
@@ -71,9 +71,12 @@ class ParticipantTest : StringSpec({
         val blackjackGamer = BlackJackGamer(dealer, participants)
         val blackJack = BlackJack(deque, blackjackGamer)
         // 블랙잭 수행
-        blackJack.doGame {
-            false
-        }
+        blackJack.doGame(
+            getOneMoreCardInput = { false },
+            askGetOneMoreCard = { participant -> OutputView.askGetOneMoreCard(participant) },
+            printParticipantInformation = { participant -> OutputView.printParticipantInformation(participant) },
+            printGetOneMoreCardForDealer = { OutputView.printGetOneMoreCardForDealer() },
+        )
         blackjackGamer.participants.first().getCurrentGamerState() shouldBe GamerCurrentState.STAND
     }
 
@@ -81,10 +84,12 @@ class ParticipantTest : StringSpec({
         // 참가자는 13, 14, 15
         val blackJackCardsThirteen =
             mutableListOf(Card(CardNumber.A, CardShape.CLOVER), Card(CardNumber.TWO, CardShape.CLOVER))
-        val participantWithThirteen = Participant.newInstance(name = "pita", cards = blackJackCardsThirteen.toGamerCards())
+        val participantWithThirteen =
+            Participant.newInstance(name = "pita", cards = blackJackCardsThirteen.toGamerCards())
         val blackJackCardsFourteen =
             mutableListOf(Card(CardNumber.A, CardShape.CLOVER), Card(CardNumber.THREE, CardShape.CLOVER))
-        val participantWithFourteen = Participant.newInstance(name = "haero", cards = blackJackCardsFourteen.toGamerCards())
+        val participantWithFourteen =
+            Participant.newInstance(name = "haero", cards = blackJackCardsFourteen.toGamerCards())
         val blackJackCardsFifteen =
             mutableListOf(Card(CardNumber.A, CardShape.CLOVER), Card(CardNumber.FOUR, CardShape.CLOVER))
         val participantWithFifteen = Participant.newInstance(name = "wan", cards = blackJackCardsFifteen.toGamerCards())
