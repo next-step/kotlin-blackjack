@@ -78,7 +78,7 @@ class ResultBoardTest : BehaviorSpec({
                 Card(CardNumber.Q, CardShape.CLOVER)
             ).toGamerCards()
         val dealer = Dealer.newInstance(cards)
-        When("참가자의 카드 값과 상관없이") {
+        When("참가자의 카드 값이 BUST 되지 않았다면") {
             // 승
             val winningParticipantCard =
                 mutableListOf(Card(CardNumber.J, CardShape.CLOVER), Card(CardNumber.EIGHT, CardShape.CLOVER)).toGamerCards()
@@ -89,10 +89,14 @@ class ResultBoardTest : BehaviorSpec({
             val drawParticipant = Participant.newInstance("pita", drawParticipantCard)
             // 패
             val losingParticipantCard =
-                mutableListOf(Card(CardNumber.J, CardShape.CLOVER), Card(CardNumber.SIX, CardShape.CLOVER)).toGamerCards()
+                mutableListOf(
+                    Card(CardNumber.J, CardShape.CLOVER),
+                    Card(CardNumber.SIX, CardShape.CLOVER),
+                    Card(CardNumber.Q, CardShape.SPADE)
+                ).toGamerCards()
             val losingParticipant = Participant.newInstance("pita", losingParticipantCard)
 
-            val expected = 3
+            val expected = 2
             Then("승리로 기록된다.") {
                 val totalResult = BlackJackResultBoard.getBlackJackResult(
                     dealer,
@@ -102,8 +106,7 @@ class ResultBoardTest : BehaviorSpec({
                         )
                     )
                 )
-                totalResult.participantsResult.filter { it.resultState == ParticipantResultState.WIN }
-                    .count() shouldBe expected
+                totalResult.participantsResult.count { it.resultState == ParticipantResultState.WIN } shouldBe expected
             }
         }
     }

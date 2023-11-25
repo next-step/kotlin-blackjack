@@ -37,8 +37,8 @@ data class Participant(
         val dealerScore = dealer.getCurrentCards().getCurrentScore()
         val participantScore = getCurrentCards().getCurrentScore()
 
-        if (dealerScore > BLACK_JACK) return ParticipantResultState.WIN
         if (getCurrentGamerState() == GamerCurrentState.BUST) return ParticipantResultState.LOSE
+        if (dealerScore > BLACK_JACK) return ParticipantResultState.WIN
 
         return when {
             dealerScore - participantScore > 0 -> ParticipantResultState.LOSE
