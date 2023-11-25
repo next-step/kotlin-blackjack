@@ -3,7 +3,6 @@ package blackjack.model
 import blackjack.model.playable.Playable
 import blackjack.model.playable.impl.Dealer
 import blackjack.model.playable.impl.Player
-import blackjack.model.result.DealerResult
 import blackjack.model.result.ParticipantResults
 import blackjack.model.result.PlayerResult
 import blackjack.model.result.PlayersResults
@@ -24,24 +23,12 @@ object Referee {
         val playerResults = getPlayerResults(participants)
         return ParticipantResults(
             playerResults = playerResults,
-            dealerDealerResult = getDealerResult(participants, playerResults)
+            // dealerDealerResult = getDealerResult(participants, playerResults)
+            dealerDealerResult = participants.dealer.result(playerResults)
         )
         // 2) 딜러가 승리한 상황
         // 3) 플레이어중 하나가 승리하고, 딜러가 패배한 상황
         // 4) 플러이어중 하나 승리, 하나 비긴, 하나 패배 딜러
-    }
-
-    private fun getDealerResult(
-        participants: Participants,
-        playerResults: PlayersResults
-    ): Pair<Dealer, DealerResult> {
-        val dealerScore = participants.dealer.score()
-        return participants.dealer to DealerResult(
-            dealerScore,
-            playerResults.winningCount(),
-            playerResults.drawingCount(),
-            playerResults.loseCount()
-        )
     }
 
     private fun getPlayerResults(participants: Participants): PlayersResults {

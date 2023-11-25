@@ -5,6 +5,8 @@ import blackjack.model.pack.Pack
 import blackjack.model.playable.Playable
 import blackjack.model.playable.PlayableReaction
 import blackjack.model.playblestrategy.PlayingStrategy
+import blackjack.model.result.DealerResult
+import blackjack.model.result.PlayersResults
 
 class Dealer(
     val cards: Cards = Cards(),
@@ -29,6 +31,15 @@ class Dealer(
             return PlayableReaction.HIT
         }
         return PlayableReaction.STAND
+    }
+
+    fun result(playerResults: PlayersResults): Pair<Dealer, DealerResult> {
+        return this to DealerResult(
+            score = this.score(),
+            dealerWinningCount = playerResults.loseCount(),
+            dealerDrawingCount = playerResults.drawingCount(),
+            dealerLosingCount = playerResults.winningCount()
+        )
     }
 
     companion object {

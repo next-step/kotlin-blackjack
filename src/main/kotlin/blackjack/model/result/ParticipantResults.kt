@@ -17,11 +17,11 @@ class ParticipantResults(
     }
 
     fun dealerWinCount(): Int {
-        return this.dealerDealerResult.second.winning
+        return this.dealerDealerResult.second.dealerWinningCount
     }
 
     fun dealerLoseCount(): Int {
-        return this.dealerDealerResult.second.losing
+        return this.dealerDealerResult.second.dealerLosingCount
     }
 
     companion object {

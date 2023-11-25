@@ -43,9 +43,9 @@ class RefereeTest : StringSpec({
         val participants = Participants(Players(player1, player2), dealer)
         val actual = Referee.blackJackResult(participants)
 
-        actual.dealerResult().point shouldBe 22
-        actual.dealerResult().winning shouldBe 0
-        actual.dealerResult().losing shouldBe 2
+        actual.dealerResult().score shouldBe 22
+        actual.dealerResult().dealerWinningCount shouldBe 0
+        actual.dealerResult().dealerLosingCount shouldBe 2
 
         actual.playerResult(player1) shouldBe PlayerResult.WIN
         actual.playerResult(player2) shouldBe PlayerResult.WIN

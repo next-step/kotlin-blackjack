@@ -1,8 +1,8 @@
 package blackjack.model.result
 
 data class DealerResult(
-    val point: Int,
-    val winning: Int,
-    val drawing: Int,
-    val losing: Int,
+    val score: Int,
+    val dealerWinningCount: Int,
+    val dealerDrawingCount: Int,
+    val dealerLosingCount: Int,
 )
