@@ -1,6 +1,7 @@
 package blackjack
 
 class Player(name: String) : Gamer(name) {
+    lateinit var betAmount: BetAmount
     override val canGetCard: Boolean
         get() = !isBusted
 
