@@ -8,8 +8,8 @@ import blackjack_dealer.entity.state.ParticipantResultState
 
 data class Participant(
     override val name: String,
+    private var betAmount: Int,
 ) : Gamer(name) {
-
     override fun drawCard(cardDeque: CardDeque) {
         super.drawCard(cardDeque)
         setCurrentState()
@@ -47,15 +47,19 @@ data class Participant(
         }
     }
 
+    fun getCurrentBetAmount(): Int {
+        return betAmount
+    }
+
     companion object {
         private const val MINIMUM_HIT_NUMBER = 1
         private const val MAXIMUM_HIT_NUMBER = 20
 
         private const val BLACK_JACK = 21
 
-        fun newInstance(name: String, cards: GamerCards): Participant {
+        fun newInstance(name: String, cards: GamerCards, betAmount: Int = 0): Participant {
             val initialState = findMatchedInitialState(cards)
-            return Participant(name = name).apply {
+            return Participant(name = name, betAmount = betAmount).apply {
                 initializeCard(cards)
                 currentState = initialState
             }

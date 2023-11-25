@@ -2,6 +2,7 @@ package blackjack_dealer
 
 import blackjack_dealer.domain.Dealer
 import blackjack_dealer.domain.Participant
+import blackjack_dealer.entity.AllParticipantWithBetAmount
 import blackjack_dealer.entity.BlackJackGamer
 import blackjack_dealer.entity.CardDeque
 import blackjack_dealer.entity.Participants
@@ -18,7 +19,7 @@ import io.kotest.matchers.shouldBe
 class ParticipantTest : StringSpec({
     val cardDeque = CardDeque().create()
     val cards = cardDeque.generateDoubleCard()
-    val participant = Participant.newInstance("pita", cards)
+    val participant = Participant.newInstance("pita", cards, 10000)
 
     "생성한 이름이 잘 나온다" {
         val expected = "pita"
@@ -66,7 +67,8 @@ class ParticipantTest : StringSpec({
         val deque = CardDeque().create()
         val participantCard = cardDeque.generateDoubleCard()
         val dealerCard = cardDeque.generateDoubleCard()
-        val participants = Participants.newInstance("pita") { participantCard }
+        val allParticipantWithBetAmount = AllParticipantWithBetAmount.newInstance("pita", betAmounts = listOf(1))
+        val participants = Participants.newInstance(allParticipantWithBetAmount) { participantCard }
         val dealer = Dealer.newInstance(dealerCard)
         val blackjackGamer = BlackJackGamer(dealer, participants)
         val blackJack = BlackJack(deque, blackjackGamer)
@@ -105,8 +107,7 @@ class ParticipantTest : StringSpec({
     }
 
     "플레이어 생성시에 베팅 금액을 정할 수 있다" {
-
         val expected = 10000
-        participant.getCurrent베팅금액 shouldBe expected
+        participant.getCurrentBetAmount() shouldBe expected
     }
 })

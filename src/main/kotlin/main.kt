@@ -12,7 +12,8 @@ fun main() {
     val participantsName = InputView.inputParticipantsName()
     val cardDeque = CardDeque().create()
 
-    val participants = Participants.newInstance(participantsName) { cardDeque.generateDoubleCard() }
+    val allParticipantWithBetAmount = OutputView.enterBetAmountEachParticipant(participantsName) { InputView.inputBetAmount() }
+    val participants = Participants.newInstance(allParticipantWithBetAmount) { cardDeque.generateDoubleCard() }
     val dealer = Dealer.newInstance(cardDeque.generateDoubleCard())
     OutputView.printDivideCardsToGamer(dealer, participants)
 

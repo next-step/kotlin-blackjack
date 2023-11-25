@@ -7,6 +7,12 @@ object InputView {
         return participants
     }
 
+    fun inputBetAmount(): Int {
+        val inputAmount = readln().toInt()
+        inputAmount.validateBetAmountValue()
+        return inputAmount
+    }
+
     fun inputGetOneMoreCard(): Boolean {
         val input = readln()
         return input == "y"

@@ -1,5 +1,6 @@
 package blackjack_dealer
 
+import blackjack_dealer.entity.AllParticipantWithBetAmount
 import blackjack_dealer.entity.CardDeque
 import blackjack_dealer.entity.Participants
 import blackjack_dealer.entity.card.Card
@@ -14,9 +15,13 @@ class ParticipantsTest : StringSpec({
         val input = "pita,haero,sery"
         val expected = 3
         CardDeque().create()
+        val allParticipantWithBetAmount = AllParticipantWithBetAmount.newInstance(
+            names = input,
+            betAmounts = listOf(1, 2, 3)
+        )
         Participants.newInstance(
-            nameString = input,
-            cardDeque = { listOf(Card(CardNumber.TWO, CardShape.CLOVER)).toGamerCards() }
+            allParticipantWithBetAmount,
+            cardDeque = { listOf(Card(CardNumber.TWO, CardShape.CLOVER)).toGamerCards() },
         ).size shouldBe expected
     }
 })
