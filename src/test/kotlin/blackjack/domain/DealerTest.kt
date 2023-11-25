@@ -60,8 +60,8 @@ class DealerTest : BehaviorSpec({
                     val dealer = Dealer(FixedDeck())
                     dealer.init(cards)
 
-                    val status = dealer.status
-                    status.shouldBeInstanceOf<Hit>()
+                    val state = dealer.state
+                    state.shouldBeInstanceOf<Hit>()
                 }
             }
         }
@@ -79,8 +79,8 @@ class DealerTest : BehaviorSpec({
                     val dealer = Dealer(FixedDeck())
                     dealer.init(cards)
 
-                    val status = dealer.status
-                    status.shouldBeInstanceOf<Stay>()
+                    val state = dealer.state
+                    state.shouldBeInstanceOf<Stay>()
                 }
             }
         }
@@ -92,8 +92,8 @@ class DealerTest : BehaviorSpec({
             val dealer = Dealer(FixedDeck())
             dealer.init(cards)
             Then("Blackjack 상태를 가진다.") {
-                val status = dealer.status
-                status.shouldBeInstanceOf<Blackjack>()
+                val state = dealer.state
+                state.shouldBeInstanceOf<Blackjack>()
             }
         }
     }
@@ -111,8 +111,8 @@ class DealerTest : BehaviorSpec({
                     dealer.hit(Card(CardSuit.CLUB, CardNumber.THREE))
                     dealer.hit(card)
 
-                    val status = dealer.status
-                    status.shouldBeInstanceOf<Hit>()
+                    val state = dealer.state
+                    state.shouldBeInstanceOf<Hit>()
                 }
             }
         }
@@ -133,8 +133,8 @@ class DealerTest : BehaviorSpec({
                     dealer.hit(Card(CardSuit.CLUB, CardNumber.THREE))
                     dealer.hit(card)
 
-                    val status = dealer.status
-                    status.shouldBeInstanceOf<Stay>()
+                    val state = dealer.state
+                    state.shouldBeInstanceOf<Stay>()
                 }
             }
         }
@@ -152,8 +152,8 @@ class DealerTest : BehaviorSpec({
                     dealer.hit(Card(CardSuit.CLUB, CardNumber.THREE))
                     dealer.hit(card)
 
-                    val status = dealer.status
-                    status.shouldBeInstanceOf<Bust>()
+                    val state = dealer.state
+                    state.shouldBeInstanceOf<Bust>()
                 }
             }
         }

@@ -5,13 +5,13 @@ import blackjack.domain.Hand
 
 abstract class Started(
     val hand: Hand = Hand(),
-) : State2 {
+) : State {
 
     override fun getSum(): Int {
         return hand.getSum()
     }
 
-    override fun init(cards: List<Card>): State2 {
+    override fun init(cards: List<Card>): State {
         hand.init(cards)
         return if (getSum() == 21) {
             Blackjack(hand)

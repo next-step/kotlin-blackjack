@@ -8,7 +8,7 @@ class Hit(
     hand: Hand,
 ) : Started(hand) {
 
-    override fun draw(card: Card): State2 {
+    override fun draw(card: Card): State {
         hand.receive(card)
         return if (hand.getSum() > User.BLACKJACK) {
             Bust(hand)
@@ -17,7 +17,7 @@ class Hit(
         }
     }
 
-    override fun stay(): State2 {
+    override fun stay(): State {
         return Stay(hand)
     }
 

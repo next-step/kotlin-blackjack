@@ -12,6 +12,6 @@ class Player(
     }
 
     override fun hit(card: Card) {
-        status = status.draw(card)
+        state = state.draw(card)
     }
 }

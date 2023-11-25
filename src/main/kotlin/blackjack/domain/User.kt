@@ -1,37 +1,34 @@
 package blackjack.domain
 
-import blackjack.domain.state.State2
+import blackjack.domain.state.State
 
 abstract class User(
-    var status: State2,
+    var state: State,
 ) {
     val hand: Hand
-        get() = status.cards()
-
-    var state = State.HIT
-        protected set
+        get() = state.cards()
 
     abstract fun hit(card: Card)
 
     open fun init(cards: List<Card>) {
         require(cards.size == 2) { "처음엔 카드 2장만 받을 수 있습니다." }
-        status = status.init(cards)
+        state = state.init(cards)
     }
 
     fun isBust(): Boolean {
-        return status.getSum() > BLACKJACK
+        return state.getSum() > BLACKJACK
     }
 
     fun isBlackjack(): Boolean {
-        return status.isBlackjack()
+        return state.isBlackjack()
     }
 
     fun stand() {
-        status = status.stay()
+        state = state.stay()
     }
 
     fun canHit(): Boolean {
-        return !status.isFinished()
+        return !state.isFinished()
     }
 
     companion object {

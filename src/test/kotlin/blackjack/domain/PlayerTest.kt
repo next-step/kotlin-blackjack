@@ -57,8 +57,8 @@ class PlayerTest : BehaviorSpec({
                     val player = Player("yeongun")
                     player.init(cards)
 
-                    val status = player.status
-                    status.shouldBeInstanceOf<Hit>()
+                    val state = player.state
+                    state.shouldBeInstanceOf<Hit>()
                 }
             }
         }
@@ -70,8 +70,8 @@ class PlayerTest : BehaviorSpec({
             val player = Player("yeongun")
             player.init(cards)
             Then("Blackjack 상태를 가진다.") {
-                val status = player.status
-                status.shouldBeInstanceOf<Blackjack>()
+                val state = player.state
+                state.shouldBeInstanceOf<Blackjack>()
             }
         }
     }
@@ -137,8 +137,8 @@ class PlayerTest : BehaviorSpec({
                     player.hit(Card(CardSuit.CLUB, CardNumber.EIGHT))
                     player.hit(card)
 
-                    val status = player.status
-                    status.shouldBeInstanceOf<Hit>()
+                    val state = player.state
+                    state.shouldBeInstanceOf<Hit>()
                 }
             }
         }
@@ -156,8 +156,8 @@ class PlayerTest : BehaviorSpec({
                     player.hit(Card(CardSuit.CLUB, CardNumber.EIGHT))
                     player.hit(card)
 
-                    val status = player.status
-                    status.shouldBeInstanceOf<Bust>()
+                    val state = player.state
+                    state.shouldBeInstanceOf<Bust>()
                 }
             }
         }
