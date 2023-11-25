@@ -1,12 +1,11 @@
 package card
 
-class CardPack private constructor(private val playingCard: List<PlayingCard>) {
+class CardPack(val cardList: List<PlayingCard>) {
 
     companion object {
-
         private val cardPack = createCard()
 
-        private fun createCard(): List<PlayingCard> {
+        private fun createCard(): CardPack {
             val suitList = Suit.getSuitList()
             val playingCardList = mutableListOf<PlayingCard>()
 
@@ -14,7 +13,7 @@ class CardPack private constructor(private val playingCard: List<PlayingCard>) {
                 playingCardList.addAll(createCardWithSuit(suit))
             }
 
-            return playingCardList
+            return CardPack(playingCardList)
         }
 
         private fun createCardWithSuit(suit: Suit): List<PlayingCard> {
@@ -27,6 +26,8 @@ class CardPack private constructor(private val playingCard: List<PlayingCard>) {
             return playingCardList
         }
 
-        fun getCradPack() = cardPack
+        fun getCardPack(): CardPack {
+            return cardPack
+        }
     }
 }
