@@ -3,14 +3,26 @@ package blackjack.game
 import blackjack.dealer.Dealer
 import blackjack.dealer.DealerStrategy
 import blackjack.dealer.DefaultDealerStrategy
+import blackjack.deck.Deck
 import blackjack.player.Player
 
 class BlackjackGame private constructor(
     val players: List<Player>,
-    val dealer: Dealer = Dealer()
+    val dealer: Dealer = Dealer(),
+    private val deck: Deck = Deck(),
 ) {
     init {
         require(players.toSet().isNotEmpty()) { "플레이어가 최소 한 명은 존재해야 합니다." }
+    }
+
+    fun dealInitialCards(): BlackjackGame {
+        val nPlayers = List(players.size) { players[it].receiveCard(deck.drawCard(2)) }
+        val nDealer = dealer.receiveCard(deck.drawCard(2))
+        return BlackjackGame(
+            players = nPlayers,
+            dealer = nDealer,
+            deck = deck
+        )
     }
 
     class BlackjackGameBuilder {

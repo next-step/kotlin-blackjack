@@ -23,7 +23,7 @@ internal class DefaultDealerStrategy : DealerStrategy {
         val remainedScore = 21 - currentScore
         val safeCards = deck.remainingCards.count { isSafe(it, remainedScore) }
 
-        return 1.0 - safeCards.toDouble() / deck.size.toDouble()
+        return 1.0 - safeCards.toDouble() / deck.remainingCards.size
     }
 
     private fun isSafe(card: Card, remainedScore: Int): Boolean {

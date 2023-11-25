@@ -8,10 +8,10 @@ import blackjack.hand.StandardHand
 
 data class Player(
     val name: String,
-    val hand: Hand = StandardHand()
+    private val hand: Hand = StandardHand()
 ) : BlackjackParticipant {
 
-    val cards: List<Card> = hand.cards()
+    val cards: List<Card> get() = hand.cards()
 
     fun canHit(): BlackJackAction = if (hand.calculateMinValue() <= 21) {
         BlackJackAction.HIT
@@ -19,9 +19,9 @@ data class Player(
         BlackJackAction.STAND
     }
 
-    override fun receiveCard(card: Card): Player {
-        return copy(hand = hand.addCard(card))
-    }
+    override fun receiveCard(card: Card): Player = copy(hand = hand.addCard(card))
+
+    override fun receiveCard(cards: List<Card>): Player = copy(hand = hand.addCard(cards))
 
     override fun calculateBestValue(): Int = hand.calculateBestValue()
 }

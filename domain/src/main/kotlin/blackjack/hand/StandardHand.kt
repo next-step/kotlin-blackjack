@@ -14,6 +14,8 @@ internal class StandardHand(
 
     override fun addCard(card: Card): StandardHand = StandardHand(cards = cards + card)
 
+    override fun addCard(cards: List<Card>): StandardHand = StandardHand(cards = this.cards + cards)
+
     override fun calculateBestValue(): Int {
         val sumWithoutAces = cards.filter { it.rank != CardRank.ACE }.sumOf { cardValue(it) }
         val aceCount = cards.count { it.rank == CardRank.ACE }
