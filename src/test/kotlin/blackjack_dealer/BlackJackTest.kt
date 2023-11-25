@@ -30,7 +30,7 @@ class BlackJackTest : StringSpec({
             true
         }
         // 한장만 더 받기
-        blackjackGamer.participants.first().getCurrentCards().count() shouldBe expected
+        blackjackGamer.participants.first().getCurrentCards().trumpCard.count() shouldBe expected
     }
 
     "블랙잭을 수행하여 한장 더 안받기 선택시에 카드의 숫자가 개수가 동일하다" {
@@ -45,6 +45,6 @@ class BlackJackTest : StringSpec({
             false
         }
         // 한장만 더 안 받기
-        blackjackGamer.participants.first().getCurrentCards().count() shouldBe expected
+        blackjackGamer.participants.first().getCurrentCards().trumpCard.count() shouldBe expected
     }
 })

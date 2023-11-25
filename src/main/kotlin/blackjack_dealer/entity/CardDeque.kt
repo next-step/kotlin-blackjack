@@ -28,6 +28,6 @@ class CardDeque(
     fun generateDoubleCard(): GamerCards {
         val initialFirstCard = generateSingleCard()
         val initialSecondCard = generateSingleCard()
-        return mutableListOf(initialFirstCard, initialSecondCard).toGamerCards()
+        return listOf(initialFirstCard, initialSecondCard).toGamerCards()
     }
 }

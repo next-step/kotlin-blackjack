@@ -5,6 +5,7 @@ import blackjack_dealer.entity.Participants
 import blackjack_dealer.entity.card.Card
 import blackjack_dealer.entity.card.CardNumber
 import blackjack_dealer.entity.card.CardShape
+import blackjack_dealer.entity.toGamerCards
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 
@@ -15,7 +16,7 @@ class ParticipantsTest : StringSpec({
         CardDeque().create()
         Participants.newInstance(
             nameString = input,
-            cardDeque = { listOf(Card(CardNumber.TWO, CardShape.CLOVER)) }
+            cardDeque = { listOf(Card(CardNumber.TWO, CardShape.CLOVER)).toGamerCards() }
         ).size shouldBe expected
     }
 })

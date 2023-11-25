@@ -38,34 +38,34 @@ class DealerTest : BehaviorSpec({
 
         When("카드 두장을 받고 받은 두장의 합계가 16 이하면") {
             val customCardsLessThanSixteen =
-                mutableListOf(Card(CardNumber.J, CardShape.HEART), Card(CardNumber.FIVE, CardShape.CLOVER)).toGamerCards()
+                mutableListOf(Card(CardNumber.J, CardShape.HEART), Card(CardNumber.FIVE, CardShape.CLOVER))
             val cardDequeLessThanSixteen = removeCustomCard(customCardsLessThanSixteen)
 
             val lessThanScoreExpected = 16
             val cardCountExpected = 3
-            val dealerLessThanSixteen = Dealer.newInstance(customCardsLessThanSixteen)
+            val dealerLessThanSixteen = Dealer.newInstance(customCardsLessThanSixteen.toGamerCards())
 
             Then("1장을 더 받는다 (16이하인지도 체크)") {
                 dealerLessThanSixteen.getCurrentCards().getCurrentScore() shouldBeLessThanOrEqual lessThanScoreExpected
 
                 dealerLessThanSixteen.drawCard(cardDequeLessThanSixteen)
-                dealerLessThanSixteen.getCurrentCards().count() shouldBe cardCountExpected
+                dealerLessThanSixteen.getCurrentCards().trumpCard.count() shouldBe cardCountExpected
             }
         }
 
         When("카드 두장을 받고 받은 두장의 합계가 17 이상이면 추가로 받을 수 없다") {
             val customCardsGreaterThanSixteen =
-                mutableListOf(Card(CardNumber.J, CardShape.HEART), Card(CardNumber.SEVEN, CardShape.CLOVER)).toGamerCards()
+                mutableListOf(Card(CardNumber.J, CardShape.HEART), Card(CardNumber.SEVEN, CardShape.CLOVER))
             removeCustomCard(customCardsGreaterThanSixteen)
 
             val moreThanScoreExpected = 17
             val cardCountExpected = 2
-            val dealerGreaterThanSixteen = Dealer.newInstance(customCardsGreaterThanSixteen)
+            val dealerGreaterThanSixteen = Dealer.newInstance(customCardsGreaterThanSixteen.toGamerCards())
 
             Then("추가로 받을 수 없다 (17 이상인지도 체크)") {
                 dealerGreaterThanSixteen.getCurrentCards()
                     .getCurrentScore() shouldBeGreaterThanOrEqual moreThanScoreExpected
-                dealerGreaterThanSixteen.getCurrentCards().count() shouldBe cardCountExpected
+                dealerGreaterThanSixteen.getCurrentCards().trumpCard.count() shouldBe cardCountExpected
             }
         }
     }
