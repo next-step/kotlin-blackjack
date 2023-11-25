@@ -23,7 +23,7 @@ abstract class User(
         return state.isBlackjack()
     }
 
-    fun stand() {
+    fun stay() {
         state = state.stay()
     }
 

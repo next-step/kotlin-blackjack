@@ -29,19 +29,19 @@ fun main() {
 
 private fun play(dealer: Dealer, player: Player) {
     while (player.canHit()) {
-        hitOrStand(dealer, player)
+        hitOrStay(dealer, player)
     }
 }
 
-private fun hitOrStand(dealer: Dealer, player: Player) {
-    when (InputView.inputHitOrStand(player)) {
+private fun hitOrStay(dealer: Dealer, player: Player) {
+    when (InputView.inputHitOrStay(player)) {
         true -> {
             val card = dealer.draw()
             player.hit(card)
             ResultView.printPlayerNameAndCard(player)
         }
 
-        false -> player.stand()
+        false -> player.stay()
     }
 }
 
