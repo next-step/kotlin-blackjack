@@ -12,7 +12,7 @@ object Referee {
 
     private const val BLACK_JACK_SCORE: Int = 21
 
-    fun isGameOver(playable: Playable): Boolean {
+    fun isBurst(playable: Playable): Boolean {
         return playable.score() >= BLACK_JACK_SCORE
     }
 

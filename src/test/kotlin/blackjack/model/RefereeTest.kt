@@ -14,7 +14,7 @@ class RefereeTest : StringSpec({
             "kim",
             CardFixture.makeCards(CardFixture.ace1, CardFixture.ace2, CardFixture.king)
         )
-        Referee.isGameOver(player) shouldBe false
+        Referee.isBurst(player) shouldBe false
     }
 
     "ACE+KING 이 들어온 경우 ACE 를 11로 인식해, 블랙잭으로 계산 되어야 한다" {
@@ -22,7 +22,7 @@ class RefereeTest : StringSpec({
             "kim",
             CardFixture.makeCards(CardFixture.ace1, CardFixture.king)
         )
-        Referee.isGameOver(player) shouldBe true
+        Referee.isBurst(player) shouldBe true
     }
 
     "딜러가 21을 초과하면 그 시점까지 남아 있던 플레이어들은 가지고 있는 패에 상관 없이 승리해야 한다" {
