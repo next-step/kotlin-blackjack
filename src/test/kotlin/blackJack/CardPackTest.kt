@@ -19,7 +19,7 @@ class CardPackTest {
         val cardPack = CardPack.getCardPack()
         val cardPackSize = cardPack.cardList.size
 
-        val distinctCardPack =  cardPack.cardList.distinct()
+        val distinctCardPack = cardPack.cardList.distinct()
         val distinctCardPackSize = distinctCardPack.size
 
         assertThat(cardPackSize).isEqualTo(distinctCardPackSize)

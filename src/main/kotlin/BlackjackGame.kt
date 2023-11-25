@@ -1,9 +1,18 @@
 import card.CardPack
+import card.PlayingCard
 
 class BlackjackGame(private val cardPack: CardPack) {
 
+    private val index = CardIndex(maxIndex = cardPack.cardList.size)
+
     init {
         validateCardPack()
+    }
+
+    fun hit(): PlayingCard {
+        val card = cardPack.cardList[index.getIndex()]
+        increaseCardIndex()
+        return card
     }
 
     private fun validateCardPack() {
@@ -17,6 +26,10 @@ class BlackjackGame(private val cardPack: CardPack) {
 
     private fun validateDuplicateCardPack() {
         require(cardPack.cardList.size == cardPack.cardList.distinct().size) { ERR_MSG_DUPLICATE_CARD_PACK }
+    }
+
+    private fun increaseCardIndex() {
+        index.increaseIndex()
     }
 
     companion object {
