@@ -10,7 +10,7 @@ class Dealer(
     override fun hit(card: Card) {
         require(state.getSum() <= 16) { "딜러는 17점 이상이면 카드를 추가로 받을 수 없습니다." }
 
-        state = state.draw(card)
+        super.hit(card)
         if (state.getSum() in 17..21) {
             state = state.stay()
         }
