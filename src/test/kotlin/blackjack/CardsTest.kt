@@ -20,9 +20,9 @@ class CardsTest {
     }
 
     @ParameterizedTest
-    @CsvSource(value = ["K, 5, 15", "J, 3, 13", "Q, 8, 18"])
-    fun `문자 카드는 10으로 계산`(card1: String, card2: String, expect: Int) {
-        val sut = Cards(Card(card1), Card(card2))
+    @CsvSource(value = ["KING, FIVE, 15", "JACK, THREE, 13", "QUEEN, EIGHT, 18"])
+    fun `문자 카드는 10으로 계산`(number1: Number, number2: Number, expect: Int) {
+        val sut = Cards(Card.diamond(number1), Card.diamond(number2))
 
         val actual = sut.sum()
 
@@ -53,17 +53,17 @@ class CardsTest {
         @JvmStatic
         fun cardsAndExpectSum(): Stream<Arguments> {
             return Stream.of(
-                Arguments.of(15, listOf(Card("7"), Card("8"))),
-                Arguments.of(11, listOf(Card("6"), Card("5"))),
-                Arguments.of(15, listOf(Card("6"), Card("5"), Card("4"))),
+                Arguments.of(15, listOf(Card.diamond(Number.SEVEN), Card.diamond(Number.EIGHT))),
+                Arguments.of(11, listOf(Card.diamond(Number.SIX), Card.diamond(Number.FIVE))),
+                Arguments.of(15, listOf(Card.diamond(Number.SIX), Card.diamond(Number.FIVE), Card.diamond(Number.FOUR))),
             )
         }
 
         @JvmStatic
         fun includeOneAceCards(): Stream<Arguments> {
             return Stream.of(
-                Arguments.of(21, listOf(Card("A"), Card("10"))),
-                Arguments.of(20, listOf(Card("A"), Card("9"), Card("J"))),
+                Arguments.of(21, listOf(Card.diamond(Number.ACE), Card.diamond(Number.TEN))),
+                Arguments.of(20, listOf(Card.diamond(Number.ACE), Card.diamond(Number.NINE), Card.diamond(Number.JACK))),
             )
         }
 
@@ -72,14 +72,14 @@ class CardsTest {
             return Stream.of(
                 Arguments.of(21,
                     listOf(
-                        Card("A"), Card("A"),
-                        Card("A"), Card("8")
+                        Card.diamond(Number.ACE), Card.diamond(Number.ACE),
+                        Card.diamond(Number.ACE), Card.diamond(Number.EIGHT)
                     )
                 ),
                 Arguments.of(21,
                     listOf(
-                        Card("A"), Card("A"), Card("A"),
-                        Card("10"), Card("8")
+                        Card.diamond(Number.ACE), Card.diamond(Number.ACE), Card.diamond(Number.ACE),
+                        Card.diamond(Number.TEN), Card.diamond(Number.EIGHT)
                     )
                 ),
             )

@@ -1,12 +1,15 @@
 package blackjack
 
-class Card(
-    number: String
+class Card private constructor(
+    val number: Number,
+    val shape: Shape,
 ) {
-    val isAce = number == "A"
-    val value = when (number) {
-        "A" -> 1
-        "K", "J", "Q" -> 10
-        else -> number.toInt()
+    val isAce = number.isAce()
+    val value = number.value()
+
+    companion object {
+        fun diamond(number: Number): Card {
+            return Card(number, Shape.DIAMOND)
+        }
     }
 }
