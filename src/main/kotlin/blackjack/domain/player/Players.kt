@@ -16,7 +16,7 @@ data class Players(
         private set
 
     val isPlayerInTurnOverMaxScore: Boolean
-        get() = inTurn.isOverMaxScore
+        get() = inTurn.isBust
 
     val isLastTurn: Boolean
         get() = all.indexOf(inTurn) == all.lastIndex

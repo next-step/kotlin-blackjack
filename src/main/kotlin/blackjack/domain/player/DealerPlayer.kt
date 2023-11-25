@@ -7,7 +7,7 @@ data class DealerPlayer(
     override val hand: Hand = Hand(),
 ) : CardHolder {
     override fun hitOrStand(): Action {
-        if (this.isScoreGreaterThan(HIT_THRESHOLD_SCORE)) return Action.STAND
+        if (isScoreGreaterThan(HIT_THRESHOLD_SCORE)) return Action.STAND
         return Action.HIT
     }
 

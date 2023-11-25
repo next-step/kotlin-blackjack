@@ -9,7 +9,7 @@ class Player(
     override val hand: Hand = Hand(),
 ) : CardHolder {
     override fun hitOrStand(): Action {
-        if (hand.score.isOverMaxScore) return Action.STAND
+        if (isBust) return Action.STAND
         return actionOf(this)
     }
 

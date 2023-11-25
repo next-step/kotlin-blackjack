@@ -9,13 +9,13 @@ interface CardHolder {
     val hand: Hand
 
     val score: HandScore
-        get() = hand.score
+        get() = HandScore.from(hand)
 
-    val isOverMaxScore: Boolean
-        get() = hand.score.isOverMaxScore
+    val isBust: Boolean
+        get() = score.isBust
 
     fun isScoreGreaterThan(other: Int): Boolean =
-        this.score.isGreaterThan(other)
+        score.isGreaterThan(other)
 
     fun addCard(card: Card) {
         hand.add(card)

@@ -49,34 +49,37 @@ class PlayerTest : DescribeSpec({
     describe("최대 점수 21 넘은 여부") {
         context("최대 점수 21을 넘었을 때") {
             val player = Player(
-                PlayerName("kim"), { Action.HIT }, Hand(
+                PlayerName("kim"), { Action.HIT },
+                Hand(
                     mutableListOf(
                         Card(Suit.DIAMOND, Rank.THREE), Card(Suit.HEART, Rank.TEN), Card(Suit.HEART, Rank.TEN)
                     )
                 )
             )
             it("플레이어 점수 반환") {
-                player.isOverMaxScore shouldBe true
+                player.isBust shouldBe true
             }
         }
 
         context("최대 점수 21을 넘지 않았을 때") {
             val player = Player(
-                PlayerName("kim"), { Action.HIT }, Hand(
+                PlayerName("kim"), { Action.HIT },
+                Hand(
                     mutableListOf(
                         Card(Suit.DIAMOND, Rank.ACE), Card(Suit.HEART, Rank.ACE), Card(Suit.HEART, Rank.ACE)
                     )
                 )
             )
             it("플레이어 점수 반환") {
-                player.isOverMaxScore shouldBe false
+                player.isBust shouldBe false
             }
         }
     }
 
     describe("점수 계산") {
         val player = Player(
-            PlayerName("kim"), { Action.HIT }, Hand(
+            PlayerName("kim"), { Action.HIT },
+            Hand(
                 mutableListOf(
                     Card(Suit.DIAMOND, Rank.ACE), Card(Suit.HEART, Rank.TEN)
                 )

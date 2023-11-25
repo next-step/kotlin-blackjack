@@ -62,14 +62,14 @@ class HandScoreTest : DescribeSpec({
         context("최대 점수 21을 넘었을 때") {
             val handScore = HandScore(22)
             it("true 반환") {
-                handScore.isOverMaxScore shouldBe true
+                handScore.isBust shouldBe true
             }
         }
 
         context("최대 점수 21을 넘지 않았을 때") {
             val handScore = HandScore(21)
             it("true 반환") {
-                handScore.isOverMaxScore shouldBe false
+                handScore.isBust shouldBe false
             }
         }
     }

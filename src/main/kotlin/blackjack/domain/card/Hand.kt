@@ -9,9 +9,6 @@ data class Hand(
     val ranks: List<Rank>
         get() = _cards.map { it.rank }
 
-    val score: HandScore
-        get() = HandScore.from(this)
-
     fun add(card: Card) {
         _cards.add(card)
     }

@@ -36,7 +36,7 @@ class BlackJackGame(
     }
 
     private fun dealCards() {
-        val result = dealCards(table) { distributor ->  setDistributor(distributor) }
+        val result = dealCards(table) { distributor -> setDistributor(distributor) }
         resultProcessor.handle(result)
     }
 }

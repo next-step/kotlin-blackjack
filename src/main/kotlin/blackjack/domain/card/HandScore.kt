@@ -4,13 +4,13 @@ package blackjack.domain.card
 value class HandScore(
     val value: Int,
 ) {
-    val isOverMaxScore: Boolean
-        get() = value > MAX_SCORE
+    val isBust: Boolean
+        get() = value > BUST_THRESHOLD
 
     fun isGreaterThan(score: Int) = value > score
 
     companion object {
-        private const val MAX_SCORE = 21
+        private const val BUST_THRESHOLD = 21
         private const val ACE_BONUS_SCORE = 10
 
         fun from(hand: Hand): HandScore {
@@ -18,7 +18,7 @@ value class HandScore(
             val score = ranks.sumOf { it.score() }
             return when {
                 ranks.hasAce().not() -> score
-                score + ACE_BONUS_SCORE > MAX_SCORE -> score
+                score + ACE_BONUS_SCORE > BUST_THRESHOLD -> score
                 else -> score + ACE_BONUS_SCORE
             }.let(::HandScore)
         }
