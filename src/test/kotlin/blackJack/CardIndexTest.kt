@@ -6,10 +6,12 @@ import org.junit.jupiter.api.Test
 
 class CardIndexTest {
 
+    private var maxIndex = 52
+
     @Test
     fun `인덱스가 생성되고, 인덱스를 요청할 때, 현재 인덱스를 반환한다`() {
         // given : 인덱스가 생성된다. 인덱스는 초기값은 0이다.
-        val caredIndex = CardIndex()
+        val caredIndex = CardIndex(maxIndex = maxIndex)
 
         // when : 인덱스를 요청한다.
         val actual = caredIndex.getIndex()
@@ -21,7 +23,7 @@ class CardIndexTest {
     @Test
     fun `인덱스가 생성되고, 인덱스 증가 요청할 때, 인덱스가 1 증가된다`() {
         // given : 인덱스가 생성된다.
-        val caredIndex = CardIndex()
+        val caredIndex = CardIndex(maxIndex = maxIndex)
         val prevIndex = caredIndex.getIndex()
 
         // when : 인덱스 증가 요청을 한다.
@@ -30,5 +32,18 @@ class CardIndexTest {
 
         // then : 인덱스가 1 증가된다.
         assertThat(actual).isEqualTo(prevIndex + 1)
+    }
+
+    @Test
+    fun `인덱스가 max값 이고, 인덱스 증가 요청을 할때, 예외를 던진다`() {
+        // given : 인덱스 값이 max 값 직전인 인덱스를 생성한다
+        val startIndex = 51
+        val cardIndex = CardIndex(index = startIndex, maxIndex = maxIndex)
+
+        // when : 인덱스 증가 요청을 한다
+        val actual = runCatching { cardIndex.increaseIndex() }.exceptionOrNull()
+
+        // then : 예외를 발생시킨다.
+        assertThat(actual).isInstanceOf(IllegalArgumentException::class.java)
     }
 }
