@@ -10,14 +10,11 @@ class Cards(
     fun sum(): Int {
         val maximum = sumOfMaximum()
         val minimum = sumOfMinimum()
-        return valueOfCloseToBlackjack(maximum, minimum)
-    }
 
-    private fun valueOfCloseToBlackjack(left: Int, right: Int): Int {
-        if (abs(BLACKJACK - left) > abs(BLACKJACK - right)) {
-            return right
+        if (BLACKJACK < maximum) {
+            return minimum
         }
-        return left
+        return maximum
     }
 
     private fun sumOfMinimum() = sumOfMaximum() - 10

@@ -31,7 +31,7 @@ class BlackjackTest {
     }
 
     @Test
-    fun `Ace를 11로 계산`() {
+    fun `최대 합이 21이 넘지 않는 경우 최대 합으로 반환`() {
         val cards = Cards("A", "10")
 
         val actual = cards.sum()
@@ -40,7 +40,7 @@ class BlackjackTest {
     }
 
     @Test
-    fun `Ace를 1로 계산`() {
+    fun `최대 합이 21을 넘는 경우 최소 합으로 반환`() {
         val cards = Cards("A", "9", "J")
 
         val actual = cards.sum()
