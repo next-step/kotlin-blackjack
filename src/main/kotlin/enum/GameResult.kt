@@ -1,17 +1,19 @@
 package enum
 
-enum class GameResult(val description: String) {
-    WIN("승"),
-    LOSE("패"),
-    DRAW("무승부");
+import domain.BlackjackRules
+
+enum class GameResult {
+    WIN,
+    LOSE,
+    DRAW;
 
     companion object {
-        fun determine(playerScore: Int, dealerScore: Int, maximumScore: Int): GameResult {
+        fun determineForResultOfPlayer(playerTotalScore: Int, dealerTotalScore: Int): GameResult {
             return when {
-                playerScore > maximumScore -> LOSE
-                dealerScore > maximumScore -> WIN
-                playerScore > dealerScore -> WIN
-                playerScore == dealerScore -> DRAW
+                playerTotalScore > BlackjackRules.MAXIMUM_SCORE -> LOSE
+                dealerTotalScore > BlackjackRules.MAXIMUM_SCORE -> WIN
+                playerTotalScore > dealerTotalScore -> WIN
+                playerTotalScore == dealerTotalScore -> DRAW
                 else -> LOSE
             }
         }

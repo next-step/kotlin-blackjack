@@ -4,7 +4,6 @@ import domain.BlackjackRules
 import domain.Dealer
 import domain.Deck
 import domain.Player
-import enum.GameResult
 import view.InputView
 import view.OutputView
 
@@ -40,11 +39,9 @@ class BlackjackGame(private val inputView: InputView, private val outputView: Ou
     private fun determineResults() {
         val dealerScore = dealer.calculateScore()
         players.forEach { player ->
-            val playerScore = player.calculateScore()
-            player.result = GameResult.determine(playerScore, dealerScore, BlackjackRules.MAXIMUM_SCORE)
+            player.determineResult(dealerScore)
         }
     }
-
     private fun addPlayer(name: String) {
         players.add(Player(name))
     }
@@ -69,8 +66,11 @@ class BlackjackGame(private val inputView: InputView, private val outputView: Ou
 
     private fun playDealerTurn() {
         while (dealer.calculateScore() < BlackjackRules.DEALER_HIT_THRESHOLD) {
-            drawCardForDealer()
-            outputView.showGameState(players, dealer)
+            val card = deck.drawCard()
+            if (card != null) {
+                dealer.receiveCard(card)
+                outputView.showGameState(players, dealer)
+            }
         }
     }
 

@@ -24,14 +24,8 @@ class ConsoleOutputView : OutputView {
         println("## 최종 승패")
         println("딜러: ${calculateDealerResult(players)}")
         players.forEach { player ->
-            println("${player.name}: ${player.result.description}")
+            println("${player.name}: ${convertResultToString(player.result)}")
         }
-    }
-
-    private fun calculateDealerResult(players: List<Player>): String {
-        val wins = players.count { it.result == GameResult.LOSE }
-        val losses = players.count { it.result == GameResult.WIN }
-        return "${wins}승 ${losses}패"
     }
 
     override fun showInitialCards(players: List<Player>, dealer: Dealer) {
@@ -41,5 +35,19 @@ class ConsoleOutputView : OutputView {
             println("${player.name}의 카드: ${player.showHand().joinToString(", ")}")
         }
         println("딜러의 카드: ${dealer.showHand().joinToString(", ")}")
+    }
+
+    private fun convertResultToString(result: GameResult): String {
+        return when (result) {
+            GameResult.WIN -> "승"
+            GameResult.LOSE -> "패"
+            GameResult.DRAW -> "무승부"
+        }
+    }
+
+    private fun calculateDealerResult(players: List<Player>): String {
+        val wins = players.count { it.result == GameResult.LOSE }
+        val losses = players.count { it.result == GameResult.WIN }
+        return "${wins}승 ${losses}패"
     }
 }
