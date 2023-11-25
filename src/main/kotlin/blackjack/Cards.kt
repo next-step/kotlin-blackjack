@@ -7,6 +7,9 @@ class Cards(val card1: String, val card2: String) {
     }
 
     private fun cardValue(card: String): Int {
+        if (card.equals("A")) {
+            return 11
+        }
         return if (isCharacterCard(card)) 10 else card.toInt()
     }
 
