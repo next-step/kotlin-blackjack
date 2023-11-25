@@ -17,4 +17,8 @@ class Blackjack(
     override fun isFinished(): Boolean {
         return true
     }
+
+    override fun isBlackjack(): Boolean {
+        return true
+    }
 }

@@ -11,9 +11,11 @@ interface State2 {
 
     fun getSum(): Int
 
-    fun init(cards: List<Card>)
+    fun init(cards: List<Card>): State2
 
     fun cards(): Hand
 
     fun isFinished(): Boolean
+
+    fun isBlackjack(): Boolean
 }

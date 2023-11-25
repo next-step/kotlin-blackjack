@@ -17,4 +17,8 @@ class Bust(
     override fun isFinished(): Boolean {
         return true
     }
+
+    override fun isBlackjack(): Boolean {
+        return false
+    }
 }

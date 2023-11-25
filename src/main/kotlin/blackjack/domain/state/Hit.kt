@@ -24,4 +24,8 @@ class Hit(
     override fun isFinished(): Boolean {
         return false
     }
+
+    override fun isBlackjack(): Boolean {
+        return false
+    }
 }
