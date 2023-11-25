@@ -1,6 +1,7 @@
 package blackjack.domain.player
 
 import blackjack.domain.card.Deck
+import blackjack.domain.rule.DefaultScoringRule
 import blackjack.domain.rule.ScoringRule
 
 class Dealer(private val scoringRule: ScoringRule) : Player(scoringRule) {
@@ -9,10 +10,17 @@ class Dealer(private val scoringRule: ScoringRule) : Player(scoringRule) {
     }
 
     override fun canDraw(): Boolean {
-        return scoringRule.isOverThreshold(totalScore, THRESHOLD_SCORE).not()
+        return scoringRule.isOverThreshold(totalScore, DEALER_THRESHOLD_SCORE).not()
+    }
+
+    fun compareWith(participant: Participant): GameResult {
+        if (this.totalScore > DefaultScoringRule.THRESHOLD_SCORE) return GameResult.LOSE
+        if (participant.totalScore > DefaultScoringRule.THRESHOLD_SCORE) return GameResult.WIN
+        if (this.totalScore == participant.totalScore) return GameResult.TIE
+        return if (this.totalScore > participant.totalScore) GameResult.WIN else GameResult.LOSE
     }
 
     companion object {
-        const val THRESHOLD_SCORE = 16
+        private const val DEALER_THRESHOLD_SCORE = 16
     }
 }

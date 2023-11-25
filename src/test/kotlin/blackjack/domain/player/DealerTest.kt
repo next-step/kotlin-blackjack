@@ -2,9 +2,12 @@ package blackjack.domain.player
 
 import blackjack.domain.card.Deck
 import blackjack.domain.rule.DefaultScoringRule
+import blackjack.domain.rule.TestScoringRule
 import io.kotest.matchers.ints.shouldBeGreaterThan
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.ValueSource
 
 class DealerTest {
 
@@ -76,5 +79,58 @@ class DealerTest {
         }
 
         dealer.canDraw() shouldBe false
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = [17, 18, 19, 20, 21, 22, 23, 24, 25])
+    fun `Dealer는 참가자와 자신을 비교해서 승패를 결정할 수 있다 - 딜러가 21을 넘으면 무조건 패배`(participantScore: Int) {
+        val dealer = Dealer(TestScoringRule(22))
+        val participant = Participant("p1", TestScoringRule(participantScore))
+
+        val result = dealer.compareWith(participant)
+
+        result shouldBe GameResult.LOSE
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = [22, 23, 24, 25, 26, 27, 28, 29, 30])
+    fun `Dealer는 참가자와 자신을 비교해서 승패를 결정할 수 있다 - 딜러가 21을 넘지않고, 참가자가 21을 넘으면 승리`(participantScore: Int) {
+        val dealer = Dealer(TestScoringRule(10))
+        val participant = Participant("p1", TestScoringRule(participantScore))
+
+        val result = dealer.compareWith(participant)
+
+        result shouldBe GameResult.WIN
+    }
+
+    @Test
+    fun `Dealer는 참가자와 자신을 비교해서 승패를 결정할 수 있다 - 딜러가 21을 넘지않고 21에 더 가까우면 승리`() {
+        val dealer = Dealer(TestScoringRule(20))
+        val participant = Participant("p1", TestScoringRule(17))
+
+        val result = dealer.compareWith(participant)
+
+        result shouldBe GameResult.WIN
+    }
+
+    @Test
+    fun `Dealer는 참가자와 자신을 비교해서 승패를 결정할 수 있다 - 딜러가 21을 넘지않고 21에 더 멀어지면 패배`() {
+        val dealer = Dealer(TestScoringRule(20))
+        val participant = Participant("p1", TestScoringRule(21))
+
+        val result = dealer.compareWith(participant)
+
+        result shouldBe GameResult.LOSE
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = [15, 16, 17, 18, 19, 20, 21])
+    fun `Dealer는 참가자와 자신을 비교해서 승패를 결정할 수 있다 - 딜러가 21을 넘지않고 같으면 무승부`(score: Int) {
+        val dealer = Dealer(TestScoringRule(score))
+        val participant = Participant("p1", TestScoringRule(score))
+
+        val result = dealer.compareWith(participant)
+
+        result shouldBe GameResult.TIE
     }
 }
