@@ -9,8 +9,9 @@ class PlayerTest {
 
     @Test
     fun `플레이어는 이름과 2장의 카드를 처음에 가진다`() {
-        val deck = listOf(Card.diamond(Number.EIGHT), Card.heart(Number.TEN)).iterator()
-        val player = Player("pobi", deck)
+        val player = Player(
+            "pobi", cardDeck(Card.diamond(Number.EIGHT), Card.heart(Number.TEN))
+        )
 
         assertThat(player.name).isEqualTo("pobi")
         assertThat(player.sumOfCards()).isEqualTo(18)
@@ -18,10 +19,9 @@ class PlayerTest {
 
     @Test
     fun `플레이어 카드를 획득할 수 있다`() {
-        val deck = listOf(
-            Card.diamond(Number.TWO), Card.heart(Number.THREE), Card.spade(Number.ACE)
-        ).iterator()
-        val player = Player("pobi", deck)
+        val player = Player(
+            "pobi", cardDeck(Card.diamond(Number.TWO), Card.heart(Number.THREE), Card.spade(Number.ACE))
+        )
 
         player.obtain()
 
@@ -30,10 +30,9 @@ class PlayerTest {
 
     @Test
     fun `21 이상이면 플레이어는 카드를 획득할 수 없다`() {
-        val deck = listOf(
-            Card.diamond(Number.ACE), Card.heart(Number.JACK), Card.spade(Number.ACE)
-        ).iterator()
-        val player = Player("pobi", deck)
+        val player = Player(
+            "pobi", cardDeck(Card.diamond(Number.ACE), Card.heart(Number.JACK), Card.spade(Number.ACE))
+        )
 
         assertThrows<IllegalArgumentException> {
             player.obtain()
@@ -43,9 +42,15 @@ class PlayerTest {
 
     @Test
     fun `21 미만이면 플레이어는 카드를 획득할 수 있다`() {
-        val deck = listOf(Card.diamond(Number.QUEEN), Card.heart(Number.JACK)).iterator()
-        val player = Player("pobi", deck)
+        val player = Player(
+            "pobi", cardDeck(Card.diamond(Number.QUEEN), Card.heart(Number.JACK))
+        )
 
         assertThat(player.isObtainable()).isTrue()
+    }
+
+    private fun cardDeck(vararg cards: Card): CardDeck {
+        val iterator = cards.iterator()
+        return CardDeck { iterator.next() }
     }
 }

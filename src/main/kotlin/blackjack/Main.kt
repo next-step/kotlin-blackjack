@@ -1,14 +1,13 @@
 package blackjack
 
-import blackjack.domain.Card
-import blackjack.domain.Number
+import blackjack.domain.ShuffledCardDeck
 import blackjack.domain.Player
-import blackjack.domain.Shape
+import blackjack.view.InputView
+import blackjack.view.OutputView
 
 fun main() {
-    val cardDeck = deck()
     val names = InputView.inputNames()
-    val players = names.map { Player(it, cardDeck) }
+    val players = names.map { Player(it, ShuffledCardDeck()) }
 
     OutputView.printPlayersCards(players)
     players.forEach { obtainCard(it) }
@@ -24,19 +23,4 @@ private fun obtainCard(player: Player) {
 
 private fun isObtainCard(player: Player): Boolean {
     return player.isObtainable() && InputView.inputIsObtainCard(player.name)
-}
-
-private fun deck(): Iterator<Card> {
-    return (0 until 4)
-        .flatMap { cards() }
-        .shuffled()
-        .iterator()
-}
-
-private fun cards(): List<Card> {
-    return Shape.values().flatMap { shape ->
-        Number.values().map { number ->
-            Card(number, shape)
-        }
-    }
 }
