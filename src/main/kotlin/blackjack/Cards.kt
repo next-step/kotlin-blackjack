@@ -15,11 +15,13 @@ class Cards (
     }
 
     private fun sumOfMaximum(): Int {
-        if (cards.any { it.isAce }) {
+        if (hasAce()) {
             return sumOfMinimum() + 10
         }
         return sumOfMinimum()
     }
+
+    private fun hasAce() = cards.any { it.isAce }
 
     private fun sumOfMinimum(): Int {
         return cards.sumOf { it.value }
@@ -27,6 +29,10 @@ class Cards (
 
     fun add(card: Card) {
         cards.add(card)
+    }
+
+    fun isLessThanBlackjack(): Boolean {
+        return sum() < BLACKJACK
     }
 
     companion object {

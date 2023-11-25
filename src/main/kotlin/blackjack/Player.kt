@@ -5,13 +5,19 @@ class Player(
     card1: Card,
     card2: Card,
 ) {
-    val cards = Cards(card1, card2)
+    private val cards = Cards(card1, card2)
 
-    fun acquire(card: Card) {
+    fun obtain(card: Card) {
+        require(isObtainable()) { "카드를 획득할 수 없습니다." }
         cards.add(card)
+
     }
 
     fun sumOfCards(): Int {
         return cards.sum()
+    }
+
+    fun isObtainable(): Boolean {
+        return cards.isLessThanBlackjack()
     }
 }

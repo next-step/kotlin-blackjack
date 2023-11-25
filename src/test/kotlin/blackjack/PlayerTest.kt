@@ -2,6 +2,8 @@ package blackjack
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
+import java.lang.IllegalArgumentException
 
 class PlayerTest {
 
@@ -21,8 +23,29 @@ class PlayerTest {
             "pobi", Card.diamond(Number.TWO), Card.heart(Number.THREE)
         )
 
-        player.acquire(Card.spade(Number.ACE))
+        player.obtain(Card.spade(Number.ACE))
 
         assertThat(player.sumOfCards()).isEqualTo(16)
+    }
+
+    @Test
+    fun `21 이상이면 플레이어는 카드를 획득할 수 없다`() {
+        val player = Player(
+            "pobi", Card.diamond(Number.ACE), Card.heart(Number.JACK)
+        )
+
+        assertThrows<IllegalArgumentException> {
+            player.obtain(Card.spade(Number.ACE))
+        }
+        assertThat(player.isObtainable()).isFalse
+    }
+
+    @Test
+    fun `21 미만이면 플레이어는 카드를 획득할 수 있다`() {
+        val player = Player(
+            "pobi", Card.diamond(Number.QUEEN), Card.heart(Number.JACK)
+        )
+
+        assertThat(player.isObtainable()).isTrue()
     }
 }
