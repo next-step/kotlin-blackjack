@@ -12,8 +12,17 @@ class PlayerTest {
         )
 
         assertThat(player.name).isEqualTo("pobi")
-        assertThat(player.cards).isEqualTo(
-            Cards(Card.diamond(Number.EIGHT), Card.heart(Number.TEN))
+        assertThat(player.sumOfCards()).isEqualTo(18)
+    }
+
+    @Test
+    fun `플레이어 카드를 획득할 수 있다`() {
+        val player = Player(
+            "pobi", Card.diamond(Number.TWO), Card.heart(Number.THREE)
         )
+
+        player.acquire(Card.spade(Number.ACE))
+
+        assertThat(player.sumOfCards()).isEqualTo(16)
     }
 }

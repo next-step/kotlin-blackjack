@@ -1,8 +1,10 @@
 package blackjack
 
-data class Cards(
-    private val cards: List<Card>,
+class Cards (
+    cards: List<Card>,
 ) {
+    private val cards = cards.toMutableList()
+
     constructor(vararg cards: Card): this(cards.toList())
 
     fun sum(): Int {
@@ -21,6 +23,10 @@ data class Cards(
 
     private fun sumOfMinimum(): Int {
         return cards.sumOf { it.value }
+    }
+
+    fun add(card: Card) {
+        cards.add(card)
     }
 
     companion object {
