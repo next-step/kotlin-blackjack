@@ -1,9 +1,12 @@
 package blackjack
 
-class Cards(val card1: String, val card2: String) {
+class Cards(
+    vararg cards: String,
+) {
+    private val cards = cards.toList()
 
     fun sum(): Int {
-        return cardValue(card1) + cardValue(card2)
+        return cards.sumOf { cardValue(it) }
     }
 
     private fun cardValue(card: String): Int {
