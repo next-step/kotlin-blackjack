@@ -1,8 +1,10 @@
 package blackjack
 
+import blackjack.domain.BettingMoney
 import blackjack.domain.Dealer
 import blackjack.domain.Player
 import blackjack.domain.Players
+import blackjack.domain.ProfitCalculator
 import blackjack.domain.RandomDeck
 import blackjack.ui.InputView
 import blackjack.ui.ResultView
@@ -10,6 +12,7 @@ import blackjack.ui.ResultView
 fun main() {
     val dealer = Dealer(RandomDeck.from())
     val inputNames = InputView.inputNames()
+    val inputNameAndBets = InputView.inputBets(inputNames)
     val players = Players.init(dealer, inputNames)
 
     players.initCard()
@@ -21,6 +24,7 @@ fun main() {
     ResultView.printCardResult(players)
 
     printGameResult(players)
+    printProfit(players, inputNameAndBets)
 }
 
 private fun play(dealer: Dealer, player: Player) {
@@ -53,4 +57,11 @@ private fun printGameResult(players: Players) {
     val dealerResult = players.getDealerResult()
     val playersResult = players.getPlayersResult()
     ResultView.printGameResult(dealerResult, playersResult)
+}
+
+private fun printProfit(players: Players, inputNameAndBets: Map<String, BettingMoney>) {
+    val profitCalculator = ProfitCalculator(inputNameAndBets)
+    val dealerProfit = players.getDealerProfit(profitCalculator)
+    val playersProfit = players.getPlayersProfit(profitCalculator)
+    ResultView.printProfit(dealerProfit, playersProfit)
 }

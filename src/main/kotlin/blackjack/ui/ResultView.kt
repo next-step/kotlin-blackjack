@@ -96,4 +96,13 @@ object ResultView {
             }
         }
     }
+
+    fun printProfit(dealerProfit: Int, playersProfit: Map<String, Int>) {
+        println()
+        println("## 최종 수익")
+        println("딜러: $dealerProfit")
+        playersProfit.forEach {
+            println("${it.key}: ${it.value}")
+        }
+    }
 }

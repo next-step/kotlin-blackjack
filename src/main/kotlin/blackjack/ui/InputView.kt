@@ -1,5 +1,6 @@
 package blackjack.ui
 
+import blackjack.domain.BettingMoney
 import blackjack.domain.Player
 
 object InputView {
@@ -31,5 +32,16 @@ object InputView {
         require(inputHitOrStop == HIT_ANSWER || inputHitOrStop == STAND_ANSWER) {
             "$HIT_ANSWER 또는 $STAND_ANSWER 만 입력가능합니다. 다시 입력해주세요."
         }
+    }
+
+    fun inputBets(inputNames: List<String>): Map<String, BettingMoney> {
+        val inputNameAndBetMap = mutableMapOf<String, BettingMoney>()
+        for (inputName in inputNames) {
+            println()
+            println("${inputName}의 배팅 금액은?")
+            val bettingMoney = BettingMoney(readln().toInt())
+            inputNameAndBetMap.put(inputName, bettingMoney)
+        }
+        return inputNameAndBetMap
     }
 }

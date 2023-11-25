@@ -2,7 +2,7 @@ package blackjack.domain
 
 data class Players(
     val dealer: Dealer,
-    val players: List<Player>
+    val players: List<Player>,
 ) {
     fun initCard() {
         val dealerInitCards = dealer.drawInitCards()
@@ -29,6 +29,16 @@ data class Players(
     fun getPlayersResult(): Map<String, GameResult> {
         return players.associate {
             it.name to it.getResult(dealer)
+        }
+    }
+
+    fun getDealerProfit(profitCalculator: ProfitCalculator): Int {
+        return players.sumOf { profitCalculator.getDealerProfit(it, dealer) }
+    }
+
+    fun getPlayersProfit(profitCalculator: ProfitCalculator): Map<String, Int> {
+        return players.associate {
+            it.name to profitCalculator.getPlayerProfit(it, dealer)
         }
     }
 
