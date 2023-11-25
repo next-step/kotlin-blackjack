@@ -15,10 +15,15 @@ class Dealer(private val scoringRule: ScoringRule) : Player(DEALER_NAME, scoring
     }
 
     fun compareWith(participant: Participant): GameResult {
-        if (this.totalScore > DefaultScoringRule.THRESHOLD_SCORE) return GameResult.LOSE
-        if (participant.totalScore > DefaultScoringRule.THRESHOLD_SCORE) return GameResult.WIN
-        if (this.totalScore == participant.totalScore) return GameResult.TIE
-        return if (this.totalScore > participant.totalScore) GameResult.WIN else GameResult.LOSE
+        val dealerTotalScore = this.totalScore
+
+        return when {
+            (dealerTotalScore > DefaultScoringRule.THRESHOLD_SCORE) -> GameResult.LOSE
+            (participant.totalScore > DefaultScoringRule.THRESHOLD_SCORE) -> GameResult.WIN
+            (dealerTotalScore == participant.totalScore) -> GameResult.TIE
+            (dealerTotalScore > participant.totalScore) -> GameResult.WIN
+            else -> GameResult.LOSE
+        }
     }
 
     companion object {

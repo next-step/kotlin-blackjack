@@ -60,24 +60,18 @@ class DealerTest {
         player.totalScore shouldBeGreaterThan 0
     }
 
-    @Test
-    fun `Dealer는 현재 총 점수가 16점 이하면 자신이 카드를 뽑을 수 있다`() {
-        val dealer = Dealer(DefaultScoringRule())
-        val deck = Deck()
-
-        dealer.draw(deck)
+    @ParameterizedTest
+    @ValueSource(ints = [1, 5, 8, 9, 10, 11, 12, 13, 14, 15, 16])
+    fun `Dealer는 현재 총 점수가 16점 이하면 자신이 카드를 뽑을 수 있다`(score: Int) {
+        val dealer = Dealer(TestScoringRule(score))
 
         dealer.canDraw() shouldBe true
     }
 
-    @Test
-    fun `Dealer는 현재 총 점수가 17점 이상이면 자신이 카드를 뽑을 수 없다`() {
-        val dealer = Dealer(DefaultScoringRule())
-        val deck = Deck()
-
-        while (dealer.totalScore < 16) {
-            dealer.draw(deck)
-        }
+    @ParameterizedTest
+    @ValueSource(ints = [17, 18, 19, 20, 21, 22, 23, 24, 25])
+    fun `Dealer는 현재 총 점수가 17점 이상이면 자신이 카드를 뽑을 수 없다`(score: Int) {
+        val dealer = Dealer(TestScoringRule(score))
 
         dealer.canDraw() shouldBe false
     }
