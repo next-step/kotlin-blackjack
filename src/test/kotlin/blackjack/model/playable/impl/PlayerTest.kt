@@ -22,5 +22,4 @@ class PlayerTest : StringSpec({
             player.cards.count() shouldBe 1
         }
     }
-
 })

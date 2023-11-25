@@ -1,9 +1,6 @@
 package blackjack.model
 
-import blackjack.model.card.Card
-import blackjack.model.card.CardRank
-import blackjack.model.card.Cards
-import blackjack.model.card.Suit
+import blackjack.model.card.CardFixture
 import blackjack.model.playable.impl.Dealer
 import blackjack.model.playable.impl.Player
 import blackjack.model.result.PlayerResult
@@ -15,13 +12,7 @@ class RefereeTest : StringSpec({
     "ACE+ACE+KING 이 들어온 경우 ACE 를 1로 인식해, 블랙잭이 아니어야만 한다" {
         val player = Player(
             "kim",
-            Cards(
-                listOf(
-                    Card.of(Suit.HEART, CardRank.ACE),
-                    Card.of(Suit.DIAMOND, CardRank.ACE),
-                    Card.of(Suit.CLOVER, CardRank.KING)
-                )
-            )
+            CardFixture.makeCards(CardFixture.ace1, CardFixture.ace2, CardFixture.king)
         )
         Referee.isGameOver(player) shouldBe false
     }
@@ -29,12 +20,7 @@ class RefereeTest : StringSpec({
     "ACE+KING 이 들어온 경우 ACE 를 11로 인식해, 블랙잭으로 계산 되어야 한다" {
         val player = Player(
             "kim",
-            Cards(
-                listOf(
-                    Card.of(Suit.DIAMOND, CardRank.ACE),
-                    Card.of(Suit.CLOVER, CardRank.KING)
-                )
-            )
+            CardFixture.makeCards(CardFixture.ace1, CardFixture.king)
         )
         Referee.isGameOver(player) shouldBe true
     }
@@ -42,30 +28,17 @@ class RefereeTest : StringSpec({
     "딜러가 21을 초과하면 그 시점까지 남아 있던 플레이어들은 가지고 있는 패에 상관 없이 승리해야 한다" {
         val player1 = Player(
             "seoul",
-            Cards(
-                listOf(
-                    Card.of(Suit.DIAMOND, CardRank.ACE),
-                    Card.of(Suit.CLOVER, CardRank.KING)
-                )
-            )
+            CardFixture.makeCards(CardFixture.ace1, CardFixture.king)
+
         )
         val player2 = Player(
             "wonju",
-            Cards(
-                listOf(
-                    Card.of(Suit.DIAMOND, CardRank.QUEEN),
-                    Card.of(Suit.CLOVER, CardRank.KING)
-                )
-            )
+            CardFixture.makeCards(CardFixture.queen, CardFixture.king)
+
         )
         val dealer = Dealer(
-            Cards(
-                listOf(
-                    Card.of(Suit.DIAMOND, CardRank.FIVE),
-                    Card.of(Suit.CLOVER, CardRank.KING),
-                    Card.of(Suit.HEART, CardRank.SEVEN),
-                )
-            )
+            CardFixture.makeCards(CardFixture.five, CardFixture.seven, CardFixture.king)
+
         )
         val participants = Participants(Players(player1, player2), dealer)
         val actual = Referee.blackJackResult(participants)
