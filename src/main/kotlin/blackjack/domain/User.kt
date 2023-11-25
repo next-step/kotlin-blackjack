@@ -1,5 +1,6 @@
 package blackjack.domain
 
+import blackjack.domain.state.Blackjack
 import blackjack.domain.state.State
 
 abstract class User(
@@ -18,7 +19,7 @@ abstract class User(
     }
 
     fun isBust(): Boolean {
-        return state.getSum() > 21
+        return state.getSum() > Blackjack.NUMBER
     }
 
     fun isBlackjack(): Boolean {

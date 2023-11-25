@@ -2,7 +2,6 @@ package blackjack.domain.state
 
 import blackjack.domain.Card
 import blackjack.domain.Hand
-import blackjack.domain.User
 
 class Hit(
     hand: Hand,
@@ -10,7 +9,7 @@ class Hit(
 
     override fun draw(card: Card): State {
         hand.receive(card)
-        return if (hand.getSum() > User.BLACKJACK) {
+        return if (hand.getSum() > Blackjack.NUMBER) {
             Bust(hand)
         } else {
             Hit(hand)

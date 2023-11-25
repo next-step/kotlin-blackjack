@@ -9,7 +9,7 @@ abstract class Started(
 
     override fun init(cards: List<Card>): State {
         hand.init(cards)
-        return if (getSum() == 21) {
+        return if (getSum() == Blackjack.NUMBER) {
             Blackjack(hand)
         } else {
             Hit(hand)

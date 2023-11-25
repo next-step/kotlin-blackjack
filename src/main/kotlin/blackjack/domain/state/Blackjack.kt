@@ -21,4 +21,8 @@ class Blackjack(
     override fun isBlackjack(): Boolean {
         return true
     }
+
+    companion object {
+        const val NUMBER = 21
+    }
 }
