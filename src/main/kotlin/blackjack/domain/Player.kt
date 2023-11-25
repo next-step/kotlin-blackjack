@@ -4,14 +4,15 @@ class Player(
     val name: String,
     private var _decision: PlayerDecision = PlayerDecision.HIT
 ) {
-    var cards = Cards.from()
-        private set
+    private var _cards = Cards.from()
+    val cards
+        get() = _cards
 
     val decision
         get() = _decision
 
     fun getCard(card: Card) {
-        cards = cards.addCard(card)
+        _cards = _cards.addCard(card)
         if (getScore() > Score.BLACKJACK) {
             turnStand()
         }
@@ -27,7 +28,7 @@ class Player(
 
     private fun toScore(): Score {
         return Score(
-            cards.map { it.denomination }
+            _cards.map { it.denomination }
         )
     }
 }
