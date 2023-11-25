@@ -82,11 +82,13 @@ class GameParticipantsTest : BehaviorSpec({
             Then("1.5배의 베팅 금액만큼 수익을 낸다.") {
                 val matchResults = GameParticipants(players, dealer).calcMatchResult()
                 matchResults shouldBe GameParticipantResults(
-                    listOf(GameParticipantPlayerResult(
-                        "winner",
-                        MatchResult.BLACKJACK,
-                        1000
-                    ))
+                    listOf(
+                        GameParticipantPlayerResult(
+                            "winner",
+                            MatchResult.BLACKJACK,
+                            1000
+                        )
+                    )
                 )
                 matchResults.players.forEach {
                     it.betAmount * 1.5 shouldBe it.profit

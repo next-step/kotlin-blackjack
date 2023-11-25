@@ -55,7 +55,7 @@ object Output {
         cards.joinToString(PLAYER_NAME_DELIMITER) { "${it.number.print}${it.symbol.kor}" }
 
     fun printGameParticipantResults(printResultKind: PrintResultKind, gameParticipantResults: GameParticipantResults) {
-        when(printResultKind) {
+        when (printResultKind) {
             PrintResultKind.WIN_LOSE -> printParticipantWinLoseResults(gameParticipantResults.players)
             PrintResultKind.PROFIT -> printParticipantProfitResults(gameParticipantResults.players)
         }

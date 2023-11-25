@@ -5,11 +5,11 @@ import blackjack.GameBlackjack
 import blackjack.GameCardDealer
 import blackjack.GameParticipants
 import blackjack.GamePlayer
-import blackjack.Message
 import blackjack.InputOutputStrategy
+import blackjack.Message
 import view.Input
 import view.Output
-import view.Output.PrintResultKind.*
+import view.Output.PrintResultKind.PROFIT
 
 fun main() {
 

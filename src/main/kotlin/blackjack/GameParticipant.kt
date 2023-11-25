@@ -52,7 +52,6 @@ abstract class GameParticipant(
     }
 }
 
-
 class GameParticipantPlayer(
     name: String,
     cards: List<Card> = emptyList(),
