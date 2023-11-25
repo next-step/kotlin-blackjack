@@ -8,8 +8,10 @@ object Message {
     const val PRINT_CONTINUE_DEAL = "%s는 한 장의 카드를 더 받겠습니까?(예 y, 아니오 n)"
     const val PRINT_PLAYER_RESULT = "%s 카드: %s - 결과: %d"
     const val PRINT_DEALER_DEALING = "딜러는 16이하라 한 장의 카드를 더 받았습니다."
-    const val PRINT_RESULT_MESSAGE = "## 최종 승패"
-    const val PRINT_DEALER_RESULT_MESSAGE = "%s: %d승 %d패"
-    const val PRINT_PLAYER_RESULT_MESSAGE = "%s: %s"
+    const val PRINT_WIN_LOSE_RESULT_MESSAGE = "## 최종 승패"
+    const val PRINT_WIN_LOSE_DEALER_RESULT_MESSAGE = "%s: %d승 %d패"
+    const val PRINT_WIN_LOSE_PLAYER_RESULT_MESSAGE = "%s: %s"
     const val INPUT_PLAYER_AMOUNT_BET = "%s의 베팅 금액은?"
+    const val PRINT_PROFIT_RESULT_MESSAGE = "## 최종 수익"
+    const val PRINT_PROFIT_PLAYER_RESULT_MESSAGE = "%s: %.0f"
 }
