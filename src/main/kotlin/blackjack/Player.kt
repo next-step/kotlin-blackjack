@@ -16,8 +16,10 @@ class Player(name: String) : Gamer(name) {
         }
         if (dealerCards.isBlackjack()) return MatchResult.LOSE
 
-        return if (dealerCards.getBestScore() > playerCards.getBestScore()) MatchResult.LOSE
-        else if (dealerCards.getBestScore() < playerCards.getBestScore()) MatchResult.WIN
-        else MatchResult.DRAW
+        return when {
+            dealerCards.getBestScore() > playerCards.getBestScore() -> MatchResult.LOSE
+            dealerCards.getBestScore() < playerCards.getBestScore() -> MatchResult.WIN
+            else -> MatchResult.DRAW
+        }
     }
 }
