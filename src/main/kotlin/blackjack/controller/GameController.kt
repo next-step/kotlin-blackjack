@@ -29,6 +29,11 @@ fun main() {
         participants.forEach { playParticipants(it, participantsEndedGame, deck) }
     }
 
+    if (dealer.canDraw()) {
+        dealer.draw(deck)
+        ConsoleResult.notifyDealerMoreOneCard(dealer)
+    }
+
     ConsoleResult.printCardsAndTotalScoreOfPlayers(allPlayers)
 }
 
