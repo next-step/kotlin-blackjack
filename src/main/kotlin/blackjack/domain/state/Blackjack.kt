@@ -28,5 +28,6 @@ class Blackjack(
 
     companion object {
         const val NUMBER = 21
+        const val PROFIT_RATE = 1.5
     }
 }

@@ -1,5 +1,7 @@
 package blackjack.domain
 
+import blackjack.domain.state.Blackjack
+
 class ProfitCalculator(private val inputNameAndBets: Map<String, BettingMoney>) {
 
     fun getPlayerProfit(player: Player, dealer: Dealer): Int {
@@ -9,7 +11,7 @@ class ProfitCalculator(private val inputNameAndBets: Map<String, BettingMoney>) 
             return 0
         }
         if (player.isBlackjack()) {
-            return (bettingMoney.value * 1.5).toInt()
+            return (bettingMoney.value * Blackjack.PROFIT_RATE).toInt()
         }
         return calculatePlayerProfit(dealer, player)
     }
