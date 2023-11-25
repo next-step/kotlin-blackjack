@@ -1,5 +1,6 @@
 package blackjack.controller
 
+import blackjack.domain.GameResults
 import blackjack.domain.card.Deck
 import blackjack.domain.player.Dealer
 import blackjack.domain.player.Participant
@@ -33,8 +34,10 @@ fun main() {
         dealer.draw(deck)
         ConsoleResult.notifyDealerMoreOneCard(dealer)
     }
-
     ConsoleResult.printCardsAndTotalScoreOfPlayers(allPlayers)
+
+    val gameResults = GameResults.results(dealer as Dealer, participants.map { it as Participant })
+    ConsoleResult.printGameResults(dealer, gameResults)
 }
 
 private fun playParticipants(

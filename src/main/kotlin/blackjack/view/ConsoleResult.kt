@@ -1,5 +1,8 @@
 package blackjack.view
 
+import blackjack.domain.player.Dealer
+import blackjack.domain.player.GameResult
+import blackjack.domain.player.Participant
 import blackjack.domain.player.Player
 
 object ConsoleResult {
@@ -29,5 +32,24 @@ object ConsoleResult {
 
     fun notifyDealerMoreOneCard(dealer: Player) {
         println("${dealer.name}는 16이하라 한장의 카드를 더 받았습니다.")
+    }
+
+    fun printGameResults(dealer: Dealer, gameResults: Map<Participant, GameResult>) {
+        println()
+        println("## 최종 승패")
+        val dealerWinCount = gameResults.values.count { it == GameResult.LOSE }
+        val dealerLoseCount = gameResults.values.count { it == GameResult.WIN }
+        val dealerTieCount = gameResults.values.count { it == GameResult.TIE }
+        println("${dealer.name}: $dealerWinCount 승 $dealerLoseCount 패 $dealerTieCount 무")
+
+        gameResults
+            .forEach { (participant, gameResult) ->
+                val convertedGameResult = when (gameResult) {
+                    GameResult.WIN -> "승"
+                    GameResult.LOSE -> "패"
+                    GameResult.TIE -> "무"
+                }
+                println("${participant.name}: $convertedGameResult")
+            }
     }
 }
