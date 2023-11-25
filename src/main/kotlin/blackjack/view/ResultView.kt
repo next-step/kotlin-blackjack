@@ -1,10 +1,6 @@
 package blackjack.view
 
-import blackjack.domain.model.Cards
-import blackjack.domain.model.Dealer
-import blackjack.domain.model.Gambler
-import blackjack.domain.model.Gamblers
-import blackjack.domain.model.Pattern
+import blackjack.domain.model.*
 
 object ResultView {
 
@@ -13,6 +9,12 @@ object ResultView {
     private const val GAMBLER_STATUS_FORMAT = "%s카드: %s"
     private const val GAMBLER_STATUS_RESULT_FORMAT = "%s카드: %s - 결과: %d"
     private const val DEAL_CARD_DESCRIPTION = "딜러와 %s에게 %d장의 나누었습니다."
+    private const val WIN_DESCRIPTION = "승"
+    private const val DRAW_DESCRIPTION = "무"
+    private const val LOSE_DESCRIPTION = "패"
+    private const val WIN_LOSE_DRAW_DESCRIPTION = "## 최종 $WIN_DESCRIPTION$DRAW_DESCRIPTION$LOSE_DESCRIPTION"
+    private const val DEALER_WIN_LOSE_DRAW_DESCRIPTION = "딜러: %d${WIN_DESCRIPTION} %d${DRAW_DESCRIPTION} %d${LOSE_DESCRIPTION}"
+    private const val GAMBLER_WIN_LOSE_DRAW_DESCRIPTION = "%s: %s"
     private const val DEAL_CARD_COUNT = 1
 
     fun drawDealCardDescription(gamblers: Gamblers, dealCardCount: Int = DEAL_CARD_COUNT) {
@@ -32,7 +34,8 @@ object ResultView {
     }
 
     fun drawDealerStatus(dealer: Dealer) {
-        println(DEALER_STATUS_FORMAT.format(dealer.name, drawCardsStatus(dealer.cards)))
+        val firstCard = dealer.cards.cards.first()
+        println(DEALER_STATUS_FORMAT.format(dealer.name, "${firstCard.sign.sign}${drawPattern(firstCard.pattern)}"))
     }
 
     private fun drawCardsStatus(cards: Cards): String {
@@ -47,7 +50,6 @@ object ResultView {
     }
 
     fun drawGamblersStatusResult(gamblers: Gamblers, target: Int) {
-        println()
         gamblers.forEach { gambler ->
             drawGamblerStatusResult(gambler, target)
         }
@@ -63,6 +65,7 @@ object ResultView {
         )
     }
     fun drawDealerStatusResult(dealer: Dealer, target: Int) {
+        println()
         println(
             DEALER_STATUS_RESULT_FORMAT.format(
                 dealer.name,
@@ -72,7 +75,26 @@ object ResultView {
         )
     }
 
-    fun drawVictoryResult() {
+    fun drawVictoryResult(dealer: Dealer, gamblers: Gamblers) {
+        println()
+        println(WIN_LOSE_DRAW_DESCRIPTION)
 
+        val dealerWinCount = gamblers.count { gambler -> gambler.winLoseDraw(dealer) == WinLoseDraw.LOSE }
+        val dealerDrawCount = gamblers.count { gambler -> gambler.winLoseDraw(dealer) == WinLoseDraw.DRAW }
+        val dealerLoseCount = gamblers.count { gambler -> gambler.winLoseDraw(dealer) == WinLoseDraw.WIN }
+
+        println(DEALER_WIN_LOSE_DRAW_DESCRIPTION.format(dealerWinCount, dealerDrawCount, dealerLoseCount))
+
+        gamblers.forEach { gambler ->
+            println(GAMBLER_WIN_LOSE_DRAW_DESCRIPTION.format(gambler.name, drawGamblerWinLoseDraw(gambler.winLoseDraw(dealer))))
+        }
+    }
+
+    private fun drawGamblerWinLoseDraw(winLoseDraw: WinLoseDraw): String {
+        return when(winLoseDraw) {
+            WinLoseDraw.WIN -> WIN_DESCRIPTION
+            WinLoseDraw.DRAW -> DRAW_DESCRIPTION
+            WinLoseDraw.LOSE -> LOSE_DESCRIPTION
+        }
     }
 }

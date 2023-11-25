@@ -1,4 +1,4 @@
-package blackjack.view
+package blackjack.domain.model
 
 enum class DrawState {
     HIT, STAY;

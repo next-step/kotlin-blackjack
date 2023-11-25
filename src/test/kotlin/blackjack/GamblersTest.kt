@@ -1,13 +1,11 @@
 package blackjack
 
-import blackjack.domain.model.Gambler
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 import blackjack.domain.model.Gamblers
 import blackjack.domain.model.Name
 import blackjack.domain.model.Names
-import io.kotest.matchers.collections.shouldContainExactly
 
 class GamblersTest: StringSpec({
     "겜블러들 생성시 빈리스트가 들어올 경우 IllegalArgumentException 예외를 던진다." {

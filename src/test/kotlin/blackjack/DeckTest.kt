@@ -3,6 +3,8 @@ package blackjack
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
 import blackjack.domain.model.Deck
+import blackjack.domain.model.Gambler
+import blackjack.domain.model.Name
 import io.kotest.matchers.shouldBe
 
 class DeckTest : StringSpec({
@@ -15,7 +17,7 @@ class DeckTest : StringSpec({
     "덱에 52장의 카드가 있는 경우 52번의 카드를 뽑을 수 있다." {
         val deck = Deck.all()
         repeat(52) {
-            deck.peek()
+            deck.peek(Gambler.from(Name("aaa")))
         }
     }
 
@@ -23,7 +25,7 @@ class DeckTest : StringSpec({
         shouldThrow<IllegalArgumentException> {
             val deck = Deck.all()
             repeat(53) {
-                deck.peek()
+                deck.peek(Gambler.from(Name("aaa")))
             }
         }
     }

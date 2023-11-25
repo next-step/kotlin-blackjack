@@ -22,8 +22,8 @@ object BlackjackController {
 
         val deck: Deck = Deck.all()
 
-        deck.peek(dealer)
         repeat(FIRST_DEAL_COUNT) {
+            deck.peek(dealer)
             deck.peek(gamblers)
         }
 
@@ -35,13 +35,12 @@ object BlackjackController {
             choiceHitAndStay(deck, gambler)
         }
 
-        InputView.drawHitDealer(DEALER_MAX_HIT_NUMBER)
-        whileHitDealer(deck, dealer)
+        hitDealer(deck, dealer)
 
         ResultView.drawDealerStatusResult(dealer, BLACKJACK_NUMBER)
         ResultView.drawGamblersStatusResult(gamblers, BLACKJACK_NUMBER)
 
-        ResultView.drawVictoryResult()
+        ResultView.drawVictoryResult(dealer, gamblers)
     }
 
     private fun choiceHitAndStay(deck: Deck, gambler: Gambler) {
@@ -53,8 +52,9 @@ object BlackjackController {
             ResultView.drawGamblerStatus(gambler)
         }
     }
-    private fun whileHitDealer(deck: Deck, dealer: Dealer) {
-        while (dealer.shouldDraw(DEALER_MAX_HIT_NUMBER)) {
+    private fun hitDealer(deck: Deck, dealer: Dealer) {
+        while (dealer.shouldDraw()) {
+            InputView.drawHitDealer(DEALER_MAX_HIT_NUMBER)
             deck.peek(dealer)
         }
     }
