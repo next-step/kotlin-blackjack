@@ -17,20 +17,14 @@ class ProfitCalculator(private val inputNameAndBets: Map<String, BettingMoney>) 
     private fun calculatePlayerProfit(dealer: Dealer, player: Player): Int {
         val bettingMoney = inputNameAndBets[player.name] ?: throw IllegalArgumentException()
 
-        if (dealer.isBust()) {
-            return bettingMoney.value
-        }
-        if (player.isBust()) {
-            return -bettingMoney.value
-        }
+        return when {
+            dealer.isBust() -> bettingMoney.value
+            player.isBust() -> -1 * bettingMoney.value
 
-        if (player.state.getSum() > dealer.state.getSum()) {
-            return bettingMoney.value
+            player.state.getSum() > dealer.state.getSum() -> bettingMoney.value
+            player.state.getSum() < dealer.state.getSum() -> -1 * bettingMoney.value
+            else -> 0
         }
-        if (player.state.getSum() < dealer.state.getSum()) {
-            return -bettingMoney.value
-        }
-        return 0
     }
 
     fun getDealerProfit(player: Player, dealer: Dealer): Int {
