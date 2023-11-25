@@ -1,7 +1,6 @@
 package blackjack
 
 import blackjack.CardsCompound.Companion.BEST
-import java.util.EnumMap
 
 object ResultView {
     fun showCardShare(players: List<Player>) {
@@ -15,26 +14,16 @@ object ResultView {
         }
     }
 
-    fun showResult(result: GameResult) {
-        println("## 최종 승패")
-        showDealerResult(result.dealerResult)
-        for (playerResult in result.playerResult) {
-            println("${playerResult.name}: ${playerResult.matchResult.korean}")
+    fun showResult(players: List<Player>, dealer: Dealer) {
+        println("## 최종 수익")
+        showProfit(dealer)
+        for (player in players) {
+            showProfit(player)
         }
     }
 
-    private fun showDealerResult(result: EnumMap<MatchResult, Int>) {
-        print("딜러: ")
-        result[MatchResult.WIN]?.let {
-            print("${it}승 ")
-        }
-        result[MatchResult.DRAW]?.let {
-            print("${it}무 ")
-        }
-        result[MatchResult.LOSE]?.let {
-            print("${it}패 ")
-        }
-        println()
+    private fun showProfit(gamer: Gamer) {
+        println("${gamer.name}: ${gamer.profit}")
     }
 
     fun showPlayerCards(player: Gamer) {

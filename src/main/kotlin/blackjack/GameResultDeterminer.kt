@@ -1,24 +1,15 @@
 package blackjack
 
-import java.util.EnumMap
-
 object GameResultDeterminer {
-    fun getResult(players: List<Player>, dealer: Dealer): GameResult {
-        val dealerResult: EnumMap<MatchResult, Int> = EnumMap(MatchResult::class.java)
-        val playerResult = mutableListOf<PlayerResult>()
+    fun setProfit(players: List<Player>, dealer: Dealer) {
         for (player in players) {
             val result = player vs dealer
-            playerResult.add(PlayerResult(player.name, result))
-            dealerResult[result.opponentResult] = dealerResult.getOrDefault(result.opponentResult, 0) + 1
+
+            val playerProfit = getProfit(player.betAmount, result.profitRate)
+            player.profit += playerProfit
+            dealer.profit -= playerProfit
         }
-
-        return GameResult(dealerResult, playerResult)
     }
+
+    private fun getProfit(betAmount: BetAmount, profitRate: Float): Int = (betAmount.amount * profitRate).toInt()
 }
-
-data class GameResult(
-    val dealerResult: EnumMap<MatchResult, Int>,
-    val playerResult: List<PlayerResult>,
-)
-
-data class PlayerResult(val name: String, val matchResult: MatchResult)

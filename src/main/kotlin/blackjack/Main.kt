@@ -19,8 +19,8 @@ fun main() {
     ResultView.showCardScore(dealer)
     ResultView.showCardScore(*players.toTypedArray())
 
-    val result = GameResultDeterminer.getResult(players, dealer)
-    ResultView.showResult(result)
+    GameResultDeterminer.setProfit(players, dealer)
+    ResultView.showResult(players, dealer)
 }
 
 private fun Dealer.getCard(cardDeck: CardDeck) {
