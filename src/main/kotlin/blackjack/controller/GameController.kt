@@ -1,7 +1,7 @@
 package blackjack.controller
 
 import blackjack.domain.card.Deck
-import blackjack.domain.player.Player
+import blackjack.domain.player.Participant
 import blackjack.domain.rule.DefaultScoringRule
 import blackjack.view.ConsoleInput
 import blackjack.view.ConsoleResult
@@ -10,27 +10,27 @@ fun main() {
     val names = ConsoleInput.inputNamesOfPlayer()
     val scoringRule = DefaultScoringRule()
 
-    val players = names.map { name -> Player(name, scoringRule) }
+    val participants = names.map { name -> Participant(name, scoringRule) }
     val deck = Deck()
 
-    ConsoleResult.drawAllFirstTwoCards(players)
-    players.forEach {
+    ConsoleResult.drawAllFirstTwoCards(participants)
+    participants.forEach {
         it.draw(deck)
         it.draw(deck)
     }
-    ConsoleResult.printCardsOfPlayers(players)
+    ConsoleResult.printCardsOfPlayers(participants)
 
-    val playersOfWantedEndGame: MutableSet<Player> = mutableSetOf()
-    while (playersOfWantedEndGame.size < players.size) {
-        players.forEach { playGame(it, playersOfWantedEndGame, deck) }
+    val participantsEndedGame: MutableSet<Participant> = mutableSetOf()
+    while (participantsEndedGame.size < participants.size) {
+        participants.forEach { playParticipants(it, participantsEndedGame, deck) }
     }
 
-    ConsoleResult.printCardsAndTotalScoreOfPlayers(players)
+    ConsoleResult.printCardsAndTotalScoreOfPlayers(participants)
 }
 
-private fun playGame(
-    it: Player,
-    playersOfWantedEndGame: MutableSet<Player>,
+private fun playParticipants(
+    it: Participant,
+    playersOfWantedEndGame: MutableSet<Participant>,
     deck: Deck
 ) {
     if (it.canDraw().not()) {
