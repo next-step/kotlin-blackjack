@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.domain
 
 enum class Number(
     val value: Int

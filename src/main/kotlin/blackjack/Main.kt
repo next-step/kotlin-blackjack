@@ -1,5 +1,10 @@
 package blackjack
 
+import blackjack.domain.Card
+import blackjack.domain.Number
+import blackjack.domain.Player
+import blackjack.domain.Shape
+
 fun main() {
     val cardDeck = deck()
     val names = InputView.inputNames()
@@ -29,7 +34,7 @@ private fun deck(): Iterator<Card> {
 }
 
 private fun cards(): List<Card> {
-    return  Shape.values().flatMap { shape ->
+    return Shape.values().flatMap { shape ->
         Number.values().map { number ->
             Card(number, shape)
         }
