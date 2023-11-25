@@ -12,7 +12,19 @@ object InputView {
 
     fun inputNames(): List<String> {
         println(INPUT_PLAYER_NAMES_MESSAGE)
-        return readln().split(PLAYER_NAME_DELIMITER)
+        val inputNames = readln().split(PLAYER_NAME_DELIMITER)
+
+        try {
+            checkValidInputNames(inputNames)
+        } catch (e: IllegalArgumentException) {
+            println(e.message)
+            return inputNames()
+        }
+        return inputNames
+    }
+
+    private fun checkValidInputNames(inputNames: List<String>) {
+        require(inputNames.size == inputNames.distinct().size) { "게임에 참여하는 사람의 이름은 중복될 수 없습니다. 다시 입력해주세요." }
     }
 
     fun inputHitOrStay(player: Player): Boolean {
