@@ -17,8 +17,8 @@ class ResultView {
 
     fun showCards(participant: BlackjackParticipant) {
         when (participant) {
-            is Dealer -> println("딜러 카드: ${participant.cards.joinToString(", ") { it.toUiString() }}")
-            is Player -> println("${participant.name} 카드: ${participant.cards.joinToString(", ") { it.toUiString() }}")
+            is Dealer -> println("딜러 카드: ${participant.cards.joinToString(", ") { it.toUiString() }} - 결과: ${participant.calculateBestValue()}")
+            is Player -> println("${participant.name} 카드: ${participant.cards.joinToString(", ") { it.toUiString() }} - 결과: ${participant.calculateBestValue()}")
         }
     }
 
@@ -28,6 +28,7 @@ class ResultView {
     }
 
     fun showDealerTurn(dealerAction: BlackJackAction) {
+        println()
         val message = if (dealerAction == BlackJackAction.HIT) {
             "딜러는 16 이하라 1장 더 받습니다."
         } else {
@@ -37,7 +38,7 @@ class ResultView {
     }
 
     fun showInitialDealMessage(players: List<Player>) {
-        println("딜러와 ${players.joinToString(", "){ it.name }}에게 2장의 카드를 나누었습니다.")
+        println("딜러와 ${players.joinToString(", ") { it.name }}에게 2장의 카드를 나누었습니다.")
     }
 
     fun showParticipantsRecord(blackjackGame: BlackjackGame, result: Map<BlackjackParticipant, BlackjackResult>) {
@@ -48,6 +49,7 @@ class ResultView {
             showPlayerRecord(it, result[it] ?: throw IllegalArgumentException())
         }
     }
+
     private fun showDealerRecord(dealerResult: BlackjackResult) {
         println("딜러: ${dealerResult.win}승 ${dealerResult.lose}패")
     }

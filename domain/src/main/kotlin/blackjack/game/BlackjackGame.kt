@@ -49,28 +49,21 @@ class BlackjackGame private constructor(
 
     fun dealDealerTurn(): BlackJackAction {
         check(state is GameState.DealerTurn) { "Dealer Turn이 아닙니다." }
-        return when (dealer.decideAction(deck)) {
-            BlackJackAction.HIT -> {
-                state = GameState.End(
-                    players,
-                    dealer.receiveCard(deck.drawCard())
-                )
-                BlackJackAction.HIT
-            }
-
-            BlackJackAction.STAND -> {
-                state = GameState.End(players, dealer)
-                BlackJackAction.STAND
-            }
+        val dealerAction = dealer.decideAction(deck)
+        return if (dealerAction == BlackJackAction.HIT) {
+            val drawnCard = deck.drawCard()
+            state = GameState.End(players, dealer.receiveCard(drawnCard))
+            BlackJackAction.HIT
+        } else {
+            state = GameState.End(players, dealer)
+            BlackJackAction.STAND
         }
     }
 
     fun calculateResult(): Map<BlackjackParticipant, BlackjackResult> {
         val results = mutableMapOf<BlackjackParticipant, BlackjackResult>()
         results[dealer] = calculateDealerResult()
-        players.forEach {
-            results[it] = calculatePlayerResult(it)
-        }
+        players.forEach { results[it] = calculatePlayerResult(it) }
         return results
     }
 
