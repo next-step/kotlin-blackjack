@@ -24,4 +24,10 @@ class CardPackTest {
 
         assertThat(cardPackSize).isEqualTo(distinctCardPackSize)
     }
+
+    @Test
+    fun `aff`() {
+        val cardPack = CardPack.getCardPack()
+        println(cardPack.cardList[0])
+    }
 }

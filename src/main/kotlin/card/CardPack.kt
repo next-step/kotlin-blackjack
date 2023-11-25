@@ -13,7 +13,13 @@ class CardPack(val cardList: List<PlayingCard>) {
                 playingCardList.addAll(createCardWithSuit(suit))
             }
 
+            cardShuffle(playingCardList)
+
             return CardPack(playingCardList)
+        }
+
+        private fun cardShuffle(playingCardList: MutableList<PlayingCard>) {
+            playingCardList.shuffle()
         }
 
         private fun createCardWithSuit(suit: Suit): List<PlayingCard> {
