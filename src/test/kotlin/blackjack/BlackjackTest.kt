@@ -25,4 +25,13 @@ class BlackjackTest {
 
         assertThat(actual).isEqualTo(15)
     }
+
+    @Test
+    fun `Jack은 10으로 계산`() {
+        val cards = Cards("J", "3")
+
+        val actual = cards.sum()
+
+        assertThat(actual).isEqualTo(13)
+    }
 }
