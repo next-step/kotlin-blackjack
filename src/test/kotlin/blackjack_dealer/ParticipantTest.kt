@@ -103,4 +103,10 @@ class ParticipantTest : StringSpec({
         participantWithFourteen.createParticipantResult(dealer).resultState shouldBe ParticipantResultState.DRAW
         participantWithFifteen.createParticipantResult(dealer).resultState shouldBe ParticipantResultState.WIN
     }
+
+    "플레이어 생성시에 베팅 금액을 정할 수 있다" {
+
+        val expected = 10000
+        participant.getCurrent베팅금액 shouldBe expected
+    }
 })
