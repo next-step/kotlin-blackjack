@@ -1,5 +1,6 @@
 package blackjack.domain.player
 
+import blackjack.domain.GameResult
 import blackjack.domain.card.Deck
 import blackjack.domain.rule.DefaultScoringRule
 import blackjack.domain.rule.TestScoringRule

@@ -1,7 +1,6 @@
 package blackjack.domain
 
 import blackjack.domain.player.Dealer
-import blackjack.domain.player.GameResult
 import blackjack.domain.player.Participant
 
 object GameResults {

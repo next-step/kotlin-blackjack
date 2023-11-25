@@ -1,4 +1,4 @@
-package blackjack.domain.player
+package blackjack.domain
 
 enum class GameResult {
     WIN, LOSE, TIE

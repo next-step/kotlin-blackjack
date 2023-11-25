@@ -1,7 +1,7 @@
 package blackjack.view
 
 import blackjack.domain.player.Dealer
-import blackjack.domain.player.GameResult
+import blackjack.domain.GameResult
 import blackjack.domain.player.Participant
 import blackjack.domain.player.Player
 
