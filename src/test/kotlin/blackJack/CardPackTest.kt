@@ -6,12 +6,12 @@ import org.junit.jupiter.api.Test
 
 class CardPackTest {
     @Test
-    fun `카드팩은 48개의 카드로 구성되어있다`() {
+    fun `카드팩은 52개의 카드로 구성되어있다`() {
         val cardPack = CardPack.getCradPack()
 
         val cardNumberSize = cardPack.size
 
-        assertThat(cardNumberSize).isEqualTo(48)
+        assertThat(cardNumberSize).isEqualTo(52)
     }
 
     @Test

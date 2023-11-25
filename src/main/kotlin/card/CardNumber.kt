@@ -10,6 +10,7 @@ enum class CardNumber private constructor(private val point: Int) {
     SEVEN(7),
     EIGHT(8),
     NINE(9),
+    TEN(10),
     JACK(10),
     QUEEN(10),
     KING(10);
@@ -18,7 +19,7 @@ enum class CardNumber private constructor(private val point: Int) {
 
         private val cardNumberList = listOf(
             ACE, TWO, TREE, FOUR, FIVE, SIX, SEVEN,
-            EIGHT, NINE, JACK, QUEEN, KING,
+            EIGHT, NINE, TEN, JACK, QUEEN, KING,
         )
 
         fun CardNumber.getPoint(): Int {
