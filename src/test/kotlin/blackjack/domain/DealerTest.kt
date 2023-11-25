@@ -1,5 +1,6 @@
 package blackjack.domain
 
+import blackjack.domain.state.Hit
 import io.kotest.assertions.throwables.shouldNotThrowAny
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
@@ -19,7 +20,7 @@ class DealerTest : BehaviorSpec({
                     row(mutableListOf(Card(CardSuit.HEART, CardNumber.TEN), Card(CardSuit.HEART, CardNumber.TEN))),
                 ) { cards ->
                     shouldThrow<IllegalArgumentException> {
-                        Dealer(FixedDeck(), Hand(cards)).hit(card)
+                        Dealer(FixedDeck(), Hit(Hand(cards))).hit(card)
                     }
                 }
             }
@@ -37,7 +38,7 @@ class DealerTest : BehaviorSpec({
                     row(mutableListOf(Card(CardSuit.HEART, CardNumber.TEN), Card(CardSuit.HEART, CardNumber.SIX))),
                 ) { cards ->
                     shouldNotThrowAny {
-                        Dealer(FixedDeck(), Hand(cards)).hit(card)
+                        Dealer(FixedDeck(), Hit(Hand(cards))).hit(card)
                     }
                 }
             }

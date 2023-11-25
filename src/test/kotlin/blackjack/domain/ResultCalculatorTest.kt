@@ -1,5 +1,6 @@
 package blackjack.domain
 
+import blackjack.domain.state.Hit
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.data.forAll
 import io.kotest.data.row
@@ -38,7 +39,7 @@ class ResultCalculatorTest : BehaviorSpec({
                         GameResult.DRAW
                     ),
                 ) { dealerCards, playerCards, expected ->
-                    val dealer = Dealer(FixedDeck(), Hand(dealerCards))
+                    val dealer = Dealer(FixedDeck(), Hit(Hand(dealerCards)))
                     val player = Player("yeongun", Hand(playerCards))
                     player.getResult(dealer) shouldBe expected
                 }
@@ -76,7 +77,7 @@ class ResultCalculatorTest : BehaviorSpec({
                         GameResult.DRAW
                     ),
                 ) { dealerCards, playerCards, expected ->
-                    val dealer = Dealer(FixedDeck(), Hand(dealerCards))
+                    val dealer = Dealer(FixedDeck(), Hit(Hand(dealerCards)))
                     val player = Player("yeongun", Hand(playerCards))
                     dealer.getResult(player) shouldBe expected
                 }

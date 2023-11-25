@@ -1,5 +1,6 @@
 package blackjack.domain
 
+import blackjack.domain.state.Hit
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 
@@ -28,7 +29,7 @@ class PlayersTest : BehaviorSpec({
     }
 
     Given("게임이 모두 종료되고 나서") {
-        val dealer = Dealer(FixedDeck(), Hand(mutableListOf(Card(CardSuit.CLUB, CardNumber.TEN), Card(CardSuit.SPADE, CardNumber.TEN))))
+        val dealer = Dealer(FixedDeck(), Hit(Hand(mutableListOf(Card(CardSuit.CLUB, CardNumber.TEN), Card(CardSuit.SPADE, CardNumber.TEN)))))
         val player1 = Player("player1", Hand(mutableListOf(Card(CardSuit.DIAMOND, CardNumber.TEN), Card(CardSuit.SPADE, CardNumber.NINE))))
         val player2 = Player("player2", Hand(mutableListOf(Card(CardSuit.DIAMOND, CardNumber.TEN), Card(CardSuit.SPADE, CardNumber.TEN))))
         val player3 = Player("player3", Hand(mutableListOf(Card(CardSuit.DIAMOND, CardNumber.TEN), Card(CardSuit.SPADE, CardNumber.ACE))))
@@ -44,7 +45,7 @@ class PlayersTest : BehaviorSpec({
     }
 
     Given("게임이 모두 종료된 후") {
-        val dealer = Dealer(FixedDeck(), Hand(mutableListOf(Card(CardSuit.CLUB, CardNumber.TEN), Card(CardSuit.SPADE, CardNumber.TEN))))
+        val dealer = Dealer(FixedDeck(), Hit(Hand(mutableListOf(Card(CardSuit.CLUB, CardNumber.TEN), Card(CardSuit.SPADE, CardNumber.TEN)))))
         val player1 = Player("player1", Hand(mutableListOf(Card(CardSuit.DIAMOND, CardNumber.TEN), Card(CardSuit.SPADE, CardNumber.NINE))))
         val player2 = Player("player2", Hand(mutableListOf(Card(CardSuit.DIAMOND, CardNumber.TEN), Card(CardSuit.SPADE, CardNumber.TEN))))
         val player3 = Player("player3", Hand(mutableListOf(Card(CardSuit.DIAMOND, CardNumber.TEN), Card(CardSuit.SPADE, CardNumber.ACE))))

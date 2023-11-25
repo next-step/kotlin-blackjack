@@ -65,7 +65,7 @@ class ProfitCalculatorTest : BehaviorSpec({
                         0
                     ),
                 ) { dealerInitCards, playerInitCards, dealerHitCard, playerHitCard, expected ->
-                    val dealer = Dealer(FixedDeck(), Hand())
+                    val dealer = Dealer(FixedDeck())
                     val player = Player("yeongun", Hand())
                     dealer.init(dealerInitCards)
                     player.init(playerInitCards)

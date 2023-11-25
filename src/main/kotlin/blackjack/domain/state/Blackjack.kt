@@ -1,0 +1,16 @@
+package blackjack.domain.state
+
+import blackjack.domain.Card
+import blackjack.domain.Hand
+
+class Blackjack(
+    hand: Hand,
+) : Started(hand) {
+    override fun draw(card: Card): State2 {
+        throw IllegalArgumentException("BLACKJACK 상태라면 카드를 더이상 뽑을 수 없습니다.")
+    }
+
+    override fun stay(): State2 {
+        throw IllegalArgumentException("BLACKJACK 상태라면 Stay 할 수 없습니다.")
+    }
+}
