@@ -11,6 +11,11 @@ class ProfitCalculator(private val inputNameAndBets: Map<String, BettingMoney>) 
         if (player.isBlackjack()) {
             return (bettingMoney.value * 1.5).toInt()
         }
+        return calculatePlayerProfit(dealer, player)
+    }
+
+    private fun calculatePlayerProfit(dealer: Dealer, player: Player): Int {
+        val bettingMoney = inputNameAndBets[player.name] ?: throw IllegalArgumentException()
 
         if (dealer.isBust()) {
             return bettingMoney.value
