@@ -1,6 +1,7 @@
 package blackjack
 
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 
@@ -14,5 +15,14 @@ class BlackjackTest {
         val actual = cards.sum()
 
         assertThat(actual).isEqualTo(expect)
+    }
+
+    @Test
+    fun `King은 10으로 계산`() {
+        val cards = Cards("K", "5")
+
+        val actual = cards.sum()
+
+        assertThat(actual).isEqualTo(15)
     }
 }
