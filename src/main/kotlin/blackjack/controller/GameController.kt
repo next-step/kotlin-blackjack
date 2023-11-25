@@ -1,7 +1,9 @@
 package blackjack.controller
 
 import blackjack.domain.card.Deck
+import blackjack.domain.player.Dealer
 import blackjack.domain.player.Participant
+import blackjack.domain.player.Player
 import blackjack.domain.rule.DefaultScoringRule
 import blackjack.view.ConsoleInput
 import blackjack.view.ConsoleResult
@@ -10,31 +12,33 @@ fun main() {
     val names = ConsoleInput.inputNamesOfPlayer()
     val scoringRule = DefaultScoringRule()
 
-    val participants = names.map { name -> Participant(name, scoringRule) }
+    val dealer: Player = Dealer(scoringRule)
+    val participants: List<Player> = names.map { name -> Participant(name, scoringRule) }
+    val allPlayers = listOf(dealer, *participants.toTypedArray())
     val deck = Deck()
 
     ConsoleResult.drawAllFirstTwoCards(participants)
-    participants.forEach {
+    allPlayers.forEach {
         it.draw(deck)
         it.draw(deck)
     }
-    ConsoleResult.printCardsOfPlayers(participants)
+    ConsoleResult.printCardsOfPlayers(allPlayers)
 
-    val participantsEndedGame: MutableSet<Participant> = mutableSetOf()
+    val participantsEndedGame: MutableSet<Player> = mutableSetOf()
     while (participantsEndedGame.size < participants.size) {
         participants.forEach { playParticipants(it, participantsEndedGame, deck) }
     }
 
-    ConsoleResult.printCardsAndTotalScoreOfPlayers(participants)
+    ConsoleResult.printCardsAndTotalScoreOfPlayers(allPlayers)
 }
 
 private fun playParticipants(
-    it: Participant,
-    playersOfWantedEndGame: MutableSet<Participant>,
+    it: Player,
+    playersOfWantedEndGame: MutableSet<Player>,
     deck: Deck
 ) {
     if (it.canDraw().not()) {
-        ConsoleResult.notifyPlayerCannotDraw(it)
+        ConsoleResult.notifyParticipantCannotDraw(it)
         playersOfWantedEndGame.add(it)
     }
 

@@ -4,7 +4,7 @@ import blackjack.domain.card.Deck
 import blackjack.domain.rule.DefaultScoringRule
 import blackjack.domain.rule.ScoringRule
 
-class Dealer(private val scoringRule: ScoringRule) : Player(scoringRule) {
+class Dealer(private val scoringRule: ScoringRule) : Player(DEALER_NAME, scoringRule) {
     override fun draw(deck: Deck) {
         this._cards.add(deck.draw())
     }
@@ -22,5 +22,6 @@ class Dealer(private val scoringRule: ScoringRule) : Player(scoringRule) {
 
     companion object {
         private const val DEALER_THRESHOLD_SCORE = 16
+        private const val DEALER_NAME = "딜러"
     }
 }
