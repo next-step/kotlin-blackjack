@@ -1,9 +1,9 @@
 package blackjack.model
 
 import blackjack.model.card.CardFixture
+import blackjack.model.playable.PlayableResult
 import blackjack.model.playable.impl.Dealer
 import blackjack.model.playable.impl.Player
-import blackjack.model.result.PlayerResult
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 
@@ -47,7 +47,7 @@ class RefereeTest : StringSpec({
         actual.dealerResult().dealerWinningCount shouldBe 0
         actual.dealerResult().dealerLosingCount shouldBe 2
 
-        actual.playerResult(player1) shouldBe PlayerResult.WIN
-        actual.playerResult(player2) shouldBe PlayerResult.WIN
+        actual.playerResult(player1) shouldBe PlayableResult.WIN
+        actual.playerResult(player2) shouldBe PlayableResult.WIN
     }
 })

@@ -1,8 +1,8 @@
 package blackjack.model
 
 import blackjack.model.pack.Pack
+import blackjack.model.playable.PlayableResult
 import blackjack.model.playable.impl.Player
-import blackjack.model.result.PlayerResult
 
 class Players(
     val values: Set<Player>,
@@ -25,11 +25,11 @@ class Players(
         return values.size
     }
 
-    fun scoreBattle(dealerScore: Int): Map<Player, PlayerResult> {
+    fun scoreBattle(dealerScore: Int): Map<Player, PlayableResult> {
         return values.associateWith { Referee.playerResult(it, dealerScore) }
     }
 
-    fun walkover(): Map<Player, PlayerResult> {
-        return values.associateWith { PlayerResult.WIN }
+    fun walkover(): Map<Player, PlayableResult> {
+        return values.associateWith { PlayableResult.WIN }
     }
 }

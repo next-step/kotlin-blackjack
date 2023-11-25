@@ -1,6 +1,7 @@
 package blackjack.model.result
 
 import blackjack.model.Participants
+import blackjack.model.playable.PlayableResult
 import blackjack.model.playable.impl.Dealer
 import blackjack.model.playable.impl.Player
 
@@ -12,7 +13,7 @@ class ParticipantResults(
         return dealerDealerResult.second
     }
 
-    fun playerResult(player: Player): PlayerResult {
+    fun playerResult(player: Player): PlayableResult {
         return playerResults.resultOfPlayer(player)
     }
 

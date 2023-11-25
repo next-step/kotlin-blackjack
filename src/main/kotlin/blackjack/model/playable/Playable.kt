@@ -7,4 +7,6 @@ interface Playable {
     fun score(): Int
     fun dealing(pack: Pack)
     fun playing(playingStrategy: PlayingStrategy, pack: Pack): PlayableReaction
+    fun result(playable: Playable): PlayableResult
+    fun isBurst(): Boolean
 }
