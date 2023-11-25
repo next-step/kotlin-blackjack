@@ -1,6 +1,6 @@
 package blackjack
 
-import blackjack.CardsCompound.Companion.BUSTED
+import blackjack.CardsCompound.Companion.BEST
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -15,7 +15,7 @@ class CardsCompoundTest {
         val third = second.addNumber(CardNumber.FOUR)
         assertThat(third.bestNumber).isEqualTo(19)
         val busted = third.addNumber(CardNumber.THREE)
-        assertThat(busted.bestNumber).isEqualTo(BUSTED)
+        assertThat(busted.bestNumber).isGreaterThan(BEST)
     }
 
     @Test

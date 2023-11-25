@@ -1,5 +1,6 @@
 package blackjack
 
+import blackjack.CardsCompound.Companion.BEST
 import java.util.EnumMap
 
 object ResultView {
@@ -46,7 +47,7 @@ object ResultView {
     }
 
     private fun getResultText(bestScore: Int): String {
-        if (bestScore == CardsCompound.BUSTED) return "버스트"
+        if (bestScore > BEST) return "버스트"
         return bestScore.toString()
     }
 

@@ -12,6 +12,6 @@ class PlayerCards(val cards: MutableList<PlayingCard> = mutableListOf()) {
 
     fun isBlackjack() = getBestScore() == BEST && cards.size == 2
 
-    fun isBusted() = compound.isBusted
+    fun isBusted() = compound.bestNumber > BEST
     fun getBestScore() = compound.bestNumber
 }
