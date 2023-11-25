@@ -1,6 +1,6 @@
 package blackjack
 
-class Card private constructor(
+data class Card (
     val number: Number,
     val shape: Shape,
 ) {

@@ -1,9 +1,9 @@
 package blackjack
 
-class Cards(
-    vararg cards: Card,
+data class Cards(
+    private val cards: List<Card>,
 ) {
-    private val cards = cards.toList()
+    constructor(vararg cards: Card): this(cards.toList())
 
     fun sum(): Int {
         if (BLACKJACK < sumOfMaximum()) {
