@@ -1,7 +1,6 @@
 package blackjack.model
 
 import blackjack.model.pack.Pack
-import blackjack.model.playable.PlayableResult
 import blackjack.model.playable.impl.Player
 
 class Players(
@@ -23,13 +22,5 @@ class Players(
 
     fun count(): Int {
         return values.size
-    }
-
-    fun scoreBattle(dealerScore: Int): Map<Player, PlayableResult> {
-        return values.associateWith { Referee.playerResult(it, dealerScore) }
-    }
-
-    fun walkover(): Map<Player, PlayableResult> {
-        return values.associateWith { PlayableResult.WIN }
     }
 }

@@ -47,9 +47,9 @@ class Dealer(
         val results = players.values.map { it -> this.result(it) }
         return this to DealerResult(
             score = this.score(),
-            dealerWinningCount = results.count { it == PlayableResult.WIN },
-            dealerDrawingCount = results.count { it == PlayableResult.DRAW },
-            dealerLosingCount = results.count { it == PlayableResult.LOSE }
+            winningCount = results.count { it == PlayableResult.WIN },
+            drawingCount = results.count { it == PlayableResult.DRAW },
+            losingCount = results.count { it == PlayableResult.LOSE }
         )
     }
 }

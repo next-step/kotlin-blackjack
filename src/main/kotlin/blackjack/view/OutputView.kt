@@ -2,7 +2,7 @@ package blackjack.view
 
 import blackjack.model.Participants
 import blackjack.model.playable.impl.Player
-import blackjack.model.result.ParticipantResults
+import blackjack.model.result.DealerResult
 import blackjack.view.Console.presentDealers
 import blackjack.view.Console.presentPlayers
 
@@ -31,12 +31,24 @@ object OutputView {
         println(it.presentPlayers())
     }
 
-    fun presentResult(blackJackResult: ParticipantResults) {
+    fun presentResult(dealerResult: DealerResult) {
         println("## 최종 승패")
-        println("딜러 ${blackJackResult.dealerWinCount()}승 ${blackJackResult.dealerLoseCount()}패")
-        blackJackResult.playerResults
-            .playerResult()
-            .forEach { println("${it.first}: ${it.second}") }
+        if (hasDraw(dealerResult)) {
+            presentResultWithDraw(dealerResult)
+        }
+        presentResultWithoutDraw(dealerResult)
+    }
+
+    private fun presentResultWithoutDraw(dealerResult: DealerResult) {
+        println("딜러 ${dealerResult.winningCount}승 ${dealerResult.drawingCount}무 ${dealerResult.drawingCount}패")
+    }
+
+    private fun presentResultWithDraw(dealerResult: DealerResult) {
+        println("딜러 ${dealerResult.winningCount}승 ${dealerResult.drawingCount}패")
+    }
+
+    private fun hasDraw(dealerResult: DealerResult): Boolean {
+        return dealerResult.drawingCount > 0
     }
 }
 
