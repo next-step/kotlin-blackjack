@@ -2,7 +2,7 @@ package blackjack
 
 interface GameBlackjack {
 
-    fun initialDealing(playerNames: String): GameParticipants
+    fun initialDealing(players: List<GamePlayer>): GameParticipants
 
     fun continueDealing(player: GameParticipantPlayer): GameParticipantPlayer
 

@@ -12,14 +12,16 @@ class GameParticipantsTest : BehaviorSpec({
                 listOf(
                     Card(Card.Symbol.HEART, Card.Number.JACK),
                     Card(Card.Symbol.HEART, Card.Number.KING)
-                )
+                ),
+                0
             ),
             GameParticipantPlayer(
                 "loser",
                 listOf(
                     Card(Card.Symbol.SPADE, Card.Number.TWO),
                     Card(Card.Symbol.SPADE, Card.Number.THREE)
-                )
+                ),
+                0
             ),
         )
         When("딜러가 두 명의 플레이어에게 각각 이기고 진다면") {

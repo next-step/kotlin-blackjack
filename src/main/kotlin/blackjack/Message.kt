@@ -11,4 +11,5 @@ object Message {
     const val PRINT_RESULT_MESSAGE = "## 최종 승패"
     const val PRINT_DEALER_RESULT_MESSAGE = "%s: %d승 %d패"
     const val PRINT_PLAYER_RESULT_MESSAGE = "%s: %s"
+    const val INPUT_PLAYER_AMOUNT_BET = "%s의 베팅 금액은?"
 }

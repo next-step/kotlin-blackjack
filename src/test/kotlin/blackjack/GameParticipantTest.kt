@@ -20,7 +20,8 @@ class GameParticipantTest : BehaviorSpec({
         )
         val gamePlayer = GameParticipantPlayer(
             "test",
-            cards
+            cards,
+            0
         )
         val dealer1 = GameCardDealer(cardShuffleStrategy)
         Then("카드가 한 장 추가된다.") {
@@ -31,7 +32,8 @@ class GameParticipantTest : BehaviorSpec({
                     Card(Symbol.SPADE, Number.TEN),
                     Card(Symbol.SPADE, Number.TWO),
                     Card(Symbol.SPADE, Number.THREE)
-                )
+                ),
+                0
             )
         }
 
@@ -42,7 +44,8 @@ class GameParticipantTest : BehaviorSpec({
                     Card(Symbol.SPADE, Number.TWO),
                     Card(Symbol.SPADE, Number.NINE),
                     Card(Symbol.SPADE, Number.KING),
-                )
+                ),
+                0
             )
             val bustDealer = GameCardDealer(cardShuffleStrategy)
             Then("버스트가 된다") {
@@ -54,7 +57,8 @@ class GameParticipantTest : BehaviorSpec({
                         Card(Symbol.SPADE, Number.NINE),
                         Card(Symbol.SPADE, Number.KING),
                         Card(Symbol.SPADE, Number.THREE)
-                    )
+                    ),
+                    betAmount = 0
                 )
             }
         }
@@ -68,7 +72,8 @@ class GameParticipantTest : BehaviorSpec({
                     Card(Symbol.HEART, Number.NINE),
                     Card(Symbol.HEART, Number.KING),
                     Card(Symbol.HEART, Number.TWO),
-                )
+                ),
+                0
             )
             val exceeded = GameParticipantPlayer(
                 "test",
@@ -76,7 +81,8 @@ class GameParticipantTest : BehaviorSpec({
                     Card(Symbol.HEART, Number.NINE),
                     Card(Symbol.HEART, Number.KING),
                     Card(Symbol.HEART, Number.JACK),
-                )
+                ),
+                0
             )
             Then("카드를 추가 받을 수 없다.") {
                 same.isNotAllowedDealing() shouldBe true

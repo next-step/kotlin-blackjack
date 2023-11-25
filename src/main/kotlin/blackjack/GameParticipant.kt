@@ -4,7 +4,8 @@ import blackjack.GameBlackjack.Companion.BLACKJACK_MAX_SCORE
 
 abstract class GameParticipant(
     val name: String,
-    val cards: List<Card> = emptyList()
+    val cards: List<Card> = emptyList(),
+    val betAmount: Int
 ) {
     val isBust: Boolean
         get() = getScore() > BLACKJACK_MAX_SCORE
@@ -54,25 +55,29 @@ abstract class GameParticipant(
 
 class GameParticipantPlayer(
     name: String,
-    cards: List<Card> = emptyList()
-) : GameParticipant(name, cards) {
+    cards: List<Card> = emptyList(),
+    betAmount: Int
+) : GameParticipant(name, cards, betAmount) {
     override fun isNotAllowedDealing(): Boolean = this.isBust || this.isBlackjack() || this.isSameMaxScore()
 
     override fun receiveCard(card: Card): GameParticipantPlayer = GameParticipantPlayer(
         name = this.name,
-        cards = this.cards + card
+        cards = this.cards + card,
+        betAmount = this.betAmount
     )
 }
 
 class GameParticipantDealer(
     name: String = NAME,
-    cards: List<Card> = emptyList()
-) : GameParticipant(name, cards) {
+    cards: List<Card> = emptyList(),
+    betAmount: Int = 0
+) : GameParticipant(name, cards, betAmount) {
     override fun isNotAllowedDealing(): Boolean = getScore() > CONTINUE_DEALING_SCORE
 
     override fun receiveCard(card: Card): GameParticipantDealer = GameParticipantDealer(
         name = this.name,
-        cards = this.cards + card
+        cards = this.cards + card,
+        betAmount = this.betAmount
     )
 
     companion object {
