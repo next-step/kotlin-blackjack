@@ -2,7 +2,7 @@ package blackjack
 
 data class BetAmount(val amount: Int) {
     init {
-        require(amount > MINIMUM) {
+        require(amount >= MINIMUM) {
             "Player need to bet more than $MINIMUM"
         }
     }

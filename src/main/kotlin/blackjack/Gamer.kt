@@ -8,6 +8,8 @@ abstract class Gamer(val name: String) {
 
     lateinit var initialPublicCards: PlayerCards
 
+    var profit = 0
+
     fun getInitialCards(cards: List<PlayingCard>) {
         for (card in cards) {
             playerCards.addCard(card)

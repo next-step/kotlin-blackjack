@@ -1,18 +1,8 @@
 package blackjack
 
-enum class MatchResult(val korean: String) {
-    WIN("승") {
-        override val opponentResult: MatchResult
-            get() = LOSE
-    },
-    DRAW("무") {
-        override val opponentResult: MatchResult
-            get() = DRAW
-    },
-    LOSE("패") {
-        override val opponentResult: MatchResult
-            get() = WIN
-    };
-
-    abstract val opponentResult: MatchResult
+enum class MatchResult(val profitRate: Float) {
+    BLACKJACK_WIN(1.5f),
+    WIN(1f),
+    DRAW(0f),
+    LOSE(-1f)
 }

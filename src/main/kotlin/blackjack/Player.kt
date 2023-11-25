@@ -11,12 +11,11 @@ class Player(name: String) : Gamer(name) {
         val dealerCards = dealer.playerCards
 
         if (isBusted) return MatchResult.LOSE
-        if (dealerCards.isBusted()) return MatchResult.WIN
-
         if (isBlackjack) {
             return if (dealerCards.isBlackjack()) MatchResult.DRAW
-            else MatchResult.WIN
+            else MatchResult.BLACKJACK_WIN
         }
+        if (dealerCards.isBusted()) return MatchResult.WIN
         if (dealerCards.isBlackjack()) return MatchResult.LOSE
 
         return when {
