@@ -7,6 +7,10 @@ import blackjack.model.result.PlayerResult
 class Players(
     val values: Set<Player>,
 ) {
+    init {
+        require(values.map { it.name }.distinct().size == values.size) { "Player 들의 이름은 중복이 허용되지 않습니다" }
+    }
+
     constructor(vararg players: Player) : this(players.toSet())
 
     fun dealing(pack: Pack) {
@@ -27,9 +31,5 @@ class Players(
 
     fun walkover(): Map<Player, PlayerResult> {
         return values.associateWith { PlayerResult.WIN }
-    }
-
-    init {
-        require(values.map { it.name }.distinct().size == values.size) { "Player 들의 이름은 중복이 허용되지 않습니다" }
     }
 }
