@@ -11,15 +11,9 @@ interface State2 {
 
     fun getSum(): Int
 
-    fun init(cards: List<Card>) {
+    fun init(cards: List<Card>)
 
-    }
+    fun receive(card: Card)
 
-    fun receive(card: Card) {
-
-    }
-
-    fun cards(): Hand? {
-        return null
-    }
+    fun cards(): Hand
 }

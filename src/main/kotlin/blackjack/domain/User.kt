@@ -6,7 +6,7 @@ abstract class User(
     val status: State2,
 ) {
     val hand: Hand
-        get() = status.cards()!!
+        get() = status.cards()
 
     var state = State.HIT
         protected set

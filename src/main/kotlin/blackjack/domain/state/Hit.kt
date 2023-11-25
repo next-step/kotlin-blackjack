@@ -21,15 +21,4 @@ class Hit(
         return Stay(hand)
     }
 
-    override fun receive(card: Card) {
-        hand.receive(card)
-    }
-
-    override fun init(cards: List<Card>) {
-        hand.init(cards)
-    }
-
-    override fun cards(): Hand {
-        return hand
-    }
 }
