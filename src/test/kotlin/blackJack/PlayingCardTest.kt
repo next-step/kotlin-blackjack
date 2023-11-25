@@ -1,8 +1,8 @@
 package blackJack
 
-import CardNumber
-import PlayingCard
-import Suit
+import card.CardNumber
+import card.PlayingCard
+import card.Suit
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 

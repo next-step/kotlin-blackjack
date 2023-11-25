@@ -1,3 +1,5 @@
+package card
+
 enum class CardNumber private constructor(private val point: Int) {
     ACE(1),
     TWO(2),
@@ -13,8 +15,16 @@ enum class CardNumber private constructor(private val point: Int) {
     KING(10);
 
     companion object {
+
+        private val cardNumberList = listOf(
+            ACE, TWO, TREE, FOUR, FIVE, SIX, SEVEN,
+            EIGHT, NINE, JACK, QUEEN, KING,
+        )
+
         fun CardNumber.getPoint(): Int {
             return this.point
         }
+
+        fun getCardNumberList() = cardNumberList
     }
 }

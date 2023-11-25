@@ -1,7 +1,9 @@
-import CardNumber.Companion.getPoint
-import Suit.Companion.getName
+package card
 
-class PlayingCard(val suit: Suit, val cardNumber: CardNumber) {
+import card.CardNumber.Companion.getPoint
+import card.Suit.Companion.getName
+
+class PlayingCard(private val suit: Suit, private val cardNumber: CardNumber) {
     fun getPoint(isMaxAce: Boolean = false): Int {
         val point = cardNumber.getPoint()
         if (isMaxAce && point == ACE_POINT) {

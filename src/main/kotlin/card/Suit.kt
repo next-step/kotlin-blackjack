@@ -1,4 +1,4 @@
-
+package card
 enum class Suit(val koName: String) {
     SPADE("스페이드"),
     HEART("하트"),
@@ -6,8 +6,12 @@ enum class Suit(val koName: String) {
     CLUB("클러버");
 
     companion object {
+
+        private val suitList = listOf(SPADE, HEART, DIAMOND, CLUB)
         fun Suit.getName(): String {
             return this.koName
         }
+
+        fun getSuitList() = suitList
     }
 }
