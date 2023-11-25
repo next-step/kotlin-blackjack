@@ -189,18 +189,18 @@ class PlayerTest : BehaviorSpec({
         When("추가로 Hit 할 수 있는지 없는지를") {
             Then("판단하여 반환한다.") {
                 forAll(
-                    row(listOf(Card(CardSuit.SPADE, CardNumber.TEN), Card(CardSuit.CLUB, CardNumber.TEN)), true),
-                    row(listOf(Card(CardSuit.SPADE, CardNumber.ACE), Card(CardSuit.CLUB, CardNumber.TEN)), true),
+                    row(listOf(Card(CardSuit.SPADE, CardNumber.TEN), Card(CardSuit.CLUB, CardNumber.TEN)), false),
+                    row(listOf(Card(CardSuit.SPADE, CardNumber.ACE), Card(CardSuit.CLUB, CardNumber.TEN)), false),
                     row(
                         listOf(Card(CardSuit.SPADE, CardNumber.TEN), Card(CardSuit.CLUB, CardNumber.TEN), Card(CardSuit.HEART, CardNumber.TWO)),
-                        false
+                        true
                     )
                 ) { cards, expected ->
                     val player = Player("yeongun")
                     cards.forEach {
                         player.hit(it)
                     }
-                    player.canHit() shouldBe expected
+                    player.isFinished() shouldBe expected
                 }
             }
         }

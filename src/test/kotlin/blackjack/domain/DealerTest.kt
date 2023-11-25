@@ -163,16 +163,16 @@ class DealerTest : BehaviorSpec({
         When("추가로 Hit 할 수 있는지 없는지를") {
             Then("판단하여 반환한다.") {
                 forAll(
-                    row(listOf(Card(CardSuit.SPADE, CardNumber.TEN), Card(CardSuit.CLUB, CardNumber.FIVE)), true),
-                    row(listOf(Card(CardSuit.SPADE, CardNumber.TEN), Card(CardSuit.CLUB, CardNumber.SIX)), true),
-                    row(listOf(Card(CardSuit.SPADE, CardNumber.ACE), Card(CardSuit.CLUB, CardNumber.SEVEN)), false),
-                    row(listOf(Card(CardSuit.SPADE, CardNumber.ACE), Card(CardSuit.CLUB, CardNumber.EIGHT)), false),
+                    row(listOf(Card(CardSuit.SPADE, CardNumber.TEN), Card(CardSuit.CLUB, CardNumber.FIVE)), false),
+                    row(listOf(Card(CardSuit.SPADE, CardNumber.TEN), Card(CardSuit.CLUB, CardNumber.SIX)), false),
+                    row(listOf(Card(CardSuit.SPADE, CardNumber.ACE), Card(CardSuit.CLUB, CardNumber.SEVEN)), true),
+                    row(listOf(Card(CardSuit.SPADE, CardNumber.ACE), Card(CardSuit.CLUB, CardNumber.EIGHT)), true),
                 ) { cards, expected ->
                     val dealer = Dealer(FixedDeck())
                     dealer.hit(cards[0])
                     dealer.hit(cards[1])
 
-                    dealer.canHit() shouldBe expected
+                    dealer.isFinished() shouldBe expected
                 }
             }
         }

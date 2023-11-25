@@ -28,7 +28,7 @@ fun main() {
 }
 
 private fun play(dealer: Dealer, player: Player) {
-    while (player.canHit()) {
+    while (!player.isFinished()) {
         hitOrStay(dealer, player)
     }
 }
@@ -46,7 +46,7 @@ private fun hitOrStay(dealer: Dealer, player: Player) {
 }
 
 private fun dealerPlay(dealer: Dealer) {
-    while (dealer.canHit()) {
+    while (!dealer.isFinished()) {
         val card = dealer.draw()
         dealer.hit(card)
         ResultView.printDealerHitMessage()

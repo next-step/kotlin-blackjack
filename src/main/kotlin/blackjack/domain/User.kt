@@ -30,7 +30,7 @@ abstract class User(
         state = state.stay()
     }
 
-    fun canHit(): Boolean {
-        return !state.isFinished()
+    fun isFinished(): Boolean {
+        return state.isFinished()
     }
 }
