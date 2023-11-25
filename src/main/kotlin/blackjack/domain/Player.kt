@@ -12,12 +12,7 @@ class Player(
     }
 
     override fun hit(card: Card) {
-        status.receive(card)
-        state = if (status.getSum() > BLACKJACK) {
-            State.BUST
-        } else {
-            State.HIT
-        }
+        status = status.draw(card)
     }
 
     override fun init(cards: List<Card>) {

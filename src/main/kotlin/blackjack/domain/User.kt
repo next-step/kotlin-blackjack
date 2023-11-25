@@ -3,7 +3,7 @@ package blackjack.domain
 import blackjack.domain.state.State2
 
 abstract class User(
-    val status: State2,
+    var status: State2,
 ) {
     val hand: Hand
         get() = status.cards()
@@ -27,11 +27,11 @@ abstract class User(
     }
 
     fun stand() {
-        state = State.STAND
+        status = status.stay()
     }
 
     fun canHit(): Boolean {
-        return state == State.HIT
+        return !status.isFinished()
     }
 
     companion object {

@@ -1,12 +1,15 @@
 package blackjack.domain
 
+import blackjack.domain.state.Bust
 import blackjack.domain.state.Hit
+import blackjack.domain.state.Stay
 import io.kotest.assertions.throwables.shouldNotThrowAny
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.data.forAll
 import io.kotest.data.row
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.types.shouldBeInstanceOf
 
 class DealerTest : BehaviorSpec({
     Given("17점 이상일 때 카드 한장이 주어진다면") {
@@ -61,23 +64,62 @@ class DealerTest : BehaviorSpec({
         }
     }
 
-    Given("히트할 때마다") {
+    Given("카드를 가져도 총합이 16점이 넘지 않는 카드가 주어지면") {
         When("딜러는") {
-            Then("자신이 가진 상태를 바꾼다.") {
+            Then("Hit 상태를 가진다.") {
                 forAll(
-                    row(Card(CardSuit.SPADE, CardNumber.ACE), State.HIT), // 총합 16점
-                    row(Card(CardSuit.SPADE, CardNumber.TWO), State.STAND), // 총합 17점
-                    row(Card(CardSuit.SPADE, CardNumber.THREE), State.STAND), // 총합 18점
-                    row(Card(CardSuit.SPADE, CardNumber.FOUR), State.STAND), // 총합 19점
-                    row(Card(CardSuit.SPADE, CardNumber.FIVE), State.STAND), // 총합 20점
-                    row(Card(CardSuit.SPADE, CardNumber.SIX), State.STAND), // 총합 21점
-                    row(Card(CardSuit.SPADE, CardNumber.SEVEN), State.BUST), // 총합 22점
-                ) { card, expected ->
+                    row(Card(CardSuit.SPADE, CardNumber.ACE)), // 총합 14점
+                    row(Card(CardSuit.SPADE, CardNumber.TWO)), // 총합 15점
+                    row(Card(CardSuit.SPADE, CardNumber.THREE)), // 총합 16점
+                ) { card ->
                     val dealer = Dealer(FixedDeck())
                     dealer.hit(Card(CardSuit.CLUB, CardNumber.TEN))
-                    dealer.hit(Card(CardSuit.CLUB, CardNumber.FIVE))
+                    dealer.hit(Card(CardSuit.CLUB, CardNumber.THREE))
                     dealer.hit(card)
-                    dealer.state shouldBe expected
+
+                    val status = dealer.status
+                    status.shouldBeInstanceOf<Hit>()
+                }
+            }
+        }
+    }
+
+    Given("카드를 갖게 되면 총합이 17점 이상 21점 이하의 카드가 주어지면") {
+        When("딜러는") {
+            Then("Stay 상태를 가진다.") {
+                forAll(
+                    row(Card(CardSuit.SPADE, CardNumber.FOUR)), // 총합 17점
+                    row(Card(CardSuit.SPADE, CardNumber.FIVE)), // 총합 18점
+                    row(Card(CardSuit.SPADE, CardNumber.SIX)), // 총합 19점
+                    row(Card(CardSuit.SPADE, CardNumber.SEVEN)), // 총합 20점
+                    row(Card(CardSuit.SPADE, CardNumber.EIGHT)), // 총합 21점
+                ) { card ->
+                    val dealer = Dealer(FixedDeck())
+                    dealer.hit(Card(CardSuit.CLUB, CardNumber.TEN))
+                    dealer.hit(Card(CardSuit.CLUB, CardNumber.THREE))
+                    dealer.hit(card)
+
+                    val status = dealer.status
+                    status.shouldBeInstanceOf<Stay>()
+                }
+            }
+        }
+    }
+
+    Given("카드를 갖게 되면 총합이 21점을 초과하는 카드가 주어지면") {
+        When("딜러는") {
+            Then("Bust 상태를 가진다.") {
+                forAll(
+                    row(Card(CardSuit.SPADE, CardNumber.NINE)), // 총합 22점
+                    row(Card(CardSuit.SPADE, CardNumber.TEN)), // 총합 23점
+                ) { card ->
+                    val dealer = Dealer(FixedDeck())
+                    dealer.hit(Card(CardSuit.CLUB, CardNumber.TEN))
+                    dealer.hit(Card(CardSuit.CLUB, CardNumber.THREE))
+                    dealer.hit(card)
+
+                    val status = dealer.status
+                    status.shouldBeInstanceOf<Bust>()
                 }
             }
         }
@@ -95,6 +137,7 @@ class DealerTest : BehaviorSpec({
                     val dealer = Dealer(FixedDeck())
                     dealer.hit(cards[0])
                     dealer.hit(cards[1])
+
                     dealer.canHit() shouldBe expected
                 }
             }

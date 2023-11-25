@@ -1,10 +1,13 @@
 package blackjack.domain
 
+import blackjack.domain.state.Bust
+import blackjack.domain.state.Hit
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.data.forAll
 import io.kotest.data.row
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.types.shouldBeInstanceOf
 
 class PlayerTest : BehaviorSpec({
     Given("이름이 주어지면") {
@@ -104,20 +107,40 @@ class PlayerTest : BehaviorSpec({
         }
     }
 
-    Given("히트할 때마다") {
+    Given("카드를 가져도 총합이 21 이하가 되는 카드를 갖게 되면") {
         When("플레이어는") {
-            Then("자신이 가진 상태를 바꾼다.") {
+            Then("Hit 상태를 가진다.") {
                 forAll(
-                    row(Card(CardSuit.SPADE, CardNumber.ACE), State.HIT), // 총합 20점
-                    row(Card(CardSuit.SPADE, CardNumber.TWO), State.HIT), // 총합 21점
-                    row(Card(CardSuit.SPADE, CardNumber.THREE), State.BUST), // 총합 22점
-                    row(Card(CardSuit.SPADE, CardNumber.FOUR), State.BUST), // 총합 23점
-                ) { card, expected ->
+                    row(Card(CardSuit.SPADE, CardNumber.ACE)), // 총합 19점
+                    row(Card(CardSuit.SPADE, CardNumber.TWO)), // 총합 20점
+                    row(Card(CardSuit.SPADE, CardNumber.THREE)), // 총합 21점
+                ) { card ->
                     val player = Player("yeongun")
                     player.hit(Card(CardSuit.SPADE, CardNumber.TEN))
-                    player.hit(Card(CardSuit.CLUB, CardNumber.NINE))
+                    player.hit(Card(CardSuit.CLUB, CardNumber.EIGHT))
                     player.hit(card)
-                    player.state shouldBe expected
+
+                    val status = player.status
+                    status.shouldBeInstanceOf<Hit>()
+                }
+            }
+        }
+    }
+
+    Given("카드를 가질 경우 총합이 21을 넘는 카드를 갖게 되면") {
+        When("플레이어는") {
+            Then("Bust 상태를 가진다.") {
+                forAll(
+                    row(Card(CardSuit.SPADE, CardNumber.FOUR)), // 총합 22점
+                    row(Card(CardSuit.SPADE, CardNumber.FIVE)), // 총합 23점
+                ) { card ->
+                    val player = Player("yeongun")
+                    player.hit(Card(CardSuit.SPADE, CardNumber.TEN))
+                    player.hit(Card(CardSuit.CLUB, CardNumber.EIGHT))
+                    player.hit(card)
+
+                    val status = player.status
+                    status.shouldBeInstanceOf<Bust>()
                 }
             }
         }
