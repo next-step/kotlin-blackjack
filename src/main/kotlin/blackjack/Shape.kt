@@ -1,6 +1,8 @@
 package blackjack
 
 enum class Shape {
-    DIAMOND
-
+    DIAMOND,
+    CLOVER,
+    HEART,
+    SPADE,
 }
