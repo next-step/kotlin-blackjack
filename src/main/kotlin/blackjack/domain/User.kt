@@ -17,6 +17,10 @@ abstract class User(
         return hand.getSum() > BLACKJACK
     }
 
+    fun isBlackjack(): Boolean {
+        return state == State.BLACKJACK
+    }
+
     fun stand() {
         state = State.STAND
     }
