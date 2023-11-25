@@ -2,7 +2,7 @@ package blackjack.domain
 
 class Dealer(
     private val deck: Deck,
-    hand: Hand = Hand()
+    hand: Hand = Hand(),
 ) : User(hand) {
     override fun hit(card: Card) {
         require(hand.getSum() <= 16) { "딜러는 17점 이상이면 카드를 추가로 받을 수 없습니다." }
@@ -19,7 +19,9 @@ class Dealer(
 
     override fun init(cards: List<Card>) {
         super.init(cards)
-        if (hand.getSum() > 16) {
+        if (hand.getSum() == BLACKJACK) {
+            state = State.BLACKJACK
+        } else if (hand.getSum() > 16) {
             state = State.STAND
         }
     }
