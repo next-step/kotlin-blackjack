@@ -4,6 +4,8 @@ class Cards (
     cards: List<Card>,
 ) {
     private val cards = cards.toMutableList()
+    val values
+        get() = cards.toList()
 
     constructor(vararg cards: Card): this(cards.toList())
 

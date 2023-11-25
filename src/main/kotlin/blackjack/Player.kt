@@ -6,11 +6,12 @@ class Player(
     card2: Card,
 ) {
     private val cards = Cards(card1, card2)
+    val hands
+        get() = cards.values
 
     fun obtain(card: Card) {
         require(isObtainable()) { "카드를 획득할 수 없습니다." }
         cards.add(card)
-
     }
 
     fun sumOfCards(): Int {
