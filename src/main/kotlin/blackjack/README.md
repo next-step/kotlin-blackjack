@@ -1,0 +1,37 @@
+# README
+
+Top Down 형식으로 객체 역할과 책임 정의
+- [x] `Nickname` 객체를 만든다.
+  - [x] `Nickname`은 3자 이상 10자 이하의 문자열을 가진다.
+- [x] `Suit` 객체를 만든다.
+    - [x] `Suit`는 `Heart`, `Diamond`, `Spade`, `Clubs`를 가진다.
+- [x] `Denomination` 객체를 만든다.
+    - [x] `Denomination`는 `Ace`, `Two`, `Three`, `Four`, `Five`, `Six`, `Seven`, `Eight`, `Nine`, `Ten`, `Jack`, `Queen`, `King`를 가진다.
+    - [x] `Denomination`는 `Ace`를 가지고 있다면 `Ace`의 숫자를 1 또는 11로 계산할 수 있다.
+- [x] `Card` 객체를 만든다.
+  - [x] `Card`는 `Suit`와 `Rank`를 가진다.
+- [X] `Cards` 일급 컬렉션 객체를 만든다.
+    - [x] `Cards`는 `List<Card>`를 가진다.
+    - [x] `Card`가 추가되었을 경우 새로운 `Cards` 객체를 생성해 불변성을 보장한다.
+    - [x] `Cards`는 `Card`를 뽑을 수 있다.
+    - [x] `Cards`는 `Card`가 모두 소진되었을 경우 IllegalStateException을 발생시킨다.
+- [x] `Deck` 객체를 만든다.
+  - [x] `Deck`은 `Card`를 가진다.
+  - [x] `Deck`은 `Card`를 뽑는다.
+  - [x] `Deck`이 초기화되었을 경우 52 조합의 `Card`를 생성한다.
+- [x] `PlayerDecision` 객체를 만든다.
+  - [x] `PlayerDecision`은 `Hit`, `Stand`를 가진다.
+- [x] `Player` 객체를 만든다.
+  - [x] `Player`는 `Card`를 가진다.
+  - [x] `Player`는 `Card`를 받는다.
+  - [x] `Player`는 `Card`를 받을 때 `PlayerDecision`을 할 수 있다.
+  - [x] `Player`는 `Bust` 상황에서 `Hit`에서 `Stand`로 `Decision`을 변경해야 한다. 
+  - [x] `Player`는 가진 카드로부터 점수를 계산할 수 있다.  
+- [x] `Players` 객체를 만든다.
+  - [x] `Players`는 `List<Player>`를 가지는 일급 컬렉션이다.
+  - [x] `Hit` 결정을 한 `Player`들을 반환한다.
+- [x] BlackjackGame 컨트롤러 객체를 생성한다.
+  - [x] `BlackjackGame`은 `Dealer`, `Players`를 가진다.
+  - [x] 게임 초기화시 `Dealer`와 `Player`와 `Deck`을 세팅한다.
+  - [x] 게임이 시작되면 `Player`에게 두장의 카드를 제공하고, 게임을 진행한다. 이후 `Player`별 결과를 반환한다.
+- [x] 입출력 조건에 맞게 `InputView`, `OutputView`를 생성한다.
