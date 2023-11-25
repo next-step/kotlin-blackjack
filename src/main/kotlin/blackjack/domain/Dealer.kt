@@ -18,10 +18,8 @@ class Dealer(
 
     override fun init(cards: List<Card>) {
         super.init(cards)
-        if (status.getSum() == BLACKJACK) {
-            state = State.BLACKJACK
-        } else if (status.getSum() > 16) {
-            state = State.STAND
+        if (status.getSum() in 17..20) {
+            status = status.stay()
         }
     }
 

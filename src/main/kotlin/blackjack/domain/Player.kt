@@ -14,11 +14,4 @@ class Player(
     override fun hit(card: Card) {
         status = status.draw(card)
     }
-
-    override fun init(cards: List<Card>) {
-        super.init(cards)
-        if (status.getSum() == BLACKJACK) {
-            state = State.BLACKJACK
-        }
-    }
 }

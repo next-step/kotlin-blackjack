@@ -15,7 +15,7 @@ abstract class User(
 
     open fun init(cards: List<Card>) {
         require(cards.size == 2) { "처음엔 카드 2장만 받을 수 있습니다." }
-        status.init(cards)
+        status = status.init(cards)
     }
 
     fun isBust(): Boolean {
@@ -23,7 +23,7 @@ abstract class User(
     }
 
     fun isBlackjack(): Boolean {
-        return state == State.BLACKJACK
+        return status.isBlackjack()
     }
 
     fun stand() {

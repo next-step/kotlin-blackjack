@@ -11,8 +11,13 @@ abstract class Started(
         return hand.getSum()
     }
 
-    override fun init(cards: List<Card>) {
+    override fun init(cards: List<Card>): State2 {
         hand.init(cards)
+        return if (getSum() == 21) {
+            Blackjack(hand)
+        } else {
+            Hit(hand)
+        }
     }
 
     override fun cards(): Hand {

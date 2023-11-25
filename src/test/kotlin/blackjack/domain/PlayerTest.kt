@@ -1,5 +1,6 @@
 package blackjack.domain
 
+import blackjack.domain.state.Blackjack
 import blackjack.domain.state.Bust
 import blackjack.domain.state.Hit
 import io.kotest.assertions.throwables.shouldThrow
@@ -44,17 +45,33 @@ class PlayerTest : BehaviorSpec({
         }
     }
 
-    Given("처음 카드 2장을 받았을 때") {
-        When("합이 21이라면") {
-            Then("상태를 BLACKJACK으로 바꾼다.") {
+    Given("처음 카드 2장을 받았을 때 총합이 20점 이하면") {
+        When("플레이어 상태는") {
+            Then("Hit 상태를 가진다.") {
                 forAll(
-                    row(listOf(Card(CardSuit.HEART, CardNumber.TEN), Card(CardSuit.HEART, CardNumber.ACE)), State.BLACKJACK),
-                    row(listOf(Card(CardSuit.HEART, CardNumber.TEN), Card(CardSuit.HEART, CardNumber.SIX)), State.HIT),
-                ) { cards, expected ->
+                    row(listOf(Card(CardSuit.HEART, CardNumber.TEN), Card(CardSuit.SPADE, CardNumber.SEVEN))), // 총합 17점
+                    row(listOf(Card(CardSuit.HEART, CardNumber.TEN), Card(CardSuit.SPADE, CardNumber.EIGHT))), // 총합 18점
+                    row(listOf(Card(CardSuit.HEART, CardNumber.TEN), Card(CardSuit.SPADE, CardNumber.NINE))), // 총합 19점
+                    row(listOf(Card(CardSuit.HEART, CardNumber.TEN), Card(CardSuit.SPADE, CardNumber.TEN))), // 총합 20점
+                ) { cards ->
                     val player = Player("yeongun")
                     player.init(cards)
-                    player.state shouldBe expected
+
+                    val status = player.status
+                    status.shouldBeInstanceOf<Hit>()
                 }
+            }
+        }
+    }
+
+    Given("처음 카드 2장을 받았을 때 총합이 21점이면") {
+        val cards = listOf(Card(CardSuit.HEART, CardNumber.TEN), Card(CardSuit.SPADE, CardNumber.ACE))
+        When("플레이어 상태는") {
+            val player = Player("yeongun")
+            player.init(cards)
+            Then("Blackjack 상태를 가진다.") {
+                val status = player.status
+                status.shouldBeInstanceOf<Blackjack>()
             }
         }
     }
