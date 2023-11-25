@@ -1,18 +1,18 @@
 package blackjack
 
 fun main() {
-    val cardDeck = deck().iterator()
+    val cardDeck = deck()
     val names = InputView.inputNames()
-    val players = names.map { Player(it, cardDeck.next(), cardDeck.next()) }
+    val players = names.map { Player(it, cardDeck) }
 
     OutputView.printPlayersCards(players)
-    players.forEach { obtainCard(it, cardDeck) }
+    players.forEach { obtainCard(it) }
     OutputView.printPlayerResult(players)
 }
 
-private fun obtainCard(player: Player, cardDeck: Iterator<Card>) {
+private fun obtainCard(player: Player) {
     while (isObtainCard(player)) {
-        player.obtain(cardDeck.next())
+        player.obtain()
         OutputView.printPlayerCards(player)
     }
 }
@@ -21,10 +21,11 @@ private fun isObtainCard(player: Player): Boolean {
     return player.isObtainable() && InputView.inputIsObtainCard(player.name)
 }
 
-private fun deck(): List<Card> {
+private fun deck(): Iterator<Card> {
     return (0 until 4)
         .flatMap { cards() }
         .shuffled()
+        .iterator()
 }
 
 private fun cards(): List<Card> {

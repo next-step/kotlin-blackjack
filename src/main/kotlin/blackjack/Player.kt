@@ -2,16 +2,15 @@ package blackjack
 
 class Player(
     val name: String,
-    card1: Card,
-    card2: Card,
+    private val deck: Iterator<Card>,
 ) {
-    private val cards = Cards(card1, card2)
+    private val cards = Cards(deck.next(), deck.next())
     val hands
         get() = cards.values
 
-    fun obtain(card: Card) {
+    fun obtain() {
         require(isObtainable()) { "카드를 획득할 수 없습니다." }
-        cards.add(card)
+        cards.add(deck.next())
     }
 
     fun sumOfCards(): Int {
