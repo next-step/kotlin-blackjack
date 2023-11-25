@@ -18,7 +18,7 @@ abstract class User(
     }
 
     fun isBust(): Boolean {
-        return state.getSum() > BLACKJACK
+        return state.getSum() > 21
     }
 
     fun isBlackjack(): Boolean {
@@ -31,9 +31,5 @@ abstract class User(
 
     fun canHit(): Boolean {
         return !state.isFinished()
-    }
-
-    companion object {
-        const val BLACKJACK = 21
     }
 }
