@@ -7,10 +7,6 @@ abstract class Started(
     val hand: Hand = Hand(),
 ) : State {
 
-    override fun getSum(): Int {
-        return hand.getSum()
-    }
-
     override fun init(cards: List<Card>): State {
         hand.init(cards)
         return if (getSum() == 21) {
@@ -18,6 +14,10 @@ abstract class Started(
         } else {
             Hit(hand)
         }
+    }
+
+    override fun getSum(): Int {
+        return hand.getSum()
     }
 
     override fun cards(): Hand {
