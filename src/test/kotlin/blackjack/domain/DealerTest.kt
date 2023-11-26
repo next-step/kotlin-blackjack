@@ -3,6 +3,7 @@ package blackjack.domain
 import blackjack.domain.Dealer.Companion.DEALER_OPEN_CARD_NUM
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertAll
 
 class DealerTest {
 
@@ -34,16 +35,24 @@ class DealerTest {
     fun `딜러용 손패 점수 계산으로 카드를 더 뽑을 수 있는지 반환`() {
         val player = Dealer()
 
-        // 16점 이하 (11점)
-        player.hand.add(Card(CardSuitInfo.SPADE, CardNumberInfo.ACE))
-        assertThat(player.canDrawMore()).isTrue()
+        assertAll(
+            // 16점 이하 (11점)
+            {
+                player.hand.add(Card(CardSuitInfo.SPADE, CardNumberInfo.ACE))
+                assertThat(player.canDrawMore()).isTrue()
+            },
 
-        // 16점 이하 (16점)
-        player.hand.add(Card(CardSuitInfo.SPADE, CardNumberInfo.FIVE))
-        assertThat(player.canDrawMore()).isTrue()
+            // 16점 이하 (16점)
+            {
+                player.hand.add(Card(CardSuitInfo.SPADE, CardNumberInfo.FIVE))
+                assertThat(player.canDrawMore()).isTrue()
+            },
 
-        // 16점 초과 (18점)
-        player.hand.add(Card(CardSuitInfo.SPADE, CardNumberInfo.TWO))
-        assertThat(player.canDrawMore()).isFalse()
+            // 16점 초과 (18점)
+            {
+                player.hand.add(Card(CardSuitInfo.SPADE, CardNumberInfo.TWO))
+                assertThat(player.canDrawMore()).isFalse()
+            }
+        )
     }
 }
