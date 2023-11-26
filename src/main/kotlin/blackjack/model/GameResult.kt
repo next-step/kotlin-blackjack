@@ -1,7 +1,6 @@
 package blackjack.model
 
 class ResultValue(val holder: CardHolder, val winLoseDraw: WinLoseDraw)
-class WinLoseDraw(var win: Int = 0, var lose: Int = 0, var draw: Int = 0)
 class GameResult(private val dealer: CardHolder.GameDealer, private val players: Players) {
     private val result =
         listOf(dealer, *players.playerList.toTypedArray())
@@ -16,7 +15,8 @@ class GameResult(private val dealer: CardHolder.GameDealer, private val players:
 
     private fun evaluateResult(player: CardHolder.Player) {
         when {
-            dealer.cardHand.totalScore > CardHand.BLACKJACK -> playerWin(player)
+            player.isBust -> dealerWin(player)
+            dealer.isBust -> playerWin(player)
             player.cardHand.totalScore > dealer.cardHand.totalScore -> playerWin(player)
             player.cardHand.totalScore < dealer.cardHand.totalScore -> dealerWin(player)
             else -> draw(player)

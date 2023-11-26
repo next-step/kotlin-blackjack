@@ -1,9 +1,6 @@
 package blackjack.view
 
-import blackjack.model.CardHand
-import blackjack.model.CardHolder
-import blackjack.model.ResultValue
-import blackjack.model.Role
+import blackjack.model.*
 
 object OutputView {
     fun renderInitMessage(playerNames: List<String>) {
@@ -35,25 +32,27 @@ object OutputView {
     fun renderResult(holders: List<CardHolder>) {
         holders.forEach {
             renderPlayer(it, ::print)
-            println("- 결과: ${it.cardHand.totalScore}")
+            println("- 결과: ${it.cardHand.totalScore} ${if(it.isBust)"(버스트)" else "" }")
+        }
+        println("## 최종 승패")
+        holders.forEach {
+            renderResolved(it)
         }
     }
 
-    fun renderResolved(resolvedResult: Map<Int, ResultValue>) {
-        println("## 최종 승패")
-        resolvedResult.entries.forEach { (_, value) ->
-            if (value.holder.role == Role.DEALER) {
-                println("${value.holder.name}: ${value.winLoseDraw.win}승 ${value.winLoseDraw.lose}패 ${value.winLoseDraw.draw}무")
-            } else {
-                val resultString = when {
-                    value.winLoseDraw.win > 0 -> "승"
-                    value.winLoseDraw.lose > 0 -> "패"
-                    value.winLoseDraw.draw > 0 -> "무"
-                    else -> "판정 불가"
-                }
-                println("${value.holder.name}: $resultString")
+    private fun renderResolved(it: CardHolder) {
+        if (it.role == Role.DEALER) {
+            println("딜러: ${it.winLoseDraw.win}승 ${it.winLoseDraw.lose}패 ${it.winLoseDraw.draw}무")
+        } else {
+            val resultString = when {
+                it.winLoseDraw.win > 0 -> "승"
+                it.winLoseDraw.lose > 0 -> "패"
+                it.winLoseDraw.draw > 0 -> "무"
+                else -> "판정 불가"
             }
+            println("${it.name}: $resultString")
         }
+
     }
 
     private fun getCardString(cardHand: CardHand): String = cardHand.cards.joinToString(", ") {

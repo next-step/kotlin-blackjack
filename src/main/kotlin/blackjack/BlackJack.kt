@@ -26,20 +26,23 @@ class BlackJack {
         }
         playGameOfDealer(gameDealer, cardDispenser)
 
-
         /*
         * 결과 도출 및 출력
         * */
+        players.playerList.forEach{
+            Judge.resolve(gameDealer, it)
+        }
+
         OutputView.renderResult(listOf(gameDealer) + players.playerList)
-        OutputView.renderResolved(
-            GameResult(gameDealer, players).resolveGame()
-        )
     }
 
     private fun playGameOfEachPlayer(player: CardHolder.Player, cardDispenser: CardDispenser) {
-        while (!player.cardHand.bust && player.moreCardOrNot(InputView::askGetCardMore)) {
+        while (!player.isBust && player.hitOrNot(InputView::askGetCardMore)) {
             player.cardHand.addCard(cardDispenser.getCard())
             OutputView.renderPlayer(player, ::println)
+            if(player.isBust){
+                println("${player.name}는 버스트하여 더이상 게임에 참여할 수 없습니다")
+            }
         }
     }
 

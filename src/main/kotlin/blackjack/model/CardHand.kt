@@ -5,8 +5,6 @@ class CardHand(cardDispenser: CardDispenser) {
         private set
     val totalScore: Int
         get() = getTotalHandScore()
-    val bust: Boolean
-        get() = getCardBust()
 
     fun addCard(card: Card) {
         val newCards = cards.toMutableList()
