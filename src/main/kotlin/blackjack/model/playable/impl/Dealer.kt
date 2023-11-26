@@ -36,8 +36,8 @@ class Dealer(
         return PlayableReaction.STAND
     }
 
-    override fun result(other: Playable): PlayableResult {
-        return this.score() vs other.score()
+    override fun result(playable: Playable): PlayableResult {
+        return this.score() vs playable.score()
     }
 
     override fun status(): BlackJackStatus {

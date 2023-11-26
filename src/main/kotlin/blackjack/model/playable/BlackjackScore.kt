@@ -2,7 +2,7 @@ package blackjack.model.playable
 
 @JvmInline
 value class BlackjackScore(
-    private val value: Int
+    val value: Int
 ) {
     infix fun vs(other: BlackjackScore): PlayableResult {
         if (this.value == other.value) {

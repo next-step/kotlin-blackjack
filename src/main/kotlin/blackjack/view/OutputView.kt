@@ -1,6 +1,7 @@
 package blackjack.view
 
 import blackjack.model.Participants
+import blackjack.model.Players
 import blackjack.model.playable.PlayableReaction
 import blackjack.model.playable.impl.Dealer
 import blackjack.model.playable.impl.Player
@@ -31,7 +32,11 @@ object OutputView {
 
     fun presentResult(participants: Participants) {
         presentDealerResult(participants.dealer.dealerResult(participants.players))
-        participants.players.values.forEach { presentPlayerResult(it, participants.dealer) }
+        presentPlayersResult(participants.dealer, participants.players)
+    }
+
+    private fun presentPlayersResult(dealer: Dealer, players: Players) {
+        players.values.forEach { presentPlayerResult(it, dealer) }
     }
 
     private fun presentPlayerResult(player: Player, dealer: Dealer) {
@@ -60,7 +65,7 @@ private fun Participants.presentDealer(): String {
 }
 
 private fun Participants.presentDealerWithScore(): String {
-    return "${this.dealer.presentDealers()} - 결과: ${this.dealer.score()}"
+    return "${this.dealer.presentDealers()} - 결과: ${this.dealer.score().value}"
 }
 
 private fun Participants.presentPlayerWithScore(): String {
