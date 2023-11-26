@@ -22,10 +22,11 @@ object BlackjackUtil {
     fun isBust(score: Int): Boolean = score > BLACKJACK_SCORE
 
     fun winAgainstDealer(playerScore: Int, dealerScore: Int): Boolean? {
-        if (isBust(dealerScore)) return true
-        if (isBust(playerScore)) return false
-        if (playerScore == dealerScore) return null
-
-        return playerScore > dealerScore
+        return when {
+            isBust(dealerScore) -> true
+            isBust(playerScore) -> false
+            playerScore == dealerScore -> null
+            else -> playerScore > dealerScore
+        }
     }
 }
