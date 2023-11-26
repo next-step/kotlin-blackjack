@@ -25,7 +25,7 @@ fun main() {
 
     // 초기 카드 분배결과 출력
     printInitialSupply(players, INITIAL_CARD_NUM)
-    players.forEach { printUserCardInfo(it, true) }
+    players.forEach { printUserCardInfo(it.name, it.initialCards()) }
 
     // 각 사용자의 추가 draw 진행
     players.filter { it !is Dealer }
@@ -63,11 +63,11 @@ private fun drawWhileUserWants(player: Player, dealer: Dealer) {
         isPrinted = true
 
         dealer.supplyCard(player)
-        printUserCardInfo(player)
+        printUserCardInfo(player.name, player.hand.toList())
     }
 
     // 추가 draw로 인한 현황 출력이 없었다면 한번 출력
     if (!isPrinted) {
-        printUserCardInfo(player)
+        printUserCardInfo(player.name, player.hand.toList())
     }
 }

@@ -10,14 +10,8 @@ fun printInitialSupply(players: List<Player>, cardNum: Int) {
     println("${players.joinToString(", ") { it.name }}에게 ${cardNum}장씩 나누었습니다.")
 }
 
-fun printUserCardInfo(player: Player, forInitial: Boolean = false) {
-    val cards = if (forInitial) {
-        player.initialCards()
-    } else {
-        player.hand.toList()
-    }
-
-    println(playerCardStatus(player.name, cards))
+fun printUserCardInfo(name: String, cards: List<Card>) {
+    println(playerCardStatus(name, cards))
 }
 
 private fun playerCardStatus(name: String, cards: List<Card>): String {
