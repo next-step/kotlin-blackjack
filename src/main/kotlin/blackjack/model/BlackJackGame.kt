@@ -3,7 +3,6 @@ package blackjack.model
 import blackjack.model.pack.Pack
 import blackjack.model.playblestrategy.PlayingStrategy
 import blackjack.model.playblestrategy.impl.DealerStrategy
-import blackjack.view.InputView
 import blackjack.view.OutputView
 
 class BlackJackGame(
@@ -28,6 +27,6 @@ class BlackJackGame(
     }
 
     private fun playersTurn(pack: Pack) {
-        participants.players.playingTurn(InputView.askHit(), pack)
+        participants.players.playingTurn(pack)
     }
 }
