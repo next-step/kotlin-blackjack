@@ -2,6 +2,7 @@ package blackjack.model.playable.impl
 
 import blackjack.model.card.CardFixture
 import blackjack.model.pack.impl.ShuffledPack
+import blackjack.model.playable.BlackjackScore
 import blackjack.model.playblestrategy.impl.DealerStrategy
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.collections.shouldContain
@@ -13,7 +14,7 @@ class DealerTest : StringSpec({
         val dealer = Dealer(
             CardFixture.makeCards(CardFixture.king, CardFixture.six)
         )
-        dealer.playing(DealerStrategy(16), ShuffledPack)
+        dealer.playing(DealerStrategy(BlackjackScore(16)), ShuffledPack)
 
         dealer.cards.cards shouldContain CardFixture.king
         dealer.cards.cards shouldContain CardFixture.six
@@ -24,7 +25,7 @@ class DealerTest : StringSpec({
         val dealer = Dealer(
             CardFixture.makeCards(CardFixture.king, CardFixture.seven)
         )
-        dealer.playing(DealerStrategy(17), ShuffledPack)
+        dealer.playing(DealerStrategy(BlackjackScore(17)), ShuffledPack)
 
         dealer.cards.cards shouldContain CardFixture.king
         dealer.cards.cards shouldContain CardFixture.seven

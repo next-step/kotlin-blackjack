@@ -17,7 +17,7 @@ class Players(
     }
 
     fun isGameOver(): Boolean {
-        return values.any { Referee.isBurst(it) }
+        return values.any { it.isBurst() }
     }
 
     fun count(): Int {
