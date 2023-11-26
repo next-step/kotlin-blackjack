@@ -20,7 +20,11 @@ class BlackjackGame(private val inputView: InputView, private val outputView: Ou
 
     private fun initializeGame() {
         val playerNames = inputView.readPlayerNames()
-        playerNames.forEach { addPlayer(it) }
+        playerNames.forEach {
+            val player = Player(it)
+            player.bettingAmount = inputView.readBettingAmount(it)
+            players.add(player)
+        }
         dealInitialCards()
         outputView.showInitialCards(players, dealer)
     }

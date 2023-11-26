@@ -7,6 +7,14 @@ enum class GameResult {
     LOSE,
     DRAW;
 
+    fun calculateProfit(bettingAmount: Int): Int {
+        return when (this) {
+            WIN -> bettingAmount * 2
+            LOSE -> -bettingAmount
+            DRAW -> 0
+        }
+    }
+
     companion object {
         fun determineForResultOfPlayer(playerTotalScore: Int, dealerTotalScore: Int): GameResult {
             return when {
