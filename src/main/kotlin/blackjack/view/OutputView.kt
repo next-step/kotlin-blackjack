@@ -1,6 +1,7 @@
 package blackjack.view
 
 import blackjack.model.Participants
+import blackjack.model.playable.PlayableReaction
 import blackjack.model.playable.impl.Dealer
 import blackjack.model.playable.impl.Player
 import blackjack.model.result.DealerResult
@@ -55,6 +56,13 @@ object OutputView {
 
     private fun hasDraw(dealerResult: DealerResult): Boolean {
         return dealerResult.drawingCount > 0
+    }
+
+    fun presentDealerAction(playableReaction: PlayableReaction) {
+        when (playableReaction) {
+            PlayableReaction.HIT -> println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
+            PlayableReaction.STAND -> println("딜러는 17이상이라 카드를 받지 않았습니다.")
+        }
     }
 }
 

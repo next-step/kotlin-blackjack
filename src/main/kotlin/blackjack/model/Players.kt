@@ -16,8 +16,9 @@ class Players(
         values.forEach { it.dealing(pack) }
     }
 
-    fun isGameOver(): Boolean {
-        return values.any { it.isBurst() }
+    fun hasAnyAlivePlayer(): Boolean {
+        val burstPlayers: List<Boolean> = values.map { it.isBurst() }.toList()
+        return !burstPlayers.contains(false)
     }
 
     fun count(): Int {

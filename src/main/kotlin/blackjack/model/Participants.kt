@@ -14,7 +14,7 @@ class Participants(
     }
 
     private fun isGameOver(): Boolean {
-        return players.isGameOver() || dealer.isBurst()
+        return players.hasAnyAlivePlayer() || dealer.isBurst()
     }
 
     fun isContinue(): Boolean {
