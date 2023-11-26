@@ -1,5 +1,6 @@
 package blackjack.model.playable
 
+import blackjack.model.BlackJackStatus
 import blackjack.model.pack.Pack
 import blackjack.model.playblestrategy.PlayingStrategy
 
@@ -8,5 +9,5 @@ interface Playable {
     fun dealing(pack: Pack)
     fun playing(playingStrategy: PlayingStrategy, pack: Pack): PlayableReaction
     fun result(playable: Playable): PlayableResult
-    fun isBurst(): Boolean
+    fun isAlive(): BlackJackStatus
 }

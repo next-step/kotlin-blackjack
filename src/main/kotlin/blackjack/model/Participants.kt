@@ -13,12 +13,8 @@ class Participants(
         dealer.dealing(pack)
     }
 
-    private fun isGameOver(): Boolean {
-        return players.hasAnyAlivePlayer() || dealer.isBurst()
-    }
-
     fun isContinue(): Boolean {
-        return !isGameOver()
+        return players.hasAnyAlivePlayer() && dealer.isNotBurst()
     }
 
     fun count(): Int {

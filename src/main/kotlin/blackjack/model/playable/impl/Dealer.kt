@@ -1,5 +1,6 @@
 package blackjack.model.playable.impl
 
+import blackjack.model.BlackJackStatus
 import blackjack.model.Players
 import blackjack.model.card.Cards
 import blackjack.model.pack.Pack
@@ -39,11 +40,18 @@ class Dealer(
         return this.score() vs other.score()
     }
 
-    override fun isBurst(): Boolean {
-        return this.score().isBurst()
+    override fun isAlive(): BlackJackStatus {
+        if (this.score().isBurst()) {
+            return BlackJackStatus.DIE
+        }
+        return BlackJackStatus.ALIVE
     }
 
     fun dealerResult(players: Players): DealerResult {
         return DealerResult.of(players.values.map { this.result(it) }, this.score())
+    }
+
+    fun isNotBurst(): Boolean {
+        return !this.score().isBurst()
     }
 }
