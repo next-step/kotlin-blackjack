@@ -30,27 +30,27 @@ class BlackjackUtilTest {
     }
 
     @ParameterizedTest
-    @ValueSource(ints = [1, 21, 22])
+    @ValueSource(ints = [2, 21, 22])
     fun `딜러가 bust인 경우 항상 승리한다`(userScore: Int) {
         val dealerScore = 22
         assertThat(winAgainstDealer(userScore, dealerScore)).isTrue()
     }
 
     @ParameterizedTest
-    @ValueSource(ints = [1, 21])
+    @ValueSource(ints = [2, 21])
     fun `딜러가 bust가 아니면 bust된 유저는 항상 패배한다`(dealerScore: Int) {
         val userScore = 22
         assertThat(winAgainstDealer(userScore, dealerScore)).isFalse()
     }
 
     @ParameterizedTest
-    @ValueSource(ints = [1, 21])
+    @ValueSource(ints = [2, 21])
     fun `유저, 딜러 중 bust가 없을시 동점이면 무승부 처리한다`(score: Int) {
         assertThat(winAgainstDealer(score, score)).isNull()
     }
 
     @ParameterizedTest
-    @CsvSource(value = ["21,1,true", "1,21,false"])
+    @CsvSource(value = ["3,2,true", "2,3,false"])
     fun `유저, 딜러 중 bust가 없을시 높은점수가 승리한다`(userScore: Int, dealerScore: Int, expected: Boolean) {
         assertThat(winAgainstDealer(userScore, dealerScore)).isEqualTo(expected)
     }
