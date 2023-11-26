@@ -41,9 +41,6 @@ object OutputView {
         }
     }
 
-    private fun presentPlayerResult(player: Player, dealer: Dealer) {
-    }
-
     private fun presentDealerResult(dealerResult: DealerResult) {
         println("딜러 ${dealerResult.winningCount}승 ${dealerResult.drawingCount}무 ${dealerResult.drawingCount}패")
     }
