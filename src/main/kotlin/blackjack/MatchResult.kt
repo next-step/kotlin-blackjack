@@ -15,10 +15,7 @@ enum class MatchResult(
 
     companion object {
         fun of(player: GameParticipantPlayer, dealer: GameParticipantDealer): MatchResult =
-            if (player.isBust) LOSS
-            else if (player.isBlackjack()) BLACKJACK
-            else if (dealer.isBust) WIN
-            else MatchResult.values().find { it.compare(player, dealer) }
+            MatchResult.values().find { it.compare(player, dealer) }
                 ?: throw RuntimeException()
     }
 }

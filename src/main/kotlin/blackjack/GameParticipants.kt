@@ -7,11 +7,16 @@ data class GameParticipants(
     val participants = players + dealer
 
     fun calcMatchResult(): GameParticipantResults {
-        return GameParticipantResults(compareScore())
+        val gameParticipantResults = players.map { player ->
+            val matchResult = compareScore(player, dealer)
+            GameParticipantPlayerResult(player.name, matchResult, player.betAmount)
+        }
+        return GameParticipantResults(gameParticipantResults)
     }
 
-    private fun compareScore(): List<GameParticipantPlayerResult> =
-        players.map {
-            GameParticipantPlayerResult(it.name, MatchResult.of(it, dealer), it.betAmount)
-        }
+    private fun compareScore(player: GameParticipantPlayer, dealer: GameParticipantDealer): MatchResult =
+        if (player.isBust || dealer.isBlackjack()) MatchResult.LOSS
+        else if (player.isBlackjack()) MatchResult.BLACKJACK
+        else if (dealer.isBust) MatchResult.WIN
+        else MatchResult.of(player, dealer)
 }
