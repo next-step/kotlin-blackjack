@@ -10,7 +10,7 @@ object InputView {
         return validateInputPlayer(readln())
     }
 
-    fun inputBettingAmount(name: String): Int {
+    fun inputBettingAmount(name: String): Double {
         println("\n${name}의 배팅 금액은?")
         return validateInputAmount(readln())
     }
@@ -26,9 +26,9 @@ object InputView {
         return result
     }
 
-    private fun validateInputAmount(input: String): Int {
-        require(input.toInt() > 0) { "배팅 금액은 0원 이상입니다." }
-        return input.toInt()
+    private fun validateInputAmount(input: String): Double {
+        require(input.toInt() >= 0) { "배팅 금액은 0원 이상입니다." }
+        return input.toDouble()
     }
 
     private fun validateChoice(choice: String): Boolean {
