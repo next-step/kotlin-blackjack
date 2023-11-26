@@ -4,9 +4,9 @@ import blackjack.domain.Player
 import blackjack.domain.Players
 
 object ResultView {
-    fun printPlayerStates(players: Players, initialDealSize: Int) {
+    fun printPlayerStates(players: Players, size: Int) {
         val playerNames = players.getNames().joinToString(",")
-        println("\n${playerNames}에게 ${initialDealSize}장의 카드를 나누었습니다.")
+        println("\n${playerNames}에게 ${size}장의 카드를 나누었습니다.")
         players.players.forEach {
             printPlayerCards(it)
         }
