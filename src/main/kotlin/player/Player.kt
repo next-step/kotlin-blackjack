@@ -2,7 +2,7 @@ package player
 
 import card.PlayingCard
 
-class Player {
+class Player(private val name: String) {
 
     private var _status = Status.PLAYING
     val status: Status
@@ -19,4 +19,6 @@ class Player {
     fun saveCard(card: PlayingCard) {
         _cardList.add(card)
     }
+
+    fun getName() = name
 }

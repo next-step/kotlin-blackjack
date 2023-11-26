@@ -9,6 +9,15 @@ class BlackjackGame(private val cardPack: CardPack, private val playerList: List
     init {
         validateCardPack()
         validatePlayer()
+        playerList.forEach {
+            initCardSetting(it)
+        }
+    }
+
+    private fun initCardSetting(player: Player) {
+        repeat(2) {
+            player.saveCard(hit())
+        }
     }
 
     fun hit(): PlayingCard {

@@ -13,7 +13,7 @@ class PlayerTest {
         // given :
 
         // when : 플레이어가 생성될 때
-        val player = Player()
+        val player = Player("OYJ")
         val actual = player.status
 
         // then : 초기 상태는  PLAYING이다.
@@ -24,7 +24,7 @@ class PlayerTest {
     @Test
     fun `플에이어가 생성되고, 카드 받기가 종료될 때, 플에이어 상태는 STAND가 된다`() {
         // given : 플레이어가 생성된다.
-        val player = Player()
+        val player = Player("OYJ")
 
         // when : 플레이어가 카드 받기를 멈춘다.
         player.hitDone()
@@ -38,7 +38,7 @@ class PlayerTest {
     @Test
     fun `플레이어와 카드팩이 생성되고, 플레이어가 카드를 받을 때, 받은 카드는 저장한다`() {
         // given : 플레이어와 카드팩을 생성한다.
-        val player = Player()
+        val player = Player("OYJ")
         val cardPack = CardPack.getCardPack()
         val card = cardPack.cardList[0]
 
