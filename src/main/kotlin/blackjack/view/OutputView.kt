@@ -31,7 +31,7 @@ object OutputView {
 
     fun presentResult(participants: Participants) {
         presentDealerResult(participants.dealer.dealerResult(participants.players))
-        participants.players.values.forEach { it -> presentPlayerResult(it, participants.dealer) }
+        participants.players.values.forEach { presentPlayerResult(it, participants.dealer) }
     }
 
     private fun presentPlayerResult(player: Player, dealer: Dealer) {
