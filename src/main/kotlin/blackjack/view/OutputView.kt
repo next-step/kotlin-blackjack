@@ -21,10 +21,10 @@ object OutputView {
 
     fun printResult(dealer: Dealer, players: List<Player>) {
         println()
-        println("딜러 카드 : ${getCard(dealer.cards())} - 결과 : ${dealer.cards.calculateScore()}")
+        println("딜러 카드 : ${getCard(dealer.cards())} - 결과 : ${dealer.score()}")
         players.forEach { player ->
             val card = getCard(player.cards())
-            val totalScore = player.cards.calculateScore()
+            val totalScore = player.score()
             println("${player.name} 카드 : $card - 결과 : $totalScore")
         }
     }
