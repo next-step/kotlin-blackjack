@@ -1,6 +1,7 @@
 package blackjack.model
 
 import blackjack.model.pack.Pack
+import blackjack.model.playblestrategy.impl.ConsoleInputStrategy
 import blackjack.model.playable.impl.Player
 
 class Players(
