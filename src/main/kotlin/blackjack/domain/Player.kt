@@ -2,17 +2,14 @@ package blackjack.domain
 
 class Player(
     val name: String,
+    val cards: PlayerCards = PlayerCards(),
     private var _decision: PlayerDecision = PlayerDecision.HIT
 ) {
-    private var _cards = Cards.from()
-    val cards
-        get() = _cards
-
     val decision
         get() = _decision
 
     fun getCard(card: Card) {
-        _cards = _cards.addCard(card)
+        cards.add(card)
         if (getScore() > Score.BLACKJACK) {
             turnStand()
         }
@@ -28,7 +25,7 @@ class Player(
 
     private fun toScore(): Score {
         return Score(
-            _cards.map { it.denomination }
+            cards.values.map { it.denomination }
         )
     }
 }

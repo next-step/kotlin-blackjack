@@ -7,7 +7,7 @@ import blackjack.view.InputView
 import blackjack.view.OutputView
 
 class BlackjackGame {
-    private val deck = Deck.of()
+    private val deck = Deck()
     private val players = Players(
         InputView.getNicknames().map(::Player)
     )
