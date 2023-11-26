@@ -1,6 +1,7 @@
 package blackjack.model.result
 
 import blackjack.model.playable.BlackjackScore
+import blackjack.model.playable.PlayableResult
 
 data class DealerResult(
     val score: BlackjackScore,
@@ -9,8 +10,13 @@ data class DealerResult(
     val losingCount: Int,
 ) {
     companion object {
-        fun a(): DealerResult {
-            TODO("Not yet implemented")
+        fun of(playerResults: List<PlayableResult>, score: BlackjackScore): DealerResult {
+            return DealerResult(
+                score = score,
+                winningCount = playerResults.count { it == PlayableResult.LOSE },
+                drawingCount = playerResults.count { it == PlayableResult.DRAW },
+                losingCount = playerResults.count { it == PlayableResult.WIN }
+            )
         }
     }
 }

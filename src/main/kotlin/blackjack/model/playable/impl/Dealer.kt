@@ -44,12 +44,6 @@ class Dealer(
     }
 
     fun dealerResult(players: Players): DealerResult {
-        val results = players.values.map { it -> this.result(it) }
-        return DealerResult(
-            score = this.score(),
-            winningCount = results.count { it == PlayableResult.WIN },
-            drawingCount = results.count { it == PlayableResult.DRAW },
-            losingCount = results.count { it == PlayableResult.LOSE }
-        )
+        return DealerResult.of(players.values.map { this.result(it) }, this.score())
     }
 }

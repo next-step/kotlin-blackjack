@@ -1,7 +1,5 @@
 package blackjack.model.playable
 
-import blackjack.model.Referee
-
 @JvmInline
 value class BlackjackScore(
     private val value: Int
@@ -17,10 +15,14 @@ value class BlackjackScore(
     }
 
     fun isBurst(): Boolean {
-        return this.value > Referee.BLACK_JACK_SCORE
+        return this.value > BLACK_JACK_SCORE
     }
 
     operator fun compareTo(other: BlackjackScore): Int {
         return this.value.compareTo(other.value)
+    }
+
+    companion object {
+        private const val BLACK_JACK_SCORE: Int = 21
     }
 }
