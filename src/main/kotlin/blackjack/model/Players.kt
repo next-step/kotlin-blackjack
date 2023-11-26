@@ -33,6 +33,9 @@ class Players(
             if (player.status() == BlackJackStatus.ALIVE) {
                 player.playing(ConsoleInputStrategy(player), pack)
             }
+//            else {
+//                println("   ### [검증용/삭제예정] 플레이어 ${player.name} 은 DIE 상태라 카드를 받을수 있는 기회가 주어지지 않습니다, score=${player.cards.totalScore()}")
+//            }
         }
     }
 
