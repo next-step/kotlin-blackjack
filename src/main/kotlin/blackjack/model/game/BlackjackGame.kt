@@ -44,10 +44,16 @@ class BlackjackGame(
 
     fun result(
         printResult: (Dealer, List<Player>) -> Unit,
-        printMatchResult: (MatchResult) -> Unit
+        printMatchResult: (MatchResult) -> Unit,
+        printBettingResult: (BettingResult) -> Unit,
     ) {
         printResult(dealer, players)
-        printMatchResult(MatchResult.toResult(dealer, players))
+
+        val matchResult = MatchResult.toResult(dealer, players)
+        printMatchResult(matchResult)
+
+        val bettingResult = BettingResult.toResult(matchResult)
+        printBettingResult(bettingResult)
     }
 
     private fun hitOrStay(player: Player, inputPlayerChoice: (String) -> Boolean) {

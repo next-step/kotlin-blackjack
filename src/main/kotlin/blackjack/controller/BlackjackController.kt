@@ -19,7 +19,7 @@ class BlackjackController {
         game.initDraw(OutputView::printInitStatus)
         game.play(InputView::inputPlayerChoice, OutputView::printPlayerCards)
         game.playDealer(OutputView::printDealerPop)
-        game.result(OutputView::printResult, OutputView::printMatchResult)
+        game.result(OutputView::printResult, OutputView::printMatchResult, OutputView::printBettingResult)
     }
 }
 

@@ -1,6 +1,7 @@
 package blackjack.view
 
 import blackjack.model.card.Card
+import blackjack.model.game.BettingResult
 import blackjack.model.game.MatchResult
 import blackjack.model.game.Rank
 import blackjack.model.player.Dealer
@@ -39,6 +40,14 @@ object OutputView {
         println("딜러 : ${dealerResult[Rank.WIN] ?: 0}승 ${dealerResult[Rank.DRAW] ?: 0}무 ${dealerResult[Rank.LOSE] ?: 0}패")
         matchResult.playerResults.forEach {
             println("${it.key.name} : ${it.value.rank}")
+        }
+    }
+
+    fun printBettingResult(bettingResult: BettingResult) {
+        println("\n## 최종 수익")
+        println("딜러 : ${bettingResult.dealerBenefit}")
+        bettingResult.playerBenefits.forEach {
+            println("${it.key.name} : ${it.value}")
         }
     }
 
