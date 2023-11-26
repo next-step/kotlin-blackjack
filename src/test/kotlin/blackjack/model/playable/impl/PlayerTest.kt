@@ -30,7 +30,7 @@ class PlayerTest : StringSpec({
             "kim",
             CardFixture.makeCards(CardFixture.ace1, CardFixture.ace2, CardFixture.king)
         )
-        player.isBurst() shouldBe false
+        player.isAlive() shouldBe false
         player.score() shouldBe BlackjackScore(12)
     }
 
@@ -39,7 +39,7 @@ class PlayerTest : StringSpec({
             "kong",
             CardFixture.makeCards(CardFixture.ace1, CardFixture.king)
         )
-        player.isBurst() shouldBe false
+        player.isAlive() shouldBe false
         player.score() shouldBe BlackjackScore(21)
     }
 })

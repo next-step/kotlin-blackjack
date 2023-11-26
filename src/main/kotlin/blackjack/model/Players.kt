@@ -2,6 +2,7 @@ package blackjack.model
 
 import blackjack.model.pack.Pack
 import blackjack.model.playable.impl.Player
+import blackjack.model.playblestrategy.PlayingStrategy
 
 class Players(
     val values: Set<Player>,
@@ -17,11 +18,23 @@ class Players(
     }
 
     fun hasAnyAlivePlayer(): Boolean {
-        val burstPlayers: List<Boolean> = values.map { it.isBurst() }.toList()
-        return !burstPlayers.contains(false)
+        val burstPlayers: List<Boolean> = values.map { it.isAlive() == BlackJackStatus.ALIVE }.toList()
+        return burstPlayers.contains(true)
     }
 
     fun count(): Int {
         return values.size
+    }
+
+    fun playingTurn(playingStrategy: PlayingStrategy, pack: Pack) {
+        values.forEach {
+            if (this.isAlive(it)) {
+                it.playing(playingStrategy, pack)
+            }
+        }
+    }
+
+    private fun isAlive(player: Player): Boolean {
+        return player.isAlive() == BlackJackStatus.ALIVE
     }
 }

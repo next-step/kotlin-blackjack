@@ -41,7 +41,10 @@ class Player(
         cards.add(pack.pickCard())
     }
 
-    override fun isBurst(): Boolean {
-        return this.score().isBurst()
+    override fun isAlive(): BlackJackStatus {
+        if (this.score().isBurst()) {
+            return BlackJackStatus.DIE
+        }
+        return BlackJackStatus.ALIVE
     }
 }
