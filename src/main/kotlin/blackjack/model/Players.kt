@@ -1,6 +1,8 @@
 package blackjack.model
 
 import blackjack.model.pack.Pack
+import blackjack.model.playable.PlayableResult
+import blackjack.model.playable.impl.Dealer
 import blackjack.model.playable.impl.Player
 import blackjack.model.playblestrategy.impl.ConsoleInputStrategy
 
@@ -32,5 +34,9 @@ class Players(
                 player.playing(ConsoleInputStrategy(player), pack)
             }
         }
+    }
+
+    fun results(dealer: Dealer): List<Pair<Player, PlayableResult>> {
+        return this.values.map { it to it.result(dealer) }
     }
 }
