@@ -1,3 +1,3 @@
 package blackjack.model
 
-class Players(val playerList: List<Player>)
+class Players(val playerList: List<CardHolder.Player>)

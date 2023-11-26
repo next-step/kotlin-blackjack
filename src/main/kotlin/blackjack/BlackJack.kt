@@ -11,7 +11,7 @@ class BlackJack {
         * */
         val playerNames = InputView.getPlayerName()
         val cardDispenser = CardDispenser(CardDeck());
-        val gameDealer = GameDealer(IdGenerator.holderId, CardHand(cardDispenser))
+        val gameDealer = CardHolder.GameDealer(IdGenerator.holderId, CardHand(cardDispenser))
         val players = Players(playerNames.toPlayerList(cardDispenser))
 
         OutputView.renderInitMessage(playerNames)
@@ -36,14 +36,14 @@ class BlackJack {
         )
     }
 
-    private fun playGameOfEachPlayer(player: Player, cardDispenser: CardDispenser) {
+    private fun playGameOfEachPlayer(player: CardHolder.Player, cardDispenser: CardDispenser) {
         while (!player.cardHand.bust && player.moreCardOrNot(InputView::askGetCardMore)) {
             player.cardHand.addCard(cardDispenser.getCard())
             OutputView.renderPlayer(player, ::println)
         }
     }
 
-    private fun playGameOfDealer(gameDealer: GameDealer, cardDispenser: CardDispenser) {
+    private fun playGameOfDealer(gameDealer: CardHolder.GameDealer, cardDispenser: CardDispenser) {
         if (gameDealer.isDealerShouldMoreCard) {
             println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
             gameDealer.cardHand.addCard(cardDispenser.getCard())
@@ -51,5 +51,5 @@ class BlackJack {
     }
 
     private fun List<String>.toPlayerList(cardDispenser: CardDispenser) =
-        this.map { Player(IdGenerator.holderId, it, CardHand(cardDispenser)) }
+        this.map { CardHolder.Player(IdGenerator.holderId, CardHand(cardDispenser), it) }
 }

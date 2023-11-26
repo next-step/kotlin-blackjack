@@ -1,6 +1,7 @@
 package blackjack.view
 
 import blackjack.model.CardHand
+import blackjack.model.CardHolder
 import blackjack.model.ResultValue
 import blackjack.model.Role
 
@@ -19,7 +20,7 @@ object OutputView {
         printer(
             "딜러의 카드: ${
                 holder.cardHand.cards[0].getName()
-            }(나머지 1장은 블라인드 입니다)"
+            }, 블라인드"
         )
     }
 
