@@ -3,7 +3,6 @@ package blackjack.domain
 import blackjack.domain.CardNumberInfo.Companion.ACE_UPPER_SCORE
 
 object BlackjackUtil {
-    const val INITIAL_CARD_NUM = 2
     const val DEALER_OPEN_CARD_NUM = 1
     const val DEALER_DRAW_THRESHOLD = 16
     private const val BLACKJACK_SCORE = 21

@@ -1,7 +1,7 @@
 package blackjack.controller
 
-import blackjack.domain.BlackjackUtil.INITIAL_CARD_NUM
 import blackjack.domain.Dealer
+import blackjack.domain.Dealer.Companion.INITIAL_CARD_NUM
 import blackjack.domain.Player
 import blackjack.view.askForDraw
 import blackjack.view.inputNames
@@ -19,9 +19,7 @@ fun main() {
     val players = listOf(dealer) + inputNames().map { Player(it) }
 
     // 초기 카드 분배
-    repeat(INITIAL_CARD_NUM) {
-        players.forEach { dealer.supplyCard(it) }
-    }
+    dealer.supplyInitialCards(players)
 
     // 초기 카드 분배결과 출력
     printInitialSupply(players, INITIAL_CARD_NUM)

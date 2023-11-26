@@ -1,6 +1,6 @@
 package blackjack.domain
 
-import blackjack.domain.BlackjackUtil.INITIAL_CARD_NUM
+import blackjack.domain.Dealer.Companion.INITIAL_CARD_NUM
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test
