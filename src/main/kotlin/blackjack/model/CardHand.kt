@@ -1,7 +1,7 @@
 package blackjack.model
 
-class CardHand(cardDispenser: CardDispenser) {
-    var cards: List<Card> = cardDispenser.getCards(FIRST_COUNT)
+class CardHand(cards: List<Card>) {
+    var cards: List<Card> = cards
         private set
     val totalScore: Int
         get() = getTotalHandScore()
@@ -43,9 +43,6 @@ class CardHand(cardDispenser: CardDispenser) {
 
         return result to aceCount
     }
-
-    private fun getCardBust(): Boolean = getTotalHandScore() > BLACKJACK
-
     companion object {
         const val BLACKJACK = 21
         const val FIRST_COUNT = 2

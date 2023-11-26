@@ -1,6 +1,8 @@
 package blackjack.view
 
-import blackjack.model.*
+import blackjack.model.CardHand
+import blackjack.model.CardHolder
+import blackjack.model.Role
 
 object OutputView {
     fun renderInitMessage(playerNames: List<String>) {
@@ -15,24 +17,20 @@ object OutputView {
 
     fun renderFirstDealerHand(holder: CardHolder, printer: (message: Any) -> Unit) {
         printer(
-            "딜러의 카드: ${
-                holder.cardHand.cards[0].getName()
-            }, 블라인드"
+            "딜러의 카드: ${holder.cardHand.cards[0].getName()}, 블라인드"
         )
     }
 
     fun renderPlayer(holder: CardHolder, printer: (message: Any) -> Unit) {
         printer(
-            "${holder.name}카드: ${
-                getCardString(holder.cardHand)
-            }"
+            "${holder.name}카드: ${getCardString(holder.cardHand)}"
         )
     }
 
     fun renderResult(holders: List<CardHolder>) {
         holders.forEach {
             renderPlayer(it, ::print)
-            println("- 결과: ${it.cardHand.totalScore} ${if(it.isBust)"(버스트)" else "" }")
+            println("- 결과: ${it.cardHand.totalScore} ${if (it.isBust) "(버스트)" else ""}")
         }
         println("## 최종 승패")
         holders.forEach {
@@ -52,7 +50,6 @@ object OutputView {
             }
             println("${it.name}: $resultString")
         }
-
     }
 
     private fun getCardString(cardHand: CardHand): String = cardHand.cards.joinToString(", ") {

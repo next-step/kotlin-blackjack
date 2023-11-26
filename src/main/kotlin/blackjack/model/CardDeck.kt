@@ -5,8 +5,8 @@ class CardDeck {
         private set
 
     fun drawCard(): Card {
-        val shuffledCards = cards.shuffled();
-        val pickedCard = shuffledCards.first();
+        val shuffledCards = cards.shuffled()
+        val pickedCard = shuffledCards.first()
         cards = shuffledCards.drop(1)
 
         return pickedCard

@@ -10,8 +10,9 @@ class BlackJack {
         * 초기화
         * */
         val playerNames = InputView.getPlayerName()
-        val cardDispenser = CardDispenser(CardDeck());
-        val gameDealer = CardHolder.GameDealer(IdGenerator.holderId, CardHand(cardDispenser))
+        val cardDispenser = CardDispenser(CardDeck())
+        val gameDealer =
+            CardHolder.GameDealer(IdGenerator.holderId, CardHand(cardDispenser.getCards(CardHand.FIRST_COUNT)))
         val players = Players(playerNames.toPlayerList(cardDispenser))
 
         OutputView.renderInitMessage(playerNames)
@@ -29,7 +30,7 @@ class BlackJack {
         /*
         * 결과 도출 및 출력
         * */
-        players.playerList.forEach{
+        players.playerList.forEach {
             Judge.resolve(gameDealer, it)
         }
 
@@ -40,7 +41,7 @@ class BlackJack {
         while (!player.isBust && player.hitOrNot(InputView::askGetCardMore)) {
             player.cardHand.addCard(cardDispenser.getCard())
             OutputView.renderPlayer(player, ::println)
-            if(player.isBust){
+            if (player.isBust) {
                 println("${player.name}는 버스트하여 더이상 게임에 참여할 수 없습니다")
             }
         }
@@ -54,5 +55,5 @@ class BlackJack {
     }
 
     private fun List<String>.toPlayerList(cardDispenser: CardDispenser) =
-        this.map { CardHolder.Player(IdGenerator.holderId, CardHand(cardDispenser), it) }
+        this.map { CardHolder.Player(IdGenerator.holderId, CardHand(cardDispenser.getCards(CardHand.FIRST_COUNT)), it) }
 }
