@@ -38,17 +38,14 @@ class DealerTest : StringSpec({
         val dealer = Dealer(
             CardFixture.makeCards(CardFixture.five, CardFixture.seven, CardFixture.king)
         )
-
         val player1 = Player(
             "seoul",
             CardFixture.makeCards(CardFixture.ace1, CardFixture.king)
         )
-
         val player2 = Player(
             "wonju",
             CardFixture.makeCards(CardFixture.queen, CardFixture.king)
         )
-
         val actualDealerResult = dealer.dealerResult(
             Players(player1, player2)
         )
@@ -59,7 +56,7 @@ class DealerTest : StringSpec({
         actualDealerResult.losingCount shouldBe 2
     }
 
-    "딜러와 플리어이 모두가 Burst 상황이라면 플레이어 가 WIN(승리) 해야한다" {
+    "딜러와 플레이어 모두가 Burst 상황이라면 플레이어 가 WIN(승리) 해야한다" {
         val dealer = Dealer(CardFixture.makeCards(CardFixture.queen, CardFixture.nine, CardFixture.three))
         val player1 = Player(
             "malibu",
@@ -75,18 +72,29 @@ class DealerTest : StringSpec({
         dealer.result(player1) shouldBe PlayableResult.LOSE
         dealer.result(player2) shouldBe PlayableResult.LOSE
     }
-
-    "플레이어는 (Burst 가 아닌 상황에서, burst와 관계없이) 딜러보다 점수가 낮은경우 LOSE 결과를 반환 해야 한다" {
-        val dealer = Dealer(CardFixture.makeCards(CardFixture.queen, CardFixture.ten))
+    "딜러는 플레이어보다 점수가 높은경우 WIN 결과를 반환 해야 한다" {
+        val dealer = Dealer(CardFixture.makeCards(CardFixture.queen, CardFixture.ten)) // 20
         val player = Player(
             "malibu",
-            CardFixture.makeCards(CardFixture.ten, CardFixture.five)
+            CardFixture.makeCards(CardFixture.ten, CardFixture.five) // 15
         )
-        val actual = player.result(dealer)
-        actual shouldBe PlayableResult.LOSE
+
+        dealer.result(player) shouldBe PlayableResult.WIN
+        player.result(dealer) shouldBe PlayableResult.LOSE
     }
 
-    "플레이어는 딜러와 점수가 같은 경우 DRAW 결과를 반환 해야 한다" {
+    "딜러는 플레이어보다 점수가 낮은경우 LOSE 결과를 반환 해야 한다" {
+        val dealer = Dealer(CardFixture.makeCards(CardFixture.three, CardFixture.four))
+        val player = Player(
+            "malibu",
+            CardFixture.makeCards(CardFixture.seven, CardFixture.five)
+        )
+
+        dealer.result(player) shouldBe PlayableResult.LOSE
+        player.result(dealer) shouldBe PlayableResult.WIN
+    }
+
+    "딜러는 플레이어와 점수가 같은 경우 DRAW 결과를 반환 해야 한다" {
         val dealer = Dealer(CardFixture.makeCards(CardFixture.queen, CardFixture.nine, CardFixture.two))
         val player = Player(
             "malibu",
@@ -96,5 +104,6 @@ class DealerTest : StringSpec({
         dealer.score() shouldBe BlackjackScore(21)
         player.score() shouldBe BlackjackScore(21)
         player.result(dealer) shouldBe PlayableResult.DRAW
+        dealer.result(player) shouldBe PlayableResult.DRAW
     }
 })
