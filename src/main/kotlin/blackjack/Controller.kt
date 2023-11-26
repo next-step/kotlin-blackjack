@@ -10,7 +10,7 @@ fun main() {
     participants.dealing(ShuffledPack)
     OutputView.dealing(participants)
     OutputView.presentCards(participants)
-    BlackJackGame(participants).start()
+    BlackJackGame(participants, ShuffledPack).start()
     OutputView.presentScores(participants)
     OutputView.presentResult(participants)
 }
