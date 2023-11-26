@@ -1,5 +1,6 @@
 package blackjack.model.playable.impl
 
+import blackjack.model.BlackJackStatus
 import blackjack.model.card.Cards
 import blackjack.model.pack.Pack
 import blackjack.model.playable.BlackjackScore
@@ -11,6 +12,7 @@ import blackjack.model.playblestrategy.PlayingStrategy
 class Player(
     val name: String,
     val cards: Cards = Cards.emptyCards(),
+    var blackJackStatus: BlackJackStatus = BlackJackStatus.ALIVE,
 ) : Playable {
 
     override fun score(): BlackjackScore {
@@ -23,6 +25,7 @@ class Player(
     }
 
     override fun playing(playingStrategy: PlayingStrategy, pack: Pack): PlayableReaction {
+
         if (playingStrategy.isHit()) {
             this.hit(pack)
             return PlayableReaction.HIT
@@ -30,8 +33,8 @@ class Player(
         return PlayableReaction.STAND
     }
 
-    override fun result(other: Playable): PlayableResult {
-        return this.score() vs other.score()
+    override fun result(playable: Playable): PlayableResult {
+        return this.score() vs playable.score()
     }
 
     fun hit(pack: Pack) {
