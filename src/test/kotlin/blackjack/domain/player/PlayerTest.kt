@@ -5,6 +5,9 @@ import blackjack.domain.card.Card
 import blackjack.domain.card.Hand
 import blackjack.domain.card.Rank
 import blackjack.domain.card.Suit
+import blackjack.mock.card
+import blackjack.mock.hand
+import blackjack.mock.player
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 
@@ -22,20 +25,20 @@ class PlayerTest : DescribeSpec({
 
     describe("addCard") {
         context("플레이어게 카드를 주면") {
-            val player = Player(PlayerName("홍길동"), { Action.HIT })
+            val player = player()
             val card = Card(Suit.CLUB, Rank.ACE)
 
             player.addCard(card)
 
             it("플레이가 소유한 카드에 카드가 추가") {
-                player.hand shouldBe Hand(mutableListOf(card))
+                player.hand.cards shouldBe listOf(card)
             }
         }
 
         context("플레이어가 다른 카드를 갖고 있던 경우") {
             val oldCard = Card(Suit.DIAMOND, Rank.EIGHT)
-            val player = Player(PlayerName("홍길동"), { Action.HIT }, Hand(mutableListOf(oldCard)))
             val newCard = Card(Suit.CLUB, Rank.ACE)
+            val player = player(hand = hand(oldCard))
 
             player.addCard(newCard)
 
@@ -47,28 +50,15 @@ class PlayerTest : DescribeSpec({
 
     describe("isBust") {
         context("21을 넘었을 때") {
-            val player = Player(
-                PlayerName("kim"), { Action.HIT },
-                Hand(
-                    mutableListOf(
-                        Card(Suit.DIAMOND, Rank.THREE), Card(Suit.HEART, Rank.TEN), Card(Suit.HEART, Rank.TEN)
-                    )
-                )
-            )
+            val player = player(hand = hand(card(Rank.THREE), card(Rank.TEN), card(Rank.TEN)))
             it("true 반환") {
                 player.isBust shouldBe true
             }
         }
 
         context("21을 넘지 않았을 때") {
-            val player = Player(
-                PlayerName("kim"), { Action.HIT },
-                Hand(
-                    mutableListOf(
-                        Card(Suit.DIAMOND, Rank.ACE), Card(Suit.HEART, Rank.ACE), Card(Suit.HEART, Rank.ACE)
-                    )
-                )
-            )
+            val player = player(hand = hand(card(Rank.ACE), card(Rank.ACE), card(Rank.ACE)))
+
             it("false 반환") {
                 player.isBust shouldBe false
             }
@@ -76,14 +66,8 @@ class PlayerTest : DescribeSpec({
     }
 
     describe("score") {
-        val player = Player(
-            PlayerName("kim"), { Action.HIT },
-            Hand(
-                mutableListOf(
-                    Card(Suit.DIAMOND, Rank.ACE), Card(Suit.HEART, Rank.TEN)
-                )
-            )
-        )
+        val player = player(hand = hand(card(Rank.ACE), card(Rank.TEN)))
+
         context("플레이어의 점수 조회") {
             val result = player.score
             it("플레이어 점수 반환") {
@@ -94,20 +78,16 @@ class PlayerTest : DescribeSpec({
 
     describe("hitOrStand") {
         context("이미 점수가 최대 점수 21을 넘었다면") {
-            val score30Cards = mutableListOf(
-                Card(Suit.HEART, Rank.QUEEN),
-                Card(Suit.HEART, Rank.QUEEN),
-                Card(Suit.HEART, Rank.QUEEN),
-            )
+            val score30Cards = hand(card(Rank.QUEEN), card(Rank.QUEEN), card(Rank.QUEEN),)
             it("HIT을 받아도 STAND가 반환") {
-                val player = Player(PlayerName("kim"), { Action.HIT }, Hand(score30Cards))
+                val player = player(action = Action.HIT, hand = score30Cards)
 
                 val result = player.hitOrStand()
 
                 result shouldBe Action.STAND
             }
             it("STAND를 받으면 STAND가 반환") {
-                val player = Player(PlayerName("kim"), { Action.STAND }, Hand(score30Cards))
+                val player = player(action = Action.STAND, hand = score30Cards)
 
                 val result = player.hitOrStand()
 
@@ -116,19 +96,17 @@ class PlayerTest : DescribeSpec({
         }
 
         context("최대 점수 21을 넘지 않았을 때") {
-            val score5Cards = mutableListOf(
-                Card(Suit.HEART, Rank.TWO),
-                Card(Suit.HEART, Rank.THREE),
-            )
+            val score5Cards = hand(card(Rank.TWO), card(Rank.THREE))
+
             it("HIT을 받으면 HIT이 반한") {
-                val player = Player(PlayerName("kim"), { Action.HIT }, Hand(score5Cards))
+                val player = player(action = Action.HIT, hand = score5Cards)
 
                 val result = player.hitOrStand()
 
                 result shouldBe Action.HIT
             }
             it("STAND를 받으면 STAND가 반환") {
-                val player = Player(PlayerName("kim"), { Action.STAND }, Hand(score5Cards))
+                val player = player(action = Action.STAND, hand = score5Cards)
 
                 val result = player.hitOrStand()
 

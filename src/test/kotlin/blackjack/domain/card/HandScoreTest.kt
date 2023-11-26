@@ -1,7 +1,7 @@
 package blackjack.domain.card
 
-import blackjack.domain.card
-import blackjack.domain.hand
+import blackjack.mock.card
+import blackjack.mock.hand
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.data.forAll
 import io.kotest.data.row

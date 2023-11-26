@@ -1,6 +1,6 @@
 package blackjack.domain.card
 
-import blackjack.domain.deck
+import blackjack.mock.deck
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe

@@ -1,9 +1,9 @@
 package blackjack.domain.player
 
 import blackjack.domain.Action
-import blackjack.domain.card
 import blackjack.domain.card.Rank
-import blackjack.domain.hand
+import blackjack.mock.card
+import blackjack.mock.hand
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 

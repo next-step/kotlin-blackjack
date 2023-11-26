@@ -1,16 +1,17 @@
 package blackjack.domain.player
 
 import blackjack.domain.Action
-import blackjack.domain.card.Card
-import blackjack.domain.card.Hand
 import blackjack.domain.card.Rank
-import blackjack.domain.card.Suit
+import blackjack.mock.card
+import blackjack.mock.hand
+import blackjack.mock.player
+import blackjack.mock.players
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 
 class PlayersTest : DescribeSpec({
-    describe("플레이어들 생성") {
+    describe("Players.of()") {
         context("플레이어 이름이 주어지면") {
             val name1 = PlayerName("홍길동")
             val name2 = PlayerName("베트맨")
@@ -38,30 +39,16 @@ class PlayersTest : DescribeSpec({
 
     describe("현재 플레이어가 최대 점수를 넘었는지 여부 반환") {
         context("현재 플레이어가 최대 점수를 넘었을 경우") {
-            val playerOverMaxScore = Player(
-                PlayerName("kim"), { Action.HIT },
-                Hand(
-                    mutableListOf(
-                        Card(Suit.DIAMOND, Rank.THREE), Card(Suit.HEART, Rank.TEN), Card(Suit.HEART, Rank.TEN)
-                    )
-                )
-            )
-            val players = Players(listOf(playerOverMaxScore, Player(PlayerName("kim"), { Action.HIT }, Hand())))
+            val playerOverMaxScore = player(hand = hand(card(Rank.THREE), card(Rank.TEN), card(Rank.TEN)))
+            val players = players(playerOverMaxScore, player())
             it("true 반환") {
                 players.isPlayerInTurnOverMaxScore shouldBe true
             }
         }
 
         context("현재 플레이어가 최대 점수를 넘지 않았을 경우") {
-            val playerUnderMaxScore = Player(
-                PlayerName("kim"), { Action.HIT },
-                Hand(
-                    mutableListOf(
-                        Card(Suit.DIAMOND, Rank.ACE), Card(Suit.HEART, Rank.TEN)
-                    )
-                )
-            )
-            val players = Players(listOf(playerUnderMaxScore, Player(PlayerName("kim"), { Action.HIT }, Hand())))
+            val playerUnderMaxScore = player(hand = hand(card(Rank.ACE), card(Rank.TEN)))
+            val players = players(playerUnderMaxScore, player())
             it("false 반환") {
                 players.isPlayerInTurnOverMaxScore shouldBe false
             }
@@ -69,10 +56,7 @@ class PlayersTest : DescribeSpec({
     }
 
     describe("다음 플레이어에게 차례 넘김") {
-        val playerList = listOf(
-            Player(PlayerName("hong"), { Action.HIT }, Hand()),
-            Player(PlayerName("dong"), { Action.HIT }, Hand()),
-        )
+        val playerList = listOf(player("kim"), player("lee"))
         val players = Players(playerList)
 
         context("플레이어 1이 차례인 경우") {
@@ -95,10 +79,7 @@ class PlayersTest : DescribeSpec({
     }
 
     describe("마지막 플레이어 차례인지 조회") {
-        val playerList = listOf(
-            Player(PlayerName("hong"), { Action.HIT }, Hand()),
-            Player(PlayerName("dong"), { Action.HIT }, Hand()),
-        )
+        val playerList = listOf(player("kim"), player("lee"))
         val players = Players(playerList)
 
         context("플레이어 1이 차례인 경우") {

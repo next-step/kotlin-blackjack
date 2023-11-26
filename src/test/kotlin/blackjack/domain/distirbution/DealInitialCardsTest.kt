@@ -1,7 +1,6 @@
 package blackjack.domain.distirbution
 
-import blackjack.domain.BlackJackGame
-import blackjack.mock.InputProcessorMock
+import blackjack.mock.blackJackGame
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeTypeOf
@@ -9,7 +8,7 @@ import io.kotest.matchers.types.shouldBeTypeOf
 class DealInitialCardsTest : DescribeSpec({
     describe("dealCards") {
         context("첫 카드 배분 스테이지를 진행시키면") {
-            val game = BlackJackGame(InputProcessorMock())
+            val game = blackJackGame()
             val table = game.table
             val dealInitialCards = DealInitialCards()
             dealInitialCards(table) { distributor -> game.setDistributor(distributor) }

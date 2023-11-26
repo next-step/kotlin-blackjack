@@ -1,37 +1,26 @@
 package blackjack.domain.distirbution
 
 import blackjack.domain.Action
-import blackjack.domain.BlackJackGame
 import blackjack.domain.Dealer
-import blackjack.domain.GameTable
-import blackjack.domain.card
-import blackjack.domain.card.Hand
 import blackjack.domain.card.Rank
-import blackjack.domain.hand
 import blackjack.domain.player.DealerPlayer
-import blackjack.domain.player.Player
-import blackjack.domain.player.PlayerName
-import blackjack.domain.player.Players
-import blackjack.mock.InputProcessorMock
+import blackjack.mock.blackJackGame
+import blackjack.mock.card
+import blackjack.mock.hand
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeTypeOf
 
 class DealToDealerTest : DescribeSpec({
     describe("DealToDealer") {
-        val players = Players(
-            listOf(
-                Player(PlayerName("kim"), { Action.HIT }, Hand()),
-                Player(PlayerName("kim"), { Action.HIT }, Hand())
-            )
-        )
-        context("딜러가 HIT을 하면") {
+        context("딜러가 (16점 이하라) HIT를 하면") {
             val under16ScoreCards = hand(card(Rank.TWO), card(Rank.THREE))
             val dealer = Dealer(player = DealerPlayer(under16ScoreCards))
-            val game = BlackJackGame(InputProcessorMock(), table = GameTable(dealer, players))
+            dealer.hitOrStand() shouldBe Action.HIT
+
+            val game = blackJackGame(dealer = dealer)
             val dealToDealer = DealToDealer()
             game.setDistributor(dealToDealer)
-            dealer.hitOrStand() shouldBe Action.HIT
 
             val result = dealToDealer(game.table) { distributor -> game.setDistributor(distributor) }
 
@@ -48,13 +37,14 @@ class DealToDealerTest : DescribeSpec({
             }
         }
 
-        context("딜러가 STAND를 하면") {
+        context("딜러가 (17점 이상이라) STAND를 하면") {
             val over16ScoreCards = hand(card(Rank.QUEEN), card(Rank.QUEEN))
             val dealer = Dealer(player = DealerPlayer(over16ScoreCards))
-            val game = BlackJackGame(InputProcessorMock(), table = GameTable(dealer, players))
+            dealer.hitOrStand() shouldBe Action.STAND
+
+            val game = blackJackGame(dealer = dealer)
             val dealToDealer = DealToDealer()
             game.setDistributor(dealToDealer)
-            dealer.hitOrStand() shouldBe Action.STAND
 
             val result = dealToDealer(game.table) { distributor -> game.setDistributor(distributor) }
 

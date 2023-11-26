@@ -5,28 +5,26 @@ import blackjack.domain.card.Hand
 import blackjack.domain.card.Rank
 import blackjack.domain.card.Suit
 import blackjack.domain.player.DealerPlayer
-import blackjack.domain.player.Player
-import blackjack.domain.player.PlayerName
 import blackjack.domain.player.Players
+import blackjack.mock.card
+import blackjack.mock.deck
+import blackjack.mock.hand
+import blackjack.mock.player
+import blackjack.mock.players
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 
 class GameTableTest : DescribeSpec({
     describe("dealToAll") {
-        context("카드가 모두 한 장도 없는 상태일 때") {
+        context("카드가 모두 한 장도 없는 상태일 때 모두에게 2장씩 지급") {
             val dealer = Dealer()
-            val players = Players(
-                listOf(
-                    Player(PlayerName("kim"), { Action.HIT }, Hand()),
-                    Player(PlayerName("lee"), { Action.HIT }, Hand()),
-                )
-            )
+            val players = players(player(hand = Hand()), player(hand = Hand()))
             val table = GameTable(dealer, players)
 
-            it("모두 두장씩 배분") {
-                table.dealToAll(2)
+            table.dealToAll(2)
 
+            it("모두 두장씩 수령") {
                 table.dealer.hand.cards.size shouldBe 2
                 table.players.all.forEach { player ->
                     player.hand.cards.size shouldBe 2
@@ -38,19 +36,16 @@ class GameTableTest : DescribeSpec({
     describe("dealToPlayerInTurn") {
         val dealer = Dealer()
         val deckCount = dealer.deck.cards.size
-        val players = Players(
-            listOf(
-                Player(PlayerName("kim"), { Action.HIT }, Hand()),
-                Player(PlayerName("lee"), { Action.HIT }, Hand()),
-            )
-        )
+        val players = players(player(hand = Hand()), player())
         val table = GameTable(dealer, players)
 
-        context("카드 배분") {
+        context("카드 1장 배분") {
+            val playerInTurn = players.inTurn
+            playerInTurn.hand.cards.size shouldBe 0
+
             table.dealToPlayerInTurn(1)
 
-            it("플레이어는 카드 1장 수령") {
-                val playerInTurn = players.inTurn
+            it("차례인 플레이어는 카드 1장 수령") {
                 playerInTurn.hand.cards.count() shouldBe 1
             }
 
@@ -61,10 +56,7 @@ class GameTableTest : DescribeSpec({
     }
 
     describe("passPlayerTurn") {
-        val players = listOf(
-            Player(PlayerName("kim"), { Action.HIT }, Hand()),
-            Player(PlayerName("lee"), { Action.HIT }, Hand()),
-        ).let(::Players)
+        val players = players(player("kim"), player("lee"))
         val table = GameTable(Dealer(), players)
 
         context("플레이어 1이 차례인 경우") {
@@ -97,13 +89,8 @@ class GameTableTest : DescribeSpec({
         )
         val dealer = Dealer(deck(cards))
         val deckCount = dealer.deck.cards.size
-        val players = Players(
-            listOf(
-                Player(PlayerName("kim"), { Action.HIT }, Hand()),
-                Player(PlayerName("lee"), { Action.HIT }, Hand()),
-            )
-        )
-        val table = GameTable(dealer, players)
+        val table = GameTable(dealer, players())
+
         val count = 2
         context("딜러 카드가 한 장도 없을 때 카드 ${count}장 배분") {
             dealer.hand.cards.size shouldBe 0
@@ -121,10 +108,7 @@ class GameTableTest : DescribeSpec({
     }
 
     describe("isLastPlayerTurn") {
-        val players = listOf(
-            Player(PlayerName("kim"), { Action.HIT }, Hand()),
-            Player(PlayerName("lee"), { Action.HIT }, Hand()),
-        )
+        val players = listOf(player("kim"), player("lee"))
         val table = GameTable(Dealer(), Players(players))
         context("첫 번째 플레이어 턴") {
             table.players.inTurn shouldBe players.first()
@@ -144,12 +128,9 @@ class GameTableTest : DescribeSpec({
     }
 
     describe("playerInTurn") {
-        val players = listOf(
-            Player(PlayerName("kim"), { Action.HIT }, Hand()),
-            Player(PlayerName("lee"), { Action.HIT }, Hand()),
-        )
+        val players = listOf(player("kim"), player("lee"))
         val table = GameTable(Dealer(), Players(players))
-        context("첫 번째 플레이어 턴") {
+        context("첫 번쨰 플레이어 턴") {
             table.players.inTurn shouldBe players.first()
 
             it("첫 번째 플레이어 반환") {
@@ -167,13 +148,11 @@ class GameTableTest : DescribeSpec({
     }
 
     describe("playerInTurnAction") {
-        context("이번 턴의 플레이어가 HIT를 하면") {
-            val players = listOf(
-                Player(PlayerName("kim"), { Action.HIT }, Hand()),
-                Player(PlayerName("lee"), { Action.HIT }, Hand()),
-            )
-            val table = GameTable(Dealer(), Players(players))
-            table.playerInTurn shouldBe players.first()
+        context("이번 턴의 플레이어가 HIT를 하면(player: HIT, 점수: 21이하)") {
+            val hitPlayer = player(action = Action.HIT, hand = Hand())
+            val players = players(hitPlayer, player("other"))
+            val table = GameTable(Dealer(), players)
+            table.playerInTurn shouldBe hitPlayer
 
             it("HIT 반환") {
                 val result = table.playerInTurnAction
@@ -182,13 +161,24 @@ class GameTableTest : DescribeSpec({
             }
         }
 
-        context("이번 턴의 플레이어가 STAND를 하면") {
-            val players = listOf(
-                Player(PlayerName("kim"), { Action.STAND }, Hand()),
-                Player(PlayerName("lee"), { Action.HIT }, Hand()),
-            )
-            val table = GameTable(Dealer(), Players(players))
-            table.playerInTurn shouldBe players.first()
+        context("이번 턴의 플레이어가 STAND를 하면(player: STAND, 점수: 21이하)") {
+            val standPlayer = player(action = Action.STAND, hand = Hand())
+            val players = players(standPlayer, player("other"))
+            val table = GameTable(Dealer(), players)
+            table.playerInTurn shouldBe standPlayer
+
+            it("STAND 반환") {
+                val result = table.playerInTurnAction
+
+                result shouldBe Action.STAND
+            }
+        }
+
+        context("이번 턴의 플레이어가 STAND를 하면(player: HIT, 점수: 21이상)") {
+            val standPlayer = player(action = Action.HIT, hand = hand(card(Rank.TEN), card(Rank.TEN), card(Rank.TEN)))
+            val players = players(standPlayer, player("other"))
+            val table = GameTable(Dealer(), players)
+            table.playerInTurn shouldBe standPlayer
 
             it("STAND 반환") {
                 val result = table.playerInTurnAction
@@ -199,14 +189,9 @@ class GameTableTest : DescribeSpec({
     }
 
     describe("dealerAction") {
-        val players = listOf(
-            Player(PlayerName("kim"), { Action.HIT }, Hand()),
-            Player(PlayerName("lee"), { Action.HIT }, Hand()),
-        )
-        context("딜러가 HIT를 하면") {
-            val under16ScoreCards = hand(card(Rank.TWO), card(Rank.THREE))
-            val dealer = Dealer(player = DealerPlayer(under16ScoreCards))
-            val table = GameTable(dealer, Players(players))
+        context("딜러가 HIT를 하면 (딜러 16점 이하)") {
+            val dealer = Dealer(player = DealerPlayer(hand(card(Rank.TWO), card(Rank.THREE))))
+            val table = GameTable(dealer, players())
             dealer.hitOrStand() shouldBe Action.HIT
 
             it("HIT 반환") {
@@ -216,10 +201,9 @@ class GameTableTest : DescribeSpec({
             }
         }
 
-        context("딜러가 STAND를 하면") {
-            val over16ScoreCards = hand(card(Rank.QUEEN), card(Rank.QUEEN))
-            val dealer = Dealer(player = DealerPlayer(over16ScoreCards))
-            val table = GameTable(dealer, Players(players))
+        context("딜러가 STAND를 하면 (딜러 17점 이상)") {
+            val dealer = Dealer(player = DealerPlayer(hand(card(Rank.QUEEN), card(Rank.QUEEN))))
+            val table = GameTable(dealer, players())
             dealer.hitOrStand() shouldBe Action.STAND
 
             it("STAND 반환") {
