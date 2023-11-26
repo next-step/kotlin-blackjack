@@ -6,8 +6,8 @@ import blackjack.model.state.State
 import blackjack.model.state.playState.gameState.Bust
 import blackjack.model.state.playState.gameState.Hit
 
-data class Player(val name: String, val bettingAmount: Int, var state: State) {
-    constructor(name: String, bettingAmount: Int, cards: CardDeck = CardDeck()) :
+data class Player(val name: String, val bettingAmount: Int = 0, var state: State) {
+    constructor(name: String, bettingAmount: Int = 0, cards: CardDeck = CardDeck()) :
         this(name, bettingAmount, Hit(cards))
 
     fun draw(card: Card) {

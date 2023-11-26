@@ -64,7 +64,7 @@ class MatchResultTest : DescribeSpec({
         val dealer = Dealer(Bust(카드덱_23점()))
 
         it("플레이어가 Stay이면 플레이어의 승이다") {
-            val player = Player("jason", Stay(카드덱_20점()))
+            val player = Player("jason", state = Stay(카드덱_20점()))
 
             val matchResult = MatchResult.toResult(dealer, listOf(player))
 
@@ -72,7 +72,7 @@ class MatchResultTest : DescribeSpec({
         }
 
         it("플레이어가 Blackjack이면 플레이어의 승이다") {
-            val player = Player("jason", BlackJack(카드덱_21점()))
+            val player = Player("jason", state = BlackJack(카드덱_21점()))
 
             val matchResult = MatchResult.toResult(dealer, listOf(player))
 
@@ -81,7 +81,7 @@ class MatchResultTest : DescribeSpec({
 
         // 플레이어가 먼저 bust 상태이므로 딜러의 승으로 판단한다
         it("플레이어가 Bust이면 딜러의 승이다") {
-            val player = Player("jason", Bust(카드덱_23점()))
+            val player = Player("jason", state = Bust(카드덱_23점()))
 
             val matchResult = MatchResult.toResult(dealer, listOf(player))
 
@@ -93,7 +93,7 @@ class MatchResultTest : DescribeSpec({
         val dealer = Dealer(BlackJack(카드덱_21점()))
 
         it("플레이어가 Stay이면 딜러의 승이다") {
-            val player = Player("jason", Stay(카드덱_20점()))
+            val player = Player("jason", state = Stay(카드덱_20점()))
 
             val matchResult = MatchResult.toResult(dealer, listOf(player))
 
@@ -101,7 +101,7 @@ class MatchResultTest : DescribeSpec({
         }
 
         it("플레이어가 Blackjack이면 무승부이다") {
-            val player = Player("jason", BlackJack(카드덱_21점()))
+            val player = Player("jason", state = BlackJack(카드덱_21점()))
 
             val matchResult = MatchResult.toResult(dealer, listOf(player))
 
@@ -109,7 +109,7 @@ class MatchResultTest : DescribeSpec({
         }
 
         it("플레이어가 Bust이면 딜러의 승이다") {
-            val player = Player("jason", Bust(카드덱_23점()))
+            val player = Player("jason", state = Bust(카드덱_23점()))
 
             val matchResult = MatchResult.toResult(dealer, listOf(player))
 
@@ -122,7 +122,7 @@ class MatchResultTest : DescribeSpec({
 
         context("플레이어가 Stay이고") {
             it("딜러보다 점수가 더 높으면 플레이어의 승이다") {
-                val player = Player("jason", Stay(카드덱_20점()))
+                val player = Player("jason", state = Stay(카드덱_20점()))
 
                 val matchResult = MatchResult.toResult(dealer, listOf(player))
 
@@ -130,7 +130,7 @@ class MatchResultTest : DescribeSpec({
             }
 
             it("딜러와 점수가 같으면 무승부이다") {
-                val player = Player("jason", Stay(카드덱_19점()))
+                val player = Player("jason", state = Stay(카드덱_19점()))
 
                 val matchResult = MatchResult.toResult(dealer, listOf(player))
 
@@ -138,7 +138,7 @@ class MatchResultTest : DescribeSpec({
             }
 
             it("딜러보다 점수가 더 낮으면 딜러의 승이다") {
-                val player = Player("jason", Stay(카드덱_18점()))
+                val player = Player("jason", state = Stay(카드덱_18점()))
 
                 val matchResult = MatchResult.toResult(dealer, listOf(player))
 
@@ -147,7 +147,7 @@ class MatchResultTest : DescribeSpec({
         }
 
         it("플레이어가 Blackjack이면 플레이어의 승이다") {
-            val player = Player("jason", BlackJack(카드덱_21점()))
+            val player = Player("jason", state = BlackJack(카드덱_21점()))
 
             val matchResult = MatchResult.toResult(dealer, listOf(player))
 
@@ -155,7 +155,7 @@ class MatchResultTest : DescribeSpec({
         }
 
         it("플레이어가 Bust이면 딜러의 승이다") {
-            val player = Player("jason", Bust(카드덱_23점()))
+            val player = Player("jason", state = Bust(카드덱_23점()))
 
             val matchResult = MatchResult.toResult(dealer, listOf(player))
 
