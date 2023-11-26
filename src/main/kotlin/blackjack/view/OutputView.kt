@@ -1,6 +1,5 @@
 package blackjack.view
 
-import blackjack.CardHolder
 import blackjack.model.CardHand
 import blackjack.model.ResultValue
 import blackjack.model.Role
@@ -9,10 +8,19 @@ object OutputView {
     fun renderInitMessage(playerNames: List<String>) {
         println("딜러와 ${playerNames.joinToString(", ")}에게 2장의 나누었습니다.")
     }
+
     fun renderPlayers(holders: List<CardHolder>) {
         holders.forEach {
             renderPlayer(it, ::println)
         }
+    }
+
+    fun renderFirstDealerHand(holder: CardHolder, printer: (message: Any) -> Unit) {
+        printer(
+            "딜러의 카드: ${
+                holder.cardHand.cards[0].getName()
+            }(나머지 1장은 블라인드 입니다)"
+        )
     }
 
     fun renderPlayer(holder: CardHolder, printer: (message: Any) -> Unit) {
@@ -30,7 +38,7 @@ object OutputView {
         }
     }
 
-    fun renderResolved(resolvedResult: Map<Int, ResultValue>){
+    fun renderResolved(resolvedResult: Map<Int, ResultValue>) {
         println("## 최종 승패")
         resolvedResult.entries.forEach { (_, value) ->
             if (value.holder.role == Role.DEALER) {

@@ -1,7 +1,5 @@
 package blackjack.model
 
-import blackjack.CardHolder
-
 class GameDealer(override val id: Int, override val cardHand: CardHand): CardHolder {
     override val name: String = "딜러"
     override val role = Role.DEALER

@@ -1,7 +1,5 @@
 package blackjack.model
 
-import blackjack.CardHolder
-
 class ResultValue(val holder: CardHolder, val winLoseDraw: WinLoseDraw)
 class WinLoseDraw(var win: Int = 0, var lose: Int = 0, var draw: Int = 0)
 class GameResult(private val dealer: GameDealer, private val players: Players) {

@@ -1,12 +1,12 @@
 package blackjack.model
 
-class CardHand(cards: List<Card>) {
-    var cards: List<Card> = cards
+class CardHand(cardDispenser: CardDispenser) {
+    var cards: List<Card> = cardDispenser.getCards(FIRST_COUNT)
         private set
     val totalScore: Int
         get() = getTotalHandScore()
-    val isSameOrSmallerThanBlackJack: Boolean
-        get() = getIsSameOrSmallerThanBlackJack()
+    val bust: Boolean
+        get() = getCardBust()
 
     fun addCard(card: Card) {
         val newCards = cards.toMutableList()
@@ -14,17 +14,42 @@ class CardHand(cards: List<Card>) {
         cards = newCards.toList()
     }
 
-    private fun getTotalHandScore(): Int = getCardValues().fold(0) { total, it ->
-        total + it.getScore(total)
+    private fun getTotalHandScore(): Int {
+        var (result, aceCount) = getTotalHandScoreAndAceCountBeforeAceScoreCheck()
+
+        /*
+        * 결과에 맞춰서 ACE 점수 조정
+        * */
+        while (result > BLACKJACK && aceCount > 0) {
+            result -= 10
+            aceCount -= 1
+        }
+
+        return result
     }
 
-    private fun getIsSameOrSmallerThanBlackJack(): Boolean = getTotalHandScore() <= BLACKJACK
+    private fun getTotalHandScoreAndAceCountBeforeAceScoreCheck(): Pair<Int, Int> {
+        var result = 0
+        var aceCount = 0
 
-    private fun getCardValues(): List<CardValue> =
-        cards.map { it.cardValue }.sortedWith(compareBy { if (it == CardValue.A) Int.MAX_VALUE else 0 })
+        for (card in cards) {
+            when (card.cardValue.value) {
+                "A" -> {
+                    aceCount += 1
+                    result += CardValue.ACE_HIGH_SCORE
+                }
+                "K", "Q", "J" -> result += CardValue.JQA_SCORE
+                else -> result += card.cardValue.value.toInt()
+            }
+        }
 
+        return result to aceCount
+    }
+
+    private fun getCardBust(): Boolean = getTotalHandScore() > BLACKJACK
 
     companion object {
         const val BLACKJACK = 21
+        const val FIRST_COUNT = 2
     }
 }
