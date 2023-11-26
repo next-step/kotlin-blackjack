@@ -6,12 +6,10 @@ class CardBundle private constructor(private val bundle: MutableList<Card>) {
         require(bundle.size == fullStackSize) { "카드 1 벌은 ${fullStackSize}장이어야 합니다." }
     }
 
-    fun draw(): Card? {
-        return if (bundle.isEmpty()) {
-            null
-        } else {
-            bundle.removeAt((0..bundle.lastIndex).random())
-        }
+    fun draw(): Card {
+        check(bundle.isNotEmpty()) { "카드가 부족합니다." }
+
+        return bundle.removeAt((0..bundle.lastIndex).random())
     }
 
     companion object {

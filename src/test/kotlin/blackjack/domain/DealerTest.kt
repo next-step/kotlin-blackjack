@@ -2,7 +2,6 @@ package blackjack.domain
 
 import blackjack.domain.Dealer.Companion.DEALER_OPEN_CARD_NUM
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.Test
 
 class DealerTest {
@@ -15,13 +14,6 @@ class DealerTest {
 
         players.forEach { assertThat(it.hand.size()).isEqualTo(2) }
         assertThat(dealer.hand.size()).isEqualTo(2)
-    }
-
-    @Test
-    fun `카드 소진시 예외를 던진다`() {
-        val dealer = Dealer()
-        repeat(52) { dealer.supplyCard(dealer) }
-        assertThrows(IllegalStateException::class.java) { dealer.supplyCard(dealer) }
     }
 
     @Test

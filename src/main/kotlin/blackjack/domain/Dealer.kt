@@ -12,8 +12,7 @@ class Dealer : Player("딜러") {
     }
 
     fun supplyCard(player: Player) {
-        val card = stack.draw() ?: throw IllegalStateException("카드가 부족합니다.")
-        player.hand.add(card)
+        player.hand.add(stack.draw())
     }
 
     override fun initialCards(): List<Card> {
