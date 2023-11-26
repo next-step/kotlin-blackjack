@@ -209,7 +209,7 @@ class GameTableTest : DescribeSpec({
                 Card(Suit.SPADE, Rank.TWO),
                 Card(Suit.SPADE, Rank.THREE),
             )
-            val dealer = Dealer(dealerPlayer = DealerPlayer(Hand(under16ScoreCards)))
+            val dealer = Dealer(player = DealerPlayer(Hand(under16ScoreCards)))
             val table = GameTable(dealer, Players(players))
             dealer.hitOrStand() shouldBe Action.HIT
 
@@ -225,7 +225,7 @@ class GameTableTest : DescribeSpec({
                 Card(Suit.SPADE, Rank.QUEEN),
                 Card(Suit.SPADE, Rank.QUEEN),
             )
-            val dealer = Dealer(dealerPlayer = DealerPlayer(Hand(over16ScoreCards)))
+            val dealer = Dealer(player = DealerPlayer(Hand(over16ScoreCards)))
             val table = GameTable(dealer, Players(players))
             dealer.hitOrStand() shouldBe Action.STAND
 

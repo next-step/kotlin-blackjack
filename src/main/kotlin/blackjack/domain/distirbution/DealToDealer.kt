@@ -1,8 +1,8 @@
-package blackjack.domain.stage
+package blackjack.domain.distirbution
 
 import blackjack.domain.Action
 import blackjack.domain.GameTable
-import blackjack.domain.result.DealToDealerResult
+import blackjack.domain.result.distribution.DealToDealerResult
 
 class DealToDealer : CardDistributor {
     override fun invoke(

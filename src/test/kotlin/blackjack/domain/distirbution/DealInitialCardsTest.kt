@@ -1,4 +1,4 @@
-package blackjack.domain.stage
+package blackjack.domain.distirbution
 
 import blackjack.domain.BlackJackGame
 import blackjack.mock.InputProcessorMock

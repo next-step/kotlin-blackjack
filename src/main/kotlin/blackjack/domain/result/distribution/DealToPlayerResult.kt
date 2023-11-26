@@ -1,6 +1,7 @@
-package blackjack.domain.result
+package blackjack.domain.result.distribution
 
 import blackjack.domain.player.Player
+import blackjack.domain.result.Result
 
 data class DealToPlayerResult(
     val player: Player

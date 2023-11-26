@@ -2,12 +2,12 @@ package blackjack.domain
 
 import blackjack.controller.InputProcessor
 import blackjack.controller.ResultProcessor
+import blackjack.domain.distirbution.CardDistributor
+import blackjack.domain.distirbution.DealInitialCards
+import blackjack.domain.distirbution.DistributionEnd
 import blackjack.domain.player.Players
-import blackjack.domain.result.GameResult
 import blackjack.domain.result.Result
-import blackjack.domain.stage.CardDistributor
-import blackjack.domain.stage.DealInitialCards
-import blackjack.domain.stage.DistributionEnd
+import blackjack.domain.result.game.GameResult
 
 class BlackJackGame(
     private val inputProcessor: InputProcessor,
@@ -24,7 +24,7 @@ class BlackJackGame(
         while (dealCards !is DistributionEnd) {
             dealCards()
         }
-        emitResult(GameResult(table.players))
+        emitResult(GameResult.of(table.players, table.dealer))
     }
 
     private fun emitResult(result: Result) {
@@ -37,6 +37,6 @@ class BlackJackGame(
 
     private fun dealCards() {
         val result = dealCards(table) { distributor -> setDistributor(distributor) }
-        resultProcessor.handle(result)
+        emitResult(result)
     }
 }

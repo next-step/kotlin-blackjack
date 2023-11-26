@@ -1,4 +1,4 @@
-package blackjack.domain.stage
+package blackjack.domain.distirbution
 
 import blackjack.domain.GameTable
 import blackjack.domain.result.Result

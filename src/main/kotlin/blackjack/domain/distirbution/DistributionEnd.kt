@@ -1,7 +1,7 @@
-package blackjack.domain.stage
+package blackjack.domain.distirbution
 
 import blackjack.domain.GameTable
-import blackjack.domain.result.DistributionEndResult
+import blackjack.domain.result.distribution.DistributionEndResult
 
 class DistributionEnd : CardDistributor {
 

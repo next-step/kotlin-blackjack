@@ -8,8 +8,8 @@ import blackjack.domain.player.Player
 
 class Dealer(
     val deck: Deck = Card.allShuffled(),
-    val dealerPlayer: DealerPlayer = DealerPlayer(),
-) : CardHolder by dealerPlayer {
+    val player: DealerPlayer = DealerPlayer(),
+) : CardHolder by player {
     fun dealCards(count: Int, vararg players: Player) {
         players.forEach { dealCards(count, it) }
     }

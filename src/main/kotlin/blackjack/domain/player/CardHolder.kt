@@ -14,8 +14,8 @@ interface CardHolder {
     val isBust: Boolean
         get() = score.isBust
 
-    fun isScoreGreaterThan(other: Int): Boolean =
-        score.isGreaterThan(other)
+    infix fun isGreaterCardScoreThan(other: Int): Boolean =
+        score isGreaterCardScoreThan other
 
     fun addCard(card: Card) {
         hand.add(card)

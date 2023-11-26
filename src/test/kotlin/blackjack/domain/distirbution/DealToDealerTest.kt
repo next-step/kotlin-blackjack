@@ -1,4 +1,4 @@
-package blackjack.domain.stage
+package blackjack.domain.distirbution
 
 import blackjack.domain.Action
 import blackjack.domain.BlackJackGame
@@ -30,7 +30,7 @@ class DealToDealerTest : DescribeSpec({
                 Card(Suit.SPADE, Rank.TWO),
                 Card(Suit.SPADE, Rank.THREE),
             )
-            val dealer = Dealer(dealerPlayer = DealerPlayer(Hand(under16ScoreCards)))
+            val dealer = Dealer(player = DealerPlayer(Hand(under16ScoreCards)))
             val game = BlackJackGame(InputProcessorMock(), table = GameTable(dealer, players))
             val dealToDealer = DealToDealer()
             game.setDistributor(dealToDealer)
@@ -56,7 +56,7 @@ class DealToDealerTest : DescribeSpec({
                 Card(Suit.SPADE, Rank.QUEEN),
                 Card(Suit.SPADE, Rank.QUEEN),
             )
-            val dealer = Dealer(dealerPlayer = DealerPlayer(Hand(over16ScoreCards)))
+            val dealer = Dealer(player = DealerPlayer(Hand(over16ScoreCards)))
             val game = BlackJackGame(InputProcessorMock(), table = GameTable(dealer, players))
             val dealToDealer = DealToDealer()
             game.setDistributor(dealToDealer)

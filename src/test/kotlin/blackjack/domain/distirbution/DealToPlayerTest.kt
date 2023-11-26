@@ -1,4 +1,4 @@
-package blackjack.domain.stage
+package blackjack.domain.distirbution
 
 import blackjack.domain.Action
 import blackjack.domain.BlackJackGame
