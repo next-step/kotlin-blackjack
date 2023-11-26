@@ -2,10 +2,9 @@ package blackjack.domain.result.game
 
 import blackjack.domain.Action
 import blackjack.domain.Dealer
-import blackjack.domain.card.Card
-import blackjack.domain.card.Hand
+import blackjack.domain.card
 import blackjack.domain.card.Rank
-import blackjack.domain.card.Suit
+import blackjack.domain.hand
 import blackjack.domain.player.DealerPlayer
 import blackjack.domain.player.Player
 import blackjack.domain.player.PlayerName
@@ -16,17 +15,18 @@ import io.kotest.matchers.shouldBe
 class GameResultTest : DescribeSpec({
     describe("GameResult of (dealer, players)") {
         val score25Cards =
-            mutableListOf(Card(Suit.CLUB, Rank.TEN), Card(Suit.CLUB, Rank.TEN), Card(Suit.CLUB, Rank.FIVE))
+            hand(card(Rank.TEN), card(Rank.TEN), card(Rank.FIVE))
         val score22Cards =
-            mutableListOf(Card(Suit.CLUB, Rank.TEN), Card(Suit.CLUB, Rank.TEN), Card(Suit.CLUB, Rank.TWO))
-        val score21Cards = mutableListOf(Card(Suit.CLUB, Rank.TEN), Card(Suit.CLUB, Rank.ACE))
-        val score10Cards = mutableListOf(Card(Suit.CLUB, Rank.TEN))
-        val score5Cards = mutableListOf(Card(Suit.CLUB, Rank.FIVE))
+            hand(card(Rank.TEN), card(Rank.TEN), card(Rank.TWO))
+        val score21Cards =
+            hand(card(Rank.TEN), card(Rank.ACE))
+        val score10Cards = hand(card(Rank.TEN))
+        val score5Cards = hand(card(Rank.FIVE))
 
         context("dealer(21) > player1(10) > player2(5)") {
-            val dealer = Dealer(player = DealerPlayer(Hand((score21Cards))))
-            val player1 = Player(PlayerName("kim"), { Action.HIT }, Hand(score10Cards))
-            val player2 = Player(PlayerName("kim"), { Action.HIT }, Hand(score5Cards))
+            val dealer = Dealer(player = DealerPlayer(score21Cards))
+            val player1 = Player(PlayerName("kim"), { Action.HIT }, score10Cards)
+            val player2 = Player(PlayerName("kim"), { Action.HIT }, score5Cards)
 
             val result = GameResult.of(Players(listOf(player1, player2)), dealer)
 
@@ -42,9 +42,9 @@ class GameResultTest : DescribeSpec({
         }
 
         context("player1(21) > player2(10) > dealer(5)") {
-            val dealer = Dealer(player = DealerPlayer(Hand(score5Cards)))
-            val player1 = Player(PlayerName("kim"), { Action.HIT }, Hand(score21Cards))
-            val player2 = Player(PlayerName("kim"), { Action.HIT }, Hand(score10Cards))
+            val dealer = Dealer(player = DealerPlayer(score5Cards))
+            val player1 = Player(PlayerName("kim"), { Action.HIT }, score21Cards)
+            val player2 = Player(PlayerName("kim"), { Action.HIT }, score10Cards)
 
             val result = GameResult.of(Players(listOf(player1, player2)), dealer)
 
@@ -62,9 +62,9 @@ class GameResultTest : DescribeSpec({
         }
 
         context("player1(21) > dealer(10) > player2(5)") {
-            val dealer = Dealer(player = DealerPlayer(Hand(score10Cards)))
-            val player1 = Player(PlayerName("kim"), { Action.HIT }, Hand(score21Cards))
-            val player2 = Player(PlayerName("kim"), { Action.HIT }, Hand(score5Cards))
+            val dealer = Dealer(player = DealerPlayer(score10Cards))
+            val player1 = Player(PlayerName("kim"), { Action.HIT }, score21Cards)
+            val player2 = Player(PlayerName("kim"), { Action.HIT }, score5Cards)
 
             val result = GameResult.of(Players(listOf(player1, player2)), dealer)
 
@@ -82,9 +82,9 @@ class GameResultTest : DescribeSpec({
         }
 
         context("dealer(5) > player1(22, BUST) == player2(22, BUST)") {
-            val dealer = Dealer(player = DealerPlayer(Hand(score5Cards)))
-            val player1 = Player(PlayerName("kim"), { Action.HIT }, Hand(score22Cards))
-            val player2 = Player(PlayerName("kim"), { Action.HIT }, Hand(score22Cards))
+            val dealer = Dealer(player = DealerPlayer(score5Cards))
+            val player1 = Player(PlayerName("kim"), { Action.HIT }, score22Cards)
+            val player2 = Player(PlayerName("kim"), { Action.HIT }, score22Cards)
 
             val result = GameResult.of(Players(listOf(player1, player2)), dealer)
 
@@ -102,9 +102,9 @@ class GameResultTest : DescribeSpec({
         }
 
         context("player1(5) == player2(5) > dealer(22, BUST)") {
-            val dealer = Dealer(player = DealerPlayer(Hand(score22Cards)))
-            val player1 = Player(PlayerName("kim"), { Action.HIT }, Hand(score5Cards))
-            val player2 = Player(PlayerName("kim"), { Action.HIT }, Hand(score5Cards))
+            val dealer = Dealer(player = DealerPlayer(score22Cards))
+            val player1 = Player(PlayerName("kim"), { Action.HIT }, score5Cards)
+            val player2 = Player(PlayerName("kim"), { Action.HIT }, score5Cards)
 
             val result = GameResult.of(Players(listOf(player1, player2)), dealer)
 
@@ -122,9 +122,9 @@ class GameResultTest : DescribeSpec({
         }
 
         context("player1(22, BUST) == player2(25, BUST) == dealer(22, BUST)") {
-            val dealer = Dealer(player = DealerPlayer(Hand(score22Cards)))
-            val player1 = Player(PlayerName("kim"), { Action.HIT }, Hand(score22Cards))
-            val player2 = Player(PlayerName("kim"), { Action.HIT }, Hand(score25Cards))
+            val dealer = Dealer(player = DealerPlayer(score22Cards))
+            val player1 = Player(PlayerName("kim"), { Action.HIT }, score22Cards)
+            val player2 = Player(PlayerName("kim"), { Action.HIT }, score25Cards)
 
             val result = GameResult.of(Players(listOf(player1, player2)), dealer)
 

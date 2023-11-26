@@ -4,10 +4,9 @@ import blackjack.domain.Action
 import blackjack.domain.BlackJackGame
 import blackjack.domain.Dealer
 import blackjack.domain.GameTable
-import blackjack.domain.card.Card
+import blackjack.domain.card
 import blackjack.domain.card.Hand
 import blackjack.domain.card.Rank
-import blackjack.domain.card.Suit
 import blackjack.domain.player.Player
 import blackjack.domain.player.PlayerName
 import blackjack.domain.player.Players
@@ -53,7 +52,7 @@ class DealToPlayerTest : DescribeSpec({
         }
 
         context("플레어가 STAND를 하면") {
-            val cards = mutableListOf(Card(Suit.HEART, Rank.TEN), Card(Suit.HEART, Rank.TEN))
+            val cards = mutableListOf(card(Rank.TEN), card(Rank.TEN))
             val players = Players(
                 listOf(
                     Player(PlayerName("currentPlayer"), { Action.STAND }, Hand(cards)),

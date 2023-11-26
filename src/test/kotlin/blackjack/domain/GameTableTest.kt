@@ -1,7 +1,6 @@
 package blackjack.domain
 
 import blackjack.domain.card.Card
-import blackjack.domain.card.Deck
 import blackjack.domain.card.Hand
 import blackjack.domain.card.Rank
 import blackjack.domain.card.Suit
@@ -90,13 +89,13 @@ class GameTableTest : DescribeSpec({
     }
 
     describe("dealToDealer") {
-        val cards = mutableListOf(
+        val cards = listOf(
             Card(Suit.CLUB, Rank.ACE),
             Card(Suit.CLUB, Rank.TWO),
             Card(Suit.DIAMOND, Rank.THREE),
             Card(Suit.DIAMOND, Rank.FOUR),
         )
-        val dealer = Dealer(Deck(ArrayDeque(cards)))
+        val dealer = Dealer(deck(cards))
         val deckCount = dealer.deck.cards.size
         val players = Players(
             listOf(
@@ -205,11 +204,8 @@ class GameTableTest : DescribeSpec({
             Player(PlayerName("lee"), { Action.HIT }, Hand()),
         )
         context("딜러가 HIT를 하면") {
-            val under16ScoreCards = mutableListOf(
-                Card(Suit.SPADE, Rank.TWO),
-                Card(Suit.SPADE, Rank.THREE),
-            )
-            val dealer = Dealer(player = DealerPlayer(Hand(under16ScoreCards)))
+            val under16ScoreCards = hand(card(Rank.TWO), card(Rank.THREE))
+            val dealer = Dealer(player = DealerPlayer(under16ScoreCards))
             val table = GameTable(dealer, Players(players))
             dealer.hitOrStand() shouldBe Action.HIT
 
@@ -221,11 +217,8 @@ class GameTableTest : DescribeSpec({
         }
 
         context("딜러가 STAND를 하면") {
-            val over16ScoreCards = mutableListOf(
-                Card(Suit.SPADE, Rank.QUEEN),
-                Card(Suit.SPADE, Rank.QUEEN),
-            )
-            val dealer = Dealer(player = DealerPlayer(Hand(over16ScoreCards)))
+            val over16ScoreCards = hand(card(Rank.QUEEN), card(Rank.QUEEN))
+            val dealer = Dealer(player = DealerPlayer(over16ScoreCards))
             val table = GameTable(dealer, Players(players))
             dealer.hitOrStand() shouldBe Action.STAND
 

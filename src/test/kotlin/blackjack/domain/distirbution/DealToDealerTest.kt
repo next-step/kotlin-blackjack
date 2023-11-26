@@ -4,10 +4,10 @@ import blackjack.domain.Action
 import blackjack.domain.BlackJackGame
 import blackjack.domain.Dealer
 import blackjack.domain.GameTable
-import blackjack.domain.card.Card
+import blackjack.domain.card
 import blackjack.domain.card.Hand
 import blackjack.domain.card.Rank
-import blackjack.domain.card.Suit
+import blackjack.domain.hand
 import blackjack.domain.player.DealerPlayer
 import blackjack.domain.player.Player
 import blackjack.domain.player.PlayerName
@@ -26,11 +26,8 @@ class DealToDealerTest : DescribeSpec({
             )
         )
         context("딜러가 HIT을 하면") {
-            val under16ScoreCards = mutableListOf(
-                Card(Suit.SPADE, Rank.TWO),
-                Card(Suit.SPADE, Rank.THREE),
-            )
-            val dealer = Dealer(player = DealerPlayer(Hand(under16ScoreCards)))
+            val under16ScoreCards = hand(card(Rank.TWO), card(Rank.THREE))
+            val dealer = Dealer(player = DealerPlayer(under16ScoreCards))
             val game = BlackJackGame(InputProcessorMock(), table = GameTable(dealer, players))
             val dealToDealer = DealToDealer()
             game.setDistributor(dealToDealer)
@@ -52,11 +49,8 @@ class DealToDealerTest : DescribeSpec({
         }
 
         context("딜러가 STAND를 하면") {
-            val over16ScoreCards = mutableListOf(
-                Card(Suit.SPADE, Rank.QUEEN),
-                Card(Suit.SPADE, Rank.QUEEN),
-            )
-            val dealer = Dealer(player = DealerPlayer(Hand(over16ScoreCards)))
+            val over16ScoreCards = hand(card(Rank.QUEEN), card(Rank.QUEEN))
+            val dealer = Dealer(player = DealerPlayer(over16ScoreCards))
             val game = BlackJackGame(InputProcessorMock(), table = GameTable(dealer, players))
             val dealToDealer = DealToDealer()
             game.setDistributor(dealToDealer)
