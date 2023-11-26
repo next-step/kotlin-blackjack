@@ -40,22 +40,7 @@ object OutputView {
 
     private fun presentDealerResult(dealerResult: DealerResult) {
         println("## 최종 승패")
-        if (hasDraw(dealerResult)) {
-            presentResultWithDraw(dealerResult)
-        }
-        presentResultWithoutDraw(dealerResult)
-    }
-
-    private fun presentResultWithoutDraw(dealerResult: DealerResult) {
         println("딜러 ${dealerResult.winningCount}승 ${dealerResult.drawingCount}무 ${dealerResult.drawingCount}패")
-    }
-
-    private fun presentResultWithDraw(dealerResult: DealerResult) {
-        println("딜러 ${dealerResult.winningCount}승 ${dealerResult.drawingCount}패")
-    }
-
-    private fun hasDraw(dealerResult: DealerResult): Boolean {
-        return dealerResult.drawingCount > 0
     }
 
     fun presentDealerAction(playableReaction: PlayableReaction) {

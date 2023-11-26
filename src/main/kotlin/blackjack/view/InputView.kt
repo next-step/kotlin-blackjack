@@ -34,11 +34,19 @@ object InputView {
         return (readlnOrNull() ?: "") == HIT_COMMAND
     }
 
-    fun askHit(it: Player): PlayingStrategy {
-        println("${it.name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
+    fun askHit(): PlayingStrategy {
+        println("플레이어는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
         if (this.isHitInput()) {
             return HitStrategy
         }
         return StandStrategy
     }
+    //TODO
+//    fun askHit(it: Player): PlayingStrategy {
+//        println("${it.name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
+//        if (this.isHitInput()) {
+//            return HitStrategy
+//        }
+//        return StandStrategy
+//    }
 }
