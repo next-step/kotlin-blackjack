@@ -4,6 +4,7 @@ import blackjack.model.Players
 import blackjack.model.card.CardFixture
 import blackjack.model.pack.impl.ShuffledPack
 import blackjack.model.playable.BlackjackScore
+import blackjack.model.playable.PlayableResult
 import blackjack.model.playblestrategy.impl.DealerStrategy
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.collections.shouldContain
@@ -34,18 +35,18 @@ class DealerTest : StringSpec({
     }
 
     "딜러가 21을 초과하면 그 시점까지 남아 있던 플레이어들은 가지고 있는 패에 상관 없이 승리해야 한다" {
+        val dealer = Dealer(
+            CardFixture.makeCards(CardFixture.five, CardFixture.seven, CardFixture.king)
+        )
+
         val player1 = Player(
             "seoul",
             CardFixture.makeCards(CardFixture.ace1, CardFixture.king)
-
         )
+
         val player2 = Player(
             "wonju",
             CardFixture.makeCards(CardFixture.queen, CardFixture.king)
-
-        )
-        val dealer = Dealer(
-            CardFixture.makeCards(CardFixture.five, CardFixture.seven, CardFixture.king)
         )
 
         val actualDealerResult = dealer.dealerResult(
@@ -56,5 +57,44 @@ class DealerTest : StringSpec({
         actualDealerResult.winningCount shouldBe 0
         actualDealerResult.drawingCount shouldBe 0
         actualDealerResult.losingCount shouldBe 2
+    }
+
+    "딜러와 플리어이 모두가 Burst 상황이라면 플레이어 가 WIN(승리) 해야한다" {
+        val dealer = Dealer(CardFixture.makeCards(CardFixture.queen, CardFixture.nine, CardFixture.three))
+        val player1 = Player(
+            "malibu",
+            CardFixture.makeCards(CardFixture.ten, CardFixture.jack, CardFixture.four)
+        )
+        val player2 = Player(
+            "martini",
+            CardFixture.makeCards(CardFixture.nine, CardFixture.eight, CardFixture.seven)
+        )
+
+        player1.result(dealer) shouldBe PlayableResult.WIN
+        player2.result(dealer) shouldBe PlayableResult.WIN
+        dealer.result(player1) shouldBe PlayableResult.LOSE
+        dealer.result(player2) shouldBe PlayableResult.LOSE
+    }
+
+    "플레이어는 (Burst 가 아닌 상황에서, burst와 관계없이) 딜러보다 점수가 낮은경우 LOSE 결과를 반환 해야 한다" {
+        val dealer = Dealer(CardFixture.makeCards(CardFixture.queen, CardFixture.ten))
+        val player = Player(
+            "malibu",
+            CardFixture.makeCards(CardFixture.ten, CardFixture.five)
+        )
+        val actual = player.result(dealer)
+        actual shouldBe PlayableResult.LOSE
+    }
+
+    "플레이어는 딜러와 점수가 같은 경우 DRAW 결과를 반환 해야 한다" {
+        val dealer = Dealer(CardFixture.makeCards(CardFixture.queen, CardFixture.nine, CardFixture.two))
+        val player = Player(
+            "malibu",
+            CardFixture.makeCards(CardFixture.ten, CardFixture.jack, CardFixture.ace2)
+        )
+
+        dealer.score() shouldBe BlackjackScore(21)
+        player.score() shouldBe BlackjackScore(21)
+        player.result(dealer) shouldBe PlayableResult.DRAW
     }
 })
