@@ -45,8 +45,8 @@ fun printResults(dealer: Dealer, players: List<Player>) {
 
 private fun buildDealerResult(players: List<Player>): String {
     val resultString = StringBuilder()
-    Result.values().forEach { result ->
-        resultString.append("${players.count { it.result == result }}${result.inKorean} ")
+    Result.values().reversed().forEach { result ->
+        resultString.append("${players.count { it.result == result }}${result.resultOnDealer().inKorean} ")
     }
 
     return resultString.toString()

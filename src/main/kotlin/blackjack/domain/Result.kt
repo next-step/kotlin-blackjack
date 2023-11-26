@@ -5,6 +5,14 @@ enum class Result(val inKorean: String) {
     DRAW("무"),
     LOSE("패");
 
+    fun resultOnDealer(): Result {
+        return when (this) {
+            WIN -> LOSE
+            DRAW -> DRAW
+            LOSE -> WIN
+        }
+    }
+
     companion object {
         fun of(hasWon: Boolean?): Result {
             return when (hasWon) {
