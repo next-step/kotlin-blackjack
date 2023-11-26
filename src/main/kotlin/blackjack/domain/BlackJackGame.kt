@@ -21,8 +21,10 @@ class BlackJackGame(
         private set
 
     fun run() {
-        while (dealCards !is DistributionEnd) {
+        var distributionCount = 0
+        while (dealCards !is DistributionEnd && distributionCount < MAX_DISTRIBUTION_COUNT) {
             dealCards()
+            distributionCount++
         }
         emitResult(GameResult.of(table.players, table.dealer))
     }
@@ -38,5 +40,9 @@ class BlackJackGame(
     private fun dealCards() {
         val result = dealCards(table) { distributor -> setDistributor(distributor) }
         emitResult(result)
+    }
+
+    companion object {
+        private const val MAX_DISTRIBUTION_COUNT = 20
     }
 }
