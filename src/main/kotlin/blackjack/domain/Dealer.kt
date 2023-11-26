@@ -1,7 +1,5 @@
 package blackjack.domain
 
-import blackjack.domain.BlackjackUtil.DEALER_DRAW_THRESHOLD
-import blackjack.domain.BlackjackUtil.DEALER_OPEN_CARD_NUM
 import blackjack.domain.BlackjackUtil.computeScore
 
 class Dealer : Player("딜러") {
@@ -29,5 +27,7 @@ class Dealer : Player("딜러") {
 
     companion object {
         const val INITIAL_CARD_NUM = 2
+        const val DEALER_OPEN_CARD_NUM = 1
+        const val DEALER_DRAW_THRESHOLD = 16
     }
 }
