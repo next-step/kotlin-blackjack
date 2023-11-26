@@ -40,11 +40,15 @@ class Dealer(
         return this.score() vs other.score()
     }
 
-    override fun isAlive(): BlackJackStatus {
+    override fun status(): BlackJackStatus {
         if (this.score().isBurst()) {
             return BlackJackStatus.DIE
         }
         return BlackJackStatus.ALIVE
+    }
+
+    override fun isBurst(): Boolean {
+        return this.score().isBurst()
     }
 
     fun dealerResult(players: Players): DealerResult {
@@ -52,6 +56,6 @@ class Dealer(
     }
 
     fun isNotBurst(): Boolean {
-        return !this.score().isBurst()
+        return !this.isBurst()
     }
 }

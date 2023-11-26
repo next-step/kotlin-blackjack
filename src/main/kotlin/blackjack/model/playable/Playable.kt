@@ -9,5 +9,6 @@ interface Playable {
     fun dealing(pack: Pack)
     fun playing(playingStrategy: PlayingStrategy, pack: Pack): PlayableReaction
     fun result(playable: Playable): PlayableResult
-    fun isAlive(): BlackJackStatus
+    fun isBurst(): Boolean
+    fun status(): BlackJackStatus
 }

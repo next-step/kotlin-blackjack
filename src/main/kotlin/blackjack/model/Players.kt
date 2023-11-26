@@ -18,7 +18,7 @@ class Players(
     }
 
     fun hasAnyAlivePlayer(): Boolean {
-        val burstPlayers: List<Boolean> = values.map { it.isAlive() == BlackJackStatus.ALIVE }.toList()
+        val burstPlayers: List<Boolean> = values.map { it.status() == BlackJackStatus.ALIVE }.toList()
         return burstPlayers.contains(true)
     }
 
@@ -28,13 +28,9 @@ class Players(
 
     fun playingTurn(playingStrategy: PlayingStrategy, pack: Pack) {
         values.forEach {
-            if (this.isAlive(it)) {
+            if (it.status() == BlackJackStatus.ALIVE) {
                 it.playing(playingStrategy, pack)
             }
         }
-    }
-
-    private fun isAlive(player: Player): Boolean {
-        return player.isAlive() == BlackJackStatus.ALIVE
     }
 }

@@ -12,7 +12,6 @@ import blackjack.model.playblestrategy.PlayingStrategy
 class Player(
     val name: String,
     val cards: Cards = Cards.emptyCards(),
-    var blackJackStatus: BlackJackStatus = BlackJackStatus.ALIVE,
 ) : Playable {
 
     override fun score(): BlackjackScore {
@@ -25,7 +24,6 @@ class Player(
     }
 
     override fun playing(playingStrategy: PlayingStrategy, pack: Pack): PlayableReaction {
-
         if (playingStrategy.isHit()) {
             this.hit(pack)
             return PlayableReaction.HIT
@@ -37,12 +35,16 @@ class Player(
         return this.score() vs playable.score()
     }
 
+    override fun isBurst(): Boolean {
+        return this.score().isBurst()
+    }
+
     fun hit(pack: Pack) {
         cards.add(pack.pickCard())
     }
 
-    override fun isAlive(): BlackJackStatus {
-        if (this.score().isBurst()) {
+    override fun status(): BlackJackStatus {
+        if (this.isBurst()) {
             return BlackJackStatus.DIE
         }
         return BlackJackStatus.ALIVE
