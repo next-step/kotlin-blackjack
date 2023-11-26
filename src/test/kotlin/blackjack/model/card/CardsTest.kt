@@ -1,5 +1,6 @@
 package blackjack.model.card
 
+import blackjack.model.playable.BlackjackScore
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 
@@ -14,7 +15,7 @@ class CardsTest : StringSpec({
                 Card.of(Suit.HEART, CardRank.KING)
             )
         ).totalScore()
-        actual shouldBe (3 + 5 + 8 + 10)
+        actual shouldBe BlackjackScore(3 + 5 + 8 + 10)
     }
 
     "합계점수가 21를 초과 하는 경우, ACE 가 1로 인식되어야 한다" {
@@ -26,7 +27,7 @@ class CardsTest : StringSpec({
                 Card.of(Suit.HEART, CardRank.KING)
             )
         ).totalScore()
-        actual shouldBe (1 + 5 + 8 + 10)
+        actual shouldBe BlackjackScore(1 + 5 + 8 + 10)
     }
 
     "합계점수가 21를 이하인 경우, ACE 가 11로 인식되어야 한다" {
@@ -37,6 +38,6 @@ class CardsTest : StringSpec({
                 Card.of(Suit.DIAMOND, CardRank.FIVE),
             )
         ).totalScore()
-        actual shouldBe (11 + 3 + 5)
+        actual shouldBe BlackjackScore(11 + 3 + 5)
     }
 })

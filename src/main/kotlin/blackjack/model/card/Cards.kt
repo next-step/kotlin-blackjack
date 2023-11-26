@@ -1,5 +1,7 @@
 package blackjack.model.card
 
+import blackjack.model.playable.BlackjackScore
+
 class Cards(
     cards: List<Card> = emptyList(),
 ) {
@@ -10,11 +12,11 @@ class Cards(
         _cards.add(card)
     }
 
-    fun totalScore(): Int {
+    fun totalScore(): BlackjackScore {
         if (this.isContainsAce()) {
-            return scoreWithAce()
+            return BlackjackScore(scoreWithAce())
         }
-        return simpleSumOfScore()
+        return BlackjackScore(simpleSumOfScore())
     }
 
     private fun simpleSumOfScore(): Int {
