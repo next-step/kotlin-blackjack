@@ -19,11 +19,11 @@ data class Player(val name: String, var state: State) {
 
     fun isFinished() = state.isFinished()
 
-    fun isBust() = state is Bust
+    fun isNotBust() = state !is Bust
 
     fun cards(): List<Card> {
-        return state.cards().deck
+        return state.cards()
     }
 
-    fun score() = state.cards().calculateScore()
+    fun score() = state.calculateScore()
 }

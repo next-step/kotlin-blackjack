@@ -20,7 +20,11 @@ class Hit(override val cardDeck: CardDeck) : Running() {
         return Stay(cardDeck)
     }
 
-    override fun cards(): CardDeck {
-        return cardDeck
+    override fun calculateScore(): Int {
+        return cardDeck.calculateScore()
+    }
+
+    override fun cards(): List<Card> {
+        return cardDeck.deck
     }
 }
