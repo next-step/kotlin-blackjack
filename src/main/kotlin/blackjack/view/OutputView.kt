@@ -1,6 +1,7 @@
 package blackjack.view
 
 import blackjack.model.Participants
+import blackjack.model.playable.impl.Dealer
 import blackjack.model.playable.impl.Player
 import blackjack.model.result.DealerResult
 import blackjack.view.Console.presentDealers
@@ -27,11 +28,16 @@ object OutputView {
         println("딜러와 ${participants.names()} 에게 2 장씩 나누었습니다.")
     }
 
-    fun playerCardPresent(it: Player) {
-        println(it.presentPlayers())
+    fun presentResult(participants: Participants) {
+        presentDealerResult(participants.dealer.dealerResult(participants.players))
+        participants.players.values.forEach { it -> presentPlayerResult(it, participants.dealer) }
     }
 
-    fun presentResult(dealerResult: DealerResult) {
+    private fun presentPlayerResult(player: Player, dealer: Dealer) {
+        println("${player.name} : ${player.result(dealer)}")
+    }
+
+    private fun presentDealerResult(dealerResult: DealerResult) {
         println("## 최종 승패")
         if (hasDraw(dealerResult)) {
             presentResultWithDraw(dealerResult)

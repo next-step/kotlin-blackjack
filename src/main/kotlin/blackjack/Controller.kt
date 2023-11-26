@@ -2,7 +2,6 @@ package blackjack
 
 import blackjack.model.BlackJackGame
 import blackjack.model.pack.impl.ShuffledPack
-import blackjack.model.result.DealerResult
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
@@ -11,8 +10,7 @@ fun main() {
     participants.dealing(ShuffledPack)
     OutputView.dealing(participants)
     OutputView.presentCards(participants)
-    val game = BlackJackGame(participants)
-    game.start()
+    BlackJackGame(participants).start()
     OutputView.presentScores(participants)
-    OutputView.presentResult(DealerResult.a())
+    OutputView.presentResult(participants)
 }
