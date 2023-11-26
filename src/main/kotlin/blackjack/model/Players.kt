@@ -1,8 +1,8 @@
 package blackjack.model
 
 import blackjack.model.pack.Pack
-import blackjack.model.playblestrategy.impl.ConsoleInputStrategy
 import blackjack.model.playable.impl.Player
+import blackjack.model.playblestrategy.impl.ConsoleInputStrategy
 
 class Players(
     val values: Set<Player>,
@@ -27,9 +27,9 @@ class Players(
     }
 
     fun playingTurn(pack: Pack) {
-        values.forEach {
-            if (it.status() == BlackJackStatus.ALIVE) {
-                it.playing(ConsoleInputStrategy(), pack)
+        values.forEach { player ->
+            if (player.status() == BlackJackStatus.ALIVE) {
+                player.playing(ConsoleInputStrategy(player), pack)
             }
         }
     }

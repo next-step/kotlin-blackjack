@@ -1,11 +1,14 @@
 package blackjack.model.playblestrategy.impl
 
+import blackjack.model.playable.impl.Player
 import blackjack.model.playblestrategy.PlayingStrategy
 
-class ConsoleInputStrategy : PlayingStrategy {
+class ConsoleInputStrategy(
+    val player: Player,
+) : PlayingStrategy {
 
     override fun isHit(): Boolean {
-        println("플레이어는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
+        println("${player.name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
         return this.isHitInput()
     }
 
