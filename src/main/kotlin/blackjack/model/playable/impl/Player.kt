@@ -1,8 +1,8 @@
 package blackjack.model.playable.impl
 
-import blackjack.model.Referee
 import blackjack.model.card.Cards
 import blackjack.model.pack.Pack
+import blackjack.model.playable.BlackjackScore
 import blackjack.model.playable.Playable
 import blackjack.model.playable.PlayableReaction
 import blackjack.model.playable.PlayableResult
@@ -13,7 +13,7 @@ class Player(
     val cards: Cards = Cards.emptyCards(),
 ) : Playable {
 
-    override fun score(): Int {
+    override fun score(): BlackjackScore {
         return this.cards.totalScore()
     }
 
@@ -30,21 +30,15 @@ class Player(
         return PlayableReaction.STAND
     }
 
+    override fun result(other: Playable): PlayableResult {
+        return this.score() vs other.score()
+    }
+
     fun hit(pack: Pack) {
         cards.add(pack.pickCard())
     }
 
-    override fun result(playable: Playable): PlayableResult {
-        if (this.score() == playable.score()) {
-            return PlayableResult.DRAW
-        }
-        if (this.score() > playable.score()) {
-            return PlayableResult.WIN
-        }
-        return PlayableResult.LOSE
-    }
-
     override fun isBurst(): Boolean {
-        return this.score() > Referee.BLACK_JACK_SCORE
+        return this.score().isBurst()
     }
 }

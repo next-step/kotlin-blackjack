@@ -1,9 +1,10 @@
 package blackjack.model.playblestrategy.impl
 
+import blackjack.model.playable.BlackjackScore
 import blackjack.model.playblestrategy.PlayingStrategy
 
-class DealerStrategy(
-    private val currentScore: Int,
+data class DealerStrategy(
+    private val currentScore: BlackjackScore,
 ) : PlayingStrategy {
 
     override fun isHit(): Boolean {
@@ -11,6 +12,6 @@ class DealerStrategy(
     }
 
     companion object {
-        private const val DEALER_PICK_THRESHOLD = 16
+        private val DEALER_PICK_THRESHOLD = BlackjackScore(16)
     }
 }

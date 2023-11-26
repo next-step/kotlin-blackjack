@@ -1,9 +1,9 @@
 package blackjack.model.playable.impl
 
 import blackjack.model.Players
-import blackjack.model.Referee
 import blackjack.model.card.Cards
 import blackjack.model.pack.Pack
+import blackjack.model.playable.BlackjackScore
 import blackjack.model.playable.Playable
 import blackjack.model.playable.PlayableReaction
 import blackjack.model.playable.PlayableResult
@@ -14,7 +14,7 @@ class Dealer(
     val cards: Cards = Cards(),
 ) : Playable {
 
-    override fun score(): Int {
+    override fun score(): BlackjackScore {
         return cards.totalScore()
     }
 
@@ -35,17 +35,17 @@ class Dealer(
         return PlayableReaction.STAND
     }
 
-    override fun result(playable: Playable): PlayableResult {
-        TODO("Not yet implemented")
+    override fun result(other: Playable): PlayableResult {
+        return this.score() vs other.score()
     }
 
     override fun isBurst(): Boolean {
-        return this.score() > Referee.BLACK_JACK_SCORE
+        return this.score().isBurst()
     }
 
-    fun dealerResult(players: Players): Pair<Dealer, DealerResult> {
+    fun dealerResult(players: Players): DealerResult {
         val results = players.values.map { it -> this.result(it) }
-        return this to DealerResult(
+        return DealerResult(
             score = this.score(),
             winningCount = results.count { it == PlayableResult.WIN },
             drawingCount = results.count { it == PlayableResult.DRAW },

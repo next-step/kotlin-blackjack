@@ -4,7 +4,7 @@ import blackjack.model.pack.Pack
 import blackjack.model.playblestrategy.PlayingStrategy
 
 interface Playable {
-    fun score(): Int
+    fun score(): BlackjackScore
     fun dealing(pack: Pack)
     fun playing(playingStrategy: PlayingStrategy, pack: Pack): PlayableReaction
     fun result(playable: Playable): PlayableResult

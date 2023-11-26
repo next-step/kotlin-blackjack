@@ -1,7 +1,9 @@
 package blackjack.model.result
 
+import blackjack.model.playable.BlackjackScore
+
 data class DealerResult(
-    val score: Int,
+    val score: BlackjackScore,
     val winningCount: Int,
     val drawingCount: Int,
     val losingCount: Int,
