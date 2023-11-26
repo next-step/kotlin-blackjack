@@ -6,7 +6,7 @@
     <img src="./step2_design.png" width="300" alt="">
 
 
-- [ ] Player는 이름을 가진다.
+- [x] Player는 이름을 가진다.
 - [ ] Dealer는 모든 종류의 카드를 하나씩 가진다.
 - [ ] Player는 처음에 2장의 카드를 Dealer로부터 받는다.
 - [ ] A 카드는 1점 혹은 11점으로 계산되고, JQK는 10점으로 계산된다. 그 외는 자신의 숫자대로 계산된다.
