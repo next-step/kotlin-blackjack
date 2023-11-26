@@ -10,7 +10,10 @@ class ResultProcessor {
     fun handle(result: Result) {
         when (result) {
             is DealInitialCardResult -> ViewResultProcessor.drawInitialDistribution(result)
-            is DealToPlayerResult -> ViewResultProcessor.drawPlayerState(result)
+            is DealToPlayerResult -> {
+                if (result.isSystemStand) return
+                ViewResultProcessor.drawPlayerState(result)
+            }
             is DealToDealerResult -> ViewResultProcessor.drawDealerState(result)
             is GameResult -> ViewResultProcessor.drawGameResult(result)
         }
