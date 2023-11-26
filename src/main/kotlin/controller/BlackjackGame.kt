@@ -1,4 +1,4 @@
-package service
+package controller
 
 import domain.BlackjackRules
 import domain.Dealer
@@ -12,18 +12,38 @@ class BlackjackGame(private val inputView: InputView, private val outputView: Ou
     private val players = mutableListOf<Player>()
     private val dealer = Dealer()
 
-    fun addPlayer(name: String) {
-        players.add(Player(name))
+    fun startGame() {
+        initializeGame()
+        conductGame()
+        concludeGame()
     }
 
-    fun startGame() {
+    private fun initializeGame() {
+        val playerNames = inputView.readPlayerNames()
+        playerNames.forEach { addPlayer(it) }
         dealInitialCards()
         outputView.showInitialCards(players, dealer)
+    }
 
+    private fun conductGame() {
         playPlayersTurn()
         playDealerTurn()
+    }
 
-        outputView.showGameResult(players, dealer)
+    private fun concludeGame() {
+        determineResults()
+        outputView.showPlayerResults(players, dealer)
+        outputView.showFinalResults(players, dealer)
+    }
+
+    private fun determineResults() {
+        val dealerScore = dealer.calculateScore()
+        players.forEach { player ->
+            player.determineResult(dealerScore)
+        }
+    }
+    private fun addPlayer(name: String) {
+        players.add(Player(name))
     }
 
     private fun dealInitialCards() {
@@ -46,8 +66,11 @@ class BlackjackGame(private val inputView: InputView, private val outputView: Ou
 
     private fun playDealerTurn() {
         while (dealer.calculateScore() < BlackjackRules.DEALER_HIT_THRESHOLD) {
-            drawCardForDealer()
-            outputView.showGameState(players, dealer)
+            val card = deck.drawCard()
+            if (card != null) {
+                dealer.receiveCard(card)
+                outputView.showGameState(players, dealer)
+            }
         }
     }
 

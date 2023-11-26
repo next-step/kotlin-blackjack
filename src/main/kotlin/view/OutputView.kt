@@ -5,6 +5,7 @@ import domain.Player
 
 interface OutputView {
     fun showGameState(players: List<Player>, dealer: Dealer)
-    fun showGameResult(players: List<Player>, dealer: Dealer)
+    fun showPlayerResults(players: List<Player>, dealer: Dealer)
+    fun showFinalResults(players: List<Player>, dealer: Dealer)
     fun showInitialCards(players: List<Player>, dealer: Dealer)
 }
