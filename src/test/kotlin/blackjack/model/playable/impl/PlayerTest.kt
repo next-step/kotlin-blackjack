@@ -38,6 +38,7 @@ class PlayerTest : StringSpec({
                 CardFixture.nine
             )
         )
+
         player.status() shouldBe BlackJackStatus.DIE
         player.isBurst() shouldBe true
         player.score() shouldBe BlackjackScore(2 + 3 + 4 + 8 + 9)
@@ -50,7 +51,18 @@ class PlayerTest : StringSpec({
             CardFixture.makeCards(CardFixture.ten, CardFixture.jack, CardFixture.ace2)
         )
         val actual = player.result(dealer)
+
         actual shouldBe PlayableResult.LOSE
+    }
+
+    "플레이어는 딜러보다 점수가 높은 경우 Win 결과를 반환 해야 한다" {
+        val dealer = Dealer(CardFixture.makeCards(CardFixture.queen, CardFixture.three))
+        val player = Player(
+            "malibu",
+            CardFixture.makeCards(CardFixture.ten, CardFixture.jack)
+        )
+
+        player.result(dealer) shouldBe PlayableResult.WIN
     }
 
     "플레이어는 (Burst 가 아닌 상황에서, burst와 관계없이) 딜러보다 점수가 낮은경우 LOSE 결과를 반환 해야 한다" {
