@@ -17,6 +17,8 @@ abstract class Gamer(
 
     fun getCurrentGamerState(): GamerCurrentState = currentState
 
+    fun gamerIsBust(): Boolean = currentState == GamerCurrentState.BUST
+
     open fun drawCard(cardDeque: CardDeque) {
         val newCard = cardDeque.generateSingleCard()
         gamerCards.addCard(newCard)

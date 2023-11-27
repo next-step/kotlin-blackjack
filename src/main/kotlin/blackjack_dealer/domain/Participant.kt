@@ -37,7 +37,11 @@ data class Participant(
         val dealerScore = dealer.getCurrentCards().getCurrentScore()
         val participantScore = getCurrentCards().getCurrentScore()
 
-        if (getCurrentGamerState() == GamerCurrentState.BUST) return ParticipantResultState.LOSE
+        if (gamerIsBust()) return if (dealer.gamerIsBust()) {
+            ParticipantResultState.DRAW
+        } else {
+            ParticipantResultState.LOSE
+        }
         if (dealerScore > BLACK_JACK) return ParticipantResultState.WIN
 
         return when {
