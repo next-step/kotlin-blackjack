@@ -1,10 +1,28 @@
 package blackjack_dealer
 
+import blackjack_dealer.domain.Participant
+import blackjack_dealer.entity.GamerCards
+import blackjack_dealer.entity.card.Card
+import blackjack_dealer.entity.card.CardNumber
+import blackjack_dealer.entity.card.CardShape
+import blackjack_dealer.entity.state.GamerCurrentState
 import io.kotest.core.spec.style.StringSpec
+import io.kotest.matchers.shouldBe
 
 class BetAmountTest : StringSpec({
     "카드를 더 뽑아 초과 했을 때 베팅 금액을 모두 잃는다" {
+        val cards = GamerCards.newInstance(
+            listOf(
+                Card(cardNumber = CardNumber.J, cardShape = CardShape.CLOVER),
+                Card(cardNumber = CardNumber.K, cardShape = CardShape.CLOVER),
+                Card(cardNumber = CardNumber.Q, cardShape = CardShape.DIAMOND),
+            )
+        )
+        val participant = Participant.newInstance("석주", cards, 20000)
+        val expected = -20000
 
+        participant.getCurrentGamerState() shouldBe GamerCurrentState.BUST
+        participant.getResultBetAmount() shouldBe expected
     }
 
     "승리 했을 때 배팅한 금액 만큼 받는다." {
