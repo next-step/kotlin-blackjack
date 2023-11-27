@@ -4,9 +4,9 @@ import blackjack.model.blackjack.BlackJackStatus
 import blackjack.model.card.CardFixture
 import blackjack.model.card.pack.impl.ShuffledPack
 import blackjack.model.player.BlackjackScore
-import blackjack.model.result.PlayableResult
 import blackjack.model.player.playable.impl.Dealer
 import blackjack.model.player.playable.impl.Player
+import blackjack.model.result.PlayableResult
 import io.kotest.assertions.throwables.shouldNotThrow
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
@@ -46,15 +46,15 @@ class PlayerTest : StringSpec({
         player.score() shouldBe BlackjackScore(2 + 3 + 4 + 8 + 9)
     }
 
-    "플레이어는 (Burst 상황에서, burst와 관계없이) 딜러보다 점수가 낮은경우 LOSE 결과를 반환 해야 한다" {
+    "플레이어가 BlackJack 이고, 딜러가 Burst 라면 플레이어가 승리하는 결과를 반환 해야 한다" {
         val dealer = Dealer(CardFixture.makeCards(CardFixture.queen, CardFixture.nine, CardFixture.three))
         val player = Player(
             "malibu",
             CardFixture.makeCards(CardFixture.ten, CardFixture.jack, CardFixture.ace2)
         )
-        val actual = player.result(dealer)
 
-        actual shouldBe PlayableResult.LOSE
+        player.result(dealer) shouldBe PlayableResult.WIN
+        dealer.result(player) shouldBe PlayableResult.LOSE
     }
 
     "플레이어는 딜러보다 점수가 높은 경우 Win 결과를 반환 해야 한다" {

@@ -1,12 +1,12 @@
 package blackjack.view
 
-import blackjack.model.player.Participants
 import blackjack.model.card.Cards
+import blackjack.model.player.Participants
 import blackjack.model.player.PlayableReaction
-import blackjack.model.result.PlayableResult
 import blackjack.model.player.playable.impl.Dealer
 import blackjack.model.player.playable.impl.Player
 import blackjack.model.result.DealerResult
+import blackjack.model.result.PlayableResult
 
 object OutputView {
 

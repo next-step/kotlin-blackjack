@@ -2,9 +2,9 @@ package blackjack.model.player.playable
 
 import blackjack.model.blackjack.BlackJackStatus
 import blackjack.model.card.pack.Pack
-import blackjack.model.player.playblestrategy.PlayingStrategy
 import blackjack.model.player.BlackjackScore
 import blackjack.model.player.PlayableReaction
+import blackjack.model.player.playblestrategy.PlayingStrategy
 import blackjack.model.result.PlayableResult
 
 interface Playable {
