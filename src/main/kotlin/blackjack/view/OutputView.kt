@@ -49,7 +49,7 @@ object OutputView {
     }
 
     private fun presentDealerResult(dealerResult: DealerResult) {
-        println("딜러 ${dealerResult.winningCount}승 ${dealerResult.drawingCount}무 ${dealerResult.drawingCount}패")
+        println("딜러 ${dealerResult.winningCount}승 ${dealerResult.drawingCount}무 ${dealerResult.losingCount}패")
     }
 
     fun presentDealerAction(playableReaction: PlayableReaction) {
