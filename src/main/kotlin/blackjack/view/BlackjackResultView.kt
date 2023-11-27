@@ -9,13 +9,20 @@ class BlackjackResultView {
         printPlayerInfos(playerInfos)
     }
 
-    fun printPlayerInfos(playerInfos: List<PlayerInfo>) {
-        playerInfos.forEach { printPlayerInfo(it) }
+    fun printGameResultStatus(playerInfos: List<PlayerInfo>) {
+        println("----- 게임 결과")
+        printPlayerInfos(playerInfos, true)
+    }
+
+    fun printPlayerInfos(playerInfos: List<PlayerInfo>, withScore: Boolean = false) {
+        playerInfos.forEach { printPlayerInfo(it, withScore) }
         println()
     }
 
-    fun printPlayerInfo(playerInfo: PlayerInfo) {
-        println("${playerInfo.name} 카드: ${playerInfo.createCardsString()}")
+    fun printPlayerInfo(playerInfo: PlayerInfo, withScore: Boolean = false) {
+        val message = "${playerInfo.name} 카드: ${playerInfo.createCardsString()}" + if (withScore) { " 결과 - ${playerInfo.score}" } else { "" }
+
+        println(message)
     }
 
     private fun List<PlayerInfo>.createPlayerNamesString(): String {

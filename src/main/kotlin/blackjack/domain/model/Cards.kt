@@ -12,7 +12,9 @@ class Cards(val cards: List<Card>) {
     }
 
     private fun List<Card>.getFirstCardScores(): Set<Score> {
-        return first().scores.toSet()
+        return first()
+            .scores
+            .toSet()
     }
 
     private fun calculatePossibleScores(card: Card, scores: Set<Score>): Set<Score> {
@@ -26,6 +28,16 @@ class Cards(val cards: List<Card>) {
         val minimumScore = scores().minBy { it.score }
 
         return minimumScore < WINNING_SCORE
+    }
+
+    fun getFinalScore(): Score {
+        val scores = scores()
+
+        if (scores.first() > WINNING_SCORE) {
+            return scores.first()
+        }
+
+        return scores.last { it <= WINNING_SCORE }
     }
 
     operator fun plus(card: Card): Cards {

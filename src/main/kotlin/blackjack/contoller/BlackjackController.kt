@@ -45,6 +45,12 @@ class BlackjackController(
             .run { blackjackResultView.printGameInitialStatus(this) }
     }
 
+    fun printGameResultStatus() {
+        blackjackGameProxy
+            .fetchPlayerInfos()
+            .run { blackjackResultView.printGameResultStatus(this) }
+    }
+
     fun printPlayerInfos() {
         blackjackGameProxy
             .fetchPlayerInfos()
@@ -54,7 +60,7 @@ class BlackjackController(
     fun printPlayerInfo(player: Player) {
         val playerInfo = PlayerInfo.from(player)
 
-        blackjackResultView.printPlayerInfo(playerInfo)
+        blackjackResultView.printPlayerInfo(playerInfo, false)
     }
 
     private fun convertPlayerNamesStringToList(playerNames: String?): List<PlayerName> {

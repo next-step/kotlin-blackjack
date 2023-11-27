@@ -32,7 +32,7 @@ private fun process(blackjackController: BlackjackController) {
         it.play(blackjackController)
     }
 
-    blackjackController.printPlayerInfos()
+    blackjackController.printGameResultStatus()
 }
 
 private fun PlayerName.play(blackjackController: BlackjackController) {

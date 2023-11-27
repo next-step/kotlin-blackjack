@@ -18,4 +18,8 @@ class Player(
     fun cards(): Cards {
         return cards
     }
+
+    fun getFinalScore(): Score {
+        return cards.getFinalScore()
+    }
 }
