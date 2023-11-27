@@ -22,11 +22,19 @@ class Cards(val cards: List<Card>) {
             .toSet()
     }
 
+    fun isPossibleToHit(): Boolean {
+        val minimumScore = scores().minBy { it.score }
+
+        return minimumScore < WINNING_SCORE
+    }
+
     operator fun plus(card: Card): Cards {
         return of(cards + listOf(card))
     }
 
     companion object {
+        private const val WINNING_SCORE = 21
+
         fun create(): Cards {
             val numbers = CardNumber.values()
             val shapes = CardShape.values()

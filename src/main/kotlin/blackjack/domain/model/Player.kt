@@ -6,7 +6,7 @@ class Player(
 ) {
 
     fun isPossibleToHit(): Boolean {
-        return cards.scores().minBy { it.score } < MAXIMUM_WINNING_SCORE
+        return cards.isPossibleToHit()
     }
 
     fun append(card: Card): Player {
@@ -17,9 +17,5 @@ class Player(
 
     fun cards(): Cards {
         return cards
-    }
-
-    companion object {
-        private const val MAXIMUM_WINNING_SCORE = 21
     }
 }
