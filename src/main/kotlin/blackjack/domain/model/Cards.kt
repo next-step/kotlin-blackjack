@@ -7,7 +7,7 @@ class Cards(val cards: List<Card>) {
             val shapes = CardShape.values()
 
             return shapes
-                .map { shape -> numbers.map { number -> Card(number, shape) } }
+                .map { shape -> numbers.map { number -> Card.of(number, shape) } }
                 .flatten()
                 .run { Cards(this) }
         }
