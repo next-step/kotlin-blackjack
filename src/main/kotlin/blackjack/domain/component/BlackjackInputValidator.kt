@@ -12,4 +12,10 @@ class BlackjackInputValidator {
 
         return playerNames
     }
+
+    fun validateYesNoString(yesNo: String?): String {
+        require(!yesNo.isNullOrBlank()) { "힛은 null 또는 공백일 수 없습니다." }
+
+        return yesNo
+    }
 }

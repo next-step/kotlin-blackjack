@@ -23,4 +23,14 @@ class BlackjackInputValidatorTest : FunSpec({
 
         shouldThrow<IllegalArgumentException> { validator.validatePlayerNamesSize(input) }
     }
+
+    test("예/아니오 입력이 null이거나 공백인 경우 IllegalArgumentException 테스트") {
+        forAll(
+            row(null),
+            row(""),
+            row(" "),
+        ) { playerNamesString ->
+            shouldThrow<IllegalArgumentException> { validator.validateYesNoString(playerNamesString) }
+        }
+    }
 })

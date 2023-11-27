@@ -3,6 +3,7 @@ package blackjack.contoller
 import blackjack.domain.component.BlackjackGameProxy
 import blackjack.domain.component.BlackjackInputValidator
 import blackjack.domain.model.PlayerName
+import blackjack.domain.model.YesNo
 import blackjack.view.BlackjackInputView
 
 class BlackjackController(
@@ -16,6 +17,12 @@ class BlackjackController(
         return convertPlayerNamesStringToList(playerNamesString)
     }
 
+    fun getHit(playerName: PlayerName): YesNo {
+        return blackJackInputView
+            .getHit(playerName.name)
+            .run { convertYesNo(this) }
+    }
+
     fun initGame(playerNames: List<PlayerName>) {
         blackjackGameProxy.init(playerNames)
     }
@@ -26,6 +33,12 @@ class BlackjackController(
             .split(PLAYER_NAME_SEPARATOR)
             .run { blackjackInputValidator.validatePlayerNamesSize(this) }
             .map { PlayerName(it) }
+    }
+
+    private fun convertYesNo(yesNo: String?): YesNo {
+        return yesNo
+            .run { blackjackInputValidator.validateYesNoString(this) }
+            .run { YesNo.from(this) ?: YesNo.N }
     }
 
     companion object {
