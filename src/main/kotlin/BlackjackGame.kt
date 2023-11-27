@@ -4,7 +4,7 @@ import player.Player
 
 class BlackjackGame(private val cardPack: CardPack, private val playerList: List<Player>) {
 
-    private val index = CardIndex(maxIndex = cardPack.cardList.size)
+    private val index = GameIndex(maxIndex = cardPack.cardList.size)
 
     init {
         validateCardPack()
@@ -21,7 +21,7 @@ class BlackjackGame(private val cardPack: CardPack, private val playerList: List
     }
 
     fun hit(): PlayingCard {
-        val card = cardPack.cardList[index.getIndex()]
+        val card = cardPack.cardList[index.index]
         increaseCardIndex()
         return card
     }
