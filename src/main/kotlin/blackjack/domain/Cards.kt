@@ -1,6 +1,6 @@
 package blackjack.domain
 
-class PlayerCards(
+class Cards(
     values: List<Card> = emptyList()
 ) {
     var values: List<Card> = values
@@ -12,5 +12,12 @@ class PlayerCards(
 
     fun add(vararg cards: Card) {
         values = values + cards
+    }
+
+    fun isBust(): Boolean {
+        return toScore() > Score.BLACKJACK
+    }
+    fun isBlackjack(): Boolean {
+        return toScore() == Score.BLACKJACK
     }
 }
