@@ -14,4 +14,13 @@ enum class CardNumber(val number: Int, val displayName: String) {
     JACK(11, "J"),
     QUEEN(12, "Q"),
     KING(13, "K"),
+    ;
+
+    fun isAce(): Boolean {
+        return number == 1
+    }
+
+    fun isOneOfKQJ(): Boolean {
+        return number >= 11
+    }
 }
