@@ -3,7 +3,7 @@ package blackjack.domain.component
 import blackjack.domain.model.*
 
 class BlackjackGame private constructor(
-    private val players: Players,
+    val players: Players,
     private val cardPool: CardPool
 ) {
     fun isHitPossible(playerName: PlayerName): Boolean {
@@ -29,7 +29,7 @@ class BlackjackGame private constructor(
     }
 
     companion object {
-        private const val INITIAL_CARD_COUNT = 2
+        const val INITIAL_CARD_COUNT = 2
 
         fun create(playerNames: List<PlayerName>): BlackjackGame {
             val cardPool = CardPool.create()

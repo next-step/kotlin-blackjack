@@ -2,6 +2,7 @@ package blackjack.domain.component
 
 import blackjack.domain.model.Player
 import blackjack.domain.model.PlayerName
+import blackjack.domain.model.Players
 
 class BlackjackGameProxy(
     private var blackjackGame: BlackjackGame? = null
@@ -20,6 +21,12 @@ class BlackjackGameProxy(
         return blackjackGame
             .checkGameExist()
             .hit(playerName)
+    }
+
+    fun getPlayers(): Players {
+        return blackjackGame
+            .checkGameExist()
+            .players
     }
 
     private fun BlackjackGame?.checkGameExist(): BlackjackGame {

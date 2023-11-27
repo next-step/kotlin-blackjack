@@ -6,7 +6,7 @@ class BlackjackInputView {
     }
 
     fun getHit(playerName: String): String? {
-        return getInput("${playerName}, 한 장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
+        return getInput("$playerName, 한 장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
     }
 
     private fun getInput(message: String): String? {

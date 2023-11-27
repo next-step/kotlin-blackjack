@@ -39,6 +39,18 @@ class BlackjackController(
         return blackjackGameProxy.hit(playerName)
     }
 
+    fun printInitialGameStatus() {
+        blackjackGameProxy
+            .fetchPlayerInfos()
+            .run { blackjackResultView.printGameInitialStatus(this) }
+    }
+
+    fun printPlayerInfos() {
+        blackjackGameProxy
+            .fetchPlayerInfos()
+            .run { blackjackResultView.printPlayerInfos(this) }
+    }
+
     fun printPlayerInfo(player: Player) {
         val playerInfo = PlayerInfo.from(player)
 
@@ -57,6 +69,13 @@ class BlackjackController(
         return yesNo
             .run { blackjackInputValidator.validateYesNoString(this) }
             .run { YesNo.from(this) ?: YesNo.N }
+    }
+
+    private fun BlackjackGameProxy.fetchPlayerInfos(): List<PlayerInfo> {
+        return this
+            .getPlayers()
+            .players
+            .map { PlayerInfo.from(it) }
     }
 
     companion object {

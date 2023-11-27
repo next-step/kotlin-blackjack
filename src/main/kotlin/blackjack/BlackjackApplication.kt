@@ -17,6 +17,8 @@ fun main() {
 
     val playerNames: List<PlayerName> = blackjackController.getPlayerNames()
     blackjackController.initGame(playerNames)
+    blackjackController.printInitialGameStatus()
+
     playerNames.forEach {
         if (!blackjackController.getHitPossible(it)) {
             return@forEach
@@ -30,4 +32,6 @@ fun main() {
 
         blackjackController.printPlayerInfo(player)
     }
+
+    blackjackController.printPlayerInfos()
 }
