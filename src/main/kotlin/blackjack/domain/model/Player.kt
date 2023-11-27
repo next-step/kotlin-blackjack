@@ -4,7 +4,7 @@ class Player(
     private val name: PlayerName,
     private var cards: Cards
 ) {
-    fun isPossibleToDraw(): Boolean {
+    fun isPossibleToHit(): Boolean {
         return cards.scores().minBy { it.score } < MAXIMUM_WINNING_SCORE
     }
 
