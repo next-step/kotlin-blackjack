@@ -12,9 +12,9 @@ data class DealerResult(
         fun of(playerResults: List<PlayableResult>, score: BlackjackScore): DealerResult {
             return DealerResult(
                 score = score,
-                winningCount = playerResults.count { it == PlayableResult.LOSE },
+                winningCount = playerResults.count { it == PlayableResult.WIN },
                 drawingCount = playerResults.count { it == PlayableResult.DRAW },
-                losingCount = playerResults.count { it == PlayableResult.WIN }
+                losingCount = playerResults.count { it == PlayableResult.LOSE }
             )
         }
     }
