@@ -6,7 +6,7 @@ import io.kotest.matchers.shouldBe
 class CardsTest : FunSpec({
     test("카드 덱 생성 정상 반환 테스트") {
         val cards = Cards.create()
-        val answer = 13 * 4
+        val answer = CardShape.values().size * CardNumber.values().size
 
         cards.cards.forEach {
             println(it)
