@@ -7,7 +7,7 @@ class Dealer(
     private val scoreCalculator: ScoreCalculator
 ) {
     val name: String = "딜러"
-    private val cards: MutableList<BlackJackCard> = mutableListOf()
+    val cards: MutableList<BlackJackCard> = mutableListOf()
 
     fun drawCard(cards: List<BlackJackCard>) {
         this.cards.addAll(cards)

@@ -1,6 +1,7 @@
 package blackjack
 
 import blackjack.card.CardDeck
+import blackjack.participant.Dealer
 import blackjack.participant.Player
 import blackjack.ui.InputManager
 import blackjack.ui.OutputManager
@@ -10,6 +11,7 @@ class GameManager(
     private val outputManager: OutputManager
 ) {
     private val players: List<Player>
+    private val dealer: Dealer = Dealer(ScoreCalculator())
 
     init {
         players = joinPlayers()
@@ -17,9 +19,10 @@ class GameManager(
 
     fun start() {
         players.forEach { it.drawCard(CardDeck.draw(FIRST_DRAW)) }
+        dealer.drawCard(CardDeck.draw(FIRST_DRAW))
 
-        outputManager.printFirstTurn(players)
-        outputManager.printPlayersCards(players)
+        outputManager.printFirstTurn(players, dealer)
+        outputManager.printPlayersCards(players, dealer)
 
         playBlackJack()
 

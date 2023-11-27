@@ -6,6 +6,7 @@ import blackjack.card.CardPattern
 import blackjack.card.CardPicture
 import blackjack.card.NormalCard
 import blackjack.card.PictureCard
+import blackjack.participant.Dealer
 import blackjack.participant.Player
 
 class OutputManager {
@@ -17,6 +18,14 @@ class OutputManager {
     }
 
     fun printPlayersCards(players: List<Player>) {
+        players.forEach {
+            println("${it.name}: ${parsingCardsToString(it.cards)}")
+        }
+    }
+
+    fun printPlayersCards(players: List<Player>, dealer: Dealer) {
+        println("${dealer.name}: ${parsingCardsToString(dealer.cards)}")
+
         players.forEach {
             println("${it.name}: ${parsingCardsToString(it.cards)}")
         }
@@ -57,5 +66,11 @@ class OutputManager {
             CardPicture.JACK -> "J"
             CardPicture.QUEEN -> "Q"
         }
+    }
+
+    fun printFirstTurn(players: List<Player>, dealer: Dealer) {
+        val names: String = players.joinToString(", ") { it.name }
+
+        println("${dealer.name}와 ${names}에게 2장의 카드를 나누었습니다.")
     }
 }
