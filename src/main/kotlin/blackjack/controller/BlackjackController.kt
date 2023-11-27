@@ -3,7 +3,7 @@ package blackjack.controller
 import blackjack.model.card.CardDeck
 import blackjack.model.game.BlackjackGame
 import blackjack.model.player.Dealer
-import blackjack.model.player.Player
+import blackjack.model.player.Players
 import blackjack.model.strategy.RandomStrategy
 import blackjack.view.InputView
 import blackjack.view.OutputView
@@ -11,9 +11,7 @@ import blackjack.view.OutputView
 class BlackjackController {
     fun start() {
         val cards = CardDeck(RandomStrategy().shuffle())
-        val players = InputView.inputPlayers().map { player ->
-            Player(player, InputView.inputBettingAmount(player))
-        }
+        val players = Players(InputView.inputPlayers(), InputView::inputBettingAmount)
 
         val game = BlackjackGame(dealer = Dealer(), players = players, cards = cards)
         game.initDraw(OutputView::printInitStatus)
