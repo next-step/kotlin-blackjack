@@ -1,6 +1,9 @@
 package blackJack.player
 
+import card.CardNumber
 import card.CardPack
+import card.PlayingCard
+import card.Suit
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import player.Player
@@ -27,7 +30,7 @@ class PlayerTest {
         val player = Player("OYJ")
 
         // when : 플레이어가 카드 받기를 멈춘다.
-        player.hitDone()
+        player.playDone()
         val actual = player.status
 
         // then : 플레이어의 상태는 STAND이다.
@@ -48,5 +51,49 @@ class PlayerTest {
 
         // then :
         assertThat(actual).isEqualTo(card)
+    }
+
+    @Test
+    fun `플레이어의 보유 가드 합이 20이하 이고, 플레이어 상태 업데이트를 요청할 때, 플에이어 상테는 PLAYING로 업데이트 된다`() {
+        // given : 플레이어 보유 카드 합 20 이하(8)
+        val player = Player("OYJ")
+        player.saveCard(PlayingCard(Suit.DIAMOND, CardNumber.TREE))
+        player.saveCard(PlayingCard(Suit.DIAMOND, CardNumber.FIVE))
+
+        // when : 플레이어 상태 업데이트
+        player.updateStatus()
+        val actual = player.status
+
+        // then : 플레이어 상태는 PLAYING이다.
+        assertThat(actual).isEqualTo(Status.PLAYING)
+    }
+
+    @Test
+    fun `플레이어의 보유 가드 합이 21이상 이고, 플레이어 상태 업데이트를 요청할 때, 플에이어 상테는 STAND로 업데이트 된다`() {
+        // given : 플레이어 보유 카드 합 21 이상(28)
+        val player = Player("OYJ")
+        player.saveCard(PlayingCard(Suit.DIAMOND, CardNumber.EIGHT))
+        player.saveCard(PlayingCard(Suit.DIAMOND, CardNumber.KING))
+        player.saveCard(PlayingCard(Suit.DIAMOND, CardNumber.JACK))
+
+        // when : 플레이어 상태 업데이트
+        player.updateStatus()
+        val actual = player.status
+
+        // then : 플레이어 상태는 PLAYING이다.
+        assertThat(actual).isEqualTo(Status.STAND)
+    }
+
+    @Test
+    fun `, 플레이어가 플레이를 멈춘다고 할때, 플에이어의 상태는 STAND로 업데이트 된다`() {
+        // given : 플레이어 보유 카드 합 21 이상(28)
+        val player = Player("OYJ")
+
+        // when : 플레이어 상태 업데이트
+        player.playDone()
+        val actual = player.status
+
+        // then : 플레이어 상태는 PLAYING이다.
+        assertThat(actual).isEqualTo(Status.STAND)
     }
 }

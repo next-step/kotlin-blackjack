@@ -1,5 +1,6 @@
 package player
 
+import BlackJackCalculator
 import card.PlayingCard
 
 class Player(private val name: String) {
@@ -12,8 +13,8 @@ class Player(private val name: String) {
     val cardList: List<PlayingCard>
         get() = _cardList
 
-    fun hitDone() {
-        _status = Status.STAND
+    fun playDone() {
+        updatePlayerStatus(Status.STAND)
     }
 
     fun saveCard(card: PlayingCard) {
@@ -21,4 +22,20 @@ class Player(private val name: String) {
     }
 
     fun getName() = name
+    fun updateStatus() {
+        val newStatus = determineStatus()
+        updatePlayerStatus(newStatus)
+    }
+
+    private fun determineStatus(): Status {
+        val totalPoint = BlackJackCalculator.calculate(_cardList)
+        return when {
+            (totalPoint <= 20) -> Status.PLAYING
+            else -> Status.STAND
+        }
+    }
+
+    private fun updatePlayerStatus(status: Status) {
+        _status = status
+    }
 }
