@@ -1,5 +1,6 @@
 package blackjack.contoller
 
+import blackjack.domain.component.BlackjackGameProxy
 import blackjack.domain.component.BlackjackInputValidator
 import blackjack.domain.model.PlayerName
 import blackjack.view.BlackjackInputView
@@ -7,11 +8,16 @@ import blackjack.view.BlackjackInputView
 class BlackjackController(
     private val blackJackInputView: BlackjackInputView,
     private val blackjackInputValidator: BlackjackInputValidator,
+    private val blackjackGameProxy: BlackjackGameProxy
 ) {
     fun getPlayerNames(): List<PlayerName> {
         val playerNamesString: String? = blackJackInputView.getPlayerNames()
 
         return convertPlayerNamesStringToList(playerNamesString)
+    }
+
+    fun initGame(playerNames: List<PlayerName>) {
+        blackjackGameProxy.init(playerNames)
     }
 
     private fun convertPlayerNamesStringToList(playerNames: String?): List<PlayerName> {
