@@ -9,6 +9,14 @@ class CardPool private constructor(private var cards: MutableList<Card>) {
         return cards.removeAt(target)
     }
 
+    fun pickAndRemove(count: Int): List<Card> {
+        if (count < 0) {
+            return listOf()
+        }
+
+        return (0 until count).map { pickAndRemove() }
+    }
+
     companion object {
         fun create(): CardPool {
             return CardPool(Cards.create().cards.toMutableList())
