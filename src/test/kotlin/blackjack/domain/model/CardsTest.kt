@@ -10,10 +10,6 @@ class CardsTest : FunSpec({
         val cards = Cards.create()
         val answer = CardShape.values().size * CardNumber.values().size
 
-        cards.cards.forEach {
-            println(it)
-        }
-
         cards.cards.size shouldBe answer
     }
 
