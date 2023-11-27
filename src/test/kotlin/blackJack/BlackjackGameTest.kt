@@ -23,14 +23,14 @@ class BlackjackGameTest {
     }
 
     @Test
-    fun `게임이 시작되고, 카드 배포를 요청할 때, 카드팩의 카드가 반환된다`() {
+    fun `게임이 시작되고, 카드 배포를 요청할 때, 카드팩의 5번째 카드가 반환된다`() {
         // given : 카드팩 생성, 게임이 시작된다.
         val cardPack = CardPack.getCardPack()
         val game = BlackjackGame(cardPack, defaultPlayers)
 
         // when : 카드 배포를 한다.
         val actual = game.hit()
-        val expect = cardPack.cardList[0]
+        val expect = cardPack.cardList[4]
 
         // then : 첫번째 카드팩이 반환된다.
         assertThat(actual).isEqualTo(expect)
