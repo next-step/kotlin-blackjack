@@ -7,13 +7,8 @@ object CardDeck {
     private const val LAST_NORMAL_CARD_NUMBER: Int = 10
 
     init {
-        val list = mutableListOf<BlackJackCard>()
-        initNormalCard(list)
-        initPictureCard(list)
-        initAceCard(list)
-
-        list.shuffle()
-        deck = ArrayDeque(list)
+        val cards: List<BlackJackCard> = normalCard() + pictureCard() + aceCard()
+        deck = ArrayDeque(cards.shuffled())
     }
 
     fun getSize(): Int {
@@ -29,6 +24,22 @@ object CardDeck {
         CardPattern.values().forEach {
             (FIRST_NORMAL_CARD_NUMBER..LAST_NORMAL_CARD_NUMBER).forEach { number -> list.add(NormalCard(number, it)) }
         }
+    }
+
+    private fun normalCard(): List<BlackJackCard> {
+        return CardPattern.values().flatMap {
+            (FIRST_NORMAL_CARD_NUMBER..LAST_NORMAL_CARD_NUMBER).map { number -> NormalCard(number, it) }
+        }
+    }
+
+    private fun pictureCard(): List<BlackJackCard> {
+        return CardPattern.values().flatMap {
+            CardPicture.values().map { picture -> PictureCard(picture, it) }
+        }
+    }
+
+    private fun aceCard(): List<BlackJackCard> {
+        return CardPattern.values().map(::AceCard)
     }
 
     private fun initPictureCard(list: MutableList<BlackJackCard>) {
