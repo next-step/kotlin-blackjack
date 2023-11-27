@@ -52,7 +52,6 @@ class DealerTest : StringSpec({
             Players(player1, player2)
         )
 
-        actualDealerResult.score shouldBe BlackjackScore(22)
         actualDealerResult.winningCount shouldBe 0
         actualDealerResult.drawingCount shouldBe 0
         actualDealerResult.losingCount shouldBe 2

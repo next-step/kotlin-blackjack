@@ -7,13 +7,13 @@ import blackjack.model.player.playable.impl.Player
 import blackjack.model.result.PlayableResult
 
 class Players(
-    val values: Set<Player>,
+    val values: List<Player>,
 ) {
     init {
         require(values.map { it.name }.distinct().size == values.size) { "Player 들의 이름은 중복이 허용되지 않습니다" }
     }
 
-    constructor(vararg players: Player) : this(players.toSet())
+    constructor(vararg players: Player) : this(players.toList())
 
     fun dealing(pack: Pack) {
         values.forEach { it.dealing(pack) }

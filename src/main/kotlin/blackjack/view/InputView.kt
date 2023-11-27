@@ -17,7 +17,7 @@ object InputView {
                 input.split(PLAYER_NAMES_DELIMITER)
                     .asSequence()
                     .map { Player(name = it, status = BlackJackStatus.ALIVE) }
-                    .toSet()
+                    .toList()
             ),
             Dealer()
         )

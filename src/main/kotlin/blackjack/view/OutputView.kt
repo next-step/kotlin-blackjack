@@ -31,7 +31,7 @@ object OutputView {
 
     fun presentResult(participants: Participants) {
         println("## 최종 승패")
-        presentDealerResult(participants.dealer.dealerResult(participants.players))
+        presentDealerResult(participants.dealerResult())
         presentPlayersResult(participants.players.results(participants.dealer))
     }
 
