@@ -50,7 +50,17 @@ class BetAmountTest : StringSpec({
     }
 
     "처음 두장의 카드 합이 블랙잭인 경우 베팅 금액의 1.5배를 받는다." {
+        val cards = GamerCards.newInstance(
+            listOf(
+                Card(cardNumber = CardNumber.J, cardShape = CardShape.CLOVER),
+                Card(cardNumber = CardNumber.A, cardShape = CardShape.CLOVER),
+            )
+        )
+        val participant = Participant.newInstance("석주", cards, 1000)
+        val expected = 1500
 
+        participant.getCurrentGamerState() shouldBe GamerCurrentState.INITIAL_BLACKJACK
+        participant.getResultBetAmount() shouldBe expected
     }
 
     "딜러와 플레이어가 모두 블랙잭인 경우 플레이어는 베팅한 금액을 그대로 돌려받는다." {

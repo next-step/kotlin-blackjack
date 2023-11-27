@@ -67,6 +67,9 @@ data class Participant(
             }
 
             GamerCurrentState.INITIAL -> TODO()
+            GamerCurrentState.INITIAL_BLACKJACK -> {
+                (betAmount * 1.5).toInt()
+            }
             GamerCurrentState.STAND -> TODO()
         }
     }
@@ -89,7 +92,7 @@ data class Participant(
             val currentScore = initialCards.getCurrentScore()
             return when (currentScore) {
                 in MINIMUM_HIT_NUMBER..MAXIMUM_HIT_NUMBER -> GamerCurrentState.HIT
-                BLACK_JACK -> GamerCurrentState.BLACKJACK
+                BLACK_JACK -> GamerCurrentState.INITIAL_BLACKJACK
                 else -> GamerCurrentState.BUST
             }
         }

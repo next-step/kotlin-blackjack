@@ -32,7 +32,7 @@ data class Dealer(
             return when (cardScores) {
                 in MINIMUM_HIT_NUMBER..MAXIMUM_HIT_NUMBER -> GamerCurrentState.HIT
                 in MINIMUM_STAND_NUMBER..MAXIMUM_STAND_NUMBER -> GamerCurrentState.STAND
-                BLACK_JACK -> GamerCurrentState.BLACKJACK
+                BLACK_JACK -> GamerCurrentState.INITIAL_BLACKJACK
                 else -> GamerCurrentState.BUST
             }
         }
