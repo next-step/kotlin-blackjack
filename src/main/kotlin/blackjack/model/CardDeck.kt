@@ -5,15 +5,17 @@ class CardDeck {
         private set
 
     fun drawCard(): Card {
-        val pickedCard = cards.shuffled().toMutableList()[0];
-        cards = cards.filter { it != pickedCard }
+        val shuffledCards = cards.shuffled()
+        val pickedCard = shuffledCards.first()
+        cards = shuffledCards.drop(1)
+
         return pickedCard
     }
 
     companion object {
-        val INIT_CARDS = CardValue.VALUES.map { value ->
+        val INIT_CARDS = CardValue.values().map { value ->
             CardSuit.values().map { suit ->
-                Card(CardValue.from(value), suit)
+                Card(value, suit)
             }
         }.flatten()
     }
