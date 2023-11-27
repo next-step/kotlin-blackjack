@@ -16,7 +16,7 @@ class ResultView {
         }
     }
 
-    private fun printPlayer(player: Player) {
+    fun printPlayer(player: Player) {
         println("${player.name}: ${player.hand}")
     }
 }

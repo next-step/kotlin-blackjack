@@ -37,6 +37,7 @@ class Blackjack(
         while (player.state == PlayerState.Hit) {
             val command = inputView.getPlayerCommand(player.name)
             player.play(command == "y")
+            resultView.printPlayer(player)
         }
     }
 
@@ -49,7 +50,6 @@ class Blackjack(
             hit()
             val card = deck.draw()
             addCard(card)
-            println("$name: ${hand.handCards}")
         } else {
             stay()
         }
