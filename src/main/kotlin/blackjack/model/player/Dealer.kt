@@ -30,7 +30,8 @@ data class Dealer(var state: State) {
     }
 
     private fun isDrawCondition(player: Player) =
-        !state.isBust() && !player.isBust() && (score() == player.score())
+        state.isStay() && player.isStay() && (score() == player.score()) ||
+            state.isBlackJack() && player.isBlackJack()
 
     private fun isWinningCondition(player: Player) = (state.isBust() && !player.isBust()) ||
         (!state.isBust() && !player.isBust() && (score() < player.score()))
