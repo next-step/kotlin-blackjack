@@ -6,6 +6,7 @@ import blackjack.domain.player.Hand
 import blackjack.domain.player.Player
 import blackjack.domain.player.PlayerState
 import blackjack.view.InputView
+import blackjack.view.InputViewCommand
 import blackjack.view.ResultView
 import blackjack.view.UserInputView
 
@@ -36,7 +37,7 @@ class Blackjack(
     private fun processPlayerTurn(player: Player) {
         while (player.state == PlayerState.Hit) {
             val command = inputView.getPlayerCommand(player.name)
-            player.play(command == "y")
+            player.play(command == InputViewCommand.Yes)
             resultView.printPlayer(player)
         }
     }

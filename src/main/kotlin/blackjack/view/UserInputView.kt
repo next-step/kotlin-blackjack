@@ -6,8 +6,9 @@ class UserInputView : InputView {
         return readln().split(",").map { it.trim() }
     }
 
-    override fun getPlayerCommand(playerName: String): String {
+    override fun getPlayerCommand(playerName: String): InputViewCommand {
         println("${playerName}은 한 장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
-        return readln().trim()
+        val cmd = readln().trim()
+        return InputViewCommand.get(cmd)
     }
 }
