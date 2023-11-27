@@ -5,11 +5,6 @@ class Card private constructor(
     val shape: CardShape,
     val scores: List<Score>
 ) {
-
-    override fun toString(): String {
-        return "${number.displayName}${shape.shape}"
-    }
-
     companion object {
         private val CARD_ACE_SCORES = listOf(Score(1), Score(11))
         private val CARD_KQJ_SCORES = listOf(Score(10))

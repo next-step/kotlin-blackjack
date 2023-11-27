@@ -8,7 +8,7 @@ data class PlayerInfo(
         fun from(player: Player): PlayerInfo {
             return PlayerInfo(
                 player.name.name,
-                player.cards().cards.map { it.toString() }
+                player.cards().cards.map { "${it.number.displayName}${it.shape.shape}" }
             )
         }
     }
