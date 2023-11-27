@@ -8,14 +8,9 @@ import kotlin.math.abs
 
 class ScoreCalculator {
     fun calcScore(card: List<BlackJackCard>): Int {
-        var score = calcScoreToNormalAndPictureCard(card)
-
-        card.filter { it is AceCard }
-            .forEach { _ ->
-                score = calcScore(score)
-            }
-
-        return score
+        return card.filterIsInstance<AceCard>().fold(calcScoreToNormalAndPictureCard(card)) { acc, _ ->
+            calcScore(acc)
+        }
     }
 
     private fun calcScore(score: Int): Int {
