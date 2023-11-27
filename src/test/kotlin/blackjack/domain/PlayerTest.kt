@@ -2,7 +2,6 @@ package blackjack.domain
 
 import blackjack.Player
 import blackjack.ScoreCalculator
-import blackjack.card.AceCard
 import blackjack.card.CardDeck
 import blackjack.card.CardPattern
 import blackjack.card.CardPicture
@@ -26,7 +25,7 @@ class PlayerTest {
     fun `플레이어는 카드를 뽑을 수 있다`() {
         val name = "홍길동"
         val player = Player(name)
-        val cardDeck = CardDeck()
+        val cardDeck = CardDeck
 
         player.drawCard(cardDeck.draw(2))
         player.cards.size shouldBe 2

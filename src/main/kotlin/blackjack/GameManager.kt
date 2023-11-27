@@ -9,7 +9,6 @@ class GameManager(
     private val outputManager: OutputManager
 ) {
     private val players: List<Player>
-    private val cardDeck: CardDeck = CardDeck()
     private val scoreCalculator: ScoreCalculator = ScoreCalculator()
 
     init {
@@ -17,7 +16,7 @@ class GameManager(
     }
 
     fun start() {
-        players.forEach { it.drawCard(cardDeck.draw(FIRST_DRAW)) }
+        players.forEach { it.drawCard(CardDeck.draw(FIRST_DRAW)) }
 
         outputManager.printFirstTurn(players)
         outputManager.printPlayersCards(players)
@@ -41,7 +40,7 @@ class GameManager(
         while (player.shouldDraw(scoreCalculator) && drawAmount != 0) {
             drawAmount = inputManager.inputShouldDrawCard(player.name)
             if (drawAmount > 0) {
-                player.drawCard(cardDeck.draw(drawAmount))
+                player.drawCard(CardDeck.draw(drawAmount))
             }
             outputManager.printPlayerCards(player)
         }
