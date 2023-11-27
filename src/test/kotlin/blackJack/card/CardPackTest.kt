@@ -24,4 +24,18 @@ class CardPackTest {
 
         assertThat(cardPackSize).isEqualTo(distinctCardPackSize)
     }
+
+    @Test
+    fun `카드팩을 생성한다, 카드 반환 요청이 들어올 때, 순차적으로 카드를 반환한다`() {
+        // given : 카드팩을 생성한다.
+        val cardPack = CardPack.getCardPack()
+
+        // when : 카드 반환 요청이 들어온다.
+        val actual_1 = cardPack.hit()
+        val actual_2 = cardPack.hit()
+
+        // 순차적으로 반환된다.
+        assertThat(actual_1).isEqualTo(cardPack.cardList[0])
+        assertThat(actual_2).isEqualTo(cardPack.cardList[1])
+    }
 }

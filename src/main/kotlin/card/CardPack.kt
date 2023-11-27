@@ -2,13 +2,17 @@ package card
 
 class CardPack(val cardList: List<PlayingCard>) {
 
+    fun hit(): PlayingCard {
+        return cardPack.cardList[cardIndex++]
+    }
+
     companion object {
         private const val CARD_PACK_SIZE = 52
         private const val ERR_MSG_CARD_PACK_SIZE = "카드는 52개로 구성되어야 합나다."
         private const val ERR_MSG_DUPLICATE_CARD_PACK = "중복되는 카드는 없어야 합니다."
 
         private val cardPack = createCard()
-
+        private var cardIndex = 0
         private fun createCard(): CardPack {
             val suitList = Suit.getSuitList()
             val playingCardList = mutableListOf<PlayingCard>()
