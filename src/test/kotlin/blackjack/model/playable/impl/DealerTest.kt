@@ -53,9 +53,11 @@ class DealerTest : StringSpec({
         )
 
         actualDealerResult.score shouldBe BlackjackScore(22)
-        actualDealerResult.winningCount shouldBe 2
+        actualDealerResult.winningCount shouldBe 0
         actualDealerResult.drawingCount shouldBe 0
-        actualDealerResult.losingCount shouldBe 0
+        actualDealerResult.losingCount shouldBe 2
+        dealer.result(player1) shouldBe PlayableResult.LOSE
+        dealer.result(player2) shouldBe PlayableResult.LOSE
     }
 
     "딜러와 플레이어 모두가 Burst 상황이라면 경기 결과는 DRAW 이어야한다" {
