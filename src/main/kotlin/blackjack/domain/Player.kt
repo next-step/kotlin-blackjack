@@ -6,4 +6,8 @@ class Player(val name: String, cardList: List<Card> = emptyList()) {
     fun getCardList(): List<Card> {
         return cardList.toList()
     }
+
+    fun draw(deck: Deck) {
+        cardList.add(deck.pop())
+    }
 }
