@@ -1,10 +1,5 @@
-package blackjack.domain
+package blackjack.domain.state
 
-open class Running: Started() {
-    override fun draw() {
-        TODO()
-    }
-    override fun calcSCore() {
-        TODO()
-    }
-}
+import blackjack.domain.Cards
+
+open class Running(cards: Cards) : Started(cards)

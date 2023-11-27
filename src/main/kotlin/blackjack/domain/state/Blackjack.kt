@@ -1,7 +1,5 @@
-package blackjack.domain
+package blackjack.domain.state
 
-class Blackjack: Finished() {
-    override fun calcSCore() {
-        TODO()
-    }
-}
+import blackjack.domain.Cards
+
+class Blackjack(cards: Cards) : Finished(cards)

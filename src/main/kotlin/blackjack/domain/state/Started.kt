@@ -1,15 +1,13 @@
-package blackjack.domain
+package blackjack.domain.state
 
-open class Started: GameState {
-    override fun handOut() {
-        TODO("Not yet implemented")
-    }
+import blackjack.domain.Card
+import blackjack.domain.Cards
 
-    override fun draw() {
-        TODO("Not yet implemented")
-    }
-
-    override fun calcSCore() {
-        TODO("Not yet implemented")
+open class Started(private val cards: Cards) : State {
+    override fun draw(card: Card): State {
+        cards.add(card)
+        if (cards.isBlackjack()) { return Blackjack(cards) }
+        if (cards.isBust()) { return Bust(cards) }
+        return Hit(cards)
     }
 }

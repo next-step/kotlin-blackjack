@@ -1,8 +1,10 @@
-package blackjack.domain
+package blackjack.domain.state
 
-interface GameState {
-    fun handOut()
-    fun draw()
-    fun calcSCore()
+import blackjack.domain.Card
+
+interface State {
+    fun draw(card: Card): State
 }
+
+
 

@@ -1,10 +1,9 @@
-package blackjack.domain
+package blackjack.domain.state
 
-class Hit: Running() {
-    override fun draw() {
-        TODO()
-    }
-    override fun calcSCore() {
-        TODO()
+import blackjack.domain.Cards
+
+class Hit(private val cards: Cards) : Running(cards) {
+    fun stand(): Stand {
+        return Stand(cards)
     }
 }
