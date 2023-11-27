@@ -38,4 +38,17 @@ class CardPackTest {
         assertThat(actual_1).isEqualTo(cardPack.cardList[0])
         assertThat(actual_2).isEqualTo(cardPack.cardList[1])
     }
+
+    @Test
+    fun `카드팩을 생성한 후, 카드 배포를 반복할 때, 동일하지 않은 카드를 배포한다`() {
+        // given : 카드팩 생성, 게임 시작
+        val cardPack = CardPack.getCardPack()
+
+        // when : 카드 배포 2회한다.
+        val card1 = cardPack.hit()
+        val card2 = cardPack.hit()
+
+        // then : 동일하지 않은 카드가 배포된다.
+        assertThat(card1).isNotEqualTo(card2)
+    }
 }

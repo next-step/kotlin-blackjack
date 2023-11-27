@@ -1,11 +1,9 @@
 import card.CardPack
-import card.PlayingCard
 import player.Player
 import player.PlayerGroup
+import player.Status
 
 class BlackjackGame(private val cardPack: CardPack, private val playerGroup: PlayerGroup) {
-
-    private val index = GameIndex(maxCardIndex = cardPack.cardList.size)
 
     init {
         playerGroup.playerList.forEach {
@@ -13,27 +11,32 @@ class BlackjackGame(private val cardPack: CardPack, private val playerGroup: Pla
         }
     }
 
-    fun hit(): PlayingCard {
-        val card = cardPack.cardList[index.cardIndex]
-        increaseCardIndex()
-        return card
+    fun hitCard() {
+        val player = playerGroup.getCurrentPlayer()
+        player.saveCard(cardPack.hit())
+        player.updateStatus()
     }
 
-    fun savePlayerCard(playingCard: PlayingCard) {
-        playerGroup.getCurrentPlayer().saveCard(playingCard)
+    fun getCurrentPlayer(): Player {
+        return playerGroup.getCurrentPlayer()
+    }
+
+    // 턴오버.
+    fun playerTurnOver() {
+        val player = playerGroup.getCurrentPlayer()
+        if (player.status == Status.STAND) {
+            playerGroup.turnOverPlayer()
+        }
+    }
+
+    fun hitDone() {
+        val player = playerGroup.getCurrentPlayer()
+        player.playDone()
     }
 
     private fun distributeTwoCards(player: Player) {
         repeat(2) {
-            player.saveCard(hit())
+            player.saveCard(cardPack.hit())
         }
-    }
-
-    private fun increaseCardIndex() {
-        index.increaseCardIndex()
-    }
-
-    companion object {
-        private const val MIN_PLAYER_CNT = 2
     }
 }

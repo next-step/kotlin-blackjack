@@ -24,34 +24,6 @@ class BlackjackGameTest {
     }
 
     @Test
-    fun `게임이 시작되고, 카드 배포를 요청할 때, 카드팩의 5번째 카드가 반환된다`() {
-        // given : 카드팩 생성, 게임이 시작된다.
-        val cardPack = CardPack.getCardPack()
-        val game = BlackjackGame(cardPack, defaultPlayers)
-
-        // when : 카드 배포를 한다.
-        val actual = game.hit()
-        val expect = cardPack.cardList[4]
-
-        // then : 첫번째 카드팩이 반환된다.
-        assertThat(actual).isEqualTo(expect)
-    }
-
-    @Test
-    fun `게임이 시작되고, 카드 배포를 반복할 때, 동일하지 않은 카드를 배포한다`() {
-        // given : 카드팩 생성, 게임 시작
-        val cardPack = CardPack.getCardPack()
-        val game = BlackjackGame(cardPack, defaultPlayers)
-
-        // when : 카드 배포 2회한다.
-        val card1 = game.hit()
-        val card2 = game.hit()
-
-        // then : 동일하지 않은 카드가 배포된다.
-        assertThat(card1).isNotEqualTo(card2)
-    }
-
-    @Test
     fun `플레이어 2명과 카드팩으로 구성되고, 게임이 시작될 때, 각 플레이어는 카드 2장을 받는다`() {
         // given : 플레이어 2명과 카드팩이 있다.
         val cardPack = CardPack.getCardPack()
@@ -70,16 +42,15 @@ class BlackjackGameTest {
 
     @Test
     fun `게임이 시작되고, 플레이어가 카드 받기를 요청할 때, 플레이어는 카드를 받아 저장한다`() {
-        // given : 게임이 시작된다.
+        // given : 게임이 시작된다. 초기화: 플레이어당 2장씩 배포
         val cardPack = CardPack.getCardPack()
         val playerGroup = PlayerGroup(listOf(Player("PoPo"), Player("OYJ")))
         val game = BlackjackGame(cardPack, playerGroup)
 
-        // when : 카드 받기 요청을 한다.
-        val playingCard = game.hit()
-        game.savePlayerCard(playingCard)
+        // when : 저장 여부 확인
         val currentPlayer = playerGroup.getCurrentPlayer()
-        val actual = currentPlayer.cardList.contains(playingCard)
+        val card = cardPack.cardList[0]
+        val actual = currentPlayer.cardList.contains(card)
 
         // then : 플레이어는 카드를 저장한다.
         assertThat(actual).isTrue()
