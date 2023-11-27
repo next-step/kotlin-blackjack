@@ -10,7 +10,7 @@ class ResultView {
         }
     }
 
-    private fun showPlayer(player: Player) {
+    fun showPlayer(player: Player) {
         println("${player.name}카드: ${player.getCardList().map { "${it.number.text}${it.shape.text}" }.joinToString()}")
     }
 }
