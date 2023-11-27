@@ -1,6 +1,6 @@
 package blackjack.model.card
 
-import blackjack.model.BlackJackStatus
+import blackjack.model.blackjack.BlackJackStatus
 import blackjack.model.playable.BlackjackScore
 import blackjack.model.playable.impl.Player
 import io.kotest.core.spec.style.StringSpec
