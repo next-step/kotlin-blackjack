@@ -1,4 +1,4 @@
-package blackjack.model.playable
+package blackjack.model.player
 
 enum class PlayableReaction {
     HIT,

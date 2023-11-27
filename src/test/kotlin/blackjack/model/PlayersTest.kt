@@ -2,8 +2,9 @@ package blackjack.model
 
 import blackjack.model.card.CardFixture
 import blackjack.model.card.CardFixture.makeCards
-import blackjack.model.playable.impl.Dealer
-import blackjack.model.playable.impl.Player
+import blackjack.model.player.Players
+import blackjack.model.player.playable.impl.Dealer
+import blackjack.model.player.playable.impl.Player
 import io.kotest.assertions.throwables.shouldNotThrow
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec

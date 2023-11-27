@@ -1,4 +1,6 @@
-package blackjack.model.playable
+package blackjack.model.player
+
+import blackjack.model.result.PlayableResult
 
 @JvmInline
 value class BlackjackScore(

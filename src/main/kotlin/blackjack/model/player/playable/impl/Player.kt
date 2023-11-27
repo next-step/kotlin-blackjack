@@ -1,13 +1,13 @@
-package blackjack.model.playable.impl
+package blackjack.model.player.playable.impl
 
 import blackjack.model.blackjack.BlackJackStatus
 import blackjack.model.card.Cards
-import blackjack.model.pack.Pack
-import blackjack.model.playable.BlackjackScore
-import blackjack.model.playable.Playable
-import blackjack.model.playable.PlayableReaction
-import blackjack.model.playable.PlayableResult
-import blackjack.model.playblestrategy.PlayingStrategy
+import blackjack.model.card.pack.Pack
+import blackjack.model.player.BlackjackScore
+import blackjack.model.player.playable.Playable
+import blackjack.model.player.PlayableReaction
+import blackjack.model.result.PlayableResult
+import blackjack.model.player.playblestrategy.PlayingStrategy
 
 class Player(
     val name: String,

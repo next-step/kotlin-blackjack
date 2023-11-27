@@ -1,11 +1,11 @@
-package blackjack.model
+package blackjack.model.player
 
 import blackjack.model.blackjack.BlackJackStatus
-import blackjack.model.pack.Pack
-import blackjack.model.playable.PlayableResult
-import blackjack.model.playable.impl.Dealer
-import blackjack.model.playable.impl.Player
-import blackjack.model.playblestrategy.impl.ConsoleInputStrategy
+import blackjack.model.card.pack.Pack
+import blackjack.model.player.playable.impl.Dealer
+import blackjack.model.player.playable.impl.Player
+import blackjack.model.player.playblestrategy.impl.ConsoleInputStrategy
+import blackjack.model.result.PlayableResult
 
 class Players(
     val values: Set<Player>,

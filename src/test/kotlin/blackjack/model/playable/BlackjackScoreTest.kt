@@ -1,5 +1,7 @@
 package blackjack.model.playable
 
+import blackjack.model.player.BlackjackScore
+import blackjack.model.result.PlayableResult
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 

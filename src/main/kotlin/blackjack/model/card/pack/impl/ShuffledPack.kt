@@ -1,9 +1,9 @@
-package blackjack.model.pack.impl
+package blackjack.model.card.pack.impl
 
 import blackjack.model.card.Card
 import blackjack.model.card.CardRank
 import blackjack.model.card.Suit
-import blackjack.model.pack.Pack
+import blackjack.model.card.pack.Pack
 import kotlin.random.Random
 
 object ShuffledPack : Pack {

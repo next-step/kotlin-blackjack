@@ -1,9 +1,9 @@
 package blackjack.model.blackjack
 
-import blackjack.model.Participants
-import blackjack.model.pack.Pack
-import blackjack.model.playblestrategy.PlayingStrategy
-import blackjack.model.playblestrategy.impl.DealerStrategy
+import blackjack.model.player.Participants
+import blackjack.model.card.pack.Pack
+import blackjack.model.player.playblestrategy.PlayingStrategy
+import blackjack.model.player.playblestrategy.impl.DealerStrategy
 import blackjack.view.OutputView
 
 class BlackJackGame(

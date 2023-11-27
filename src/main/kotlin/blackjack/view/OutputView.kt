@@ -1,11 +1,11 @@
 package blackjack.view
 
-import blackjack.model.Participants
+import blackjack.model.player.Participants
 import blackjack.model.card.Cards
-import blackjack.model.playable.PlayableReaction
-import blackjack.model.playable.PlayableResult
-import blackjack.model.playable.impl.Dealer
-import blackjack.model.playable.impl.Player
+import blackjack.model.player.PlayableReaction
+import blackjack.model.result.PlayableResult
+import blackjack.model.player.playable.impl.Dealer
+import blackjack.model.player.playable.impl.Player
 import blackjack.model.result.DealerResult
 
 object OutputView {

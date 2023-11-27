@@ -1,4 +1,4 @@
-package blackjack.model.playblestrategy
+package blackjack.model.player.playblestrategy
 
 interface PlayingStrategy {
     fun isHit(): Boolean

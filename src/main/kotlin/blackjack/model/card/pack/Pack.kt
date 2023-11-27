@@ -1,4 +1,4 @@
-package blackjack.model.pack
+package blackjack.model.card.pack
 
 import blackjack.model.card.Card
 

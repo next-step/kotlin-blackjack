@@ -1,6 +1,6 @@
 package blackjack.model.card
 
-import blackjack.model.playable.BlackjackScore
+import blackjack.model.player.BlackjackScore
 
 class Cards(
     cards: List<Card> = emptyList(),

@@ -1,8 +1,11 @@
-package blackjack.model.playable
+package blackjack.model.player.playable
 
 import blackjack.model.blackjack.BlackJackStatus
-import blackjack.model.pack.Pack
-import blackjack.model.playblestrategy.PlayingStrategy
+import blackjack.model.card.pack.Pack
+import blackjack.model.player.playblestrategy.PlayingStrategy
+import blackjack.model.player.BlackjackScore
+import blackjack.model.player.PlayableReaction
+import blackjack.model.result.PlayableResult
 
 interface Playable {
     fun score(): BlackjackScore

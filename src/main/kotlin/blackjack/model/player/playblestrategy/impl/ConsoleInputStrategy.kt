@@ -1,7 +1,7 @@
-package blackjack.model.playblestrategy.impl
+package blackjack.model.player.playblestrategy.impl
 
-import blackjack.model.playable.impl.Player
-import blackjack.model.playblestrategy.PlayingStrategy
+import blackjack.model.player.playable.impl.Player
+import blackjack.model.player.playblestrategy.PlayingStrategy
 
 class ConsoleInputStrategy(
     val player: Player,

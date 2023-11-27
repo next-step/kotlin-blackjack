@@ -1,11 +1,13 @@
 package blackjack.model.playable.impl
 
-import blackjack.model.Players
+import blackjack.model.player.Players
 import blackjack.model.card.CardFixture
-import blackjack.model.pack.impl.ShuffledPack
-import blackjack.model.playable.BlackjackScore
-import blackjack.model.playable.PlayableResult
-import blackjack.model.playblestrategy.impl.DealerStrategy
+import blackjack.model.card.pack.impl.ShuffledPack
+import blackjack.model.player.BlackjackScore
+import blackjack.model.result.PlayableResult
+import blackjack.model.player.playblestrategy.impl.DealerStrategy
+import blackjack.model.player.playable.impl.Dealer
+import blackjack.model.player.playable.impl.Player
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.collections.shouldContain
 import io.kotest.matchers.shouldBe

@@ -1,9 +1,9 @@
 package blackjack.view
 
-import blackjack.model.Participants
-import blackjack.model.Players
-import blackjack.model.playable.impl.Dealer
-import blackjack.model.playable.impl.Player
+import blackjack.model.player.Participants
+import blackjack.model.player.Players
+import blackjack.model.player.playable.impl.Dealer
+import blackjack.model.player.playable.impl.Player
 
 object InputView {
     private const val PLAYER_NAMES_DELIMITER: String = ","

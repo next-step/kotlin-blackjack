@@ -1,4 +1,4 @@
-package blackjack.model.playable
+package blackjack.model.result
 
 enum class PlayableResult {
     WIN,
