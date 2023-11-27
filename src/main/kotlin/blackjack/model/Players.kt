@@ -1,5 +1,6 @@
 package blackjack.model
 
+import blackjack.model.blackjack.BlackJackStatus
 import blackjack.model.pack.Pack
 import blackjack.model.playable.PlayableResult
 import blackjack.model.playable.impl.Dealer
@@ -39,7 +40,7 @@ class Players(
         }
     }
 
-    fun results(dealer: Dealer): List<Pair<Player, PlayableResult>> {
-        return this.values.map { it to it.result(dealer) }
+    fun results(dealer: Dealer): Map<Player, PlayableResult> {
+        return this.values.map { player -> player to player.result(dealer) }.toMap()
     }
 }

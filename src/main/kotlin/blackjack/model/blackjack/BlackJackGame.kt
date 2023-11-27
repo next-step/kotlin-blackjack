@@ -1,5 +1,6 @@
-package blackjack.model
+package blackjack.model.blackjack
 
+import blackjack.model.Participants
 import blackjack.model.pack.Pack
 import blackjack.model.playblestrategy.PlayingStrategy
 import blackjack.model.playblestrategy.impl.DealerStrategy

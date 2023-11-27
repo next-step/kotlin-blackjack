@@ -1,6 +1,6 @@
 package blackjack.model.playable.impl
 
-import blackjack.model.BlackJackStatus
+import blackjack.model.blackjack.BlackJackStatus
 import blackjack.model.card.Cards
 import blackjack.model.pack.Pack
 import blackjack.model.playable.BlackjackScore
@@ -32,6 +32,15 @@ class Player(
     }
 
     override fun result(playable: Playable): PlayableResult {
+        if (this.isBurst() && playable.isBurst()) {
+            return PlayableResult.DRAW
+        }
+        if (this.isBurst() && !playable.isBurst()) {
+            return PlayableResult.LOSE
+        }
+        if (!this.isBurst() && playable.isBurst()) {
+            return PlayableResult.WIN
+        }
         return this.score() vs playable.score()
     }
 

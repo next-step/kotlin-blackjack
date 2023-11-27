@@ -1,6 +1,6 @@
 package blackjack.model.playable.impl
 
-import blackjack.model.BlackJackStatus
+import blackjack.model.blackjack.BlackJackStatus
 import blackjack.model.card.CardFixture
 import blackjack.model.pack.impl.ShuffledPack
 import blackjack.model.playable.BlackjackScore

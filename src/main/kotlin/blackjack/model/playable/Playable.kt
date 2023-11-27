@@ -1,6 +1,6 @@
 package blackjack.model.playable
 
-import blackjack.model.BlackJackStatus
+import blackjack.model.blackjack.BlackJackStatus
 import blackjack.model.pack.Pack
 import blackjack.model.playblestrategy.PlayingStrategy
 
