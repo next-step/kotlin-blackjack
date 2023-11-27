@@ -3,7 +3,6 @@ package blackjack.domain
 import blackjack.domain.CardNumberInfo.Companion.ACE_UPPER_SCORE
 
 object BlackjackUtil {
-    const val INITIAL_CARD_COUNT = 2
     private const val BLACKJACK_SCORE = 21
 
     fun computeScore(hand: Hand): Pair<Int, Int> {
@@ -18,4 +17,13 @@ object BlackjackUtil {
     }
 
     fun isBust(score: Int): Boolean = score > BLACKJACK_SCORE
+
+    fun winAgainstDealer(playerScore: Int, dealerScore: Int): Boolean? {
+        return when {
+            isBust(dealerScore) -> true
+            isBust(playerScore) -> false
+            playerScore == dealerScore -> null
+            else -> playerScore > dealerScore
+        }
+    }
 }

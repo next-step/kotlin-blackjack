@@ -1,11 +1,7 @@
 package blackjack.domain
 
 class Hand(cards: List<Card> = listOf()) {
-    private val cards: MutableList<Card>
-
-    init {
-        this.cards = cards.toMutableList()
-    }
+    private val cards: MutableList<Card> = cards.toMutableList()
 
     fun add(card: Card) = cards.add(card)
 

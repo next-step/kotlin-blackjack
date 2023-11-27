@@ -1,49 +1,71 @@
 package blackjack.controller
 
-import blackjack.domain.BlackjackUtil.INITIAL_CARD_COUNT
-import blackjack.domain.BlackjackUtil.isBust
 import blackjack.domain.Dealer
+import blackjack.domain.Dealer.Companion.INITIAL_CARD_NUM
 import blackjack.domain.Player
 import blackjack.view.askForDraw
 import blackjack.view.inputNames
+import blackjack.view.printDealerDrawsMore
 import blackjack.view.printInitialSupply
-import blackjack.view.printResult
+import blackjack.view.printResults
+import blackjack.view.printScores
 import blackjack.view.printUserCardInfo
 
 fun main() {
-    // 참가자 명단 입력
-    val players = inputNames().map { Player(it) }
-
-    // 딜러 생성, 초기카드 분배
+    // 딜러 생성
     val dealer = Dealer()
-    repeat(INITIAL_CARD_COUNT) {
-        players.forEach { dealer.supplyCard(it) }
-    }
+
+    // 참가자 명단 입력
+    val players = listOf(dealer) + inputNames().map { Player(it) }
+
+    // 초기 카드 분배
+    dealer.supplyInitialCards(players)
 
     // 초기 카드 분배결과 출력
-    printInitialSupply(players, INITIAL_CARD_COUNT)
-    players.forEach { printUserCardInfo(it) }
+    printInitialSupply(players, INITIAL_CARD_NUM)
+    players.forEach { printUserCardInfo(it.name, it.initialCards()) }
 
     // 각 사용자의 추가 draw 진행
-    players.forEach { drawWhileUserWants(it, dealer) }
+    players.filter { it !is Dealer }
+        .forEach { drawWhileUserWants(it, dealer) }
 
-    // 결과 출력
-    printResult(players)
+    // 딜러의 추가 draw 진행
+    drawForDealer(dealer)
+
+    // 최종점수 계산
+    players.forEach { it.setFinalScore() }
+
+    // 점수 출력
+    printScores(players)
+
+    // 플레이어 승패 계산
+    players.filter { it !is Dealer }
+        .forEach { it.setResult(dealer.getFinalScore()) }
+
+    // 승자 출력
+    printResults(dealer, players.filter { it !is Dealer })
+}
+
+private fun drawForDealer(dealer: Dealer) {
+    while (dealer.canDrawMore()) {
+        dealer.supplyCard(dealer)
+        printDealerDrawsMore()
+    }
 }
 
 private fun drawWhileUserWants(player: Player, dealer: Dealer) {
     var isPrinted = false
 
     // 점수 합계가 21을 넘지 않는다면 추가 draw 가능
-    while (!isBust(player.hand.sumOf()) && askForDraw(player.name)) {
+    while (player.canDrawMore() && askForDraw(player.name)) {
         isPrinted = true
 
         dealer.supplyCard(player)
-        printUserCardInfo(player)
+        printUserCardInfo(player.name, player.hand.toList())
     }
 
     // 추가 draw로 인한 현황 출력이 없었다면 한번 출력
     if (!isPrinted) {
-        printUserCardInfo(player)
+        printUserCardInfo(player.name, player.hand.toList())
     }
 }

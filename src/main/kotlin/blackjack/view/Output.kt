@@ -1,31 +1,53 @@
 package blackjack.view
 
-import blackjack.domain.BlackjackUtil
 import blackjack.domain.Card
+import blackjack.domain.Dealer
 import blackjack.domain.Player
+import blackjack.domain.Result
 
 fun printInitialSupply(players: List<Player>, cardNum: Int) {
     println()
     println("${players.joinToString(", ") { it.name }}에게 ${cardNum}장씩 나누었습니다.")
 }
 
-fun printUserCardInfo(player: Player) {
-    println(playerCardStatus(player))
+fun printUserCardInfo(name: String, cards: List<Card>) {
+    println(playerCardStatus(name, cards))
 }
 
-private fun playerCardStatus(player: Player): String {
-    return "${player.name}카드: ${player.hand.toList().joinToString(", ") { cardToString(it) }}"
+private fun playerCardStatus(name: String, cards: List<Card>): String {
+    return "${name}카드: ${cards.joinToString(", ") { cardToString(it) }}"
 }
 
 private fun cardToString(card: Card): String {
     return "${card.num}${card.suit.inKorean}"
 }
 
-fun printResult(players: List<Player>) {
+fun printDealerDrawsMore() {
+    println("딜러는 16점 이하라 한장의 카드를 더 받았습니다.")
+}
+
+fun printScores(players: List<Player>) {
     println()
     players.forEach {
-        val score = BlackjackUtil.computeScore(it.hand).second
-        val result = "${playerCardStatus(it)} - 결과: $score"
+        val result = "${playerCardStatus(it.name, it.hand.toList())} - 결과: ${it.getFinalScore()}"
         println(result)
     }
+}
+
+fun printResults(dealer: Dealer, players: List<Player>) {
+    println("## 최종 승패")
+    println("${dealer.name}: ${buildDealerResult(players)}")
+
+    players.forEach {
+        println("${it.name}: ${it.result.inKorean}")
+    }
+}
+
+private fun buildDealerResult(players: List<Player>): String {
+    val resultString = StringBuilder()
+    Result.values().reversed().forEach { result ->
+        resultString.append("${players.count { it.result == result }}${result.resultOnDealer().inKorean} ")
+    }
+
+    return resultString.toString()
 }
