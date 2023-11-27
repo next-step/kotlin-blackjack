@@ -31,21 +31,19 @@ class GameManager(
 
     private fun playBlackJack() {
         players.forEach {
-            shouldDraw(it)
+            playerDraw(it)
         }
     }
 
-    private fun shouldDraw(it: Player) {
-        var score = scoreCalculator.calcScore(it.cards)
+    private fun playerDraw(player: Player) {
         var drawAmount = -1
 
-        while (score <= 21 && drawAmount != 0) {
-            drawAmount = inputManager.inputShouldDrawCard(it.name)
+        while (player.shouldDraw(scoreCalculator) && drawAmount != 0) {
+            drawAmount = inputManager.inputShouldDrawCard(player.name)
             if (drawAmount > 0) {
-                it.drawCard(cardDeck.draw(drawAmount))
+                player.drawCard(cardDeck.draw(drawAmount))
             }
-            score = scoreCalculator.calcScore(it.cards)
-            outputManager.printPlayerCards(it)
+            outputManager.printPlayerCards(player)
         }
     }
 

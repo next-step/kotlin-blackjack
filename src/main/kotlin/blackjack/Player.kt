@@ -10,4 +10,8 @@ class Player(
     fun drawCard(cards: List<BlackJackCard>) {
         this.cards.addAll(cards)
     }
+
+    fun shouldDraw(scoreCalculator: ScoreCalculator): Boolean {
+        return scoreCalculator.calcScore(cards) <= 21
+    }
 }
