@@ -7,7 +7,8 @@ import blackjack.view.OutputView
 
 fun main() {
     val names = InputView.inputNames()
-    val players = names.map { Player(it, ShuffledCardDeck()) }
+    val cardDeck = ShuffledCardDeck()
+    val players = names.map { Player(it, cardDeck) }
 
     OutputView.printPlayersCards(players)
     players.forEach { obtainCard(it) }
