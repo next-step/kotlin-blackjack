@@ -7,7 +7,6 @@ import blackjack_dealer.entity.card.Card
 import blackjack_dealer.entity.card.CardNumber
 import blackjack_dealer.entity.card.CardShape
 import blackjack_dealer.entity.state.GamerCurrentState
-import blackjack_dealer.entity.state.ParticipantResultState
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 
@@ -42,10 +41,8 @@ class BetAmountTest : StringSpec({
         )
         val participant = Participant.newInstance("석주", participantCards, 20000)
         val dealer = Dealer.newInstance(dealerCards)
-        val participantResult = participant.createParticipantResult(dealer)
         val expected = 20000
 
-        participantResult.resultState shouldBe ParticipantResultState.WIN
         participant.getResultBetAmount() shouldBe expected
     }
 

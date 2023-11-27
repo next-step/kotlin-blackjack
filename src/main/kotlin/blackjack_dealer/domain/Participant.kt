@@ -2,9 +2,7 @@ package blackjack_dealer.domain
 
 import blackjack_dealer.entity.CardDeque
 import blackjack_dealer.entity.GamerCards
-import blackjack_dealer.entity.result.ParticipantResult
 import blackjack_dealer.entity.state.GamerCurrentState
-import blackjack_dealer.entity.state.ParticipantResultState
 
 data class Participant(
     override val name: String,
@@ -25,29 +23,6 @@ data class Participant(
             in MINIMUM_HIT_NUMBER..MAXIMUM_HIT_NUMBER -> GamerCurrentState.HIT
             BLACK_JACK -> GamerCurrentState.BLACKJACK
             else -> GamerCurrentState.BUST
-        }
-    }
-
-    fun createParticipantResult(dealer: Dealer): ParticipantResult {
-        val participantState = createParticipantResultState(dealer)
-        return ParticipantResult(name = getGamerName(), resultState = participantState)
-    }
-
-    private fun createParticipantResultState(dealer: Dealer): ParticipantResultState {
-        val dealerScore = dealer.getCurrentCards().getCurrentScore()
-        val participantScore = getCurrentCards().getCurrentScore()
-
-        if (gamerIsBust()) return if (dealer.gamerIsBust()) {
-            ParticipantResultState.DRAW
-        } else {
-            ParticipantResultState.LOSE
-        }
-        if (dealerScore > BLACK_JACK) return ParticipantResultState.WIN
-
-        return when {
-            dealerScore - participantScore > 0 -> ParticipantResultState.LOSE
-            dealerScore - participantScore < 0 -> ParticipantResultState.WIN
-            else -> ParticipantResultState.DRAW
         }
     }
 
