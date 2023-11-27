@@ -3,7 +3,6 @@ package blackjack.model.player
 import blackjack.model.card.Card
 import blackjack.model.card.CardDeck
 import blackjack.model.state.State
-import blackjack.model.state.playState.gameState.BlackJack
 import blackjack.model.state.playState.gameState.Hit
 
 data class Player(val name: String, val bettingAmount: Double = 0.0, var state: State) {
@@ -22,7 +21,9 @@ data class Player(val name: String, val bettingAmount: Double = 0.0, var state: 
 
     fun isBust() = state.isBust()
 
-    fun isBlackJack() = state is BlackJack
+    fun isBlackJack() = state.isBlackJack()
+
+    fun isStay() = state.isStay()
 
     fun cards(): List<Card> {
         return state.cards()
