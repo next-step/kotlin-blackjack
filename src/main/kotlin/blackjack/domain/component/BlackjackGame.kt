@@ -7,11 +7,25 @@ class BlackjackGame private constructor(
     private val cardPool: CardPool
 ) {
     fun isHitPossible(playerName: PlayerName): Boolean {
+        return players
+            .findByName(playerName)
+            .checkNull()
+            .isPossibleToHit()
+    }
+
+    fun hit(playerName: PlayerName): Player {
         val player = players.findByName(playerName)
+        val card = cardPool.pickAndRemove()
 
-        check(player != null) { "해당 플레이어는 존재하지 않습니다." }
+        return player
+            .checkNull()
+            .append(card)
+    }
 
-        return player.isPossibleToHit()
+    private fun Player?.checkNull(): Player {
+        check(this != null) { "해당 플레이어는 존재하지 않습니다." }
+
+        return this
     }
 
     companion object {

@@ -1,5 +1,6 @@
 package blackjack.domain.component
 
+import blackjack.domain.model.Player
 import blackjack.domain.model.PlayerName
 
 class BlackjackGameProxy(
@@ -13,6 +14,12 @@ class BlackjackGameProxy(
         return blackjackGame
             .checkGameExist()
             .isHitPossible(playerName)
+    }
+
+    fun hit(playerName: PlayerName): Player {
+        return blackjackGame
+            .checkGameExist()
+            .hit(playerName)
     }
 
     private fun BlackjackGame?.checkGameExist(): BlackjackGame {

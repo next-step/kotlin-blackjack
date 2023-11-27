@@ -23,5 +23,7 @@ fun main() {
         if (blackjackController.getHit(it).isNo()) {
             return@forEach
         }
+
+        val player = blackjackController.hit(it)
     }
 }

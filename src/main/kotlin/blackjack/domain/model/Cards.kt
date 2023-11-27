@@ -22,6 +22,10 @@ class Cards(val cards: List<Card>) {
             .toSet()
     }
 
+    operator fun plus(card: Card): Cards {
+        return Cards.of(cards + listOf(card))
+    }
+
     companion object {
         fun create(): Cards {
             val numbers = CardNumber.values()

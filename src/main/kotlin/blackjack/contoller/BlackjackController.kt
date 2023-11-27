@@ -2,6 +2,7 @@ package blackjack.contoller
 
 import blackjack.domain.component.BlackjackGameProxy
 import blackjack.domain.component.BlackjackInputValidator
+import blackjack.domain.model.Player
 import blackjack.domain.model.PlayerName
 import blackjack.domain.model.YesNo
 import blackjack.view.BlackjackInputView
@@ -29,6 +30,10 @@ class BlackjackController(
 
     fun initGame(playerNames: List<PlayerName>) {
         blackjackGameProxy.init(playerNames)
+    }
+
+    fun hit(playerName: PlayerName): Player {
+        return blackjackGameProxy.hit(playerName)
     }
 
     private fun convertPlayerNamesStringToList(playerNames: String?): List<PlayerName> {
