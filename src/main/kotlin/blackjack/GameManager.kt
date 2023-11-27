@@ -8,12 +8,15 @@ class GameManager(
     private val inputManager: InputManager,
     private val outputManager: OutputManager
 ) {
-    private lateinit var players: List<Player>
+    private val players: List<Player>
     private val cardDeck: CardDeck = CardDeck()
     private val scoreCalculator: ScoreCalculator = ScoreCalculator()
 
+    init {
+        players = joinPlayers()
+    }
+
     fun start() {
-        joinPlayers()
         players.forEach { it.drawCard(cardDeck.draw(FIRST_DRAW)) }
 
         outputManager.printFirstTurn(players)
@@ -46,9 +49,9 @@ class GameManager(
         }
     }
 
-    private fun joinPlayers() {
+    private fun joinPlayers(): List<Player> {
         val playerNames: List<String> = inputManager.inputPlayerNames()
-        this.players = playerNames.map(::Player)
+        return playerNames.map(::Player)
     }
 
     companion object {
