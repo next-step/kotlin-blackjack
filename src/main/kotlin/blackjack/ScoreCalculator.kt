@@ -9,11 +9,11 @@ import kotlin.math.abs
 class ScoreCalculator {
     fun calcScore(card: List<BlackJackCard>): Int {
         return card.filterIsInstance<AceCard>().fold(calcScoreToNormalAndPictureCard(card)) { acc, _ ->
-            calcScore(acc)
+            calcAceScore(acc)
         }
     }
 
-    private fun calcScore(score: Int): Int {
+    private fun calcAceScore(score: Int): Int {
         var totalScore = score
         val plusMin = totalScore + MIN_ACE_SCORE
         val plusMax = totalScore + MAX_ACE_SCORE
