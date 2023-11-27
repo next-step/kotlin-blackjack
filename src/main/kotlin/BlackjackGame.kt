@@ -9,7 +9,7 @@ class BlackjackGame(private val cardPack: CardPack, private val playerList: List
     init {
         validatePlayer()
         playerList.forEach {
-            initCardSetting(it)
+            distributeTwoCards(it)
         }
     }
 
@@ -19,7 +19,11 @@ class BlackjackGame(private val cardPack: CardPack, private val playerList: List
         return card
     }
 
-    private fun initCardSetting(player: Player) {
+    fun savePlayerCard(playingCard: PlayingCard) {
+        playerList[index.playerIndex].saveCard(playingCard)
+    }
+
+    private fun distributeTwoCards(player: Player) {
         repeat(2) {
             player.saveCard(hit())
         }

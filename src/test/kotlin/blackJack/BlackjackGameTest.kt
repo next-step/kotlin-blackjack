@@ -55,7 +55,7 @@ class BlackjackGameTest {
         // given : 카드팩과  범위를 넘어서는 플레이어 리스트가 생성된다.
         val cardPack = CardPack.getCardPack()
         val singlePlayerList = listOf(Player("OYJ"))
-        val overPlayerList = List(27) { Player("OYJ") }
+        val overPlayerList = List(27) { i -> Player("OYJ_$i") }
 
         // when : 게임에 플레이어를 주입한다
         val actualSingle = runCatching { BlackjackGame(cardPack, singlePlayerList) }.exceptionOrNull()
@@ -73,7 +73,7 @@ class BlackjackGameTest {
         val playerList = listOf(Player("PoPo"), Player("OYJ"))
 
         // when : 게임이 시작된다.
-        val game = BlackjackGame(cardPack, playerList)
+        BlackjackGame(cardPack, playerList)
 
         // then : 각 플레이어는 카드를 2장 받는다.
         playerList.forEach {
@@ -81,5 +81,22 @@ class BlackjackGameTest {
             val expect = 2
             assertThat(actual).isEqualTo(expect)
         }
+    }
+
+    @Test
+    fun `게임이 시작되고, 플레이어가 카드 받기를 요청할 때, 플레이어는 카드를 받아 저장한다`() {
+        // given : 게임이 시작된다.
+        val cardPack = CardPack.getCardPack()
+        val playerList = listOf(Player("PoPo"), Player("OYJ"))
+        val game = BlackjackGame(cardPack, playerList)
+
+        // when : 카드 받기 요청을 한다.
+        val playingCard = game.hit()
+        game.savePlayerCard(playingCard)
+
+        val actual = playerList[0].cardList.contains(playingCard)
+
+        // then : 플레이어는 카드를 저장한다.
+        assertThat(actual).isTrue()
     }
 }
