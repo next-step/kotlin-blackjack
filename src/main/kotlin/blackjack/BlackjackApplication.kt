@@ -8,30 +8,41 @@ import blackjack.view.BlackjackInputView
 import blackjack.view.BlackjackResultView
 
 fun main() {
-    val blackjackController = BlackjackController(
+    val controller = init()
+
+    process(controller)
+}
+
+private fun init(): BlackjackController {
+    return BlackjackController(
         BlackjackInputView(),
         BlackjackInputValidator(),
         BlackjackResultView(),
         BlackjackGameProxy()
     )
+}
 
+private fun process(blackjackController: BlackjackController) {
     val playerNames: List<PlayerName> = blackjackController.getPlayerNames()
+
     blackjackController.initGame(playerNames)
     blackjackController.printInitialGameStatus()
 
     playerNames.forEach {
-        if (!blackjackController.getHitPossible(it)) {
-            return@forEach
-        }
-
-        if (blackjackController.getHit(it).isNo()) {
-            return@forEach
-        }
-
-        val player = blackjackController.hit(it)
-
-        blackjackController.printPlayerInfo(player)
+        it.play(blackjackController)
     }
 
     blackjackController.printPlayerInfos()
+}
+
+private fun PlayerName.play(blackjackController: BlackjackController) {
+    while (blackjackController.getHitPossible(this)) {
+        if (blackjackController.getHit(this).isNo()) {
+            return
+        }
+
+        val player = blackjackController.hit(this)
+
+        blackjackController.printPlayerInfo(player)
+    }
 }
