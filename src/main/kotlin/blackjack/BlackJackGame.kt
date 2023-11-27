@@ -1,8 +1,10 @@
-package blackjack.model.blackjack
+package blackjack
 
 import blackjack.model.card.pack.Pack
 import blackjack.model.player.Participants
+import blackjack.model.player.playable.impl.Player
 import blackjack.model.player.playblestrategy.PlayingStrategy
+import blackjack.model.player.playblestrategy.impl.ConsoleInputStrategy
 import blackjack.model.player.playblestrategy.impl.DealerStrategy
 import blackjack.view.OutputView
 
@@ -28,6 +30,9 @@ class BlackJackGame(
     }
 
     private fun playersTurn(pack: Pack) {
-        participants.players.playingTurn(pack)
+        participants.players.values.forEach { player: Player ->
+            player.playing(ConsoleInputStrategy(player), pack)
+            OutputView.presentPlayer(player)
+        }
     }
 }

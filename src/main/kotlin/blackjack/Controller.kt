@@ -1,6 +1,5 @@
 package blackjack
 
-import blackjack.model.blackjack.BlackJackGame
 import blackjack.model.card.pack.impl.ShuffledPack
 import blackjack.view.InputView
 import blackjack.view.OutputView
