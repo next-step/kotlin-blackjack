@@ -1,5 +1,6 @@
 package blackjack.model.playable.impl
 
+import blackjack.model.blackjack.BlackJackStatus
 import blackjack.model.card.CardFixture
 import blackjack.model.card.pack.impl.ShuffledPack
 import blackjack.model.player.BlackjackScore
@@ -42,11 +43,11 @@ class DealerTest : StringSpec({
         )
         val player1 = Player(
             "seoul", // 13점
-            CardFixture.makeCards(CardFixture.ace1, CardFixture.king, CardFixture.two)
+            CardFixture.makeCards(CardFixture.ace1, CardFixture.king, CardFixture.two), status = BlackJackStatus.ALIVE
         )
         val player2 = Player(
             "wonju", // 21점
-            CardFixture.makeCards(CardFixture.queen, CardFixture.king, CardFixture.ace2)
+            CardFixture.makeCards(CardFixture.queen, CardFixture.king, CardFixture.ace2), status = BlackJackStatus.ALIVE
         )
         val actualDealerResult = dealer.dealerResult(
             Players(player1, player2)
@@ -63,11 +64,12 @@ class DealerTest : StringSpec({
         val dealer = Dealer(CardFixture.makeCards(CardFixture.queen, CardFixture.nine, CardFixture.three))
         val player1 = Player(
             "malibu",
-            CardFixture.makeCards(CardFixture.ten, CardFixture.jack, CardFixture.four)
+            CardFixture.makeCards(CardFixture.ten, CardFixture.jack, CardFixture.four), status = BlackJackStatus.ALIVE
         )
         val player2 = Player(
             "martini",
-            CardFixture.makeCards(CardFixture.nine, CardFixture.eight, CardFixture.seven)
+            CardFixture.makeCards(CardFixture.nine, CardFixture.eight, CardFixture.seven),
+            status = BlackJackStatus.ALIVE
         )
 
         player1.result(dealer) shouldBe PlayableResult.DRAW
@@ -79,7 +81,8 @@ class DealerTest : StringSpec({
         val dealer = Dealer(CardFixture.makeCards(CardFixture.queen, CardFixture.ten)) // 20
         val player = Player(
             "malibu",
-            CardFixture.makeCards(CardFixture.ten, CardFixture.five) // 15
+            CardFixture.makeCards(CardFixture.ten, CardFixture.five), // 15
+            status = BlackJackStatus.ALIVE
         )
 
         dealer.result(player) shouldBe PlayableResult.WIN
@@ -90,7 +93,7 @@ class DealerTest : StringSpec({
         val dealer = Dealer(CardFixture.makeCards(CardFixture.three, CardFixture.four))
         val player = Player(
             "malibu",
-            CardFixture.makeCards(CardFixture.seven, CardFixture.five)
+            CardFixture.makeCards(CardFixture.seven, CardFixture.five), status = BlackJackStatus.ALIVE
         )
 
         dealer.result(player) shouldBe PlayableResult.LOSE
@@ -101,7 +104,7 @@ class DealerTest : StringSpec({
         val dealer = Dealer(CardFixture.makeCards(CardFixture.queen, CardFixture.nine, CardFixture.two))
         val player = Player(
             "malibu",
-            CardFixture.makeCards(CardFixture.ten, CardFixture.jack, CardFixture.ace2)
+            CardFixture.makeCards(CardFixture.ten, CardFixture.jack, CardFixture.ace2), status = BlackJackStatus.ALIVE
         )
 
         dealer.score() shouldBe BlackjackScore(21)
@@ -116,15 +119,15 @@ class DealerTest : StringSpec({
         )
         val player1 = Player(
             "saml", // 21점
-            CardFixture.makeCards(CardFixture.five, CardFixture.king, CardFixture.six)
+            CardFixture.makeCards(CardFixture.five, CardFixture.king, CardFixture.six), status = BlackJackStatus.ALIVE
         )
         val player2 = Player(
             "ldap", // 18점
-            CardFixture.makeCards(CardFixture.eight, CardFixture.queen, CardFixture.ace2)
+            CardFixture.makeCards(CardFixture.eight, CardFixture.queen, CardFixture.ace2), status = BlackJackStatus.ALIVE
         )
         val player3 = Player(
             "oauth", // 10점
-            CardFixture.makeCards(CardFixture.two, CardFixture.eight)
+            CardFixture.makeCards(CardFixture.two, CardFixture.eight), status = BlackJackStatus.ALIVE
         )
         val actual = dealer.dealerResult(
             Players(player1, player2, player3)

@@ -13,7 +13,7 @@ import blackjack.model.result.PlayableResult
 class Player(
     val name: String,
     val cards: Cards = Cards.emptyCards(),
-    var status: BlackJackStatus = BlackJackStatus.ALIVE,
+    var status: BlackJackStatus,
 ) : Playable {
 
     override fun score(): BlackjackScore {

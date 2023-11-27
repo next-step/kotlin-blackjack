@@ -15,7 +15,7 @@ class PlayerTest : StringSpec({
 
     "플레이어는 dealing 시 2장의 카드를 받을 수 있다" {
         shouldNotThrow<IllegalArgumentException> {
-            val player = Player("구글")
+            val player = Player("구글", status = BlackJackStatus.ALIVE)
             player.dealing(ShuffledPack)
             player.cards.count() shouldBe 2
         }
@@ -23,7 +23,7 @@ class PlayerTest : StringSpec({
 
     "플레이어는 hit 시 1장의 카드를 받을 수 있다" {
         shouldNotThrow<IllegalArgumentException> {
-            val player = Player("애플")
+            val player = Player("애플", status = BlackJackStatus.ALIVE)
             player.hit(ShuffledPack)
             player.cards.count() shouldBe 1
         }
@@ -38,7 +38,8 @@ class PlayerTest : StringSpec({
                 CardFixture.four,
                 CardFixture.eight,
                 CardFixture.nine
-            )
+            ),
+            status = BlackJackStatus.ALIVE
         )
 
         player.isBurst() shouldBe true
@@ -50,7 +51,7 @@ class PlayerTest : StringSpec({
         val dealer = Dealer(CardFixture.makeCards(CardFixture.queen, CardFixture.nine, CardFixture.three))
         val player = Player(
             "malibu",
-            CardFixture.makeCards(CardFixture.ten, CardFixture.jack, CardFixture.ace2)
+            CardFixture.makeCards(CardFixture.ten, CardFixture.jack, CardFixture.ace2), status = BlackJackStatus.ALIVE
         )
 
         player.result(dealer) shouldBe PlayableResult.WIN
@@ -61,7 +62,7 @@ class PlayerTest : StringSpec({
         val dealer = Dealer(CardFixture.makeCards(CardFixture.queen, CardFixture.three))
         val player = Player(
             "malibu",
-            CardFixture.makeCards(CardFixture.ten, CardFixture.jack)
+            CardFixture.makeCards(CardFixture.ten, CardFixture.jack), status = BlackJackStatus.ALIVE
         )
 
         player.result(dealer) shouldBe PlayableResult.WIN
@@ -71,7 +72,7 @@ class PlayerTest : StringSpec({
         val dealer = Dealer(CardFixture.makeCards(CardFixture.queen, CardFixture.ten))
         val player = Player(
             "malibu",
-            CardFixture.makeCards(CardFixture.ten, CardFixture.five)
+            CardFixture.makeCards(CardFixture.ten, CardFixture.five), status = BlackJackStatus.ALIVE
         )
         val actual = player.result(dealer)
         actual shouldBe PlayableResult.LOSE
@@ -81,7 +82,7 @@ class PlayerTest : StringSpec({
         val dealer = Dealer(CardFixture.makeCards(CardFixture.queen, CardFixture.nine, CardFixture.two))
         val player = Player(
             "malibu",
-            CardFixture.makeCards(CardFixture.ten, CardFixture.jack, CardFixture.ace2)
+            CardFixture.makeCards(CardFixture.ten, CardFixture.jack, CardFixture.ace2), status = BlackJackStatus.ALIVE
         )
 
         dealer.score() shouldBe BlackjackScore(21)
