@@ -1,21 +1,21 @@
 package blackjack.domain.model
 
 class Cards(val cards: List<Card>) {
-    fun scores(): List<Int> {
+    fun scores(): List<Score> {
         check(cards.isNotEmpty()) { "카드의 개수가 0장으로 점수를 계산할 수 없습니다." }
 
         return cards
             .drop(1)
             .fold(cards.getFirstCardScores()) { scores, card -> calculatePossibleScores(card, scores) }
             .toList()
-            .sorted()
+            .sortedBy { it.score }
     }
 
-    private fun List<Card>.getFirstCardScores(): Set<Int> {
+    private fun List<Card>.getFirstCardScores(): Set<Score> {
         return first().scores.toSet()
     }
 
-    private fun calculatePossibleScores(card: Card, scores: Set<Int>): Set<Int> {
+    private fun calculatePossibleScores(card: Card, scores: Set<Score>): Set<Score> {
         return card.scores
             .map { scores.map { score -> score + it } }
             .flatten()

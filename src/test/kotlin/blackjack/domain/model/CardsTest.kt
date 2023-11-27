@@ -26,21 +26,21 @@ class CardsTest : FunSpec({
         val king = Card.of(CardNumber.KING, CardShape.Spade)
 
         forAll(
-            row(Cards.of(ace, two), listOf(3, 13)),
-            row(Cards.of(ace, three), listOf(4, 14)),
-            row(Cards.of(ace, jack), listOf(11, 21)),
-            row(Cards.of(ace, queen), listOf(11, 21)),
-            row(Cards.of(ace, king), listOf(11, 21)),
+            row(Cards.of(ace, two), listOf(Score(3), Score(13))),
+            row(Cards.of(ace, three), listOf(Score(4), Score(14))),
+            row(Cards.of(ace, jack), listOf(Score(11), Score(21))),
+            row(Cards.of(ace, queen), listOf(Score(11), Score(21))),
+            row(Cards.of(ace, king), listOf(Score(11), Score(21))),
 
-            row(Cards.of(two, three), listOf(5)),
+            row(Cards.of(two, three), listOf(Score(5))),
 
-            row(Cards.of(two, jack), listOf(12)),
-            row(Cards.of(two, king), listOf(12)),
-            row(Cards.of(two, queen), listOf(12)),
+            row(Cards.of(two, jack), listOf(Score(12))),
+            row(Cards.of(two, king), listOf(Score(12))),
+            row(Cards.of(two, queen), listOf(Score(12))),
 
-            row(Cards.of(jack, queen), listOf(20)),
-            row(Cards.of(queen, king), listOf(20)),
-            row(Cards.of(jack, king), listOf(20)),
+            row(Cards.of(jack, queen), listOf(Score(20))),
+            row(Cards.of(queen, king), listOf(Score(20))),
+            row(Cards.of(jack, king), listOf(Score(20))),
         ) { cards, answer ->
             cards.scores() shouldBe answer
         }
