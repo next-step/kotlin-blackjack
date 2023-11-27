@@ -14,6 +14,14 @@ class Stay(override val cardDeck: CardDeck) : Finished(cardDeck) {
         return false
     }
 
+    override fun isBlackJack(): Boolean {
+        return false
+    }
+
+    override fun isStay(): Boolean {
+        return true
+    }
+
     override fun cards(): List<Card> {
         return cardDeck.deck
     }

@@ -14,6 +14,10 @@ interface State {
 
     fun isBust(): Boolean
 
+    fun isBlackJack(): Boolean
+
+    fun isStay(): Boolean
+
     fun cards(): List<Card>
 
     fun calculateScore(): Int

@@ -14,6 +14,14 @@ class BlackJack(override val cardDeck: CardDeck) : Finished(cardDeck) {
         return false
     }
 
+    override fun isBlackJack(): Boolean {
+        return true
+    }
+
+    override fun isStay(): Boolean {
+        return false
+    }
+
     override fun cards(): List<Card> {
         return cardDeck.deck
     }

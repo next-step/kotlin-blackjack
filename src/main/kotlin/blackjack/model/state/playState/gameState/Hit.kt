@@ -24,6 +24,14 @@ class Hit(override val cardDeck: CardDeck) : Running() {
         return false
     }
 
+    override fun isBlackJack(): Boolean {
+        return false
+    }
+
+    override fun isStay(): Boolean {
+        return false
+    }
+
     override fun calculateScore(): Int {
         return cardDeck.calculateScore()
     }
