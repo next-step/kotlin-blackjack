@@ -15,16 +15,19 @@ class ScoreCalculator {
 
     private fun calcAceScore(score: Int): Int {
         var totalScore = score
-        val plusMin = totalScore + MIN_ACE_SCORE
-        val plusMax = totalScore + MAX_ACE_SCORE
+        val plusMinAceScore = totalScore + MIN_ACE_SCORE
+        val plusMaxAcreScore = totalScore + MAX_ACE_SCORE
 
         totalScore += when {
-            (abs(plusMin - BEST_SCORE) < abs(plusMax - BEST_SCORE)) -> MIN_ACE_SCORE
-            (abs(plusMin - BEST_SCORE) > abs(plusMax - BEST_SCORE)) -> MAX_ACE_SCORE
-            else -> MIN_ACE_SCORE
+            (isMinAceScoreCloser(plusMaxAcreScore, plusMinAceScore)) -> MIN_ACE_SCORE
+            else -> MAX_ACE_SCORE
         }
 
         return totalScore
+    }
+
+    private fun isMinAceScoreCloser(plusMaxAcreScore: Int, plusMinAceScore: Int): Boolean {
+        return abs(plusMinAceScore - BEST_SCORE) < abs(plusMaxAcreScore - BEST_SCORE)
     }
 
     private fun calcScoreToNormalAndPictureCard(card: List<BlackJackCard>) = card.sumOf {
