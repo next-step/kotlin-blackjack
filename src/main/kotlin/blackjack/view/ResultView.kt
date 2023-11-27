@@ -4,7 +4,7 @@ import blackjack.domain.Player
 
 class ResultView {
     fun showInitialPlayers(players: List<Player>, initialCard: Int) {
-        println("${players.map { it.name }.joinToString()}에게 ${initialCard}장의 카드를 나누었습니다.")
+        println("\n${players.map { it.name }.joinToString()}에게 ${initialCard}장의 카드를 나누었습니다.")
         players.forEach {
             showPlayer(it)
         }
