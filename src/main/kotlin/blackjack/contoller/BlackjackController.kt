@@ -17,6 +17,10 @@ class BlackjackController(
         return convertPlayerNamesStringToList(playerNamesString)
     }
 
+    fun getHitPossible(playerName: PlayerName): Boolean {
+        return blackjackGameProxy.isHitPossible(playerName)
+    }
+
     fun getHit(playerName: PlayerName): YesNo {
         return blackJackInputView
             .getHit(playerName.name)
