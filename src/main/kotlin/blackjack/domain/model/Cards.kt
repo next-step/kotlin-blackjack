@@ -23,7 +23,7 @@ class Cards(val cards: List<Card>) {
     }
 
     operator fun plus(card: Card): Cards {
-        return Cards.of(cards + listOf(card))
+        return of(cards + listOf(card))
     }
 
     companion object {
