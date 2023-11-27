@@ -3,6 +3,8 @@ package blackjack.card
 object CardDeck {
     private val deck: ArrayDeque<BlackJackCard>
     private const val EMPTY_DECK_ERROR_MESSAGE: String = "카드 덱이 모두 소진되었습니다."
+    private const val FIRST_NORMAL_CARD_NUMBER: Int = 2
+    private const val LAST_NORMAL_CARD_NUMBER: Int = 10
 
     init {
         val list = mutableListOf<BlackJackCard>()
@@ -25,7 +27,7 @@ object CardDeck {
 
     private fun initNormalCard(list: MutableList<BlackJackCard>) {
         CardPattern.values().forEach {
-            (2..10).forEach { number -> list.add(NormalCard(number, it)) }
+            (FIRST_NORMAL_CARD_NUMBER..LAST_NORMAL_CARD_NUMBER).forEach { number -> list.add(NormalCard(number, it)) }
         }
     }
 
