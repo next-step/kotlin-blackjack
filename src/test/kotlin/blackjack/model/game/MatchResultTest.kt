@@ -41,11 +41,21 @@ class MatchResultTest : DescribeSpec({
         )
     }
 
-    fun 카드덱_21점(): CardDeck {
+    fun 카드덱_블랙잭(): CardDeck {
         return CardDeck(
             mutableListOf(
                 Card(CardNumber.ACE, CardSuit.하트),
                 Card(CardNumber.KING, CardSuit.다이아몬드)
+            )
+        )
+    }
+
+    fun 카드덱_21점(): CardDeck {
+        return CardDeck(
+            mutableListOf(
+                Card(CardNumber.SIX, CardSuit.하트),
+                Card(CardNumber.SEVEN, CardSuit.클럽),
+                Card(CardNumber.EIGHT, CardSuit.다이아몬드)
             )
         )
     }
@@ -72,7 +82,7 @@ class MatchResultTest : DescribeSpec({
         }
 
         it("플레이어가 Blackjack이면 플레이어의 승이다") {
-            val player = Player("jason", state = BlackJack(카드덱_21점()))
+            val player = Player("jason", state = BlackJack(카드덱_블랙잭()))
 
             val matchResult = MatchResult.toResult(dealer, listOf(player))
 
@@ -90,10 +100,10 @@ class MatchResultTest : DescribeSpec({
     }
 
     describe("딜러가 Blackjack이고") {
-        val dealer = Dealer(BlackJack(카드덱_21점()))
+        val dealer = Dealer(BlackJack(카드덱_블랙잭()))
 
         it("플레이어가 Stay이면 딜러의 승이다") {
-            val player = Player("jason", state = Stay(카드덱_20점()))
+            val player = Player("jason", state = Stay(카드덱_21점()))
 
             val matchResult = MatchResult.toResult(dealer, listOf(player))
 
@@ -101,7 +111,7 @@ class MatchResultTest : DescribeSpec({
         }
 
         it("플레이어가 Blackjack이면 무승부이다") {
-            val player = Player("jason", state = BlackJack(카드덱_21점()))
+            val player = Player("jason", state = BlackJack(카드덱_블랙잭()))
 
             val matchResult = MatchResult.toResult(dealer, listOf(player))
 
@@ -147,7 +157,7 @@ class MatchResultTest : DescribeSpec({
         }
 
         it("플레이어가 Blackjack이면 플레이어의 승이다") {
-            val player = Player("jason", state = BlackJack(카드덱_21점()))
+            val player = Player("jason", state = BlackJack(카드덱_블랙잭()))
 
             val matchResult = MatchResult.toResult(dealer, listOf(player))
 
@@ -160,6 +170,43 @@ class MatchResultTest : DescribeSpec({
             val matchResult = MatchResult.toResult(dealer, listOf(player))
 
             matchResult.dealerResult[0] shouldBe Rank.WIN
+        }
+    }
+
+    describe("배팅 결과") {
+        val playerBettingAmount = 10000.0
+
+        context("플레이어만 블랙잭이면") {
+            val dealer = Dealer(Bust(카드덱_23점()))
+            val player = Player("jason", bettingAmount = playerBettingAmount, state = BlackJack(카드덱_블랙잭()))
+
+            it("플레이어는 1.5배를 딜러에게 받는다") {
+                val matchResult = MatchResult.toResult(dealer, listOf(player))
+
+                matchResult.playerBenefits()[player] shouldBe playerBettingAmount * 1.5
+            }
+        }
+
+        context("딜러, 플레이어가 블랙잭이면") {
+            val dealer = Dealer(BlackJack(카드덱_블랙잭()))
+            val player = Player("jason", bettingAmount = playerBettingAmount, state = BlackJack(카드덱_블랙잭()))
+
+            it("플레이어는 배팅금액을 돌려받는다") {
+                val matchResult = MatchResult.toResult(dealer, listOf(player))
+
+                matchResult.playerBenefits()[player] shouldBe playerBettingAmount
+            }
+        }
+
+        context("딜러가 승리하면") {
+            val dealer = Dealer(Stay(카드덱_20점()))
+            val player = Player("jason", bettingAmount = playerBettingAmount, state = Bust(카드덱_23점()))
+
+            it("플레이어는 배팅금액을 잃는다") {
+                val matchResult = MatchResult.toResult(dealer, listOf(player))
+
+                matchResult.playerBenefits()[player] shouldBe -playerBettingAmount
+            }
         }
     }
 })
