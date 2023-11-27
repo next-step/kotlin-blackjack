@@ -1,16 +1,24 @@
-class GameIndex(private val maxIndex: Int) {
+class GameIndex(private val maxCardIndex: Int) {
 
     private var _cardIndex: Int = 0
     val cardIndex: Int
         get() = _cardIndex
 
-    fun increaseIndex() {
+    private var _playerIndex: Int = 0
+    val playerIndex: Int
+        get() = _playerIndex
+
+    fun increaseCardIndex() {
         _cardIndex++
         validateIndex()
     }
 
+    fun increasePlayerIndex() {
+        _playerIndex++
+    }
+
     private fun validateIndex() {
-        require(_cardIndex < maxIndex) { ERR_MSG_EMPTY_CARD }
+        require(_cardIndex < maxCardIndex) { ERR_MSG_EMPTY_CARD }
     }
 
     companion object {
