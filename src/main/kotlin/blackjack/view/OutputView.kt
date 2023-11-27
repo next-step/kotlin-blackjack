@@ -35,10 +35,10 @@ object OutputView {
         presentPlayersResult(participants.players.results(participants.dealer))
     }
 
-    private fun presentPlayersResult(playersResult: List<Pair<Player, PlayableResult>>) {
-        playersResult.forEach {
-            println("${it.first.name} : ${it.second}")
-        }
+    private fun presentPlayersResult(playersResult: Map<Player, PlayableResult>) {
+        playersResult
+            .keys
+            .forEach { player -> println("${player.name} : ${playersResult[player]}") }
     }
 
     private fun presentDealerResult(dealerResult: DealerResult) {
