@@ -41,8 +41,8 @@ class PlayerTest : StringSpec({
             )
         )
 
-        player.status() shouldBe BlackJackStatus.DIE
         player.isBurst() shouldBe true
+        player.status() shouldBe BlackJackStatus.STOP
         player.score() shouldBe BlackjackScore(2 + 3 + 4 + 8 + 9)
     }
 

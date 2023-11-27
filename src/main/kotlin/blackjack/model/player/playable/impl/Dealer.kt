@@ -43,7 +43,7 @@ class Dealer(
 
     override fun status(): BlackJackStatus {
         if (this.score().isBurst()) {
-            return BlackJackStatus.DIE
+            return BlackJackStatus.STOP
         }
         return BlackJackStatus.ALIVE
     }

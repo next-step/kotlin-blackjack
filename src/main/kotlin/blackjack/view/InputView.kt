@@ -1,5 +1,6 @@
 package blackjack.view
 
+import blackjack.model.blackjack.BlackJackStatus
 import blackjack.model.player.Participants
 import blackjack.model.player.Players
 import blackjack.model.player.playable.impl.Dealer
@@ -15,7 +16,7 @@ object InputView {
             Players(
                 input.split(PLAYER_NAMES_DELIMITER)
                     .asSequence()
-                    .map { Player(it) }
+                    .map { Player(name = it, status = BlackJackStatus.ALIVE) }
                     .toSet()
             ),
             Dealer()

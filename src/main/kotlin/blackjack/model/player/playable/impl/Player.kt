@@ -13,6 +13,7 @@ import blackjack.model.result.PlayableResult
 class Player(
     val name: String,
     val cards: Cards = Cards.emptyCards(),
+    var status: BlackJackStatus = BlackJackStatus.ALIVE,
 ) : Playable {
 
     override fun score(): BlackjackScore {
@@ -29,6 +30,7 @@ class Player(
             this.hit(pack)
             return PlayableReaction.HIT
         }
+        this.status = BlackJackStatus.STOP
         return PlayableReaction.STAND
     }
 
@@ -37,7 +39,11 @@ class Player(
     }
 
     override fun isBurst(): Boolean {
-        return this.score().isBurst()
+        if (this.score().isBurst()) {
+            this.status = BlackJackStatus.STOP
+            return true
+        }
+        return false
     }
 
     fun hit(pack: Pack) {
@@ -46,8 +52,8 @@ class Player(
 
     override fun status(): BlackJackStatus {
         if (this.isBurst()) {
-            return BlackJackStatus.DIE
+            return BlackJackStatus.STOP
         }
-        return BlackJackStatus.ALIVE
+        return this.status
     }
 }
