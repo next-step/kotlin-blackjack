@@ -1,14 +1,14 @@
 import card.CardPack
 import card.PlayingCard
 import player.Player
+import player.PlayerGroup
 
-class BlackjackGame(private val cardPack: CardPack, private val playerList: List<Player>) {
+class BlackjackGame(private val cardPack: CardPack, private val playerGroup: PlayerGroup) {
 
     private val index = GameIndex(maxCardIndex = cardPack.cardList.size)
 
     init {
-        validatePlayer()
-        playerList.forEach {
+        playerGroup.playerList.forEach {
             distributeTwoCards(it)
         }
     }
@@ -20,17 +20,13 @@ class BlackjackGame(private val cardPack: CardPack, private val playerList: List
     }
 
     fun savePlayerCard(playingCard: PlayingCard) {
-        playerList[index.playerIndex].saveCard(playingCard)
+        playerGroup.getCurrentPlayer().saveCard(playingCard)
     }
 
     private fun distributeTwoCards(player: Player) {
         repeat(2) {
             player.saveCard(hit())
         }
-    }
-
-    private fun validatePlayer() {
-        require(playerList.size in MIN_PLAYER_CNT..cardPack.cardList.size / 2) { "참여 가능한 플레이어의 범위를 넘어섰습니다." }
     }
 
     private fun increaseCardIndex() {
