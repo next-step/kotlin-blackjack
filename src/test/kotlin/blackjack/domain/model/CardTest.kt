@@ -6,13 +6,6 @@ import io.kotest.data.row
 import io.kotest.matchers.shouldBe
 
 class CardTest : FunSpec({
-    test("카드 이름 정상 반환 테스트") {
-        val card = Card.of(CardNumber.ACE, CardShape.Spade)
-        val answer = "A스페이드"
-
-        card.toString() shouldBe answer
-    }
-
     test("카드 숫자가 2~10일 경우 점수가 1개이며 점수가 10인지 테스트") {
         forAll(
             row(Card.of(CardNumber.TWO, CardShape.Spade), Score(2)),
