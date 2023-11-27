@@ -66,17 +66,24 @@ class PlayerTest {
 
 
     @Test
-    fun `게임 시작시 받아야 할 카드 개수(INITIAL_DEAL_SIZE)보다 더 많은 카드를 받는다면 IllegalArgumentException을 발생시킨다`() {
+    fun `게임 시작시 받아야 할 카드 개수(INITIAL_DEAL_SIZE)보다 더 적거나 많은 카드를 받는다면 IllegalArgumentException을 발생시킨다`() {
         // given
         val player = Player("test")
-        val cards = listOf(
+        val cards1 = listOf(
             Card(Suit.SPADES, Denomination.ACE),
             Card(Suit.SPADES, Denomination.TWO),
             Card(Suit.SPADES, Denomination.KING),
         )
+        val cards2 = listOf(
+            Card(Suit.SPADES, Denomination.ACE),
+        )
 
         assertThrows<IllegalArgumentException> { // then
-            player.receiveInitialCards(cards) // when
+            player.receiveInitialCards(cards1) // when
+        }
+
+        assertThrows<IllegalArgumentException> { // then
+            player.receiveInitialCards(cards2) // when
         }
     }
 }
