@@ -21,6 +21,8 @@ class BlackjackController(
         )
 
         playGame()
+
+        resultView.showResult(players = players)
     }
 
     private fun getPlayers(): List<Player> {

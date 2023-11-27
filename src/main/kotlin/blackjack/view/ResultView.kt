@@ -11,6 +11,19 @@ class ResultView {
     }
 
     fun showPlayer(player: Player) {
-        println("${player.name}카드: ${player.getCardList().map { "${it.number.text}${it.shape.text}" }.joinToString()}")
+        println(playerText(player = player))
     }
+
+    fun showResult(players: List<Player>) {
+        println(
+            players.joinToString("\n") {
+                "${playerText(player = it)} - ${playerScore(player = it)}"
+            }
+        )
+    }
+
+    private fun playerText(player: Player): String =
+        "${player.name}카드: ${player.getCardList().joinToString { "${it.number.text}${it.shape.text}" }}"
+
+    private fun playerScore(player: Player): String = "결과: ${player.getScore()}"
 }
