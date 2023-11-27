@@ -57,7 +57,11 @@ data class Participant(
             GamerCurrentState.BUST -> {
                 -betAmount
             }
-            GamerCurrentState.HIT -> TODO()
+
+            GamerCurrentState.HIT -> {
+                betAmount
+            }
+
             GamerCurrentState.INITIAL -> TODO()
             GamerCurrentState.STAND -> TODO()
         }
