@@ -22,9 +22,9 @@ object OutputView {
         }
     }
 
-    fun printPlayerGameResult(players: Players, dealer: Dealer) {
-        players.forEach {
-            println("${it.name}: ${(it versus dealer).message}")
+    fun printPlayerGameResult(players: Players, gameResults: List<GameResult>) {
+        gameResults.forEachIndexed { index, gameResult ->
+            println("${players[index].name}: ${gameResult.message}")
         }
     }
 

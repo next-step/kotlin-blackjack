@@ -52,7 +52,11 @@ class BlackjackGame {
     private fun showGameResult() {
         OutputView.printGameScore(participants)
         OutputView.printDealerGameResult(GameResult.resultOfDealer(players, dealer))
-        OutputView.printPlayerGameResult(players, dealer)
+
+        val playerGameResults = players.map { player ->
+            GameResult.resultOfPlayer(player, dealer)
+        }
+        OutputView.printPlayerGameResult(players, playerGameResults)
     }
 }
 
