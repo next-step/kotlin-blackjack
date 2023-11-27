@@ -4,7 +4,6 @@ import blackjack.model.card.Card
 import blackjack.model.card.CardDeck
 import blackjack.model.game.Rank
 import blackjack.model.state.State
-import blackjack.model.state.playState.gameState.Bust
 import blackjack.model.state.playState.gameState.Hit
 
 data class Dealer(var state: State) {
@@ -31,10 +30,10 @@ data class Dealer(var state: State) {
     }
 
     private fun isDrawCondition(player: Player) =
-        state !is Bust && player.isNotBust() && (score() == player.score())
+        !state.isBust() && !player.isBust() && (score() == player.score())
 
-    private fun isWinningCondition(player: Player) = (state is Bust && player.isNotBust()) ||
-        (state !is Bust && player.isNotBust() && (score() < player.score()))
+    private fun isWinningCondition(player: Player) = (state.isBust() && !player.isBust()) ||
+        (!state.isBust() && !player.isBust() && (score() < player.score()))
 
     companion object {
         private const val SCORE_HURDLE = 16

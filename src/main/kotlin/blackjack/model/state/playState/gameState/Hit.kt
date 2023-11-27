@@ -20,6 +20,10 @@ class Hit(override val cardDeck: CardDeck) : Running() {
         return Stay(cardDeck)
     }
 
+    override fun isBust(): Boolean {
+        return false
+    }
+
     override fun calculateScore(): Int {
         return cardDeck.calculateScore()
     }

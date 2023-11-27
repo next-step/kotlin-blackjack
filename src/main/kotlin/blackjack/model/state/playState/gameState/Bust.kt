@@ -10,6 +10,10 @@ class Bust(override val cardDeck: CardDeck) : Finished(cardDeck) {
         require(cardDeck.isBust()) { NOT_BUST_MESSAGE }
     }
 
+    override fun isBust(): Boolean {
+        return true
+    }
+
     override fun cards(): List<Card> {
         return cardDeck.deck
     }

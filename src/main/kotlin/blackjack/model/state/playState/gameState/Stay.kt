@@ -10,6 +10,10 @@ class Stay(override val cardDeck: CardDeck) : Finished(cardDeck) {
         require(cardDeck.isStay()) { NOT_STAY_MESSAGE }
     }
 
+    override fun isBust(): Boolean {
+        return false
+    }
+
     override fun cards(): List<Card> {
         return cardDeck.deck
     }

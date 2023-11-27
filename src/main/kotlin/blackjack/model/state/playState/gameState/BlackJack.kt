@@ -10,6 +10,10 @@ class BlackJack(override val cardDeck: CardDeck) : Finished(cardDeck) {
         require(cardDeck.isBlackJack()) { NOT_BLACKJACK_MESSAGE }
     }
 
+    override fun isBust(): Boolean {
+        return false
+    }
+
     override fun cards(): List<Card> {
         return cardDeck.deck
     }

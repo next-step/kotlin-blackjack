@@ -12,6 +12,8 @@ interface State {
 
     fun isFinished(): Boolean
 
+    fun isBust(): Boolean
+
     fun cards(): List<Card>
 
     fun calculateScore(): Int
