@@ -1,67 +1,67 @@
 package blackjack
 
+import blackjack.domain.BettingMoney
 import blackjack.domain.Dealer
-import blackjack.domain.Deck
 import blackjack.domain.Player
 import blackjack.domain.Players
+import blackjack.domain.ProfitCalculator
 import blackjack.domain.RandomDeck
-import blackjack.domain.getResult
 import blackjack.ui.InputView
 import blackjack.ui.ResultView
 
 fun main() {
+    val dealer = Dealer(RandomDeck.from())
     val inputNames = InputView.inputNames()
-    val players = Players.init(Dealer(), inputNames)
+    val inputNameAndBets = InputView.inputBets(inputNames)
+    val players = Players.init(dealer, inputNames)
 
-    val deck = RandomDeck.from()
-    players.initCard(deck)
+    players.initCard()
     ResultView.printInitPlayers(players)
 
     players.players
-        .forEach { play(it, deck) }
-    dealerPlay(players.dealer, deck)
+        .forEach { play(dealer, it) }
+    dealerPlay(dealer)
     ResultView.printCardResult(players)
 
     printGameResult(players)
+    printProfit(players, inputNameAndBets)
 }
 
-private fun play(player: Player, deck: Deck) {
-    while (player.canHit()) {
-        hitOrStand(player, deck)
+private fun play(dealer: Dealer, player: Player) {
+    while (!player.isFinished()) {
+        hitOrStay(dealer, player)
     }
 }
 
-private fun hitOrStand(player: Player, deck: Deck) {
-    when (InputView.inputHitOrStand(player)) {
+private fun hitOrStay(dealer: Dealer, player: Player) {
+    when (InputView.inputHitOrStay(player)) {
         true -> {
-            val card = deck.hit()
+            val card = dealer.draw()
             player.hit(card)
             ResultView.printPlayerNameAndCard(player)
         }
 
-        false -> player.stand()
+        false -> player.stay()
     }
 }
 
-private fun dealerPlay(dealer: Dealer, deck: Deck) {
-    while (dealer.canHit()) {
-        val card = deck.hit()
+private fun dealerPlay(dealer: Dealer) {
+    while (!dealer.isFinished()) {
+        val card = dealer.draw()
         dealer.hit(card)
         ResultView.printDealerHitMessage()
     }
 }
 
 private fun printGameResult(players: Players) {
-    val dealer = players.dealer
-    val dealerResult = players.players
-        .map { dealer.getResult(it) }
-        .groupingBy { it }
-        .eachCount()
+    val dealerResult = players.getDealerResult()
+    val playersResult = players.getPlayersResult()
+    ResultView.printGameResult(dealerResult, playersResult)
+}
 
-    val playerResult = players.players
-        .associate {
-            it.name to it.getResult(dealer)
-        }
-
-    ResultView.printGameResult(dealerResult, playerResult)
+private fun printProfit(players: Players, inputNameAndBets: Map<String, BettingMoney>) {
+    val profitCalculator = ProfitCalculator(inputNameAndBets)
+    val dealerProfit = players.getDealerProfit(profitCalculator)
+    val playersProfit = players.getPlayersProfit(profitCalculator)
+    ResultView.printProfit(dealerProfit, playersProfit)
 }

@@ -8,11 +8,11 @@ import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.shouldBe
 
 class HandTest : BehaviorSpec({
-    val deck = FixedDeck()
+    val dealer = Dealer(FixedDeck())
 
     Given("패가 주어졌을 때") {
         val hand = Hand()
-        val initCard = deck.init()
+        val initCard = dealer.drawInitCards()
         When("초기화를 하면") {
             hand.init(initCard)
             Then("카드 2장을 새로 가진다.") {
@@ -45,7 +45,7 @@ class HandTest : BehaviorSpec({
 
     Given("패가 생성된 후") {
         val hand = Hand()
-        val card = deck.hit()
+        val card = dealer.draw()
         When("receive를 하면") {
             hand.receive(card)
             Then("카드 1장을 새로 가진다.") {

@@ -55,14 +55,15 @@ object ResultView {
     }
 
     private fun printCard(user: User) {
-        val playerCards = user.hand
+        val playerCards = user.state
+            .cards()
             .cards
             .joinToString { "${it.num.symbol}${it.suit.value}" }
         print(playerCards)
     }
 
     private fun printSum(user: User) {
-        print(" - 결과: ${user.hand.getSum()}")
+        print(" - 결과: ${user.state.getSum()}")
     }
 
     fun printGameResult(dealerResult: Map<GameResult, Int>, playersResult: Map<String, GameResult>) {
@@ -94,6 +95,15 @@ object ResultView {
                 GameResult.DRAW -> println("무")
                 GameResult.LOSE -> println("패")
             }
+        }
+    }
+
+    fun printProfit(dealerProfit: Int, playersProfit: Map<String, Int>) {
+        println()
+        println("## 최종 수익")
+        println("딜러: $dealerProfit")
+        playersProfit.forEach {
+            println("${it.key}: ${it.value}")
         }
     }
 }
