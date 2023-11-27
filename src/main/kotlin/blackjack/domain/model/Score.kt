@@ -6,7 +6,7 @@ value class Score(val score: Int) {
         return Score(this.score + score.score)
     }
 
-    operator fun compareTo(score: Score): Int {
-        return this.score - score.score
+    operator fun compareTo(score: Int): Int {
+        return this.score - score
     }
 }
