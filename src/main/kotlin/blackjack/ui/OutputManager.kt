@@ -3,6 +3,8 @@ package blackjack.ui
 import blackjack.Player
 import blackjack.card.AceCard
 import blackjack.card.BlackJackCard
+import blackjack.card.CardPattern
+import blackjack.card.CardPicture
 import blackjack.card.NormalCard
 import blackjack.card.PictureCard
 
@@ -34,9 +36,26 @@ class OutputManager {
 
     private fun parsingCardToString(card: BlackJackCard): String {
         return when (card) {
-            is NormalCard -> "${card.number}${card.pattern.patternName}"
-            is PictureCard -> "${card.picture.pictureName}${card.pattern.patternName}"
-            is AceCard -> "ace${card.pattern.patternName}"
+            is NormalCard -> "${card.number}${parsingCardPatternToString(card.pattern)}"
+            is PictureCard -> "${parsingCardPictureToString(card.picture)}${parsingCardPatternToString(card.pattern)}"
+            is AceCard -> "ace${parsingCardPatternToString(card.pattern)}"
+        }
+    }
+
+    private fun parsingCardPatternToString(cardPattern: CardPattern): String {
+        return when (cardPattern) {
+            CardPattern.DIAMOND -> "다이아"
+            CardPattern.CLOVER -> "클로버"
+            CardPattern.SPADE -> "스페이드"
+            CardPattern.HEART -> "하트"
+        }
+    }
+
+    private fun parsingCardPictureToString(cardPicture: CardPicture): String {
+        return when (cardPicture) {
+            CardPicture.KING -> "K"
+            CardPicture.JACK -> "J"
+            CardPicture.QUEEN -> "Q"
         }
     }
 }
