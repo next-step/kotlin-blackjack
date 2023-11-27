@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.contoller
 
 import blackjack.domain.component.BlackjackInputValidator
 import blackjack.domain.model.PlayerName
