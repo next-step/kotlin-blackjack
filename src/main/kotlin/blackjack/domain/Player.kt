@@ -7,6 +7,8 @@ class Player(val name: String, cardList: List<Card> = emptyList()) {
         return cardList.toList()
     }
 
+    fun canDraw(): Boolean = cardList.sumOf { it.number.score } <= BlackjackRule.targetScore
+
     fun draw(deck: Deck) {
         cardList.add(deck.pop())
     }

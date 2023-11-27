@@ -1,5 +1,6 @@
 package blackjack
 
+import blackjack.domain.BlackjackRule
 import blackjack.domain.Card
 import blackjack.domain.CardNumber
 import blackjack.domain.CardShape
@@ -49,6 +50,25 @@ class PlayerTest : FunSpec({
             player.getCardList().forEachIndexed { index, card ->
                 card shouldBe initialCardList[initialCardList.count() - 1 - index]
             }
+        }
+    }
+    context("Player는 점수가 21점을 초과하면 카드를 뽑을 수 없다.") {
+        withData(
+            listOf(
+                listOf(
+                    Card(number = CardNumber.JACK, shape = CardShape.SPADE),
+                    Card(number = CardNumber.JACK, shape = CardShape.HEART),
+                ),
+                listOf(
+                    Card(number = CardNumber.JACK, shape = CardShape.SPADE),
+                    Card(number = CardNumber.JACK, shape = CardShape.HEART),
+                    Card(number = CardNumber.JACK, shape = CardShape.DIAMOND),
+                )
+            )
+        ) { cardList ->
+            val player = Player("김영태", cardList = cardList)
+
+            player.canDraw() shouldBe (cardList.sumOf { it.number.score } <= BlackjackRule.targetScore)
         }
     }
 })
