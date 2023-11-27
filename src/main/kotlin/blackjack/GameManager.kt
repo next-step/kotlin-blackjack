@@ -1,6 +1,7 @@
 package blackjack
 
 import blackjack.card.CardDeck
+import blackjack.participant.Player
 import blackjack.ui.InputManager
 import blackjack.ui.OutputManager
 

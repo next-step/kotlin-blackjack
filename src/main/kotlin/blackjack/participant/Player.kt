@@ -1,5 +1,6 @@
-package blackjack
+package blackjack.participant
 
+import blackjack.ScoreCalculator
 import blackjack.card.BlackJackCard
 
 class Player(
