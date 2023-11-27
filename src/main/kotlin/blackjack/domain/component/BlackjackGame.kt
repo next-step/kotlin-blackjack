@@ -14,12 +14,15 @@ class BlackjackGame private constructor(
 
         fun create(playerNames: List<PlayerName>): BlackjackGame {
             val cardPool = CardPool.create()
-            val initialCards = cardPool
-                .pickAndRemove(INITIAL_CARD_COUNT)
-                .run { Cards.of(this) }
-            val players = playerNames.map { Player(it, initialCards) }
+            val players = playerNames.map { Player(it, fetchInitialCards(cardPool)) }
 
             return BlackjackGame(players, cardPool)
+        }
+
+        private fun fetchInitialCards(cardPool: CardPool): Cards {
+            return cardPool
+                .pickAndRemove(INITIAL_CARD_COUNT)
+                .run { Cards.of(this) }
         }
     }
 }
