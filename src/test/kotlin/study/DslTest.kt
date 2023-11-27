@@ -5,21 +5,6 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.provider.CsvSource
 import org.junit.jupiter.params.provider.ValueSource
 
-/**
- *  introduce {
- *      name("홍길동")
- *      company("활빈당")
- *      skills {
- *          soft("A passion for problem solving")
- *          soft("Good communication skills")
- *          hard("Kotiln")
- *      }
- *      languages {
- *          "Korean" level 5
- *          "English" level 3
- *      }
- * }
- */
 class DslTest {
     //    @ParameterizedTest
     @ValueSource(strings = ["홍길동", "허균"])
