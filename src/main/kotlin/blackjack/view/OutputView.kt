@@ -1,41 +1,93 @@
 package blackjack.view
 
-import blackjack.model.Participants
-import blackjack.model.Player
-import blackjack.view.Console.present
+import blackjack.model.card.Cards
+import blackjack.model.player.Participants
+import blackjack.model.player.PlayableReaction
+import blackjack.model.player.playable.impl.Dealer
+import blackjack.model.player.playable.impl.Player
+import blackjack.model.result.DealerResult
+import blackjack.model.result.PlayableResult
 
 object OutputView {
 
     fun presentCards(participants: Participants) {
-        println(participants.present())
+        println(participants.presentDealer())
+        println(participants.presentPlayers())
     }
 
-    fun result(participants: Participants) {
+    fun presentScores(participants: Participants) {
         presentCardsWitScore(participants)
     }
 
     private fun presentCardsWitScore(participants: Participants) {
-        println()
-        println(participants.presentWithScore())
+        print(System.lineSeparator())
+        println(participants.presentDealerWithScore())
+        println(participants.presentPlayerWithScore())
     }
 
     fun dealing(participants: Participants) {
-        println("${participants.names()} 에게 2 장씩 나누었습니다.")
+        println("딜러와 ${participants.names()} 에게 2 장씩 나누었습니다.")
     }
 
-    fun playerCardPresent(it: Player) {
-        println(it.present())
+    fun presentResult(participants: Participants) {
+        println("## 최종 승패")
+        presentDealerResult(participants.dealerResult())
+        presentPlayersResult(participants.players.results(participants.dealer))
+    }
+
+    private fun presentPlayersResult(playersResult: List<Pair<Player, PlayableResult>>) {
+        playersResult
+            .forEach { presentPlayerResult(it.first, it.second) }
+    }
+
+    private fun presentPlayerResult(player: Player, result: PlayableResult) {
+        println("${player.name}: ${result.name}")
+    }
+
+    fun presentPlayer(player: Player) {
+        println(player.presentPlayers())
+    }
+
+    private fun presentDealerResult(dealerResult: DealerResult) {
+        println("딜러 ${dealerResult.winningCount}승 ${dealerResult.drawingCount}무 ${dealerResult.losingCount}패")
+    }
+
+    fun presentDealerAction(playableReaction: PlayableReaction) {
+        when (playableReaction) {
+            PlayableReaction.HIT -> println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
+            PlayableReaction.STAND -> println("딜러는 17이상이라 카드를 받지 않았습니다.")
+        }
     }
 }
 
-private fun Participants.present(): String {
-    return this.participants.joinToString(separator = "\n") { it.present() }
+private fun Participants.presentPlayers(): String {
+    return this.players.values.joinToString(separator = "\n") { it.presentPlayers() }
 }
 
-private fun Participants.presentWithScore(): String {
-    return this.participants.joinToString(separator = "\n") { "${it.present()} - 결과: ${it.cards.totalScore()}" }
+private fun Participants.presentDealer(): String {
+    return this.dealer.presentDealers()
+}
+
+private fun Participants.presentDealerWithScore(): String {
+    return "${this.dealer.presentDealers()} - 결과: ${this.dealer.score().value}"
+}
+
+private fun Participants.presentPlayerWithScore(): String {
+    return this.players.values.joinToString(separator = "\n") { "${it.presentPlayers()} - 결과: ${it.cards.totalScore().value}" }
 }
 
 private fun Participants.names(): String {
-    return participants.joinToString(separator = InputView.PARTICIPANTS_PRESENT_SEPARATOR) { it.name }
+    return players.values.joinToString(separator = InputView.PARTICIPANTS_PRESENT_SEPARATOR) { it.name }
+}
+
+fun Cards.presentPlayers(): String {
+    return cards.joinToString(separator = ", ") { "${it.cardRank.alias}${it.suit.alias}" }
+}
+
+fun Player.presentPlayers(): String {
+    return "${this.name}카드 : ${this.cards.presentPlayers()}"
+}
+
+fun Dealer.presentDealers(): String {
+    return "딜러 카드 : ${this.cards.presentPlayers()}"
 }

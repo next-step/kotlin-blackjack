@@ -1,8 +1,9 @@
-package blackjack.model.pack
+package blackjack.model.card.pack.impl
 
-import blackjack.model.Card
-import blackjack.model.CardRank
-import blackjack.model.Suit
+import blackjack.model.card.Card
+import blackjack.model.card.CardRank
+import blackjack.model.card.Suit
+import blackjack.model.card.pack.Pack
 import kotlin.random.Random
 
 object ShuffledPack : Pack {
@@ -21,6 +22,6 @@ object ShuffledPack : Pack {
     }
 
     private fun randomInRange(range: Int): Int {
-        return this.random.nextInt(0, Int.MAX_VALUE) % range
+        return random.nextInt(0, Int.MAX_VALUE) % range
     }
 }

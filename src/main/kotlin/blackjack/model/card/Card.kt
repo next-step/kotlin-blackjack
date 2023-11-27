@@ -1,20 +1,20 @@
-package blackjack.model
+package blackjack.model.card
 
 class Card private constructor(
     val suit: Suit,
     val cardRank: CardRank,
 ) {
     companion object {
-        private val CARDS: Map<Pair< Suit, CardRank>, Card> by lazy {
+        private val CARDS: Map<Trump, Card> by lazy {
             Suit.values().flatMap { suit ->
                 CardRank.values().map { rank ->
-                    (suit to rank) to Card(suit, rank)
+                    Trump(suit to rank) to Card(suit, rank)
                 }
             }.toMap()
         }
 
         fun of(suit: Suit, cardRank: CardRank): Card {
-            return requireNotNull(this.CARDS[suit to cardRank]) { "입력된 suit=[$suit] , cardRank=[$cardRank] 는 찾을수 없습니다" }
+            return requireNotNull(CARDS[Trump(suit to cardRank)]) { "입력된 suit=[$suit] , cardRank=[$cardRank] 는 찾을수 없습니다" }
         }
     }
 }

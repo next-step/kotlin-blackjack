@@ -1,4 +1,6 @@
-package blackjack.model
+package blackjack.model.card
+
+import blackjack.model.player.BlackjackScore
 
 class Cards(
     cards: List<Card> = emptyList(),
@@ -10,11 +12,11 @@ class Cards(
         _cards.add(card)
     }
 
-    fun totalScore(): Int {
+    fun totalScore(): BlackjackScore {
         if (this.isContainsAce()) {
-            return scoreWithAce()
+            return BlackjackScore(scoreWithAce())
         }
-        return simpleSumOfScore()
+        return BlackjackScore(simpleSumOfScore())
     }
 
     private fun simpleSumOfScore(): Int {
@@ -28,10 +30,10 @@ class Cards(
 
     private fun scoreWithAce(): Int {
         val simpleSum = simpleSumOfScore()
-        if (simpleSum + ALTERNATIVE_ACE_SCORE_DIFF > HIGHEST_SCORE) {
+        if (simpleSum + ACE_BONUS_SCORE > HIGHEST_SCORE) {
             return simpleSum
         }
-        return simpleSum + ALTERNATIVE_ACE_SCORE_DIFF
+        return simpleSum + ACE_BONUS_SCORE
     }
 
     fun count(): Int {
@@ -40,7 +42,7 @@ class Cards(
 
     companion object {
         private const val HIGHEST_SCORE: Int = 21
-        private const val ALTERNATIVE_ACE_SCORE_DIFF: Int = 11 - 1
+        private const val ACE_BONUS_SCORE: Int = 10
 
         fun emptyCards(): Cards {
             return Cards(mutableListOf())

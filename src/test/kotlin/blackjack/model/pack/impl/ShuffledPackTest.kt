@@ -1,5 +1,6 @@
-package blackjack.model.pack
+package blackjack.model.pack.impl
 
+import blackjack.model.card.pack.impl.ShuffledPack
 import io.kotest.assertions.throwables.shouldNotThrow
 import io.kotest.core.spec.style.StringSpec
 
