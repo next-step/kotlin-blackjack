@@ -4,6 +4,7 @@ class Player(
     val name: PlayerName,
     private var cards: Cards
 ) {
+
     fun isPossibleToHit(): Boolean {
         return cards.scores().minBy { it.score } < MAXIMUM_WINNING_SCORE
     }
@@ -12,6 +13,10 @@ class Player(
         cards += card
 
         return this
+    }
+
+    fun cards(): Cards {
+        return cards
     }
 
     companion object {

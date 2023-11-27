@@ -3,13 +3,16 @@ package blackjack.contoller
 import blackjack.domain.component.BlackjackGameProxy
 import blackjack.domain.component.BlackjackInputValidator
 import blackjack.domain.model.Player
+import blackjack.domain.model.PlayerInfo
 import blackjack.domain.model.PlayerName
 import blackjack.domain.model.YesNo
 import blackjack.view.BlackjackInputView
+import blackjack.view.BlackjackResultView
 
 class BlackjackController(
     private val blackJackInputView: BlackjackInputView,
     private val blackjackInputValidator: BlackjackInputValidator,
+    private val blackjackResultView: BlackjackResultView,
     private val blackjackGameProxy: BlackjackGameProxy
 ) {
     fun getPlayerNames(): List<PlayerName> {
@@ -34,6 +37,12 @@ class BlackjackController(
 
     fun hit(playerName: PlayerName): Player {
         return blackjackGameProxy.hit(playerName)
+    }
+
+    fun printPlayerInfo(player: Player) {
+        val playerInfo = PlayerInfo.from(player)
+
+        blackjackResultView.printPlayerInfo(playerInfo)
     }
 
     private fun convertPlayerNamesStringToList(playerNames: String?): List<PlayerName> {

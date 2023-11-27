@@ -5,11 +5,13 @@ import blackjack.domain.component.BlackjackGameProxy
 import blackjack.domain.component.BlackjackInputValidator
 import blackjack.domain.model.PlayerName
 import blackjack.view.BlackjackInputView
+import blackjack.view.BlackjackResultView
 
 fun main() {
     val blackjackController = BlackjackController(
         BlackjackInputView(),
         BlackjackInputValidator(),
+        BlackjackResultView(),
         BlackjackGameProxy()
     )
 
@@ -25,5 +27,7 @@ fun main() {
         }
 
         val player = blackjackController.hit(it)
+
+        blackjackController.printPlayerInfo(player)
     }
 }
