@@ -1,4 +1,4 @@
-package blackJack
+package blackJack.card
 
 import card.CardNumber
 import card.PlayingCard

@@ -1,4 +1,4 @@
-package blackJack
+package blackJack.player
 
 import card.CardPack
 import org.assertj.core.api.Assertions.assertThat
