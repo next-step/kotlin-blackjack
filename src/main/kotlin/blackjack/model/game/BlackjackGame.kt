@@ -36,7 +36,7 @@ class BlackjackGame(
     }
 
     fun playDealer(printDealerPop: () -> Unit) {
-        if (dealer.isOverSixTeen()) {
+        if (dealer.hasPassedHurdle()) {
             dealer.draw(cards.pop())
             printDealerPop()
         }

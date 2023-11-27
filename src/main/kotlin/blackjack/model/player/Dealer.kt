@@ -14,7 +14,7 @@ data class Dealer(var state: State) {
         this.state = state.draw(card)
     }
 
-    fun isOverSixTeen() = score() <= SIXTEEN
+    fun hasPassedHurdle() = score() <= SCORE_HURDLE
 
     fun cards(): List<Card> {
         return state.cards()
@@ -37,6 +37,6 @@ data class Dealer(var state: State) {
         (state !is Bust && player.isNotBust() && (score() < player.score()))
 
     companion object {
-        private const val SIXTEEN = 16
+        private const val SCORE_HURDLE = 16
     }
 }
