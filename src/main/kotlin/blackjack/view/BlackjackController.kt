@@ -2,6 +2,7 @@ package blackjack.view
 
 import blackjack.domain.BlackjackRule
 import blackjack.domain.Deck
+import blackjack.domain.Hand
 import blackjack.domain.Player
 
 class BlackjackController(
@@ -24,7 +25,12 @@ class BlackjackController(
 
     private fun getPlayers(): List<Player> {
         return inputView.getPlayerNames().map {
-            Player(name = it, deck.popMany(count = BlackjackRule.initialCard))
+            Player(
+                name = it,
+                Hand(
+                    cardList = deck.popMany(count = BlackjackRule.initialCard)
+                )
+            )
         }
     }
 

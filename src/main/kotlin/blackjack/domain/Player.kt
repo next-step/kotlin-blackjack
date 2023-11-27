@@ -1,20 +1,40 @@
 package blackjack.domain
 
-class Player(val name: String, cardList: List<Card> = emptyList(), private var isEnded: Boolean = false) {
-    private val cardList: MutableList<Card> = cardList.toMutableList()
-
+class Player(
+    val name: String,
+    private val hand: Hand = Hand(),
+    private var isEnded: Boolean = false
+) {
     fun getCardList(): List<Card> {
-        return cardList.toList()
+        return hand.getCardList()
     }
 
     fun canDraw(): Boolean =
-        cardList.sumOf { it.number.score } <= BlackjackRule.targetScore && !isEnded
+        getScore() <= BlackjackRule.targetScore && !isEnded
 
     fun draw(deck: Deck) {
-        cardList.add(deck.pop())
+        hand.add(card = deck.pop())
     }
 
     fun endTurn() {
         isEnded = true
+    }
+
+    fun getScore(): Int {
+        val possibleScore = hand.getPossibleScore()
+
+        if (possibleScore.count() == 1) {
+            return possibleScore.first()
+        }
+
+        return hand.getPossibleScore().filter {
+            it <= BlackjackRule.targetScore
+        }.let {
+            if (it.isNotEmpty()) {
+                return it.max()
+            }
+
+            hand.getPossibleScore().min()
+        }
     }
 }

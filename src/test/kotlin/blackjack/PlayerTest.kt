@@ -5,6 +5,7 @@ import blackjack.domain.Card
 import blackjack.domain.CardNumber
 import blackjack.domain.CardShape
 import blackjack.domain.Deck
+import blackjack.domain.Hand
 import blackjack.domain.Player
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.datatest.withData
@@ -66,7 +67,7 @@ class PlayerTest : FunSpec({
                 )
             )
         ) { cardList ->
-            val player = Player("김영태", cardList = cardList)
+            val player = Player("김영태", hand = Hand(cardList))
 
             player.canDraw() shouldBe (cardList.sumOf { it.number.score } <= BlackjackRule.targetScore)
         }

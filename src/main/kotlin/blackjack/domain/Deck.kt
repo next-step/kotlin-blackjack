@@ -3,6 +3,10 @@ package blackjack.domain
 class Deck(deck: List<Card>) {
     private val deck: ArrayDeque<Card> = ArrayDeque(deck)
 
+    init {
+        require(deck.distinct().count() == deck.count()) { "Duplicated cards in deck!" }
+    }
+
     fun getCardList() = deck.toList()
 
     fun pop(): Card = deck.removeLast()
