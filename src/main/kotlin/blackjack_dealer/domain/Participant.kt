@@ -51,6 +51,18 @@ data class Participant(
         return betAmount
     }
 
+    fun getResultBetAmount(): Int {
+        return when (currentState) {
+            GamerCurrentState.BLACKJACK -> TODO()
+            GamerCurrentState.BUST -> {
+                -betAmount
+            }
+            GamerCurrentState.HIT -> TODO()
+            GamerCurrentState.INITIAL -> TODO()
+            GamerCurrentState.STAND -> TODO()
+        }
+    }
+
     companion object {
         private const val MINIMUM_HIT_NUMBER = 1
         private const val MAXIMUM_HIT_NUMBER = 20
