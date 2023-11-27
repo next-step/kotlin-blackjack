@@ -1,31 +1,26 @@
 package blackjack.domain
 
+import blackjack.domain.state.Hit
+import blackjack.domain.state.Started
+import blackjack.domain.state.State
+
 class Player(
-    val name: String,
-    val cards: PlayerCards = PlayerCards(),
-    private var _decision: PlayerDecision = PlayerDecision.HIT
-) {
-    val decision
-        get() = _decision
+    override val name: String,
+    override val cards: Cards = Cards(),
+) : Participant() {
+    var state: State = Started(cards)
+        private set
 
-    fun getCard(card: Card) {
-        cards.add(card)
-        if (getScore() > Score.BLACKJACK) {
-            turnStand()
-        }
-    }
-
-    fun getScore(): Int {
-        return toScore().calculate()
+    override fun receiveCard(card: Card) {
+        state = state.draw(card)
     }
 
     fun turnStand() {
-        _decision = PlayerDecision.STAND
+        check(state is Hit) { "Hit 상태가 아닙니다." }
+        state = (state as Hit).stand()
     }
 
-    private fun toScore(): Score {
-        return Score(
-            cards.values.map { it.denomination }
-        )
+    infix fun versus(dealer: Dealer): GameResult {
+        return GameResult.resultOfPlayer(this, dealer)
     }
 }
