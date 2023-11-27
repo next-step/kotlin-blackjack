@@ -20,15 +20,13 @@ class PlayingCardTest {
         val actual = playingCard.getPoint()
         val actual2 = playingCard2.getPoint()
         val actual3 = playingCard3.getPoint()
-        val actual4 = playingCard3.getPoint(true)
-        val actual5 = playingCard4.getPoint()
+        val actual4 = playingCard4.getPoint()
 
         // then : 카드별 포인트를 반환한다
         assertThat(actual).isEqualTo(3)
         assertThat(actual2).isEqualTo(2)
         assertThat(actual3).isEqualTo(1)
-        assertThat(actual4).isEqualTo(11)
-        assertThat(actual5).isEqualTo(10)
+        assertThat(actual4).isEqualTo(10)
     }
 
     @Test

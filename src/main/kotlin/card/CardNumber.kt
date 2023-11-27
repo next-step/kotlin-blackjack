@@ -26,7 +26,7 @@ enum class CardNumber private constructor(private val point: Int, private val ca
             return this.point
         }
 
-        fun CardNumber.getCardName(): String {
+        fun CardNumber.getCardNumber(): String {
             return this.cardName
         }
 
