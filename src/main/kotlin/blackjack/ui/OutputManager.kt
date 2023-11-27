@@ -1,12 +1,12 @@
 package blackjack.ui
 
-import blackjack.participant.Player
 import blackjack.card.AceCard
 import blackjack.card.BlackJackCard
 import blackjack.card.CardPattern
 import blackjack.card.CardPicture
 import blackjack.card.NormalCard
 import blackjack.card.PictureCard
+import blackjack.participant.Player
 
 class OutputManager {
 
