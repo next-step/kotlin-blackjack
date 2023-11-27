@@ -1,16 +1,20 @@
 package blackjack
 
 import blackjack.domain.Deck
+import blackjack.domain.Dealer
+import blackjack.domain.GameResult
 import blackjack.domain.Player
 import blackjack.domain.Players
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
 class BlackjackGame {
-    private val deck = Deck()
     private val players = Players(
         InputView.getNicknames().map(::Player)
     )
+    private val deck = Deck()
+    private val dealer = Dealer("딜러")
+    private val participants = listOf(dealer) + players
 
     fun start() {
         dealCards()
@@ -19,32 +23,36 @@ class BlackjackGame {
     }
 
     private fun dealCards() {
-        repeat(Deck.INITIAL_DEAL_SIZE) {
-            val cards = deck.draw(players.size)
-            players.receiveCards(cards)
+        participants.forEach {
+            it.receiveInitialCards(
+                deck.draw(Deck.INITIAL_DEAL_SIZE)
+            )
         }
-        OutputView.printPlayerStates(players, Deck.INITIAL_DEAL_SIZE)
+        OutputView.printPlayerStates(participants, Deck.INITIAL_DEAL_SIZE)
     }
 
     private fun process() {
         while (players.withHit().isNotEmpty()) {
-            players.withHit().first().playGame(deck)
+            players.withHit().first().playGame()
+        }
+        if (dealer.needOneMoreCard()) {
+            dealer.receiveCard(deck.draw())
         }
     }
 
-    private fun Player.playGame(deck: Deck) {
+    private fun Player.playGame() {
         if (InputView.askHitOrStand(this.name)) {
-            this.getCard(deck.draw())
-            OutputView.printPlayerState(this)
+            this.receiveCard(deck.draw())
+            OutputView.printParticipantCards(this)
         } else {
             this.turnStand()
         }
     }
 
     private fun showGameResult() {
-        players.forEach {
-            OutputView.printGameScore(it, it.getScore())
-        }
+        OutputView.printGameScore(participants)
+        OutputView.printDealerGameResult(GameResult.resultOfDealer(players, dealer))
+        OutputView.printPlayerGameResult(players, dealer)
     }
 }
 

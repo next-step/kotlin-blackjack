@@ -16,5 +16,10 @@ class Score(private val denominations: List<Denomination>) {
 
     companion object {
         const val BLACKJACK = 21
+        const val DEALER_HIT_THRESHOLD = 16
     }
+}
+
+fun Cards.toScore(): Int {
+    return Score(this.values.map { it.denomination }).calculate()
 }
