@@ -1,6 +1,6 @@
 package study
 
-import introduce
+import dsl.introduce
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest

@@ -1,3 +1,5 @@
+package dsl
+
 class Skill {
     private val hardSkills: MutableList<String> = mutableListOf()
     private val softSkills: MutableList<String> = mutableListOf()
