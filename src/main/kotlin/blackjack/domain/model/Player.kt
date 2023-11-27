@@ -1,7 +1,7 @@
 package blackjack.domain.model
 
 class Player(
-    private val name: String,
+    private val name: PlayerName,
     private var cards: Cards
 ) {
     fun isPossibleToDraw(): Boolean {
