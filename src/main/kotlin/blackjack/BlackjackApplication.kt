@@ -19,5 +19,9 @@ fun main() {
         if (!blackjackController.getHitPossible(it)) {
             return@forEach
         }
+
+        if (blackjackController.getHit(it).isNo()) {
+            return@forEach
+        }
     }
 }
