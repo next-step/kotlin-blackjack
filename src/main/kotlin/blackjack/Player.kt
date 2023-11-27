@@ -17,6 +17,6 @@ class Player(
     }
 
     fun resultScore(): Int {
-        return scoreCalculator.calcScore(cards)
+        return scoreCalculator.calculateGameScore(cards)
     }
 }
