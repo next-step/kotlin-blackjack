@@ -1,6 +1,6 @@
 package card
 
-enum class CardNumber private constructor(private val point: Int, private val cardName: String) {
+enum class CardNumber(val point: Int, val cardName: String) {
     ACE(1, "A"),
     TWO(2, "2"),
     TREE(3, "3"),
@@ -21,14 +21,6 @@ enum class CardNumber private constructor(private val point: Int, private val ca
             ACE, TWO, TREE, FOUR, FIVE, SIX, SEVEN,
             EIGHT, NINE, TEN, JACK, QUEEN, KING,
         )
-
-        fun CardNumber.getPoint(): Int {
-            return this.point
-        }
-
-        fun CardNumber.getCardNumber(): String {
-            return this.cardName
-        }
 
         fun getCardNumberList() = cardNumberList
     }

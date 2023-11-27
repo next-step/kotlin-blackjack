@@ -1,12 +1,10 @@
 package card
 
-import card.CardNumber.Companion.getCardNumber
-import card.CardNumber.Companion.getPoint
 import card.Suit.Companion.getName
 
 class PlayingCard(private val suit: Suit, private val cardNumber: CardNumber) {
     fun getPoint(): Int {
-        return cardNumber.getPoint()
+        return cardNumber.point
     }
 
     fun getSuitName(): String {
@@ -18,6 +16,6 @@ class PlayingCard(private val suit: Suit, private val cardNumber: CardNumber) {
     }
 
     override fun toString(): String {
-        return "${cardNumber.getCardNumber()}${suit.koName}"
+        return "${cardNumber.cardName}${suit.koName}"
     }
 }
