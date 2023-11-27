@@ -109,4 +109,29 @@ class DealerTest : StringSpec({
         player.result(dealer) shouldBe PlayableResult.DRAW
         dealer.result(player) shouldBe PlayableResult.DRAW
     }
+
+    "딜러가 2승1패인 경우 경기결과가 잘 표현되어야한다" {
+        val dealer = Dealer( // 15점
+            CardFixture.makeCards(CardFixture.two, CardFixture.two, CardFixture.eight, CardFixture.three)
+        )
+        val player1 = Player(
+            "saml", // 21점
+            CardFixture.makeCards(CardFixture.five, CardFixture.king, CardFixture.six)
+        )
+        val player2 = Player(
+            "ldap", // 18점
+            CardFixture.makeCards(CardFixture.eight, CardFixture.queen, CardFixture.ace2)
+        )
+        val player3 = Player(
+            "oauth", // 10점
+            CardFixture.makeCards(CardFixture.two, CardFixture.eight)
+        )
+        val actual = dealer.dealerResult(
+            Players(player1, player2, player3)
+        )
+
+        actual.winningCount shouldBe 1
+        actual.drawingCount shouldBe 0
+        actual.losingCount shouldBe 2
+    }
 })
