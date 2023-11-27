@@ -16,18 +16,6 @@ class PlayerTest : FunSpec({
         player.isPossibleToHit() shouldBe true
     }
 
-    test("카드 A를 포함한 상태에서 점수 합이 21 미만이 가능할 경우 카드 뽑기 가능 여부 메소드 true 반환 테스트") {
-        val name = PlayerName("홍길동")
-        val cards = Cards.of(
-            Card.of(CardNumber.ACE, CardShape.Spade),
-            Card.of(CardNumber.TEN, CardShape.Spade)
-        )
-
-        val player = Player(name, cards)
-
-        player.isPossibleToHit() shouldBe true
-    }
-
     test("점수 합이 21일 경우 카드 뽑기 가능 여부 메소드 false 반환 테스트") {
         val name = PlayerName("홍길동")
         val cards = Cards.of(
@@ -47,6 +35,31 @@ class PlayerTest : FunSpec({
             Card.of(CardNumber.THREE, CardShape.Spade),
             Card.of(CardNumber.NINE, CardShape.Spade),
             Card.of(CardNumber.TEN, CardShape.Spade),
+        )
+
+        val player = Player(name, cards)
+
+        player.isPossibleToHit() shouldBe false
+    }
+
+    test("카드 A를 포함한 상태에서 점수 합이 21 미만이 가능할 경우 카드 뽑기 가능 여부 메소드 true 반환 테스트") {
+        val name = PlayerName("홍길동")
+        val cards = Cards.of(
+            Card.of(CardNumber.ACE, CardShape.Spade),
+            Card.of(CardNumber.TWO, CardShape.Spade),
+            Card.of(CardNumber.TEN, CardShape.Spade)
+        )
+
+        val player = Player(name, cards)
+
+        player.isPossibleToHit() shouldBe true
+    }
+
+    test("카드 A를 포함한 상태에서 점수 합이 21인 경우 카드 뽑기 가능 여부 메소드 false 반환 테스트") {
+        val name = PlayerName("홍길동")
+        val cards = Cards.of(
+            Card.of(CardNumber.ACE, CardShape.Spade),
+            Card.of(CardNumber.JACK, CardShape.Spade),
         )
 
         val player = Player(name, cards)

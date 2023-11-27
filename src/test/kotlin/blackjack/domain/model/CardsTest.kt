@@ -41,4 +41,19 @@ class CardsTest : FunSpec({
             cards.scores() shouldBe answer
         }
     }
+
+    test("힛 가능 여부 정상 반환 테스트") {
+        val ace = Card.of(CardNumber.ACE, CardShape.Spade)
+        val two = Card.of(CardNumber.TWO, CardShape.Spade)
+        val jack = Card.of(CardNumber.JACK, CardShape.Spade)
+        val queen = Card.of(CardNumber.QUEEN, CardShape.Spade)
+
+        forAll(
+            row(Cards.of(ace, two), true),
+            row(Cards.of(ace, jack), false),
+            row(Cards.of(two, jack, queen), false),
+        ) { cards, answer ->
+            cards.isPossibleToHit() shouldBe answer
+        }
+    }
 })

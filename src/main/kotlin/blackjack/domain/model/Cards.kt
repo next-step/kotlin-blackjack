@@ -25,19 +25,23 @@ class Cards(val cards: List<Card>) {
     }
 
     fun isPossibleToHit(): Boolean {
-        val minimumScore = scores().minBy { it.score }
+        val scores = scores()
 
-        return minimumScore < WINNING_SCORE
+        if (scores.last().isWinningScore()) {
+            return false
+        }
+
+        return scores.first().ltWinningScore()
     }
 
     fun getFinalScore(): Score {
         val scores = scores()
 
-        if (scores.first() > WINNING_SCORE) {
+        if (scores.first().isBust()) {
             return scores.first()
         }
 
-        return scores.last { it <= WINNING_SCORE }
+        return scores.last { it.lteWinningScore() }
     }
 
     operator fun plus(card: Card): Cards {
@@ -45,8 +49,6 @@ class Cards(val cards: List<Card>) {
     }
 
     companion object {
-        private const val WINNING_SCORE = 21
-
         fun create(): Cards {
             val numbers = CardNumber.values()
             val shapes = CardShape.values()
