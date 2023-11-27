@@ -1,6 +1,11 @@
 package blackjack.domain
 
-import blackjack.domain.state.*
+import blackjack.domain.state.Blackjack
+import blackjack.domain.state.Bust
+import blackjack.domain.state.Finished
+import blackjack.domain.state.Hit
+import blackjack.domain.state.Running
+import blackjack.domain.state.Stand
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -17,7 +22,6 @@ class PlayerTest {
         assertEquals(true, player.state is Hit)
         assertEquals(true, player.state is Running)
     }
-
 
     @Test
     fun `새로운 카드를 받았을 때 카드 점수가 21점일 경우 사용자 상태는 Blackjack(Finished)으로 변경된다`() {
@@ -63,7 +67,6 @@ class PlayerTest {
         assertEquals(true, player.state is Stand)
         assertEquals(true, player.state is Finished)
     }
-
 
     @Test
     fun `게임 시작시 받아야 할 카드 개수(INITIAL_DEAL_SIZE)보다 더 적거나 많은 카드를 받는다면 IllegalArgumentException을 발생시킨다`() {
