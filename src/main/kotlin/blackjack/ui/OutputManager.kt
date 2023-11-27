@@ -24,8 +24,8 @@ class OutputManager {
         println("${player.name}: ${parsingCardsToString(player.cards)}")
     }
 
-    fun printPlayerResultGame(player: Player, score: Int) {
-        println("${player.name} 카드: ${parsingCardsToString(player.cards)} - 결과: $score")
+    fun printPlayerResultGame(player: Player) {
+        println("${player.name} 카드: ${parsingCardsToString(player.cards)} - 결과: ${player.resultScore()}")
     }
 
     private fun parsingCardsToString(cards: List<BlackJackCard>): String {

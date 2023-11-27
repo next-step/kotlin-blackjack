@@ -4,6 +4,7 @@ import blackjack.card.BlackJackCard
 
 class Player(
     val name: String,
+    private val scoreCalculator: ScoreCalculator
 ) {
     val cards: MutableList<BlackJackCard> = mutableListOf()
 
@@ -11,7 +12,11 @@ class Player(
         this.cards.addAll(cards)
     }
 
-    fun shouldDraw(scoreCalculator: ScoreCalculator): Boolean {
-        return scoreCalculator.calcScore(cards) <= 21
+    fun shouldDraw(): Boolean {
+        return resultScore() <= 21
+    }
+
+    fun resultScore(): Int {
+        return scoreCalculator.calcScore(cards)
     }
 }

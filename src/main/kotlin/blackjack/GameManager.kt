@@ -9,7 +9,6 @@ class GameManager(
     private val outputManager: OutputManager
 ) {
     private val players: List<Player>
-    private val scoreCalculator: ScoreCalculator = ScoreCalculator()
 
     init {
         players = joinPlayers()
@@ -24,7 +23,7 @@ class GameManager(
         playBlackJack()
 
         players.forEach {
-            outputManager.printPlayerResultGame(it, scoreCalculator.calcScore(it.cards))
+            outputManager.printPlayerResultGame(it)
         }
     }
 
@@ -37,18 +36,20 @@ class GameManager(
     private fun playerDraw(player: Player) {
         var drawAmount = -1
 
-        while (player.shouldDraw(scoreCalculator) && drawAmount != 0) {
+        while (player.shouldDraw() && drawAmount != 0) {
             drawAmount = inputManager.inputShouldDrawCard(player.name)
-            if (drawAmount > 0) {
+            if (playerChooseDraw(drawAmount)) {
                 player.drawCard(CardDeck.draw(drawAmount))
             }
             outputManager.printPlayerCards(player)
         }
     }
 
+    private fun playerChooseDraw(drawAmount: Int) = drawAmount > 0
+
     private fun joinPlayers(): List<Player> {
         val playerNames: List<String> = inputManager.inputPlayerNames()
-        return playerNames.map(::Player)
+        return playerNames.map { Player(it, ScoreCalculator()) }
     }
 
     companion object {
