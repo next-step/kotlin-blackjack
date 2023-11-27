@@ -20,7 +20,7 @@ class BlackjackGame(private val cardPack: CardPack, private val playerList: List
     }
 
     fun hit(): PlayingCard {
-        val card = cardPack.cardList[index.index]
+        val card = cardPack.cardList[index.cardIndex]
         increaseCardIndex()
         return card
     }
