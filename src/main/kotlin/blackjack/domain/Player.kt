@@ -1,6 +1,6 @@
 package blackjack.domain
 
-open class Player (
+class Player (
     name: String,
     cardDeck: CardDeck,
 ) : Participant(name, cardDeck) {
