@@ -20,7 +20,7 @@ class DealToPlayer : CardDistributor {
             }
         }
 
-        val isSystemStand = action == Action.STAND && playerInTurn.isBust
+        val isSystemStand = (action == Action.STAND && playerInTurn.isBust)
         return DealToPlayerResult(playerInTurn, isSystemStand)
     }
 
