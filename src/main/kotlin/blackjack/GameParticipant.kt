@@ -10,8 +10,6 @@ abstract class GameParticipant(
     val isBust: Boolean
         get() = getScore() > BLACKJACK_MAX_SCORE
 
-    operator fun compareTo(other: GameParticipant) = this.getScore() - other.getScore()
-
     abstract fun isNotAllowedDealing(): Boolean
 
     abstract fun receiveCard(card: Card): GameParticipant
@@ -49,38 +47,5 @@ abstract class GameParticipant(
         result = 31 * result + cards.hashCode()
         result = 31 * result + isBust.hashCode()
         return result
-    }
-}
-
-class GameParticipantPlayer(
-    name: String,
-    cards: List<Card> = emptyList(),
-    betAmount: Int
-) : GameParticipant(name, cards, betAmount) {
-    override fun isNotAllowedDealing(): Boolean = this.isBust || this.isBlackjack() || this.isSameMaxScore()
-
-    override fun receiveCard(card: Card): GameParticipantPlayer = GameParticipantPlayer(
-        name = this.name,
-        cards = this.cards + card,
-        betAmount = this.betAmount
-    )
-}
-
-class GameParticipantDealer(
-    name: String = NAME,
-    cards: List<Card> = emptyList(),
-    betAmount: Int = 0
-) : GameParticipant(name, cards, betAmount) {
-    override fun isNotAllowedDealing(): Boolean = getScore() > CONTINUE_DEALING_SCORE
-
-    override fun receiveCard(card: Card): GameParticipantDealer = GameParticipantDealer(
-        name = this.name,
-        cards = this.cards + card,
-        betAmount = this.betAmount
-    )
-
-    companion object {
-        const val NAME = "딜러"
-        private const val CONTINUE_DEALING_SCORE = 16
     }
 }
