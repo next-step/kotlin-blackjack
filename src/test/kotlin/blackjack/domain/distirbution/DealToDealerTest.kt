@@ -12,7 +12,7 @@ import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeTypeOf
 
 class DealToDealerTest : DescribeSpec({
-    describe("DealToDealer") {
+    describe("deal") {
         context("딜러가 (16점 이하라) HIT를 하면") {
             val under16ScoreCards = hand(card(Rank.TWO), card(Rank.THREE))
             val dealer = Dealer(player = DealerPlayer(under16ScoreCards))

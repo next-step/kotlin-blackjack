@@ -13,7 +13,7 @@ import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeTypeOf
 
 class DealToPlayerTest : DescribeSpec({
-    describe("DealToPlayer") {
+    describe("deal") {
         context("플레이어가 HIT (player: HIT, 점수 : bust 아님) 을 하면") {
             val players = players(player("currentPlayer", Action.HIT), player())
             val table = table(inputAction = Action.HIT, players = players)

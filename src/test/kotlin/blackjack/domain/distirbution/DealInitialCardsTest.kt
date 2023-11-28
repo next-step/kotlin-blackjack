@@ -6,7 +6,7 @@ import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeTypeOf
 
 class DealInitialCardsTest : DescribeSpec({
-    describe("dealCards") {
+    describe("deal") {
         context("첫 카드 배분 스테이지를 진행시키면") {
             val table = table()
             val dealInitialCards = DealInitialCards(table)
