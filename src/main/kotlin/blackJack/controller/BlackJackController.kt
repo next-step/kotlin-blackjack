@@ -49,7 +49,7 @@ private fun playGamePlayers(participants: Participants, cardDeck: Cards): List<P
     participants.players.players.forEach {
         while (it.isContinued()) {
             val isContinue = isContinuePlayer(it)
-            continueGamePlayer(isContinue, it, cardDeck)
+            it.continueGamePlayer(isContinue, cardDeck)
             OutputView.printPlayerCard(PlayerDto(it))
         }
         players.add(PlayerDto(it, it.getTotalScore()))
@@ -64,25 +64,10 @@ private fun isContinuePlayer(player: Player): Boolean {
     return InputView.answerYesOrNo() == "y"
 }
 
-private fun continueGamePlayer(isContinue: Boolean, player: Player, cardDeck: Cards) {
-    if (isContinue) {
-        val card = cardDeck.drawCard()
-        player.addCard(card)
-    } else {
-        player.gameStop()
-    }
-}
-
 private fun playGameDealer(dealer: Dealer, cardDeck: Cards): DealerDto {
-    val dealerTotalScore = dealer.cards.calculateTotalScore()
-    if (dealer.isContinued(dealerTotalScore)) {
-        continueGameDealer(dealer, cardDeck)
+    if (dealer.isContinued()) {
+        dealer.addCard(cardDeck.drawCard())
         OutputView.printPlayerCard(DealerDto(dealer))
     }
-    return DealerDto(dealer, dealerTotalScore)
-}
-
-private fun continueGameDealer(dealer: Dealer, cardDeck: Cards) {
-    val card = cardDeck.drawCard()
-    dealer.addCard(card)
+    return DealerDto(dealer, dealer.getTotalScore())
 }
