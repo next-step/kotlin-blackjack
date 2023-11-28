@@ -14,4 +14,21 @@ class Dealer(private val cardDeck: CardDeck) {
     fun isObtainable(): Boolean {
         return cards.sum() < 17
     }
+
+    fun compareWith(player: Player): CompareResult {
+        if (cards.sum() > 21) {
+            return CompareResult.DEALER_LOSE
+        }
+        if (player.sumOfCards() > 21) {
+            return CompareResult.DEALER_WIN
+        }
+
+        if (cards.sum() == player.sumOfCards()) {
+            return CompareResult.DRAW
+        }
+        if (cards.sum() < player.sumOfCards()) {
+            return CompareResult.DEALER_LOSE
+        }
+        return CompareResult.DEALER_WIN
+    }
 }
