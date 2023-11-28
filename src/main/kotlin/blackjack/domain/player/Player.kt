@@ -8,6 +8,7 @@ class Player(
     val actionOf: (player: Player) -> Action,
     override val hand: Hand = Hand(),
 ) : CardPlayer {
+
     override fun hitOrStand(): Action {
         if (isBust) return Action.STAND
         return actionOf(this)

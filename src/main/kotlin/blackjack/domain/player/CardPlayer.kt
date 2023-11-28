@@ -18,6 +18,7 @@ interface CardPlayer {
         score isGreaterCardScoreThan other
 
     fun addCard(card: Card) {
+        require(!isBust) { "버스트라 카드를 더 받을 수 없습니다" }
         hand.add(card)
     }
 

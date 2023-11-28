@@ -8,8 +8,10 @@ import blackjack.domain.card.Suit
 import blackjack.mock.card
 import blackjack.mock.hand
 import blackjack.mock.player
+import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
+import java.lang.IllegalArgumentException
 
 class PlayerTest : DescribeSpec({
     describe("Player()") {
@@ -44,6 +46,17 @@ class PlayerTest : DescribeSpec({
 
             it("플레이가 소유한 카드에 카드가 추가") {
                 player.hand shouldBe Hand(mutableListOf(oldCard, newCard))
+            }
+        }
+
+        context("플레이어가 버스트라면") {
+            val over21Cards = hand(card(Rank.TEN), card(Rank.TEN), card(Rank.TEN))
+            val player = player(hand = over21Cards)
+
+            it("카드를 추가할 수 없다") {
+                shouldThrowExactly<IllegalArgumentException> {
+                    player.addCard(Card(Suit.CLUB, Rank.TEN))
+                }
             }
         }
     }
