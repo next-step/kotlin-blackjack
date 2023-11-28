@@ -5,6 +5,7 @@ import blackjack.domain.card.Deck
 import blackjack.domain.player.Dealer
 import blackjack.domain.player.Participant
 import blackjack.domain.player.Player
+import blackjack.domain.player.Players
 import blackjack.domain.rule.DefaultScoringRule
 import blackjack.view.ConsoleInput
 import blackjack.view.ConsoleResult
@@ -25,7 +26,7 @@ fun main() {
     }
     ConsoleResult.printCardsOfPlayers(allPlayers)
 
-    val participantsEndedGame: MutableSet<Player> = mutableSetOf()
+    val participantsEndedGame = Players()
     while (participantsEndedGame.size < participants.size) {
         participants.forEach { playParticipants(it, participantsEndedGame, deck) }
     }
@@ -41,26 +42,26 @@ fun main() {
 }
 
 private fun playParticipants(
-    it: Player,
-    playersOfWantedEndGame: MutableSet<Player>,
+    player: Player,
+    playersOfWantedEndGame: Players,
     deck: Deck
 ) {
-    if (it.canDraw().not()) {
-        ConsoleResult.notifyParticipantCannotDraw(it)
-        playersOfWantedEndGame.add(it)
+    if (player.canDraw().not()) {
+        ConsoleResult.notifyParticipantCannotDraw(player)
+        playersOfWantedEndGame.add(player)
     }
 
-    if (playersOfWantedEndGame.contains(it)) {
+    if (playersOfWantedEndGame.contains(player)) {
         return
     }
 
-    val drawOneMoreCard = ConsoleInput.inputGettingOneMoreCard(it)
-    if (drawOneMoreCard && it.canDraw()) {
-        it.draw(deck)
-        ConsoleResult.printCardsOfPlayer(it)
+    val drawOneMoreCard = ConsoleInput.inputGettingOneMoreCard(player)
+    if (drawOneMoreCard && player.canDraw()) {
+        player.draw(deck)
+        ConsoleResult.printCardsOfPlayer(player)
     }
 
     if (!drawOneMoreCard) {
-        playersOfWantedEndGame.add(it)
+        playersOfWantedEndGame.add(player)
     }
 }
