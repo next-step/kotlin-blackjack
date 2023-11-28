@@ -7,11 +7,7 @@ data class Players(val players: List<Player>) {
 
     fun receiveCards(cards: List<Card>) {
         players.forEachIndexed { index, player ->
-            player.receiveCard(cards[index])
+            player.hit(cards[index])
         }
-    }
-
-    fun getHits(): List<Player> {
-        return players.filter { it.status == Status.HIT }
     }
 }

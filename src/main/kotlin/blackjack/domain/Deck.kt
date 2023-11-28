@@ -1,24 +1,24 @@
 package blackjack.domain
 
-class CardDraw(val cards: Cards) {
+class Deck(val cards: Cards) {
     fun draw(): Card {
-        return cards.getCard()
+        return cards.dealCard()
     }
 
-    fun draw(size: Int): List<Card> {
-        return List(size) { cards.getCard() }
+    fun firstDraw(): List<Card> {
+        return List(INITIAL_SIZE) { cards.dealCard() }
     }
 
     companion object {
         const val INITIAL_SIZE = 2
 
-        fun init(): CardDraw {
+        fun init(): Deck {
             val cards = Suit.values().flatMap { suit ->
                 Denomination.values().map { denomination ->
                     Card(denomination, suit)
                 }.shuffled()
             }
-            return CardDraw(Cards.from(cards))
+            return Deck(Cards.from(cards))
         }
     }
 }

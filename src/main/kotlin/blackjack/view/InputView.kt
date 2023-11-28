@@ -1,13 +1,11 @@
 package blackjack.view
 
 import blackjack.domain.Player
-import blackjack.domain.Players
 
 object InputView {
-    fun getPlayers(): Players {
+    fun getPlayers(): List<Player> {
         println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)")
-        val players = readln().replace(" ","").split(",").map { Player(it) }
-        return Players(players)
+        return readln().replace(" ", "").split(",").map { Player(it) }
     }
 
     fun askPlayer(playerName: String): Boolean {

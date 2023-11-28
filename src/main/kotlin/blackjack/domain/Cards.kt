@@ -1,16 +1,13 @@
 package blackjack.domain
 
 class Cards(val cards: MutableList<Card>) {
-    override fun toString(): String {
-        return cards.joinToString(", ")
-    }
 
     fun addCard(card: Card): Cards {
         cards.add(card)
         return from(cards)
     }
 
-    fun getCard(): Card {
+    fun dealCard(): Card {
         return cards.removeFirstOrNull() ?: throw IllegalStateException("카드가 모두 소진되었습니다.")
     }
 
