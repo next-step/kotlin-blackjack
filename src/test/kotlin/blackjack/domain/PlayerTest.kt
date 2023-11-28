@@ -14,18 +14,22 @@ class PlayerTest {
         )
 
         assertThat(player.name).isEqualTo("pobi")
-        assertThat(player.sumOfCards()).isEqualTo(18)
+        assertThat(player.hands).containsExactlyInAnyOrder(
+            Card.diamond(Number.EIGHT), Card.heart(Number.TEN)
+        )
     }
 
     @Test
-    fun `플레이어 카드를 획득할 수 있다`() {
+    fun `21 미만이면 플레이어는 카드를 획득할 수 있다`() {
         val player = Player(
-            "pobi", cardDeck(Card.diamond(Number.TWO), Card.heart(Number.THREE), Card.spade(Number.ACE))
+            "pobi", cardDeck(Card.diamond(Number.QUEEN), Card.heart(Number.JACK), Card.spade(Number.ACE))
         )
 
         player.obtain()
 
-        assertThat(player.sumOfCards()).isEqualTo(16)
+        assertThat(player.hands).containsExactlyInAnyOrder(
+            Card.diamond(Number.QUEEN), Card.heart(Number.JACK), Card.spade(Number.ACE)
+        )
     }
 
     @Test
@@ -38,15 +42,20 @@ class PlayerTest {
             player.obtain()
         }
         assertThat(player.isObtainable()).isFalse
+        assertThat(player.hands).containsExactlyInAnyOrder(
+            Card.diamond(Number.ACE), Card.heart(Number.JACK)
+        )
     }
 
     @Test
-    fun `21 미만이면 플레이어는 카드를 획득할 수 있다`() {
+    fun `플레이어는 발급 받은 카드의 총합을 계산한다`() {
         val player = Player(
-            "pobi", cardDeck(Card.diamond(Number.QUEEN), Card.heart(Number.JACK))
+            "pobi", cardDeck(Card.diamond(Number.EIGHT), Card.heart(Number.TEN))
         )
 
-        assertThat(player.isObtainable()).isTrue()
+        val actual = player.sumOfCards()
+
+        assertThat(actual).isEqualTo(18)
     }
 
     private fun cardDeck(vararg cards: Card): CardDeck {
