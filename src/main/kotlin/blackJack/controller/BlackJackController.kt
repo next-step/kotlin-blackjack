@@ -5,9 +5,11 @@ import blackJack.domain.card.Cards
 import blackJack.domain.player.Dealer
 import blackJack.domain.player.Participants
 import blackJack.domain.player.Player
-import blackJack.dto.DealerDto
-import blackJack.dto.ParticipantsDto
-import blackJack.dto.PlayerDto
+import blackJack.domain.result.Result
+import blackJack.dto.playerDto.DealerDto
+import blackJack.dto.playerDto.ParticipantsDto
+import blackJack.dto.playerDto.PlayerDto
+import blackJack.dto.ResultDto.ResultDto
 import blackJack.view.InputView
 import blackJack.view.OutputView
 
@@ -28,25 +30,32 @@ fun main() {
     playGame(participants, cardDeck)
 
     val finishGameParticipants = playGame(participants, cardDeck)
-    val participantsResult = ParticipantsDto(finishGameParticipants)
-    OutputView.printResult(participantsResult)
+    OutputView.printResult(finishGameParticipants)
+
+    val calculateResult = Result.calculateResult(participants)
+    val resultDto = ResultDto(calculateResult)
+    OutputView.printWinner(resultDto)
 }
 
-private fun playGame(participants: Participants, cardDeck: Cards): Participants {
-    playGamePlayers(participants, cardDeck)
-    playGameDealer(participants.dealer, cardDeck)
+private fun playGame(participants: Participants, cardDeck: Cards): ParticipantsDto {
+    val playGamePlayers = playGamePlayers(participants, cardDeck)
+    val playGameDealer = playGameDealer(participants.dealer, cardDeck)
+    return ParticipantsDto(playGamePlayers, playGameDealer)
 }
 
-private fun playGamePlayers(participants: Participants, cardDeck: Cards) {
+private fun playGamePlayers(participants: Participants, cardDeck: Cards): List<PlayerDto> {
+    val players = mutableListOf<PlayerDto>()
+
     participants.players.players.forEach {
         while (it.isContinued()) {
             val isContinue = isContinuePlayer(it)
-            continueGamePlayers(isContinue, it, cardDeck)
+            continueGamePlayer(isContinue, it, cardDeck)
             OutputView.printPlayerCard(PlayerDto(it))
         }
-        // totalScore 넣기
-        PlayerDto(it, it.getTotalScore())
+        players.add(PlayerDto(it, it.getTotalScore()))
     }
+
+    return players
 }
 
 private fun isContinuePlayer(player: Player): Boolean {
@@ -55,7 +64,7 @@ private fun isContinuePlayer(player: Player): Boolean {
     return InputView.answerYesOrNo() == "y"
 }
 
-private fun continueGamePlayers(isContinue: Boolean, player: Player, cardDeck: Cards) {
+private fun continueGamePlayer(isContinue: Boolean, player: Player, cardDeck: Cards) {
     if (isContinue) {
         val card = cardDeck.drawCard()
         player.addCard(card)
@@ -64,13 +73,13 @@ private fun continueGamePlayers(isContinue: Boolean, player: Player, cardDeck: C
     }
 }
 
-private fun playGameDealer(dealer: Dealer, cardDeck: Cards) {
+private fun playGameDealer(dealer: Dealer, cardDeck: Cards): DealerDto {
     val dealerTotalScore = dealer.cards.calculateTotalScore()
     if (dealer.isContinued(dealerTotalScore)) {
         continueGameDealer(dealer, cardDeck)
         OutputView.printPlayerCard(DealerDto(dealer))
     }
-    DealerDto(dealer, dealerTotalScore)
+    return DealerDto(dealer, dealerTotalScore)
 }
 
 private fun continueGameDealer(dealer: Dealer, cardDeck: Cards) {
