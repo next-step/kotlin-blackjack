@@ -7,8 +7,8 @@ data class Players(
 ) {
 
     init {
-        require(value.size == 2) {
-            "플레이어는 두 명이어야 합니다"
+        require(value.size == PLAYER_COUNT) {
+            "플레이어는 ${PLAYER_COUNT}명이어야 합니다"
         }
     }
 
@@ -29,6 +29,7 @@ data class Players(
     }
 
     companion object {
+        private const val PLAYER_COUNT = 2
         fun of(
             names: PlayerNames,
             actionOf: (player: Player) -> Action,
