@@ -1,7 +1,11 @@
 package blackjack.controller
 
-import blackjack.domain.Deck
-import blackjack.domain.Player
+import blackjack.domain.GameResults
+import blackjack.domain.card.Deck
+import blackjack.domain.player.Dealer
+import blackjack.domain.player.Participant
+import blackjack.domain.player.Player
+import blackjack.domain.player.Players
 import blackjack.domain.rule.DefaultScoringRule
 import blackjack.view.ConsoleInput
 import blackjack.view.ConsoleResult
@@ -10,45 +14,54 @@ fun main() {
     val names = ConsoleInput.inputNamesOfPlayer()
     val scoringRule = DefaultScoringRule()
 
-    val players = names.map { name -> Player(name, scoringRule) }
+    val dealer: Player = Dealer(scoringRule)
+    val participants: List<Player> = names.map { name -> Participant(name, scoringRule) }
+    val allPlayers = listOf(dealer, *participants.toTypedArray())
     val deck = Deck()
 
-    ConsoleResult.drawAllFirstTwoCards(players)
-    players.forEach {
+    ConsoleResult.drawAllFirstTwoCards(participants)
+    allPlayers.forEach {
         it.draw(deck)
         it.draw(deck)
     }
-    ConsoleResult.printCardsOfPlayers(players)
+    ConsoleResult.printCardsOfPlayers(allPlayers)
 
-    val playersOfWantedEndGame: MutableSet<Player> = mutableSetOf()
-    while (playersOfWantedEndGame.size < players.size) {
-        players.forEach { playGame(it, playersOfWantedEndGame, deck) }
+    val participantsEndedGame = Players()
+    while (participantsEndedGame.size < participants.size) {
+        participants.forEach { playParticipants(it, participantsEndedGame, deck) }
     }
 
-    ConsoleResult.printCardsAndTotalScoreOfPlayers(players)
+    if (dealer.canDraw()) {
+        dealer.draw(deck)
+        ConsoleResult.notifyDealerMoreOneCard(dealer)
+    }
+    ConsoleResult.printCardsAndTotalScoreOfPlayers(allPlayers)
+
+    val gameResults = GameResults.results(dealer as Dealer, participants.map { it as Participant })
+    ConsoleResult.printGameResults(dealer, gameResults)
 }
 
-private fun playGame(
-    it: Player,
-    playersOfWantedEndGame: MutableSet<Player>,
+private fun playParticipants(
+    player: Player,
+    playersOfWantedEndGame: Players,
     deck: Deck
 ) {
-    if (it.canDraw().not()) {
-        ConsoleResult.notifyPlayerCannotDraw(it)
-        playersOfWantedEndGame.add(it)
+    if (player.canDraw().not()) {
+        ConsoleResult.notifyParticipantCannotDraw(player)
+        playersOfWantedEndGame.add(player)
     }
 
-    if (playersOfWantedEndGame.contains(it)) {
+    if (playersOfWantedEndGame.contains(player)) {
         return
     }
 
-    val drawOneMoreCard = ConsoleInput.inputGettingOneMoreCard(it)
-    if (drawOneMoreCard && it.canDraw()) {
-        it.draw(deck)
-        ConsoleResult.printCardsOfPlayer(it)
+    val drawOneMoreCard = ConsoleInput.inputGettingOneMoreCard(player)
+    if (drawOneMoreCard && player.canDraw()) {
+        player.draw(deck)
+        ConsoleResult.printCardsOfPlayer(player)
     }
 
     if (!drawOneMoreCard) {
-        playersOfWantedEndGame.add(it)
+        playersOfWantedEndGame.add(player)
     }
 }

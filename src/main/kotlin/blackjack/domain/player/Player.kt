@@ -1,27 +1,21 @@
-package blackjack.domain
+package blackjack.domain.player
 
+import blackjack.domain.card.Card
+import blackjack.domain.card.Deck
+import blackjack.domain.card.DrewCards
 import blackjack.domain.rule.ScoringRule
 
-class Player(val name: String, private val scoringRule: ScoringRule) {
-    private val _cards: DrewCards = DrewCards(scoringRule)
+abstract class Player(open val name: String, scoringRule: ScoringRule) {
+    protected val _cards: DrewCards = DrewCards(scoringRule)
     val cards: List<Card> get() = _cards.cards
-
-    init {
-        require(name.length <= 10) { "이름은 10자를 넘을 수 없습니다." }
-    }
 
     var totalScore: Int = 0
         get() = _cards.totalScore
         private set
 
-    fun draw(deck: Deck) {
-        this._cards.add(deck.draw())
-    }
+    abstract fun draw(deck: Deck)
 
-    fun canDraw(): Boolean {
-        return scoringRule.isOverThreshold(totalScore).not()
-    }
-
+    abstract fun canDraw(): Boolean
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false

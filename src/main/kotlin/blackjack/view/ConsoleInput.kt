@@ -1,6 +1,7 @@
 package blackjack.view
 
-import blackjack.domain.Player
+import blackjack.domain.player.Participant
+import blackjack.domain.player.Player
 
 object ConsoleInput {
 
@@ -24,9 +25,9 @@ object ConsoleInput {
         return input
     }
 
-    fun inputGettingOneMoreCard(player: Player): Boolean {
+    fun inputGettingOneMoreCard(participant: Player): Boolean {
         println()
-        println("${player.name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
+        println("${participant.name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
 
         val input = inputNotEmptyString("공백을 입력할 수 없습니다. 다시 입력해주세요!")
 
@@ -35,7 +36,7 @@ object ConsoleInput {
             "n" -> false
             else -> {
                 println("y 또는 n을 입력해주세요.")
-                inputGettingOneMoreCard(player)
+                inputGettingOneMoreCard(participant)
             }
         }
     }

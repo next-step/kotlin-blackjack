@@ -1,7 +1,7 @@
 package blackjack.domain.rule
 
-import blackjack.domain.Card
-import blackjack.domain.CardCharacter
+import blackjack.domain.card.Card
+import blackjack.domain.card.CardCharacter
 
 class DefaultScoringRule : ScoringRule {
 
@@ -14,8 +14,8 @@ class DefaultScoringRule : ScoringRule {
         return firstSumUsingAceTo11
     }
 
-    override fun isOverThreshold(score: Int): Boolean {
-        return score > THRESHOLD_SCORE
+    override fun isOverThreshold(score: Int, threshold: Int): Boolean {
+        return score > threshold
     }
 
     companion object {

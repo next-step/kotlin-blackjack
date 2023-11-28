@@ -1,31 +1,55 @@
 package blackjack.view
 
-import blackjack.domain.Player
+import blackjack.domain.player.Dealer
+import blackjack.domain.GameResult
+import blackjack.domain.player.Participant
+import blackjack.domain.player.Player
 
-class ConsoleResult {
-    companion object {
-        fun drawAllFirstTwoCards(players: List<Player>) {
-            println()
-            println("${players.joinToString { it.name }}에게 2장의 카드를 나누었습니다.")
+object ConsoleResult {
+    fun drawAllFirstTwoCards(participants: List<Player>) {
+        println()
+        println("딜러와 ${participants.joinToString { it.name }}에게 2장의 카드를 나누었습니다.")
+    }
+
+    fun printCardsOfPlayers(players: List<Player>) {
+        players.forEach { printCardsOfPlayer(it) }
+    }
+
+    fun printCardsOfPlayer(player: Player) {
+        println("${player.name} 카드: ${player.cards.joinToString { card -> card.character.mark + card.shape.korean }}")
+    }
+
+    fun printCardsAndTotalScoreOfPlayers(players: List<Player>) {
+        println()
+        players.forEach {
+            println("${it.name} 카드: ${it.cards.joinToString { card -> card.character.mark + card.shape.korean }} - 결과: ${it.totalScore}")
         }
+    }
 
-        fun printCardsOfPlayers(players: List<Player>) {
-            players.forEach { printCardsOfPlayer(it) }
-        }
+    fun notifyParticipantCannotDraw(participant: Player) {
+        println("${participant.name}는 총 점수가 21점이 넘어 더이상 카드를 받을 수 없습니다.")
+    }
 
-        fun printCardsOfPlayer(player: Player) {
-            println("${player.name}카드: ${player.cards.joinToString { card -> card.character.mark + card.shape.korean }}")
-        }
+    fun notifyDealerMoreOneCard(dealer: Player) {
+        println("${dealer.name}는 16이하라 한장의 카드를 더 받았습니다.")
+    }
 
-        fun printCardsAndTotalScoreOfPlayers(players: List<Player>) {
-            println()
-            players.forEach {
-                println("${it.name}카드: ${it.cards.joinToString { card -> card.character.mark + card.shape.korean }} - 결과: ${it.totalScore}")
+    fun printGameResults(dealer: Dealer, gameResults: Map<Participant, GameResult>) {
+        println()
+        println("## 최종 승패")
+        val dealerWinCount = gameResults.values.count { it == GameResult.LOSE }
+        val dealerLoseCount = gameResults.values.count { it == GameResult.WIN }
+        val dealerTieCount = gameResults.values.count { it == GameResult.TIE }
+        println("${dealer.name}: $dealerWinCount 승 $dealerLoseCount 패 $dealerTieCount 무")
+
+        gameResults
+            .forEach { (participant, gameResult) ->
+                val convertedGameResult = when (gameResult) {
+                    GameResult.WIN -> "승"
+                    GameResult.LOSE -> "패"
+                    GameResult.TIE -> "무"
+                }
+                println("${participant.name}: $convertedGameResult")
             }
-        }
-
-        fun notifyPlayerCannotDraw(player: Player) {
-            println("${player.name}는 총 점수가 21점이 넘어 더이상 카드를 받을 수 없습니다.")
-        }
     }
 }
