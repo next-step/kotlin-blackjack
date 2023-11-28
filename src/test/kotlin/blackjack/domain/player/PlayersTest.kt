@@ -19,8 +19,8 @@ class PlayersTest : DescribeSpec({
 
             val result = Players.of(names) { Action.HIT }
             it("주어진 이름 순서대로 플레이어들 생성") {
-                result.all[0].name shouldBe name1
-                result.all[1].name shouldBe name2
+                result.value[0].name shouldBe name1
+                result.value[1].name shouldBe name2
             }
             it("첫 이름의 플레이어가 첫 순번") {
                 result.inTurn.name shouldBe name1

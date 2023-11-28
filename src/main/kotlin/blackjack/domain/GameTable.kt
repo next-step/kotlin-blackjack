@@ -20,7 +20,7 @@ data class GameTable(
         get() = dealer.hitOrStand()
 
     fun dealToAll(count: Int) {
-        dealer.dealCards(count, *players.all.toTypedArray())
+        dealer.dealCards(count, *players.value.toTypedArray())
         dealer dealToSelf count
     }
 

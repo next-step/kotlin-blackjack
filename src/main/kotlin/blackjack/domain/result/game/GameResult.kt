@@ -11,7 +11,7 @@ data class GameResult(
 
     companion object {
         fun of(players: Players, dealer: Dealer): GameResult {
-            val playersResult = players.all.map { PlayerResult.of(it, dealer.player) }
+            val playersResult = players.value.map { PlayerResult.of(it, dealer.player) }
             return GameResult(
                 DealerResult.of(dealer, playersResult),
                 playersResult

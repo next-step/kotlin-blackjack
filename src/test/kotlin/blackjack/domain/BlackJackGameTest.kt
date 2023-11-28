@@ -17,7 +17,7 @@ class BlackJackGameTest : DescribeSpec({
             )
 
             it("전달된 이름으로 플레이어 세팅") {
-                val playerNames = game.table.players.all.map { it.name }
+                val playerNames = game.table.players.value.map { it.name }
 
                 playerNames[0] shouldBe PlayerName(name1)
                 playerNames[1] shouldBe PlayerName(name2)

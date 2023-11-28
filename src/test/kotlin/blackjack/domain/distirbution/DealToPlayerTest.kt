@@ -61,7 +61,7 @@ class DealToPlayerTest : DescribeSpec({
                 }
 
                 it("플레이어 카드는 변화 없음") {
-                    game.table.players.all.first().hand shouldBe player1Cards
+                    game.table.players.value.first().hand shouldBe player1Cards
                 }
 
                 it("결과 값의 플레이어는 이번 차례 진행한 플레이어") {
@@ -109,7 +109,7 @@ class DealToPlayerTest : DescribeSpec({
                 }
 
                 it("플레이어 카드는 변화 없음") {
-                    game.table.players.all.first().hand shouldBe cards
+                    game.table.players.value.first().hand shouldBe cards
                 }
 
                 it("결과 값의 플레이어는 이번 차례 진행한 플레이어") {

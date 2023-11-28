@@ -26,7 +26,7 @@ class GameTableTest : DescribeSpec({
 
             it("모두 두장씩 수령") {
                 table.dealer.hand.cards.size shouldBe 2
-                table.players.all.forEach { player ->
+                table.players.value.forEach { player ->
                     player.hand.cards.size shouldBe 2
                 }
             }
@@ -60,17 +60,17 @@ class GameTableTest : DescribeSpec({
         val table = GameTable(Dealer(), players)
 
         context("플레이어 1이 차례인 경우") {
-            players.inTurn shouldBe players.all.first()
+            players.inTurn shouldBe players.value.first()
 
             table.passPlayerTurn()
 
             it("플레이어 2에게 차례가 넘어감") {
-                players.inTurn shouldBe players.all.last()
+                players.inTurn shouldBe players.value.last()
             }
         }
 
         context("플레이어 2가 차례인 경우") {
-            players.inTurn shouldBe players.all.last()
+            players.inTurn shouldBe players.value.last()
 
             it("턴이 넘어갈 수 없다") {
                 shouldThrowExactly<IllegalArgumentException> {

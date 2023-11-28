@@ -12,7 +12,7 @@ import blackjack.view.output.OutputView
 
 object ViewResultProcessor {
     fun drawInitialDistribution(result: DealInitialCardResult) {
-        val players = result.players.all.map { PlayerDto(it.name.value, it.hand.cards) }
+        val players = result.players.value.map { PlayerDto(it.name.value, it.hand.cards) }
         val dealer = PlayerDto("딜러", result.dealer.hand.cards.subList(0, 1))
         OutputView.drawInitialDistributionResult(players, dealer)
     }

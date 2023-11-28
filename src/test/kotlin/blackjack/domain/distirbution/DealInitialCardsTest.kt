@@ -14,7 +14,7 @@ class DealInitialCardsTest : DescribeSpec({
             dealInitialCards(table) { distributor -> game.setDistributor(distributor) }
 
             it("플레이어마다 2장의 카드 수령") {
-                table.players.all.forEach { player ->
+                table.players.value.forEach { player ->
                     player.hand.cards.size shouldBe 2
                 }
             }
