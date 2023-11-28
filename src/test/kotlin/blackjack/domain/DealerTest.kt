@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
+import kotlin.math.exp
 
 class DealerTest {
 
@@ -63,7 +64,8 @@ class DealerTest {
         val actual = dealer.compareWith(player)
 
         // assert
-        assertThat(actual).isEqualTo(CompareResult.DEALER_LOSE)
+        assertThat(actual)
+            .isEqualTo(mapOf("player" to CompareResult.DEALER_LOSE))
     }
 
     @ParameterizedTest
@@ -82,7 +84,8 @@ class DealerTest {
         val actual = dealer.compareWith(player)
 
         // assert
-        assertThat(actual).isEqualTo(expect)
+        assertThat(actual)
+            .isEqualTo(mapOf("player" to expect))
     }
 
     @Test
@@ -100,7 +103,41 @@ class DealerTest {
         val actual = dealer.compareWith(player)
 
         // assert
-        assertThat(actual).isEqualTo(CompareResult.DEALER_WIN)
+        assertThat(actual)
+            .isEqualTo(mapOf("player" to CompareResult.DEALER_WIN))
+    }
+
+    @Test
+    fun `딜러는 여러 플레이어의 승패 결과를 수집하여 반환한다`() {
+        // arrange
+        val dealer = Dealer(
+            cardDeck(Card.diamond(Number.TEN), Card.diamond(Number.JACK))
+        )
+        val player1 = Player(
+            "player1",
+            cardDeck(Card.spade(Number.TEN), Card.spade(Number.ACE))
+        )
+        val player2 = Player(
+            "player2",
+            cardDeck(Card.clover(Number.TEN), Card.clover(Number.NINE))
+        )
+        val player3 = Player(
+            "player3",
+            cardDeck(Card.heart(Number.TEN), Card.heart(Number.JACK))
+        )
+
+        // act
+        val actual = dealer.compareWith(player1, player2, player3)
+
+        // assert
+        assertThat(actual)
+            .isEqualTo(
+                mapOf(
+                    "player1" to CompareResult.DEALER_LOSE,
+                    "player2" to CompareResult.DEALER_WIN,
+                    "player3" to CompareResult.DRAW,
+                )
+            )
     }
 
     private fun cardDeck(vararg cards: Card): CardDeck {

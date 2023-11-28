@@ -9,7 +9,11 @@ class Dealer(
         return sumOfCards() < 17
     }
 
-    fun compareWith(player: Player): CompareResult {
+    fun compareWith(vararg players: Player): Map<String, CompareResult> {
+        return players.associate { it.name to compareWith(it) }
+    }
+
+    private fun compareWith(player: Player): CompareResult {
         if (isMoreThanBlackjack()) {
             return CompareResult.DEALER_LOSE
         }

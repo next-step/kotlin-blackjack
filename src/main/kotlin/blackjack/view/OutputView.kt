@@ -1,21 +1,23 @@
 package blackjack.view
 
 import blackjack.domain.Card
+import blackjack.domain.CompareResult
 import blackjack.domain.Number
-import blackjack.domain.Player
+import blackjack.domain.Participant
 import blackjack.domain.Shape
 
 object OutputView {
-
-    fun printPlayersCards(players: List<Player>) {
+    fun printParticipantOpenedCards(players: List<Participant>) {
         val names = players.joinToString(separator = ", ") { it.name }
         println("${names}에게 2장의 카드를 나누었습니다")
-        players.forEach { printPlayerCards(it) }
+        players.forEach {
+            printParticipantCards(it.name, it.openedCards)
+        }
     }
 
-    fun printPlayerCards(player: Player) {
-        val hands = player.hands.joinToString(", ") { cardText(it) }
-        println("${player.name} 카드 : $hands")
+    fun printParticipantCards(name: String, cards: List<Card>) {
+        val cardsText = cards.joinToString(", ") { cardText(it) }
+        println("${name} 카드 : $cardsText")
     }
 
     private fun cardText(card: Card): String {
@@ -41,10 +43,41 @@ object OutputView {
         }
     }
 
-    fun printPlayerResult(players: List<Player>) {
-        for (player in players) {
-            val hands = player.hands.joinToString(", ") { cardText(it) }
-            println("${player.name} 카드 : $hands - 결과: ${player.sumOfCards()}")
+    fun printObtainDealerCard() {
+        println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
+    }
+
+    fun printParticipantHands(participants: List<Participant>) {
+        for (participant in participants) {
+            val hands = participant.hands.joinToString(", ") { cardText(it) }
+            println("${participant.name} 카드 : $hands - 결과: ${participant.sumOfCards()}")
+        }
+    }
+
+    fun printCompareResults(compareResults: Map<String, CompareResult>) {
+        println("## 최종 승패")
+        printDealerResult(compareResults)
+        printPlayerResult(compareResults)
+    }
+
+    private fun printDealerResult(compareResults: Map<String, CompareResult>) {
+        val dealerWinCount = compareResults.values.count { it == CompareResult.DEALER_WIN }
+        val dealerDrawCount = compareResults.values.count { it == CompareResult.DRAW }
+        val dealerLoseCount = compareResults.values.count { it == CompareResult.DEALER_LOSE }
+        println("딜러 : ${dealerWinCount}승 ${dealerDrawCount}무 ${dealerLoseCount}패")
+    }
+
+    private fun printPlayerResult(compareResults: Map<String, CompareResult>) {
+        compareResults.forEach { (name, result) ->
+            println("${name} ${playerResultText(result)}")
+        }
+    }
+
+    private fun playerResultText(result: CompareResult): String {
+        return when(result) {
+            CompareResult.DEALER_LOSE -> "승"
+            CompareResult.DRAW -> "무"
+            CompareResult.DEALER_WIN -> "패"
         }
     }
 }
