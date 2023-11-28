@@ -21,10 +21,12 @@ class ConsoleOutputView : OutputView {
     }
 
     override fun showFinalResults(players: List<Player>, dealer: Dealer) {
-        println("## 최종 승패")
-        println("딜러: ${calculateDealerResult(players)}")
+        val dealerProfit = calculateDealerProfit(players)
+        println("## 최종 수익")
+        println("딜러: $dealerProfit")
         players.forEach { player ->
-            println("${player.name}: ${convertResultToString(player.result)}")
+            val playerProfit = player.calculateFinalProfit()
+            println("${player.name}: $playerProfit")
         }
     }
 
@@ -37,12 +39,8 @@ class ConsoleOutputView : OutputView {
         println("딜러의 카드: ${dealer.showHand().joinToString(", ")}")
     }
 
-    private fun convertResultToString(result: GameResult): String {
-        return when (result) {
-            GameResult.WIN, GameResult.BLACKJACK_WIN -> "승"
-            GameResult.LOSE -> "패"
-            GameResult.DRAW -> "무승부"
-        }
+    private fun calculateDealerProfit(players: List<Player>): Int {
+        return players.sumOf { -it.calculateFinalProfit() }
     }
 
     private fun calculateDealerResult(players: List<Player>): String {
