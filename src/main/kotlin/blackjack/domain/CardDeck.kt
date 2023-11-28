@@ -3,7 +3,7 @@ package blackjack.domain
 import kotlin.random.Random
 
 
-class PlayingCard {
+class CardDeck {
     val cards: Cards = Cards(
         CardShape.values()
             .flatMap { shape -> CardCharacter.values().map { cardCharacter -> Card(cardCharacter, shape) } }
