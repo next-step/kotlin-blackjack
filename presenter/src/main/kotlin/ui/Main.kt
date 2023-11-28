@@ -1,8 +1,9 @@
 package ui
 
-import blackjack.deck.Deck
-import blackjack.hand.Hand
-import blackjack.player.Player
+import blackjack.game.BlackjackGame
+import blackjack.game.DealerStrategyType
+import blackjack.game.GameState
+import blackjack.game.blackjackOpen
 import ui.input.InputView
 import ui.result.ResultView
 
@@ -11,30 +12,56 @@ fun main() {
     val resultView = ResultView()
     val playerNames = inputView.inputPlayerNames()
 
-    val deck = Deck()
-    val players = playerNames.map { Player(it, Hand()) }
-
-    playBlackjack(deck, players, inputView, resultView)
-}
-
-fun playBlackjack(deck: Deck, players: List<Player>, inputView: InputView, resultView: ResultView) {
-    val playingPlayers = resultView.showInitialCards(deck, players).toMutableList()
-    println()
-
-    playingPlayers.forEach { player ->
-        handlePlayerTurn(deck, player, inputView, resultView)
+    val blackjackGame = blackjackOpen {
+        join(playerNames)
+        dealerStrategy(DealerStrategyType.DEFAULT_DEALER_STRATEGY)
     }
 
-    resultView.showFinalResults(playingPlayers)
+    while (blackjackGame.state !is GameState.End) {
+        processGameState(blackjackGame, inputView, resultView)
+    }
+    processGameState(blackjackGame, inputView, resultView)
 }
 
-fun handlePlayerTurn(deck: Deck, player: Player, inputView: InputView, resultView: ResultView) {
-    while (player.canReceiveCard()) {
-        if (!inputView.askForAdditionalCard(player.name)) {
-            return
-        }
-        player.drawCard(deck)
-        resultView.showHandCards(player)
+private fun processGameState(blackjackGame: BlackjackGame, inputView: InputView, resultView: ResultView) {
+    when (val gameState = blackjackGame.state) {
+        is GameState.PlayerTurn -> processPlayerTurn(gameState, blackjackGame, inputView, resultView)
+        is GameState.DealerTurn -> processDealerTurn(blackjackGame, resultView)
+        is GameState.InitialDeal -> processInitialDeal(blackjackGame, resultView)
+        is GameState.End -> processGameEnd(blackjackGame, resultView)
     }
+}
+
+private fun processPlayerTurn(
+    gameState: GameState.PlayerTurn,
+    blackjackGame: BlackjackGame,
+    inputView: InputView,
+    resultView: ResultView
+) {
+    val currentPlayer = gameState.currentPlayer
+    val isDeal = inputView.askForAdditionalCard(currentPlayer.name)
+    blackjackGame.dealPlayerTurn(currentPlayer, isDeal)
+    resultView.showCards(currentPlayer.name, blackjackGame.showPlayerCards(currentPlayer.name))
+}
+
+private fun processDealerTurn(blackjackGame: BlackjackGame, resultView: ResultView) {
+    val action = blackjackGame.dealDealerTurn()
+    resultView.showDealerTurn(action)
+}
+
+private fun processInitialDeal(blackjackGame: BlackjackGame, resultView: ResultView) {
+    blackjackGame.dealInitialCards()
+    resultView.showInitialDealMessage(blackjackGame.players)
+    resultView.showCards(blackjackGame.dealer)
+    resultView.showCards(blackjackGame.players)
+}
+
+private fun processGameEnd(blackjackGame: BlackjackGame, resultView: ResultView) {
     println()
+    val result = blackjackGame.calculateResult()
+
+    resultView.showCards(blackjackGame.dealer)
+    blackjackGame.players.forEach { resultView.showCards(it) }
+
+    resultView.showParticipantsRecord(blackjackGame, result)
 }

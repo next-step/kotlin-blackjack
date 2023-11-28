@@ -17,9 +17,9 @@ class DeckTest : StringSpec({
 
     "drawCard 함수가 실행되면 덱의 사이즈가 1 줄어든다." {
         val deck = Deck(StandardCardProvider(), RandomCardShuffler())
-        val initialSize = deck.size
+        val initialSize = deck.remainingCards.size
         deck.drawCard()
-        deck.size shouldBe (initialSize - 1)
+        deck.remainingCards.size shouldBe (initialSize - 1)
     }
 
     "덱이 비어있을 때 카드를 뽑으려고 하면 예외가 발생해야 한다" {
