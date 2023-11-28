@@ -2,6 +2,7 @@ package blackjack.domain
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 
@@ -24,6 +25,16 @@ class DealerTest {
 
         assertThat(dealer.hands).containsExactlyInAnyOrder(
             Card.diamond(Number.TEN), Card.heart(Number.SIX), Card.spade(Number.ACE)
+        )
+    }
+
+    @Test
+    fun `딜러는 17점 이상인 경우 카드를 발급 받을 수 없다`() {
+        val dealer = Dealer(cardDeck(Card.diamond(Number.TEN), Card.heart(Number.SEVEN), Card.spade(Number.ACE)))
+
+        assertThrows<IllegalArgumentException> { dealer.obtain() }
+        assertThat(dealer.hands).containsExactlyInAnyOrder(
+            Card.diamond(Number.TEN), Card.heart(Number.SEVEN)
         )
     }
 
