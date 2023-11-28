@@ -32,7 +32,8 @@ data class GameTable(
         dealer dealToSelf count
     }
 
-    fun passPlayerTurn() {
+    fun passPlayerTurnIfNotLastTurn() {
+        if (isLastPlayerTurn) return
         players.changePlayer()
     }
 }

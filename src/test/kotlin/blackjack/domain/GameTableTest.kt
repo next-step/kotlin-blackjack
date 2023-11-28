@@ -11,7 +11,6 @@ import blackjack.mock.deck
 import blackjack.mock.hand
 import blackjack.mock.player
 import blackjack.mock.players
-import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 
@@ -55,14 +54,14 @@ class GameTableTest : DescribeSpec({
         }
     }
 
-    describe("passPlayerTurn") {
+    describe("passPlayerTurnIfNotLastTurn") {
         val players = players(player("kim"), player("lee"))
         val table = GameTable(Dealer(), players)
 
         context("플레이어 1이 차례인 경우") {
             players.inTurn shouldBe players.value.first()
 
-            table.passPlayerTurn()
+            table.passPlayerTurnIfNotLastTurn()
 
             it("플레이어 2에게 차례가 넘어감") {
                 players.inTurn shouldBe players.value.last()
@@ -72,10 +71,8 @@ class GameTableTest : DescribeSpec({
         context("플레이어 2가 차례인 경우") {
             players.inTurn shouldBe players.value.last()
 
-            it("턴이 넘어갈 수 없다") {
-                shouldThrowExactly<IllegalArgumentException> {
-                    table.passPlayerTurn()
-                }
+            it("턴이 넘어가지 않는다") {
+                players.inTurn shouldBe players.value.last()
             }
         }
     }
@@ -118,7 +115,7 @@ class GameTableTest : DescribeSpec({
             }
         }
         context("마지막 플레이어 턴") {
-            table.passPlayerTurn()
+            table.passPlayerTurnIfNotLastTurn()
             table.players.inTurn shouldBe players.last()
 
             it("true 반환") {
@@ -138,7 +135,7 @@ class GameTableTest : DescribeSpec({
             }
         }
         context("마지막 플레이어 턴") {
-            table.passPlayerTurn()
+            table.passPlayerTurnIfNotLastTurn()
             table.players.inTurn shouldBe players.last()
 
             it("두 번째 플레이어 반환") {

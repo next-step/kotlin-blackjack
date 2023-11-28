@@ -11,19 +11,21 @@ class DealToPlayer : CardDistributor {
     ): DealToPlayerResult {
         val playerInTurn = table.playerInTurn
         val action = table.playerInTurnAction
+
         when (action) {
-            Action.HIT -> {
-                table.dealToPlayerInTurn(DISTRIBUTION_COUNT)
-            }
+            Action.HIT -> table.dealToPlayerInTurn(DISTRIBUTION_COUNT)
             Action.STAND -> {
-                when (table.isLastPlayerTurn) {
-                    true -> decideDistributor(DealToDealer())
-                    false -> table.passPlayerTurn()
-                }
+                finishDistributionIfLastTurn(table.isLastPlayerTurn, decideDistributor)
+                table.passPlayerTurnIfNotLastTurn()
             }
         }
+
         val isSystemStand = action == Action.STAND && playerInTurn.isBust
         return DealToPlayerResult(playerInTurn, isSystemStand)
+    }
+
+    private fun finishDistributionIfLastTurn(isLastPlayerStand: Boolean, decideDistributor: (distributor: CardDistributor) -> Unit) {
+        if (isLastPlayerStand) decideDistributor(DealToDealer())
     }
 
     companion object {
