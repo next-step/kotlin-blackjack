@@ -21,7 +21,7 @@ data class GameTable(
 
     fun dealToAll(count: Int) {
         dealer.dealCards(count, *players.all.toTypedArray())
-        dealer.dealToSelf(count)
+        dealer dealToSelf count
     }
 
     fun dealToPlayerInTurn(count: Int) {
@@ -29,7 +29,7 @@ data class GameTable(
     }
 
     fun dealToDealer(count: Int) {
-        dealer.dealToSelf(count)
+        dealer dealToSelf count
     }
 
     fun passPlayerTurn() {

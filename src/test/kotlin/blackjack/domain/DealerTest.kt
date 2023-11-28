@@ -75,7 +75,7 @@ class DealerTest : DescribeSpec({
 
         val count = 2
         context("자신에게 ${count}장 카드 배분") {
-            dealer.dealToSelf(count)
+            dealer dealToSelf count
 
             it("플레이어에게 카드 전달") {
                 dealer.hand.cards shouldBe listOf(cards[3], cards[2])
