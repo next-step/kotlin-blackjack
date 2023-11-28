@@ -1,8 +1,6 @@
 package blackjack.domain
 
-import blackjack.domain.player.Player
 import blackjack.domain.player.PlayerName
-import blackjack.domain.player.Players
 import blackjack.mock.InputProcessorMock
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
@@ -19,12 +17,10 @@ class BlackJackGameTest : DescribeSpec({
             )
 
             it("전달된 이름으로 플레이어 세팅") {
-                game.table.players shouldBe Players(
-                    listOf(
-                        Player(PlayerName(name1), { Action.HIT }),
-                        Player(PlayerName(name2), { Action.HIT })
-                    )
-                )
+                val playerNames = game.table.players.all.map { it.name }
+
+                playerNames[0] shouldBe PlayerName(name1)
+                playerNames[1] shouldBe PlayerName(name2)
             }
         }
     }
