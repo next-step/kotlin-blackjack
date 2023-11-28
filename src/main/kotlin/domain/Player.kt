@@ -13,10 +13,15 @@ class Player(val name: String) : AbstractCardHolder() {
 
     fun determineResult(dealerScore: Int) {
         val playerTotalScore = calculateScore()
-        result = GameResult.determineForResultOfPlayer(playerTotalScore, dealerScore)
+        result = determineGameResult(playerTotalScore, dealerScore)
     }
 
     fun calculateFinalProfit(): Int {
         return result.calculateProfit(bettingAmount)
+    }
+
+    private fun determineGameResult(playerTotalScore: Int, dealerScore: Int): GameResult {
+        val playerHasBlackjack = BlackjackRules.isBlackjack(showHand())
+        return GameResult.determineForResultOfPlayer(playerTotalScore, dealerScore, playerHasBlackjack)
     }
 }

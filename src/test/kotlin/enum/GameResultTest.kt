@@ -11,8 +11,9 @@ class GameResultTest {
     fun `플레이어 점수가 21을 초과하면 패배`() {
         val playerScore = 22
         val dealerScore = 20
+        val playerHasBlackjack = false
 
-        val result = GameResult.determineForResultOfPlayer(playerScore, dealerScore)
+        val result = GameResult.determineForResultOfPlayer(playerScore, dealerScore, playerHasBlackjack)
         assertEquals(GameResult.LOSE, result)
     }
 
@@ -21,8 +22,9 @@ class GameResultTest {
     fun `딜러 점수가 21을 초과하면 승리`() {
         val playerScore = 20
         val dealerScore = 22
+        val playerHasBlackjack = false
 
-        val result = GameResult.determineForResultOfPlayer(playerScore, dealerScore)
+        val result = GameResult.determineForResultOfPlayer(playerScore, dealerScore, playerHasBlackjack)
         assertEquals(GameResult.WIN, result)
     }
 
@@ -31,8 +33,9 @@ class GameResultTest {
     fun `플레이어 점수가 딜러 점수보다 높으면 승리`() {
         val playerScore = 20
         val dealerScore = 18
+        val playerHasBlackjack = false
 
-        val result = GameResult.determineForResultOfPlayer(playerScore, dealerScore)
+        val result = GameResult.determineForResultOfPlayer(playerScore, dealerScore, playerHasBlackjack)
         assertEquals(GameResult.WIN, result)
     }
 
@@ -41,8 +44,9 @@ class GameResultTest {
     fun `플레이어 점수와 딜러 점수가 같으면 무승부`() {
         val playerScore = 20
         val dealerScore = 20
+        val playerHasBlackjack = false
 
-        val result = GameResult.determineForResultOfPlayer(playerScore, dealerScore)
+        val result = GameResult.determineForResultOfPlayer(playerScore, dealerScore, playerHasBlackjack)
         assertEquals(GameResult.DRAW, result)
     }
 
@@ -51,8 +55,9 @@ class GameResultTest {
     fun `플레이어 점수가 딜러 점수보다 낮으면 패배`() {
         val playerScore = 17
         val dealerScore = 20
+        val playerHasBlackjack = false
 
-        val result = GameResult.determineForResultOfPlayer(playerScore, dealerScore)
+        val result = GameResult.determineForResultOfPlayer(playerScore, dealerScore, playerHasBlackjack)
         assertEquals(GameResult.LOSE, result)
     }
 }

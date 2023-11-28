@@ -39,7 +39,7 @@ class ConsoleOutputView : OutputView {
 
     private fun convertResultToString(result: GameResult): String {
         return when (result) {
-            GameResult.WIN -> "승"
+            GameResult.WIN, GameResult.BLACKJACK_WIN -> "승"
             GameResult.LOSE -> "패"
             GameResult.DRAW -> "무승부"
         }
