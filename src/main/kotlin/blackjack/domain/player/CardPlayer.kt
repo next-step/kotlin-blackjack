@@ -5,7 +5,7 @@ import blackjack.domain.card.Card
 import blackjack.domain.card.Hand
 import blackjack.domain.card.HandScore
 
-interface CardHolder {
+interface CardPlayer {
     val hand: Hand
 
     val score: HandScore
