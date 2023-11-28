@@ -3,11 +3,11 @@ package blackjack.domain.distirbution
 import blackjack.domain.Action
 import blackjack.domain.card.Rank
 import blackjack.domain.player.PlayerName
-import blackjack.mock.blackJackGame
 import blackjack.mock.card
 import blackjack.mock.hand
 import blackjack.mock.player
 import blackjack.mock.players
+import blackjack.mock.table
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeTypeOf
@@ -16,21 +16,20 @@ class DealToPlayerTest : DescribeSpec({
     describe("DealToPlayer") {
         context("플레이어가 HIT (player: HIT, 점수 : bust 아님) 을 하면") {
             val players = players(player("currentPlayer", Action.HIT), player())
-            val game = blackJackGame(inputAction = Action.HIT, players = players)
-            val deckCount = game.table.dealer.deck.cards.size
-            val handCount = game.table.players.inTurn.hand.cards.size
+            val table = table(inputAction = Action.HIT, players = players)
+            val deckCount = table.dealer.deck.cards.size
+            val handCount = table.players.inTurn.hand.cards.size
 
-            val dealToPlayer = DealToPlayer()
-            game.setDistributor(dealToPlayer)
+            val dealToPlayer = DealToPlayer(table)
 
-            val result = dealToPlayer(game.table) { distributor -> game.setDistributor(distributor) }
+            val result = dealToPlayer.deal()
 
             it("플레이어의 카드는 증가") {
-                game.table.players.inTurn.hand.cards.size shouldBe handCount + 1
+                table.players.inTurn.hand.cards.size shouldBe handCount + 1
             }
 
             it("덱에서 카드는 제거") {
-                game.table.dealer.deck.cards.size shouldBe deckCount - 1
+                table.dealer.deck.cards.size shouldBe deckCount - 1
             }
 
             it("결과 값의 플레이어는 이번 차례 진행한 플레이어") {
@@ -48,20 +47,19 @@ class DealToPlayerTest : DescribeSpec({
                 player("currentPlayer", Action.STAND, player1Cards),
                 player("nextPlayer", Action.STAND),
             )
-            val game = blackJackGame(players = players)
+            val table = table(inputAction = Action.HIT, players = players)
 
             context("첫번째 플레이어가 STAND을 하면") {
-                val dealToPlayer = DealToPlayer()
-                game.setDistributor(dealToPlayer)
-                val result = dealToPlayer(game.table) { distributor -> game.setDistributor(distributor) }
+                val dealToPlayer = DealToPlayer(table)
+                val result = dealToPlayer.deal()
 
                 it("게임의 다음 상태는 다음 플레이어 배분 차례") {
-                    game.dealCards.shouldBeTypeOf<DealToPlayer>()
-                    game.table.players.inTurn.name shouldBe PlayerName("nextPlayer")
+                    dealToPlayer.nextDistributor.shouldBeTypeOf<DealToPlayer>()
+                    table.players.inTurn.name shouldBe PlayerName("nextPlayer")
                 }
 
                 it("플레이어 카드는 변화 없음") {
-                    game.table.players.value.first().hand shouldBe player1Cards
+                    table.players.value.first().hand shouldBe player1Cards
                 }
 
                 it("결과 값의 플레이어는 이번 차례 진행한 플레이어") {
@@ -74,13 +72,12 @@ class DealToPlayerTest : DescribeSpec({
             }
 
             context("카드 배분시 두 번째 플레이어가 STAND을 한 경우") {
-                game.table.players.inTurn.name shouldBe PlayerName("nextPlayer")
-                val dealToPlayer = DealToPlayer()
-                game.setDistributor(dealToPlayer)
-                val result = dealToPlayer(game.table) { distributor -> game.setDistributor(distributor) }
+                table.players.inTurn.name shouldBe PlayerName("nextPlayer")
+                val dealToPlayer = DealToPlayer(table)
+                val result = dealToPlayer.deal()
 
                 it("딜러 카드 배분 차례") {
-                    game.dealCards.shouldBeTypeOf<DealToDealer>()
+                    dealToPlayer.nextDistributor.shouldBeTypeOf<DealToDealer>()
                 }
 
                 it("결과 값의 플레이어는 이번 차례 진행한 플레이어") {
@@ -96,20 +93,19 @@ class DealToPlayerTest : DescribeSpec({
                 val cards = hand(card(Rank.TEN), card(Rank.TEN), card(Rank.TEN))
                 val players = players(player("currentPlayer", hand = cards, action = Action.HIT), player("nextPlayer"))
 
-                val game = blackJackGame(players = players)
-                game.table.players.inTurn.name shouldBe PlayerName("currentPlayer")
-                val dealToPlayer = DealToPlayer()
-                game.setDistributor(dealToPlayer)
+                val table = table(inputAction = Action.HIT, players = players)
+                table.players.inTurn.name shouldBe PlayerName("currentPlayer")
+                val dealToPlayer = DealToPlayer(table)
 
-                val result = dealToPlayer(game.table) { distributor -> game.setDistributor(distributor) }
+                val result = dealToPlayer.deal()
 
                 it("게임의 다음 상태는 다음 플레이어 배분 차례") {
-                    game.dealCards.shouldBeTypeOf<DealToPlayer>()
-                    game.table.players.inTurn.name shouldBe PlayerName("nextPlayer")
+                    dealToPlayer.nextDistributor.shouldBeTypeOf<DealToPlayer>()
+                    table.players.inTurn.name shouldBe PlayerName("nextPlayer")
                 }
 
                 it("플레이어 카드는 변화 없음") {
-                    game.table.players.value.first().hand shouldBe cards
+                    table.players.value.first().hand shouldBe cards
                 }
 
                 it("결과 값의 플레이어는 이번 차례 진행한 플레이어") {

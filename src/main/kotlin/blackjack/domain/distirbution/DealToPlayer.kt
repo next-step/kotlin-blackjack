@@ -4,18 +4,22 @@ import blackjack.domain.Action
 import blackjack.domain.GameTable
 import blackjack.domain.result.distribution.DealToPlayerResult
 
-class DealToPlayer : CardDistributor {
-    override fun invoke(
-        table: GameTable,
-        decideDistributor: (distributor: CardDistributor) -> Unit
-    ): DealToPlayerResult {
+class DealToPlayer(
+    override val table: GameTable
+) : CardDistributor() {
+
+    override fun deal(): DealToPlayerResult {
         val playerInTurn = table.playerInTurn
         val action = table.playerInTurnAction
 
         when (action) {
-            Action.HIT -> table.dealToPlayerInTurn(DISTRIBUTION_COUNT)
+            Action.HIT -> {
+                table.dealToPlayerInTurn(DISTRIBUTION_COUNT)
+                _nextDistributor = DealToPlayer(table)
+            }
+
             Action.STAND -> {
-                finishDistributionIfLastTurn(table.isLastPlayerTurn, decideDistributor)
+                endPlayerDistributionIfLastTurn()
                 table.passPlayerTurnIfNotLastTurn()
             }
         }
@@ -24,8 +28,11 @@ class DealToPlayer : CardDistributor {
         return DealToPlayerResult(playerInTurn, isSystemStand)
     }
 
-    private fun finishDistributionIfLastTurn(isLastPlayerStand: Boolean, decideDistributor: (distributor: CardDistributor) -> Unit) {
-        if (isLastPlayerStand) decideDistributor(DealToDealer())
+    private fun endPlayerDistributionIfLastTurn() {
+        _nextDistributor = when (table.isLastPlayerTurn) {
+            true -> DealToDealer(table)
+            false -> DealToPlayer(table)
+        }
     }
 
     companion object {

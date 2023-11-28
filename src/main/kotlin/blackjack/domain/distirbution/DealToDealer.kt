@@ -4,14 +4,13 @@ import blackjack.domain.Action
 import blackjack.domain.GameTable
 import blackjack.domain.result.distribution.DealToDealerResult
 
-class DealToDealer : CardDistributor {
-    override fun invoke(
-        table: GameTable,
-        decideDistributor: (distributor: CardDistributor) -> Unit
-    ): DealToDealerResult {
+class DealToDealer(
+    override val table: GameTable
+) : CardDistributor() {
+    override fun deal(): DealToDealerResult {
         val isHit = table.dealerAction == Action.HIT
         if (isHit) table.dealToDealer(COUNT_TO_DEAL)
-        decideDistributor(DistributionEnd())
+        _nextDistributor = DistributionEnd(table)
         return DealToDealerResult(isHit)
     }
 

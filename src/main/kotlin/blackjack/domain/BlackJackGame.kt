@@ -17,7 +17,7 @@ class BlackJackGame(
         Players.of(inputProcessor.playerNames()) { player -> inputProcessor.playerAction(player) }
     ),
 ) {
-    var dealCards: CardDistributor = DealInitialCards()
+    var dealCards: CardDistributor = DealInitialCards(table)
         private set
 
     fun run() {
@@ -33,12 +33,9 @@ class BlackJackGame(
         resultProcessor.handle(result)
     }
 
-    fun setDistributor(distributor: CardDistributor) {
-        this.dealCards = distributor
-    }
-
     private fun dealCards() {
-        val result = dealCards(table) { distributor -> setDistributor(distributor) }
+        val result = dealCards.deal()
+        this.dealCards = dealCards.nextDistributor
         emitResult(result)
     }
 

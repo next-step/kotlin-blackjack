@@ -39,3 +39,13 @@ fun blackJackGame(
     dealer: Dealer = Dealer(),
     players: Players = players(player("kim"), player("lee")),
 ) = BlackJackGame(InputProcessorMock(action = inputAction), resultProcessor, GameTable(dealer, players))
+
+fun table(
+    inputAction: Action = Action.HIT,
+    dealer: Dealer = Dealer(),
+    players: Players? = null,
+): GameTable =
+    GameTable(
+        dealer,
+        players ?: players(player("kim", inputAction), player("lee", inputAction))
+    )

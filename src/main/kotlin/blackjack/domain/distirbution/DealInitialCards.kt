@@ -3,14 +3,13 @@ package blackjack.domain.distirbution
 import blackjack.domain.GameTable
 import blackjack.domain.result.distribution.DealInitialCardResult
 
-class DealInitialCards : CardDistributor {
+class DealInitialCards(
+    override val table: GameTable
+) : CardDistributor() {
 
-    override fun invoke(
-        table: GameTable,
-        decideDistributor: (distributor: CardDistributor) -> Unit
-    ): DealInitialCardResult {
+    override fun deal(): DealInitialCardResult {
         table.dealToAll(INITIAL_DISTRIBUTION_COUNT)
-        decideDistributor(DealToPlayer())
+        _nextDistributor = DealToPlayer(table)
         return DealInitialCardResult(table.dealer, table.players)
     }
 
