@@ -7,8 +7,10 @@ import blackjack.domain.CardShape
 import blackjack.domain.Deck
 import blackjack.domain.Hand
 import blackjack.domain.Player
+import blackjack.domain.State
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.datatest.withData
+import io.kotest.matchers.collections.shouldHaveElementAt
 import io.kotest.matchers.shouldBe
 
 data class PlayerDrawCardTestData(
@@ -49,10 +51,11 @@ class PlayerTest : FunSpec({
             player.draw(deck)
 
             player.getCardList().forEachIndexed { index, card ->
-                card shouldBe initialCardList[initialCardList.count() - 1 - index]
+                initialCardList.shouldHaveElementAt(initialCardList.count() - 1 - index, card)
             }
         }
     }
+
     context("Player는 점수가 21점을 초과하면 카드를 뽑을 수 없다.") {
         withData(
             listOf(
@@ -69,7 +72,21 @@ class PlayerTest : FunSpec({
         ) { cardList ->
             val player = Player("김영태", hand = Hand(cardList))
 
-            player.canDraw() shouldBe (cardList.sumOf { it.number.score } <= BlackjackRule.targetScore)
+            player.canDraw() shouldBe (cardList.sumOf { it.number.score } <= BlackjackRule.TARGET_SCORE)
         }
+    }
+
+    context("Player가 처음 뽑은 2장의 점수가 21이면 Blackjack") {
+        val player = Player(
+            name = "김영태",
+            hand = Hand(
+                listOf(
+                    Card(number = CardNumber.ACE, shape = CardShape.SPADE),
+                    Card(number = CardNumber.JACK, shape = CardShape.HEART),
+                )
+            )
+        )
+
+        player.state shouldBe State.BLACKJACK
     }
 })

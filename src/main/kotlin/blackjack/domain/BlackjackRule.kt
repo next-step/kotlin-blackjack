@@ -1,6 +1,6 @@
 package blackjack.domain
 
 object BlackjackRule {
-    const val initialCard = 2
-    const val targetScore = 21
+    const val INITIAL_CARD = 2
+    const val TARGET_SCORE = 21
 }

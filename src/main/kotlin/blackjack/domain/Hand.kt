@@ -1,12 +1,32 @@
 package blackjack.domain
 
-class Hand(cardList: List<Card> = emptyList()) {
-    private val cardList = cardList.toMutableList()
+class Hand(cards: List<Card> = emptyList()) {
+    private val _cards: MutableList<Card> = cards.toMutableList()
+    val cards: List<Card>
+        get() {
+            return _cards.toList()
+        }
 
-    fun getCardList(): List<Card> = cardList.toList()
+    fun getScore(): Int {
+        val possibleScore = getPossibleScore()
 
-    fun getPossibleScore(): List<Int> {
-        val standardScore = cardList.sumOf { it.number.score }
+        if (possibleScore.count() == 1) {
+            return possibleScore.first()
+        }
+
+        return possibleScore.filter {
+            it <= BlackjackRule.TARGET_SCORE
+        }.let {
+            if (it.isNotEmpty()) {
+                return it.max()
+            }
+
+            possibleScore.min()
+        }
+    }
+
+    private fun getPossibleScore(): List<Int> {
+        val standardScore = _cards.sumOf { it.number.score }
 
         return (0..countAce()).map {
             standardScore + (it * 10)
@@ -14,11 +34,11 @@ class Hand(cardList: List<Card> = emptyList()) {
     }
 
     fun add(card: Card) {
-        cardList.add(card)
+        _cards.add(card)
     }
 
     private fun countAce(): Int =
-        cardList.count {
+        _cards.count {
             it.number == CardNumber.ACE
         }
 }

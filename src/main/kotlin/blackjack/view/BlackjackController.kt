@@ -17,7 +17,7 @@ class BlackjackController(
 
         resultView.showInitialPlayers(
             players = players,
-            initialCard = BlackjackRule.initialCard
+            initialCard = BlackjackRule.INITIAL_CARD
         )
 
         playGame()
@@ -30,7 +30,7 @@ class BlackjackController(
             Player(
                 name = it,
                 Hand(
-                    cardList = deck.popMany(count = BlackjackRule.initialCard)
+                    cards = deck.popMany(count = BlackjackRule.INITIAL_CARD)
                 )
             )
         }
