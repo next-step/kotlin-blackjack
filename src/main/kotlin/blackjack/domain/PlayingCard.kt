@@ -1,8 +1,10 @@
 package blackjack.domain
 
-@JvmInline
-value class PlayingCard (val cards: Cards) {
-    init {
-        require(cards.size == 52) { "카드의 개수는 반드시 52장이어야 합니다." }
-    }
+
+class PlayingCard {
+    val cards: Cards = Cards(
+        CardShape.values()
+            .flatMap { shape -> CardCharacter.values().map { cardCharacter -> Card(cardCharacter, shape) } }
+            .toMutableSet()
+    )
 }
