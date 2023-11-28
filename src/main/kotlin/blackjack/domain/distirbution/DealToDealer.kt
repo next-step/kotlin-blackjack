@@ -10,7 +10,7 @@ class DealToDealer(
     override fun deal(): DealToDealerResult {
         val isHit = table.dealerAction == Action.HIT
         if (isHit) table.dealToDealer(COUNT_TO_DEAL)
-        _nextDistributor = DistributionEnd(table)
+        _nextDistributor = DealEnd(table)
         return DealToDealerResult(isHit)
     }
 

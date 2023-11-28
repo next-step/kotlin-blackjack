@@ -31,7 +31,7 @@ class DealToDealerTest : DescribeSpec({
             }
 
             it("게임의 다음 배분은 종료 상태") {
-                dealToDealer.nextDistributor.shouldBeTypeOf<DistributionEnd>()
+                dealToDealer.nextDistributor.shouldBeTypeOf<DealEnd>()
             }
         }
 
@@ -53,7 +53,7 @@ class DealToDealerTest : DescribeSpec({
             }
 
             it("게임의 다음 배분은 종료 상태") {
-                dealToDealer.nextDistributor.shouldBeTypeOf<DistributionEnd>()
+                dealToDealer.nextDistributor.shouldBeTypeOf<DealEnd>()
             }
         }
     }

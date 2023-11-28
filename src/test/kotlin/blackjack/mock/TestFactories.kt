@@ -1,8 +1,6 @@
 package blackjack.mock
 
-import blackjack.controller.ResultProcessor
 import blackjack.domain.Action
-import blackjack.domain.BlackJackGame
 import blackjack.domain.Dealer
 import blackjack.domain.GameTable
 import blackjack.domain.card.Card
@@ -32,13 +30,6 @@ fun players(vararg players: Player) = players
     .toList()
     .let { it.ifEmpty { listOf(player("kim"), player("lee")) } }
     .let(::Players)
-
-fun blackJackGame(
-    inputAction: Action = Action.HIT,
-    resultProcessor: ResultProcessor = ResultProcessor(),
-    dealer: Dealer = Dealer(),
-    players: Players = players(player("kim"), player("lee")),
-) = BlackJackGame(InputProcessorMock(action = inputAction), resultProcessor, GameTable(dealer, players))
 
 fun table(
     inputAction: Action = Action.HIT,
