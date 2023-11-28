@@ -15,4 +15,14 @@ fun main() {
         it.receiveCard(playingCard.draw())
     }
     OutputView.printCardState(players)
+    players.forEach { player ->
+        getMoreCard(player, playingCard)
+    }
+}
+
+private fun getMoreCard(player: Player, playingCard: PlayingCard) {
+    while (InputView.getNeedOneMoreCard(player)) {
+        player.receiveCard(playingCard.draw())
+        OutputView.printCurrentCardState(player)
+    }
 }
