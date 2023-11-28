@@ -9,7 +9,6 @@ import blackJack.domain.enums.Suit.CLUB
 import blackJack.domain.enums.Suit.DIAMOND
 import blackJack.domain.enums.Suit.HEART
 import blackJack.domain.enums.Suit.SPADE
-import blackJack.domain.player.Dealer
 import blackJack.error.ErrorMessage
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
