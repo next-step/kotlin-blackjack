@@ -1,9 +1,9 @@
 package blackJack.view
 
-import blackJack.dto.DealerDto
-import blackJack.dto.ParticipantsDto
-import blackJack.dto.PlayerDto
-import blackJack.dto.PlayersDto
+import blackJack.dto.playerDto.DealerDto
+import blackJack.dto.playerDto.ParticipantsDto
+import blackJack.dto.playerDto.PlayerDto
+import blackJack.dto.ResultDto.ResultDto
 
 object OutputView {
 
@@ -44,12 +44,20 @@ object OutputView {
 
     fun printResult(participants: ParticipantsDto) {
         val dealerCardInfo = participants.dealer.cardsDto.cardDtos.joinToString(", ") { "${it.rank} ${it.suit}" }
-        println("딜러 카드: $dealerCardInfo - 결과: ${dealerCardInfo.totalScore}")
+        println("딜러 카드: $dealerCardInfo - 결과: ${participants.dealer.totalScore}")
 
         participants.players.forEach { player ->
             val cardsInfo = player.cardsDto.cardDtos.joinToString(", ") { "${it.rank} ${it.suit}" }
             println("${player.name}카드: $cardsInfo - 결과: ${player.totalScore}")
         }
         println()
+    }
+
+    fun printWinner(resultDto: ResultDto) {
+        println("## 최종 승패")
+        println("딜러: " + resultDto.dealerResult.win + "승 " + resultDto.dealerResult.lose + "패")
+        resultDto.playersResult.playerResults.forEach {
+            println(it.name + ": " + it.result)
+        }
     }
 }
