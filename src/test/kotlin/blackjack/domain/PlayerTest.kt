@@ -38,10 +38,10 @@ class PlayerTest {
             "pobi", cardDeck(Card.diamond(Number.ACE), Card.heart(Number.JACK), Card.spade(Number.ACE))
         )
 
+        assertThat(player.isObtainable()).isFalse
         assertThrows<IllegalArgumentException> {
             player.obtain()
         }
-        assertThat(player.isObtainable()).isFalse
         assertThat(player.hands).containsExactlyInAnyOrder(
             Card.diamond(Number.ACE), Card.heart(Number.JACK)
         )
