@@ -3,7 +3,6 @@ package blackjack
 import blackjack.domain.game.BlackJackGame
 import blackjack.domain.player.Player
 import blackjack.domain.player.PlayerGroup
-import blackjack.domain.player.player
 import blackjack.view.InputView
 import blackjack.view.ResultView
 
@@ -39,8 +38,6 @@ private fun askNeedMoreCard(
 
 private fun createPlayers(): PlayerGroup {
     return PlayerGroup(InputView.readPlayerNames().map {
-        player {
-            name(it)
-        }
+        Player(it)
     })
 }
