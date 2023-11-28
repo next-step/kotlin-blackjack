@@ -26,6 +26,7 @@ class BlackJackGame(
             dealCards()
             distributionCount++
         }
+        endDeal()
     }
 
     private fun emitResult(result: Result) {
@@ -35,6 +36,11 @@ class BlackJackGame(
     private fun dealCards() {
         val result = dealCards.deal()
         this.dealCards = dealCards.nextDistributor
+        emitResult(result)
+    }
+
+    private fun endDeal() {
+        val result = dealCards.deal()
         emitResult(result)
     }
 
