@@ -1,5 +1,6 @@
 package blackjack.domain.player
 
+import blackjack.domain.GameResult
 import blackjack.domain.card.Deck
 import blackjack.domain.rule.DefaultScoringRule
 import blackjack.domain.rule.ScoringRule
@@ -16,5 +17,16 @@ class Participant(override val name: String, private val scoringRule: ScoringRul
 
     override fun canDraw(): Boolean {
         return scoringRule.isOverThreshold(totalScore, DefaultScoringRule.THRESHOLD_SCORE).not()
+    }
+
+    fun compareWith(dealer: Dealer): GameResult {
+        val dealerGameResult = dealer.compareWith(this)
+        val result = when (dealerGameResult) {
+            GameResult.WIN -> GameResult.LOSE
+            GameResult.LOSE -> GameResult.WIN
+            GameResult.TIE -> GameResult.TIE
+        }
+
+        return result
     }
 }

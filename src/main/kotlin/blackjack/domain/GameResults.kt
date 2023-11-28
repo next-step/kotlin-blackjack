@@ -7,14 +7,7 @@ object GameResults {
     fun results(dealer: Dealer, participants: List<Participant>): Map<Participant, GameResult> {
         val results = mutableMapOf<Participant, GameResult>()
 
-        participants.forEach { participant ->
-            val dealerGameResult = dealer.compareWith(participant)
-            results[participant] = when (dealerGameResult) {
-                GameResult.WIN -> GameResult.LOSE
-                GameResult.LOSE -> GameResult.WIN
-                GameResult.TIE -> GameResult.TIE
-            }
-        }
+        participants.map { results[it] = it.compareWith(dealer) }
 
         return results
     }

@@ -65,3 +65,4 @@
 
 --- 피드백 반영
 - [x] Players 객체로 분리
+- [x] Participant에서 Dealer와 비교하는 기능을 추가

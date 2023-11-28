@@ -1,7 +1,9 @@
 package blackjack.domain.player
 
+import blackjack.domain.GameResult
 import blackjack.domain.card.Deck
 import blackjack.domain.rule.DefaultScoringRule
+import blackjack.domain.rule.TestScoringRule
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.ints.shouldBeGreaterThan
 import io.kotest.matchers.shouldBe
@@ -88,5 +90,29 @@ class ParticipantTest {
 
         participant.canDraw() shouldBe false
         participant.totalScore shouldBeGreaterThan DefaultScoringRule.THRESHOLD_SCORE
+    }
+
+    @Test
+    fun `참가자는 딜러의 결과와 비교해 자신의 결과를 계산한다 - 참가자 승리`() {
+        val p1 = Participant("p1", TestScoringRule(21))
+        val dealer = Dealer(TestScoringRule(20))
+
+        p1.compareWith(dealer) shouldBe GameResult.WIN
+    }
+
+    @Test
+    fun `참가자는 딜러의 결과와 비교해 자신의 결과를 계산한다 - 참가자 패배`() {
+        val p1 = Participant("p1", TestScoringRule(20))
+        val dealer = Dealer(TestScoringRule(21))
+
+        p1.compareWith(dealer) shouldBe GameResult.LOSE
+    }
+
+    @Test
+    fun `참가자는 딜러의 결과와 비교해 자신의 결과를 계산한다 - 참가자 무승부`() {
+        val p1 = Participant("p1", TestScoringRule(20))
+        val dealer = Dealer(TestScoringRule(20))
+
+        p1.compareWith(dealer) shouldBe GameResult.TIE
     }
 }
