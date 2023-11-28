@@ -51,4 +51,30 @@ class PlayerTest {
             player.bettingAmount = invalidAmount
         }
     }
+
+    @Test
+    @DisplayName("플레이어가 블랙잭으로 승리할 경우 수익 계산")
+    fun `플레이어의 블랙잭 승리 수익 계산`() {
+        val player = Player("Jaeyeon")
+        player.bettingAmount = 10000
+        player.receiveCard(Card(Suit.HEARTS, Rank.ACE))
+        player.receiveCard(Card(Suit.DIAMONDS, Rank.KING))
+        player.determineResult(BlackjackRules.MAXIMUM_SCORE - 1)
+
+        val profit = player.calculateFinalProfit()
+        assertEquals(15000, profit)
+    }
+
+    @Test
+    @DisplayName("딜러와 플레이어 모두 블랙잭인 경우 베팅 금액 돌려받음")
+    fun `딜러와 플레이어 모두 블랙잭인 경우 수익 계산`() {
+        val player = Player("Jaeyeon")
+        player.bettingAmount = 10000
+        player.receiveCard(Card(Suit.HEARTS, Rank.ACE))
+        player.receiveCard(Card(Suit.DIAMONDS, Rank.KING))
+        player.determineResult(BlackjackRules.MAXIMUM_SCORE)
+
+        val profit = player.calculateFinalProfit()
+        assertEquals(0, profit)
+    }
 }
