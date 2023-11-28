@@ -8,17 +8,16 @@ import blackjack.view.OutputView
 
 fun main() {
     val cardDeck = ShuffledCardDeck()
+    val (dealer, players) = createParticipants(cardDeck)
+    obtainCards(players, dealer)
+    compareBetweenDealerAndPlayers(dealer, players)
+}
 
+private fun createParticipants(cardDeck: ShuffledCardDeck): Pair<Dealer, List<Player>> {
     val dealer = Dealer(cardDeck)
     val players = createPlayers(cardDeck)
-    val participants = listOf(dealer) + players
-
-    OutputView.printParticipantOpenedCards(participants)
-    obtainCards(players, dealer)
-    OutputView.printParticipantHands(participants)
-
-    val compareResults = dealer.compareWith(*players.toTypedArray())
-    OutputView.printCompareResults(compareResults)
+    OutputView.printParticipantOpenedCards(listOf(dealer) + players)
+    return Pair(dealer, players)
 }
 
 private fun createPlayers(cardDeck: ShuffledCardDeck): List<Player> {
@@ -47,4 +46,10 @@ private fun obtainDealerCard(dealer: Dealer) {
         dealer.obtain()
         OutputView.printObtainDealerCard()
     }
+}
+
+private fun compareBetweenDealerAndPlayers(dealer: Dealer, players: List<Player>) {
+    val compareResults = dealer.compareWith(*players.toTypedArray())
+    OutputView.printParticipantHands(listOf(dealer) + players)
+    OutputView.printCompareResults(compareResults)
 }
