@@ -1,31 +1,24 @@
 package blackJack.domain.player
 
-import blackJack.domain.card.Card
 import blackJack.domain.card.Cards
 import blackJack.domain.enums.Status
 import blackJack.domain.enums.Status.HIT
 import blackJack.error.ErrorMessage
 
-class Player(val name: String, val cards: Cards = Cards(emptyList()), var status: Status = HIT){
+class Player(val name: String, cards: Cards = Cards(emptyList()), status: Status = HIT) : Participant(status, cards) {
 
     init {
         require(name.isNotEmpty()) { ErrorMessage.EMPTY_NAME.message }
     }
 
-    fun addCard(card: Card) {
-        Status.validationAddCard(status)
-        cards.addCard(card)
-        status = Status.calculateStatus(cards.calculateTotalScore(), cards.cardSize)
+    fun continueGamePlayer(isContinue: Boolean, cardDeck: Cards) {
+        if (isContinue) {
+            val card = cardDeck.drawCard()
+            addCard(card)
+        } else {
+            gameStop()
+        }
     }
-
-    fun receiveInitialCards(initialCards: Cards) {
-        cards.addAllCard(initialCards)
-        status = Status.calculateStatus(cards.calculateTotalScore(), cards.cardSize)
-    }
-
-    fun isContinued() = status == HIT
-
-    fun getTotalScore(): Int = cards.calculateTotalScore()
 
     fun gameStop() { status = Status.STAND }
 
