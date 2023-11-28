@@ -14,7 +14,7 @@ class DealerTest {
 
         val actual = dealer.openedCards
 
-        assertThat(actual).isEqualTo(Card.diamond(Number.TEN))
+        assertThat(actual).containsExactly(Card.diamond(Number.TEN))
     }
 
     @Test
@@ -23,6 +23,7 @@ class DealerTest {
 
         dealer.obtain()
 
+        assertThat(dealer.openedCards).containsExactly(Card.diamond(Number.TEN))
         assertThat(dealer.hands).containsExactlyInAnyOrder(
             Card.diamond(Number.TEN), Card.heart(Number.SIX), Card.spade(Number.ACE)
         )
