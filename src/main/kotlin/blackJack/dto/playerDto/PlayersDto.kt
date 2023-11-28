@@ -1,4 +1,4 @@
-package blackJack.dto
+package blackJack.dto.playerDto
 
 import blackJack.domain.player.Players
 
