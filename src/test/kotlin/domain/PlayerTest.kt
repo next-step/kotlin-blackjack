@@ -77,4 +77,31 @@ class PlayerTest {
         val profit = player.calculateFinalProfit()
         assertEquals(0, profit)
     }
+
+    @Test
+    @DisplayName("플레이어가 승리할 경우 베팅 금액만큼 수익을 얻음")
+    fun `플레이어 승리 시 수익 계산`() {
+        val player = Player("Jaeyeon")
+        player.bettingAmount = 10000
+        player.receiveCard(Card(Suit.HEARTS, Rank.TEN))
+        player.receiveCard(Card(Suit.DIAMONDS, Rank.NINE))
+        player.determineResult(18)
+
+        val profit = player.calculateFinalProfit()
+        assertEquals(10000, profit)
+    }
+
+    @Test
+    @DisplayName("플레이어가 패배하거나 버스트인 경우 베팅 금액을 잃음")
+    fun `플레이어 패배 또는 버스트 시 수익 계산`() {
+        val player = Player("Jaeyeon")
+        player.bettingAmount = 10000
+        player.receiveCard(Card(Suit.HEARTS, Rank.TEN))
+        player.receiveCard(Card(Suit.DIAMONDS, Rank.NINE))
+        player.receiveCard(Card(Suit.CLUBS, Rank.FOUR))
+        player.determineResult(20)
+
+        val profit = player.calculateFinalProfit()
+        assertEquals(-10000, profit)
+    }
 }

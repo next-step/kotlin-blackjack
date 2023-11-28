@@ -10,7 +10,7 @@ enum class GameResult {
 
     fun calculateProfit(bettingAmount: Int): Int {
         return when (this) {
-            WIN -> bettingAmount * 2
+            WIN -> bettingAmount
             BLACKJACK_WIN -> (bettingAmount * 1.5).toInt()
             LOSE -> -bettingAmount
             DRAW -> 0
