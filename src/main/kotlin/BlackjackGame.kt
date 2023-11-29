@@ -1,9 +1,9 @@
-import card.Cards
+import card.deck.GameDeck
 import player.Player
 import player.PlayerGroup
 import player.Status
 
-class BlackjackGame(private val cards: Cards, private val playerGroup: PlayerGroup) {
+class BlackjackGame(private val cardDeck: GameDeck, private val playerGroup: PlayerGroup) {
 
     init {
         playerGroup.playerList.forEach {
@@ -13,7 +13,7 @@ class BlackjackGame(private val cards: Cards, private val playerGroup: PlayerGro
 
     fun hit() {
         val player = playerGroup.getCurrentPlayer()
-        player.saveCard(cards.getCard())
+        player.saveCard(cardDeck.getCardWithIncrease())
         player.updateStatus()
     }
 
@@ -36,7 +36,7 @@ class BlackjackGame(private val cards: Cards, private val playerGroup: PlayerGro
 
     private fun distributeTwoCards(player: Player) {
         repeat(2) {
-            player.saveCard(cards.getCard())
+            player.saveCard(cardDeck.getCardWithIncrease())
         }
     }
 }
