@@ -7,10 +7,10 @@ class Player(
     val name: String,
     private val scoreCalculator: ScoreCalculator
 ) {
-    val cards: MutableList<BlackJackCard> = mutableListOf()
+    var cards: List<BlackJackCard> = emptyList()
 
     fun drawCard(cards: List<BlackJackCard>) {
-        this.cards.addAll(cards)
+        this.cards += cards
     }
 
     fun shouldDraw(): Boolean {
