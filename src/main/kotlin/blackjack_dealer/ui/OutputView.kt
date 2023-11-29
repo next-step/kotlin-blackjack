@@ -5,12 +5,8 @@ import blackjack_dealer.domain.Participant
 import blackjack_dealer.entity.AllParticipantWithBetAmount
 import blackjack_dealer.entity.ParticipantNamesWithBetAmount
 import blackjack_dealer.entity.Participants
-import blackjack_dealer.entity.result.DealerResult
-import blackjack_dealer.entity.result.ParticipantResult
 import blackjack_dealer.entity.toAllParticipantWithBetAmount
 import blackjack_dealer.ui.printer.GamerPrinter
-import blackjack_dealer.ui.printer.board.DealerResultBoardPrinter
-import blackjack_dealer.ui.printer.board.ParticipantResultBoardPrinter
 import blackjack_dealer.ui.printer.result.GamerResultPrinter
 
 object OutputView {
@@ -20,11 +16,11 @@ object OutputView {
 
     fun enterBetAmountEachParticipant(participants: String, inputBet: () -> Int): AllParticipantWithBetAmount {
         val participantsName = participants.split(',')
-        return participantsName.map { name ->
+        val betAmountList = participantsName.map { name ->
             println(ENTER_BET_AMOUNT.format(name))
-            val inputAmount = inputBet()
-            ParticipantNamesWithBetAmount(name = name, betAmount = inputAmount)
-        }.toAllParticipantWithBetAmount()
+            inputBet()
+        }
+        return AllParticipantWithBetAmount.newInstance(participants, betAmountList)
     }
 
     fun printDivideCardsToGamer(dealer: Dealer, participants: Participants) {
@@ -67,18 +63,14 @@ object OutputView {
         println(FINAL_RESULT_BOARD)
     }
 
-    fun printFinalDealerResult(dealerResult: DealerResult) {
-        println(
-            DealerResultBoardPrinter.print(dealerResult)
-        )
+    fun printFinalParticipantsResult(participants: Participants, dealer: Dealer) {
+        participants.forEach { participant ->
+            println("${participant.getGamerName()}: ${participant.getResultBetAmount(dealer)}")
+        }
     }
 
-    fun printFinalParticipantsResult(participantsResult: List<ParticipantResult>) {
-        participantsResult.forEach { participantResult ->
-            println(
-                ParticipantResultBoardPrinter.print(participantResult)
-            )
-        }
+    fun printFinalDealerResult(dealerResult: Int) {
+        println("딜러: $dealerResult")
     }
 
     private const val ENTER_PARTICIPANTS_NAME = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)"

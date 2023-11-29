@@ -1,5 +1,4 @@
 import blackjack_dealer.BlackJack
-import blackjack_dealer.BlackJackResultBoard
 import blackjack_dealer.domain.Dealer
 import blackjack_dealer.entity.BlackJackGamer
 import blackjack_dealer.entity.CardDeque
@@ -32,10 +31,7 @@ fun main() {
     OutputView.printResult(dealer, participants)
 
     OutputView.printFinalResultBoard()
-    // val totalResult = BlackJackResultBoard.getBlackJackResult(dealer, participants)
-    // OutputView.printFinalDealerResult(totalResult.dealerResult)
-    // OutputView.printFinalParticipantsResult(totalResult.participantsResult)
-    participants.forEach {
-        println("${it.getGamerName()}: ${it.getResultBetAmount(dealer)}")
-    }
+    val dealerResult = participants.getParticipantsLoss(dealer)
+    OutputView.printFinalDealerResult(dealerResult)
+    OutputView.printFinalParticipantsResult(participants, dealer)
 }

@@ -54,25 +54,36 @@ data class Participant(
 
     fun getResultBetAmount(dealer: Dealer): Int {
         val participantState = createParticipantResultState(dealer)
-        return when (participantState) {
-            ParticipantResultState.WIN -> {
-                betAmount
-            }
-            ParticipantResultState.LOSE -> {
-                -betAmount
-            }
-            ParticipantResultState.DRAW -> {
-                0
-            }
-            ParticipantResultState.BLACKJACK -> {
-                if (dealer.getCurrentGamerState() == GamerCurrentState.BLACKJACK) {
-                    0
-                } else {
-                    (betAmount * 1.5).toInt()
-                }
-            }
+        return createBetAmountWithResultState(participantState, dealer)
+    }
+
+    private fun createBetAmountWithResultState(
+        participantState: ParticipantResultState,
+        dealer: Dealer
+    ): Int = when (participantState) {
+        ParticipantResultState.WIN -> {
+            betAmount
+        }
+
+        ParticipantResultState.LOSE -> {
+            -betAmount
+        }
+
+        ParticipantResultState.DRAW -> {
+            0
+        }
+
+        ParticipantResultState.BLACKJACK -> {
+            betAmountWhenStateIsBlackJack(dealer)
         }
     }
+
+    private fun betAmountWhenStateIsBlackJack(dealer: Dealer): Int =
+        if (dealer.getCurrentGamerState() == GamerCurrentState.BLACKJACK) {
+            0
+        } else {
+            (betAmount * 1.5).toInt()
+        }
 
     companion object {
         private const val MINIMUM_HIT_NUMBER = 1
