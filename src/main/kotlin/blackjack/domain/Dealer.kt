@@ -7,7 +7,7 @@ class Dealer(
         cards.add(card)
     }
 
-    fun needOneMoreCard(): Boolean {
+    override fun canReceiveOneMoreCard(): Boolean {
         return cards.toScore() <= Score.DEALER_HIT_THRESHOLD
     }
 

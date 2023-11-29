@@ -14,6 +14,10 @@ class Player(
         state = state.draw(card)
     }
 
+    override fun canReceiveOneMoreCard(): Boolean {
+        return state is Hit
+    }
+
     fun turnStand() {
         check(state is Hit) { "Hit 상태가 아닙니다." }
         state = (state as Hit).stand()

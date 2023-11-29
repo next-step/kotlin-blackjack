@@ -35,7 +35,7 @@ class BlackjackGame {
         while (players.withHit().isNotEmpty()) {
             players.withHit().first().playGame()
         }
-        if (dealer.needOneMoreCard()) {
+        if (dealer.canReceiveOneMoreCard()) {
             dealer.receiveCard(deck.draw())
         }
     }

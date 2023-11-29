@@ -27,7 +27,7 @@ class DealerTest {
         dealer.receiveInitialCards(cardList)
 
         // then
-        assertEquals(true, dealer.needOneMoreCard())
+        assertEquals(true, dealer.canReceiveOneMoreCard())
     }
 
     @Test
@@ -43,6 +43,6 @@ class DealerTest {
         dealer.receiveInitialCards(cardList)
 
         // then
-        assertEquals(false, dealer.needOneMoreCard())
+        assertEquals(false, dealer.canReceiveOneMoreCard())
     }
 }

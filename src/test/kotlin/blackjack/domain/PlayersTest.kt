@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test
 
 class PlayersTest {
     @Test
-    fun `Hit 상태인 플레이어들만 필터링한다`() {
+    fun `카드를 추가로 받을 수 있는 플레이어들만 필터링한다`() {
         // given
         val player1 = Player("player1")
         val player2 = Player("player2")

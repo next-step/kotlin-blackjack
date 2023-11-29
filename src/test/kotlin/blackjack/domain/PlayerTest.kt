@@ -69,6 +69,18 @@ class PlayerTest {
     }
 
     @Test
+    fun `Hit 상태인 플레이어는 카드를 더 받을 수 있다`() {
+        // given
+        val player = Player("test")
+
+        // when
+        player.receiveCard(Card(Suit.SPADES, Denomination.ACE))
+
+        // then
+        assertEquals(true, player.canReceiveOneMoreCard())
+    }
+
+    @Test
     fun `게임 시작시 받아야 할 카드 개수(INITIAL_DEAL_SIZE)보다 더 적거나 많은 카드를 받는다면 IllegalArgumentException을 발생시킨다`() {
         // given
         val player = Player("test")
