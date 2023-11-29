@@ -3,11 +3,10 @@ package player
 import BlackJackCalculator
 import card.PlayingCard
 
-class Player(private val name: String) {
+class Player(val name: String) {
 
-    private var _status = Status.PLAYING
-    val status: Status
-        get() = _status
+    var status = Status.PLAYING
+        private set
 
     private var _cardList = mutableListOf<PlayingCard>()
     val cardList: List<PlayingCard>
@@ -21,7 +20,6 @@ class Player(private val name: String) {
         _cardList.add(card)
     }
 
-    fun getName() = name
     fun updateStatus() {
         val newStatus = determineStatus()
         updatePlayerStatus(newStatus)
@@ -36,6 +34,6 @@ class Player(private val name: String) {
     }
 
     private fun updatePlayerStatus(status: Status) {
-        _status = status
+        this.status = status
     }
 }

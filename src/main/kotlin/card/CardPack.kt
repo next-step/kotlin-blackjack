@@ -16,7 +16,7 @@ class CardPack(val cardList: List<PlayingCard>) {
         private val cardPack = createCard()
 
         private fun createCard(): CardPack {
-            val suitList = Suit.getSuitList()
+            val suitList = Suit.values()
             val playingCardList = mutableListOf<PlayingCard>()
 
             for (suit in suitList) {
