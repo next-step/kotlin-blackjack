@@ -1,5 +1,7 @@
 package blackjack.domain
 
+import blackjack.domain.card.Card
+import blackjack.domain.card.CardShuffler
 import java.util.LinkedList
 import java.util.Queue
 

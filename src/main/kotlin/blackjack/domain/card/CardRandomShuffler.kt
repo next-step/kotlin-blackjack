@@ -1,4 +1,4 @@
-package blackjack.domain
+package blackjack.domain.card
 
 class CardRandomShuffler : CardShuffler {
     override fun shuffle(cards: List<Card>): List<Card> {

@@ -1,5 +1,8 @@
-package blackjack.domain
+package blackjack.domain.player
 
+import blackjack.domain.player.Player
+import blackjack.domain.player.PlayerName
+import blackjack.domain.player.Players
 import io.kotest.assertions.throwables.shouldThrowWithMessage
 import io.kotest.core.spec.style.StringSpec
 

@@ -1,4 +1,4 @@
-package blackjack.domain
+package blackjack.domain.card
 
 class Card private constructor(
     val number: CardNumber,

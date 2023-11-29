@@ -1,7 +1,7 @@
-package blackjack.domain
+package blackjack.domain.player
 
 @JvmInline
-value class PlayerName (
+value class PlayerName(
     val value: String
 ) {
     init {

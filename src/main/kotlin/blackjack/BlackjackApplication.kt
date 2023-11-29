@@ -1,6 +1,6 @@
 package blackjack
 
-import blackjack.domain.CardRandomShuffler
+import blackjack.domain.card.CardRandomShuffler
 import blackjack.domain.Dealer
 import blackjack.domain.Deck
 import blackjack.view.InputView
@@ -21,5 +21,4 @@ class BlackjackApplication {
             OutputView.playerCardMessage(players)
         }
     }
-
 }

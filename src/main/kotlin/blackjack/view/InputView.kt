@@ -1,9 +1,8 @@
 package blackjack.view
 
-import blackjack.domain.Player
-import blackjack.domain.PlayerName
-import blackjack.domain.Players
-
+import blackjack.domain.player.Player
+import blackjack.domain.player.PlayerName
+import blackjack.domain.player.Players
 
 object InputView {
 
@@ -21,7 +20,7 @@ object InputView {
     }
 
     private fun createPlayers(userInput: String): Players {
-        val splitNames =userInput.split(DELIMITER)
+        val splitNames = userInput.split(DELIMITER)
         return try {
             createPlayers(splitNames)
         } catch (e: Exception) {
