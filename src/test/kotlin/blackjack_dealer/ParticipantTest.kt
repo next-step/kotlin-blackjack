@@ -10,6 +10,7 @@ import blackjack_dealer.entity.card.Card
 import blackjack_dealer.entity.card.CardNumber
 import blackjack_dealer.entity.card.CardShape
 import blackjack_dealer.entity.state.GamerCurrentState
+import blackjack_dealer.entity.state.ParticipantResultState
 import blackjack_dealer.entity.toGamerCards
 import blackjack_dealer.ui.OutputView
 import io.kotest.core.spec.style.StringSpec
@@ -79,6 +80,30 @@ class ParticipantTest : StringSpec({
             printGetOneMoreCardForDealer = { OutputView.printGetOneMoreCardForDealer() },
         )
         blackjackGamer.participants.first().getCurrentGamerState() shouldBe GamerCurrentState.STAND
+    }
+
+    "승 무 패가 잘 출력된다" {
+        // 참가자는 13, 14, 15
+        val blackJackCardsThirteen =
+            mutableListOf(Card(CardNumber.A, CardShape.CLOVER), Card(CardNumber.TWO, CardShape.CLOVER))
+        val participantWithThirteen =
+            Participant.newInstance(name = "pita", cards = blackJackCardsThirteen.toGamerCards())
+        val blackJackCardsFourteen =
+            mutableListOf(Card(CardNumber.A, CardShape.CLOVER), Card(CardNumber.THREE, CardShape.CLOVER))
+        val participantWithFourteen =
+            Participant.newInstance(name = "haero", cards = blackJackCardsFourteen.toGamerCards())
+        val blackJackCardsFifteen =
+            mutableListOf(Card(CardNumber.A, CardShape.CLOVER), Card(CardNumber.FOUR, CardShape.CLOVER))
+        val participantWithFifteen = Participant.newInstance(name = "wan", cards = blackJackCardsFifteen.toGamerCards())
+
+        // 딜런느 14
+        val dealerCardsFourteen =
+            mutableListOf(Card(CardNumber.A, CardShape.CLOVER), Card(CardNumber.THREE, CardShape.CLOVER))
+        val dealer = Dealer.newInstance(dealerCardsFourteen.toGamerCards())
+
+        participantWithThirteen.createParticipantResult(dealer).resultState shouldBe ParticipantResultState.LOSE
+        participantWithFourteen.createParticipantResult(dealer).resultState shouldBe ParticipantResultState.DRAW
+        participantWithFifteen.createParticipantResult(dealer).resultState shouldBe ParticipantResultState.WIN
     }
 
     "플레이어 생성시에 베팅 금액을 정할 수 있다" {
