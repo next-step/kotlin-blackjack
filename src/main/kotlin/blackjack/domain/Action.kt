@@ -1,6 +1,6 @@
 package blackjack.domain
 
-enum class PlayerAction {
+enum class Action {
     HIT,
     STAND;
 }

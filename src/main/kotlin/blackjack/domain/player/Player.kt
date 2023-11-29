@@ -1,20 +1,16 @@
 package blackjack.domain.player
 
-import blackjack.domain.card.Card
+import blackjack.domain.Action
 import blackjack.domain.card.Hand
-import blackjack.domain.card.HandScore
 
-data class Player(
+class Player(
     val name: PlayerName,
-    val hand: Hand = Hand(),
-) {
-    val isOverMaxScore: Boolean
-        get() = hand.score.isOverMaxScore
+    val getDesiredAction: (player: Player) -> Action,
+    override val hand: Hand = Hand(),
+) : CardPlayer {
 
-    val score: HandScore
-        get() = hand.score
-
-    fun addCard(card: Card) {
-        hand.add(card)
+    override fun hitOrStand(): Action {
+        if (isBust) return Action.STAND
+        return getDesiredAction(this)
     }
 }

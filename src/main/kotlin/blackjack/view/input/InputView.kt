@@ -1,7 +1,6 @@
 package blackjack.view.input
 
-import blackjack.view.model.PlayerNameModel
-import java.lang.IllegalArgumentException
+import blackjack.view.dto.PlayerNameDto
 
 object InputView {
     private const val PLAYER_NAMES_MESSAGE = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)"
@@ -12,7 +11,7 @@ object InputView {
         return readInput().let(InputParser::intoPlayerNames)
     }
 
-    fun playerAction(player: PlayerNameModel): String {
+    fun playerAction(player: PlayerNameDto): String {
         println(PLAYER_ACTION_MESSAGE.format(player.name))
         return readInput()
     }

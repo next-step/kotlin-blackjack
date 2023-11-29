@@ -1,5 +1,6 @@
 package blackjack.domain.card
 
+import blackjack.mock.deck
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
@@ -12,14 +13,14 @@ class DeckTest : DescribeSpec({
             it("덱 생성") {
                 val result = Deck.from(cards)
 
-                result shouldBe Deck(ArrayDeque(cards))
+                result.cards shouldBe cards
             }
         }
     }
     describe("덱에서 카드 제거") {
         context("덱에서 카드를 한 장 빼면") {
-            val cards = mutableListOf(Card(Suit.HEART, Rank.FOUR), Card(Suit.CLUB, Rank.SEVEN))
-            val deck = Deck(ArrayDeque(cards))
+            val cards = listOf(Card(Suit.HEART, Rank.FOUR), Card(Suit.CLUB, Rank.SEVEN))
+            val deck = deck(cards)
 
             val result = deck.draw()
 
@@ -28,7 +29,7 @@ class DeckTest : DescribeSpec({
             }
 
             it("덱에서는 해당 카드 제거") {
-                deck shouldBe Deck(ArrayDeque(mutableListOf(Card(Suit.HEART, Rank.FOUR))))
+                deck.cards shouldBe listOf(Card(Suit.HEART, Rank.FOUR))
             }
         }
 

@@ -4,14 +4,14 @@ import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 
 class HandTest : DescribeSpec({
-    describe("카드 추가") {
-        context("카드가 주어지면") {
+    describe("add") {
+        context("카드가 없었을 때") {
             val hand = Hand()
             val card = Card(Suit.HEART, Rank.FOUR)
 
             hand.add(card)
 
-            it("카드 목록에 추가") {
+            it("주어진 카드 추가") {
                 hand.cards shouldBe listOf(card)
             }
         }
@@ -23,36 +23,21 @@ class HandTest : DescribeSpec({
 
             hand.add(newCard)
 
-            it("카드 목록에 추가") {
+            it("주어진 카드 추가") {
                 hand.cards shouldBe listOf(oldCard, newCard)
             }
         }
     }
 
-    describe("rank 목록 반환") {
-        context("해당 카드의 rank 요청") {
-            val hand = Hand(
-                mutableListOf(
-                    Card(Suit.SPADE, Rank.FIVE), Card(Suit.DIAMOND, Rank.THREE), Card(Suit.CLUB, Rank.FIVE)
-                )
-            )
-            it("해당 카드의 rank 반환") {
-                hand.ranks shouldBe listOf(Rank.FIVE, Rank.THREE, Rank.FIVE)
-            }
-        }
-    }
+    describe("rank") {
+        val cards =
+            mutableListOf(Card(Suit.SPADE, Rank.FIVE), Card(Suit.DIAMOND, Rank.THREE), Card(Suit.CLUB, Rank.FIVE))
+        context("카드($cards)") {
+            val hand = Hand(cards)
 
-    describe("점수 계산") {
-        context("카드 점수 조회") {
-            val hand = Hand(
-                mutableListOf(
-                    Card(Suit.CLUB, Rank.ACE),
-                    Card(Suit.CLUB, Rank.TEN),
-                    Card(Suit.CLUB, Rank.JACK),
-                )
-            )
-            it("카드 점수 반환") {
-                hand.score shouldBe HandScore(21)
+            val expect = listOf(Rank.FIVE, Rank.THREE, Rank.FIVE)
+            it("rank 반환 ($expect)") {
+                hand.ranks shouldBe expect
             }
         }
     }

@@ -1,12 +1,12 @@
-package blackjack.view.model
+package blackjack.view.dto
 
 import blackjack.domain.player.Player
 
-data class PlayerNameModel(
+data class PlayerNameDto(
     val name: String,
 ) {
     companion object {
-        fun from(player: Player): PlayerNameModel = PlayerNameModel(
+        fun from(player: Player): PlayerNameDto = PlayerNameDto(
             player.name.value
         )
     }

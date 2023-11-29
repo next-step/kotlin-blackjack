@@ -1,36 +1,41 @@
 package blackjack.domain.player
 
+import blackjack.domain.Action
+
 data class Players(
-    val allPlayers: List<Player>,
+    val value: List<Player>,
 ) {
 
     init {
-        require(allPlayers.size == 2) {
-            "플레이어는 두 명이어야 합니다"
+        require(value.size == PLAYER_COUNT) {
+            "플레이어는 ${PLAYER_COUNT}명이어야 합니다"
         }
     }
 
-    var playerInTurn: Player = allPlayers.first()
+    var inTurn: Player = value.first()
         private set
 
     val isPlayerInTurnOverMaxScore: Boolean
-        get() = playerInTurn.isOverMaxScore
+        get() = inTurn.isBust
 
     val isLastTurn: Boolean
-        get() = allPlayers.indexOf(playerInTurn) == allPlayers.lastIndex
+        get() = value.indexOf(inTurn) == value.lastIndex
 
     fun changePlayer() {
-        require(playerInTurn == allPlayers.first()) {
+        require(inTurn == value.first()) {
             "플레이어 모두의 차례가 한 번씩 돌아갔습니다."
         }
-        playerInTurn = allPlayers.last()
+        inTurn = value.last()
     }
 
     companion object {
-        fun from(names: PlayerNames) =
-            names.value.map { name -> createPlayer(name) }.let(::Players)
+        private const val PLAYER_COUNT = 2
+        fun of(
+            names: PlayerNames,
+            actionOf: (player: Player) -> Action,
+        ) = names.value.map { name -> createPlayer(name, actionOf) }.let(::Players)
 
-        private fun createPlayer(name: PlayerName) =
-            Player(name)
+        private fun createPlayer(name: PlayerName, actionOf: (player: Player) -> Action) =
+            Player(name, actionOf)
     }
 }
