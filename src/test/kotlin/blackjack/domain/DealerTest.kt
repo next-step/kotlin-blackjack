@@ -5,7 +5,7 @@ import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 
 class DealerTest : StringSpec({
-    
+
     "딜러는 카드를 플레이어에게 지정된 수만큼 분배할 수 있다." {
         // given
         val players = Players(

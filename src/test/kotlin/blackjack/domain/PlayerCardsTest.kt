@@ -5,7 +5,7 @@ import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 
 class PlayerCardsTest : StringSpec({
-    
+
     "카드를 한 장 추가할 수 있다." {
         // given
         val deck = DeckHelper.createMockDeck()
