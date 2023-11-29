@@ -5,6 +5,12 @@ fun inputNames(): List<String> {
     return tokenizeUserNames(readln())
 }
 
+fun inputBet(playerName: String): Int {
+    println()
+    println("$playerName 의 배팅 금액은?")
+    return readln().toInt()
+}
+
 fun askForDraw(playerName: String): Boolean {
     println()
     println("$playerName, 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
