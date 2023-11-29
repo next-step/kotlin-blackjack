@@ -38,4 +38,8 @@ open class Player(val name: String) {
 
         result = Result.of(winAgainstDealer(finalScore, dealerScore))
     }
+
+    fun isBlackjack(): Boolean {
+        return hand.size() == INITIAL_CARD_NUM && finalScore == 21
+    }
 }

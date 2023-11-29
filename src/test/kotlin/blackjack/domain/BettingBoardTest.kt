@@ -44,10 +44,24 @@ class BettingBoardTest {
             mapOf(testPlayers.first().name to testMoney)
         )
 
-        var prize = bettingBoard.adjustment(testPlayers.first().name, Result.WIN)
+        var prize = bettingBoard.adjustment(testPlayers.first().name, Result.WIN, false)
         assertAll(
             { assertThat(prize).isEqualTo(testMoney * 2) },
             { assertThat(bettingBoard.getRemain()).isEqualTo(-1 * testMoney) }
+        )
+    }
+
+    @Test
+    fun `블랙잭으로 승리한 플레이어의 상금에 추가 배율을 적용하고 보유 금액을 차감한다`() {
+        val testMoney = 3000
+        val bettingBoard = BettingBoard(
+            mapOf(testPlayers.first().name to testMoney)
+        )
+
+        var prize = bettingBoard.adjustment(testPlayers.first().name, Result.WIN, true)
+        assertAll(
+            { assertThat(prize).isEqualTo((testMoney * 2.5).toInt()) },
+            { assertThat(bettingBoard.getRemain()).isEqualTo((-1.5 * testMoney).toInt()) }
         )
     }
 
@@ -58,7 +72,7 @@ class BettingBoardTest {
             mapOf(testPlayers.first().name to testMoney)
         )
 
-        val prize = bettingBoard.adjustment(testPlayers.first().name, Result.DRAW)
+        val prize = bettingBoard.adjustment(testPlayers.first().name, Result.DRAW, false)
         assertAll(
             { assertThat(prize).isEqualTo(testMoney) },
             { assertThat(bettingBoard.getRemain()).isEqualTo(0) }
@@ -72,7 +86,7 @@ class BettingBoardTest {
             mapOf(testPlayers.first().name to testMoney)
         )
 
-        val prize = bettingBoard.adjustment(testPlayers.first().name, Result.LOSE)
+        val prize = bettingBoard.adjustment(testPlayers.first().name, Result.LOSE, false)
         assertAll(
             { assertThat(prize).isEqualTo(0) },
             { assertThat(bettingBoard.getRemain()).isEqualTo(testMoney) }
@@ -86,7 +100,7 @@ class BettingBoardTest {
             mapOf(testPlayers.first().name to 1000)
         )
 
-        assertThatThrownBy { bettingBoard.adjustment(unknownUser, Result.WIN) }
+        assertThatThrownBy { bettingBoard.adjustment(unknownUser, Result.WIN, false) }
             .isInstanceOf(IllegalArgumentException::class.java)
             .hasMessage("존재하지 않는 플레이어입니다.")
     }

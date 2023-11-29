@@ -46,8 +46,8 @@ fun printResults(dealer: Dealer, players: List<Player>, bettingBoard: BettingBoa
 private fun buildPlayerResults(players: List<Player>, bettingBoard: BettingBoard): String {
     val resultString = StringBuilder()
     players.forEach {
-        val profit = bettingBoard.adjustment(it.name, it.result) - bettingBoard.betOf(it.name)
-        resultString.appendLine("${it.name}: $profit")
+        val receive = bettingBoard.adjustment(it.name, it.result, it.isBlackjack())
+        resultString.appendLine("${it.name}: ${receive - bettingBoard.betOf(it.name)}")
     }
 
     return resultString.toString()
