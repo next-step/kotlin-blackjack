@@ -1,8 +1,9 @@
-package blackJack.domain
+package blackJack.domain.card
 
+import blackJack.domain.enums.Rank
 import blackJack.error.ErrorMessage
 
-class Cards(cards: MutableList<Card>) {
+class Cards(cards: List<Card>) {
 
     private val _cards: MutableList<Card> = cards.toMutableList()
 
@@ -15,6 +16,10 @@ class Cards(cards: MutableList<Card>) {
     fun drawCard(): Card {
         require(_cards.isNotEmpty()) { ErrorMessage.EMPTY_CARDS.message }
         return _cards.removeAt(0)
+    }
+
+    fun initialCards(): Cards {
+        return Cards(List(CardDeck.INIT_CARD_COUNT) { drawCard() })
     }
 
     fun calculateTotalScore(): Int {
@@ -36,6 +41,8 @@ class Cards(cards: MutableList<Card>) {
     }
 
     fun addCard(card: Card) = _cards.add(card)
+
+    fun addAllCard(cards: Cards) = cards._cards.forEach { _cards.add(it) }
 
     companion object {
         const val MAX_SCORE = 21

@@ -1,59 +1,73 @@
 package blackJack.controller
 
-import blackJack.domain.CardDeck
-import blackJack.domain.Cards
-import blackJack.domain.Dealer
-import blackJack.domain.Player
-import blackJack.domain.Players
-import blackJack.dto.PlayerDto
-import blackJack.dto.PlayersDto
+import blackJack.domain.card.CardDeck
+import blackJack.domain.card.Cards
+import blackJack.domain.player.Dealer
+import blackJack.domain.player.Participants
+import blackJack.domain.player.Player
+import blackJack.domain.result.Result
+import blackJack.dto.playerDto.DealerDto
+import blackJack.dto.playerDto.ParticipantsDto
+import blackJack.dto.playerDto.PlayerDto
+import blackJack.dto.ResultDto.ResultDto
 import blackJack.view.InputView
 import blackJack.view.OutputView
 
 fun main() {
     val cardDeck = CardDeck.createShuffledDeck()
-    val dealer = Dealer(cardDeck)
 
     OutputView.printEnterName()
     val inputNames = InputView.inputNames()
     val playerList = Player.splitNames(inputNames)
     OutputView.printPlayer(playerList)
 
-    val players: Players = Players.createPlayers(playerList)
-    val initialCards = dealer.initialCards(playerList.size)
-    players.receiveInitialCards(initialCards)
+    val participants = Participants.createParticipants(playerList)
+    participants.receiveInitialCards { cardDeck.initialCards() }
 
-    val playersDto = PlayersDto(players)
-    OutputView.printPlayerCards(playersDto)
+    val participantsDto = ParticipantsDto(participants)
+    OutputView.printPlayerCards(participantsDto)
 
-    val finishGamePlayers = players.players
-        .map {
-            val player = playGame(it, dealer.cardDeck)
-            PlayerDto(player, player.getTotalScore())
+    playGame(participants, cardDeck)
+
+    val finishGameParticipants = playGame(participants, cardDeck)
+    OutputView.printResult(finishGameParticipants)
+
+    val calculateResult = Result.calculateResult(participants)
+    val resultDto = ResultDto(calculateResult)
+    OutputView.printWinner(resultDto)
+}
+
+private fun playGame(participants: Participants, cardDeck: Cards): ParticipantsDto {
+    val playGamePlayers = playGamePlayers(participants, cardDeck)
+    val playGameDealer = playGameDealer(participants.dealer, cardDeck)
+    return ParticipantsDto(playGamePlayers, playGameDealer)
+}
+
+private fun playGamePlayers(participants: Participants, cardDeck: Cards): List<PlayerDto> {
+    val players = mutableListOf<PlayerDto>()
+
+    participants.players.players.forEach {
+        while (it.isContinued()) {
+            val isContinue = isContinuePlayer(it)
+            it.continueGamePlayer(isContinue, cardDeck)
+            OutputView.printPlayerCard(PlayerDto(it))
         }
-    val playersResult = PlayersDto(finishGamePlayers)
-    OutputView.printResult(playersResult)
-}
-
-private fun playGame(player: Player, cardDeck: Cards): Player {
-    var answer = promptForAction(player)
-
-    if (answer == "n") {
-        OutputView.printPlayerCard(PlayerDto(player))
-        return player
+        players.add(PlayerDto(it, it.getTotalScore()))
     }
 
-    while (player.isContinued(answer)) {
-        player.addCard(cardDeck)
-        OutputView.printPlayerCard(PlayerDto(player))
-        answer = promptForAction(player)
-    }
-
-    return player
+    return players
 }
 
-private fun promptForAction(player: Player): String {
+private fun isContinuePlayer(player: Player): Boolean {
     val playerDto = PlayerDto(player)
     OutputView.printQuestionYesOrNo(playerDto)
-    return InputView.answerYesOrNo()
+    return InputView.answerYesOrNo() == "y"
+}
+
+private fun playGameDealer(dealer: Dealer, cardDeck: Cards): DealerDto {
+    if (dealer.isContinued()) {
+        dealer.addCard(cardDeck.drawCard())
+        OutputView.printPlayerCard(DealerDto(dealer))
+    }
+    return DealerDto(dealer, dealer.getTotalScore())
 }

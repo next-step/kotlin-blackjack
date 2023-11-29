@@ -1,19 +1,9 @@
-package blackJack.domain
+package blackJack.domain.player
 
 import org.assertj.core.api.Assertions
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 class PlayersTest {
-
-    private lateinit var cardDeck: Cards
-    private lateinit var dealer: Dealer
-
-    @BeforeEach
-    fun setUp() {
-        cardDeck = CardDeck.createShuffledDeck()
-        dealer = Dealer(cardDeck)
-    }
 
     @Test
     fun `Player name List 입력하면 자동으로 Players 와 초기 카드가 생성된다`() {
