@@ -2,8 +2,7 @@ package blackjack.domain
 
 class Dealer(
     override val name: String,
-    override val cards: Cards = Cards(),
-) : Participant() {
+) : Participant(name) {
     override fun receiveCard(card: Card) {
         cards.add(card)
     }

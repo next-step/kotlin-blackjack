@@ -6,8 +6,7 @@ import blackjack.domain.state.State
 
 class Player(
     override val name: String,
-    override val cards: Cards = Cards(),
-) : Participant() {
+) : Participant(name) {
     var state: State = Started(cards)
         private set
 

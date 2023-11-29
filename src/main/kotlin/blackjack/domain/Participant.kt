@@ -1,8 +1,9 @@
 package blackjack.domain
 
-abstract class Participant {
-    abstract val name: String
-    abstract val cards: Cards
+abstract class Participant(
+    open val name: String,
+    val cards: Cards = Cards()
+) {
     abstract fun receiveCard(card: Card)
 
     open fun receiveInitialCards(cards: List<Card>) {
