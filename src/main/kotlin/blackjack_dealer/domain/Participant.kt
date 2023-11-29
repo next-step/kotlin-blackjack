@@ -42,6 +42,7 @@ data class Participant(
         } else {
             ParticipantResultState.LOSE
         }
+        if (participantScore == BLACK_JACK) return ParticipantResultState.BLACKJACK
         if (dealerScore > BLACK_JACK) return ParticipantResultState.WIN
 
         return when {
@@ -55,21 +56,25 @@ data class Participant(
         return betAmount
     }
 
-    fun getResultBetAmount(): Int {
-        return when (currentState) {
-            GamerCurrentState.BLACKJACK -> {
-                (betAmount * 1.5).toInt()
-            }
-            GamerCurrentState.BUST -> {
-                -betAmount
-            }
-
-            GamerCurrentState.HIT -> {
+    fun getResultBetAmount(dealer: Dealer): Int {
+        val participantState = createParticipantResultState(dealer)
+        return when (participantState) {
+            ParticipantResultState.WIN -> {
                 betAmount
             }
-
-            GamerCurrentState.INITIAL -> TODO()
-            GamerCurrentState.STAND -> TODO()
+            ParticipantResultState.LOSE -> {
+                -betAmount
+            }
+            ParticipantResultState.DRAW -> {
+                0
+            }
+            ParticipantResultState.BLACKJACK -> {
+                if (dealer.getCurrentGamerState() == GamerCurrentState.BLACKJACK) {
+                    0
+                } else {
+                    (betAmount * 1.5).toInt()
+                }
+            }
         }
     }
 
