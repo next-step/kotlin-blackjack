@@ -1,6 +1,6 @@
 package card
 
-enum class CardNumber(val point: Int, val cardName: String) {
+enum class CardRank(val point: Int, val symbol: String) {
     ACE(1, "A"),
     TWO(2, "2"),
     TREE(3, "3"),

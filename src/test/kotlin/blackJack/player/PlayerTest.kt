@@ -1,6 +1,6 @@
 package blackJack.player
 
-import card.CardNumber
+import card.CardRank
 import card.CardPack
 import card.PlayingCard
 import card.Suit
@@ -57,8 +57,8 @@ class PlayerTest {
     fun `플레이어의 보유 가드 합이 20이하 이고, 플레이어 상태 업데이트를 요청할 때, 플에이어 상테는 PLAYING로 업데이트 된다`() {
         // given : 플레이어 보유 카드 합 20 이하(8)
         val player = Player("OYJ")
-        player.saveCard(PlayingCard(Suit.DIAMOND, CardNumber.TREE))
-        player.saveCard(PlayingCard(Suit.DIAMOND, CardNumber.FIVE))
+        player.saveCard(PlayingCard(Suit.DIAMOND, CardRank.TREE))
+        player.saveCard(PlayingCard(Suit.DIAMOND, CardRank.FIVE))
 
         // when : 플레이어 상태 업데이트
         player.updateStatus()
@@ -72,9 +72,9 @@ class PlayerTest {
     fun `플레이어의 보유 가드 합이 21이상 이고, 플레이어 상태 업데이트를 요청할 때, 플에이어 상테는 STAND로 업데이트 된다`() {
         // given : 플레이어 보유 카드 합 21 이상(28)
         val player = Player("OYJ")
-        player.saveCard(PlayingCard(Suit.DIAMOND, CardNumber.EIGHT))
-        player.saveCard(PlayingCard(Suit.DIAMOND, CardNumber.KING))
-        player.saveCard(PlayingCard(Suit.DIAMOND, CardNumber.JACK))
+        player.saveCard(PlayingCard(Suit.DIAMOND, CardRank.EIGHT))
+        player.saveCard(PlayingCard(Suit.DIAMOND, CardRank.KING))
+        player.saveCard(PlayingCard(Suit.DIAMOND, CardRank.JACK))
 
         // when : 플레이어 상태 업데이트
         player.updateStatus()

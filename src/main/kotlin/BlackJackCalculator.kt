@@ -1,4 +1,4 @@
-import card.CardNumber
+import card.CardRank
 import card.PlayingCard
 
 object BlackJackCalculator {
@@ -9,7 +9,7 @@ object BlackJackCalculator {
 
     fun calculate(cardList: List<PlayingCard>): Int {
         var result = cardList.sumOf { it.getPoint() }
-        cardList.filter { it.getCardNumber() == CardNumber.ACE }
+        cardList.filter { it.getCardNumber() == CardRank.ACE }
             .forEach { _ -> result += addCalculateAce(result) }
 
         return result

@@ -1,19 +1,19 @@
 package card
 
-class PlayingCard(private val suit: Suit, private val cardNumber: CardNumber) {
+class PlayingCard(private val suit: Suit, private val cardRank: CardRank) {
     fun getPoint(): Int {
-        return cardNumber.point
+        return cardRank.point
     }
 
     fun getSuitName(): String {
         return suit.koName
     }
 
-    fun getCardNumber(): CardNumber {
-        return cardNumber
+    fun getCardNumber(): CardRank {
+        return cardRank
     }
 
     override fun toString(): String {
-        return "${cardNumber.cardName}${suit.koName}"
+        return "${cardRank.symbol}${suit.koName}"
     }
 }

@@ -36,9 +36,9 @@ class CardPack(val cardList: List<PlayingCard>) {
 
         private fun createCardWithSuit(suit: Suit): List<PlayingCard> {
             val playingCardList = mutableListOf<PlayingCard>()
-            val cardNumberList = CardNumber.getCardNumberList()
+            val cardRankList = CardRank.getCardNumberList()
 
-            for (cardNumber in cardNumberList) {
+            for (cardNumber in cardRankList) {
                 playingCardList.add(PlayingCard(suit, cardNumber))
             }
             return playingCardList
