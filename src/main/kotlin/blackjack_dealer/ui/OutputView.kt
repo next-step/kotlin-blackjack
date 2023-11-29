@@ -86,5 +86,5 @@ object OutputView {
     private const val DIVIDE_CARDS_TO_GAMERS = "%s와 %s에게 2장의 카드를 나누었습니다."
     private const val ASK_GET_MORE_ONE_CARD = "%s은(는) 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)"
     private const val GET_ONE_MORE_CARD_FOR_DEALER = "딜러는 16이하라 한장의 카드를 더 받았습니다."
-    private const val FINAL_RESULT_BOARD = "## 최종 승패"
+    private const val FINAL_RESULT_BOARD = "## 최종 수익"
 }

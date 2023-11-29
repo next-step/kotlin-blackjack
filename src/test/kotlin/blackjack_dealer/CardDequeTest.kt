@@ -1,6 +1,7 @@
 package blackjack_dealer
 
 import blackjack_dealer.entity.CardDeque
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.collections.shouldNotBeIn
 import io.kotest.matchers.shouldBe
@@ -25,5 +26,15 @@ class CardDequeTest : StringSpec({
         val cards = cardDeque.generateDoubleCard()
 
         cards shouldNotBeIn cardDeque
+    }
+
+    "Card를 모두 나누어주면 에러 발생" {
+        val cardDeque = CardDeque().create()
+        repeat(26) {
+            cardDeque.generateDoubleCard()
+        }
+        shouldThrow<IllegalStateException> {
+            cardDeque.generateSingleCard()
+        }
     }
 })

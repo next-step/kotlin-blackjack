@@ -32,7 +32,10 @@ fun main() {
     OutputView.printResult(dealer, participants)
 
     OutputView.printFinalResultBoard()
-    val totalResult = BlackJackResultBoard.getBlackJackResult(dealer, participants)
-    OutputView.printFinalDealerResult(totalResult.dealerResult)
-    OutputView.printFinalParticipantsResult(totalResult.participantsResult)
+    // val totalResult = BlackJackResultBoard.getBlackJackResult(dealer, participants)
+    // OutputView.printFinalDealerResult(totalResult.dealerResult)
+    // OutputView.printFinalParticipantsResult(totalResult.participantsResult)
+    participants.forEach {
+        println("${it.getGamerName()}: ${it.getResultBetAmount(dealer)}")
+    }
 }

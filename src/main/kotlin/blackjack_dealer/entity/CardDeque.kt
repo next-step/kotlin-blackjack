@@ -22,7 +22,9 @@ class CardDeque(
     }
 
     fun generateSingleCard(): Card {
-        return cardDeque.removeLast()
+        return kotlin.runCatching {
+            cardDeque.removeLast()
+        }.getOrNull() ?: error("카드를 모두 나누어주었습니다.")
     }
 
     fun generateDoubleCard(): GamerCards {
