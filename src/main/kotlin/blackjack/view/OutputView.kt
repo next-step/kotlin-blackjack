@@ -1,13 +1,14 @@
 package blackjack.view
 
-import blackjack.domain.Card
+import blackjack.domain.BlackJackGame
+import blackjack.domain.CardList
 import blackjack.domain.Player
 
 object OutputView {
     private const val DELIMITER = ", "
 
-    fun printCards(name: String, cards: List<Card>) {
-        println("${name}카드: ${cards.joinToString(DELIMITER)}")
+    fun printCards(name: String, cards: CardList) {
+        println("${name}카드: ${cards.cards.joinToString(DELIMITER)}")
     }
 
     fun printDrawTwoCards(players: List<Player>) {
@@ -17,10 +18,10 @@ object OutputView {
 
     fun printPlayersScore(players: List<Player>) {
         println()
-        players.forEach { printPlayerScore(it) }
+        players.forEach { printPlayerScore(it, it.cards) }
     }
 
-    fun printPlayerScore(player: Player) {
-        println("${player.name}카드 : ${player.cards.joinToString(DELIMITER)} - 결과: ${player.score()}")
+    private fun printPlayerScore(player: Player, cards: CardList) {
+        println("${player.name}카드 : ${cards.cards.joinToString(DELIMITER)} - 결과: ${BlackJackGame.score(cards)}")
     }
 }
