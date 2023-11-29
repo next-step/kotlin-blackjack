@@ -26,11 +26,11 @@ class DealerTest : StringSpec({
         val dealer = Dealer(Deck.fullDeck())
         dealer.initHand()
 
-        dealer.asPlayer.toTargetValue(20)
+        dealer.asPlayer.toTargetValueOver19(20)
 
         val player = Player("pp", dealer.createInitialHand())
 
-        player.toTargetValue(20)
+        player.toTargetValueOver19(20)
 
         dealer.asPlayer.hand.valueSum() shouldBe 20
         player.hand.valueSum() shouldBe 20
@@ -42,20 +42,31 @@ class DealerTest : StringSpec({
         val dealer = Dealer(Deck.fullDeck())
         dealer.initHand()
 
-        dealer.asPlayer.toTargetValue(21)
+        dealer.asPlayer.toTargetValueOver19(21)
 
         val player = Player("pp", dealer.createInitialHand())
 
-        player.toTargetValue(20)
+        player.toTargetValueOver19(20)
 
         dealer.asPlayer.hand.valueSum() shouldBe 21
         player.hand.valueSum() shouldBe 20
 
         dealer.wins(player) shouldBe true
     }
+
+    "Dealer process turn 테스트" {
+        val dealer = Dealer(Deck.fullDeck())
+        dealer.initHand()
+
+        dealer.asPlayer.toTargetValueOver19(20)
+
+        dealer.processTurn {
+            it shouldBe false
+        }
+    }
 })
 
-private fun Player.toTargetValue(targetValue: Int) {
+private fun Player.toTargetValueOver19(targetValue: Int) {
     var remain = targetValue - hand.valueSum()
 
     while (remain != 0) {
