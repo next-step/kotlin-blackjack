@@ -4,20 +4,18 @@ import blackjack.ScoreCalculator
 import blackjack.card.BlackJackCard
 
 class Player(
-    val name: String,
-    private val scoreCalculator: ScoreCalculator
-) {
-    var cards: List<BlackJackCard> = emptyList()
-
-    fun drawCard(cards: List<BlackJackCard>) {
-        this.cards += cards
+    name: String,
+    scoreCalculator: ScoreCalculator
+) : AbstractPlayer(scoreCalculator, name) {
+    override fun isDealer(): Boolean {
+        return false
     }
 
-    fun shouldDraw(): Boolean {
-        return resultScore() <= 21
+    override fun shouldDraw(): Boolean {
+        return resultScore() <= BUST
     }
 
-    fun resultScore(): Int {
-        return scoreCalculator.calculateGameScore(cards)
+    companion object {
+        private const val BUST: Int = 21
     }
 }

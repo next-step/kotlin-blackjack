@@ -4,21 +4,14 @@ import blackjack.ScoreCalculator
 import blackjack.card.BlackJackCard
 
 class Dealer(
-    private val scoreCalculator: ScoreCalculator
-) {
-    val name: String = "딜러"
-    val cards: MutableList<BlackJackCard> = mutableListOf()
-
-    fun drawCard(cards: List<BlackJackCard>) {
-        this.cards.addAll(cards)
+    scoreCalculator: ScoreCalculator
+) : AbstractPlayer(scoreCalculator, "딜러") {
+    override fun isDealer(): Boolean {
+        return true
     }
 
-    fun shouldDraw(): Boolean {
+    override fun shouldDraw(): Boolean {
         return resultScore() <= DEALER_SHOULD_DRAW_SCORE
-    }
-
-    fun resultScore(): Int {
-        return scoreCalculator.calculateGameScore(cards)
     }
 
     companion object {
