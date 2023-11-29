@@ -13,7 +13,7 @@ class PlayerTest : BehaviorSpec({
 
         `when`("플레이어가 카드를 한번 발급하면") {
             val dealer = Dealer(getDeck())
-            val player = Player(nickname)
+            val player = Player(nickname, Amount(1000))
 
             then("총 점수는 11점이다.") {
                 player.receiveCard(dealer.dealCard())
@@ -23,7 +23,7 @@ class PlayerTest : BehaviorSpec({
 
         `when`("플레이어가 카드를 두번 발급하면") {
             val dealer = Dealer(getDeck())
-            val player = Player(nickname)
+            val player = Player(nickname, Amount(1000))
 
             then("총 점수는 21점이다.") {
                 player.receiveCard(dealer.dealCard())
@@ -34,7 +34,7 @@ class PlayerTest : BehaviorSpec({
 
         `when`("플레이어가 카드를 세번 발급하면") {
             val dealer = Dealer(getDeck())
-            val player = Player(nickname)
+            val player = Player(nickname, Amount(1000))
 
             then("총 점수는 12점이다.") {
                 player.receiveCard(dealer.dealCard())
@@ -52,7 +52,7 @@ class PlayerTest : BehaviorSpec({
 
         `when`("플레이어가 카드를 한번 발급하면") {
             val dealer = Dealer(getDeck())
-            val player = Player(nickname)
+            val player = Player(nickname, Amount(1000))
 
             then("총 점수는 9점이다.") {
                 player.receiveCard(dealer.dealCard())
@@ -62,7 +62,7 @@ class PlayerTest : BehaviorSpec({
 
         `when`("플레이어가 카드를 두번 발급하면") {
             val dealer = Dealer(getDeck())
-            val player = Player(nickname)
+            val player = Player(nickname, Amount(1000))
 
             then("총 점수는 19점이다.") {
                 player.receiveCard(dealer.dealCard())

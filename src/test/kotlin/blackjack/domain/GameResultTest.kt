@@ -9,7 +9,7 @@ class GameResultTest : BehaviorSpec({
     val deck = TestDeckGenerator.generate(Symbol.SPADE withRank Rank.ACE)
 
     given("플레이어 13점 / 딜러 21점이 주어졌을 때") {
-        val player = Player(Nickname("플레이어")).apply {
+        val player = Player(Nickname("플레이어"), Amount(1000)).apply {
             receiveCard(Card(Symbol.SPADE, Rank.KING))
             receiveCard(Card(Symbol.SPADE, Rank.THREE))
         }
@@ -22,17 +22,19 @@ class GameResultTest : BehaviorSpec({
             val gameResult = GameResult(listOf(player), dealer)
 
             then("플레이어는 패배한다.") {
-                gameResult.playerResults[player] shouldBe GameOutcome.LOSE
+                gameResult.playerResults[player]?.outcome shouldBe GameOutcome.LOSE
+                gameResult.playerResults[player]?.amount shouldBe Amount(1000)
             }
 
-            then("딜러는 1승 0패를 기록한다.") {
-                gameResult.dealerStats shouldBe DealerStats(1, 0)
+            then("딜러는 승리한다.") {
+                gameResult.dealerResults[0].outcome shouldBe GameOutcome.WIN
+                gameResult.dealerResults[0].amount shouldBe Amount(1000)
             }
         }
     }
 
-    given("플레이어 13점 / 딜러 22점이 주어졌을 때") {
-        val player = Player(Nickname("플레이어")).apply {
+    given("플레이어가 13점 / 딜러 22점이 주어졌을 때") {
+        val player = Player(Nickname("플레이어"), Amount(1000)).apply {
             receiveCard(Card(Symbol.SPADE, Rank.KING))
             receiveCard(Card(Symbol.SPADE, Rank.THREE))
         }
@@ -46,17 +48,19 @@ class GameResultTest : BehaviorSpec({
             val gameResult = GameResult(listOf(player), dealer)
 
             then("플레이어는 승리한다.") {
-                gameResult.playerResults[player] shouldBe GameOutcome.WIN
+                gameResult.playerResults[player]?.outcome shouldBe GameOutcome.WIN
+                gameResult.playerResults[player]?.amount shouldBe Amount(1000)
             }
 
-            then("딜러는 0승 1패를 기록한다.") {
-                gameResult.dealerStats shouldBe DealerStats(0, 1)
+            then("딜러는 패배한다.") {
+                gameResult.dealerResults[0].outcome shouldBe GameOutcome.LOSE
+                gameResult.dealerResults[0].amount shouldBe Amount(1000)
             }
         }
     }
 
     given("플레이어 22점 / 딜러 22점이 주어졌을 때") {
-        val player = Player(Nickname("플레이어")).apply {
+        val player = Player(Nickname("플레이어"), Amount(1000)).apply {
             receiveCard(Card(Symbol.SPADE, Rank.TWO))
             receiveCard(Card(Symbol.SPADE, Rank.TEN))
             receiveCard(Card(Symbol.SPADE, Rank.TEN))
@@ -70,12 +74,14 @@ class GameResultTest : BehaviorSpec({
         `when`("게임 결과를 계산하면") {
             val gameResult = GameResult(listOf(player), dealer)
 
-            then("플레이어는 패배한다.") {
-                gameResult.playerResults[player] shouldBe GameOutcome.WIN
+            then("플레이어는 승리한다..") {
+                gameResult.playerResults[player]?.outcome shouldBe GameOutcome.WIN
+                gameResult.playerResults[player]?.amount shouldBe Amount(1000)
             }
 
-            then("딜러는 0승 1패를 기록한다.") {
-                gameResult.dealerStats shouldBe DealerStats(0, 1)
+            then("딜러는 패배한다.") {
+                gameResult.dealerResults[0].outcome shouldBe GameOutcome.LOSE
+                gameResult.dealerResults[0].amount shouldBe Amount(1000)
             }
         }
     }

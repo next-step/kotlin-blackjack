@@ -10,7 +10,8 @@ import blackjack.view.InputView
 import blackjack.view.OutputView
 
 fun main(args: Array<String>) {
-    val players = InputView.readNicknames().map { Player(it) }
+    val nickname = InputView.readNicknames().let { InputView.readBetAmount(it) }
+    val players = nickname.map { Player(it) }
     val dealer = Dealer(deck(RandomShuffleStrategy) { Card.ALL_CARDS.map { +it } })
 
     val game = Game(players, dealer)
