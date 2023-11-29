@@ -1,6 +1,10 @@
 package blackjack.domain.card
 
 data class Card(val kind: CardKind, val number: CardNumber) {
+    fun isAce(): Boolean {
+        return number == CardNumber.ACE
+    }
+
     companion object {
         private val CARDS: List<Card> = CardKind.values().flatMap { kind ->
             CardNumber.values().map { number ->
