@@ -100,6 +100,38 @@ class BetAmountTest : StringSpec({
     }
 
     "딜러가 21을 초과한 경우, BUST 아닌 선수는 베팅 금액을 받는다( 되돌려 받는다? or 이겨서 더받는다?) 모르겠음" {
+        val bustCards = GamerCards.newInstance(
+            listOf(
+                Card(cardNumber = CardNumber.J, cardShape = CardShape.CLOVER),
+                Card(cardNumber = CardNumber.K, cardShape = CardShape.CLOVER),
+                Card(cardNumber = CardNumber.Q, cardShape = CardShape.DIAMOND),
+            )
+        )
+        val bustParticipant = Participant.newInstance("석주", bustCards, 20000)
+        val hitCards = GamerCards.newInstance(
+            listOf(
+                Card(cardNumber = CardNumber.J, cardShape = CardShape.HEART),
+                Card(cardNumber = CardNumber.TWO, cardShape = CardShape.DIAMOND),
+            )
+        )
+        val hitParticipant = Participant.newInstance("석주", hitCards, 20000)
+        val bustDealerCards = GamerCards.newInstance(
+            listOf(
+                Card(cardNumber = CardNumber.Q, cardShape = CardShape.CLOVER),
+                Card(cardNumber = CardNumber.SEVEN, cardShape = CardShape.DIAMOND),
+                Card(cardNumber = CardNumber.EIGHT, cardShape = CardShape.DIAMOND),
+            )
+        )
+        val dealer = Dealer.newInstance(bustDealerCards)
+        val bustExpected = -20000
+        val hitExpected = 20000
 
+        dealer.getCurrentGamerState() shouldBe GamerCurrentState.BUST
+
+        bustParticipant.getCurrentGamerState() shouldBe GamerCurrentState.BUST
+        bustParticipant.getResultBetAmount(dealer) shouldBe bustExpected
+
+        hitParticipant.getCurrentGamerState() shouldBe GamerCurrentState.HIT
+        hitParticipant.getResultBetAmount(dealer) shouldBe hitExpected
     }
 })
