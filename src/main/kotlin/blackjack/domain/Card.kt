@@ -1,8 +1,8 @@
 package blackjack.domain
 
 class Card private constructor(
-    private val number: CardNumber,
-    private val pattern: CardPattern
+    val number: CardNumber,
+    val pattern: CardPattern
 ) {
 
     companion object {
