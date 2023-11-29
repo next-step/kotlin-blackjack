@@ -50,7 +50,7 @@ fun main() {
         .forEach { it.setResult(dealer.getFinalScore()) }
 
     // 승자 출력
-    printResults(dealer, players.filter { it !is Dealer })
+    printResults(dealer, players.filter { it !is Dealer }, bettingBoard)
 }
 
 private fun drawForDealer(dealer: Dealer) {
