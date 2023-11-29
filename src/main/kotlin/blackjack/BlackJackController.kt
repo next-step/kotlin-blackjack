@@ -13,4 +13,13 @@ fun main() {
         it.addCard(deck.draw(2))
     }
     OutputView.printDrawTwoCards(players)
+
+    players.forEach {
+        while (it.canDraw() && InputView.inputHitOrStand(it.name)) {
+            it.addCard(deck.draw())
+            OutputView.printCards(it.name, it.cards)
+        }
+    }
+
+    OutputView.printPlayersScore(players)
 }

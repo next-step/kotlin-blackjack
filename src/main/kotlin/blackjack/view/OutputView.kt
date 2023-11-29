@@ -11,8 +11,13 @@ object OutputView {
     }
 
     fun printDrawTwoCards(players: List<Player>) {
-        println("${players.joinToString(DELIMITER) { it.name }}에게 2장의 카드를 나누었습니다.")
+        println("\n${players.joinToString(DELIMITER) { it.name }}에게 2장의 카드를 나누었습니다.")
         players.forEach { printCards(it.name, it.cards) }
+    }
+
+    fun printPlayersScore(players: List<Player>) {
+        println()
+        players.forEach { printPlayerScore(it) }
     }
 
     fun printPlayerScore(player: Player) {
