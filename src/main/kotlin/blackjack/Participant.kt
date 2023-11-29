@@ -20,19 +20,21 @@ data class Participant (
     }
 
     fun addCard() {
-        val card = Card.getCard()
-
-        val cardNumber =  if (card.cardValue.value == StringValue.A) {
-            StringValue.addAce(score)
-        } else card.cardValue.getNumber()
-
-        score += cardNumber
         if (score <= 21) {
-            card.received()
+            val card = Card.getCard()
             cards.add(card)
+            calculateScore(card)
         } else {
-            score -= cardNumber
             receive = false
         }
     }
+
+    private fun calculateScore(card: Card) {
+        score += if (card.cardValue.value == StringValue.A) {
+            card.cardValue.getAceNumber(score)
+        } else {
+            card.cardValue.getNumber()
+        }
+    }
 }
+

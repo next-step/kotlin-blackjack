@@ -1,6 +1,6 @@
 package blackjack
 
-import blackjack.CardValue.Companion.CARD_Card_VALUES
+import blackjack.CardValue.Companion.CARD_VALUES
 
 data class Card (
     val pattern: Pattern,
@@ -10,16 +10,12 @@ data class Card (
         return "${cardValue.value}${pattern.description}"
     }
 
-    fun received() {
-        CARDS.remove(this)
-    }
-
     companion object {
         fun getCard(): Card {
-            return CARDS.first()
+            return CARDS.removeFirst()
         }
 
-        private val CARDS = CARD_Card_VALUES.flatMap { number -> Pattern.values().map { pattern -> Card(pattern, number) } }.shuffled().toMutableList()
+        val CARDS = CARD_VALUES.flatMap { number -> Pattern.values().map { pattern -> Card(pattern, number) } }.shuffled().toMutableList()
     }
 }
 

@@ -10,14 +10,14 @@ class ResultView {
 
     fun printCards(participants: List<Participant>) {
         participants.forEach {
-            println(CARDS.message.format(it.name, it.cards.joinToString(", ")))
+            println(PARTICIPANT_CARDS.message.format(it.name, it.cards.joinToString(", ")))
         }
     }
 
     fun printResult(participants: List<Participant>) {
         println()
         participants.forEach {
-            println(RESULT.message.format(it.name, it.cards.joinToString(", "), it.score))
+            println(PARTICIPANT_RESULT.message.format(it.name, it.cards.joinToString(", "), it.score))
         }
     }
 }
