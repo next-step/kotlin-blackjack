@@ -1,15 +1,15 @@
 package blackjack.domain
 
 class Players(
-    private val player: List<Player>
+    val values: List<Player>
 ) {
 
     init {
-        validate()
+        validateCount()
     }
 
-    private fun validate() {
-        require(player.size >= MIN_PLAYER_COUNT) {
+    private fun validateCount() {
+        require(values.size >= MIN_PLAYER_COUNT) {
             "플레이어는 최소 ${MIN_PLAYER_COUNT}명 이상이어야 합니다."
         }
     }
