@@ -18,43 +18,47 @@ class GameParticipantTest : BehaviorSpec({
             Card(Symbol.SPADE, Number.TEN),
             Card(Symbol.SPADE, Number.TWO),
         )
-        val gamePlayer = GameParticipant.Player(
+        val gamePlayer = GameParticipantPlayer(
             "test",
-            cards
+            cards,
+            0
         )
         val dealer1 = GameCardDealer(cardShuffleStrategy)
         Then("카드가 한 장 추가된다.") {
             val updatedPlayer = gamePlayer.receiveCard(dealer1.deal())
-            updatedPlayer shouldBe GameParticipant.Player(
+            updatedPlayer shouldBe GameParticipantPlayer(
                 "test",
                 listOf(
                     Card(Symbol.SPADE, Number.TEN),
                     Card(Symbol.SPADE, Number.TWO),
                     Card(Symbol.SPADE, Number.THREE)
-                )
+                ),
+                0
             )
         }
 
         When("카드의 합이 21을 초과한다면") {
-            val bustPlayer = GameParticipant.Player(
+            val bustPlayer = GameParticipantPlayer(
                 "test",
                 listOf(
                     Card(Symbol.SPADE, Number.TWO),
                     Card(Symbol.SPADE, Number.NINE),
                     Card(Symbol.SPADE, Number.KING),
-                )
+                ),
+                0
             )
             val bustDealer = GameCardDealer(cardShuffleStrategy)
             Then("버스트가 된다") {
                 val updatedPlayer = bustPlayer.receiveCard(bustDealer.deal())
-                updatedPlayer shouldBe GameParticipant.Player(
+                updatedPlayer shouldBe GameParticipantPlayer(
                     name = "test",
                     cards = listOf(
                         Card(Symbol.SPADE, Number.TWO),
                         Card(Symbol.SPADE, Number.NINE),
                         Card(Symbol.SPADE, Number.KING),
                         Card(Symbol.SPADE, Number.THREE)
-                    )
+                    ),
+                    betAmount = 0
                 )
             }
         }
@@ -62,21 +66,23 @@ class GameParticipantTest : BehaviorSpec({
 
     Given("참가자에는 플레이어와 딜러가 있으며") {
         When("플레이어는 21점과 동일하거나 초과하면") {
-            val same = GameParticipant.Player(
+            val same = GameParticipantPlayer(
                 "test",
                 listOf(
                     Card(Symbol.HEART, Number.NINE),
                     Card(Symbol.HEART, Number.KING),
                     Card(Symbol.HEART, Number.TWO),
-                )
+                ),
+                0
             )
-            val exceeded = GameParticipant.Player(
+            val exceeded = GameParticipantPlayer(
                 "test",
                 listOf(
                     Card(Symbol.HEART, Number.NINE),
                     Card(Symbol.HEART, Number.KING),
                     Card(Symbol.HEART, Number.JACK),
-                )
+                ),
+                0
             )
             Then("카드를 추가 받을 수 없다.") {
                 same.isNotAllowedDealing() shouldBe true
@@ -85,7 +91,7 @@ class GameParticipantTest : BehaviorSpec({
         }
 
         When("딜러는 16점을 초과하면") {
-            val exceeded = GameParticipant.Dealer(
+            val exceeded = GameParticipantDealer(
                 "test",
                 listOf(
                     Card(Symbol.HEART, Number.NINE),

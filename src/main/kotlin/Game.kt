@@ -4,11 +4,12 @@ import blackjack.DefaultGameBlackjack
 import blackjack.GameBlackjack
 import blackjack.GameCardDealer
 import blackjack.GameParticipants
-import blackjack.Message
-import blackjack.InputOutputProxyBlackjack
+import blackjack.GamePlayer
 import blackjack.InputOutputStrategy
+import blackjack.Message
 import view.Input
 import view.Output
+import view.Output.PrintResultKind.PROFIT
 
 fun main() {
 
@@ -23,14 +24,16 @@ fun main() {
     }
     val gameCardDealer = GameCardDealer(cardShuffleStrategy)
 
-    Output.printMessage(Message.INPUT_PLAYER_NAMES)
-    val playerNames = Input.getLine()
-    val gameBlackjack: GameBlackjack = InputOutputProxyBlackjack(
-        DefaultGameBlackjack(gameCardDealer),
-        InputOutputStrategy()
-    )
+    Output.printAny(Message.INPUT_PLAYER_NAMES)
+    val players = Input.getLine()
+        .split(GameBlackjack.PLAYER_NAME_DELIMITER)
+        .map {
+            Output.printAny(Message.INPUT_PLAYER_AMOUNT_BET.format(it))
+            GamePlayer(it, Input.getLine())
+        }
+    val gameBlackjack: GameBlackjack = DefaultGameBlackjack(gameCardDealer, InputOutputStrategy())
 
-    val playing = gameBlackjack.initialDealing(playerNames)
+    val playing = gameBlackjack.initialDealing(players)
     Output.printParticipantsInitialDealing(playing)
 
     val updatedPlayers = playing.players.map {
@@ -43,5 +46,5 @@ fun main() {
 
     val gameParticipantResults = gameParticipants.calcMatchResult()
 
-    Output.printGameParticipantResults(gameParticipantResults)
+    Output.printGameParticipantResults(PROFIT, gameParticipantResults)
 }

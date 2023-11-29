@@ -1,18 +1,12 @@
 package blackjack
 
-typealias CompareScore = (GameParticipant, GameParticipant) -> Boolean
-
 enum class MatchResult(
     val message: String,
-    private val compare: CompareScore
+    val rate: Double
 ) {
-    WIN("승", { player, other -> player > other }),
-    LOSS("패", { player, other -> player < other })
+    BLACKJACK("승", 1.5),
+    WIN("승", 1.0),
+    LOSS("패", -1.0),
+    DRAW("무", 0.0)
     ;
-
-    companion object {
-        fun of(player: GameParticipant, other: GameParticipant) =
-            MatchResult.values().find { it.compare(player, other) }
-                ?: throw RuntimeException()
-    }
 }

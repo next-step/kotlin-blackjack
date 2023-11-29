@@ -2,8 +2,11 @@ package blackjack
 
 interface GameBlackjack {
 
-    fun initialDealing(playerNames: String): GameParticipants
-    fun continueDealing(player: GameParticipant): GameParticipant
+    fun initialDealing(players: List<GamePlayer>): GameParticipants
+
+    fun continueDealing(player: GameParticipantPlayer): GameParticipantPlayer
+
+    fun continueDealing(dealer: GameParticipantDealer): GameParticipantDealer
 
     companion object {
         const val GAME_INIT_CARD_SIZE = 2
