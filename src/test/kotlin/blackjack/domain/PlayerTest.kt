@@ -13,34 +13,34 @@ class PlayerTest : BehaviorSpec({
 
         `when`("플레이어가 카드를 한번 발급하면") {
             val dealer = Dealer(getDeck())
-            val player = Player(nickname, Amount(1000))
+            val player = Player(nickname, Amount(1000.0))
 
             then("총 점수는 11점이다.") {
                 player.receiveCard(dealer.dealCard())
-                player.calculateScore() shouldBe 11
+                player.getScore() shouldBe 11
             }
         }
 
         `when`("플레이어가 카드를 두번 발급하면") {
             val dealer = Dealer(getDeck())
-            val player = Player(nickname, Amount(1000))
+            val player = Player(nickname, Amount(1000.0))
 
             then("총 점수는 21점이다.") {
                 player.receiveCard(dealer.dealCard())
                 player.receiveCard(dealer.dealCard())
-                player.calculateScore() shouldBe 21
+                player.getScore() shouldBe 21
             }
         }
 
         `when`("플레이어가 카드를 세번 발급하면") {
             val dealer = Dealer(getDeck())
-            val player = Player(nickname, Amount(1000))
+            val player = Player(nickname, Amount(1000.0))
 
             then("총 점수는 12점이다.") {
                 player.receiveCard(dealer.dealCard())
                 player.receiveCard(dealer.dealCard())
                 player.receiveCard(dealer.dealCard())
-                player.calculateScore() shouldBe 12
+                player.getScore() shouldBe 12
             }
         }
     }
@@ -52,22 +52,22 @@ class PlayerTest : BehaviorSpec({
 
         `when`("플레이어가 카드를 한번 발급하면") {
             val dealer = Dealer(getDeck())
-            val player = Player(nickname, Amount(1000))
+            val player = Player(nickname, Amount(1000.0))
 
             then("총 점수는 9점이다.") {
                 player.receiveCard(dealer.dealCard())
-                player.calculateScore() shouldBe 9
+                player.getScore() shouldBe 9
             }
         }
 
         `when`("플레이어가 카드를 두번 발급하면") {
             val dealer = Dealer(getDeck())
-            val player = Player(nickname, Amount(1000))
+            val player = Player(nickname, Amount(1000.0))
 
             then("총 점수는 19점이다.") {
                 player.receiveCard(dealer.dealCard())
                 player.receiveCard(dealer.dealCard())
-                player.calculateScore() shouldBe 19
+                player.getScore() shouldBe 19
             }
         }
     }

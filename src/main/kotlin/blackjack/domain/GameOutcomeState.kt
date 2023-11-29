@@ -5,7 +5,7 @@ enum class GameOutcome {
 }
 
 sealed class GameOutcomeState {
-    abstract fun calculateOutcome(playerScore: Int, dealerScore: Int): GameOutcome
+    abstract fun calculateOutcome(player: Player, dealer: Dealer): GameOutcome
 
     companion object {
         fun create(participant: Participant): GameOutcomeState {
@@ -18,7 +18,10 @@ sealed class GameOutcomeState {
 }
 
 object PlayerWinState : GameOutcomeState() {
-    override fun calculateOutcome(playerScore: Int, dealerScore: Int): GameOutcome {
+    override fun calculateOutcome(player: Player, dealer: Dealer): GameOutcome {
+        val playerScore = player.getScore()
+        val dealerScore = dealer.getScore()
+
         if (dealerScore > BLACKJACK) {
             return GameOutcome.WIN
         }
@@ -32,7 +35,10 @@ object PlayerWinState : GameOutcomeState() {
 }
 
 object DealerWinState : GameOutcomeState() {
-    override fun calculateOutcome(playerScore: Int, dealerScore: Int): GameOutcome {
+    override fun calculateOutcome(player: Player, dealer: Dealer): GameOutcome {
+        val playerScore = player.getScore()
+        val dealerScore = dealer.getScore()
+
         if (dealerScore > BLACKJACK || (playerScore in (dealerScore + 1)..BLACKJACK)) {
             return GameOutcome.LOSE
         }

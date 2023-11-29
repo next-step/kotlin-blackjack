@@ -16,7 +16,7 @@ object InputView {
     fun readBetAmount(nickNames: List<Nickname>): List<Pair<Nickname, Amount>> {
         return nickNames.map { nickname ->
             println("${nickname.value}의 배팅 금액은?")
-            nickname to Amount(readln().toInt())
+            nickname to Amount(readln().toDouble())
         }
     }
 

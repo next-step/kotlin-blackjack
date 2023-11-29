@@ -13,13 +13,10 @@ class GameResult(players: List<Player>, private val dealer: Dealer) {
     }
 
     private fun calculateReward(player: Player, participant: Participant = player): GameReward {
-        val playerScore = player.calculateScore()
-        val dealerScore = dealer.calculateScore()
-
         val state = GameOutcomeState.create(participant)
-        val outcome = state.calculateOutcome(playerScore, dealerScore)
+        val outcome = state.calculateOutcome(player, dealer)
 
-        return GameReward(player.betAmount, outcome)
+        return GameReward.create(player.betAmount, outcome, player)
     }
 
     private fun calculateDealerStats(players: List<Player>): List<GameReward> {

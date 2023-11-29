@@ -11,9 +11,7 @@ data class Player(override val name: Nickname, val betAmount: Amount) : Particip
         _cards.add(card)
     }
 
-    override fun canDraw(): Boolean = calculateScore() < DRAW_CONDITION
+    override fun canDraw(): Boolean = getScore() < BLACKJACK
 
-    companion object {
-        private const val DRAW_CONDITION = 21
-    }
+    fun isBlackJack(): Boolean = _cards.subList(0, 2).calculateScore() == BLACKJACK
 }

@@ -8,80 +8,105 @@ class GameResultTest : BehaviorSpec({
 
     val deck = TestDeckGenerator.generate(Symbol.SPADE withRank Rank.ACE)
 
-    given("플레이어 13점 / 딜러 21점이 주어졌을 때") {
-        val player = Player(Nickname("플레이어"), Amount(1000)).apply {
-            receiveCard(Card(Symbol.SPADE, Rank.KING))
-            receiveCard(Card(Symbol.SPADE, Rank.THREE))
-        }
-        val dealer = Dealer(deck).apply {
-            receiveCard(Card(Symbol.SPADE, Rank.ACE))
-            receiveCard(Card(Symbol.SPADE, Rank.TEN))
-        }
+    given("플레이어가 1000원 배팅했을 때") {
+        val player = Player(Nickname("플레이어"), Amount(1000.0))
+        val dealer = Dealer(deck)
 
-        `when`("게임 결과를 계산하면") {
-            val gameResult = GameResult(listOf(player), dealer)
-
-            then("플레이어는 패배한다.") {
-                gameResult.playerResults[player]?.outcome shouldBe GameOutcome.LOSE
-                gameResult.playerResults[player]?.amount shouldBe Amount(1000)
+        `when`("플레이어 13점 / 딜러 21점이면") {
+            player.apply {
+                receiveCard(Card(Symbol.SPADE, Rank.KING))
+                receiveCard(Card(Symbol.SPADE, Rank.THREE))
+            }
+            dealer.apply {
+                receiveCard(Card(Symbol.SPADE, Rank.ACE))
+                receiveCard(Card(Symbol.SPADE, Rank.TEN))
             }
 
-            then("딜러는 승리한다.") {
-                gameResult.dealerResults[0].outcome shouldBe GameOutcome.WIN
-                gameResult.dealerResults[0].amount shouldBe Amount(1000)
+            val gameResult = GameResult(listOf(player), dealer)
+
+            then("플레이어는 수익이 -1000원이다.") {
+                gameResult.playerResults[player]?.getValue() shouldBe -1000.0
+            }
+
+            then("딜러는 수익이 1000원이다.") {
+                gameResult.dealerResults[0].getValue() shouldBe 1000.0
             }
         }
     }
 
-    given("플레이어가 13점 / 딜러 22점이 주어졌을 때") {
-        val player = Player(Nickname("플레이어"), Amount(1000)).apply {
-            receiveCard(Card(Symbol.SPADE, Rank.KING))
-            receiveCard(Card(Symbol.SPADE, Rank.THREE))
-        }
-        val dealer = Dealer(deck).apply {
-            receiveCard(Card(Symbol.SPADE, Rank.TWO))
-            receiveCard(Card(Symbol.SPADE, Rank.TEN))
-            receiveCard(Card(Symbol.SPADE, Rank.TEN))
-        }
+    given("플레이어가 2000원 배팅했을 때") {
+        val player = Player(Nickname("플레이어"), Amount(2000.0))
+        val dealer = Dealer(deck)
 
-        `when`("게임 결과를 계산하면") {
+        `when`("플레이어가 13점 / 딜러 22점이 주어졌을 때") {
+            player.apply {
+                receiveCard(Card(Symbol.SPADE, Rank.KING))
+                receiveCard(Card(Symbol.SPADE, Rank.THREE))
+            }
+            dealer.apply {
+                receiveCard(Card(Symbol.SPADE, Rank.TWO))
+                receiveCard(Card(Symbol.SPADE, Rank.TEN))
+                receiveCard(Card(Symbol.SPADE, Rank.TEN))
+            }
             val gameResult = GameResult(listOf(player), dealer)
 
-            then("플레이어는 승리한다.") {
-                gameResult.playerResults[player]?.outcome shouldBe GameOutcome.WIN
-                gameResult.playerResults[player]?.amount shouldBe Amount(1000)
+            then("플레이어는 수익이 2000 원이다.") {
+                gameResult.playerResults[player]?.getValue() shouldBe 2000.0
             }
 
-            then("딜러는 패배한다.") {
-                gameResult.dealerResults[0].outcome shouldBe GameOutcome.LOSE
-                gameResult.dealerResults[0].amount shouldBe Amount(1000)
+            then("딜러는 수익이 -2000 원이다.") {
+                gameResult.dealerResults[0].getValue() shouldBe -2000.0
             }
         }
     }
 
-    given("플레이어 22점 / 딜러 22점이 주어졌을 때") {
-        val player = Player(Nickname("플레이어"), Amount(1000)).apply {
-            receiveCard(Card(Symbol.SPADE, Rank.TWO))
-            receiveCard(Card(Symbol.SPADE, Rank.TEN))
-            receiveCard(Card(Symbol.SPADE, Rank.TEN))
-        }
-        val dealer = Dealer(deck).apply {
-            receiveCard(Card(Symbol.SPADE, Rank.TWO))
-            receiveCard(Card(Symbol.SPADE, Rank.TEN))
-            receiveCard(Card(Symbol.SPADE, Rank.TEN))
-        }
+    given("플레이어가 3000원 배팅했을 때") {
+        val player = Player(Nickname("플레이어"), Amount(3000.0))
+        val dealer = Dealer(deck)
 
-        `when`("게임 결과를 계산하면") {
+        `when`("플레이어 22점 / 딜러 22점이 주어졌을 때") {
+            player.apply {
+                receiveCard(Card(Symbol.SPADE, Rank.TWO))
+                receiveCard(Card(Symbol.SPADE, Rank.TEN))
+                receiveCard(Card(Symbol.SPADE, Rank.TEN))
+            }
+            dealer.apply {
+                receiveCard(Card(Symbol.SPADE, Rank.TWO))
+                receiveCard(Card(Symbol.SPADE, Rank.TEN))
+                receiveCard(Card(Symbol.SPADE, Rank.TEN))
+            }
             val gameResult = GameResult(listOf(player), dealer)
 
-            then("플레이어는 승리한다..") {
-                gameResult.playerResults[player]?.outcome shouldBe GameOutcome.WIN
-                gameResult.playerResults[player]?.amount shouldBe Amount(1000)
+            then("플레이어는 수익이 3000 원이다.") {
+                gameResult.playerResults[player]?.getValue() shouldBe 3000.0
             }
 
-            then("딜러는 패배한다.") {
-                gameResult.dealerResults[0].outcome shouldBe GameOutcome.LOSE
-                gameResult.dealerResults[0].amount shouldBe Amount(1000)
+            then("딜러는 수익이 -3000 원이다.") {
+                gameResult.dealerResults[0].getValue() shouldBe -3000.0
+            }
+        }
+    }
+
+    given("플레이어가 4000원 배팅했을 때") {
+        val player = Player(Nickname("플레이어"), Amount(4000.0))
+        val dealer = Dealer(deck)
+
+        `when`("플레이어 21점 / 딜러 2점이 주어졌을 때") {
+            player.apply {
+                receiveCard(Card(Symbol.SPADE, Rank.ACE))
+                receiveCard(Card(Symbol.SPADE, Rank.TEN))
+            }
+            dealer.apply {
+                receiveCard(Card(Symbol.SPADE, Rank.TWO))
+            }
+            val gameResult = GameResult(listOf(player), dealer)
+
+            then("플레이어는 수익이 6000 원이다.") {
+                gameResult.playerResults[player]?.getValue() shouldBe 6000.0
+            }
+
+            then("딜러는 수익이 -6000 원이다.") {
+                gameResult.dealerResults[0].getValue() shouldBe -6000.0
             }
         }
     }
