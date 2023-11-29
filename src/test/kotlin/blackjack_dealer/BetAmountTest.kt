@@ -40,7 +40,6 @@ class BetAmountTest : StringSpec({
             )
         )
         val participant = Participant.newInstance("석주", participantCards, 20000)
-        val dealer = Dealer.newInstance(dealerCards)
         val expected = 20000
 
         participant.getResultBetAmount() shouldBe expected
@@ -56,7 +55,7 @@ class BetAmountTest : StringSpec({
         val participant = Participant.newInstance("석주", cards, 1000)
         val expected = 1500
 
-        participant.getCurrentGamerState() shouldBe GamerCurrentState.INITIAL_BLACKJACK
+        participant.getCurrentGamerState() shouldBe GamerCurrentState.BLACKJACK
         participant.getResultBetAmount() shouldBe expected
     }
 

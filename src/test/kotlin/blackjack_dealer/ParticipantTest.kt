@@ -42,7 +42,7 @@ class ParticipantTest : StringSpec({
         val blackJackCards =
             mutableListOf(Card(CardNumber.A, CardShape.CLOVER), Card(CardNumber.J, CardShape.CLOVER))
         val participantWithBlackJack = Participant.newInstance(name = "pita", cards = blackJackCards.toGamerCards())
-        val expected = GamerCurrentState.INITIAL_BLACKJACK
+        val expected = GamerCurrentState.BLACKJACK
         participantWithBlackJack.getCurrentGamerState() shouldBe expected
     }
 

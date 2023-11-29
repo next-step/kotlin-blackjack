@@ -32,7 +32,9 @@ data class Participant(
 
     fun getResultBetAmount(): Int {
         return when (currentState) {
-            GamerCurrentState.BLACKJACK -> TODO()
+            GamerCurrentState.BLACKJACK -> {
+                (betAmount * 1.5).toInt()
+            }
             GamerCurrentState.BUST -> {
                 -betAmount
             }
@@ -42,9 +44,6 @@ data class Participant(
             }
 
             GamerCurrentState.INITIAL -> TODO()
-            GamerCurrentState.INITIAL_BLACKJACK -> {
-                (betAmount * 1.5).toInt()
-            }
             GamerCurrentState.STAND -> TODO()
         }
     }
@@ -67,7 +66,7 @@ data class Participant(
             val currentScore = initialCards.getCurrentScore()
             return when (currentScore) {
                 in MINIMUM_HIT_NUMBER..MAXIMUM_HIT_NUMBER -> GamerCurrentState.HIT
-                BLACK_JACK -> GamerCurrentState.INITIAL_BLACKJACK
+                BLACK_JACK -> GamerCurrentState.BLACKJACK
                 else -> GamerCurrentState.BUST
             }
         }
