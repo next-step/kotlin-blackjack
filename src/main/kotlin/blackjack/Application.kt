@@ -30,7 +30,7 @@ private fun askNeedMoreCard(
     var playerWithNewCard = player
     while (InputView.askNeedCard(playerWithNewCard.name)) {
         playerGroupWithNewCard = blackJackGame.dealCardTo(playerGroupWithNewCard, playerWithNewCard)
-        playerWithNewCard = playerGroupWithNewCard.firstOrNull { it.name == playerWithNewCard.name }!!
+        playerWithNewCard = playerGroupWithNewCard.firstOrNull { it.name == playerWithNewCard.name } ?: throw IllegalArgumentException()
         ResultView.printPlayerState(playerWithNewCard)
     }
     return playerGroupWithNewCard
