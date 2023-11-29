@@ -1,7 +1,7 @@
 package blackJack.player
 
+import card.CardDeck
 import card.CardRank
-import card.CardPack
 import card.PlayingCard
 import card.Suit
 import org.assertj.core.api.Assertions.assertThat
@@ -42,8 +42,7 @@ class PlayerTest {
     fun `플레이어와 카드팩이 생성되고, 플레이어가 카드를 받을 때, 받은 카드는 저장한다`() {
         // given : 플레이어와 카드팩을 생성한다.
         val player = Player("OYJ")
-        val cardPack = CardPack.getCardPack()
-        val card = cardPack.cardList[0]
+        val card = CardDeck.cards[0]
 
         // when : 플레이어가 카드를 받는다.
         player.saveCard(card)

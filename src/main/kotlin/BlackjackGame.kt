@@ -1,9 +1,9 @@
-import card.CardPack
+import card.Cards
 import player.Player
 import player.PlayerGroup
 import player.Status
 
-class BlackjackGame(private val cardPack: CardPack, private val playerGroup: PlayerGroup) {
+class BlackjackGame(private val cards: Cards, private val playerGroup: PlayerGroup) {
 
     init {
         playerGroup.playerList.forEach {
@@ -11,9 +11,9 @@ class BlackjackGame(private val cardPack: CardPack, private val playerGroup: Pla
         }
     }
 
-    fun hitCard() {
+    fun hit() {
         val player = playerGroup.getCurrentPlayer()
-        player.saveCard(cardPack.hit())
+        player.saveCard(cards.getCard())
         player.updateStatus()
     }
 
@@ -36,7 +36,7 @@ class BlackjackGame(private val cardPack: CardPack, private val playerGroup: Pla
 
     private fun distributeTwoCards(player: Player) {
         repeat(2) {
-            player.saveCard(cardPack.hit())
+            player.saveCard(cards.getCard())
         }
     }
 }
