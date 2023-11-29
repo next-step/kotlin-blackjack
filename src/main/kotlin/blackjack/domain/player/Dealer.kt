@@ -29,4 +29,12 @@ class Dealer(private val deck: Deck) {
 
         onResult(addCard)
     }
+
+    fun wins(player: Player): Boolean {
+        return if (asPlayer.state.isBust()) {
+            false
+        } else {
+            asPlayer.hand.blackjackDiff() < player.hand.blackjackDiff()
+        }
+    }
 }

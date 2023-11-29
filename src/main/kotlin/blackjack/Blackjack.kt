@@ -1,5 +1,7 @@
 package blackjack
 
+import blackjack.domain.BlackjackResult
+import blackjack.domain.PlayerResult
 import blackjack.domain.cards.Deck
 import blackjack.domain.player.Dealer
 import blackjack.domain.player.Player
@@ -34,6 +36,14 @@ class Blackjack(
 
         resultView.printPlayer(dealer.asPlayer)
         resultView.printResult(players)
+
+        val gameResult = BlackjackResult(
+            players.map { player ->
+                PlayerResult(player, dealer.wins(player))
+            }
+        )
+
+        resultView.printBlackjackResult(gameResult)
     }
 
     private fun processPlayerTurn(player: Player) {
