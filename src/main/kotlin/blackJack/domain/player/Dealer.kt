@@ -1,6 +1,6 @@
 package blackJack.domain.player
 
-import blackJack.domain.enums.Status.*
+import blackJack.domain.enums.Status.HIT
 
 class Dealer(val name: String) : Participant() {
 

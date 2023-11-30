@@ -1,13 +1,12 @@
 package blackJack.domain.result
 
-class DealerResult(val blackJackWin: Int, val win: Int, val draw: Int, val lose: Int) {
+class DealerResult(val dealerProfit: Int) {
     companion object {
         fun calculateResult(playersResults: PlayersResult): DealerResult {
-            val blackJackWin = playersResults.countPlayerBlackJackWin()
-            val win = playersResults.countPlayerWin()
-            val draw = playersResults.countPlayerDraw()
-            val lose = playersResults.countPlayerLose()
-            return DealerResult(blackJackWin, win, draw, lose)
+            val dealerProfit = -playersResults.playersResult.sumOf {
+                it.bettingPrice * it.result.reward
+            }.toInt()
+            return DealerResult(dealerProfit)
         }
     }
 }
