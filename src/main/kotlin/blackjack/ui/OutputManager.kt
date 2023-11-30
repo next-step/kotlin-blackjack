@@ -20,10 +20,6 @@ class OutputManager {
         }
     }
 
-    fun printPlayerCards(player: Player) {
-        println("${player.name}: ${parsingCardsToString(player.cards)}")
-    }
-
     fun printPlayerCards(player: AbstractPlayer) {
         println("${player.name}: ${parsingCardsToString(player.cards)}")
     }
