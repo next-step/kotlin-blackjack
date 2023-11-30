@@ -18,6 +18,6 @@
 
 ## step3
 - [x] Dealer는 2장의 카드를 받고 시작한다. (Player와 동일)
-- [ ] Dealer는 16점 이하이면 Hit 상태, 이상이면 Stay, 21 초과면 Bust 상태이다
+- [ ] Dealer는 16점 이하이면 Hit 상태, 이상이면 Stay, 21이면 Blackjack, 21 초과면 Bust 상태이다
 - [ ] Dealer가 21점을 초과하면 Player는 전원 승리한다.
 - [ ] Player와 Dealer는 승부의 결과를 가진다.

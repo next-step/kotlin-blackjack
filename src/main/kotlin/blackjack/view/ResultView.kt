@@ -22,9 +22,11 @@ class ResultView {
         println(playerText(player = player))
     }
 
+    fun showDealerDraw(): String = "딜러는 ${BlackjackRule.DEALER_MINIMUM_SCORE - 1}이하라 한장의 카드를 더 받았습니다."
+
     fun showResult(players: List<Player>) {
         println(
-            players.joinToString("\n") {
+            "\n" + players.joinToString("\n") {
                 "${playerText(player = it)} - ${playerScore(player = it)}"
             }
         )

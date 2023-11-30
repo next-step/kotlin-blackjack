@@ -32,6 +32,6 @@ class Player(
     }
 
     private fun updateState() {
-        state = State.fromHand(hand)
+        state = State.fromPlayer(hand)
     }
 }

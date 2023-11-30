@@ -55,5 +55,10 @@ class BlackjackController(
                 }
             }
         }
+
+        while (dealer.canDraw()) {
+            dealer.draw(deck = deck)
+            resultView.showDealerDraw()
+        }
     }
 }
