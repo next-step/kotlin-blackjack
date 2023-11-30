@@ -4,23 +4,9 @@ import blackjack.domain.state.Hit
 import blackjack.domain.state.Started
 import blackjack.domain.state.State
 
-class Player(
-    override val name: String,
-) : Participant(name) {
-    var state: State = Started(cards)
-        private set
-
+class Player(name: String) : Participant(name) {
     override fun receiveCard(card: Card) {
         state = state.draw(card)
-    }
-
-    override fun canReceiveOneMoreCard(): Boolean {
-        return state is Hit
-    }
-
-    fun turnStand() {
-        check(state is Hit) { "Hit 상태가 아닙니다." }
-        state = (state as Hit).stand()
     }
 
     infix fun versus(dealer: Dealer): GameResult {

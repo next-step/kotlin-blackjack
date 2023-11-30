@@ -1,5 +1,6 @@
 package blackjack.domain
 
+import blackjack.domain.CardScoreCalculator.isCloseToBlackjack
 import blackjack.domain.CardScoreCalculator.isOverScore
 
 enum class GameResult(
@@ -25,10 +26,10 @@ enum class GameResult(
         }
 
         fun resultOfPlayer(player: Player, dealer: Dealer): GameResult {
-            val isPlayerScoreOver = isOverScore(player.cards, dealer.cards)
+            val isPlayerCloseToBlackjack = isCloseToBlackjack(player.cards, dealer.cards)
             return when {
-                isOverScore(dealer.cards, CardScoreCalculator.BLACKJACK) || isPlayerScoreOver -> WIN
-                !isPlayerScoreOver -> LOSE
+                isOverScore(dealer.cards, CardScoreCalculator.BLACKJACK) || isPlayerCloseToBlackjack -> WIN
+                !isPlayerCloseToBlackjack -> LOSE
                 else -> DRAW
             }
         }

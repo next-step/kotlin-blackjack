@@ -1,17 +1,12 @@
 package blackjack.domain
 
-class Dealer(
-    override val name: String,
-) : Participant(name) {
-    override fun receiveCard(card: Card) {
-        cards.add(card)
-    }
+import blackjack.domain.CardScoreCalculator.isOverScore
+import blackjack.domain.CardScoreCalculator.DEALER_SCORE_THRESHOLD
 
-    override fun canReceiveOneMoreCard(): Boolean {
-        return CardScoreCalculator.isUnderScore(
-            cards,
-            CardScoreCalculator.DEALER_SCORE_THRESHOLD
-        )
+class Dealer(name: String) : Participant(name) {
+    override fun receiveCard(card: Card) {
+        state = state.draw(card)
+        if (isOverScore(cards, DEALER_SCORE_THRESHOLD)) turnStand()
     }
 
     infix fun versus(players: Players): List<GameResult> {

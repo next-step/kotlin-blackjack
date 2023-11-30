@@ -1,5 +1,7 @@
 package blackjack.domain
 
+import kotlin.math.abs
+
 object CardScoreCalculator {
     const val BLACKJACK = 21
     const val DEALER_SCORE_THRESHOLD = 16
@@ -12,16 +14,12 @@ object CardScoreCalculator {
         return calcScore(cards) > BLACKJACK
     }
 
-    fun isUnderScore(cards: Cards, threshold: Int): Boolean {
-        return calcScore(cards) < threshold
-    }
-
     fun isOverScore(cards: Cards, threshold: Int): Boolean {
         return calcScore(cards) > threshold
     }
 
-    fun isOverScore(cards1: Cards, cards2: Cards): Boolean {
-        return calcScore(cards1) > calcScore(cards2)
+    fun isCloseToBlackjack(cards1: Cards, cards2: Cards): Boolean {
+        return abs(calcScore(cards1)-BLACKJACK) < abs(calcScore(cards2) - BLACKJACK)
     }
 
     fun calcScore(cards: Cards): Int {
