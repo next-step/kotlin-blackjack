@@ -15,11 +15,4 @@ class Cards(
     fun add(vararg card: Card) {
         values = values + card
     }
-
-    fun isBust(): Boolean {
-        return toScore() > Score.BLACKJACK
-    }
-    fun isBlackjack(): Boolean {
-        return toScore() == Score.BLACKJACK
-    }
 }

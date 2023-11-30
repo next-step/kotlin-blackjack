@@ -8,7 +8,10 @@ class Dealer(
     }
 
     override fun canReceiveOneMoreCard(): Boolean {
-        return cards.toScore() <= Score.DEALER_HIT_THRESHOLD
+        return CardScoreCalculator.isUnderScore(
+            cards,
+            CardScoreCalculator.DEALER_SCORE_THRESHOLD
+        )
     }
 
     infix fun versus(players: Players): List<GameResult> {

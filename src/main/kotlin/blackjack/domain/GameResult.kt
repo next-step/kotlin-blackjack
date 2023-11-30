@@ -1,5 +1,7 @@
 package blackjack.domain
 
+import blackjack.domain.CardScoreCalculator.isOverScore
+
 enum class GameResult(
     val message: String
 ) {
@@ -23,11 +25,10 @@ enum class GameResult(
         }
 
         fun resultOfPlayer(player: Player, dealer: Dealer): GameResult {
-            val playerScore = player.cards.toScore()
-            val dealerScore = dealer.cards.toScore()
+            val isPlayerScoreOver = isOverScore(player.cards, dealer.cards)
             return when {
-                dealerScore > Score.BLACKJACK || playerScore > dealerScore -> WIN
-                playerScore < dealerScore -> LOSE
+                isOverScore(dealer.cards, CardScoreCalculator.BLACKJACK) || isPlayerScoreOver -> WIN
+                !isPlayerScoreOver -> LOSE
                 else -> DRAW
             }
         }
