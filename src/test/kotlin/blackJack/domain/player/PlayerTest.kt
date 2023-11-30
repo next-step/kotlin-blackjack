@@ -33,13 +33,6 @@ class PlayerTest {
     }
 
     @Test
-    fun `이름을 입력하면 정상적으로 Player 가 만들어 진다`() {
-        val name = "pobi"
-        val player = Player.createPlayer(name)
-        assertThat(player.name).isEqualTo(name)
-    }
-
-    @Test
     fun `Status 가 HIT 이고 Answer 가 'y' 이면 카드를 계속해서 추가가 가능하다`() {
         val player = Player("pobi")
         player.cards = Cards(listOf())

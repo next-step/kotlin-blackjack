@@ -1,9 +1,8 @@
 package blackJack.view
 
-import blackJack.dto.playerDto.DealerDto
+import blackJack.dto.ResultDto.ResultDto
 import blackJack.dto.playerDto.ParticipantsDto
 import blackJack.dto.playerDto.PlayerDto
-import blackJack.dto.ResultDto.ResultDto
 
 object OutputView {
 
@@ -11,6 +10,7 @@ object OutputView {
     private const val BETTING = " 에게 2장의 나누었습니다."
     private const val QUESTION_YES_OR_NO = "는 한장의 카드를 더 받겠습니까? (예는 y, 아니오는 n)"
     private const val PRINT_ADD_DEALER = "딜러는 16이하라 한장의 카드를 더 받았습니다."
+    private const val PRINT_BETTING_PRICE = "의 배팅 금액은?"
 
     fun printEnterName() = println(ENTER_NAME)
     fun printPlayer(splitNames: List<String>) {
@@ -61,4 +61,6 @@ object OutputView {
             println(it.name + ": " + it.result)
         }
     }
+
+    fun printBettingPrice(playerName: String) = println(playerName + PRINT_BETTING_PRICE)
 }

@@ -18,8 +18,9 @@ fun main() {
 
     OutputView.printEnterName()
     val inputNames = InputView.inputNames()
-    val playerList = Player.splitNames(inputNames)
-    OutputView.printPlayer(playerList)
+    val playerNameList = Player.splitNames(inputNames)
+    OutputView.printPlayer(playerNameList)
+    val playerList = createPlayerList(playerNameList)
 
     val participants = Participants.createParticipants(playerList)
     participants.receiveInitialCards { cardDeck.initialCards() }
@@ -35,6 +36,14 @@ fun main() {
     val calculateResult = Result.calculateResult(participants)
     val resultDto = ResultDto(calculateResult)
     OutputView.printWinner(resultDto)
+}
+
+private fun createPlayerList(playerNameList: List<String>): List<Player> {
+    return playerNameList.map {
+        OutputView.printBettingPrice(it)
+        val bettingPrice = InputView.inputBettingPrice()
+        Player(it, bettingPrice)
+    }
 }
 
 private fun playGame(participants: Participants, cardDeck: Cards): ParticipantsDto {

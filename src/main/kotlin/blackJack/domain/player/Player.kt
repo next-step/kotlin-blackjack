@@ -4,7 +4,7 @@ import blackJack.domain.card.Cards
 import blackJack.domain.enums.Status
 import blackJack.error.ErrorMessage
 
-class Player(val name: String) : Participant() {
+class Player(val name: String, val reward: Int = 0) : Participant() {
 
     init {
         require(name.isNotEmpty()) { ErrorMessage.EMPTY_NAME.message }
@@ -24,10 +24,6 @@ class Player(val name: String) : Participant() {
     companion object {
         fun splitNames(inputNames: String): List<String> {
             return inputNames.split(",").map { it.trim() }.toList()
-        }
-
-        fun createPlayer(name: String): Player {
-            return Player(name)
         }
     }
 }
