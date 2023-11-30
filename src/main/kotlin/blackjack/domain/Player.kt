@@ -2,7 +2,7 @@ package blackjack.domain
 
 class Player(val name: String) {
     private var _cards = Cards(mutableListOf())
-    val isBusted get() = getScore() > 21
+    val isBusted get() = getScore() > Score.TARGET_SCORE
 
     val cards: Cards
         get() = _cards
