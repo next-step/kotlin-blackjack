@@ -22,6 +22,10 @@ class PlayerCards {
         }
     }
 
+    fun isBust(): Boolean {
+        return calculateScore() > BLACKJACK_SCORE
+    }
+
     private fun calculateCardScore(): Score {
         val score = cards.sumOf { it.number.score.value }
         return Score(score)
