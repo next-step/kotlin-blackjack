@@ -1,6 +1,7 @@
 package blackjack
 
-data class BetAmount(val amount: Int) {
+@JvmInline
+value class BetAmount(val amount: Int) {
     init {
         require(amount >= MINIMUM) {
             "Player need to bet more than $MINIMUM"

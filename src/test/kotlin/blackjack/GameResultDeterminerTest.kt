@@ -4,34 +4,30 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class GameResultDeterminerTest {
-    private val bustedPlayer: Player = Player("busted").apply {
-        betAmount = BetAmount(10000)
+    private val bet10000 = BetAmount(10000)
+    private val bustedPlayer: Player = Player("busted", bet10000).apply {
         hit(PlayingCard(Suits.DIAMOND, CardNumber.KING))
         hit(PlayingCard(Suits.CLOVER, CardNumber.KING))
         hit(PlayingCard(Suits.SPADE, CardNumber.KING))
     }
 
-    private val blackjackPlayer: Player = Player("blackjack").apply {
-        betAmount = BetAmount(10000)
+    private val blackjackPlayer: Player = Player("blackjack", bet10000).apply {
         hit(PlayingCard(Suits.DIAMOND, CardNumber.KING))
         hit(PlayingCard(Suits.CLOVER, CardNumber.ACE))
     }
 
-    private val score21Player: Player = Player("21").apply {
-        betAmount = BetAmount(10000)
+    private val score21Player: Player = Player("21", bet10000).apply {
         hit(PlayingCard(Suits.DIAMOND, CardNumber.KING))
         hit(PlayingCard(Suits.CLOVER, CardNumber.KING))
         hit(PlayingCard(Suits.CLOVER, CardNumber.ACE))
     }
 
-    private val score20Player: Player = Player("20").apply {
-        betAmount = BetAmount(10000)
+    private val score20Player: Player = Player("20", bet10000).apply {
         hit(PlayingCard(Suits.DIAMOND, CardNumber.KING))
         hit(PlayingCard(Suits.CLOVER, CardNumber.KING))
     }
 
-    private val score19Player: Player = Player("19").apply {
-        betAmount = BetAmount(10000)
+    private val score19Player: Player = Player("19", bet10000).apply {
         hit(PlayingCard(Suits.DIAMOND, CardNumber.KING))
         hit(PlayingCard(Suits.CLOVER, CardNumber.NINE))
     }
