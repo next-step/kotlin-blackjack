@@ -3,8 +3,10 @@ package blackjack.domain
 class Player(
     val name: String,
     private val hand: Hand = Hand(),
-    var state: State = State.HIT,
 ) {
+    var state: State = State.HIT
+        private set
+
     init {
         updateState()
     }
@@ -15,7 +17,7 @@ class Player(
         getScore() <= BlackjackRule.TARGET_SCORE && state == State.HIT
 
     fun draw(deck: Deck) {
-        hand.add(card = deck.pop())
+        receiveCard(deck.pop())
         updateState()
     }
 
@@ -25,16 +27,11 @@ class Player(
 
     fun getScore(): Int = hand.getScore()
 
-    private fun updateState() {
-        if (hand.getScore() > BlackjackRule.TARGET_SCORE) {
-            state = State.BUST
-        }
+    private fun receiveCard(card: Card) {
+        hand.add(card)
+    }
 
-        if (
-            hand.getScore() == BlackjackRule.TARGET_SCORE &&
-            getCardList().count() == BlackjackRule.INITIAL_CARD
-        ) {
-            state = State.BLACKJACK
-        }
+    private fun updateState() {
+        state = State.fromHand(hand)
     }
 }
