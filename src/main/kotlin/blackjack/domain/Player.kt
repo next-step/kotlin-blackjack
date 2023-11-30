@@ -2,21 +2,19 @@ package blackjack.domain
 
 class Player(
     val name: String,
-    private val hand: Hand = Hand(),
-) {
-    var state: State = State.HIT
+    override val hand: Hand = Hand(),
+) : BlackjackMember {
+    override var state: State = State.HIT
         private set
 
     init {
         updateState()
     }
 
-    fun getCardList(): List<Card> = hand.cards
-
-    fun canDraw(): Boolean =
+    override fun canDraw(): Boolean =
         getScore() <= BlackjackRule.TARGET_SCORE && state == State.HIT
 
-    fun draw(deck: Deck) {
+    override fun draw(deck: Deck) {
         receiveCard(deck.pop())
         updateState()
     }
