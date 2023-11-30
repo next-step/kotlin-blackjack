@@ -12,7 +12,7 @@ class Player(val name: String) {
         private set
 
     fun playDone() {
-        updatePlayerStatus(Status.STAND)
+        this.status = Status.STAND
     }
 
     fun saveCard(card: PlayingCard) {
@@ -20,30 +20,19 @@ class Player(val name: String) {
     }
 
     fun updateStatus() {
-        val newStatus = determineStatus()
-        updatePlayerStatus(newStatus)
-    }
-
-    private fun determineStatus(): Status {
         val totalPoint = playerDeck.getResultPoint()
 
         if (totalPoint > 21) {
-            return Status.BUST
+            this.status = Status.BUST
+        } else if (isBlackJack()) {
+            this.status = Status.BLACK_JACK
+        } else {
+            this.status = Status.PLAYING
         }
-
-        if (isBlackJack()) {
-            return Status.BLACK_JACK
-        }
-
-        return Status.PLAYING
     }
 
     private fun isBlackJack(): Boolean {
         val totalPoint = playerDeck.getResultPoint()
         return playerDeck.cardDeckSize() == 2 && totalPoint == 21
-    }
-
-    private fun updatePlayerStatus(status: Status) {
-        this.status = status
     }
 }
