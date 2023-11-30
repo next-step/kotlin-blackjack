@@ -10,6 +10,8 @@ open class Participant(var status: Status = Status.HIT, var cards: Cards = Cards
 
     open fun isContinued() = status == Status.HIT
 
+    fun isBlackJack(): Boolean = status == Status.BLACKJACK
+
     fun addCard(card: Card) {
         Status.validationAddCard(status)
         cards.addCard(card)

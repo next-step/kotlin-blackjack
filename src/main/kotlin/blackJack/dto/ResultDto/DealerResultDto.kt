@@ -1,3 +1,3 @@
 package blackJack.dto.ResultDto
 
-data class DealerResultDto(val win: Int, val lose: Int)
+data class DealerResultDto(val blackjackWin: Int, val win: Int, val draw: Int, val lose: Int)
