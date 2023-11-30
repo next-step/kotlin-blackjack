@@ -1,5 +1,6 @@
 package blackjack.ui
 
+import blackjack.GameResult
 import blackjack.card.AceCard
 import blackjack.card.BlackJackCard
 import blackjack.card.CardPattern
@@ -7,7 +8,6 @@ import blackjack.card.CardPicture
 import blackjack.card.NormalCard
 import blackjack.card.PictureCard
 import blackjack.participant.AbstractPlayer
-import blackjack.participant.Player
 
 class OutputManager {
     fun printPlayersCards(players: List<AbstractPlayer>) {
@@ -26,6 +26,12 @@ class OutputManager {
 
     fun printPlayerResultGame(player: AbstractPlayer) {
         println("${player.name} 카드: ${parsingCardsToString(player.cards)} - 결과: ${player.resultScore()}")
+    }
+
+    fun printResult(gameResult: GameResult) {
+        gameResult.resultMap.forEach{
+            println("${it.key} : ${it.value}")
+        }
     }
 
     private fun parsingCardsToString(cards: List<BlackJackCard>): String {
