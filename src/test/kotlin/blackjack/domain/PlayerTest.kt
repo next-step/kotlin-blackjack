@@ -29,4 +29,16 @@ class PlayerTest {
         player.init(deck)
         assertThrows<IllegalStateException> { player.init(deck) }
     }
+
+    @Test
+    fun `보유한 카드의 점수 합이 블랙잭 기준치(21) 미만이면 추가로 카드를 받을 수 있는 상태이다`() {
+        val cards: MutableList<Card> = mutableListOf(
+            Card(Suit.HEART, Rank.TEN),
+            Card(Suit.CLUB, Rank.TEN)
+        )
+        val hand: Hand = Hand(cards)
+        val player: Player = Player("test", hand)
+        player.updateState()
+        assertEquals(PlayerState.UNDER, player.state)
+    }
 }

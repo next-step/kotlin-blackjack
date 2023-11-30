@@ -1,10 +1,8 @@
 package blackjack.domain
 
-data class Player(val name: String) {
+data class Player(val name: String, val hand: Hand = Hand()) {
     var state: PlayerState = PlayerState.READY
         private set
-
-    val hand: Hand = Hand()
 
     fun init(deck: Deck) {
         check(state == PlayerState.READY) { "can only 'init' if the 'PlayerState' is 'READY'" }
@@ -23,7 +21,7 @@ data class Player(val name: String) {
         state = PlayerState.STAY
     }
 
-    private fun updateState() {
+    fun updateState() {
         val score = hand.getBestScore()
         val count = hand.getCardCount()
         state = when {
@@ -32,7 +30,7 @@ data class Player(val name: String) {
                 true -> PlayerState.BLACKJACK
                 false -> PlayerState.STAY
             }
-            else -> state
+            else -> PlayerState.UNDER
         }
     }
 }
