@@ -38,7 +38,10 @@ data class Participant(
         val participantScore = getCurrentCards().getCurrentScore()
 
         if (gamerIsBust()) return ParticipantResultState.LOSE
-        if (participantScore == BLACK_JACK) return ParticipantResultState.BLACKJACK
+        if (participantScore == BLACK_JACK) {
+            if (dealerScore == BLACK_JACK) return ParticipantResultState.DRAW
+            else ParticipantResultState.WIN
+        }
         if (dealerScore > BLACK_JACK) return ParticipantResultState.WIN
 
         return when {
@@ -54,42 +57,23 @@ data class Participant(
 
     fun getResultBetAmount(dealer: Dealer): Int {
         val participantState = createParticipantResultState(dealer)
-        return createBetAmountWithResultState(participantState, dealer)
+        return createBetAmountWithResultState(participantState)
     }
 
     private fun createBetAmountWithResultState(
         participantState: ParticipantResultState,
-        dealer: Dealer
-    ): Int = when (participantState) {
-        ParticipantResultState.WIN -> {
-            betAmount
-        }
-
-        ParticipantResultState.LOSE -> {
-            -betAmount
-        }
-
-        ParticipantResultState.DRAW -> {
-            0
-        }
-
-        ParticipantResultState.BLACKJACK -> {
-            betAmountWhenStateIsBlackJack(dealer)
-        }
+    ): Int = if (getCurrentCards().getCurrentScore() == BLACK_JACK && participantState != ParticipantResultState.DRAW) {
+        (BLACK_JACK_MULTIPLY_NUMBER * betAmount).toInt()
+    } else {
+        participantState.multiplyNumber * betAmount
     }
-
-    private fun betAmountWhenStateIsBlackJack(dealer: Dealer): Int =
-        if (dealer.getCurrentGamerState() == GamerCurrentState.BLACKJACK) {
-            0
-        } else {
-            (betAmount * 1.5).toInt()
-        }
 
     companion object {
         private const val MINIMUM_HIT_NUMBER = 1
         private const val MAXIMUM_HIT_NUMBER = 20
 
         private const val BLACK_JACK = 21
+        private const val BLACK_JACK_MULTIPLY_NUMBER = 1.5
 
         fun newInstance(name: String, cards: GamerCards, betAmount: Int = 0): Participant {
             val initialState = findMatchedInitialState(cards)

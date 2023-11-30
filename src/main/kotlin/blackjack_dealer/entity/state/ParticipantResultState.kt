@@ -1,12 +1,5 @@
 package blackjack_dealer.entity.state
 
-enum class ParticipantResultState(val state: String) {
-    WIN("승"), LOSE("패"), DRAW("무"), BLACKJACK("블랙잭");
-
-    companion object {
-        private const val DEFAULT_VALUE = 0
-
-        fun getParticipantResultStateGroup(groupingByParticipantResult: Map<ParticipantResultState, Int>) =
-            values().associateWith { groupingByParticipantResult.getOrDefault(it, DEFAULT_VALUE) }
-    }
+enum class ParticipantResultState(val state: String, val multiplyNumber: Int) {
+    WIN("승", 1), LOSE("패", -1), DRAW("무", 0);
 }
