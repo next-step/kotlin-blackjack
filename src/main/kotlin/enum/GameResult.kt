@@ -19,8 +19,8 @@ enum class GameResult(private val multiplier: Double) {
                 return if (dealerTotalScore == BlackjackRules.MAXIMUM_SCORE) DRAW else BLACKJACK_WIN
             }
             return when {
-                playerTotalScore > BlackjackRules.MAXIMUM_SCORE -> LOSE
-                dealerTotalScore > BlackjackRules.MAXIMUM_SCORE -> WIN
+                BlackjackRules.isBust(playerTotalScore) -> LOSE
+                BlackjackRules.isBust(dealerTotalScore) -> WIN
                 playerTotalScore > dealerTotalScore -> WIN
                 playerTotalScore == dealerTotalScore -> DRAW
                 else -> LOSE
