@@ -1,6 +1,6 @@
 package blackjack
 
-class Player(name: String, val betAmount: BetAmount = BetAmount(0)) : Gamer(name) {
+class Player(name: String, private val betAmount: BetAmount = BetAmount(0)) : Gamer(name) {
     override val canGetCard: Boolean
         get() = !isBusted
 
@@ -22,5 +22,11 @@ class Player(name: String, val betAmount: BetAmount = BetAmount(0)) : Gamer(name
             dealerCards.getBestScore() < playerCards.getBestScore() -> MatchResult.WIN
             else -> MatchResult.DRAW
         }
+    }
+
+    fun getProfit(profitRate: Float): Int = (betAmount.amount * profitRate).toInt()
+
+    override fun calculateProfit(playerProfit: Int) {
+        profit += playerProfit
     }
 }

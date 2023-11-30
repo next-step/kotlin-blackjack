@@ -9,6 +9,7 @@ abstract class Gamer(val name: String) {
     lateinit var initialPublicCards: PlayerCards
 
     var profit = 0
+        protected set
 
     fun getInitialCards(cards: List<PlayingCard>) {
         for (card in cards) {
@@ -28,4 +29,5 @@ abstract class Gamer(val name: String) {
 
     abstract val canGetCard: Boolean
     abstract fun getInitialPublicCards(playerCards: PlayerCards): PlayerCards
+    abstract fun calculateProfit(playerProfit: Int)
 }

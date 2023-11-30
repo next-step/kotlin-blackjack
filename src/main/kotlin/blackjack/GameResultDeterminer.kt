@@ -5,11 +5,9 @@ object GameResultDeterminer {
         for (player in players) {
             val result = player vs dealer
 
-            val playerProfit = getProfit(player.betAmount, result.profitRate)
-            player.profit += playerProfit
-            dealer.profit -= playerProfit
+            val playerProfit = player.getProfit(result.profitRate)
+            player.calculateProfit(playerProfit)
+            dealer.calculateProfit(playerProfit)
         }
     }
-
-    private fun getProfit(betAmount: BetAmount, profitRate: Float): Int = (betAmount.amount * profitRate).toInt()
 }
