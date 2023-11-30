@@ -14,17 +14,43 @@ data class BlackJackGamer(
         printParticipantInformation: (Participant) -> Unit,
     ) {
         participants.forEach { participant ->
-            while (participant.canKeepPlayingGame()) {
-                askGetOneMoreCard(participant)
-                if (getOneMoreCardInput.invoke()) {
-                    participant.drawCard(cardDeque)
-                    printParticipantInformation(participant)
-                } else {
-                    participant.changeStateToStand()
-                    break
-                }
-            }
+            doBlackJackForEachParticipant(
+                participant,
+                askGetOneMoreCard,
+                getOneMoreCardInput,
+                cardDeque,
+                printParticipantInformation
+            )
         }
+    }
+
+    private fun doBlackJackForEachParticipant(
+        participant: Participant,
+        askGetOneMoreCard: (Participant) -> Unit,
+        getOneMoreCardInput: () -> Boolean,
+        cardDeque: CardDeque,
+        printParticipantInformation: (Participant) -> Unit
+    ) {
+        while (participant.canKeepPlayingGame()) {
+            askGetOneMoreCard(participant)
+            if (drawOrStand(getOneMoreCardInput, participant, cardDeque, printParticipantInformation)) break
+        }
+    }
+
+    private fun drawOrStand(
+        getOneMoreCardInput: () -> Boolean,
+        participant: Participant,
+        cardDeque: CardDeque,
+        printParticipantInformation: (Participant) -> Unit
+    ): Boolean {
+        if (getOneMoreCardInput.invoke()) {
+            participant.drawCard(cardDeque)
+            printParticipantInformation(participant)
+        } else {
+            participant.changeStateToStand()
+            return true
+        }
+        return false
     }
 
     fun doDealerGame(cardDeque: CardDeque, printGetOneMoreCardForDealer: () -> Unit) {
