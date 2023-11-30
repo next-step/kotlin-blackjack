@@ -1,6 +1,7 @@
 package blackjack.domain.player
 
-import blackjack.domain.player.PlayerCards
+import blackjack.domain.Deck
+import blackjack.domain.Score
 import blackjack.helper.DeckHelper
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
@@ -20,4 +21,37 @@ class PlayerCardsTest : StringSpec({
         playerCards.values.size shouldBe 1
         playerCards.values shouldBe listOf(card)
     }
+
+    "카드의 총 점수를 계산한다." {
+        // given
+        val playerCards = PlayerCards()
+        val deck = DeckHelper.createMockDeck()
+        addCards(5, playerCards, deck)
+
+        // when
+        val score = playerCards.calculateScore()
+
+        // then
+        score shouldBe Score(15)
+    }
+
+    "카드에 에이스가 있으면, 에이스의 점수 규칙에 따라 블랙잭에 가까울 수 있도록 점수를 계산한다." {
+        // given
+        val playerCards = PlayerCards()
+        val deck = DeckHelper.createMockDeck()
+        addCards(2, playerCards, deck)
+
+        // when
+        val score = playerCards.calculateScore()
+
+        // then
+        score shouldBe Score(13)
+    }
 })
+
+private fun addCards(count: Int, playerCards: PlayerCards, deck: Deck) {
+    repeat(count) {
+        val card = deck.draw()
+        playerCards.add(card)
+    }
+}

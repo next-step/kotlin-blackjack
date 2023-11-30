@@ -18,4 +18,8 @@ enum class CardNumber(
     JACK(Score(10)),
     QUEEN(Score(10)),
     KING(Score(10));
+
+    fun isAce(): Boolean {
+        return this == ACE
+    }
 }
