@@ -2,6 +2,7 @@ package enum
 
 import domain.Amount
 import domain.BlackjackRules
+import domain.Card
 
 enum class GameResult(private val multiplier: Double) {
     WIN(2.0),
@@ -14,9 +15,12 @@ enum class GameResult(private val multiplier: Double) {
     }
 
     companion object {
-        fun determineForResultOfPlayer(playerTotalScore: Int, dealerTotalScore: Int, playerHasBlackjack: Boolean): GameResult {
+        fun determineForResultOfPlayer(playerTotalScore: Int, dealerTotalScore: Int, playerCards: List<Card>, dealerCards: List<Card>): GameResult {
+            val playerHasBlackjack = BlackjackRules.isBlackjack(playerCards)
+            val dealerHasBlackjack = BlackjackRules.isBlackjack(dealerCards)
+
             if (playerHasBlackjack) {
-                return if (dealerTotalScore == BlackjackRules.MAXIMUM_SCORE) DRAW else BLACKJACK_WIN
+                return if (dealerHasBlackjack) DRAW else BLACKJACK_WIN
             }
             return when {
                 BlackjackRules.isBust(playerTotalScore) -> LOSE
