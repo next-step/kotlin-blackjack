@@ -6,10 +6,10 @@ import blackJack.domain.player.Dealer
 import blackJack.domain.player.Participants
 import blackJack.domain.player.Player
 import blackJack.domain.result.Result
+import blackJack.dto.ResultDto.ResultDto
 import blackJack.dto.playerDto.DealerDto
 import blackJack.dto.playerDto.ParticipantsDto
 import blackJack.dto.playerDto.PlayerDto
-import blackJack.dto.ResultDto.ResultDto
 import blackJack.view.InputView
 import blackJack.view.OutputView
 
@@ -27,8 +27,6 @@ fun main() {
 
     val participantsDto = ParticipantsDto(participants)
     OutputView.printPlayerCards(participantsDto)
-
-    playGame(participants, cardDeck)
 
     val finishGameParticipants = playGame(participants, cardDeck)
     OutputView.printResult(finishGameParticipants)

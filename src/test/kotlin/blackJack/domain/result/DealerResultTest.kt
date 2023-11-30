@@ -15,23 +15,23 @@ class DealerResultTest {
     fun setUp() {
         winPlayersResult = PlayersResult(
             listOf(
-                PlayerResult("win1", BlackjackResult.WIN),
-                PlayerResult("win2", BlackjackResult.WIN)
-            )
+                PlayerResult("win1", 0, BlackjackResult.WIN),
+                PlayerResult("win2", 0, BlackjackResult.WIN),
+            ),
         )
 
         losePlayersResult = PlayersResult(
             listOf(
-                PlayerResult("lose1", BlackjackResult.LOSE),
-                PlayerResult("lose2", BlackjackResult.LOSE)
-            )
+                PlayerResult("lose1", 0, BlackjackResult.LOSE),
+                PlayerResult("lose2", 0, BlackjackResult.LOSE),
+            ),
         )
 
         drawPlayersResult = PlayersResult(
             listOf(
-                PlayerResult("draw1", BlackjackResult.DRAW),
-                PlayerResult("draw2", BlackjackResult.DRAW)
-            )
+                PlayerResult("draw1", 0, BlackjackResult.DRAW),
+                PlayerResult("draw2", 0, BlackjackResult.DRAW),
+            ),
         )
     }
 

@@ -17,7 +17,7 @@ class ParticipantsTest {
 
     @Test
     fun `리스트로 플레이어 이름을 넘기면 플레이어와 딜러가 생성된다`() {
-        val playerList = listOf("Player1", "Player2")
+        val playerList = listOf("Player1", "Player2").map { Player(it) }
         val participants = Participants.createParticipants(playerList)
 
         assertEquals(2, participants.players.players.size)
@@ -28,7 +28,7 @@ class ParticipantsTest {
 
     @Test
     fun `딜러와 플레이어들에게 2장씩 카드를 나눠준다`() {
-        val playerList = listOf("Player1", "Player2")
+        val playerList = listOf("Player1", "Player2").map { Player(it) }
         val participants = Participants.createParticipants(playerList)
 
         participants.receiveInitialCards { cardDeck.initialCards() }
