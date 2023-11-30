@@ -20,6 +20,9 @@ abstract class Player(open val name: String, scoringRule: ScoringRule) {
         get() = _cards.totalScore
         private set
 
+    var profit: Int = 0
+        private set
+
     fun beginGame(deck: Deck) {
         draw(deck)
         draw(deck)

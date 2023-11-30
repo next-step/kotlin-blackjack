@@ -24,7 +24,7 @@ enum class State(val isFinished: Boolean) {
     },
     BUST(true) {
         override fun profit(bet: Int): Int {
-            return 0
+            return bet
         }
     };
 

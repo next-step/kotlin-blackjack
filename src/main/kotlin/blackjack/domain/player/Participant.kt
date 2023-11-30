@@ -6,7 +6,11 @@ import blackjack.domain.rule.DefaultScoringRule
 import blackjack.domain.rule.ScoringRule
 import blackjack.domain.rule.State
 
-class Participant(override val name: String, private val scoringRule: ScoringRule) : Player(name, scoringRule) {
+class Participant(
+    override val name: String,
+    val bet: Int,
+    private val scoringRule: ScoringRule
+) : Player(name, scoringRule) {
 
     init {
         require(name.length <= 10) { "이름은 10자를 넘을 수 없습니다." }

@@ -15,7 +15,7 @@ fun main() {
     val scoringRule = DefaultScoringRule()
 
     val dealer: Player = Dealer(scoringRule)
-    val participants: List<Participant> = names.map { name -> Participant(name, scoringRule) }
+    val participants: List<Participant> = names.map { name -> Participant(name, 1000, scoringRule) }
     val allPlayers = listOf(dealer, *participants.toTypedArray())
     val deck = Deck()
 

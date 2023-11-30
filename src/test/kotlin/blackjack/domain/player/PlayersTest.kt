@@ -12,8 +12,8 @@ class PlayersTest {
     fun `Players 객체는 플레이어의 리스트를 받아서 생성`() {
         val players = Players(
             listOf(
-                Participant("p1", DefaultScoringRule()),
-                Participant("p2", DefaultScoringRule()),
+                Participant("p1", 1000, DefaultScoringRule()),
+                Participant("p2", 1000, DefaultScoringRule()),
                 Dealer(DefaultScoringRule())
             )
         )
@@ -24,8 +24,8 @@ class PlayersTest {
     @Test
     fun `Players에 플레이어들이 모두 턴이 종료되었는지 판단할 수 있다`() {
         val deck = Deck()
-        val p1 = Participant("p1", DefaultScoringRule())
-        val p2 = Participant("p2", DefaultScoringRule())
+        val p1 = Participant("p1", 1000, DefaultScoringRule())
+        val p2 = Participant("p2", 1000, DefaultScoringRule())
         val players = Players(listOf(p1, p2))
         p1.beginGame(deck)
         p2.beginGame(deck)

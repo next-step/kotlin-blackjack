@@ -11,4 +11,16 @@ object GameResults {
 
         return results
     }
+
+    fun winners(dealer: Dealer, participants: List<Participant>): List<Participant> {
+        val winners = mutableListOf<Participant>()
+
+        participants.map {
+            if (it.compareWith(dealer) == GameResult.WIN) {
+                winners.add(it)
+            }
+        }
+
+        return winners
+    }
 }

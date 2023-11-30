@@ -11,8 +11,8 @@ class GameResultsTest {
     @Test
     fun `딜러와 참가자 리스트를 받으면, 전체 참가자의 GameResult 리스트를 반환 - 딜러 결과, 1승 1패`() {
         val dealer = Dealer(TestScoringRule(20))
-        val p1 = Participant("p1", TestScoringRule(21))
-        val p2 = Participant("p2", TestScoringRule(17))
+        val p1 = Participant("p1", 1000, TestScoringRule(21))
+        val p2 = Participant("p2", 1000, TestScoringRule(17))
         val participants = listOf(p1, p2)
 
         val gameResults = GameResults.results(dealer, participants)
@@ -25,8 +25,8 @@ class GameResultsTest {
     @Test
     fun `딜러와 참가자 리스트를 받으면, 전체 참가자의 GameResult 리스트를 반환 - 딜러 결과, 2패`() {
         val dealer = Dealer(TestScoringRule(22))
-        val p1 = Participant("p1", TestScoringRule(21))
-        val p2 = Participant("p2", TestScoringRule(17))
+        val p1 = Participant("p1", 1000, TestScoringRule(21))
+        val p2 = Participant("p2", 1000, TestScoringRule(17))
         val participants = listOf(p1, p2)
 
         val gameResults = GameResults.results(dealer, participants)
@@ -39,9 +39,9 @@ class GameResultsTest {
     @Test
     fun `딜러와 참가자 리스트를 받으면, 전체 참가자의 GameResult 리스트를 반환 - 딜러 결과, 1승 1패 1무`() {
         val dealer = Dealer(TestScoringRule(20))
-        val p1 = Participant("p1", TestScoringRule(21))
-        val p2 = Participant("p2", TestScoringRule(17))
-        val p3 = Participant("p3", TestScoringRule(20))
+        val p1 = Participant("p1", 1000, TestScoringRule(21))
+        val p2 = Participant("p2", 1000, TestScoringRule(17))
+        val p3 = Participant("p3", 1000, TestScoringRule(20))
         val participants = listOf(p1, p2, p3)
 
         val gameResults = GameResults.results(dealer, participants)
