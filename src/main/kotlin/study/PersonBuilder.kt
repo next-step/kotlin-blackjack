@@ -15,11 +15,15 @@ class PersonBuilder {
     }
 
     fun skills(block: SkillsBuilder.() -> Unit) {
-        skills = SkillsBuilder().apply(block).build()
+        skills = SkillsBuilder()
+            .apply(block)
+            .build()
     }
 
     fun languages(block: LanguagesBuilder.() -> Unit) {
-        languages = LanguagesBuilder().apply(block).build()
+        languages = LanguagesBuilder()
+            .apply(block)
+            .build()
     }
     fun build(): Person {
         return Person(name, company, skills, languages)
