@@ -5,7 +5,7 @@ import domain.BlackjackRules
 import domain.Card
 
 enum class GameResult(private val multiplier: Double) {
-    WIN(2.0),
+    WIN(1.0),
     BLACKJACK_WIN(1.5),
     LOSE(-1.0),
     DRAW(0.0);
