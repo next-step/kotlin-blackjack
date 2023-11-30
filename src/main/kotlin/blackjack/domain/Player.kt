@@ -8,8 +8,4 @@ class Player(name: String) : Participant(name) {
     override fun receiveCard(card: Card) {
         state = state.draw(card)
     }
-
-    infix fun versus(dealer: Dealer): GameResult {
-        return GameResult.resultOfPlayer(this, dealer)
-    }
 }

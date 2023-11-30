@@ -34,13 +34,13 @@ object OutputView {
         }
     }
 
-    fun printPlayerGameResult(players: Players, gameResults: List<GameResult>) {
+    fun printPlayerGameResult(players: Players, gameResults: GameResults) {
         gameResults.forEachIndexed { index, gameResult ->
             println("${players[index].name}: ${gameResult.message}")
         }
     }
 
-    fun printDealerGameResult(gameResults: List<GameResult>) {
+    fun printDealerGameResult(gameResults: GameResults) {
         println()
         val result = gameResults.groupingBy { it }.eachCount().toList()
             .joinToString(" ") { "${it.second}${it.first.message}" }

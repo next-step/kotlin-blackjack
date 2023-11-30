@@ -8,9 +8,5 @@ class Dealer(name: String) : Participant(name) {
         state = state.draw(card)
         if (isOverScore(cards, DEALER_SCORE_THRESHOLD)) turnStand()
     }
-
-    infix fun versus(players: Players): List<GameResult> {
-        return GameResult.resultOfDealer(players, this)
-    }
 }
 

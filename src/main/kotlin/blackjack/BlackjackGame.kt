@@ -2,6 +2,8 @@ package blackjack
 
 import blackjack.domain.Dealer
 import blackjack.domain.Deck
+import blackjack.domain.GameResult
+import blackjack.domain.toGameResults
 import blackjack.domain.Participants
 import blackjack.domain.Player
 import blackjack.domain.Players
@@ -53,11 +55,12 @@ class BlackjackGame {
 
     private fun showGameResult() {
         OutputView.printGameScore(participants)
-        OutputView.printDealerGameResult(dealer versus players)
 
-        val playerGameResults = players.map { player ->
-            player versus dealer
-        }
+        val playerGameResults = players
+            .map { GameResult.resultOfPlayer(it, dealer) }
+            .toGameResults()
+
+        OutputView.printDealerGameResult(playerGameResults.getOpposite())
         OutputView.printPlayerGameResult(players, playerGameResults)
     }
 }
