@@ -3,21 +3,33 @@ package blackjack.view
 import blackjack.domain.*
 
 object OutputView {
-    fun printPlayerStates(participants: List<Participant>, initialDealSize: Int) {
-        val names = participants.joinToString(", ") { it.name }
-        println("\n${names}에게 ${initialDealSize}장의 나누었습니다.")
-        participants.forEach {
-            printParticipantCards(it)
+    fun printDealingHeader(playerNames: String) {
+        println("\n딜러와 ${playerNames}에게 ${Deck.INITIAL_DEAL_SIZE}장의 나누었습니다.")
+    }
+
+    fun printParticipantCards(participants: Participants) {
+        participants.dealer.let {
+            printDealerCard(it.name, it.cards)
+        }
+        participants.players.forEach {
+            printPlayerCards(it.name, it.cards)
         }
         println()
     }
 
-    fun printParticipantCards(participant: Participant) {
-        println("${participant.name}카드: ${participant.cards}")
+    private fun printDealerCard(name: String, cards: Cards) {
+        println("${name}카드: ${cards.values.first()}")
     }
 
-    fun printGameScore(participants: List<Participant>) {
-        participants.forEach {
+    fun printPlayerCards(name: String, cards: Cards) {
+        println("${name}카드: $cards")
+    }
+
+    fun printGameScore(participants: Participants) {
+        participants.dealer.let {
+            print("\n${it.name} 카드: ${it.cards} - 결과: ${it.cards.toScore()}")
+        }
+        participants.players.forEach {
             print("\n${it.name}카드: ${it.cards} - 결과: ${it.cards.toScore()}")
         }
     }
@@ -33,6 +45,10 @@ object OutputView {
         val result = gameResults.groupingBy { it }.eachCount().toList()
             .joinToString(" ") { "${it.second}${it.first.message}" }
         println("\n딜러: $result")
+    }
+
+    fun printDealerReceiveMessage() {
+        println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.")
     }
 
 }

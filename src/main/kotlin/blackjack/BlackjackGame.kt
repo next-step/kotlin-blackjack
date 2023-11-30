@@ -2,19 +2,19 @@ package blackjack
 
 import blackjack.domain.Dealer
 import blackjack.domain.Deck
-import blackjack.domain.GameResult
+import blackjack.domain.Participants
 import blackjack.domain.Player
 import blackjack.domain.Players
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
 class BlackjackGame {
+    private val deck = Deck()
+    private val dealer = Dealer("딜러")
     private val players = Players(
         InputView.getNicknames().map(::Player)
     )
-    private val deck = Deck()
-    private val dealer = Dealer("딜러")
-    private val participants = listOf(dealer) + players
+    private val participants = Participants(dealer, players)
 
     fun start() {
         dealCards()
@@ -23,12 +23,13 @@ class BlackjackGame {
     }
 
     private fun dealCards() {
-        participants.forEach {
+        participants.getAll().forEach {
             it.receiveInitialCards(
                 deck.draw(Deck.INITIAL_DEAL_SIZE)
             )
         }
-        OutputView.printPlayerStates(participants, Deck.INITIAL_DEAL_SIZE)
+        OutputView.printDealingHeader(players.getNames())
+        OutputView.printParticipantCards(participants)
     }
 
     private fun process() {
@@ -37,13 +38,14 @@ class BlackjackGame {
         }
         if (dealer.canReceiveOneMoreCard()) {
             dealer.receiveCard(deck.draw())
+            OutputView.printDealerReceiveMessage()
         }
     }
 
     private fun Player.playGame() {
         if (InputView.askHitOrStand(this.name)) {
             this.receiveCard(deck.draw())
-            OutputView.printParticipantCards(this)
+            OutputView.printPlayerCards(this.name, this.cards)
         } else {
             this.turnStand()
         }
