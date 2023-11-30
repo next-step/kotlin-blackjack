@@ -16,9 +16,9 @@ class Deck(val cards: Cards) {
             val cards = Suit.values().flatMap { suit ->
                 Denomination.values().map { denomination ->
                     Card(denomination, suit)
-                }.shuffled()
+                }
             }
-            return Deck(Cards.from(cards))
+            return Deck(Cards.from(cards.shuffled()))
         }
     }
 }

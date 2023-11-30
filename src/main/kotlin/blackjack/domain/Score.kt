@@ -1,6 +1,7 @@
 package blackjack.domain
 
 class Score(private val denominations: List<Denomination>) {
+
     fun calculate(): Int {
         var score = denominations.sumOf { it.score }
         var numOfAce = denominations.count { it == Denomination.ACE }

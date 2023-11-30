@@ -12,13 +12,12 @@ object ResultView {
         println("${player.name}카드: ${player.cards.cards}")
     }
 
-    fun printResult(player: Player) {
-        print("\n${player.name}카드: ${player.cards.cards} - 결과: ${player.getScore()}")
+
+    fun showPlayerResult(players: List<Player>) {
+        println()
+        for (player in players) {
+            println("${player.name}카드: ${player.cards.cards} - 결과: ${player.getScore()}")
+        }
     }
 
-
-    // player가 가지고 잇는 card 리스트를
-    private fun Player.cardToString() : String{
-        return ""
-    }
 }

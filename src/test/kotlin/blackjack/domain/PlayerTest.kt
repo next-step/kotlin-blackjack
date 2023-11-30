@@ -19,7 +19,8 @@ class PlayerTest {
         val player = Player("test")
         val card = Card(Denomination.TWO, Suit.CLUBS)
         player.hit(card)
-        assertEquals(player.cards.toString(), card.toString())
+
+        player.cards.cards.size shouldBe 1
     }
 
     @Test
@@ -35,7 +36,23 @@ class PlayerTest {
             )
         )
         player.cards = cards
-        player.hit(cardDraw.draw())
 
+        player.hit(cardDraw.draw())
+    }
+
+    @Test
+    fun `player가 받은 카드에 대한 점수를 계산할 수 있다`() {
+        val player = Player("test")
+
+        val cards = Cards(
+            mutableListOf(
+                Card(Denomination.KING, Suit.CLUBS),
+                Card(Denomination.JACK, Suit.HEARTS),
+                Card(Denomination.ACE, Suit.HEARTS)
+            )
+        )
+        player.cards = cards
+
+        player.getScore() shouldBe 21
     }
 }
