@@ -8,6 +8,7 @@ abstract class AbstractPlayer(
     val name: String
 ) {
     var cards: List<BlackJackCard> = emptyList()
+    val isBust get() = resultScore() > 21
 
     fun drawCard(cards: List<BlackJackCard>) {
         this.cards += cards

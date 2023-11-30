@@ -58,4 +58,19 @@ class PlayerTest {
 
         player.shouldDraw() shouldBe false
     }
+
+    @Test
+    fun `플레이어는 카드 점수 합계가 21이상이면 버스트 상태가 된다`() {
+        val name = "홍길동"
+        val player = Player(name, scoreCalculator)
+        player.drawCard(
+            listOf(
+                NormalCard(9, CardPattern.CLOVER),
+                PictureCard(CardPicture.KING, CardPattern.CLOVER),
+                PictureCard(CardPicture.KING, CardPattern.SPADE)
+            )
+        )
+
+        player.isBust shouldBe true
+    }
 }
