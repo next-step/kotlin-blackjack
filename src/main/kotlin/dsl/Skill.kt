@@ -1,5 +1,12 @@
 package dsl
 
-data class Skill(
-    val value: String,
-)
+sealed interface Skill {
+    val value: String
+
+    data class Soft(
+        override val value: String,
+    ) : Skill
+    data class Hard(
+        override val value: String,
+    ) : Skill
+}
