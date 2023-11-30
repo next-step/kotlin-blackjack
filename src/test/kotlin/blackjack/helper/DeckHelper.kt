@@ -1,8 +1,8 @@
 package blackjack.helper
 
+import blackjack.domain.Deck
 import blackjack.domain.card.Card
 import blackjack.domain.card.CardShuffler
-import blackjack.domain.Deck
 
 object DeckHelper {
 

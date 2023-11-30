@@ -63,8 +63,10 @@ object InputView {
         return when (userInput) {
             YesOrNo.YES.value, YesOrNo.YES.value.uppercase(Locale.getDefault()),
             YesOrNo.NO.value, YesOrNo.NO.value.uppercase(Locale.getDefault()) -> UserInput.Success(userInput)
-            else -> UserInput.Failure("${YesOrNo.YES.value}(${YesOrNo.YES.value.uppercase(Locale.getDefault())}) " +
-                    "또는 ${YesOrNo.NO.value}(${YesOrNo.NO.value.uppercase(Locale.getDefault())})만 입력 가능합니다.")
+            else -> UserInput.Failure(
+                "${YesOrNo.YES.value}(${YesOrNo.YES.value.uppercase(Locale.getDefault())}) " +
+                    "또는 ${YesOrNo.NO.value}(${YesOrNo.NO.value.uppercase(Locale.getDefault())})만 입력 가능합니다."
+            )
         }
     }
 
