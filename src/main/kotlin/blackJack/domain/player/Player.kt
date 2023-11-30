@@ -2,10 +2,9 @@ package blackJack.domain.player
 
 import blackJack.domain.card.Cards
 import blackJack.domain.enums.Status
-import blackJack.domain.enums.Status.HIT
 import blackJack.error.ErrorMessage
 
-class Player(val name: String, cards: Cards = Cards(emptyList()), status: Status = HIT) : Participant(status, cards) {
+class Player(val name: String) : Participant() {
 
     init {
         require(name.isNotEmpty()) { ErrorMessage.EMPTY_NAME.message }

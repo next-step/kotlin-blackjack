@@ -1,10 +1,8 @@
 package blackJack.domain.player
 
-import blackJack.domain.card.Cards
-import blackJack.domain.enums.Status
 import blackJack.domain.enums.Status.*
 
-class Dealer(val name: String, cards: Cards = Cards(emptyList()), status: Status = HIT) : Participant(status, cards) {
+class Dealer(val name: String) : Participant() {
 
     override fun isContinued(): Boolean {
         val totalScore = cards.calculateTotalScore()

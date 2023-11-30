@@ -4,7 +4,7 @@ import blackJack.domain.card.Card
 import blackJack.domain.card.Cards
 import blackJack.domain.enums.Status
 
-open class Participant(var status: Status, var cards: Cards) {
+open class Participant(var status: Status = Status.HIT, var cards: Cards = Cards(emptyList())) {
 
     fun getTotalScore(): Int = cards.calculateTotalScore()
 

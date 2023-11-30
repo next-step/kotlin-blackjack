@@ -18,8 +18,10 @@ class PlayerResultTest {
 
     @BeforeEach
     fun setUp() {
-        player = Player(name = "test1", cards = Cards(listOf(Card(Suit.SPADE, Rank.KING), Card(Suit.SPADE, Rank.QUEEN))))
-        dealer = Dealer(name = "dealer", cards = Cards(listOf(Card(Suit.SPADE, Rank.KING), Card(Suit.SPADE, Rank.QUEEN))))
+        player = Player(name = "test1")
+        player.cards = Cards(listOf(Card(Suit.SPADE, Rank.KING), Card(Suit.SPADE, Rank.QUEEN)))
+        dealer = Dealer(name = "dealer")
+        dealer.cards = Cards(listOf(Card(Suit.SPADE, Rank.KING), Card(Suit.SPADE, Rank.QUEEN)))
     }
 
     @Test

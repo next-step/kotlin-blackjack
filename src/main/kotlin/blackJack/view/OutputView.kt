@@ -15,12 +15,12 @@ object OutputView {
     fun printEnterName() = println(ENTER_NAME)
     fun printPlayer(splitNames: List<String>) {
         val names = splitNames.joinToString(", ")
-        println(names + BETTING)
+        println("딜러와 $names $BETTING")
     }
 
     fun printPlayerCards(participants: ParticipantsDto) {
         val dealerCardInfo = participants.dealer.cardsDto.cardDtos.joinToString(", ") { "${it.rank} ${it.suit}" }
-        println("딜러 카드: $dealerCardInfo")
+        println("딜러 : $dealerCardInfo")
 
         participants.players.forEach { players ->
             val playersCardsInfo = players.cardsDto.cardDtos.joinToString(", ") { "${it.rank} ${it.suit}" }
