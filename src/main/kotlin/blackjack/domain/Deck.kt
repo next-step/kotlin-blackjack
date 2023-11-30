@@ -19,5 +19,4 @@ value class Deck(private val cards: MutableSet<Card>) {
 
         fun getDeck(): Deck = preparedDeck.toMutableSet().let(::Deck)
     }
-
 }

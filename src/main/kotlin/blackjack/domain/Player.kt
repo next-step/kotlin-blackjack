@@ -4,6 +4,8 @@ data class Player(val name: String, val hand: Hand = Hand()) {
     var state: PlayerState = PlayerState.READY
         private set
 
+    val resultScore: Score by lazy { decideScore() }
+
     fun init(deck: Deck) {
         check(state == PlayerState.READY) { "can only 'init' if the 'PlayerState' is 'READY'" }
         repeat(Rule.INIT_CARD_COUNT) { hand.add(deck.draw()) }
@@ -25,13 +27,18 @@ data class Player(val name: String, val hand: Hand = Hand()) {
         val score = hand.getBestScore()
         val count = hand.getCardCount()
         state = when {
+            score.value < Rule.BLACKJACK_SCORE -> PlayerState.UNDER
             score.value > Rule.BLACKJACK_SCORE -> PlayerState.BUST
-            score.value == Rule.BLACKJACK_SCORE -> when (count == Rule.BLACKJACK_CARD_COUNT) {
+            else -> when (count == Rule.BLACKJACK_CARD_COUNT) {
                 true -> PlayerState.BLACKJACK
                 false -> PlayerState.STAY
             }
-            else -> PlayerState.UNDER
         }
+    }
+
+    private fun decideScore(): Score {
+        check(state == PlayerState.STAY || state == PlayerState.BLACKJACK || state == PlayerState.BUST) { "can't decide score until the action is over" }
+        return hand.getBestScore()
     }
 }
 

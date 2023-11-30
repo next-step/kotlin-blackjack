@@ -41,4 +41,29 @@ class PlayerTest {
         player.updateState()
         assertEquals(PlayerState.UNDER, player.state)
     }
+
+    @Test
+    fun `만들 수 있는 최종 점수가 모두 블랙잭 기준치(21)를 넘는다면 버스트이다`() {
+        val cards: MutableList<Card> = mutableListOf(
+            Card(Suit.HEART, Rank.TEN),
+            Card(Suit.CLUB, Rank.TEN),
+            Card(Suit.CLUB, Rank.TWO),
+        )
+        val hand: Hand = Hand(cards)
+        val player: Player = Player("test", hand)
+        player.updateState()
+        assertEquals(PlayerState.BUST, player.state)
+    }
+
+    @Test
+    fun `최종 점수가 블랙잭 기준치(21)이고 가진 카드가 2장이면 블랙잭이다`() {
+        val cards: MutableList<Card> = mutableListOf(
+            Card(Suit.HEART, Rank.TEN),
+            Card(Suit.CLUB, Rank.ACE),
+        )
+        val hand: Hand = Hand(cards)
+        val player: Player = Player("test", hand)
+        player.updateState()
+        assertEquals(PlayerState.BLACKJACK, player.state)
+    }
 }

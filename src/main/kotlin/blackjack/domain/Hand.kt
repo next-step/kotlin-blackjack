@@ -10,13 +10,20 @@ value class Hand(private val cards: MutableList<Card> = mutableListOf()) {
     fun getBestScore(): Score {
         val scoreSums = mutableSetOf<Score>()
         calculateScoreSums(cards.toList(), 0, Score.from(0), scoreSums)
-        return scoreSums
-            .filter { it.value <= Rule.BLACKJACK_SCORE }
-            .maxBy { it.value }
+        return when (scoreSums.minBy { it.value }.value <= Rule.BLACKJACK_SCORE) {
+            true -> {
+                scoreSums
+                    .filter { it.value <= Rule.BLACKJACK_SCORE }
+                    .maxBy { it.value }
+            }
+            false -> {
+                scoreSums.minBy { it.value }
+            }
+        }
     }
 
     private fun calculateScoreSums(cards: List<Card>, index: Int, sum: Score, sums: MutableSet<Score>) {
-        if(index == cards.size) {
+        if (index == cards.size) {
             sums.add(sum)
             return
         }
