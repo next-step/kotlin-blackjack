@@ -5,7 +5,7 @@ import blackjack.card.BlackJackCard
 
 class Dealer(
     scoreCalculator: ScoreCalculator
-) : AbstractPlayer(scoreCalculator, "딜러") {
+) : AbstractPlayer(scoreCalculator, DEALER_NAME) {
     override fun isDealer(): Boolean {
         return true
     }
@@ -16,5 +16,6 @@ class Dealer(
 
     companion object {
         private const val DEALER_SHOULD_DRAW_SCORE: Int = 16
+        private const val DEALER_NAME: String = "딜러"
     }
 }

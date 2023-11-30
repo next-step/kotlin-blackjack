@@ -6,27 +6,16 @@ import blackjack.card.CardPattern
 import blackjack.card.CardPicture
 import blackjack.card.NormalCard
 import blackjack.card.PictureCard
-import blackjack.participant.Dealer
+import blackjack.participant.AbstractPlayer
 import blackjack.participant.Player
 
 class OutputManager {
-
-    fun printFirstTurn(players: List<Player>) {
-        val names: String = players.joinToString(", ") { it.name }
-
-        println("${names}에게 두장의 카드를 나누었습니다.")
-    }
-
-    fun printPlayersCards(players: List<Player>) {
+    fun printPlayersCards(players: List<AbstractPlayer>) {
         players.forEach {
-            println("${it.name}: ${parsingCardsToString(it.cards)}")
-        }
-    }
-
-    fun printPlayersCards(players: List<Player>, dealer: Dealer) {
-        println("${dealer.name}: ${parsingCardsToString(dealer.cards)}")
-
-        players.forEach {
+            if (it.isDealer()) {
+                println("${it.name}: ${parsingCardsToString(it.cards.first())}")
+                return@forEach
+            }
             println("${it.name}: ${parsingCardsToString(it.cards)}")
         }
     }
@@ -35,12 +24,20 @@ class OutputManager {
         println("${player.name}: ${parsingCardsToString(player.cards)}")
     }
 
-    fun printPlayerResultGame(player: Player) {
+    fun printPlayerCards(player: AbstractPlayer) {
+        println("${player.name}: ${parsingCardsToString(player.cards)}")
+    }
+
+    fun printPlayerResultGame(player: AbstractPlayer) {
         println("${player.name} 카드: ${parsingCardsToString(player.cards)} - 결과: ${player.resultScore()}")
     }
 
     private fun parsingCardsToString(cards: List<BlackJackCard>): String {
         return cards.joinToString(", ") { parsingCardToString(it) }
+    }
+
+    private fun parsingCardsToString(cards: BlackJackCard): String {
+        return parsingCardToString(cards)
     }
 
     private fun parsingCardToString(card: BlackJackCard): String {
@@ -68,9 +65,9 @@ class OutputManager {
         }
     }
 
-    fun printFirstTurn(players: List<Player>, dealer: Dealer) {
+    fun printFirstTurn(players: List<AbstractPlayer>) {
         val names: String = players.joinToString(", ") { it.name }
 
-        println("${dealer.name}와 ${names}에게 2장의 카드를 나누었습니다.")
+        println("${names}에게 2장의 카드를 나누었습니다.")
     }
 }

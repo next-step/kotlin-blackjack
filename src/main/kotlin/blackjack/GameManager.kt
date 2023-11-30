@@ -1,6 +1,7 @@
 package blackjack
 
 import blackjack.card.CardDeck
+import blackjack.participant.AbstractPlayer
 import blackjack.participant.Dealer
 import blackjack.participant.Player
 import blackjack.ui.InputManager
@@ -10,7 +11,7 @@ class GameManager(
     private val inputManager: InputManager,
     private val outputManager: OutputManager
 ) {
-    private val players: List<Player>
+    private val players: List<AbstractPlayer>
     private val dealer: Dealer = Dealer(ScoreCalculator())
 
     init {
@@ -21,10 +22,11 @@ class GameManager(
         players.forEach { it.drawCard(CardDeck.draw(FIRST_DRAW)) }
         dealer.drawCard(CardDeck.draw(FIRST_DRAW))
 
-        outputManager.printFirstTurn(players, dealer)
-        outputManager.printPlayersCards(players, dealer)
+        outputManager.printFirstTurn(players)
+        outputManager.printPlayersCards(players)
 
         playBlackJack()
+        dealersTurn()
 
         players.forEach {
             outputManager.printPlayerResultGame(it)
@@ -32,16 +34,21 @@ class GameManager(
     }
 
     private fun playBlackJack() {
-        players.forEach {
+        players.filter { !it.isDealer() }.forEach {
             playerDraw(it)
         }
     }
 
-    private fun playerDraw(player: Player) {
+    private fun dealersTurn() {
+        players.filter { it.isDealer() }.forEach {
+            playerDraw(it)
+        }
+    }
+    private fun playerDraw(player: AbstractPlayer) {
         var drawAmount = -1
 
         while (player.shouldDraw() && drawAmount != 0) {
-            drawAmount = inputManager.inputShouldDrawCard(player.name)
+            drawAmount = inputManager.inputShouldDrawCard(player)
             if (playerChooseDraw(drawAmount)) {
                 player.drawCard(CardDeck.draw(drawAmount))
             }
@@ -51,9 +58,9 @@ class GameManager(
 
     private fun playerChooseDraw(drawAmount: Int) = drawAmount > 0
 
-    private fun joinPlayers(): List<Player> {
+    private fun joinPlayers(): List<AbstractPlayer> {
         val playerNames: List<String> = inputManager.inputPlayerNames()
-        return playerNames.map { Player(it, ScoreCalculator()) }
+        return listOf(Dealer(ScoreCalculator())) + playerNames.map { Player(it, ScoreCalculator()) }
     }
 
     companion object {
