@@ -6,6 +6,6 @@ data class ResultDto(val playersResult: PlayersResultDto, val dealerResult: Deal
 
     constructor(result: Result) : this(
         PlayersResultDto(result.playersResult.playersResult.map { PlayerResultDto(it) }),
-        DealerResultDto(result.dealerResult.win, result.dealerResult.lose)
+        DealerResultDto(result.dealerResult.blackJackWin, result.dealerResult.win, result.dealerResult.draw, result.dealerResult.lose),
     )
 }

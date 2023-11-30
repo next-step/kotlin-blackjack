@@ -4,7 +4,7 @@ import blackJack.domain.card.Cards
 import blackJack.domain.enums.Status
 import blackJack.error.ErrorMessage
 
-class Player(val name: String, val reward: Int = 0) : Participant() {
+class Player(val name: String, val bettingPrice: Int = 0) : Participant() {
 
     init {
         require(name.isNotEmpty()) { ErrorMessage.EMPTY_NAME.message }
