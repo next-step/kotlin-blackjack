@@ -1,24 +1,25 @@
 package player
 
-import BlackJackCalculator
 import card.PlayingCard
+import card.deck.PlayerDeck
 
 class Player(val name: String) {
 
-    var status = Status.PLAYING
+    var status = Status.START
         private set
 
-    private var _cardList = mutableListOf<PlayingCard>()
-    val cardList: List<PlayingCard>
-        get() = _cardList
+    var playerDeck = PlayerDeck()
+        private set
 
     fun playDone() {
         updatePlayerStatus(Status.STAND)
     }
 
     fun saveCard(card: PlayingCard) {
-        _cardList.add(card)
+        playerDeck.addCard(card)
     }
+
+    fun cardDeckSize() = playerDeck.cardDeck.size
 
     fun updateStatus() {
         val newStatus = determineStatus()
@@ -26,11 +27,22 @@ class Player(val name: String) {
     }
 
     private fun determineStatus(): Status {
-        val totalPoint = BlackJackCalculator.calculate(_cardList)
-        return when {
-            (totalPoint <= 20) -> Status.PLAYING
-            else -> Status.STAND
+        val totalPoint = playerDeck.getResultPoint()
+
+        if (totalPoint > 21) {
+            return Status.BUST
         }
+
+        if (isBlackJack()) {
+            return Status.BLACK_JACK
+        }
+
+        return Status.PLAYING
+    }
+
+    private fun isBlackJack(): Boolean {
+        val totalPoint = playerDeck.getResultPoint()
+        return playerDeck.cardDeckSize() == 2 && totalPoint == 21
     }
 
     private fun updatePlayerStatus(status: Status) {

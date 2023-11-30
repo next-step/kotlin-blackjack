@@ -1,5 +1,5 @@
 package player
 
 enum class Status {
-    PLAYING, STAND
+    START, PLAYING, STAND, BLACK_JACK, BUST
 }

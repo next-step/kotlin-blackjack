@@ -19,12 +19,14 @@ class PlayerDeck(override val cardDeck: MutableList<PlayingCard> = mutableListOf
         return point
     }
 
+    fun cardDeckSize() = cardDeck.size
+
     private fun isContainAce(): Boolean {
         return cardDeck.any { it.getCardRank() == CardRank.ACE }
     }
 
     private fun addAcePoint(point: Int): Int {
-        return if (point < 11) {
+        return if (point <= 11) {
             ADD_ACE_POINT
         } else {
             ADD_ACE_POINT_NONE
