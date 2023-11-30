@@ -12,38 +12,40 @@ class GameManager(
     private val outputManager: OutputManager
 ) {
     private val players: List<AbstractPlayer>
-    private val dealer: Dealer = Dealer(ScoreCalculator())
-
     init {
         players = joinPlayers()
     }
 
     fun start() {
         players.forEach { it.drawCard(CardDeck.draw(FIRST_DRAW)) }
-        dealer.drawCard(CardDeck.draw(FIRST_DRAW))
 
         outputManager.printFirstTurn(players)
         outputManager.printPlayersCards(players)
 
-        playBlackJack()
-        dealersTurn()
+        val result = playBlackJack()
 
         players.forEach {
             outputManager.printPlayerResultGame(it)
         }
+
+        outputManager.printResult(result)
     }
 
-    private fun playBlackJack() {
+    private fun playBlackJack(): GameResult {
         players.filter { !it.isDealer() }.forEach {
             playerDraw(it)
         }
+
+        dealersTurn()
+
+        return GameResult(players)
     }
 
     private fun dealersTurn() {
-        players.filter { it.isDealer() }.forEach {
-            playerDraw(it)
-        }
+        val dealer: AbstractPlayer = players.first { it.isDealer() }
+        playerDraw(dealer)
     }
+
     private fun playerDraw(player: AbstractPlayer) {
         var drawAmount = -1
 
