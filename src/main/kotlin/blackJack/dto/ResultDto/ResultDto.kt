@@ -9,4 +9,3 @@ data class ResultDto(val playersResult: PlayersResultDto, val dealerResult: Deal
         DealerResultDto(result.dealerResult.win, result.dealerResult.lose)
     )
 }
-
