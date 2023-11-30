@@ -12,7 +12,7 @@ class Cards(
         return values.joinToString(",  ")
     }
 
-    fun add(card: Card) {
+    fun add(vararg card: Card) {
         values = values + card
     }
 

@@ -12,12 +12,16 @@ import org.junit.jupiter.api.assertThrows
 
 class PlayerTest {
     @Test
-    fun `새로운 카드를 받았을 때 카드 점수가 21점 미만일 경우 사용자의 상태는 기본적으로 Hit(Running)이다`() {
+    fun `게임 시작 후 두 장의 카드를 받고 카드 점수가 21점 미만일 경우 사용자의 상태는 기본적으로 Hit(Running)이다`() {
         // given
         val player = Player("test")
-        val card = Card(Suit.SPADES, Denomination.ACE)
+
         // when
-        player.receiveCard(card)
+        player.receiveInitialCards(listOf(
+            Card(Suit.SPADES, Denomination.ACE),
+            Card(Suit.SPADES, Denomination.TWO)
+        ))
+
         // then
         assertEquals(true, player.state is Hit)
         assertEquals(true, player.state is Running)
@@ -61,7 +65,10 @@ class PlayerTest {
         val player = Player("test")
         val card = Card(Suit.SPADES, Denomination.ACE)
         // when
-        player.receiveCard(card)
+        player.receiveInitialCards(listOf(
+            Card(Suit.SPADES, Denomination.ACE),
+            Card(Suit.SPADES, Denomination.TWO)
+        ))
         player.turnStand()
         // then
         assertEquals(true, player.state is Stand)
@@ -75,6 +82,7 @@ class PlayerTest {
 
         // when
         player.receiveCard(Card(Suit.SPADES, Denomination.ACE))
+        player.receiveCard(Card(Suit.HEARTS, Denomination.TWO))
 
         // then
         assertEquals(true, player.canReceiveOneMoreCard())
