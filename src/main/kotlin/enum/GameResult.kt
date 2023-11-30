@@ -1,20 +1,16 @@
 package enum
 
+import domain.Amount
 import domain.BlackjackRules
 
-enum class GameResult {
-    WIN,
-    LOSE,
-    DRAW,
-    BLACKJACK_WIN;
+enum class GameResult(private val multiplier: Double) {
+    WIN(2.0),
+    BLACKJACK_WIN(1.5),
+    LOSE(-1.0),
+    DRAW(0.0);
 
-    fun calculateProfit(bettingAmount: Int): Int {
-        return when (this) {
-            WIN -> bettingAmount
-            BLACKJACK_WIN -> (bettingAmount * 1.5).toInt()
-            LOSE -> -bettingAmount
-            DRAW -> 0
-        }
+    fun calculateProfit(bettingAmount: Amount): Int {
+        return (bettingAmount.amount * multiplier).toInt()
     }
 
     companion object {
