@@ -1,12 +1,11 @@
 package blackjack
 
-abstract class Gamer(val name: String) {
-    val playerCards: PlayerCards = PlayerCards()
-
+abstract class Gamer(val name: String, val playerCards: PlayerCards = PlayerCards()) {
     val isBusted get() = playerCards.isBusted()
     val isBlackjack get() = playerCards.isBlackjack()
 
     lateinit var initialPublicCards: PlayerCards
+        private set
 
     var profit = 0
         protected set
