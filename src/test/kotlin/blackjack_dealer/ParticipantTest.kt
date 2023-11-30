@@ -2,6 +2,7 @@ package blackjack_dealer
 
 import blackjack_dealer.domain.Dealer
 import blackjack_dealer.domain.Participant
+import blackjack_dealer.dto.ParticipantBetAmount
 import blackjack_dealer.entity.AllParticipantWithBetAmount
 import blackjack_dealer.entity.BlackJackGamer
 import blackjack_dealer.entity.CardDeque
@@ -67,7 +68,9 @@ class ParticipantTest : StringSpec({
         val deque = CardDeque().create()
         val participantCard = cardDeque.generateDoubleCard()
         val dealerCard = cardDeque.generateDoubleCard()
-        val allParticipantWithBetAmount = AllParticipantWithBetAmount.newInstance("pita", betAmounts = listOf(1))
+        val allParticipantWithBetAmount = AllParticipantWithBetAmount.newInstance("pita", betAmounts = listOf(
+            ParticipantBetAmount(1)
+        ))
         val participants = Participants.newInstance(allParticipantWithBetAmount) { participantCard }
         val dealer = Dealer.newInstance(dealerCard)
         val blackjackGamer = BlackJackGamer(dealer, participants)

@@ -2,6 +2,7 @@ package blackjack_dealer.ui
 
 import blackjack_dealer.domain.Dealer
 import blackjack_dealer.domain.Participant
+import blackjack_dealer.dto.ParticipantBetAmount
 import blackjack_dealer.entity.AllParticipantWithBetAmount
 import blackjack_dealer.entity.ParticipantNamesWithBetAmount
 import blackjack_dealer.entity.Participants
@@ -14,7 +15,7 @@ object OutputView {
         println(ENTER_PARTICIPANTS_NAME)
     }
 
-    fun enterBetAmountEachParticipant(participants: String, inputBet: () -> Int): AllParticipantWithBetAmount {
+    fun enterBetAmountEachParticipant(participants: String, inputBet: () -> ParticipantBetAmount): AllParticipantWithBetAmount {
         val participantsName = participants.split(',')
         val betAmountList = participantsName.map { name ->
             println(ENTER_BET_AMOUNT.format(name))

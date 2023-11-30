@@ -1,6 +1,7 @@
 package blackjack_dealer
 
 import blackjack_dealer.domain.Dealer
+import blackjack_dealer.dto.ParticipantBetAmount
 import blackjack_dealer.entity.AllParticipantWithBetAmount
 import blackjack_dealer.entity.BlackJackGamer
 import blackjack_dealer.entity.CardDeque
@@ -21,7 +22,8 @@ class BlackJackTest : StringSpec({
             mutableListOf(Card(CardNumber.J, CardShape.HEART), Card(CardNumber.J, CardShape.CLOVER)).toGamerCards()
         val dealerCards =
             mutableListOf(Card(CardNumber.J, CardShape.SPADE), Card(CardNumber.THREE, CardShape.CLOVER)).toGamerCards()
-        val allParticipantWithBetAmount = AllParticipantWithBetAmount.newInstance("pita", betAmounts = listOf(1))
+        val allParticipantWithBetAmount =
+            AllParticipantWithBetAmount.newInstance("pita", betAmounts = listOf(ParticipantBetAmount(1)))
 
         val participant = Participants.newInstance(allParticipantWithBetAmount) { customCards }
         val dealer = Dealer.newInstance(dealerCards)
@@ -40,7 +42,7 @@ class BlackJackTest : StringSpec({
     }
 
     "블랙잭을 수행하여 한장 더 안받기 선택시에 카드의 숫자가 개수가 동일하다" {
-        val allParticipantWithBetAmount = AllParticipantWithBetAmount.newInstance("pita", betAmounts = listOf(1))
+        val allParticipantWithBetAmount = AllParticipantWithBetAmount.newInstance("pita", betAmounts = listOf(ParticipantBetAmount(1)))
         val participants = Participants.newInstance(allParticipantWithBetAmount) { cards }
         val dealerCards = cardDeque.generateDoubleCard()
         val dealer = Dealer.newInstance(dealerCards)

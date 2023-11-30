@@ -1,5 +1,7 @@
 package blackjack_dealer.ui
 
+import blackjack_dealer.dto.ParticipantBetAmount
+
 object InputView {
     fun inputParticipantsName(): String {
         val participants = readln().replace(", ", ",")
@@ -7,10 +9,9 @@ object InputView {
         return participants
     }
 
-    fun inputBetAmount(): Int {
+    fun inputBetAmount(): ParticipantBetAmount {
         val inputAmount = readln().toInt()
-        inputAmount.validateBetAmountValue()
-        return inputAmount
+        return ParticipantBetAmount(inputAmount)
     }
 
     fun inputGetOneMoreCard(): Boolean {

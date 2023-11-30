@@ -1,6 +1,7 @@
 package blackjack_dealer
 
 import blackjack_dealer.domain.Dealer
+import blackjack_dealer.dto.ParticipantBetAmount
 import blackjack_dealer.entity.AllParticipantWithBetAmount
 import blackjack_dealer.entity.CardDeque
 import blackjack_dealer.entity.Participants
@@ -18,7 +19,7 @@ class ParticipantsTest : StringSpec({
         CardDeque().create()
         val allParticipantWithBetAmount = AllParticipantWithBetAmount.newInstance(
             names = input,
-            betAmounts = listOf(1, 2, 3)
+            betAmounts = listOf(ParticipantBetAmount(1), ParticipantBetAmount(2), ParticipantBetAmount(3))
         )
         Participants.newInstance(
             allParticipantWithBetAmount,
@@ -33,7 +34,7 @@ class ParticipantsTest : StringSpec({
 
         val allParticipantWithBetAmount = AllParticipantWithBetAmount.newInstance(
             names = input,
-            betAmounts = listOf(1000, 2000)
+            betAmounts = listOf(ParticipantBetAmount(1000), ParticipantBetAmount(2000))
         )
         val participants = Participants.newInstance(
             allParticipantWithBetAmount,
@@ -70,7 +71,7 @@ class ParticipantsTest : StringSpec({
 
         val allParticipantWithBetAmount = AllParticipantWithBetAmount.newInstance(
             names = input,
-            betAmounts = listOf(1000, 2000)
+            betAmounts = listOf(ParticipantBetAmount(1000), ParticipantBetAmount(2000))
         )
         val participants = Participants.newInstance(
             allParticipantWithBetAmount,
@@ -107,7 +108,7 @@ class ParticipantsTest : StringSpec({
 
         val allParticipantWithBetAmount = AllParticipantWithBetAmount.newInstance(
             names = input,
-            betAmounts = listOf(1000, 2000)
+            betAmounts = listOf(ParticipantBetAmount(1000), ParticipantBetAmount(2000))
         )
         val participants = Participants.newInstance(
             allParticipantWithBetAmount,
@@ -143,7 +144,7 @@ class ParticipantsTest : StringSpec({
 
         val allParticipantWithBetAmount = AllParticipantWithBetAmount.newInstance(
             names = input,
-            betAmounts = listOf(1000)
+            betAmounts = listOf(ParticipantBetAmount(1000))
         )
         val participants = Participants.newInstance(
             allParticipantWithBetAmount,
@@ -170,7 +171,7 @@ class ParticipantsTest : StringSpec({
 
         val allParticipantWithBetAmount = AllParticipantWithBetAmount.newInstance(
             names = input,
-            betAmounts = listOf(1000)
+            betAmounts = listOf(ParticipantBetAmount(1000))
         )
         val participants = Participants.newInstance(
             allParticipantWithBetAmount,
@@ -198,7 +199,7 @@ class ParticipantsTest : StringSpec({
 
         val allParticipantWithBetAmount = AllParticipantWithBetAmount.newInstance(
             names = input,
-            betAmounts = listOf(1000, 2000)
+            betAmounts = listOf(ParticipantBetAmount(1000), ParticipantBetAmount(2000))
         )
         val participants = Participants.newInstance(
             allParticipantWithBetAmount,
