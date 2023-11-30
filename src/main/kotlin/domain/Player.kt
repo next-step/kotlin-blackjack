@@ -2,10 +2,8 @@ package domain
 
 import enum.GameResult
 
-class Player(val name: String, val bettingAmount: Int) : AbstractCardHolder() {
-    init {
-        require(bettingAmount >= 0) { "베팅 금액은 음수가 될 수 없습니다." }
-    }
+class Player(val name: String, bettingAmount: Int) : AbstractCardHolder() {
+    val bettingAmount = Amount(bettingAmount)
 
     var result: GameResult = GameResult.DRAW
         private set
@@ -16,7 +14,7 @@ class Player(val name: String, val bettingAmount: Int) : AbstractCardHolder() {
     }
 
     fun calculateFinalProfit(): Int {
-        return result.calculateProfit(bettingAmount)
+        return result.calculateProfit(bettingAmount.amount)
     }
 
     private fun determineGameResult(playerTotalScore: Int, dealerScore: Int): GameResult {
