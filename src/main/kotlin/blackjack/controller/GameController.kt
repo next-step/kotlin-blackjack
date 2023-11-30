@@ -15,20 +15,23 @@ fun main() {
     val scoringRule = DefaultScoringRule()
 
     val dealer: Player = Dealer(scoringRule)
-    val participants: List<Player> = names.map { name -> Participant(name, scoringRule) }
+    val participants: List<Participant> = names.map { name -> Participant(name, scoringRule) }
     val allPlayers = listOf(dealer, *participants.toTypedArray())
     val deck = Deck()
 
     ConsoleResult.drawAllFirstTwoCards(participants)
-    allPlayers.forEach {
-        it.draw(deck)
-        it.draw(deck)
-    }
+    allPlayers.forEach { it.beginGame(deck) }
     ConsoleResult.printCardsOfPlayers(allPlayers)
 
-    val participantsEndedGame = Players()
-    while (participantsEndedGame.size < participants.size) {
-        participants.forEach { playParticipants(it, participantsEndedGame, deck) }
+    val participantsEndedGame = Players(participants)
+    while (!participantsEndedGame.isAllFinished()) {
+        participants
+            .filter { it.state.isFinished.not() }
+            .forEach {
+                val inputState = ConsoleInput.inputHitAndStay(it)
+                it.nextTurn(inputState, deck)
+                ConsoleResult.printCardsOfPlayer(it)
+            }
     }
 
     if (dealer.canDraw()) {
@@ -37,31 +40,6 @@ fun main() {
     }
     ConsoleResult.printCardsAndTotalScoreOfPlayers(allPlayers)
 
-    val gameResults = GameResults.results(dealer as Dealer, participants.map { it as Participant })
+    val gameResults = GameResults.results(dealer as Dealer, participants.map { it })
     ConsoleResult.printGameResults(dealer, gameResults)
-}
-
-private fun playParticipants(
-    player: Player,
-    playersOfWantedEndGame: Players,
-    deck: Deck
-) {
-    if (player.canDraw().not()) {
-        ConsoleResult.notifyParticipantCannotDraw(player)
-        playersOfWantedEndGame.add(player)
-    }
-
-    if (playersOfWantedEndGame.contains(player)) {
-        return
-    }
-
-    val drawOneMoreCard = ConsoleInput.inputGettingOneMoreCard(player)
-    if (drawOneMoreCard && player.canDraw()) {
-        player.draw(deck)
-        ConsoleResult.printCardsOfPlayer(player)
-    }
-
-    if (!drawOneMoreCard) {
-        playersOfWantedEndGame.add(player)
-    }
 }

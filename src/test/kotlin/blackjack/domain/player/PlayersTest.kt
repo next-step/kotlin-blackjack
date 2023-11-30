@@ -1,44 +1,38 @@
 package blackjack.domain.player
 
+import blackjack.domain.card.Deck
 import blackjack.domain.rule.DefaultScoringRule
+import blackjack.domain.rule.State
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
 class PlayersTest {
 
     @Test
-    fun `Players 객체는 참가자가 없는 상태로 생성`() {
-        val players = Players()
+    fun `Players 객체는 플레이어의 리스트를 받아서 생성`() {
+        val players = Players(
+            listOf(
+                Participant("p1", DefaultScoringRule()),
+                Participant("p2", DefaultScoringRule()),
+                Dealer(DefaultScoringRule())
+            )
+        )
 
-        players.size shouldBe 0
+        players.size shouldBe 3
     }
 
     @Test
-    fun `Players에 플레이어를 추가할 수 있다`() {
-        val players = Players()
-        players.add(Participant("p1", DefaultScoringRule()))
+    fun `Players에 플레이어들이 모두 턴이 종료되었는지 판단할 수 있다`() {
+        val deck = Deck()
+        val p1 = Participant("p1", DefaultScoringRule())
+        val p2 = Participant("p2", DefaultScoringRule())
+        val players = Players(listOf(p1, p2))
+        p1.beginGame(deck)
+        p2.beginGame(deck)
+        p1.nextTurn(State.STAY, deck)
+        p2.nextTurn(State.STAY, deck)
 
-        players.size shouldBe 1
-    }
-
-    @Test
-    fun `Players에 같은 Player를 추가하면 1개만 등록된다`() {
-        val players = Players()
-        val participant = Participant("p1", DefaultScoringRule())
-        players.add(participant)
-        players.add(participant)
-
-        players.size shouldBe 1
-    }
-
-    @Test
-    fun `Players에 같은 Player가 등록되어있는지 검사한다`() {
-        val players = Players()
-        val participant1 = Participant("p1", DefaultScoringRule())
-        val participant2 = Participant("p2", DefaultScoringRule())
-        players.add(participant1)
-
-        players.contains(participant1) shouldBe true
-        players.contains(participant2) shouldBe false
+        players.size shouldBe 2
+        players.isAllFinished() shouldBe true
     }
 }

@@ -1,14 +1,10 @@
 package blackjack.domain.player
 
-class Players {
-    private val _players: MutableSet<Player> = mutableSetOf()
+data class Players(private val players: List<Player>) {
+    var size: Int = players.size
+        private set
 
-    val size: Int get() = _players.size
-    fun add(player: Player) {
-        _players.add(player)
-    }
-
-    fun contains(player: Player): Boolean {
-        return _players.contains(player)
+    fun isAllFinished(): Boolean {
+        return players.all { it.isFinished }
     }
 }

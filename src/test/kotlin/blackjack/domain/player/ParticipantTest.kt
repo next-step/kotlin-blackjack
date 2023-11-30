@@ -3,6 +3,7 @@ package blackjack.domain.player
 import blackjack.domain.GameResult
 import blackjack.domain.card.Deck
 import blackjack.domain.rule.DefaultScoringRule
+import blackjack.domain.rule.State
 import blackjack.domain.rule.TestScoringRule
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.ints.shouldBeGreaterThan
@@ -114,5 +115,42 @@ class ParticipantTest {
         val dealer = Dealer(TestScoringRule(20))
 
         p1.compareWith(dealer) shouldBe GameResult.TIE
+    }
+
+    @Test
+    fun `참가자는 게임 시작 후 HIT을 입력하면 카드를 한 장 더 뽑는다`() {
+        val participant = Participant("parker", DefaultScoringRule())
+        val deck = Deck()
+
+        participant.beginGame(deck)
+        participant.nextTurn(State.HIT, deck)
+
+        participant.cards.size shouldBe 3
+    }
+
+    @Test
+    fun `참가자는 게임 시작 후, 21이 넘도록 HIT를 하면 BUST 상태로 바뀐다`() {
+        val participant = Participant("parker", DefaultScoringRule())
+        val deck = Deck()
+
+        participant.beginGame(deck)
+        do {
+            participant.nextTurn(State.HIT, deck)
+        } while (participant.canDraw())
+
+        participant.state shouldBe State.BUST
+        participant.isFinished shouldBe true
+    }
+
+    @Test
+    fun `참가자는 게임 시작 후 STAY를 입력하면 카드를 한 장 더 뽑는다`() {
+        val participant = Participant("parker", DefaultScoringRule())
+        val deck = Deck()
+
+        participant.beginGame(deck)
+        participant.nextTurn(State.STAY, deck)
+
+        participant.cards.size shouldBe 2
+        participant.isFinished shouldBe true
     }
 }

@@ -88,14 +88,26 @@
 ### 객체
 - Card / Deck : 카드를 생성하고 필요한 군집을 만들어줘서 제공해주는 역할
 - Player (Participant / Dealer) : 게임 상태를 결정하고, 그 상태 결과에 따라 서로 비교할 수 있다.
+  - Player는 카드 리스트, 상태, 베팅 금액을 갖는다.
+  - 생성하는 즉시, Player는 상태가 BEGIN이 되며, 카드 2장을 받는다.
 - Rule: 점수 계산 규칙과 게임 상태 규칙을 관리한다.
 
 ### TODO
-- [ ] Player는 자신의 상태를 갖고 있다.
+- [x] Player는 자신의 상태를 갖고 있다.
   - 상태(State) 종류
-    - BEGIN: 게임을 막 시작한 시점
-    - HIT: 최초 카드를 2장 뽑은 상태
+    - BEGIN: 게임을 시작하여 카드를 2장 받은 상태
+    - HIT: 최초 카드를 2장에서 한 장을 더 뽑은 상태
     - STAY: 카드를 더 이상 뽑지 않고, 차례를 마친 상태
     - BLACKJACK: 처음 2장의 카드 합이 21인 상태
     - BUST: 카드 총합이 21을 넘는 상태
 - [ ] State는 게임 규칙에 대한 전반적인 것을 관리한다.
+  - profit 으로 베팅 금액을 계산한다.
+  - isFinished 로 현재 상태가 끝난 상태인지 확인한다.
+  - next로 현재 플레이어의 상태로 다음 상태를 계산한다.
+    - BEGIN -> BLACKJACK (finished)
+    - BEGIN -> HIT
+    - BEGIN -> STAY (finished)
+    - HIT -> HIT
+    - HIT -> STAY (finished)
+    - HIT -> BUST (finished)
+    - 
