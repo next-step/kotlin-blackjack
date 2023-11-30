@@ -18,3 +18,7 @@ class Players(
         private const val MIN_PLAYER_COUNT = 2
     }
 }
+
+fun Players.forEach(action: (Player) -> Unit) {
+    values.forEach(action)
+}
