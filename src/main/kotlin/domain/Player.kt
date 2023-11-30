@@ -8,17 +8,12 @@ class Player(val name: String, bettingAmount: Int) : AbstractCardHolder() {
     var result: GameResult = GameResult.DRAW
         private set
 
-    fun determineResult(dealerScore: Int) {
+    fun determineResult(dealerScore: Int, dealerCards: List<Card>) {
         val playerTotalScore = calculateScore()
-        result = determineGameResult(playerTotalScore, dealerScore)
+        result = GameResult.determineForResultOfPlayer(playerTotalScore, dealerScore, showHand(), dealerCards)
     }
 
     fun calculateFinalProfit(): Int {
-        return result.calculateProfit(bettingAmount.amount)
-    }
-
-    private fun determineGameResult(playerTotalScore: Int, dealerScore: Int): GameResult {
-        val playerHasBlackjack = BlackjackRules.isBlackjack(showHand())
-        return GameResult.determineForResultOfPlayer(playerTotalScore, dealerScore, playerHasBlackjack)
+        return result.calculateProfit(bettingAmount)
     }
 }

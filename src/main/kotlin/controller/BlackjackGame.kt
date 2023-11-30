@@ -37,13 +37,16 @@ class BlackjackGame(private val inputView: InputView, private val outputView: Ou
     private fun concludeGame() {
         determineResults()
         outputView.showPlayerResults(players, dealer)
-        outputView.showFinalResults(players, dealer)
+        val dealerProfit = dealer.calculateProfit(players)
+        outputView.showFinalResults(players, dealer, dealerProfit)
     }
 
     private fun determineResults() {
         val dealerScore = dealer.calculateScore()
+        val dealerCards = dealer.showHand()
+
         players.forEach { player ->
-            player.determineResult(dealerScore)
+            player.determineResult(dealerScore, dealerCards)
         }
     }
 

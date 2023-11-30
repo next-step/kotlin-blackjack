@@ -2,7 +2,6 @@ package view
 
 import domain.Dealer
 import domain.Player
-import enum.GameResult
 
 class ConsoleOutputView : OutputView {
     override fun showGameState(players: List<Player>, dealer: Dealer) {
@@ -20,8 +19,7 @@ class ConsoleOutputView : OutputView {
         println("딜러: ${dealer.showHand().joinToString(", ")} - 결과: ${dealer.calculateScore()}")
     }
 
-    override fun showFinalResults(players: List<Player>, dealer: Dealer) {
-        val dealerProfit = calculateDealerProfit(players)
+    override fun showFinalResults(players: List<Player>, dealer: Dealer, dealerProfit: Int) {
         println("## 최종 수익")
         println("딜러: $dealerProfit")
         players.forEach { player ->
@@ -41,11 +39,5 @@ class ConsoleOutputView : OutputView {
 
     private fun calculateDealerProfit(players: List<Player>): Int {
         return players.sumOf { -it.calculateFinalProfit() }
-    }
-
-    private fun calculateDealerResult(players: List<Player>): String {
-        val wins = players.count { it.result == GameResult.LOSE }
-        val losses = players.count { it.result == GameResult.WIN }
-        return "${wins}승 ${losses}패"
     }
 }
