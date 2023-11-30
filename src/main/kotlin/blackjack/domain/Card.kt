@@ -1,20 +1,10 @@
 package blackjack.domain
 
-data class Card(val suit: Suit, val rank: Rank, val possibleScore: PossibleScore) {
-    companion object {
+data class Card(val suit: Suit, val rank: Rank) {
+    val possibleScore: PossibleScore = PossibleScore.getPossibleScore(rank)
 
-        private val cardPool: Set<Card> =
-            Suit.values().flatMap { suit ->
-                Rank.values().map { rank ->
-                    Card(suit = suit, rank = rank, possibleScore = PossibleScore.getPossibleScore(rank))
-                }
-            }.toSet()
-
-        fun getDeck(): Deck = cardPool.toMutableSet()
-    }
+    fun getPossibleScoreSums(score: Score): List<Score> = possibleScore.getPossibleScoreSums(score)
 }
-
-typealias Deck = MutableSet<Card>
 
 enum class Suit {
     HEART,
@@ -40,22 +30,28 @@ enum class Rank(val number: Int) {
 }
 
 @JvmInline
-value class PossibleScore(val values: Set<Int>) {
+value class PossibleScore(private val values: Set<Score>) {
+
+    fun getPossibleScoreSums(score: Score): List<Score> = values.map { score + it }
+
     companion object {
         fun getPossibleScore(rank: Rank) = when (rank) {
-            Rank.ACE -> setOf(1, 11)
-            Rank.TWO -> setOf(2)
-            Rank.THREE -> setOf(3)
-            Rank.FOUR -> setOf(4)
-            Rank.FIVE -> setOf(5)
-            Rank.SIX -> setOf(6)
-            Rank.SEVEN -> setOf(7)
-            Rank.EIGHT -> setOf(8)
-            Rank.NINE -> setOf(9)
-            Rank.TEN -> setOf(10)
-            Rank.JACK -> setOf(10)
-            Rank.QUEEN -> setOf(10)
-            Rank.KING -> setOf(10)
-        }.let { PossibleScore(it) }
+            Rank.ACE -> listOf(1, 11)
+            Rank.TWO -> listOf(2)
+            Rank.THREE -> listOf(3)
+            Rank.FOUR -> listOf(4)
+            Rank.FIVE -> listOf(5)
+            Rank.SIX -> listOf(6)
+            Rank.SEVEN -> listOf(7)
+            Rank.EIGHT -> listOf(8)
+            Rank.NINE -> listOf(9)
+            Rank.TEN -> listOf(10)
+            Rank.JACK -> listOf(10)
+            Rank.QUEEN -> listOf(10)
+            Rank.KING -> listOf(10)
+        }
+            .map(Score::from)
+            .toSet()
+            .let(::PossibleScore)
     }
 }
