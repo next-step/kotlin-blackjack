@@ -8,7 +8,6 @@ data class Participants(
 ) : List<Participant> by participants {
 
     fun getParticipantsCanPlayGame(): Participants = participants.filter { it.canKeepPlayingGame() }.toParticipants()
-    fun getParticipantsLoss(dealer: Dealer): Int = participants.sumOf { it.getResultBetAmount(dealer) } * -1
 
     companion object {
         fun newInstance(

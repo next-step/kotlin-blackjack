@@ -31,7 +31,7 @@ fun main() {
     OutputView.printResult(dealer, participants)
 
     OutputView.printFinalResultBoard()
-    val dealerResult = participants.getParticipantsLoss(dealer)
+    val dealerResult = dealer.getDealerProfits(participants)
     OutputView.printFinalDealerResult(dealerResult)
     OutputView.printFinalParticipantsResult(participants, dealer)
 }
