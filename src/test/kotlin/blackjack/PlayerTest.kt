@@ -76,6 +76,50 @@ class PlayerTest : FunSpec({
         }
     }
 
+    context("Player가 처음 뽑은 2장의 점수가 21 미만이면 Hit") {
+        val player = Player(
+            name = "김영태",
+            hand = Hand(
+                listOf(
+                    Card(number = CardNumber.ACE, shape = CardShape.SPADE),
+                    Card(number = CardNumber.NINE, shape = CardShape.HEART),
+                )
+            )
+        )
+
+        player.state shouldBe State.HIT
+    }
+
+    context("Player의 점수가 21 초과면 Bust") {
+        val player = Player(
+            name = "김영태",
+            hand = Hand(
+                listOf(
+                    Card(number = CardNumber.QUEEN, shape = CardShape.SPADE),
+                    Card(number = CardNumber.JACK, shape = CardShape.HEART),
+                    Card(number = CardNumber.THREE, shape = CardShape.HEART),
+                )
+            )
+        )
+
+        player.state shouldBe State.BUST
+    }
+
+    context("Player가 draw를 멈추면 Stay") {
+        val player = Player(
+            name = "김영태",
+            hand = Hand(
+                listOf(
+                    Card(number = CardNumber.ACE, shape = CardShape.SPADE),
+                    Card(number = CardNumber.THREE, shape = CardShape.HEART),
+                )
+            )
+        )
+        player.endTurn()
+
+        player.state shouldBe State.STAY
+    }
+
     context("Player가 처음 뽑은 2장의 점수가 21이면 Blackjack") {
         val player = Player(
             name = "김영태",
