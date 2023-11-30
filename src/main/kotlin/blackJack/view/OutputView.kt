@@ -35,8 +35,8 @@ object OutputView {
     }
 
     fun printAddDealer() {
-        println()
         println(PRINT_ADD_DEALER)
+        println()
     }
 
     fun printQuestionYesOrNo(playerDto: PlayerDto) {
@@ -55,10 +55,12 @@ object OutputView {
     }
 
     fun printWinner(resultDto: ResultDto) {
-        println("## 최종 승패")
-        println("딜러: " + resultDto.dealerResult.win + "승 " + resultDto.dealerResult.lose + "패")
+        println("## 최종 수익")
+        val dealerProfit = -resultDto.playersResult.playerResults.sumOf { (it.bettingPrice * it.result).toInt() }
+        println("딜러: $dealerProfit")
         resultDto.playersResult.playerResults.forEach {
-            println(it.name + ": " + it.result)
+            val profit = (it.bettingPrice * it.result).toInt()
+            println(it.name + ": " + profit)
         }
     }
 
