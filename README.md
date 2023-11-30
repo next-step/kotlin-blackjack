@@ -14,3 +14,10 @@
 - [x] Player는 점수가 21점을 초과하면 카드를 뽑을 수 없다.
 - [x] Player는 카드 뽑기를 멈출 수 있다.
 - [x] Player의 점수 총합을 출력한다.
+
+
+## step3
+- [ ] Dealer는 2장의 카드를 받고 시작한다. (Player와 동일)
+- [ ] Dealer는 16점 이하이면 Hit 상태, 이상이면 Stay, 21 초과면 Bust 상태이다
+- [ ] Dealer가 21점을 초과하면 Player는 전원 승리한다.
+- [ ] Player와 Dealer는 승부의 결과를 가진다.
