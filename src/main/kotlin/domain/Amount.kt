@@ -5,6 +5,7 @@ data class Amount(private val value: Int) {
         require(value >= 0) { "금액은 음수가 될 수 없습니다." }
     }
 
-    val amount: Int
-        get() = value
+    fun amount(): Int {
+        return value
+    }
 }

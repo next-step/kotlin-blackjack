@@ -11,7 +11,7 @@ enum class GameResult(private val multiplier: Double) {
     DRAW(0.0);
 
     fun calculateProfit(bettingAmount: Amount): Int {
-        return (bettingAmount.amount * multiplier).toInt()
+        return (bettingAmount.amount() * multiplier).toInt()
     }
 
     companion object {
