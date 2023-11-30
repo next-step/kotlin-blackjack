@@ -27,16 +27,15 @@ class GameDeckTest {
 
     @Test
     fun `gameDeck을 생성하고, 카드덱을 추가할 때, gameDeck에 카드가 추가된다`() {
-        // given :
+        // given : 게임 덱을 생성한다.
         val gameDeck = GameDeck.create(CardPack.cards)
 
-        // when :
+        // when : 게임 덱을 추가한다.
         gameDeck.addCards(CardPack.cards)
         val actual = gameDeck.cardDeck.size
 
-        // then :
+        // then : 카드 덱이 추가된다.
         val expect = CardPack.cards.size * 2
         assertThat(actual).isEqualTo(expect)
-
     }
 }
