@@ -22,6 +22,7 @@ class BlackjackApplication {
             drawCardFirst(players, dealer)
             printFirstPlayerCardMessage(players)
             handCardToAllPlayers(players, dealer)
+            OutputView.printResult(players)
         }
 
         private fun createDealer(): Dealer {
