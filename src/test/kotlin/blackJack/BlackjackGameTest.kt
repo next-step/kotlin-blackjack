@@ -35,7 +35,7 @@ class BlackjackGameTest {
 
         // then : 각 플레이어는 카드를 2장 받는다.
         playerGroup.playerList.forEach {
-            val actual = it.cardList.size
+            val actual = it.playerDeck.cardDeckSize()
             val expect = 2
             assertThat(actual).isEqualTo(expect)
         }
@@ -51,8 +51,9 @@ class BlackjackGameTest {
         // when : 저장 여부 확인
         game.hit()
         val currentPlayer = playerGroup.getCurrentPlayer()
+
         val expectCard = CardPack.cards[0]
-        val actual = currentPlayer.cardList.contains(expectCard)
+        val actual = currentPlayer.playerDeck.cardDeck.contains(expectCard)
 
         // then : 플레이어는 카드를 저장한다.
         assertThat(actual).isTrue()

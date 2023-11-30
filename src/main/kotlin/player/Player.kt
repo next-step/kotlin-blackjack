@@ -19,8 +19,6 @@ class Player(val name: String) {
         playerDeck.addCard(card)
     }
 
-    fun cardDeckSize() = playerDeck.cardDeck.size
-
     fun updateStatus() {
         val newStatus = determineStatus()
         updatePlayerStatus(newStatus)

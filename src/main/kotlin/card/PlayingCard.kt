@@ -1,6 +1,6 @@
 package card
 
-class PlayingCard(private val suit: Suit, private val cardRank: CardRank) {
+data class PlayingCard(private val suit: Suit, private val cardRank: CardRank) {
     fun getPoint(): Int {
         return cardRank.point
     }
@@ -9,7 +9,7 @@ class PlayingCard(private val suit: Suit, private val cardRank: CardRank) {
         return suit.koName
     }
 
-    fun getCardNumber(): CardRank {
+    fun getCardRank(): CardRank {
         return cardRank
     }
 
