@@ -15,7 +15,8 @@ object ResultView {
         println("${player.name}카드: ${player.cards.cards}")
     }
 
-    fun showPlayerResult(dealer: Dealer, players: List<Player>) {
+    fun showPlayerResult(count: Int, dealer: Dealer, players: List<Player>) {
+        showDealerDrawCount(count)
         println("${dealer.name}카드: ${dealer.cards.cards} - 결과: ${dealer.getScore()}")
         for (player in players) {
             println("${player.name}카드: ${player.cards.cards} - 결과: ${player.getScore()}")
