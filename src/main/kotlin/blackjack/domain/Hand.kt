@@ -1,7 +1,7 @@
 package blackjack.domain
 
 @JvmInline
-value class Hand(private val cards: MutableList<Card> = mutableListOf()) {
+value class Hand(val cards: MutableList<Card> = mutableListOf()) {
 
     fun add(card: Card) = cards.add(card)
 

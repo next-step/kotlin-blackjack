@@ -6,21 +6,21 @@ data class Player(val name: String, val hand: Hand = Hand()) {
 
     val resultScore: Score by lazy { decideScore() }
 
-    fun init(deck: Deck) {
+    fun initialize(deck: Deck) {
         check(state == PlayerState.READY) { "can only 'init' if the 'PlayerState' is 'READY'" }
         repeat(Rule.INIT_CARD_COUNT) { hand.add(deck.draw()) }
         state = PlayerState.UNDER
     }
 
     fun hit(deck: Deck) {
-        check(state == PlayerState.UNDER) { "can only 'hit' if the 'PlayerState' is 'UNDER'" }
+        check(active()) { "can only 'hit' if the 'PlayerState' is 'UNDER'" }
         hand.add(deck.draw())
         updateState()
     }
 
     fun stay() {
-        check(state == PlayerState.UNDER) { "can only 'stay' if the 'PlayerState' is 'UNDER'" }
-        state = PlayerState.STAY
+        check(active()) { "can only 'stay' if the 'PlayerState' is 'UNDER'" }
+        state = PlayerState.STAND
     }
 
     fun updateState() {
@@ -31,19 +31,25 @@ data class Player(val name: String, val hand: Hand = Hand()) {
             score.value > Rule.BLACKJACK_SCORE -> PlayerState.BUST
             else -> when (count == Rule.BLACKJACK_CARD_COUNT) {
                 true -> PlayerState.BLACKJACK
-                false -> PlayerState.STAY
+                false -> PlayerState.STAND
             }
         }
     }
 
+    fun ready() = state == PlayerState.READY
+
+    fun active() = state == PlayerState.UNDER
+
+    fun resolved() = state == PlayerState.STAND || state == PlayerState.BLACKJACK || state == PlayerState.BUST
+
     private fun decideScore(): Score {
-        check(state == PlayerState.STAY || state == PlayerState.BLACKJACK || state == PlayerState.BUST) { "can't decide score until the action is over" }
+        check(resolved()) { "can't decide score until the action is over" }
         return hand.getBestScore()
     }
 }
 
 @JvmInline
-value class Players(private val values: List<Player>) {
+value class Players(val values: List<Player>) {
 
     constructor(vararg names: String) : this(names.map { Player(it) })
 
@@ -55,7 +61,7 @@ value class Players(private val values: List<Player>) {
 enum class PlayerState {
     READY,
     UNDER,
-    STAY,
+    STAND,
     BLACKJACK,
     BUST;
 }
