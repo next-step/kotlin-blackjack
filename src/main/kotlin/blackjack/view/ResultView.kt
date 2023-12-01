@@ -1,6 +1,11 @@
 package blackjack.view
 
-import blackjack.domain.model.*
+import blackjack.domain.model.Cards
+import blackjack.domain.model.Dealer
+import blackjack.domain.model.Gambler
+import blackjack.domain.model.Gamblers
+import blackjack.domain.model.Pattern
+import blackjack.domain.model.WinLoseDraw
 
 object ResultView {
 
@@ -13,8 +18,7 @@ object ResultView {
     private const val DRAW_DESCRIPTION = "무"
     private const val LOSE_DESCRIPTION = "패"
     private const val WIN_LOSE_DRAW_DESCRIPTION = "## 최종 $WIN_DESCRIPTION$DRAW_DESCRIPTION$LOSE_DESCRIPTION"
-    private const val DEALER_WIN_LOSE_DRAW_DESCRIPTION =
-        "딜러: %d${WIN_DESCRIPTION} %d${DRAW_DESCRIPTION} %d${LOSE_DESCRIPTION}"
+    private const val DEALER_WIN_LOSE_DRAW_DESCRIPTION = "딜러: %d$WIN_DESCRIPTION %d$DRAW_DESCRIPTION %d$LOSE_DESCRIPTION"
     private const val GAMBLER_WIN_LOSE_DRAW_DESCRIPTION = "%s: %s"
     private const val DEAL_CARD_COUNT = 1
 
