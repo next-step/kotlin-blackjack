@@ -14,10 +14,6 @@ class DefaultScoringRule : ScoringRule {
         return firstSumUsingAceTo11
     }
 
-    override fun isOverThreshold(score: Int, threshold: Int): Boolean {
-        return score > threshold
-    }
-
     companion object {
         const val THRESHOLD_SCORE = 21
         val CARD_SCORE_BORD: Map<CardCharacter, Pair<Int, Int>> = mapOf(

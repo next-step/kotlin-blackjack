@@ -1,5 +1,6 @@
-package blackjack.domain.rule
+package blackjack.domain.card
 
+import blackjack.domain.card.State
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 

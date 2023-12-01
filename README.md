@@ -86,10 +86,9 @@
 - 버스트(Bust): 카드 총합이 21을 넘는 경우. 배당금을 잃는다.
 
 ### 객체
-- Card / Deck : 카드를 생성하고 필요한 군집을 만들어줘서 제공해주는 역할
-- Player (Participant / Dealer) : 게임 상태를 결정하고, 그 상태 결과에 따라 서로 비교할 수 있다.
-  - Player는 카드 리스트, 상태, 베팅 금액을 갖는다.
-  - 생성하는 즉시, Player는 상태가 BEGIN이 되며, 카드 2장을 받는다.
+- Card / Deck : 카드 생성과 카드 리스트 관리
+- DrewCards: 뽑은 카드를 관리하고, 점수와 상태를 계산한다.
+- Player (Participant / Dealer) : 딜러 또는 참가자의 메타 데이터와 뽑은 카드를 갖고 있다. 카드를 뽑거나 베팅 금액을 계산하는 등의 게임 진행에 따라 상태값이 변한다.
 - Rule: 점수 계산 규칙과 게임 상태 규칙을 관리한다.
 
 ### TODO
@@ -101,25 +100,7 @@
     - BLACKJACK: 처음 2장의 카드 합이 21인 상태
     - BUST: 카드 총합이 21을 넘는 상태
 - [x] 참가자는 각자 베팅 금액을 갖고 있다.
-- [ ] 게임 결과로 딜러와 참가자는 각자 상태를 비교한다.
-  - 딜러 VS 참가자
-    - BLACKJACK VS BLACKJACK: 무승부 -> 참가자는 베팅 금액을 그대로 받는다.
-    - BLACKJACK VS STAY/BUST: 딜러 승 -> 참가자는 베팅 금액을 모두 잃는다.
-    - BUST VS BLACKJACK: 참가자 승 -> 참가자는 베팅 금액의 1.5배를 딜러에게 받는다.
-    - BUST VS STAY/BUST: 참가자 승 -> 참가자는 베팅 금액을 그대로 받는다.
-    - BEGIN VS STAY: 점수 비교
-    - BEGIN VS BUST: 딜러 승 -> 참가자는 베팅 금액을 모두 잃는다.
-- [ ] 비교 결과에 따라 참가자는 베팅 금액 결과(profit)를 계산한다. 
-
-
-- [ ] State는 게임 규칙에 대한 전반적인 것을 관리한다.
-  - profit 으로 베팅 금액을 계산한다.
-  - isFinished 로 현재 상태가 끝난 상태인지 확인한다.
-  - next로 현재 플레이어의 상태로 다음 상태를 계산한다.
-    - BEGIN -> BLACKJACK (finished)
-    - BEGIN -> HIT
-    - BEGIN -> STAY (finished)
-    - HIT -> HIT
-    - HIT -> STAY (finished)
-    - HIT -> BUST (finished)
-    - 
+- [x] 게임 결과로 딜러와 참가자는 각자 상태를 비교한다.
+- [x] 비교 결과에 따라 참가자는 베팅 금액 결과(profit)를 계산한다. 
+- [x] 상태는 DrewCards에서 계산한다.
+- [x] 최종 수익 계산은 MatchedProfitRule에서 계산한다.

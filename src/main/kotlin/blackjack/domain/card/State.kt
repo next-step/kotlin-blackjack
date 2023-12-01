@@ -1,15 +1,15 @@
-package blackjack.domain.rule
+package blackjack.domain.card
 
 enum class State(val isFinished: Boolean) {
 
     BEGIN(false) {
         override fun profit(bet: Int): Int {
-            return bet
+            return 0
         }
     },
     HIT(false) {
         override fun profit(bet: Int): Int {
-            return bet
+            return 0
         }
     },
     STAY(true) {
@@ -24,7 +24,7 @@ enum class State(val isFinished: Boolean) {
     },
     BUST(true) {
         override fun profit(bet: Int): Int {
-            return bet
+            return -bet
         }
     };
 

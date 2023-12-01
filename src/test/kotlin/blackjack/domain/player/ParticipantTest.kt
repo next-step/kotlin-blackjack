@@ -1,10 +1,8 @@
 package blackjack.domain.player
 
-import blackjack.domain.GameResult
 import blackjack.domain.card.Deck
+import blackjack.domain.card.State
 import blackjack.domain.rule.DefaultScoringRule
-import blackjack.domain.rule.State
-import blackjack.domain.rule.TestScoringRule
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.ints.shouldBeGreaterThan
 import io.kotest.matchers.shouldBe
@@ -19,7 +17,6 @@ class ParticipantTest {
         player.name shouldBe "parker"
         player.cards.size shouldBe 0
         player.totalScore shouldBe 0
-        player.profit shouldBe 0
         player.bet shouldBe 1000
     }
 
@@ -83,76 +80,16 @@ class ParticipantTest {
     }
 
     @Test
-    fun `Participant는 총 점수가 21점을 넘으면 카드를 더이상 받을 수 없다`() {
+    fun `Participant는 총 BUST 상태가 되면 카드를 더이상 받을 수 없다`() {
         val participant = Participant("parker", 1000, DefaultScoringRule())
         val deck = Deck()
 
         do {
             participant.draw(deck)
-        } while (participant.canDraw())
+        } while (participant.isFinished.not())
 
-        participant.canDraw() shouldBe false
+        participant.cards.state shouldBe State.BUST
+        participant.isFinished shouldBe true
         participant.totalScore shouldBeGreaterThan DefaultScoringRule.THRESHOLD_SCORE
-    }
-
-    @Test
-    fun `참가자는 딜러의 결과와 비교해 자신의 결과를 계산한다 - 참가자 승리`() {
-        val p1 = Participant("p1", 1000, TestScoringRule(21))
-        val dealer = Dealer(TestScoringRule(20))
-
-        p1.compareWith(dealer) shouldBe GameResult.WIN
-    }
-
-    @Test
-    fun `참가자는 딜러의 결과와 비교해 자신의 결과를 계산한다 - 참가자 패배`() {
-        val p1 = Participant("p1", 1000, TestScoringRule(20))
-        val dealer = Dealer(TestScoringRule(21))
-
-        p1.compareWith(dealer) shouldBe GameResult.LOSE
-    }
-
-    @Test
-    fun `참가자는 딜러의 결과와 비교해 자신의 결과를 계산한다 - 참가자 무승부`() {
-        val p1 = Participant("p1", 1000, TestScoringRule(20))
-        val dealer = Dealer(TestScoringRule(20))
-
-        p1.compareWith(dealer) shouldBe GameResult.TIE
-    }
-
-    @Test
-    fun `참가자는 게임 시작 후 HIT을 입력하면 카드를 한 장 더 뽑는다`() {
-        val participant = Participant("parker", 1000, DefaultScoringRule())
-        val deck = Deck()
-
-        participant.beginGame(deck)
-        participant.nextTurn(State.HIT, deck)
-
-        participant.cards.size shouldBe 3
-    }
-
-    @Test
-    fun `참가자는 게임 시작 후, 21이 넘도록 HIT를 하면 BUST 상태로 바뀐다`() {
-        val participant = Participant("parker", 1000, DefaultScoringRule())
-        val deck = Deck()
-
-        participant.beginGame(deck)
-        do {
-            participant.nextTurn(State.HIT, deck)
-        } while (participant.canDraw())
-
-        participant.state shouldBe State.BUST
-        participant.isFinished shouldBe true
-    }
-
-    @Test
-    fun `참가자는 게임 시작 후 STAY를 입력하면 카드를 한 장 더 뽑는다`() {
-        val participant = Participant("parker", 1000, DefaultScoringRule())
-        val deck = Deck()
-
-        participant.beginGame(deck)
-        participant.nextTurn(State.STAY, deck)
-
-        participant.cards.size shouldBe 2
-        participant.isFinished shouldBe true
     }
 }
