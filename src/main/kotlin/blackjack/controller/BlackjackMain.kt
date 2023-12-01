@@ -50,7 +50,11 @@ fun main() {
         .forEach { it.setResult(dealer.getFinalScore()) }
 
     // 승자 출력
-    printResults(dealer, players.filter { it !is Dealer }, bettingBoard)
+    val playerProfits = players.filter { it !is Dealer }.map {
+        val prize = bettingBoard.adjustment(it.name, it.result, it.isBlackjack())
+        Pair(it, prize - bettingBoard.betOf(it.name))
+    }
+    printResults(playerProfits)
 }
 
 private fun drawForDealer(dealer: Dealer) {

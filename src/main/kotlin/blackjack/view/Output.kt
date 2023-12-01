@@ -1,8 +1,6 @@
 package blackjack.view
 
-import blackjack.domain.BettingBoard
 import blackjack.domain.Card
-import blackjack.domain.Dealer
 import blackjack.domain.Player
 
 fun printInitialSupply(players: List<Player>, cardNum: Int) {
@@ -34,21 +32,12 @@ fun printScores(players: List<Player>) {
     }
 }
 
-fun printResults(dealer: Dealer, players: List<Player>, bettingBoard: BettingBoard) {
+fun printResults(profits: List<Pair<Player, Int>>) {
     println()
     println("## 최종 수익")
 
-    val playerResult = buildPlayerResults(players, bettingBoard)
-    println("${dealer.name}: ${bettingBoard.getRemain()}")
-    println(playerResult)
-}
-
-private fun buildPlayerResults(players: List<Player>, bettingBoard: BettingBoard): String {
-    val resultString = StringBuilder()
-    players.forEach {
-        val receive = bettingBoard.adjustment(it.name, it.result, it.isBlackjack())
-        resultString.appendLine("${it.name}: ${receive - bettingBoard.betOf(it.name)}")
+    println("딜러: ${profits.sumOf { it.second } * -1}")
+    profits.forEach {
+        println("${it.first.name}: ${it.second}")
     }
-
-    return resultString.toString()
 }
