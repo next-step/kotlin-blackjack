@@ -9,4 +9,6 @@ interface BlackjackMember {
     fun canDraw(): Boolean
 
     fun draw(deck: Deck)
+
+    fun getScore(): Int = hand.getScore()
 }

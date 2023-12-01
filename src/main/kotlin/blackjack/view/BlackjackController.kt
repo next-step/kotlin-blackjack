@@ -1,6 +1,7 @@
 package blackjack.view
 
 import blackjack.domain.BlackjackRule
+import blackjack.domain.CompareResult
 import blackjack.domain.Dealer
 import blackjack.domain.Deck
 import blackjack.domain.Hand
@@ -30,7 +31,11 @@ class BlackjackController(
 
         playGame()
 
-        resultView.showResult(players = players)
+        resultView.showResult(dealer = dealer, players = players)
+
+        resultView.showCompareResultTitle()
+
+        resultView.showCompareResult(CompareResult(dealer, players))
     }
 
     private fun getPlayers(): List<Player> {

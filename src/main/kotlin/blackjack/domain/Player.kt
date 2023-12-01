@@ -23,8 +23,6 @@ class Player(
         state = State.STAY
     }
 
-    fun getScore(): Int = hand.getScore()
-
     private fun receiveCard(card: Card) {
         hand.add(card)
     }
