@@ -26,18 +26,13 @@ class PlayerTest {
     @Test
     fun `player가 받은 카드가 21점을 넘으면 버스트 상태가 된다`() {
         val player = Player("test")
-
-        val cards = Cards(
-            mutableListOf(
+        player.getFirstDealCards(
+            listOf(
                 Card(Denomination.KING, Suit.CLUBS),
-                Card(Denomination.JACK, Suit.HEARTS),
-                Card(Denomination.JACK, Suit.HEARTS)
+                Card(Denomination.SEVEN, Suit.CLUBS),
+                Card(Denomination.SEVEN, Suit.CLUBS)
             )
         )
-
-        for (card in cards.cards) {
-            player.hit(card)
-        }
 
         player.isBusted shouldBe true
     }
@@ -45,18 +40,13 @@ class PlayerTest {
     @Test
     fun `player가 받은 카드에 대한 점수를 계산할 수 있다`() {
         val player = Player("test")
-
-        val cards = Cards(
-            mutableListOf(
+        player.getFirstDealCards(
+            listOf(
                 Card(Denomination.KING, Suit.CLUBS),
-                Card(Denomination.JACK, Suit.HEARTS),
-                Card(Denomination.ACE, Suit.HEARTS)
+                Card(Denomination.SEVEN, Suit.CLUBS)
             )
         )
-        for (card in cards.cards) {
-            player.hit(card)
-        }
 
-        player.getScore() shouldBe 21
+        player.getScore() shouldBe 17
     }
 }

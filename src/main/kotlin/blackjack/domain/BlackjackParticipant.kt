@@ -1,9 +1,9 @@
 package blackjack.domain
 
-abstract class BlackjackParticipant(val name : String) {
+abstract class BlackjackParticipant(val name: String) {
     private var _cards = Cards(mutableListOf())
 
-    val isBusted get() = getScore() > Score.TARGET_SCORE
+    val isBusted get() = getScore() > Score.BLACKJACK
 
     val cards: Cards
         get() = _cards
@@ -12,7 +12,7 @@ abstract class BlackjackParticipant(val name : String) {
         return Score(cards.cards.map { it.denomination }).calculate()
     }
 
-    fun getFirstTwoCards(twoCards: List<Card>) {
+    fun getFirstDealCards(twoCards: List<Card>) {
         twoCards.forEach { cards.addCard(it) }
     }
 

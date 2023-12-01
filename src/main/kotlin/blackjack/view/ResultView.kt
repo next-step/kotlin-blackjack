@@ -15,7 +15,6 @@ object ResultView {
         println("${player.name}카드: ${player.cards.cards}")
     }
 
-
     fun showPlayerResult(dealer: Dealer, players: List<Player>) {
         println("${dealer.name}카드: ${dealer.cards.cards} - 결과: ${dealer.getScore()}")
         for (player in players) {
@@ -25,7 +24,7 @@ object ResultView {
 
     fun showDealerDrawCount(count: Int) {
         if (count == 0) return
-        println("딜러는 16이하라 ${count}장의 카드를 더 받았습니다.\n")
+        println("딜러는 16점이하라 ${count}장의 카드를 더 받았습니다.\n")
     }
 
     fun displayGameResult(gameResult: GameResult) {
@@ -37,11 +36,10 @@ object ResultView {
         }
     }
 
-
-    private fun displayDealerResult(matches: List<Pair<MatchResult, Int>>) {
-        val loss = matches.count { it.first == MatchResult.WIN }
-        val win = matches.count { it.first == MatchResult.LOSS }
-        val tie = matches.count { it.first == MatchResult.TIE }
+    private fun displayDealerResult(matches: List<Map<MatchResult, Int>>) {
+        val loss = matches.sumOf { it.getOrDefault(MatchResult.WIN, 0) }
+        val win = matches.sumOf { it.getOrDefault(MatchResult.LOSS, 0) }
+        val tie = matches.sumOf { it.getOrDefault(MatchResult.TIE, 0) }
 
         println("딜러: ${win}승 ${loss}패 ${tie}무")
     }
