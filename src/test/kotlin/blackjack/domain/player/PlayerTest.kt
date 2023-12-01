@@ -1,13 +1,12 @@
 package blackjack.domain.player
 
 import blackjack.helper.DeckHelper
-import io.kotest.core.spec.style.StringSpec
+import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 
-class PlayerTest : StringSpec({
+class PlayerTest : BehaviorSpec({
 
-    "플레이어는 카드를 한 장 받을 수 있다." {
-        // given
+    Given("덱이 주어졌을 때") {
         val player = Player(
             name = PlayerName("플레이어1"),
             cards = PlayerCards()
@@ -15,11 +14,13 @@ class PlayerTest : StringSpec({
         val deck = DeckHelper.createMockDeck()
         val card = deck.draw()
 
-        // when
-        player.handCard(card)
+        When("플레이어가 한 장 받게 되면") {
+            player.handCard(card)
 
-        // then
-        player.cards.values.size shouldBe 1
-        player.cards.values shouldBe listOf(card)
+            Then("플레이어의 카드는 한 장 증가한다.") {
+                player.cards.values.size shouldBe 1
+                player.cards.values shouldBe listOf(card)
+            }
+        }
     }
 })

@@ -3,23 +3,23 @@ package blackjack.domain
 import blackjack.domain.player.Player
 import blackjack.domain.player.PlayerName
 import blackjack.helper.DeckHelper
-import io.kotest.core.spec.style.StringSpec
+import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 
-class DealerTest : StringSpec({
-
-    "딜러는 카드를 플레이어에게 카드를 분배할 수 있다." {
-        // given
+class DealerTest : BehaviorSpec({
+    Given("플레이어와 딜러가 있을 때") {
         val player = Player(
             name = PlayerName("플레이어1")
         )
         val deck = DeckHelper.createMockDeck()
         val dealer = Dealer(deck)
 
-        // when
-        dealer.handCard(player)
+        When("딜러가 카드를 분배하면") {
+            dealer.handCard(player)
 
-        // then
-        player.cards.values.size shouldBe 1
+            Then("플레이어의 카드는 한 장 증가한다.") {
+                player.cards.values.size shouldBe 1
+            }
+        }
     }
 })

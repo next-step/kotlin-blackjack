@@ -3,20 +3,21 @@ package blackjack.domain
 import blackjack.domain.card.CardNumber
 import blackjack.domain.card.CardPattern
 import blackjack.helper.DeckHelper
-import io.kotest.core.spec.style.StringSpec
+import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 
-class DeckTest : StringSpec({
+class DeckTest : BehaviorSpec({
 
-    "카드를 한 장 뽑을 수 있다." {
-        // given
+    Given("덱이 주어져 있을 때") {
         val deck = DeckHelper.createMockDeck()
 
-        // when
-        val card = deck.draw()
+        When("한 장 뽑으면") {
+            val card = deck.draw()
 
-        // then
-        card.number shouldBe CardNumber.ACE
-        card.pattern shouldBe CardPattern.HEART
+            Then("카드가 반환된다.") {
+                card.number shouldBe CardNumber.ACE
+                card.pattern shouldBe CardPattern.HEART
+            }
+        }
     }
 })

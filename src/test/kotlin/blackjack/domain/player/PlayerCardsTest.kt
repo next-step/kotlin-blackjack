@@ -3,68 +3,81 @@ package blackjack.domain.player
 import blackjack.domain.Deck
 import blackjack.domain.Score
 import blackjack.helper.DeckHelper
-import io.kotest.core.spec.style.StringSpec
-import io.kotest.data.forAll
-import io.kotest.data.row
+import io.kotest.core.spec.style.BehaviorSpec
+import io.kotest.matchers.booleans.shouldBeFalse
+import io.kotest.matchers.booleans.shouldBeTrue
 import io.kotest.matchers.shouldBe
 
-class PlayerCardsTest : StringSpec({
+class PlayerCardsTest : BehaviorSpec({
 
-    "카드를 한 장 추가할 수 있다." {
-        // given
+    Given("카드가 주어졌을 때 - 1") {
+        val playerCards = PlayerCards()
         val deck = DeckHelper.createMockDeck()
         val card = deck.draw()
-        val playerCards = PlayerCards()
 
-        // when
-        playerCards.add(card)
+        When("카드를 한 장 추가하면") {
+            playerCards.add(card)
 
-        // then
-        playerCards.values.size shouldBe 1
-        playerCards.values shouldBe listOf(card)
+            Then("카드가 추가된다.") {
+                playerCards.values.size shouldBe 1
+                playerCards.values shouldBe listOf(card)
+            }
+        }
     }
 
-    "카드의 총 점수를 계산한다." {
-        // given
+    Given("카드가 주어졌을 때 - 2") {
         val playerCards = PlayerCards()
         val deck = DeckHelper.createMockDeck()
         addCards(5, playerCards, deck)
 
-        // when
-        val score = playerCards.calculateScore()
+        When("카드의 점수를 계산하면") {
+            val score = playerCards.calculateScore()
 
-        // then
-        score shouldBe Score(15)
+            Then("카드의 총 점수가 반환된다.") {
+                score shouldBe Score(15)
+            }
+        }
     }
 
-    "카드에 에이스가 있으면, 에이스의 점수 규칙에 따라 블랙잭에 가까울 수 있도록 점수를 계산한다." {
-        // given
+    Given("카드가 주어졌을 때 - 3") {
+        val playerCards = PlayerCards()
+        val deck = DeckHelper.createMockDeck()
+        addCards(10, playerCards, deck)
+
+        When("버스트가 되었다면") {
+            val result = playerCards.isBust()
+
+            Then("true를 반환한다.") {
+                result.shouldBeTrue()
+            }
+        }
+    }
+
+    Given("카드가 주어졌을 때 - 4") {
         val playerCards = PlayerCards()
         val deck = DeckHelper.createMockDeck()
         addCards(2, playerCards, deck)
 
-        // when
-        val score = playerCards.calculateScore()
-
-        // then
-        score shouldBe Score(13)
-    }
-
-    "카드가 버스트라면 true, 아니면 false를 반환한다" {
-        forAll(
-            row(10, true),
-            row(2, false)
-        ) { count, expected ->
-            // given
-            val playerCards = PlayerCards()
-            val deck = DeckHelper.createMockDeck()
-            addCards(count, playerCards, deck)
-
-            // when
+        When("버스트가 되지 않았다면") {
             val result = playerCards.isBust()
 
-            // then
-            result shouldBe expected
+            Then("false를 반환한다.") {
+                result.shouldBeFalse()
+            }
+        }
+    }
+
+    Given("카드에 에이스가 존재하면") {
+        val playerCards = PlayerCards()
+        val deck = DeckHelper.createMockDeck()
+        addCards(2, playerCards, deck)
+
+        When("점수를 계산할 때") {
+            val score = playerCards.calculateScore()
+
+            Then("에이스의 점수 규칙에 따라 블랙잭에 가까운 값을 반환한다.") {
+                score shouldBe Score(13)
+            }
         }
     }
 })
