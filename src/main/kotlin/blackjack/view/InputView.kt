@@ -9,7 +9,7 @@ object InputView {
     }
 
     fun askPlayer(playerName: String): Boolean {
-        println("${playerName}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
+        println("\n${playerName}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
         val answer = readln().trim()
         require(answer == "y" || answer == "n") { "y 또는 n 만 입력가능합니다." }
         return answer == "y"
