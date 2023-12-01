@@ -2,7 +2,6 @@ package view
 
 import domain.Dealer
 import domain.Player
-import enum.GameResult
 
 class ConsoleOutputView : OutputView {
     override fun showGameState(players: List<Player>, dealer: Dealer) {
@@ -20,11 +19,12 @@ class ConsoleOutputView : OutputView {
         println("딜러: ${dealer.showHand().joinToString(", ")} - 결과: ${dealer.calculateScore()}")
     }
 
-    override fun showFinalResults(players: List<Player>, dealer: Dealer) {
-        println("## 최종 승패")
-        println("딜러: ${calculateDealerResult(players)}")
+    override fun showFinalResults(players: List<Player>, dealer: Dealer, dealerProfit: Int) {
+        println("## 최종 수익")
+        println("딜러: $dealerProfit")
         players.forEach { player ->
-            println("${player.name}: ${convertResultToString(player.result)}")
+            val playerProfit = player.calculateFinalProfit()
+            println("${player.name}: $playerProfit")
         }
     }
 
@@ -37,17 +37,7 @@ class ConsoleOutputView : OutputView {
         println("딜러의 카드: ${dealer.showHand().joinToString(", ")}")
     }
 
-    private fun convertResultToString(result: GameResult): String {
-        return when (result) {
-            GameResult.WIN -> "승"
-            GameResult.LOSE -> "패"
-            GameResult.DRAW -> "무승부"
-        }
-    }
-
-    private fun calculateDealerResult(players: List<Player>): String {
-        val wins = players.count { it.result == GameResult.LOSE }
-        val losses = players.count { it.result == GameResult.WIN }
-        return "${wins}승 ${losses}패"
+    private fun calculateDealerProfit(players: List<Player>): Int {
+        return players.sumOf { -it.calculateFinalProfit() }
     }
 }

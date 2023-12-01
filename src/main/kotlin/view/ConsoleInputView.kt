@@ -12,4 +12,9 @@ class ConsoleInputView : InputView {
         println("${playerName}은(는) 한 장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
         return readlnOrNull()?.lowercase(Locale.getDefault()) == "y"
     }
+
+    override fun readBettingAmount(playerName: String): Int {
+        println("${playerName}의 배팅 금액은?")
+        return readln().toInt()
+    }
 }
