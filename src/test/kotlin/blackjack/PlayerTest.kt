@@ -50,4 +50,17 @@ class PlayerTest {
         player.hit(PlayingCard(Suits.DIAMOND, CardNumber.ACE))
         assertThat(player.isBusted).isFalse()
     }
+
+    @Test
+    fun `플레이어는 2개의 초기 카드가 공개된다`() {
+        val player = Player("")
+        player.getInitialCards(
+            listOf(
+                PlayingCard(Suits.DIAMOND, CardNumber.KING),
+                PlayingCard(Suits.CLOVER, CardNumber.KING)
+            )
+        )
+
+        assertThat(player.initialPublicCards.cards.size).isEqualTo(2)
+    }
 }

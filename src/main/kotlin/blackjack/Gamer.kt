@@ -2,24 +2,32 @@ package blackjack
 
 abstract class Gamer(val name: String) {
     val playerCards: PlayerCards = PlayerCards()
-
     val isBusted get() = playerCards.isBusted()
     val isBlackjack get() = playerCards.isBlackjack()
+
+    lateinit var initialPublicCards: PlayerCards
+        private set
+
+    var profit = 0
+        protected set
 
     fun getInitialCards(cards: List<PlayingCard>) {
         for (card in cards) {
             playerCards.addCard(card)
         }
+        initialPublicCards = getInitialPublicCards(playerCards)
     }
 
     fun hit(card: PlayingCard) {
         playerCards.addCard(card)
     }
 
-    fun setInitialDeck(cardDeck: CardDeck, showCards: (t: Gamer) -> Unit) {
+    fun setInitialDeck(cardDeck: CardDeck, callback: (Gamer) -> Unit) {
         getInitialCards(cardDeck.drawInitialCards())
-        showCards(this)
+        callback(this)
     }
 
     abstract val canGetCard: Boolean
+    abstract fun getInitialPublicCards(playerCards: PlayerCards): PlayerCards
+    abstract fun calculateProfit(playerProfit: Int)
 }

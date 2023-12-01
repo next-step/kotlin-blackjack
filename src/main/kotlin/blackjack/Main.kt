@@ -6,9 +6,9 @@ fun main() {
     val dealer = Dealer()
 
     ResultView.showCardShare(players)
-    dealer.setInitialDeck(cardDeck, ResultView::showDealerCard)
+    dealer.setInitialDeck(cardDeck, ResultView::showInitialCards)
     for (player in players) {
-        player.setInitialDeck(cardDeck, ResultView::showPlayerCards)
+        player.setInitialDeck(cardDeck, ResultView::showInitialCards)
     }
 
     for (player in players) {
@@ -19,8 +19,8 @@ fun main() {
     ResultView.showCardScore(dealer)
     ResultView.showCardScore(*players.toTypedArray())
 
-    val result = GameResultDeterminer.getResult(players, dealer)
-    ResultView.showResult(result)
+    GameResultDeterminer.setProfit(players, dealer)
+    ResultView.showResult(players, dealer)
 }
 
 private fun Dealer.getCard(cardDeck: CardDeck) {

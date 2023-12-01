@@ -1,6 +1,6 @@
 package blackjack
 
-import java.util.EnumMap
+import blackjack.CardsCompound.Companion.BEST
 
 object ResultView {
     fun showCardShare(players: List<Player>) {
@@ -14,26 +14,16 @@ object ResultView {
         }
     }
 
-    fun showResult(result: GameResult) {
-        println("## 최종 승패")
-        showDealerResult(result.dealerResult)
-        for (playerResult in result.playerResult) {
-            println("${playerResult.name}: ${playerResult.matchResult.korean}")
+    fun showResult(players: List<Player>, dealer: Dealer) {
+        println("## 최종 수익")
+        showProfit(dealer)
+        for (player in players) {
+            showProfit(player)
         }
     }
 
-    private fun showDealerResult(result: EnumMap<MatchResult, Int>) {
-        print("딜러: ")
-        result[MatchResult.WIN]?.let {
-            print("${it}승 ")
-        }
-        result[MatchResult.DRAW]?.let {
-            print("${it}무 ")
-        }
-        result[MatchResult.LOSE]?.let {
-            print("${it}패 ")
-        }
-        println()
+    private fun showProfit(gamer: Gamer) {
+        println("${gamer.name}: ${gamer.profit}")
     }
 
     fun showPlayerCards(player: Gamer) {
@@ -46,8 +36,12 @@ object ResultView {
     }
 
     private fun getResultText(bestScore: Int): String {
-        if (bestScore == CardsCompound.BUSTED) return "버스트"
+        if (bestScore > BEST) return "버스트"
         return bestScore.toString()
+    }
+
+    fun showInitialCards(gamer: Gamer) {
+        println("${gamer.name} 카드: ${gamer.initialPublicCards.cardsToString()}")
     }
 
     private fun PlayerCards.cardsToString(): String {
@@ -56,9 +50,5 @@ object ResultView {
 
     private fun PlayingCard.cardToString(): String {
         return "${number.numberName}${suit.korean}"
-    }
-
-    fun showDealerCard(dealer: Gamer) {
-        println("딜러 카드: ${dealer.playerCards.cards.first().cardToString()}")
     }
 }
