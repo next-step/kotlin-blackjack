@@ -1,9 +1,11 @@
 package blackjack.controller
 
+import blackjack.domain.BettingBoard
 import blackjack.domain.Dealer
 import blackjack.domain.Dealer.Companion.INITIAL_CARD_NUM
 import blackjack.domain.Player
 import blackjack.view.askForDraw
+import blackjack.view.inputBet
 import blackjack.view.inputNames
 import blackjack.view.printDealerDrawsMore
 import blackjack.view.printInitialSupply
@@ -17,6 +19,11 @@ fun main() {
 
     // 참가자 명단 입력
     val players = listOf(dealer) + inputNames().map { Player(it) }
+
+    // 각 사용자의 베팅 입력
+    val bettingBoard = players.filter { it !is Dealer }
+        .associate { it.name to inputBet(it.name) }
+        .let { BettingBoard(it) }
 
     // 초기 카드 분배
     dealer.supplyInitialCards(players)
@@ -43,7 +50,11 @@ fun main() {
         .forEach { it.setResult(dealer.getFinalScore()) }
 
     // 승자 출력
-    printResults(dealer, players.filter { it !is Dealer })
+    val playerProfits = players.filter { it !is Dealer }.map {
+        val prize = bettingBoard.adjustment(it.name, it.result, it.isBlackjack())
+        Pair(it, prize - bettingBoard.betOf(it.name))
+    }
+    printResults(playerProfits)
 }
 
 private fun drawForDealer(dealer: Dealer) {
