@@ -52,11 +52,11 @@ object BlackjackController {
             ResultView.drawGamblerStatus(gambler)
         }
     }
+
     private fun hitDealer(deck: Deck, dealer: Dealer) {
         while (dealer.shouldDraw()) {
             InputView.drawHitDealer(DEALER_MAX_HIT_NUMBER)
             deck.peek(dealer)
         }
     }
-
 }

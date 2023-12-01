@@ -7,7 +7,7 @@ import io.kotest.matchers.shouldBe
 import blackjack.domain.model.Name
 import blackjack.domain.model.Names
 
-class NamesTest: StringSpec({
+class NamesTest : StringSpec({
     "이름들 생성시 빈리스트가 들어올 경우 IllegalArgumentException 예외를 던진다." {
         shouldThrow<IllegalArgumentException> {
             Names.from(emptyList())

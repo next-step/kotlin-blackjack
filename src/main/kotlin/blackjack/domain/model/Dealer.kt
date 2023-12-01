@@ -5,7 +5,7 @@ import blackjack.domain.interfaces.Drawable
 data class Dealer(
     val name: Name,
     val cards: Cards,
-): Drawable {
+) : Drawable {
 
     override fun draw(card: Card) = cards + card
     fun shouldDraw(): Boolean = cards.sum(BLACK_JACK_NUMBER).value <= Score.from(SHOULD_DRAW_NUMBER).value

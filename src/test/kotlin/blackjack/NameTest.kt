@@ -5,7 +5,7 @@ import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 import blackjack.domain.model.Name
 
-class NameTest: StringSpec({
+class NameTest : StringSpec({
     "이름에 빈 문자열이 들어올 경우 IllegalArgumentException 예외를 던진다." {
         shouldThrow<IllegalArgumentException> {
             Name.from("")

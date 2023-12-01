@@ -21,5 +21,4 @@ class SkillBuilder {
         private const val SKILL_LEVEL_SOFT_KEY = "SKILL_LEVEL_SOFT_KEY"
         private const val SKILL_LEVEL_HARD_KEY = "SKILL_LEVEL_HARD_KEY"
     }
-
 }

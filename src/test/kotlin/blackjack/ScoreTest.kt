@@ -5,7 +5,7 @@ import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 import blackjack.domain.model.Score
 
-class ScoreTest: StringSpec({
+class ScoreTest : StringSpec({
     "스코어 생성시 0이 들어올 경우 IllegalArgumentException 예외를 던진다." {
         shouldThrow<IllegalArgumentException> {
             Score.from(0)

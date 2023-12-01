@@ -12,13 +12,11 @@ value class Deck private constructor(private val cards: Cards) {
 
     companion object {
         fun all(): Deck {
-            val cards = Cards.from(Pattern.values()
-                .flatMap { pattern ->
-                    Sign.values()
-                        .map { sign -> Card.of(pattern, sign) }
-                }
-                .shuffled()
-                .toSet())
+            val cards = Cards.from(
+                Pattern.values().flatMap { pattern ->
+                    Sign.values().map { sign -> Card.of(pattern, sign) }
+                }.shuffled().toSet()
+            )
             return Deck(cards)
         }
     }

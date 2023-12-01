@@ -7,7 +7,7 @@ import blackjack.domain.model.Gamblers
 import blackjack.domain.model.Name
 import blackjack.domain.model.Names
 
-class GamblersTest: StringSpec({
+class GamblersTest : StringSpec({
     "겜블러들 생성시 빈리스트가 들어올 경우 IllegalArgumentException 예외를 던진다." {
         shouldThrow<IllegalArgumentException> {
             Gamblers(emptyList())
