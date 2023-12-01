@@ -55,12 +55,12 @@ object OutputView {
     }
 
     fun printWinner(resultDto: ResultDto) {
+        val dealerProfit = resultDto.dealerResult.dealerProfit
+
         println("## 최종 수익")
-        val dealerProfit = -resultDto.playersResult.playerResults.sumOf { (it.bettingPrice * it.result).toInt() }
         println("딜러: $dealerProfit")
         resultDto.playersResult.playerResults.forEach {
-            val profit = (it.bettingPrice * it.result).toInt()
-            println(it.name + ": " + profit)
+            println(it.name + ": " + it.profit)
         }
     }
 

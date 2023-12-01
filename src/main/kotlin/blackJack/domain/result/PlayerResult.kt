@@ -4,7 +4,7 @@ import blackJack.domain.enums.BlackjackResult
 import blackJack.domain.player.Dealer
 import blackJack.domain.player.Player
 
-class PlayerResult(val name: String, val bettingPrice: Int, val result: BlackjackResult) {
+class PlayerResult(val name: String, val profit: Int) {
     companion object {
         fun calculateResult(player: Player, dealer: Dealer): PlayerResult {
             val dealerScore = dealer.cards.calculateTotalScore()
@@ -20,8 +20,9 @@ class PlayerResult(val name: String, val bettingPrice: Int, val result: Blackjac
                 playerScore == dealerScore -> BlackjackResult.DRAW
                 else -> BlackjackResult.LOSE
             }
+            val profit: Int = (player.bettingPrice * result.reward).toInt()
 
-            return PlayerResult(player.name, player.bettingPrice, result)
+            return PlayerResult(player.name, profit)
         }
     }
 }
