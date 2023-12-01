@@ -23,11 +23,6 @@ object ResultView {
         }
     }
 
-    fun showDealerDrawCount(count: Int) {
-        if (count == 0) return
-        println("딜러는 16점이하라 ${count}장의 카드를 더 받았습니다.\n")
-    }
-
     fun displayGameResult(gameResult: GameResult) {
         println("\n## 최종 승패")
         val resultMap = gameResult.getResultMap()
@@ -35,6 +30,11 @@ object ResultView {
         for (resultMapEntry in resultMap) {
             println("${resultMapEntry.keys.first().name}: ${resultMapEntry.values.first().text}")
         }
+    }
+
+    private fun showDealerDrawCount(count: Int) {
+        if (count == 0) return
+        println("딜러는 16점이하라 ${count}장의 카드를 더 받았습니다.\n")
     }
 
     private fun displayDealerResult(matches: List<Map<MatchResult, Int>>) {
