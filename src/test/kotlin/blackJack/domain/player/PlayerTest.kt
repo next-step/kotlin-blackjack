@@ -3,13 +3,10 @@ package blackJack.domain.player
 import blackJack.domain.card.Card
 import blackJack.domain.card.CardDeck
 import blackJack.domain.card.Cards
-import blackJack.domain.enums.Rank
-import blackJack.domain.enums.Rank.KING
-import blackJack.domain.enums.Rank.QUEEN
+import blackJack.domain.enums.Rank.*
 import blackJack.domain.enums.Status
 import blackJack.domain.enums.Status.HIT
-import blackJack.domain.enums.Suit
-import blackJack.domain.enums.Suit.DIAMOND
+import blackJack.domain.enums.Suit.*
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertTrue
@@ -92,9 +89,9 @@ class PlayerTest {
     }
 
     companion object {
-        private val SPADE_KING = Card(Suit.SPADE, Rank.KING)
-        private val SPADE_TEN = Card(Suit.SPADE, Rank.TEN)
-        private val SPADE_QUEEN = Card(Suit.SPADE, Rank.QUEEN)
-        private val SPADE_ACE = Card(Suit.SPADE, Rank.ACE)
+        private val SPADE_KING = Card(SPADE, KING)
+        private val SPADE_TEN = Card(SPADE, TEN)
+        private val SPADE_QUEEN = Card(SPADE, QUEEN)
+        private val SPADE_ACE = Card(SPADE, ACE)
     }
 }

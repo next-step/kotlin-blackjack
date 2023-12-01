@@ -1,42 +1,34 @@
 package blackJack.domain.result
 
-import blackJack.domain.enums.BlackjackResult
+import blackJack.domain.card.Card
+import blackJack.domain.enums.Rank.*
+import blackJack.domain.enums.Suit.*
+import blackJack.domain.player.Dealer
+import blackJack.domain.player.Player
+import blackJack.domain.player.Players
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 class DealerResultTest {
 
-    private lateinit var winPlayersResult: PlayersResult
-    private lateinit var losePlayersResult: PlayersResult
-    private lateinit var drawPlayersResult: PlayersResult
+    private lateinit var player: Players
+    private lateinit var players: Players
+    private lateinit var dealer: Dealer
 
     @BeforeEach
     fun setUp() {
-        winPlayersResult = PlayersResult(
-            listOf(
-                PlayerResult("win1", 0, BlackjackResult.WIN),
-                PlayerResult("win2", 0, BlackjackResult.WIN),
-            ),
-        )
-        losePlayersResult = PlayersResult(
-            listOf(
-                PlayerResult("lose1", 0, BlackjackResult.LOSE),
-                PlayerResult("lose2", 0, BlackjackResult.LOSE),
-            ),
-        )
-        drawPlayersResult = PlayersResult(
-            listOf(
-                PlayerResult("draw1", 0, BlackjackResult.DRAW),
-                PlayerResult("draw2", 0, BlackjackResult.DRAW),
-            ),
-        )
+        player = Players(listOf(Player("pobi", 10000)))
+        dealer = Dealer("dealer")
+        players = Players(listOf(Player("pobi", 10000), Player("jason", 20000)))
     }
 
     @Test
     fun `10000 원을 건 플레이어가 이겼을 경우 딜러는 -10000 손해를 본다`() {
-        val playerResult = PlayerResult("pobi", 10000, BlackjackResult.WIN)
-        val playerResults = PlayersResult(listOf(playerResult))
+        player.players[0].addCard(SPADE_ACE)
+        dealer.addCard(SPADE_KING)
+
+        val playerResults = PlayersResult.calculateResult(player, dealer)
         val dealerResult = DealerResult.calculateResult(playerResults)
 
         assertEquals(-10000, dealerResult.dealerProfit)
@@ -44,8 +36,10 @@ class DealerResultTest {
 
     @Test
     fun `10000 원을 건 플레이어가 졌을 경우 딜러는 10000 이득을 본다`() {
-        val playerResult = PlayerResult("pobi", 10000, BlackjackResult.LOSE)
-        val playerResults = PlayersResult(listOf(playerResult))
+        player.players[0].addCard(SPADE_TWO)
+        dealer.addCard(SPADE_KING)
+
+        val playerResults = PlayersResult.calculateResult(player, dealer)
         val dealerResult = DealerResult.calculateResult(playerResults)
 
         assertEquals(10000, dealerResult.dealerProfit)
@@ -53,9 +47,11 @@ class DealerResultTest {
 
     @Test
     fun `10000 원을 건 플레이어가 졌고, 20000 원을 건 플레이어가 이겼을 경우 경우 딜러는 -10000 손해를 본다`() {
-        val playerResult1 = PlayerResult("pobi", 10000, BlackjackResult.LOSE)
-        val playerResult2 = PlayerResult("jason", 20000, BlackjackResult.WIN)
-        val playerResults = PlayersResult(listOf(playerResult1, playerResult2))
+        players.players[0].addCard(SPADE_TWO)
+        players.players[1].addCard(SPADE_ACE)
+        dealer.addCard(SPADE_KING)
+
+        val playerResults = PlayersResult.calculateResult(players, dealer)
         val dealerResult = DealerResult.calculateResult(playerResults)
 
         assertEquals(-10000, dealerResult.dealerProfit)
@@ -63,10 +59,20 @@ class DealerResultTest {
 
     @Test
     fun `10000 원을 건 플레이어가 블랙잭으로 이겼을 경우 경우 딜러는 -15000 손해를 본다`() {
-        val playerResult = PlayerResult("pobi", 10000, BlackjackResult.BLACKJACK)
-        val playerResults = PlayersResult(listOf(playerResult))
+        player.players[0].addCard(SPADE_ACE)
+        player.players[0].addCard(SPADE_QUEEN)
+        dealer.addCard(SPADE_KING)
+
+        val playerResults = PlayersResult.calculateResult(player, dealer)
         val dealerResult = DealerResult.calculateResult(playerResults)
 
         assertEquals(-15000, dealerResult.dealerProfit)
+    }
+
+    companion object {
+        private val SPADE_KING = Card(SPADE, KING)
+        private val SPADE_QUEEN = Card(SPADE, QUEEN)
+        private val SPADE_ACE = Card(SPADE, ACE)
+        private val SPADE_TWO = Card(SPADE, TWO)
     }
 }
