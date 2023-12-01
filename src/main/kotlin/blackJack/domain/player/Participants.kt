@@ -9,7 +9,7 @@ class Participants(val players: Players, val dealer: Dealer) {
     }
 
     companion object {
-        fun createParticipants(playerList: List<String>): Participants {
+        fun createParticipants(playerList: List<Player>): Participants {
             val players = Players.createPlayers(playerList)
             val dealer = Dealer.createDealer()
             return Participants(players, dealer)

@@ -3,15 +3,13 @@ package blackJack.domain.player
 import blackJack.domain.card.Card
 import blackJack.domain.card.CardDeck
 import blackJack.domain.card.Cards
-import blackJack.domain.enums.Rank.KING
-import blackJack.domain.enums.Rank.QUEEN
+import blackJack.domain.enums.Rank.*
 import blackJack.domain.enums.Status
-import blackJack.domain.enums.Status.BLACKJACK
-import blackJack.domain.enums.Status.BUST
 import blackJack.domain.enums.Status.HIT
-import blackJack.domain.enums.Suit.DIAMOND
+import blackJack.domain.enums.Suit.*
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -19,10 +17,12 @@ import org.junit.jupiter.api.assertThrows
 class PlayerTest {
 
     private lateinit var cardDeck: Cards
+    private lateinit var player: Player
 
     @BeforeEach
     fun setUp() {
         cardDeck = CardDeck.createShuffledDeck()
+        player = Player("player")
     }
 
     @Test
@@ -33,23 +33,24 @@ class PlayerTest {
     }
 
     @Test
-    fun `이름을 입력하면 정상적으로 Player 가 만들어 진다`() {
-        val name = "pobi"
-        val player = Player.createPlayer(name)
-        assertThat(player.name).isEqualTo(name)
-    }
-
-    @Test
     fun `Status 가 HIT 이고 Answer 가 'y' 이면 카드를 계속해서 추가가 가능하다`() {
-        val player = Player("pobi", cardDeck.initialCards(), HIT)
+        val player = Player("pobi")
+        player.addCard(SPADE_KING)
+
+        assertTrue(player.isContinued())
         val card = cardDeck.drawCard()
         player.addCard(card)
-        assertEquals(3, player.cards.cards.size)
+        assertEquals(2, player.cards.cards.size)
     }
 
     @Test
     fun `Status 가 BUST 이고 Answer 가 'y' 이면 카드를 계속해서 추가가 불가능하다`() {
-        val player = Player("pobi", cardDeck.initialCards(), BUST)
+        val player = Player("pobi")
+        player.addCard(SPADE_KING)
+        player.addCard(SPADE_QUEEN)
+        player.addCard(SPADE_TEN)
+
+        assertTrue(player.isBust())
         assertThrows<IllegalArgumentException> {
             val card = cardDeck.drawCard()
             player.addCard(card)
@@ -58,7 +59,11 @@ class PlayerTest {
 
     @Test
     fun `Status 가 BLACKJACK 이고 Answer 가 'y' 이면 카드를 계속해서 추가가 불가능하다`() {
-        val player = Player("pobi", cardDeck.initialCards(), BLACKJACK)
+        val player = Player("pobi")
+        player.addCard(SPADE_KING)
+        player.addCard(SPADE_ACE)
+
+        assertTrue(player.isBlackJack())
         assertThrows<IllegalArgumentException> {
             val card = cardDeck.drawCard()
             player.addCard(card)
@@ -78,8 +83,15 @@ class PlayerTest {
 
     @Test
     fun `stop() 을 호출하면 status 가 STAND 로 바뀐다`() {
-        val player = Player(name = "pobi", status = HIT)
+        val player = Player(name = "pobi")
         player.gameStop()
         assertEquals(Status.STAND, player.status)
+    }
+
+    companion object {
+        private val SPADE_KING = Card(SPADE, KING)
+        private val SPADE_TEN = Card(SPADE, TEN)
+        private val SPADE_QUEEN = Card(SPADE, QUEEN)
+        private val SPADE_ACE = Card(SPADE, ACE)
     }
 }

@@ -1,58 +1,71 @@
 package blackJack.domain.result
 
 import blackJack.domain.card.Card
-import blackJack.domain.card.Cards
-import blackJack.domain.enums.BlackjackResult
-import blackJack.domain.enums.Rank
-import blackJack.domain.enums.Suit
+import blackJack.domain.enums.Rank.*
+import blackJack.domain.enums.Suit.*
 import blackJack.domain.player.Dealer
 import blackJack.domain.player.Player
-import org.junit.jupiter.api.Assertions
+import blackJack.domain.player.Players
+import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 class PlayerResultTest {
 
-    private lateinit var player: Player
+    private lateinit var player: Players
+    private lateinit var players: Players
     private lateinit var dealer: Dealer
 
     @BeforeEach
     fun setUp() {
-        player = Player(name = "test1", cards = Cards(listOf(Card(Suit.SPADE, Rank.KING), Card(Suit.SPADE, Rank.QUEEN))))
-        dealer = Dealer(name = "dealer", cards = Cards(listOf(Card(Suit.SPADE, Rank.KING), Card(Suit.SPADE, Rank.QUEEN))))
+        player = Players(listOf(Player("pobi", 10000)))
+        dealer = Dealer("dealer")
+        players = Players(listOf(Player("pobi", 10000), Player("jason", 20000)))
     }
 
     @Test
-    fun `playerScore 가 21 이상이면 LOSE 가 반환된다`() {
-        player.cards.addCard(Card(Suit.SPADE, Rank.TWO))
-        val result = PlayerResult.calculateResult(player, dealer).result
-        Assertions.assertEquals(BlackjackResult.LOSE, result)
+    fun `10000 원을 건 플레이어가 이겼을 경우 플레이어는 10000 이득을 본다`() {
+        player.players[0].addCard(SPADE_ACE)
+        dealer.addCard(SPADE_KING)
+
+        val playerResults = PlayersResult.calculateResult(player, dealer)
+        assertEquals(10000, playerResults.playersResult[0].profit)
     }
 
     @Test
-    fun `dealerScore 가 21 이상이면 WIN 가 반환된다`() {
-        dealer.cards.addCard(Card(Suit.SPADE, Rank.TWO))
-        val result = PlayerResult.calculateResult(player, dealer).result
-        Assertions.assertEquals(BlackjackResult.WIN, result)
+    fun `10000 원을 건 플레이어가 졌을 경우 플레이어는 -10000 손해를 본다`() {
+        player.players[0].addCard(SPADE_TWO)
+        dealer.addCard(SPADE_KING)
+
+        val playerResults = PlayersResult.calculateResult(player, dealer)
+        assertEquals(-10000, playerResults.playersResult[0].profit)
     }
 
     @Test
-    fun `playerScore 가 dealerScore 보다 크면 WIN 가 반환된다`() {
-        player.cards.addCard(Card(Suit.SPADE, Rank.ACE))
-        val result = PlayerResult.calculateResult(player, dealer).result
-        Assertions.assertEquals(BlackjackResult.WIN, result)
+    fun `10000 원을 건 플레이어가 졌고, 20000 원을 건 플레이어가 이겼을 경우 경우 각각 -10000 손해와 20000 이득을 본다`() {
+        players.players[0].addCard(SPADE_TWO)
+        players.players[1].addCard(SPADE_ACE)
+        dealer.addCard(SPADE_KING)
+
+        val playerResults = PlayersResult.calculateResult(players, dealer)
+        assertEquals(-10000, playerResults.playersResult[0].profit)
+        assertEquals(20000, playerResults.playersResult[1].profit)
     }
 
     @Test
-    fun `dealerScore 가 playerScore 보다 크면 LOSE 가 반환된다`() {
-        dealer.cards.addCard(Card(Suit.SPADE, Rank.ACE))
-        val result = PlayerResult.calculateResult(player, dealer).result
-        Assertions.assertEquals(BlackjackResult.LOSE, result)
+    fun `10000 원을 건 플레이어가 블랙잭으로 이겼을 경우 경우 플레이어는 15000 이득을 본다`() {
+        player.players[0].addCard(SPADE_ACE)
+        player.players[0].addCard(SPADE_QUEEN)
+        dealer.addCard(SPADE_KING)
+
+        val playerResults = PlayersResult.calculateResult(player, dealer)
+        assertEquals(15000, playerResults.playersResult[0].profit)
     }
 
-    @Test
-    fun `dealerScore 와 playerScore 가 같으면 DRAW 가 반환된다`() {
-        val result = PlayerResult.calculateResult(player, dealer).result
-        Assertions.assertEquals(BlackjackResult.DRAW, result)
+    companion object {
+        private val SPADE_KING = Card(SPADE, KING)
+        private val SPADE_QUEEN = Card(SPADE, QUEEN)
+        private val SPADE_ACE = Card(SPADE, ACE)
+        private val SPADE_TWO = Card(SPADE, TWO)
     }
 }

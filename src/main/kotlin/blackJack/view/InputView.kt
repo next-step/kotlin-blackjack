@@ -16,4 +16,10 @@ object InputView {
         require(answer == "y" || answer == "n") { ErrorMessage.WRONG_INPUT.message }
         return answer
     }
+
+    fun inputBettingPrice(): Int {
+        val bettingPrice = readln()
+        require(bettingPrice.toIntOrNull() != null) { ErrorMessage.WRONG_INPUT.message }
+        return bettingPrice.toInt()
+    }
 }

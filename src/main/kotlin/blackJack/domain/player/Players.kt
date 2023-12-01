@@ -13,8 +13,8 @@ class Players(val players: List<Player>) {
     }
 
     companion object {
-        fun createPlayers(playerList: List<String>): Players {
-            val players = playerList.map { Player.createPlayer(it) }
+        fun createPlayers(playerList: List<Player>): Players {
+            val players = playerList.map { Player(it.name, it.bettingPrice) }
             return Players(players)
         }
     }
