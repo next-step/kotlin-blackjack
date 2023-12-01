@@ -1,7 +1,6 @@
 package blackJack.domain.player
 
 import blackJack.domain.card.Cards
-import blackJack.domain.enums.Status
 import blackJack.error.ErrorMessage
 
 class Player(val name: String, val bettingPrice: Int = 0) : Participant() {
@@ -18,8 +17,6 @@ class Player(val name: String, val bettingPrice: Int = 0) : Participant() {
             gameStop()
         }
     }
-
-    fun gameStop() { status = Status.STAND }
 
     companion object {
         fun splitNames(inputNames: String): List<String> {
