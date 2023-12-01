@@ -6,8 +6,12 @@ import blackjack.view.ResultView
 fun main() {
     val deck = Deck.init()
     val players = InputView.getPlayers()
+    val dealer = Dealer()
 
-    ResultView.firstDealCard(players)
+    ResultView.firstDealCard(players, dealer)
+
+    dealer.getFirstTwoCards(deck.firstDraw())
+    ResultView.showPlayerCards(dealer)
 
     for (player in players) {
         player.getFirstTwoCards(deck.firstDraw())
@@ -18,7 +22,20 @@ fun main() {
         player.isHit(deck)
     }
 
-    ResultView.showPlayerResult(players)
+    dealer.getCard(deck)
+    ResultView.showPlayerResult(dealer, players)
+
+    val gameResult = GameResult(dealer, players)
+    ResultView.displayGameResult(gameResult)
+}
+
+private fun Dealer.getCard(deck: Deck) {
+    var count = 0
+    while (canHit) {
+        hit(deck.draw())
+        count++
+    }
+    ResultView.showDealerDrawCount(count)
 }
 
 private fun Player.isHit(deck: Deck) {
