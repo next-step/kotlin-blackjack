@@ -3,21 +3,30 @@ package blackjack_dealer.entity
 import blackjack_dealer.entity.card.Card
 import blackjack_dealer.entity.card.CardNumber
 
-data class GamerCards(
-    val trumpCard: MutableList<Card> = mutableListOf()
-) : MutableList<Card> by trumpCard {
+class GamerCards {
+    private var _trumpCard: MutableList<Card> = mutableListOf()
+    val trumpCard get() = _trumpCard.toList()
+
     private val cardsContainACard: Boolean
         get() {
-            return trumpCard.any { card -> card.cardNumber == CardNumber.A }
+            return _trumpCard.any { card -> card.cardNumber == CardNumber.A }
         }
 
     private val sumOfCardNumbers: Int
-        get() = trumpCard.sumOf { it.cardNumber.number }
+        get() = _trumpCard.sumOf { it.cardNumber.number }
 
     fun getCurrentScore(): Int = if (cardsContainACard) {
         sumOfCardsWithA()
     } else {
         sumOfCardNumbers
+    }
+
+    fun getCurrentCards(): GamerCards {
+        return _trumpCard.toGamerCards()
+    }
+
+    fun addCard(card: Card) {
+        _trumpCard.add(card)
     }
 
     /**
@@ -33,7 +42,13 @@ data class GamerCards(
     companion object {
         private const val BLACK_JACK = 21
         private const val SUPER_A_PLUS_NUMBER = 10
+
+        fun newInstance(gamerCards: List<Card>): GamerCards {
+            return GamerCards().apply {
+                _trumpCard.addAll(gamerCards)
+            }
+        }
     }
 }
 
-fun MutableList<Card>.toGamerCards() = GamerCards(this)
+fun List<Card>.toGamerCards() = GamerCards.newInstance(this)

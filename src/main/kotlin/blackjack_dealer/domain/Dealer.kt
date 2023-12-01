@@ -2,6 +2,7 @@ package blackjack_dealer.domain
 
 import blackjack_dealer.entity.CardDeque
 import blackjack_dealer.entity.GamerCards
+import blackjack_dealer.entity.Participants
 import blackjack_dealer.entity.state.GamerCurrentState
 
 data class Dealer(
@@ -11,6 +12,8 @@ data class Dealer(
         super.drawCard(cardDeque)
         currentState = findDealerMatchedState(gamerCards)
     }
+
+    fun getDealerProfits(participants: Participants): Int = participants.sumOf { it.getResultBetAmount(this) } * -1
 
     companion object {
         private const val DEALER_NAME = "딜러"

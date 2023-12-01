@@ -1,8 +1,8 @@
 package blackjack_dealer
 
+import blackjack_dealer.domain.Participant
 import blackjack_dealer.entity.BlackJackGamer
 import blackjack_dealer.entity.CardDeque
-import blackjack_dealer.ui.OutputView
 
 class BlackJack(
     private val cardDeque: CardDeque,
@@ -10,22 +10,16 @@ class BlackJack(
 ) {
     fun doGame(
         getOneMoreCardInput: () -> Boolean,
+        askGetOneMoreCard: (Participant) -> Unit,
+        printParticipantInformation: (Participant) -> Unit,
+        printGetOneMoreCardForDealer: () -> Unit,
     ) {
-        blackJackGamer.participants.forEach { participant ->
-            while (participant.canKeepPlayingGame()) {
-                OutputView.askGetOneMoreCard(participant)
-                if (getOneMoreCardInput.invoke()) {
-                    participant.drawCard(cardDeque)
-                    OutputView.printParticipantInformation(participant)
-                } else {
-                    participant.changeStateToStand()
-                    break
-                }
-            }
-        }
-        while (blackJackGamer.dealer.canKeepPlayingGame()) {
-            OutputView.printGetOneMoreCardForDealer()
-            blackJackGamer.dealer.drawCard(cardDeque)
-        }
+        blackJackGamer.doParticipantsGame(
+            getOneMoreCardInput = getOneMoreCardInput,
+            cardDeque = cardDeque,
+            askGetOneMoreCard = askGetOneMoreCard,
+            printParticipantInformation = printParticipantInformation
+        )
+        blackJackGamer.doDealerGame(cardDeque, printGetOneMoreCardForDealer)
     }
 }

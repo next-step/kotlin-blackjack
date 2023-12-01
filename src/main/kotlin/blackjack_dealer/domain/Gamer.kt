@@ -7,19 +7,21 @@ import blackjack_dealer.entity.state.GamerCurrentState
 abstract class Gamer(
     open val name: String,
 ) {
-    protected val gamerCards: GamerCards = GamerCards()
+    protected lateinit var gamerCards: GamerCards
     protected var currentState: GamerCurrentState = GamerCurrentState.INITIAL
 
     fun getGamerName(): String = name
-    fun getCurrentCards(): GamerCards = gamerCards
+    fun getCurrentCards(): GamerCards = gamerCards.getCurrentCards()
     fun canKeepPlayingGame(): Boolean = currentState is GamerCurrentState.HIT
-    fun initializeCard(cards: GamerCards) { cards.forEach { card -> gamerCards.add(card) } }
+    fun initializeCard(cards: GamerCards) { gamerCards = cards }
 
     fun getCurrentGamerState(): GamerCurrentState = currentState
 
+    fun gamerIsBust(): Boolean = currentState == GamerCurrentState.BUST
+
     open fun drawCard(cardDeque: CardDeque) {
         val newCard = cardDeque.generateSingleCard()
-        gamerCards.add(newCard)
+        gamerCards.addCard(newCard)
     }
 
     companion object {

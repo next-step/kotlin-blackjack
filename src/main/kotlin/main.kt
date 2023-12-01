@@ -1,5 +1,4 @@
 import blackjack_dealer.BlackJack
-import blackjack_dealer.BlackJackResultBoard
 import blackjack_dealer.domain.Dealer
 import blackjack_dealer.entity.BlackJackGamer
 import blackjack_dealer.entity.CardDeque
@@ -12,7 +11,8 @@ fun main() {
     val participantsName = InputView.inputParticipantsName()
     val cardDeque = CardDeque().create()
 
-    val participants = Participants.newInstance(participantsName) { cardDeque.generateDoubleCard() }
+    val allParticipantWithBetAmount = OutputView.enterBetAmountEachParticipant(participantsName) { InputView.inputBetAmount() }
+    val participants = Participants.newInstance(allParticipantWithBetAmount) { cardDeque.generateDoubleCard() }
     val dealer = Dealer.newInstance(cardDeque.generateDoubleCard())
     OutputView.printDivideCardsToGamer(dealer, participants)
 
@@ -21,12 +21,17 @@ fun main() {
     val canJoinParticipants = participants.getParticipantsCanPlayGame()
     val blackJackGamer = BlackJackGamer(dealer = dealer, participants = canJoinParticipants)
     val blackJack = BlackJack(cardDeque = cardDeque, blackJackGamer = blackJackGamer)
-    blackJack.doGame { InputView.inputGetOneMoreCard() }
+    blackJack.doGame(
+        getOneMoreCardInput = { InputView.inputGetOneMoreCard() },
+        askGetOneMoreCard = { participant -> OutputView.askGetOneMoreCard(participant) },
+        printParticipantInformation = { participant -> OutputView.printParticipantInformation(participant) },
+        printGetOneMoreCardForDealer = { OutputView.printGetOneMoreCardForDealer() }
+    )
 
     OutputView.printResult(dealer, participants)
 
     OutputView.printFinalResultBoard()
-    val totalResult = BlackJackResultBoard.getBlackJackResult(dealer, participants)
-    OutputView.printFinalDealerResult(totalResult.dealerResult)
-    OutputView.printFinalParticipantsResult(totalResult.participantsResult)
+    val dealerResult = dealer.getDealerProfits(participants)
+    OutputView.printFinalDealerResult(dealerResult)
+    OutputView.printFinalParticipantsResult(participants, dealer)
 }

@@ -1,18 +1,25 @@
 package blackjack_dealer.entity
 
+import blackjack_dealer.domain.Dealer
 import blackjack_dealer.domain.Participant
-import blackjack_dealer.entity.card.Card
 
 data class Participants(
     val participants: List<Participant>
 ) : List<Participant> by participants {
 
     fun getParticipantsCanPlayGame(): Participants = participants.filter { it.canKeepPlayingGame() }.toParticipants()
+
     companion object {
-        fun newInstance(nameString: String, cardDeque: () -> List<Card>): Participants {
-            val names = nameString.split(',')
-            return names.map { name ->
-                Participant.newInstance(name = name, cards = GamerCards(cardDeque().toMutableList()))
+        fun newInstance(
+            allParticipantWithBetAmount: AllParticipantWithBetAmount,
+            cardDeque: () -> GamerCards
+        ): Participants {
+            return allParticipantWithBetAmount.map { participantWithBetAmount ->
+                Participant.newInstance(
+                    name = participantWithBetAmount.name,
+                    cards = cardDeque.invoke(),
+                    betAmount = participantWithBetAmount.betAmount
+                )
             }.toParticipants()
         }
     }
