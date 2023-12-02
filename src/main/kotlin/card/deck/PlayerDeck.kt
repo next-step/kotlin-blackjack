@@ -38,4 +38,13 @@ class PlayerDeck(override val cardDeck: MutableList<PlayingCard> = mutableListOf
         private const val ADD_ACE_POINT = 10
         private const val ADD_ACE_POINT_NONE = 0
     }
+
+    override fun toString(): String {
+        val sb = StringBuilder()
+        for(card in cardDeck) {
+            sb.append("$card, ")
+        }
+        sb.deleteCharAt(sb.lastIndex - 1)
+        return sb.toString()
+    }
 }

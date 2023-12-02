@@ -2,8 +2,11 @@ package card.deck
 
 import card.PlayingCard
 
-class GameDeck private constructor(override val cardDeck: MutableList<PlayingCard>) : CardDeck {
+class GameDeck (override val cardDeck: MutableList<PlayingCard>) : CardDeck {
 
+    init {
+        cardDeck.shuffle()
+    }
     private var index = 0
 
     fun getCardWithIncrease(): PlayingCard {
@@ -12,9 +15,5 @@ class GameDeck private constructor(override val cardDeck: MutableList<PlayingCar
 
     fun addCards(cards: List<PlayingCard>) {
         this.cardDeck.addAll(cards)
-    }
-
-    companion object {
-        fun create(cards: List<PlayingCard>) = GameDeck(cards.toMutableList())
     }
 }
