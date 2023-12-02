@@ -6,6 +6,8 @@ class HandScore(
     val isBust: Boolean
         get() = cardScore > BUST_THRESHOLD
 
+    val isGreaterOrEqualToMaxScore: Boolean = cardScore >= BUST_THRESHOLD
+
     val gameScore: Int
         get() {
             if (isBust) return BUST_SCORE

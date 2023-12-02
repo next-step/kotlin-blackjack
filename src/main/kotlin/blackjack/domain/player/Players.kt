@@ -15,9 +15,6 @@ data class Players(
     var inTurn: Player = value.first()
         private set
 
-    val isPlayerInTurnOverMaxScore: Boolean
-        get() = inTurn.isBust
-
     val isLastTurn: Boolean
         get() = value.indexOf(inTurn) == value.lastIndex
 

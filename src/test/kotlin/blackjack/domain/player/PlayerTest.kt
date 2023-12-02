@@ -59,13 +59,31 @@ class PlayerTest : DescribeSpec({
                 }
             }
         }
+
+        context("플레이어가 21점이라면") {
+            val score21Cards = hand(card(Rank.TEN), card(Rank.ACE))
+            val player = player(hand = score21Cards)
+
+            it("카드를 추가할 수 없다") {
+                shouldThrowExactly<IllegalArgumentException> {
+                    player.addCard(Card(Suit.CLUB, Rank.TEN))
+                }
+            }
+        }
     }
 
-    describe("isBust") {
+    describe("isGreaterOrEqualToMaxScore") {
         context("21을 넘었을 때") {
             val player = player(hand = hand(card(Rank.THREE), card(Rank.TEN), card(Rank.TEN)))
             it("true 반환") {
-                player.isBust shouldBe true
+                player.isGreaterOrEqualToMaxScore shouldBe true
+            }
+        }
+
+        context("21점일 때") {
+            val player = player(hand = hand(card(Rank.ACE), card(Rank.TEN)))
+            it("true 반환") {
+                player.isGreaterOrEqualToMaxScore shouldBe true
             }
         }
 
@@ -73,7 +91,7 @@ class PlayerTest : DescribeSpec({
             val player = player(hand = hand(card(Rank.ACE), card(Rank.ACE), card(Rank.ACE)))
 
             it("false 반환") {
-                player.isBust shouldBe false
+                player.isGreaterOrEqualToMaxScore shouldBe false
             }
         }
     }
@@ -101,6 +119,24 @@ class PlayerTest : DescribeSpec({
             }
             it("STAND를 받으면 STAND가 반환") {
                 val player = player(action = Action.STAND, hand = score30Cards)
+
+                val result = player.hitOrStand()
+
+                result shouldBe Action.STAND
+            }
+        }
+
+        context("이미 점수가 최대 점수 21점 이라면") {
+            val score21Cards = hand(card(Rank.QUEEN), card(Rank.ACE))
+            it("HIT을 받아도 STAND가 반환") {
+                val player = player(action = Action.HIT, hand = score21Cards)
+
+                val result = player.hitOrStand()
+
+                result shouldBe Action.STAND
+            }
+            it("STAND를 받으면 STAND가 반환") {
+                val player = player(action = Action.STAND, hand = score21Cards)
 
                 val result = player.hitOrStand()
 

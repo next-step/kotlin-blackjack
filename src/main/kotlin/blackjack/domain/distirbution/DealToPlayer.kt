@@ -24,7 +24,7 @@ class DealToPlayer(
             }
         }
 
-        val isSystemStand = (action == Action.STAND && playerInTurn.isBust)
+        val isSystemStand = (action == Action.STAND && playerInTurn.isGreaterOrEqualToMaxScore)
         return DealToPlayerResult(playerInTurn, isSystemStand)
     }
 

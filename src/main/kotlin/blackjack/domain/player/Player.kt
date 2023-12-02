@@ -10,7 +10,7 @@ class Player(
 ) : CardPlayer {
 
     override fun hitOrStand(): Action {
-        if (isBust) return Action.STAND
+        if (isGreaterOrEqualToMaxScore) return Action.STAND
         return getDesiredAction(this)
     }
 }

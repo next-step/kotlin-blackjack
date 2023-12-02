@@ -14,7 +14,7 @@ import io.kotest.matchers.types.shouldBeTypeOf
 
 class DealToPlayerTest : DescribeSpec({
     describe("deal") {
-        context("플레이어가 HIT (player: HIT, 점수 : bust 아님) 을 하면") {
+        context("플레이어가 HIT (player: HIT, 점수 : 21점 미만) 을 하면") {
             val players = players(player("currentPlayer", Action.HIT), player())
             val table = table(inputAction = Action.HIT, players = players)
             val deckCount = table.dealer.deck.cards.size
@@ -41,7 +41,7 @@ class DealToPlayerTest : DescribeSpec({
             }
         }
 
-        context("모든 플레이어는 항상 STAND를 응답(player: STAND)할 때") {
+        context("플레이어가 STAND를 응답(player: STAND)할 때") {
             val player1Cards = hand(card(Rank.TEN), card(Rank.TEN))
             val players = players(
                 player("currentPlayer", Action.STAND, player1Cards),
@@ -90,7 +90,7 @@ class DealToPlayerTest : DescribeSpec({
             }
 
             context("카드 배분시 게임 룰에 의한 (21점 이상) STAND을 한 경우") {
-                val cards = hand(card(Rank.TEN), card(Rank.TEN), card(Rank.TEN))
+                val cards = hand(card(Rank.TEN), card(Rank.ACE))
                 val players = players(player("currentPlayer", hand = cards, action = Action.HIT), player("nextPlayer"))
 
                 val table = table(inputAction = Action.HIT, players = players)
@@ -115,6 +115,35 @@ class DealToPlayerTest : DescribeSpec({
                 it("게임 룰에 의한 STAND인지 여부는 TRUE") {
                     result.isSystemStand shouldBe true
                 }
+            }
+        }
+
+        context("플레이어가 HIT를 했지만 STAND를 응답할 때(점수 21점 이상)") {
+            val player1Cards = hand(card(Rank.TEN), card(Rank.ACE))
+            val players = players(
+                player("currentPlayer", Action.STAND, player1Cards),
+                player("nextPlayer", Action.STAND),
+            )
+            val table = table(inputAction = Action.HIT, players = players)
+
+            val dealToPlayer = DealToPlayer(table)
+            val result = dealToPlayer.deal()
+
+            it("게임의 다음 상태는 다음 플레이어 배분 차례") {
+                dealToPlayer.nextDistributor.shouldBeTypeOf<DealToPlayer>()
+                table.players.inTurn.name shouldBe PlayerName("nextPlayer")
+            }
+
+            it("플레이어 카드는 변화 없음") {
+                table.players.value.first().hand shouldBe player1Cards
+            }
+
+            it("결과 값의 플레이어는 이번 차례 진행한 플레이어") {
+                result.player.name shouldBe PlayerName("currentPlayer")
+            }
+
+            it("게임 룰에 의한 STAND인지 여부는 TRUE") {
+                result.isSystemStand shouldBe true
             }
         }
     }

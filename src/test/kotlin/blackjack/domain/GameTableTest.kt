@@ -145,7 +145,7 @@ class GameTableTest : DescribeSpec({
     }
 
     describe("playerInTurnAction") {
-        context("이번 턴의 플레이어가 HIT를 하면(player: HIT, 점수: 21이하)") {
+        context("이번 턴의 플레이어가 HIT를 하면(player: HIT, 점수: 21미만)") {
             val hitPlayer = player(action = Action.HIT, hand = Hand())
             val players = players(hitPlayer, player("other"))
             val table = GameTable(Dealer(), players)
@@ -158,7 +158,7 @@ class GameTableTest : DescribeSpec({
             }
         }
 
-        context("이번 턴의 플레이어가 STAND를 하면(player: STAND, 점수: 21이하)") {
+        context("이번 턴의 플레이어가 STAND를 하면(player: STAND, 점수: 21미만)") {
             val standPlayer = player(action = Action.STAND, hand = Hand())
             val players = players(standPlayer, player("other"))
             val table = GameTable(Dealer(), players)
@@ -172,7 +172,7 @@ class GameTableTest : DescribeSpec({
         }
 
         context("이번 턴의 플레이어가 STAND를 하면(player: HIT, 점수: 21이상)") {
-            val standPlayer = player(action = Action.HIT, hand = hand(card(Rank.TEN), card(Rank.TEN), card(Rank.TEN)))
+            val standPlayer = player(action = Action.HIT, hand = hand(card(Rank.TEN), card(Rank.ACE)))
             val players = players(standPlayer, player("other"))
             val table = GameTable(Dealer(), players)
             table.playerInTurn shouldBe standPlayer

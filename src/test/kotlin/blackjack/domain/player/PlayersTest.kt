@@ -1,11 +1,7 @@
 package blackjack.domain.player
 
 import blackjack.domain.Action
-import blackjack.domain.card.Rank
-import blackjack.mock.card
-import blackjack.mock.hand
 import blackjack.mock.player
-import blackjack.mock.players
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
@@ -33,24 +29,6 @@ class PlayersTest : DescribeSpec({
                 shouldThrowExactly<IllegalArgumentException> {
                     Players.of(playerNames) { Action.HIT }
                 }
-            }
-        }
-    }
-
-    describe("현재 플레이어가 최대 점수를 넘었는지 여부 반환") {
-        context("현재 플레이어가 최대 점수를 넘었을 경우") {
-            val playerOverMaxScore = player(hand = hand(card(Rank.THREE), card(Rank.TEN), card(Rank.TEN)))
-            val players = players(playerOverMaxScore, player())
-            it("true 반환") {
-                players.isPlayerInTurnOverMaxScore shouldBe true
-            }
-        }
-
-        context("현재 플레이어가 최대 점수를 넘지 않았을 경우") {
-            val playerUnderMaxScore = player(hand = hand(card(Rank.ACE), card(Rank.TEN)))
-            val players = players(playerUnderMaxScore, player())
-            it("false 반환") {
-                players.isPlayerInTurnOverMaxScore shouldBe false
             }
         }
     }

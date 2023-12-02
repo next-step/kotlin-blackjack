@@ -73,6 +73,30 @@ class HandScoreTest : DescribeSpec({
         }
     }
 
+    describe("isGreaterOrEqualToMaxScore") {
+        context("21점 미만일 때") {
+            val handScore = HandScore(20)
+
+            it("false 반환") {
+                handScore.isGreaterOrEqualToMaxScore shouldBe false
+            }
+        }
+        context("21점일 때") {
+            val handScore = HandScore(21)
+
+            it("true 반환") {
+                handScore.isGreaterOrEqualToMaxScore shouldBe true
+            }
+        }
+        context("21점 초과일 때") {
+            val handScore = HandScore(22)
+
+            it("true 반환") {
+                handScore.isGreaterOrEqualToMaxScore shouldBe true
+            }
+        }
+    }
+
     describe("isGreaterCardScoreThan") {
         val score = HandScore(16)
         context("보다 작은 점수를 비교") {
