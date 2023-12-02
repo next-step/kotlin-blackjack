@@ -8,6 +8,8 @@ import blackjack.domain.state.State
 
 class Player(val name: Name) {
     var state: State = First(Cards())
+    val score: Int
+        get() = state.hands.score().toInt()
 
     fun receiveCard(card: Card) {
         state = state.draw(card)

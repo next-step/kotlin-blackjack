@@ -33,7 +33,7 @@ class PlayerTest {
         val player = Player(name = Name("Seongmo"))
         val card = Card(CardCharacter.ACE, CardShape.CLUB)
         player.receiveCard(card)
-        assertThat(player.state.hands.score().value).isEqualTo(11)
+        assertThat(player.score).isEqualTo(11)
     }
 
     @Test
@@ -43,7 +43,7 @@ class PlayerTest {
         val card2 = Card(CardCharacter.TEN, CardShape.CLUB)
         player.receiveCard(card)
         player.receiveCard(card2)
-        assertThat(player.state.hands.score().value).isEqualTo(card.character.score + card2.character.score)
+        assertThat(player.score).isEqualTo(card.character.score + card2.character.score)
     }
 
     @Test

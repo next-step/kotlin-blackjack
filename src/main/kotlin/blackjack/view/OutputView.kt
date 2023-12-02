@@ -13,12 +13,12 @@ object OutputView {
     }
 
     fun printResult(player: Player) {
-        println("${player.name}카드: ${playerCardsToString(player)} - 결과: ${player.state.hands.score().value}")
+        println("${player.name}카드: ${playerCardsToString(player)} - 결과: ${player.score}")
     }
 
     private fun playerCardsToString(player: Player): String {
         return player.state.getCards().joinToString(separator = ", ") {
-                card -> "${card.character.displayName}${card.shape.displayName}"
+                card -> "${card.cardCharacterDisplayName}${card.cardShapeDisplayName}"
         }
     }
 }

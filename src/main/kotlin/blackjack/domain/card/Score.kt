@@ -4,6 +4,8 @@ package blackjack.domain.card
 value class Score(val value: Int) {
     constructor(cards: Cards) : this(cards.sumOf { card -> card.character.score })
 
+    fun toInt(): Int = value
+
     fun addBonusIfNotBust(): Score {
         if (canReceiveMoreCard()) {
             return Score(value + SOFT_SCORE)
