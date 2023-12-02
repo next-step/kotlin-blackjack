@@ -26,7 +26,9 @@ class ResultView {
         println(playerText(player = player))
     }
 
-    fun showDealerDraw(): String = "딜러는 ${BlackjackRule.DEALER_MINIMUM_SCORE - 1}이하라 한장의 카드를 더 받았습니다."
+    fun showDealerDraw(countOfDraw: Int) {
+        println("\n딜러는 ${BlackjackRule.DEALER_MINIMUM_SCORE - 1}이하라 한장의 카드를 더 받았습니다.".repeat(countOfDraw))
+    }
 
     fun showResult(dealer: Dealer, players: List<Player>) {
         println()

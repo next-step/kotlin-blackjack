@@ -17,6 +17,17 @@ class Dealer(
         updateState()
     }
 
+    fun drawUntilOverMinimum(deck: Deck): Int {
+        var countOfDraw = 0
+        while (canDraw()) {
+            receiveCard(deck.pop())
+            updateState()
+            countOfDraw++
+        }
+
+        return countOfDraw
+    }
+
     private fun receiveCard(card: Card) {
         hand.add(card)
     }
