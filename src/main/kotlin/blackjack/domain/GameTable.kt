@@ -4,8 +4,8 @@ import blackjack.domain.player.Player
 import blackjack.domain.player.Players
 
 data class GameTable(
-    val dealer: Dealer,
     val players: Players,
+    val dealer: Dealer = Dealer(),
 ) {
     val isLastPlayerTurn: Boolean
         get() = players.isLastTurn

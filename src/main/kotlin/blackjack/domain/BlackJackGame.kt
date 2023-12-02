@@ -2,6 +2,7 @@ package blackjack.domain
 
 import blackjack.controller.InputProcessor
 import blackjack.controller.ResultProcessor
+import blackjack.domain.batting.BetBoard
 import blackjack.domain.distirbution.CardDistributor
 import blackjack.domain.distirbution.DealEnd
 import blackjack.domain.distirbution.DealInitialCards
@@ -9,16 +10,14 @@ import blackjack.domain.player.Players
 import blackjack.domain.result.Result
 
 class BlackJackGame(
-    private val inputProcessor: InputProcessor,
-    private val resultProcessor: ResultProcessor = ResultProcessor(),
+    inputProcessor: InputProcessor,
+    players: Players = Players.of(inputProcessor.playerNames()) { player -> inputProcessor.playerAction(player) },
+    private val resultProcessor: ResultProcessor,
 ) {
-    var dealCards: CardDistributor = DealInitialCards(
-        GameTable(
-            Dealer(),
-            Players.of(inputProcessor.playerNames()) { player -> inputProcessor.playerAction(player) }
-        ),
-    )
+
+    var dealCards: CardDistributor = DealInitialCards(GameTable(players))
         private set
+    val betBoard: BetBoard = BetBoard.of(players) { player -> inputProcessor.playerBet(player) }
 
     fun run() {
         var distributionCount = 0

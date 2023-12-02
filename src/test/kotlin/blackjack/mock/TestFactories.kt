@@ -37,6 +37,6 @@ fun table(
     players: Players? = null,
 ): GameTable =
     GameTable(
+        players ?: players(player("kim", inputAction), player("lee", inputAction)),
         dealer,
-        players ?: players(player("kim", inputAction), player("lee", inputAction))
     )

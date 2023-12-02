@@ -1,5 +1,6 @@
 package blackjack.domain
 
+import blackjack.controller.ResultProcessor
 import blackjack.domain.player.PlayerName
 import blackjack.mock.InputProcessorMock
 import io.kotest.core.spec.style.DescribeSpec
@@ -14,6 +15,7 @@ class BlackJackGameTest : DescribeSpec({
                 inputProcessor = InputProcessorMock(
                     playerNames = listOf(name1, name2)
                 ),
+                resultProcessor = ResultProcessor(),
             )
 
             it("전달된 이름으로 플레이어 세팅") {
