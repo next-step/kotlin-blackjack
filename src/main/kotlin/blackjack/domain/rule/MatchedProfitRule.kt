@@ -6,9 +6,7 @@ import blackjack.domain.card.State
 class MatchedProfitRule {
 
     fun profit(dealerDrewCards: DrewCards, participantDrewCards: DrewCards, bet: Int): Int {
-        if (participantDrewCards.isFinished.not()) {
-            throw IllegalArgumentException("참가자는 카드를 모두 뽑은 후에 베팅 금액을 계산할 수 있습니다.")
-        }
+        require(participantDrewCards.isFinished) { "참가자는 카드를 모두 뽑은 후에 베팅 금액을 계산할 수 있습니다." }
 
         if (participantDrewCards.state == State.BUST) {
             return -bet
