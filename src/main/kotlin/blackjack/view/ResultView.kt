@@ -2,10 +2,11 @@ package blackjack.view
 
 import blackjack.domain.BlackjackMember
 import blackjack.domain.BlackjackRule
-import blackjack.domain.CompareResult
-import blackjack.domain.CompareResultItem
 import blackjack.domain.Dealer
 import blackjack.domain.Player
+import blackjack.domain.result.BlackjackResult
+import blackjack.domain.result.DealerResult
+import blackjack.domain.result.PlayerResult
 
 class ResultView {
     fun showInitialPlayers(dealer: Dealer, players: List<Player>) {
@@ -30,11 +31,13 @@ class ResultView {
     fun showResult(dealer: Dealer, players: List<Player>) {
         println()
         println(
-            "딜러 카드: ${dealer.getCardList().joinToString { "${it.number.text}${it.shape.text}" }} - ${
-            memberScore(
-                blackjackMember = dealer
-            )
-            }"
+            StringBuilder("딜러 카드: ").also {
+                it.append(dealer.getCardList().joinToString { card -> "${card.number.text}${card.shape.text}" })
+                it.append(
+                    " - ${memberScore(blackjackMember = dealer)}"
+                )
+            }
+
         )
         println(
             players.joinToString("\n") {
@@ -47,46 +50,30 @@ class ResultView {
         println("\n## 최종 승패")
     }
 
-    fun showCompareResult(compareResult: CompareResult) {
-        showDealerCompareResult(compareResult.dealerCompareResultItem)
-        showPlayerCompareResult(compareResult.playerCompareResultMap)
+    fun showCompareResult(blackjackResult: BlackjackResult) {
+        showDealerCompareResult(blackjackResult.dealerCompeteResult)
+        showPlayerCompareResult(blackjackResult.playerCompeteResults)
     }
 
-    private fun showPlayerCompareResult(playerCompareResultMap: Map<Player, CompareResultItem>) {
-        playerCompareResultMap.forEach { (player, result) ->
-            println(
-                StringBuilder().also {
-                    it.append("${player.name}: ")
-
-                    if (result == CompareResultItem.win()) {
-                        it.append("승")
-                    }
-
-                    if (result == CompareResultItem.draw()) {
-                        it.append("무")
-                    }
-
-                    if (result == CompareResultItem.lose()) {
-                        it.append("패")
-                    }
-                }
-            )
+    private fun showPlayerCompareResult(playerCompareResultMap: List<PlayerResult>) {
+        playerCompareResultMap.forEach { (playerName, result) ->
+            println("$playerName: ${result.text}")
         }
     }
 
-    private fun showDealerCompareResult(compareResultItem: CompareResultItem) {
+    private fun showDealerCompareResult(dealerResult: DealerResult) {
         println(
             StringBuilder("딜러: ").also {
-                if (compareResultItem.win > 0) {
-                    it.append("${compareResultItem.win}승 ")
+                if (dealerResult.win > 0) {
+                    it.append("${dealerResult.win}승 ")
                 }
 
-                if (compareResultItem.draw > 0) {
-                    it.append("${compareResultItem.draw}무 ")
+                if (dealerResult.draw > 0) {
+                    it.append("${dealerResult.draw}무 ")
                 }
 
-                if (compareResultItem.lose > 0) {
-                    it.append("${compareResultItem.lose}패")
+                if (dealerResult.lose > 0) {
+                    it.append("${dealerResult.lose}패")
                 }
             }
         )
