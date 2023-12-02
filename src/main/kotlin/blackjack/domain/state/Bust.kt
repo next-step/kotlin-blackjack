@@ -1,3 +1,10 @@
 package blackjack.domain.state
 
-class Bust(override val rate: Double = 0.0) : Finished()
+import blackjack.domain.card.Cards
+import blackjack.domain.card.Hands
+
+class Bust(override val rate: Double = 0.0, override val hands: Hands) : Finished() {
+    override fun getCards(): Cards {
+        return Cards(hands.cards)
+    }
+}

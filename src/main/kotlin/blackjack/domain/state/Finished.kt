@@ -9,7 +9,7 @@ abstract class Finished : State {
         throw IllegalStateException()
     }
 
-    override fun stay(): State = Stay()
+    override fun stay(): State = Stay(hands = hands)
 
     fun profit(money: Int): Double = money * rate
 }

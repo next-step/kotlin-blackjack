@@ -1,3 +1,5 @@
 package blackjack.domain.state
 
-class Stay(override val rate: Double = 1.0) : Finished()
+import blackjack.domain.card.Hands
+
+class Stay(override val rate: Double = 1.0, override val hands: Hands) : Finished()

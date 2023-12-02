@@ -10,7 +10,7 @@ object OutputView {
 
     fun printCurrentCardState(player: Player) {
         val joinToString =
-            player.cards.joinToString(separator = ", ") { card -> "${card.character.displayName}${card.shape.displayName}" }
+            player.state.getCards().joinToString(separator = ", ") { card -> "${card.character.displayName}${card.shape.displayName}" }
         println("${player.name}카드: $joinToString")
     }
 }

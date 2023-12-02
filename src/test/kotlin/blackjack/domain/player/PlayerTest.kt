@@ -3,8 +3,6 @@ package blackjack.domain.player
 import blackjack.domain.card.Card
 import blackjack.domain.card.CardCharacter
 import blackjack.domain.card.CardShape
-import blackjack.domain.player.Name
-import blackjack.domain.player.Player
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -18,7 +16,7 @@ class PlayerTest {
     @Test
     fun `플레이어는 카드를 가지고 있지 않을 수 있다`() {
         val player = Player(name = Name("Seongmo"))
-        assertThat(player.cards).isEmpty()
+        assertThat(player.getCards()).isEmpty()
     }
 
     @Test
@@ -26,25 +24,24 @@ class PlayerTest {
         val player = Player(name = Name("Seongmo"))
         val card = Card(CardCharacter.FIVE, CardShape.CLUB)
         player.receiveCard(card)
-        assertThat(player.cards.contains(card)).isTrue()
+        assertThat(player.getCards().contains(card)).isTrue()
     }
 
     @Test
-    fun `플레이어가 가지고 있는 카드의 점수가 계산된다 (Ace는 1점으로 계산된다)`() {
+    fun `플레이어가 가지고 있는 카드의 점수가 계산된다 (Ace는 사용자가 21점 미만에서는 11점으로 계산된다)`() {
         val player = Player(name = Name("Seongmo"))
         val card = Card(CardCharacter.ACE, CardShape.CLUB)
         player.receiveCard(card)
-        assertThat(player.score).isEqualTo(card.character.score)
-        assertThat(player.score).isEqualTo(1)
+        assertThat(player.state.hands.score().value).isEqualTo(11)
     }
 
     @Test
     fun `플레이어가 가지고 있는 카드의 총합 점수가 계산된다`() {
         val player = Player(name = Name("Seongmo"))
         val card = Card(CardCharacter.FIVE, CardShape.CLUB)
-        val card2 = Card(CardCharacter.ACE, CardShape.CLUB)
+        val card2 = Card(CardCharacter.TEN, CardShape.CLUB)
         player.receiveCard(card)
         player.receiveCard(card2)
-        assertThat(player.score).isEqualTo(card.character.score + card2.character.score)
+        assertThat(player.state.hands.score().value).isEqualTo(card.character.score + card2.character.score)
     }
 }

@@ -1,8 +1,9 @@
 package blackjack.domain.card
 
-class Hands(private val cards: List<Card>) {
-    constructor(vararg cards: Card): this(cards.toList())
+class Hands(val cards: Cards) {
+    constructor(vararg cards: Card): this(Cards(cards.toList()))
 
+    operator fun plus(otherCards: Cards): Hands = Hands(this.cards + otherCards)
     operator fun plus(otherCard: Card): Hands = Hands(this.cards + otherCard)
 
     fun hasTwo(): Boolean = cards.size == INITIAL_CARDS_SIZE
