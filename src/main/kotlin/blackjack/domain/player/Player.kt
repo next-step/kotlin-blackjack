@@ -10,12 +10,12 @@ class Player(val name: Name) {
     var state: State = First(Cards())
     val score: Int
         get() = state.hands.score().toInt()
+    val cards: Cards
+        get() = state.getCards()
 
     fun receiveCard(card: Card) {
         state = state.draw(card)
     }
-
-    fun getCards(): Cards = state.getCards()
 
     fun isFinished(): Boolean = state is Finished
 }

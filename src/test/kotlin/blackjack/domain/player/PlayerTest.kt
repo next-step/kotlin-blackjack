@@ -17,7 +17,7 @@ class PlayerTest {
     @Test
     fun `플레이어는 카드를 가지고 있지 않을 수 있다`() {
         val player = Player(name = Name("Seongmo"))
-        assertThat(player.getCards()).isEmpty()
+        assertThat(player.cards).isEmpty()
     }
 
     @Test
@@ -25,7 +25,7 @@ class PlayerTest {
         val player = Player(name = Name("Seongmo"))
         val card = Card(CardCharacter.FIVE, CardShape.CLUB)
         player.receiveCard(card)
-        assertThat(player.getCards().contains(card)).isTrue()
+        assertThat(player.cards.contains(card)).isTrue()
     }
 
     @Test
