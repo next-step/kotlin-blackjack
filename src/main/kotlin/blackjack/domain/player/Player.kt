@@ -5,12 +5,12 @@ import blackjack.domain.card.Hand
 
 class Player(
     val name: PlayerName,
-    val getDesiredAction: (player: Player) -> Action,
+    val desiredAction: (player: Player) -> Action,
     override val hand: Hand = Hand(),
 ) : CardPlayer {
 
     override fun hitOrStand(): Action {
         if (isGreaterOrEqualToMaxScore) return Action.STAND
-        return getDesiredAction(this)
+        return desiredAction(this)
     }
 }
