@@ -1,7 +1,7 @@
 package blackjack.domain
 
+import blackjack.domain.dealer.Dealer
 import blackjack.domain.player.Player
-import blackjack.domain.player.PlayerName
 import blackjack.helper.DeckHelper
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
@@ -9,7 +9,7 @@ import io.kotest.matchers.shouldBe
 class DealerTest : BehaviorSpec({
     Given("플레이어와 딜러가 있을 때") {
         val player = Player(
-            name = PlayerName("플레이어1")
+            name = ParticipantName("플레이어1")
         )
         val deck = DeckHelper.createMockDeck()
         val dealer = Dealer(deck)

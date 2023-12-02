@@ -1,8 +1,8 @@
 package blackjack
 
-import blackjack.domain.Dealer
+import blackjack.domain.dealer.Dealer
 import blackjack.domain.Deck
-import blackjack.domain.card.CardRandomShuffler
+import blackjack.domain.card.CardShuffleMachine
 import blackjack.domain.player.Player
 import blackjack.domain.player.Players
 import blackjack.domain.player.forEach
@@ -17,8 +17,8 @@ class BlackjackApplication {
         @JvmStatic
         fun main(args: Array<String>) {
             val players = InputView.readPlayers()
-            OutputView.drawCardMessage(players, INIT_DRAW_CARD_COUNT)
             val dealer = createDealer()
+            OutputView.drawCardMessage(dealer, players, INIT_DRAW_CARD_COUNT)
             drawCardFirst(players, dealer)
             printFirstPlayerCardMessage(players)
             handCardToAllPlayers(players, dealer)
@@ -26,7 +26,7 @@ class BlackjackApplication {
         }
 
         private fun createDealer(): Dealer {
-            val deck = Deck(CardRandomShuffler())
+            val deck = Deck(CardShuffleMachine())
             return Dealer(deck)
         }
 

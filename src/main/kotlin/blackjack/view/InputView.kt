@@ -1,7 +1,7 @@
 package blackjack.view
 
 import blackjack.domain.player.Player
-import blackjack.domain.player.PlayerName
+import blackjack.domain.ParticipantName
 import blackjack.domain.player.Players
 import java.util.Locale
 
@@ -41,7 +41,7 @@ object InputView {
 
     private fun createPlayers(splitNames: List<String>): Players {
         val players = splitNames.map {
-            val playerName = PlayerName(it.trim())
+            val playerName = ParticipantName(it.trim())
             Player(name = playerName)
         }
         return Players(players)

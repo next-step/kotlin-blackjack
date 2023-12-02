@@ -1,5 +1,6 @@
 package blackjack.domain.player
 
+import blackjack.domain.ParticipantName
 import blackjack.helper.DeckHelper
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
@@ -8,7 +9,7 @@ class PlayerTest : BehaviorSpec({
 
     Given("덱이 주어졌을 때") {
         val player = Player(
-            name = PlayerName("플레이어1"),
+            name = ParticipantName("플레이어1"),
             cards = PlayerCards()
         )
         val deck = DeckHelper.createMockDeck()

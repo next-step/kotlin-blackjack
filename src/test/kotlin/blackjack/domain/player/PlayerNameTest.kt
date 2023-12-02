@@ -1,5 +1,6 @@
 package blackjack.domain.player
 
+import blackjack.domain.ParticipantName
 import io.kotest.assertions.throwables.shouldThrowWithMessage
 import io.kotest.core.spec.style.StringSpec
 
@@ -11,7 +12,7 @@ class PlayerNameTest : StringSpec({
 
         // expected
         shouldThrowWithMessage<IllegalArgumentException>("이름은 최소 1글자 이상이어야 합니다.") {
-            PlayerName(name)
+            ParticipantName(name)
         }
     }
 })

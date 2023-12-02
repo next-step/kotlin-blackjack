@@ -1,5 +1,6 @@
 package blackjack.domain.player
 
+import blackjack.domain.ParticipantName
 import io.kotest.assertions.throwables.shouldThrowWithMessage
 import io.kotest.core.spec.style.StringSpec
 
@@ -9,7 +10,7 @@ class PlayersTest : StringSpec({
         // given
         val players = listOf(
             Player(
-                name = PlayerName("플레이어1")
+                name = ParticipantName("플레이어1")
             )
         )
 
