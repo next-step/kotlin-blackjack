@@ -11,7 +11,7 @@ import blackjack.mock.player
 import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
-import java.lang.IllegalArgumentException
+import io.kotest.matchers.shouldNotBe
 
 class PlayerTest : DescribeSpec({
     describe("Player()") {
@@ -109,7 +109,7 @@ class PlayerTest : DescribeSpec({
 
     describe("hitOrStand") {
         context("이미 점수가 최대 점수 21을 넘었다면") {
-            val score30Cards = hand(card(Rank.QUEEN), card(Rank.QUEEN), card(Rank.QUEEN),)
+            val score30Cards = hand(card(Rank.QUEEN), card(Rank.QUEEN), card(Rank.QUEEN))
             it("HIT을 받아도 STAND가 반환") {
                 val player = player(action = Action.HIT, hand = score30Cards)
 
@@ -161,6 +161,31 @@ class PlayerTest : DescribeSpec({
 
                 result shouldBe Action.STAND
             }
+        }
+    }
+
+    describe("equals") {
+        context("두 플레이어의 이름이 다르면") {
+            val action = { _: Player -> Action.HIT }
+            val hand = hand()
+
+            val player1 = Player(PlayerName("kim"), action, hand)
+            val player2 = Player(PlayerName("lee"), action, hand)
+
+            it("다른 플레이어로 취급") {
+                player1 shouldNotBe player2
+            }
+        }
+    }
+
+    context("두 플레이어의 이름이 같다면") {
+        val action = { _: Player -> Action.HIT }
+
+        val player1 = Player(PlayerName("kim"), action, hand(card(Rank.ACE)))
+        val player2 = Player(PlayerName("kim"), action, hand(card(Rank.TEN)))
+
+        it("같은 플레이어로 취급") {
+            player1 shouldBe player2
         }
     }
 })
