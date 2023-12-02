@@ -41,7 +41,7 @@ class Player(val name: String) {
         return playerDeck.cardDeckSize() == BLACKJACK_CARD_COUNT && totalPoint == BLACKJACK_NUMBER
     }
 
-    companion object{
+    companion object {
         private const val BLACKJACK_CARD_COUNT = 2
         private const val BLACKJACK_NUMBER = 21
     }

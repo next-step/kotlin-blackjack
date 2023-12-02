@@ -41,7 +41,7 @@ class PlayerDeck(override val cardDeck: MutableList<PlayingCard> = mutableListOf
 
     override fun toString(): String {
         val sb = StringBuilder()
-        for(card in cardDeck) {
+        for (card in cardDeck) {
             sb.append("$card, ")
         }
         sb.deleteCharAt(sb.lastIndex - 1)

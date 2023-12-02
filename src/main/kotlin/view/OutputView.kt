@@ -10,7 +10,7 @@ object OutputView {
         playerGroup.playerList.forEach {
             sb.append("${it.name}, ")
         }
-        sb.deleteCharAt(sb.lastIndex -1)
+        sb.deleteCharAt(sb.lastIndex - 1)
         sb.append("에게 2장의 나누었습니다.")
         println(sb.toString())
         playerGroup.playerList.forEach { showPlayingCard(it) }

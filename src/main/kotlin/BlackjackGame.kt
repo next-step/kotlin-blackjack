@@ -29,7 +29,7 @@ class BlackjackGame(private val cardDeck: GameDeck, val playerGroup: PlayerGroup
 
     private fun handleForResponse(response: String, player: Player) {
         when (response.uppercase()) {
-            TEXT_ANSWER_YES-> {
+            TEXT_ANSWER_YES -> {
                 player.saveCard(cardDeck.getCardWithIncrease())
             }
             TEXT_ANSWER_NO -> {

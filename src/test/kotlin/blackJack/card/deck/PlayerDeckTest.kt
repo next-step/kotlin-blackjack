@@ -15,7 +15,7 @@ class PlayerDeckTest {
         val playerDeck = PlayerDeck.create()
 
         playerDeck.addCard(CardPack.cards[0])
-        
+
         val actual = playerDeck.cardDeck[0]
 
         assertThat(actual).isEqualTo(CardPack.cards[0])
