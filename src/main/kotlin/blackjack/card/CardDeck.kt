@@ -20,12 +20,6 @@ object CardDeck {
         return (1..drawNumber).map { deck.removeFirst() }.toList()
     }
 
-    private fun initNormalCard(list: MutableList<BlackJackCard>) {
-        CardPattern.values().forEach {
-            (FIRST_NORMAL_CARD_NUMBER..LAST_NORMAL_CARD_NUMBER).forEach { number -> list.add(NormalCard(number, it)) }
-        }
-    }
-
     private fun normalCard(): List<BlackJackCard> {
         return CardPattern.values().flatMap {
             (FIRST_NORMAL_CARD_NUMBER..LAST_NORMAL_CARD_NUMBER).map { number -> NormalCard(number, it) }
@@ -40,17 +34,5 @@ object CardDeck {
 
     private fun aceCard(): List<BlackJackCard> {
         return CardPattern.values().map(::AceCard)
-    }
-
-    private fun initPictureCard(list: MutableList<BlackJackCard>) {
-        CardPattern.values().forEach {
-            CardPicture.values().forEach { picture -> list.add(PictureCard(picture, it)) }
-        }
-    }
-
-    private fun initAceCard(list: MutableList<BlackJackCard>) {
-        CardPattern.values().forEach {
-            list.add(AceCard(it))
-        }
     }
 }
