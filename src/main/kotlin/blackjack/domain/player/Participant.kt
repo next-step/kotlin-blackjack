@@ -18,8 +18,8 @@ class Participant(
         this.cards.stay()
     }
 
-    fun profit(dealer: Dealer, matchedProfitRule: MatchedProfitRule) {
-        this.profit = matchedProfitRule.profit(dealer.cards, this.cards, bet)
+    fun profit(dealer: Dealer, matchedProfitRule: MatchedProfitRule) : Int {
+        return matchedProfitRule.profit(dealer.cards, this.cards, bet)
     }
 
     override fun draw(deck: Deck) {

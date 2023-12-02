@@ -1,12 +1,12 @@
 package blackjack.controller
 
-import blackjack.domain.Match
 import blackjack.domain.card.Deck
+import blackjack.domain.card.State
 import blackjack.domain.player.Dealer
 import blackjack.domain.player.Participant
 import blackjack.domain.player.Players
 import blackjack.domain.rule.DefaultScoringRule
-import blackjack.domain.card.State
+import blackjack.domain.rule.MatchedProfitRule
 import blackjack.view.ConsoleInput
 import blackjack.view.ConsoleResult
 
@@ -45,9 +45,7 @@ fun main() {
         ConsoleResult.notifyDealerMoreOneCard(dealer)
     }
     ConsoleResult.printCardsAndTotalScoreOfPlayers(allPlayers)
-
-    Match.applyAllResult(dealer, participants)
-    ConsoleResult.printGameResults(dealer, participants)
+    ConsoleResult.printGameResults(dealer, participants, MatchedProfitRule())
 }
 
 fun nextTurn(participant: Participant, inputState: State, deck: Deck) {

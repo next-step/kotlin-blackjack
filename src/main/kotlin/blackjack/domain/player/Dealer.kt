@@ -1,6 +1,7 @@
 package blackjack.domain.player
 
 import blackjack.domain.card.Deck
+import blackjack.domain.rule.MatchedProfitRule
 import blackjack.domain.rule.ScoringRule
 
 class Dealer(scoringRule: ScoringRule) : Player(DEALER_NAME, scoringRule) {
@@ -10,6 +11,10 @@ class Dealer(scoringRule: ScoringRule) : Player(DEALER_NAME, scoringRule) {
 
     fun canDraw(): Boolean {
         return totalScore <= DEALER_THRESHOLD_SCORE
+    }
+
+    fun profit(participants: List<Participant>, matchedProfitRule: MatchedProfitRule): Int {
+        return (-1 * participants.sumOf { it.profit(this, matchedProfitRule) })
     }
 
     companion object {

@@ -14,8 +14,6 @@ abstract class Player(open val name: String, scoringRule: ScoringRule) {
         get() = cards.totalScore
         private set
 
-    var profit: Int = 0
-
     abstract fun draw(deck: Deck)
 
     override fun equals(other: Any?): Boolean {

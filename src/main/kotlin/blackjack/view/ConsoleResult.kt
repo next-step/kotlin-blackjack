@@ -1,7 +1,9 @@
 package blackjack.view
 
 import blackjack.domain.player.Dealer
+import blackjack.domain.player.Participant
 import blackjack.domain.player.Player
+import blackjack.domain.rule.MatchedProfitRule
 
 object ConsoleResult {
     fun drawAllFirstTwoCards(participants: List<Player>) {
@@ -28,11 +30,11 @@ object ConsoleResult {
         println("${dealer.name}는 16이하라 한장의 카드를 더 받았습니다.")
     }
 
-    fun printGameResults(dealer: Dealer, participants: List<Player>) {
+    fun printGameResults(dealer: Dealer, participants: List<Participant>, matchedProfitRule: MatchedProfitRule) {
         println()
         println("## 최종 승패")
-        println("${dealer.name}: ${dealer.profit}")
+        println("${dealer.name}: ${dealer.profit(participants, matchedProfitRule)}")
 
-        participants.forEach { println("${it.name}: ${it.profit}") }
+        participants.forEach { println("${it.name}: ${it.profit(dealer, matchedProfitRule)}") }
     }
 }
