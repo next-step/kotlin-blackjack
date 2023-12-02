@@ -29,15 +29,16 @@ class DrewCards(private val scoringRule: ScoringRule) {
         if (isBust()) state = State.BUST
     }
 
-    private fun isBlackjack() = (size == 2
-            && state == State.BEGIN
+    private fun isBlackjack() = (isFirstDraws()
             && totalScore == DefaultScoringRule.THRESHOLD_SCORE)
 
-    private fun isHit() = (size > 2
-            && (state == State.BEGIN || state == State.HIT)
+    private fun isHit() = (isAfterFirstDraws()
             && totalScore < DefaultScoringRule.THRESHOLD_SCORE)
 
-    private fun isBust() = (size > 2
-            && (state == State.BEGIN || state == State.HIT)
+    private fun isBust() = (isAfterFirstDraws()
             && totalScore > DefaultScoringRule.THRESHOLD_SCORE)
+
+    private fun isFirstDraws() = size == 2 && state == State.BEGIN
+
+    private fun isAfterFirstDraws() = size > 2 && (state == State.BEGIN || state == State.HIT)
 }
