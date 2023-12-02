@@ -9,7 +9,7 @@ class MatchedProfitRule {
         require(participantDrewCards.isFinished) { "참가자는 카드를 모두 뽑은 후에 베팅 금액을 계산할 수 있습니다." }
 
         if (participantDrewCards.state == State.BUST) {
-            return -bet
+            return -State.BUST.profit(bet)
         }
 
         if (participantDrewCards.state == State.BLACKJACK && dealerDrewCards.state == State.BLACKJACK) {
@@ -17,11 +17,11 @@ class MatchedProfitRule {
         }
 
         if (participantDrewCards.state == State.BLACKJACK && dealerDrewCards.state != State.BLACKJACK) {
-            return (bet * 1.5).toInt()
+            return State.BLACKJACK.profit(bet)
         }
 
         if (dealerDrewCards.state == State.BUST) {
-            return bet
+            return State.BUST.profit(bet)
         }
 
         if (participantDrewCards.totalScore == dealerDrewCards.totalScore) {
@@ -29,9 +29,9 @@ class MatchedProfitRule {
         }
 
         if (participantDrewCards.totalScore > dealerDrewCards.totalScore) {
-            return bet
+            return participantDrewCards.state.profit(bet)
         }
 
-        return -bet
+        return -participantDrewCards.state.profit(bet)
     }
 }
