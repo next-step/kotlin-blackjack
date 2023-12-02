@@ -17,12 +17,13 @@ class Player(val name: String) {
 
     fun saveCard(card: PlayingCard) {
         playerDeck.addCard(card)
+        updateStatus()
     }
 
     fun updateStatus() {
         val totalPoint = playerDeck.getResultPoint()
 
-        if (totalPoint > 21) {
+        if (totalPoint > BLACKJACK_NUMBER) {
             this.status = Status.BUST
         } else if (isBlackJack()) {
             this.status = Status.BLACK_JACK
@@ -31,8 +32,17 @@ class Player(val name: String) {
         }
     }
 
+    fun getResultPoint(): Int {
+        return playerDeck.getResultPoint()
+    }
+
     private fun isBlackJack(): Boolean {
         val totalPoint = playerDeck.getResultPoint()
-        return playerDeck.cardDeckSize() == 2 && totalPoint == 21
+        return playerDeck.cardDeckSize() == BLACKJACK_CARD_COUNT && totalPoint == BLACKJACK_NUMBER
+    }
+
+    companion object{
+        private const val BLACKJACK_CARD_COUNT = 2
+        private const val BLACKJACK_NUMBER = 21
     }
 }

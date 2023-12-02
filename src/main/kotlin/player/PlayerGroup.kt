@@ -1,7 +1,6 @@
 package player
 
 class PlayerGroup(val playerList: List<Player>) {
-    private var playerIndex = 0
 
     init {
         validatePlayer()
@@ -9,14 +8,6 @@ class PlayerGroup(val playerList: List<Player>) {
 
     private fun validatePlayer() {
         require(playerList.size in MIN_PLAYER_CNT..MAM_PLAYER_CNT) { "참여 가능한 플레이어의 범위를 넘어섰습니다." }
-    }
-
-    fun getCurrentPlayer(): Player {
-        return playerList[playerIndex]
-    }
-
-    fun turnOverPlayer() {
-        playerIndex++
     }
 
     companion object {

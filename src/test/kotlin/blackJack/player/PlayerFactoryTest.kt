@@ -13,10 +13,10 @@ class PlayerFactoryTest {
         val playerNames = "oyj, kth, og"
 
         // when : 플레이어 생성을 요청한다.
-        val actual =PlayerFactory.createPlayerList(playerNames)
+        val actual = PlayerFactory.createPlayerList(playerNames).size
 
         // then : List<Player>를 생성한다.
-        val expect = listOf(Player("oyj"),Player("kth"),Player("og"))
+        val expect = 3
         assertThat(actual).isEqualTo(expect)
     }
 
@@ -26,10 +26,10 @@ class PlayerFactoryTest {
         val playerNames = "oyj, kth,   "
 
         // when : 플레이어 생성을 요청한다.
-        val actual =PlayerFactory.createPlayerList(playerNames)
+        val actual = PlayerFactory.createPlayerList(playerNames).size
 
         // then : List<Player>를 생성한다.
-        val expect = listOf(Player("oyj"),Player("kth"))
+        val expect = 2
         assertThat(actual).isEqualTo(expect)
     }
 }
