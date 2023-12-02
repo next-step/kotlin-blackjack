@@ -1,5 +1,10 @@
-package blackjack.domain
+package blackjack.domain.player
 
+import blackjack.domain.card.Card
+import blackjack.domain.card.CardCharacter
+import blackjack.domain.card.CardShape
+import blackjack.domain.player.Name
+import blackjack.domain.player.Player
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -25,12 +30,12 @@ class PlayerTest {
     }
 
     @Test
-    fun `플레이어가 가지고 있는 카드의 점수가 계산된다 (Ace는 11점으로 계산된다)`() {
+    fun `플레이어가 가지고 있는 카드의 점수가 계산된다 (Ace는 1점으로 계산된다)`() {
         val player = Player(name = Name("Seongmo"))
         val card = Card(CardCharacter.ACE, CardShape.CLUB)
         player.receiveCard(card)
         assertThat(player.score).isEqualTo(card.character.score)
-        assertThat(player.score).isEqualTo(11)
+        assertThat(player.score).isEqualTo(1)
     }
 
     @Test

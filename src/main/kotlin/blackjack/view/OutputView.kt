@@ -1,6 +1,6 @@
 package blackjack.view
 
-import blackjack.domain.Player
+import blackjack.domain.player.Player
 
 object OutputView {
     fun printCardState(players: List<Player>) {

@@ -1,4 +1,6 @@
-package blackjack.domain
+package blackjack.domain.card
+
+import blackjack.domain.player.Name
 
 enum class CardShape(val displayName: Name) {
     HEART(Name("하트")),

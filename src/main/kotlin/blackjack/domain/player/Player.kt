@@ -1,4 +1,8 @@
-package blackjack.domain
+package blackjack.domain.player
+
+import blackjack.domain.card.Card
+import blackjack.domain.card.Cards
+import blackjack.domain.card.Score
 
 class Player(val name: Name) {
     private val _cards: Cards = Cards(mutableSetOf())

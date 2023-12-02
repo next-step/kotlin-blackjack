@@ -1,7 +1,6 @@
-package blackjack.domain
+package blackjack.domain.card
 
 import kotlin.random.Random
-
 
 class CardDeck {
     val cards: Cards = Cards(

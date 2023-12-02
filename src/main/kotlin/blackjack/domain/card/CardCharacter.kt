@@ -1,7 +1,9 @@
-package blackjack.domain
+package blackjack.domain.card
+
+import blackjack.domain.player.Name
 
 enum class CardCharacter(val displayName: Name, val score: Int){
-    ACE(Name("A"), 11),
+    ACE(Name("A"), 1),
     JACK(Name("J"), 10),
     QUEEN(Name("Q"), 10),
     KING(Name("K"), 10),
