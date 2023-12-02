@@ -1,5 +1,5 @@
 package blackjack.domain.card
 
-interface CardShuffler {
+interface ShuffleMachine {
     fun shuffle(cards: List<Card>): List<Card>
 }
