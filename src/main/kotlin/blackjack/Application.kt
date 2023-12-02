@@ -18,6 +18,9 @@ fun main() {
     players.forEach { player ->
         getMoreCard(player, cardDeck)
     }
+    players.forEach { player ->
+        OutputView.printResult(player)
+    }
 }
 
 private fun getMoreCard(player: Player, cardDeck: CardDeck) {

@@ -9,8 +9,16 @@ object OutputView {
     }
 
     fun printCurrentCardState(player: Player) {
-        val joinToString =
-            player.state.getCards().joinToString(separator = ", ") { card -> "${card.character.displayName}${card.shape.displayName}" }
-        println("${player.name}카드: $joinToString")
+        println("${player.name}카드: ${playerCardsToString(player)}")
+    }
+
+    fun printResult(player: Player) {
+        println("${player.name}카드: ${playerCardsToString(player)} - 결과: ${player.state.hands.score().value}")
+    }
+
+    private fun playerCardsToString(player: Player): String {
+        return player.state.getCards().joinToString(separator = ", ") {
+                card -> "${card.character.displayName}${card.shape.displayName}"
+        }
     }
 }
