@@ -3,6 +3,7 @@ package blackjack.domain.player
 import blackjack.domain.card.Card
 import blackjack.domain.card.CardCharacter
 import blackjack.domain.card.CardShape
+import io.kotest.matchers.shouldBe
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -43,5 +44,13 @@ class PlayerTest {
         player.receiveCard(card)
         player.receiveCard(card2)
         assertThat(player.state.hands.score().value).isEqualTo(card.character.score + card2.character.score)
+    }
+
+    @Test
+    fun `플레이어의 카드 상태가 블랙잭 상태면 Finished 상태다`() {
+        val player = Player(name = Name("Seongmo"))
+        player.receiveCard(Card(CardCharacter.TEN, CardShape.CLUB))
+        player.receiveCard(Card(CardCharacter.ACE, CardShape.CLUB))
+        player.isFinished() shouldBe true
     }
 }

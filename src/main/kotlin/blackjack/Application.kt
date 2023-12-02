@@ -24,5 +24,6 @@ private fun getMoreCard(player: Player, cardDeck: CardDeck) {
     while (InputView.getNeedOneMoreCard(player)) {
         player.receiveCard(cardDeck.draw())
         OutputView.printCurrentCardState(player)
+        if (player.isFinished()) break
     }
 }
