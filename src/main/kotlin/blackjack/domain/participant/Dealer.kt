@@ -15,15 +15,16 @@ class Dealer(
     fun handCard(): Card = deck.draw()
 
     fun canHit(): Boolean {
-        return cards().calculateScore() <= Score(MIN_HIT_SCORE)
+        return calculateScore() <= Score(MIN_HIT_SCORE)
     }
 
-    fun receiveCard(card: Card) {
+    fun receiveCard() {
+        val card = handCard()
         cards().add(card)
     }
 
     companion object {
         private const val DEALER_NAME = "딜러"
-        private const val MIN_HIT_SCORE = 16
+        const val MIN_HIT_SCORE = 16
     }
 }

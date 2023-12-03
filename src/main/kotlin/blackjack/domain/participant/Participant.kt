@@ -1,11 +1,12 @@
 package blackjack.domain.participant
 
+import blackjack.domain.Score
 import blackjack.domain.card.Cards
 import blackjack.domain.state.State
 
 sealed class Participant(
     private val name: ParticipantName,
-    private val state: State
+    protected val state: State
 ) {
     fun name(): String {
         return name.value
@@ -13,5 +14,9 @@ sealed class Participant(
 
     fun cards(): Cards {
         return state.cards()
+    }
+
+    fun calculateScore(): Score {
+        return cards().calculateScore()
     }
 }

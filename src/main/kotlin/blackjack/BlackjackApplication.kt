@@ -19,9 +19,9 @@ class BlackjackApplication {
             val dealer = createDealer()
             val players = InputView.readPlayers(dealer)
             printFirstTurnCards(dealer, players)
-            handCardToAllPlayers(players, dealer)
+            handCardToAllPlayers(dealer, players)
             handCardToDealer(dealer)
-            OutputView.printResult(players)
+            OutputView.printResult(dealer, players)
         }
 
         private fun createDealer(): Dealer {
@@ -37,7 +37,7 @@ class BlackjackApplication {
             }
         }
 
-        private fun handCardToAllPlayers(players: Players, dealer: Dealer) {
+        private fun handCardToAllPlayers(dealer: Dealer, players: Players) {
             players.forEach { player ->
                 handCard(player, dealer)
             }
@@ -59,6 +59,8 @@ class BlackjackApplication {
 
         private fun handCardToDealer(dealer: Dealer) {
             while (dealer.canHit()) {
+                OutputView.printDealerReceiveCardMessage(dealer, Dealer.MIN_HIT_SCORE)
+                dealer.receiveCard()
             }
         }
     }

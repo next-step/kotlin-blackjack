@@ -16,6 +16,7 @@ class DealerTest : StringSpec({
 
         val card = dealer.handCard()
 
+        // 초기 2장 스킵
         card.number shouldBe CardNumber.THREE
         card.pattern shouldBe CardPattern.HEART
     }
@@ -23,8 +24,7 @@ class DealerTest : StringSpec({
     "딜러의 점수가 16 이하면 true를 반환한다." {
         val deck = DeckHelper.createMockDeck()
         val dealer = Dealer(deck)
-
-        dealer.receiveCard(deck.draw()) // 11 + 2 + 3
+        dealer.receiveCard() // 11 + 2 + 3
 
         dealer.canHit().shouldBeTrue()
     }
@@ -32,9 +32,8 @@ class DealerTest : StringSpec({
     "딜러의 점수가 17 이상이면 false를 반환한다." {
         val deck = DeckHelper.createMockDeck()
         val dealer = Dealer(deck)
-
-        dealer.receiveCard(deck.draw())
-        dealer.receiveCard(deck.draw()) // 11 + 2 + 3 + 4
+        dealer.receiveCard() // 11 + 2 + 3
+        dealer.receiveCard() // 11 + 2 + 3 + 4
 
         dealer.canHit().shouldBeFalse()
     }

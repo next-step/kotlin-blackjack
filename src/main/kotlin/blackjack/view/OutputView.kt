@@ -13,6 +13,7 @@ object OutputView {
     private const val PARTICIPANT_CARD_MESSAGE_FORMAT = "%s: %s"
     private const val BUST_MESSAGE = "%s는 점수 총합 %d으로, 버스트 되었습니다."
     private const val RESULT_MESSAGE = "%s카드: %s - 결과: %d"
+    private const val DEALER_RECEIVE_CARD_MESSAGE = "%s는 %d이하라 한장의 카드를 더 받았습니다."
 
     fun drawCardMessage(dealer: Dealer, players: Players, initDrawCardCount: Int) {
         val dealerName = dealer.name()
@@ -36,14 +37,16 @@ object OutputView {
         println(String.format(BUST_MESSAGE, player.name(), player.calculateScore().value))
     }
 
-    fun printResult(players: Players) {
+    fun printResult(dealer: Dealer, players: Players) {
         print(System.lineSeparator())
+        printParticipantResult(dealer)
         players.forEach { player ->
-            val playerName = player.name()
-            val playerCards = convertPlayerCardMessage(player.cards())
-            val playerScore = player.calculateScore().value
-            println(String.format(RESULT_MESSAGE, playerName, playerCards, playerScore))
+            printParticipantResult(player)
         }
+    }
+
+    fun printDealerReceiveCardMessage(dealer: Dealer, minScore: Int) {
+        println(System.lineSeparator() + String.format(DEALER_RECEIVE_CARD_MESSAGE, dealer.name(), minScore))
     }
 
     private fun createDrawCardMessage(dealerName: String, playerNames: String, initDrawCardCount: Int): String {
@@ -59,5 +62,12 @@ object OutputView {
         return cards.values.joinToString(", ") {
             CardViewCreator.convert(it)
         }
+    }
+
+    private fun printParticipantResult(participant: Participant) {
+        val playerName = participant.name()
+        val playerCards = convertPlayerCardMessage(participant.cards())
+        val playerScore = participant.calculateScore().value
+        println(String.format(RESULT_MESSAGE, playerName, playerCards, playerScore))
     }
 }

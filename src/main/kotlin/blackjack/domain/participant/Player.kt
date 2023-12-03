@@ -1,6 +1,5 @@
 package blackjack.domain.participant
 
-import blackjack.domain.Score
 import blackjack.domain.card.Card
 import blackjack.domain.state.Started
 
@@ -19,9 +18,5 @@ class Player(
 
     fun isBust(): Boolean {
         return cards().isBust()
-    }
-
-    fun calculateScore(): Score {
-        return cards().calculateScore()
     }
 }
