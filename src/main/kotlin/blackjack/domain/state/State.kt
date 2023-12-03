@@ -9,5 +9,8 @@ interface State {
     fun cards(): Cards
 
     fun receiveCard(card: Card): State
+
     fun calculateResult(otherScore: Score): GameResult.Result
+
+    fun stay(): State
 }

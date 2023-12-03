@@ -30,4 +30,12 @@ class HitTest : StringSpec({
 
         newState.shouldBeInstanceOf<Hit>()
     }
+
+    "플레이어가 카드를 그만 받으면 스테이 상태로 변경된다." {
+        val hit = Hit(cards = Cards())
+
+        val newState = hit.stay()
+
+        newState.shouldBeInstanceOf<Stay>()
+    }
 })

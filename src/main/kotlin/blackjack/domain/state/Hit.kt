@@ -15,4 +15,8 @@ class Hit(
             false -> return Hit(cards)
         }
     }
+
+    override fun stay(): State {
+        return Stay(cards())
+    }
 }
