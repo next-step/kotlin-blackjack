@@ -18,14 +18,9 @@ class Player(
         return cards().isBust()
     }
 
-    fun compareScore(other: Score): GameResult.GameResultByPlayer {
-        val score = cards().calculateScore()
-        if (score == other) {
-            return GameResult.GameResultByPlayer(name(), GameResult.Result.DRAW)
-        }
-        if (score < other) {
-            return GameResult.GameResultByPlayer(name(), GameResult.Result.LOSE)
-        }
-        return GameResult.GameResultByPlayer(name(), GameResult.Result.WIN)
+    fun getResult(other: Score): GameResult.GameResultByPlayer {
+        val name = name()
+        val result = state.calculateResult(other)
+        return GameResult.GameResultByPlayer(name, result)
     }
 }

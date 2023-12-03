@@ -52,7 +52,7 @@ class PlayerTest : BehaviorSpec({
         val player = createPlayer()
 
         When("점수를 비교하여 이겼다면") {
-            val result = player.compareScore(Score(19))
+            val result = player.getResult(Score(19))
 
             Then("이긴 결과를 반환한다.") {
                 result shouldBe GameResult.GameResultByPlayer(player.name(), GameResult.Result.WIN)
@@ -60,7 +60,7 @@ class PlayerTest : BehaviorSpec({
         }
 
         When("점수를 비교하여 비겼다면") {
-            val result = player.compareScore(Score(20))
+            val result = player.getResult(Score(20))
 
             Then("비긴 결과를 반환한다.") {
                 result shouldBe GameResult.GameResultByPlayer(player.name(), GameResult.Result.DRAW)
@@ -68,7 +68,7 @@ class PlayerTest : BehaviorSpec({
         }
 
         When("점수를 비교하여 졌다면") {
-            val result = player.compareScore(Score(21))
+            val result = player.getResult(Score(21))
 
             Then("진 결과를 반환한다.") {
                 result shouldBe GameResult.GameResultByPlayer(player.name(), GameResult.Result.LOSE)

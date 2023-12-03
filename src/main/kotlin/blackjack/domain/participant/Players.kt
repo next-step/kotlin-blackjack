@@ -18,7 +18,7 @@ class Players private constructor(
 
     fun getGameResult(dealer: Dealer): GameResult {
         val results = values.map { player ->
-            player.compareScore(dealer.calculateScore())
+            player.getResult(dealer.calculateScore())
         }
         return GameResult(dealer.name(), results)
     }
