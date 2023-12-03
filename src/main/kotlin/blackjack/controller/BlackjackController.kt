@@ -8,14 +8,15 @@ import blackjack.domain.Player
 import blackjack.view.BlackjackInputView
 import blackjack.view.BlackjackOutputView
 
-object BlackjackController {
+class BlackjackController(
+    private val dealer: Dealer,
+    private val deck: Deck,
+) {
     fun handle() {
         val namesInput = BlackjackInputView.readPlayerNamesInput()
-        val dealer = Dealer()
         val players = namesInput.map { Player(it) }
         val participants = Participants(dealer, players)
 
-        val deck = Deck()
         participants.drawInitialCards(deck)
         BlackjackOutputView.printInitialCards(participants)
 
