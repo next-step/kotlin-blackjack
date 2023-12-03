@@ -50,6 +50,7 @@ class PlayerTest : BehaviorSpec({
 
     Given("점수가 주어졌을 때") {
         val player = createPlayer()
+        player.stay()
 
         When("점수를 비교하여 이겼다면") {
             val result = player.getResult(Score(19))

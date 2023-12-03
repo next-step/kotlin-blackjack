@@ -24,4 +24,8 @@ sealed class Participant(
     fun receiveCard(card: Card) {
         state = state.receiveCard(card)
     }
+
+    fun stay() {
+        state = state.stay()
+    }
 }

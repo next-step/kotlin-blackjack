@@ -8,6 +8,8 @@ import blackjack.domain.participant.forEach
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
+// FIXME Controller 없이 게임을 진행할 수 있게 만드려면 어떻게 해야 할지 잘 모르겠어요 ㅠ_ㅠ
+// 지금은 이 클래스가 너무 많은 책임을 가지고 있나 싶습니다...!
 class BlackjackGame {
     fun start() {
         val dealer = createDealer()
@@ -43,6 +45,7 @@ class BlackjackGame {
 
     private fun handCard(player: Player, dealer: Dealer) {
         if (InputView.readHitOrStay(player).isStay()) {
+            player.stay()
             return
         }
         if (player.isBust()) {
