@@ -20,6 +20,7 @@ object ViewResultProcessor {
     }
 
     fun drawPlayerState(result: DealToPlayerResult) {
+        if (result.isSystemStand) return
         val dto = result.player.let { PlayerDto(it.name.value, it.hand.cards) }
         OutputView.drawPlayerCurrentState(dto)
     }
