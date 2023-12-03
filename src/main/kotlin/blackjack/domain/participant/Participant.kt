@@ -1,6 +1,7 @@
 package blackjack.domain.participant
 
 import blackjack.domain.Score
+import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
 import blackjack.domain.state.State
 
@@ -18,5 +19,9 @@ sealed class Participant(
 
     fun calculateScore(): Score {
         return cards().calculateScore()
+    }
+
+    fun receiveCard(card: Card) {
+        cards().add(card)
     }
 }

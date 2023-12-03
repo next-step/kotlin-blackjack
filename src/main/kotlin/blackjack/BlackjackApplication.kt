@@ -60,7 +60,8 @@ class BlackjackApplication {
         private fun handCardToDealer(dealer: Dealer) {
             while (dealer.canHit()) {
                 OutputView.printDealerReceiveCardMessage(dealer, Dealer.MIN_HIT_SCORE)
-                dealer.receiveCard()
+                val card = dealer.handCard()
+                dealer.receiveCard(card)
             }
         }
     }

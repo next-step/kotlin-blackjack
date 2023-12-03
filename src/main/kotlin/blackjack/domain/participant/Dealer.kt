@@ -18,11 +18,6 @@ class Dealer(
         return calculateScore() <= Score(MIN_HIT_SCORE)
     }
 
-    fun receiveCard() {
-        val card = handCard()
-        cards().add(card)
-    }
-
     companion object {
         private const val DEALER_NAME = "딜러"
         const val MIN_HIT_SCORE = 16

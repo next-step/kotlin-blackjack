@@ -12,10 +12,6 @@ class Player(
     state = Started.handCard(firstCard, secondCard)
 ) {
 
-    fun receiveCard(card: Card) {
-        cards().add(card)
-    }
-
     fun isBust(): Boolean {
         return cards().isBust()
     }
