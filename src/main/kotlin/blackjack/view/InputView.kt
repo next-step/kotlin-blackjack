@@ -21,12 +21,12 @@ object InputView {
         }
     }
 
-    fun readDrawMoreCard(player: Player): YesOrNo {
+    fun readHitOrStay(player: Player): HitOrStay {
         println(String.format(System.lineSeparator() + DRAW_CARD_MESSAGE_FORMAT, player.name()))
         val userInput = readlnOrNull()
         return when (val blankValidationResult = validateIsNullOrBlank(userInput)) {
-            is UserInput.Failure -> retry(blankValidationResult.errorMessage) { readDrawMoreCard(player) }
-            is UserInput.Success -> validateYesOrNo(blankValidationResult, player)
+            is UserInput.Failure -> retry(blankValidationResult.errorMessage) { readHitOrStay(player) }
+            is UserInput.Success -> validateHitOrStay(blankValidationResult, player)
         }
     }
 
@@ -51,36 +51,36 @@ object InputView {
         return UserInput.Success(userInput)
     }
 
-    private fun validateIsYesOrNo(userInput: String): UserInput {
+    private fun validateHitOrStay(blankValidationResult: UserInput.Success, player: Player): HitOrStay {
+        val isDrawCard = blankValidationResult.data
+        return when (val yOrNValidationResult = validateIsYOrN(isDrawCard)) {
+            is UserInput.Failure -> retry(yOrNValidationResult.errorMessage) { readHitOrStay(player) }
+            is UserInput.Success -> HitOrStay.of(yOrNValidationResult.data)
+        }
+    }
+
+    private fun validateIsYOrN(userInput: String): UserInput {
         return when (userInput) {
-            YesOrNo.YES.value, YesOrNo.YES.value.uppercase(Locale.getDefault()),
-            YesOrNo.NO.value, YesOrNo.NO.value.uppercase(Locale.getDefault()) -> UserInput.Success(userInput)
+            HitOrStay.Hit.value, HitOrStay.Hit.value.uppercase(Locale.getDefault()),
+            HitOrStay.Stay.value, HitOrStay.Stay.value.uppercase(Locale.getDefault()) -> UserInput.Success(userInput)
 
             else -> UserInput.Failure(
-                "${YesOrNo.YES.value}(${YesOrNo.YES.value.uppercase(Locale.getDefault())}) " +
-                        "또는 ${YesOrNo.NO.value}(${YesOrNo.NO.value.uppercase(Locale.getDefault())})만 입력 가능합니다."
+                "${HitOrStay.Hit.value}(${HitOrStay.Hit.value.uppercase(Locale.getDefault())}) " +
+                        "또는 ${HitOrStay.Stay.value}(${HitOrStay.Stay.value.uppercase(Locale.getDefault())})만 입력 가능합니다."
             )
         }
     }
 
-    private fun validateYesOrNo(blankValidationResult: UserInput.Success, player: Player): YesOrNo {
-        val isDrawCard = blankValidationResult.data
-        return when (val yesOrNoValidationResult = validateIsYesOrNo(isDrawCard)) {
-            is UserInput.Failure -> retry(yesOrNoValidationResult.errorMessage) { readDrawMoreCard(player) }
-            is UserInput.Success -> YesOrNo.of(yesOrNoValidationResult.data)
-        }
-    }
+    enum class HitOrStay(val value: String) {
+        Hit("y"),
+        Stay("n");
 
-    enum class YesOrNo(val value: String) {
-        YES("y"),
-        NO("n");
-
-        fun isNo(): Boolean {
-            return this == NO
+        fun isStay(): Boolean {
+            return this == Stay
         }
 
         companion object {
-            fun of(userInput: String): YesOrNo {
+            fun of(userInput: String): HitOrStay {
                 return values().first { it.value == userInput || it.value.uppercase(Locale.getDefault()) == userInput }
             }
         }

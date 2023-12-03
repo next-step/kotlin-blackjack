@@ -21,7 +21,7 @@ class PlayerTest : BehaviorSpec({
         val card = deck.draw()
 
         When("플레이어가 한 장 받게 되면") {
-            player.handCard(card)
+            player.receiveCard(card)
 
             Then("플레이어의 카드는 한 장 증가한다.") {
                 player.cards().values shouldContain card

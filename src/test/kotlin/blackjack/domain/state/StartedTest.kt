@@ -7,7 +7,7 @@ import blackjack.domain.card.Cards
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.equality.shouldBeEqualToComparingFields
 
-class StartTest : BehaviorSpec({
+class StartedTest : BehaviorSpec({
 
     Given("카드 2장이 주어졌을 때 - 1") {
         val firstCard = Card(number = CardNumber.TEN, pattern = CardPattern.CLOVER)
@@ -18,7 +18,7 @@ class StartTest : BehaviorSpec({
         }
 
         When("두 점수의 합이 블랙잭이면") {
-            val result = Start.handCard(firstCard, secondCard)
+            val result = Started.handCard(firstCard, secondCard)
 
             Then("블랙잭을 반환한다.") {
                 result shouldBeEqualToComparingFields Blackjack(cards)
@@ -35,7 +35,7 @@ class StartTest : BehaviorSpec({
         }
 
         When("두 점수의 합이 블랙잭이 아니면") {
-            val result = Start.handCard(firstCard, secondCard)
+            val result = Started.handCard(firstCard, secondCard)
 
             Then("히트를 반환한다.") {
                 result shouldBeEqualToComparingFields Hit(cards)

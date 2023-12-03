@@ -2,7 +2,7 @@ package blackjack.domain.participant
 
 import blackjack.domain.Score
 import blackjack.domain.card.Card
-import blackjack.domain.state.Start
+import blackjack.domain.state.Started
 
 class Player(
     name: ParticipantName,
@@ -10,10 +10,10 @@ class Player(
     secondCard: Card,
 ): Participant(
     name = name,
-    state = Start.handCard(firstCard, secondCard)
+    state = Started.handCard(firstCard, secondCard)
 ) {
 
-    fun handCard(card: Card) {
+    fun receiveCard(card: Card) {
         cards().add(card)
     }
 

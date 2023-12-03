@@ -21,8 +21,8 @@ class Players private constructor(
             return playerNames.map {
                 Player(
                     name = ParticipantName(it),
-                    firstCard = dealer.drawCard(),
-                    secondCard = dealer.drawCard()
+                    firstCard = dealer.handCard(),
+                    secondCard = dealer.handCard()
                 )
             }.let { Players(it) }
         }

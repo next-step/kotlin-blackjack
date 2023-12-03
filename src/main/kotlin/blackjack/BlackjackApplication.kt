@@ -18,10 +18,9 @@ class BlackjackApplication {
         fun main(args: Array<String>) {
             val dealer = createDealer()
             val players = InputView.readPlayers(dealer)
-
-            OutputView.drawCardMessage(dealer, players, INIT_DRAW_CARD_COUNT)
-            printFirstPlayerCardMessage(dealer, players)
+            printFirstTurnCards(dealer, players)
             handCardToAllPlayers(players, dealer)
+            handCardToDealer(dealer)
             OutputView.printResult(players)
         }
 
@@ -30,7 +29,8 @@ class BlackjackApplication {
             return Dealer(deck = deck)
         }
 
-        private fun printFirstPlayerCardMessage(dealer: Dealer, players: Players) {
+        private fun printFirstTurnCards(dealer: Dealer, players: Players) {
+            OutputView.drawCardMessage(dealer, players, INIT_DRAW_CARD_COUNT)
             OutputView.playerCardMessage(dealer)
             players.forEach { player ->
                 OutputView.playerCardMessage(player)
@@ -44,17 +44,22 @@ class BlackjackApplication {
         }
 
         private fun handCard(player: Player, dealer: Dealer) {
-            if (InputView.readDrawMoreCard(player).isNo()) {
+            if (InputView.readHitOrStay(player).isStay()) {
                 return
             }
             if (player.isBust()) {
                 OutputView.bustMessage(player)
                 return
             }
-            val card = dealer.drawCard()
-            player.handCard(card)
+            val card = dealer.handCard()
+            player.receiveCard(card)
             OutputView.playerCardMessage(player)
             handCard(player, dealer)
+        }
+
+        private fun handCardToDealer(dealer: Dealer) {
+            while (dealer.canHit()) {
+            }
         }
     }
 }
