@@ -1,11 +1,11 @@
 package blackjack
 
-import blackjack.domain.dealer.Dealer
 import blackjack.domain.Deck
 import blackjack.domain.card.CardShuffleMachine
-import blackjack.domain.player.Player
-import blackjack.domain.player.Players
-import blackjack.domain.player.forEach
+import blackjack.domain.participant.Dealer
+import blackjack.domain.participant.Player
+import blackjack.domain.participant.Players
+import blackjack.domain.participant.forEach
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
@@ -16,33 +16,22 @@ class BlackjackApplication {
 
         @JvmStatic
         fun main(args: Array<String>) {
-            val players = InputView.readPlayers()
             val dealer = createDealer()
+            val players = InputView.readPlayers(dealer)
+
             OutputView.drawCardMessage(dealer, players, INIT_DRAW_CARD_COUNT)
-            drawCardFirst(players, dealer)
-            printFirstPlayerCardMessage(players)
+            printFirstPlayerCardMessage(dealer, players)
             handCardToAllPlayers(players, dealer)
             OutputView.printResult(players)
         }
 
         private fun createDealer(): Dealer {
             val deck = Deck(CardShuffleMachine())
-            return Dealer(deck)
+            return Dealer(deck = deck)
         }
 
-        private fun drawCardFirst(players: Players, dealer: Dealer) {
-            repeat(INIT_DRAW_CARD_COUNT) {
-                drawCardToParticipants(players, dealer)
-            }
-        }
-
-        private fun drawCardToParticipants(players: Players, dealer: Dealer) {
-            players.forEach { player ->
-                dealer.handCard(player)
-            }
-        }
-
-        private fun printFirstPlayerCardMessage(players: Players) {
+        private fun printFirstPlayerCardMessage(dealer: Dealer, players: Players) {
+            OutputView.playerCardMessage(dealer)
             players.forEach { player ->
                 OutputView.playerCardMessage(player)
             }
@@ -62,7 +51,8 @@ class BlackjackApplication {
                 OutputView.bustMessage(player)
                 return
             }
-            dealer.handCard(player)
+            val card = dealer.drawCard()
+            player.handCard(card)
             OutputView.playerCardMessage(player)
             handCard(player, dealer)
         }

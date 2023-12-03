@@ -1,6 +1,6 @@
-package blackjack.domain.player
+package blackjack.domain.participant
 
-class Players(
+class Players private constructor(
     val values: List<Player>
 ) {
 
@@ -16,6 +16,16 @@ class Players(
 
     companion object {
         private const val MIN_PLAYER_COUNT = 2
+
+        fun create(playerNames: List<String>, dealer: Dealer): Players {
+            return playerNames.map {
+                Player(
+                    name = ParticipantName(it),
+                    firstCard = dealer.drawCard(),
+                    secondCard = dealer.drawCard()
+                )
+            }.let { Players(it) }
+        }
     }
 }
 

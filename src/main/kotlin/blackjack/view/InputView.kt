@@ -1,8 +1,8 @@
 package blackjack.view
 
-import blackjack.domain.player.Player
-import blackjack.domain.ParticipantName
-import blackjack.domain.player.Players
+import blackjack.domain.participant.Dealer
+import blackjack.domain.participant.Player
+import blackjack.domain.participant.Players
 import java.util.Locale
 
 object InputView {
@@ -12,17 +12,17 @@ object InputView {
     private const val DRAW_CARD_MESSAGE_FORMAT = "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)"
     private const val DEFAULT_EXCEPTION_MESSAGE = "알 수 없는 예외가 발생하였습니다."
 
-    fun readPlayers(): Players {
+    fun readPlayers(dealer: Dealer): Players {
         println(PLAYER_MESSAGE)
         val userInput = readlnOrNull()
         return when (val blankValidationResult = validateIsNullOrBlank(userInput)) {
-            is UserInput.Failure -> retry(blankValidationResult.errorMessage, ::readPlayers)
-            is UserInput.Success -> createPlayers(blankValidationResult.data)
+            is UserInput.Failure -> retry(blankValidationResult.errorMessage) { readPlayers(dealer) }
+            is UserInput.Success -> createPlayers(blankValidationResult.data, dealer)
         }
     }
 
     fun readDrawMoreCard(player: Player): YesOrNo {
-        println(String.format(System.lineSeparator() + DRAW_CARD_MESSAGE_FORMAT, player.name.value))
+        println(String.format(System.lineSeparator() + DRAW_CARD_MESSAGE_FORMAT, player.name()))
         val userInput = readlnOrNull()
         return when (val blankValidationResult = validateIsNullOrBlank(userInput)) {
             is UserInput.Failure -> retry(blankValidationResult.errorMessage) { readDrawMoreCard(player) }
@@ -30,21 +30,13 @@ object InputView {
         }
     }
 
-    private fun createPlayers(userInput: String): Players {
-        val splitNames = userInput.split(DELIMITER)
+    private fun createPlayers(userInput: String, dealer: Dealer): Players {
+        val playerNames = userInput.split(DELIMITER)
         return try {
-            createPlayers(splitNames)
+            Players.create(playerNames, dealer)
         } catch (e: Exception) {
-            return retry(e.message ?: DEFAULT_EXCEPTION_MESSAGE, ::readPlayers)
+            return retry(e.message ?: DEFAULT_EXCEPTION_MESSAGE) { readPlayers(dealer) }
         }
-    }
-
-    private fun createPlayers(splitNames: List<String>): Players {
-        val players = splitNames.map {
-            val playerName = ParticipantName(it.trim())
-            Player(name = playerName)
-        }
-        return Players(players)
     }
 
     private fun <T> retry(errorMessage: String, retryFunction: () -> T): T {
@@ -63,9 +55,10 @@ object InputView {
         return when (userInput) {
             YesOrNo.YES.value, YesOrNo.YES.value.uppercase(Locale.getDefault()),
             YesOrNo.NO.value, YesOrNo.NO.value.uppercase(Locale.getDefault()) -> UserInput.Success(userInput)
+
             else -> UserInput.Failure(
                 "${YesOrNo.YES.value}(${YesOrNo.YES.value.uppercase(Locale.getDefault())}) " +
-                    "또는 ${YesOrNo.NO.value}(${YesOrNo.NO.value.uppercase(Locale.getDefault())})만 입력 가능합니다."
+                        "또는 ${YesOrNo.NO.value}(${YesOrNo.NO.value.uppercase(Locale.getDefault())})만 입력 가능합니다."
             )
         }
     }
