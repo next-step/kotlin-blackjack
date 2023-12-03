@@ -29,10 +29,9 @@ class DealToPlayer(
     }
 
     private fun endPlayerDistributionIfLastTurn() {
-        _nextDistributor = when (table.isLastPlayerTurn) {
-            true -> DealToDealer(table)
-            false -> DealToPlayer(table)
-        }
+        _nextDistributor =
+            if (table.isLastPlayerTurn) DealToDealer(table)
+            else DealToPlayer(table)
     }
 
     companion object {
