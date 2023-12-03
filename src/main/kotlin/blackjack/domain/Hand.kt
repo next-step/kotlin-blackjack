@@ -7,6 +7,10 @@ class Hand(cards: List<Card> = emptyList()) {
             return _cards.toList()
         }
 
+    fun getCount(): Int {
+        return _cards.count()
+    }
+
     fun getScore(): Int {
         val possibleScore = getPossibleScore()
 

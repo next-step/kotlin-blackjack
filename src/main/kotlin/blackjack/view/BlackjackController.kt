@@ -1,9 +1,11 @@
 package blackjack.view
 
 import blackjack.domain.BlackjackRule
+import blackjack.domain.Dealer
 import blackjack.domain.Deck
 import blackjack.domain.Hand
 import blackjack.domain.Player
+import blackjack.domain.result.BlackjackResult
 
 class BlackjackController(
     val inputView: InputView,
@@ -11,18 +13,29 @@ class BlackjackController(
 ) {
     private val deck: Deck = Deck.forBlackjack()
     private val players: List<Player>
+    private val dealer: Dealer
 
     init {
         players = getPlayers()
 
+        dealer = Dealer(
+            Hand(
+                cards = deck.popMany(count = BlackjackRule.INITIAL_CARD)
+            )
+        )
+
         resultView.showInitialPlayers(
+            dealer = dealer,
             players = players,
-            initialCard = BlackjackRule.INITIAL_CARD
         )
 
         playGame()
 
-        resultView.showResult(players = players)
+        resultView.showResult(dealer = dealer, players = players)
+
+        resultView.showCompareResultTitle()
+
+        resultView.showCompareResult(BlackjackResult(dealer, players))
     }
 
     private fun getPlayers(): List<Player> {
@@ -47,5 +60,9 @@ class BlackjackController(
                 }
             }
         }
+
+        resultView.showDealerDraw(
+            dealer.drawUntilOverMinimum(deck = deck)
+        )
     }
 }
