@@ -5,8 +5,8 @@ import blackjack.domain.Dealer
 import blackjack.domain.Game
 import blackjack.domain.Participant
 import blackjack.domain.Participants
-import blackjack.domain.Player
 import blackjack.domain.PlayerResult
+import blackjack.domain.GameResult
 import blackjack.domain.Suit
 
 object BlackjackOutputView {
@@ -33,20 +33,10 @@ object BlackjackOutputView {
         }
     }
 
-    fun printGameResult(participants: Participants) {
+    fun printGameResult(participants: Participants, gameResult: GameResult) {
         println("\n## 최종 승패")
-
-        val playerResults = participants.players.map {
-            it.getResult(participants.dealer)
-        }
-
-        printDealerResult(participants.dealer, playerResults)
-
-        participants.players
-            .zip(playerResults)
-            .forEach { (player, playerResult) ->
-                println("${player.name}: ${playerResult.toOutputString()}")
-            }
+        printDealerResult(participants.dealer, gameResult)
+        printPlayerResults(participants, gameResult)
     }
 
     private fun getCardsString(participant: Participant): String {
@@ -55,14 +45,22 @@ object BlackjackOutputView {
             .joinToString { it.toOutputString() }
     }
 
-    private fun printDealerResult(dealer: Dealer, playerResults: List<PlayerResult>) {
+    private fun printDealerResult(dealer: Dealer, gameResult: GameResult) {
         val dealerResult = buildString {
-            dealer.getResult(playerResults)
+            gameResult.getDealerResult()
                 .forEach { (playerResult, count) ->
                     append("$count${playerResult.toOutputString()} ")
                 }
         }
         println("${dealer.name}: $dealerResult")
+    }
+
+    private fun printPlayerResults(participants: Participants, gameResult: GameResult) {
+        participants.players
+            .zip(gameResult.playerResults)
+            .forEach { (player, playerResult) ->
+                println("${player.name}: ${playerResult.toOutputString()}")
+            }
     }
 
     private fun Card.toOutputString(): String {

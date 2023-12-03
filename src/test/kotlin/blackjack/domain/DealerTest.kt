@@ -33,25 +33,4 @@ class DealerTest {
 
         assertThat(actual).isFalse()
     }
-
-    @Test
-    fun `플레이어 승패에 따른 딜러의 승패 결과를 반환한다`() {
-        val dealer = Dealer()
-        val playerResults = listOf(
-            PlayerResult.WIN,
-            PlayerResult.LOSE,
-            PlayerResult.WIN,
-            PlayerResult.DRAW,
-        )
-
-        val actual = dealer.getResult(playerResults)
-
-        assertThat(actual).containsExactlyInAnyOrderEntriesOf(
-            mapOf(
-                PlayerResult.WIN to 1,
-                PlayerResult.DRAW to 1,
-                PlayerResult.LOSE to 2,
-            )
-        )
-    }
 }
