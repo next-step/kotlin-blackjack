@@ -5,7 +5,7 @@ class Player(
 ) : Participant() {
     override val cards: Cards = Cards()
 
-    fun canReceiveCard(isHit: Boolean): Boolean {
-        return !isBust() && isHit
+    fun canReceiveCard(): Boolean {
+        return !isBust() && !isBlackjack()
     }
 }

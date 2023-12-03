@@ -32,7 +32,7 @@ object BlackjackController {
     }
 
     private fun Player.action() {
-        while (canReceiveCard(isHit())) {
+        while (canReceiveCard() && isHit()) {
             receiveCard(Deck.draw())
             BlackjackOutputView.printCards(this)
         }

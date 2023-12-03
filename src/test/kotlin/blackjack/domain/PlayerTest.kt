@@ -35,23 +35,25 @@ class PlayerTest {
     }
 
     @Test
-    fun `플레이어가 가진 카드 숫자의 총합이 21 이하이면 버스트가 아니다`() {
+    fun `플레이어가 가진 카드 숫자의 총합이 21이면 블랙잭이다`() {
         val card1 = Card(Denomination.TEN, Suit.SPADE)
         val card2 = Card(Denomination.TEN, Suit.DIAMOND)
+        val card3 = Card(Denomination.ACE, Suit.SPADE)
         val player = Player("a")
 
         player.run {
             receiveCard(card1)
             receiveCard(card2)
+            receiveCard(card3)
         }
 
-        val actual = player.isBust()
+        val actual = player.isBlackjack()
 
-        assertThat(actual).isFalse()
+        assertThat(actual).isTrue()
     }
 
     @Test
-    fun `플레이어가 버스트가 아니고 힛을 선언하면 카드를 더 받을 수 있다`() {
+    fun `플레이어가 버스트, 블랙잭이 아니면 카드를 더 받을 수 있다`() {
         val card1 = Card(Denomination.TEN, Suit.SPADE)
         val card2 = Card(Denomination.TEN, Suit.DIAMOND)
         val player = Player("a")
@@ -61,7 +63,7 @@ class PlayerTest {
             receiveCard(card2)
         }
 
-        val actual = player.canReceiveCard(true)
+        val actual = player.canReceiveCard()
 
         assertThat(actual).isTrue()
     }
@@ -79,23 +81,25 @@ class PlayerTest {
             receiveCard(card3)
         }
 
-        val actual = player.canReceiveCard(true)
+        val actual = player.canReceiveCard()
 
         assertThat(actual).isFalse()
     }
 
     @Test
-    fun `플레이어가 힛을 선언하지 않으면 카드를 더 받을 수 없다`() {
+    fun `플레이어가 블랙잭이면 카드를 더 받을 수 없다`() {
         val card1 = Card(Denomination.TEN, Suit.SPADE)
         val card2 = Card(Denomination.TEN, Suit.DIAMOND)
+        val card3 = Card(Denomination.ACE, Suit.DIAMOND)
         val player = Player("a")
 
         player.run {
             receiveCard(card1)
             receiveCard(card2)
+            receiveCard(card3)
         }
 
-        val actual = player.canReceiveCard(false)
+        val actual = player.canReceiveCard()
 
         assertThat(actual).isFalse()
     }
