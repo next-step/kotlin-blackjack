@@ -1,5 +1,7 @@
 package blackjack
 
+import blackjack.domain.Card
+import blackjack.domain.Deck
 import blackjack.view.InputView
 import blackjack.view.ResultView
 
@@ -10,17 +12,14 @@ fun main() {
 
     val names = inputView.inputNames()
     resultView.printNames(names)
-    val participants = blackjackGame.makeParticipants(names)
-    blackjackGame.init(participants)
+
+    val deck = Deck(Card.CARDS)
+    val participants = blackjackGame.start(names, deck)
     resultView.printCards(participants)
 
     participants.forEach { participant ->
-        while (participant.receive) {
-            inputView.inputAnswer(participant)
-            if (participant.receive) {
-                participant.addCard()
-                resultView.printCards(listOf(participant))
-            }
+        while (inputView.inputAnswer(participant).also { blackjackGame.play(participant, deck, it) }) {
+            resultView.printCards(listOf(participant))
         }
     }
 

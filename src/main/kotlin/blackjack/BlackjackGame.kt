@@ -1,15 +1,17 @@
 package blackjack
 
+import blackjack.domain.Deck
+import blackjack.domain.Participant
+
 class BlackjackGame {
-    fun init(participants: List<Participant>){
-        participants.forEach { participant ->
-            repeat(2) {
-                participant.addCard()
-            }
-        }
+    fun start(names: List<String>, deck: Deck): List<Participant> {
+        return names.map { Participant(it, deck.getCards(2)) }
     }
 
-    fun makeParticipants(names: List<String>): List<Participant> {
-        return names.map { Participant(it) }
+    fun play(participant: Participant, deck: Deck, receive: Boolean): Boolean {
+        if (receive) {
+            participant.addCard(deck.getCard())
+        }
+        return receive
     }
 }

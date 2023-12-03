@@ -1,6 +1,6 @@
 package blackjack.view
 
-import blackjack.Participant
+import blackjack.domain.Participant
 import blackjack.view.ResultType.*
 
 class ResultView {
@@ -17,7 +17,7 @@ class ResultView {
     fun printResult(participants: List<Participant>) {
         println()
         participants.forEach {
-            println(PARTICIPANT_RESULT.message.format(it.name, it.cards.joinToString(", "), it.score))
+            println(PARTICIPANT_RESULT.message.format(it.name, it.cards.joinToString(", "), it.getScore()))
         }
     }
 }
