@@ -4,15 +4,16 @@ import blackjack.domain.Card
 import blackjack.domain.Dealer
 import blackjack.domain.Game
 import blackjack.domain.Participant
+import blackjack.domain.Participants
 import blackjack.domain.Player
 import blackjack.domain.PlayerResult
 import blackjack.domain.Suit
 
 object BlackjackOutputView {
-    fun printInitialCards(participants: List<Participant>) {
-        println("\n${participants.joinToString { it.name }}에게 2장의 카드를 나누었습니다.")
+    fun printInitialCards(participants: Participants) {
+        println("\n${participants.value.joinToString { it.name }}에게 2장의 카드를 나누었습니다.")
 
-        participants.forEach { printCards(it) }
+        participants.value.forEach { printCards(it) }
         println()
     }
 
@@ -24,10 +25,10 @@ object BlackjackOutputView {
         println("\n${Dealer.name}는 ${Game.DEALER_RECEIVE_CARD_SCORE}이하라 한장의 카드를 더 받았습니다.")
     }
 
-    fun printCardResult(participants: List<Participant>) {
+    fun printCardResult(participants: Participants) {
         println()
 
-        participants.forEach {
+        participants.value.forEach {
             println("${it.name} 카드: ${getCardsString(it)} - 결과: ${it.cards.calculateScore()}")
         }
     }
