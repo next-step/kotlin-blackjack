@@ -40,7 +40,7 @@ class Cards {
 
     private fun addSpecialScoreIfPossible(score: Score): Score {
         val totalScore = score + ACE_SPECIAL_SCORE
-        if (totalScore < BLACKJACK_SCORE) {
+        if (totalScore <= BLACKJACK_SCORE) {
             return totalScore
         }
         return score
