@@ -1,21 +1,21 @@
 package blackjack.domain.player
 
-import blackjack.domain.card.Card
 import blackjack.domain.card.Deck
 import blackjack.domain.card.DrewCards
 import blackjack.domain.rule.ScoringRule
 
 abstract class Player(open val name: String, scoringRule: ScoringRule) {
-    protected val _cards: DrewCards = DrewCards(scoringRule)
-    val cards: List<Card> get() = _cards.cards
+    val cards: DrewCards = DrewCards(scoringRule)
+    var isFinished: Boolean = false
+        get() = cards.isFinished
+        private set
 
     var totalScore: Int = 0
-        get() = _cards.totalScore
+        get() = cards.totalScore
         private set
 
     abstract fun draw(deck: Deck)
 
-    abstract fun canDraw(): Boolean
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false

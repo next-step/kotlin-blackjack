@@ -1,12 +1,12 @@
 package blackjack.controller
 
-import blackjack.domain.GameResults
 import blackjack.domain.card.Deck
+import blackjack.domain.card.State
 import blackjack.domain.player.Dealer
 import blackjack.domain.player.Participant
-import blackjack.domain.player.Player
 import blackjack.domain.player.Players
 import blackjack.domain.rule.DefaultScoringRule
+import blackjack.domain.rule.MatchedProfitRule
 import blackjack.view.ConsoleInput
 import blackjack.view.ConsoleResult
 
@@ -14,8 +14,11 @@ fun main() {
     val names = ConsoleInput.inputNamesOfPlayer()
     val scoringRule = DefaultScoringRule()
 
-    val dealer: Player = Dealer(scoringRule)
-    val participants: List<Player> = names.map { name -> Participant(name, scoringRule) }
+    val dealer = Dealer(scoringRule)
+    val participants: List<Participant> = names.map { name ->
+        val inputBet = ConsoleInput.inputBet(name)
+        Participant(name, inputBet, scoringRule)
+    }
     val allPlayers = listOf(dealer, *participants.toTypedArray())
     val deck = Deck()
 
@@ -26,9 +29,15 @@ fun main() {
     }
     ConsoleResult.printCardsOfPlayers(allPlayers)
 
-    val participantsEndedGame = Players()
-    while (participantsEndedGame.size < participants.size) {
-        participants.forEach { playParticipants(it, participantsEndedGame, deck) }
+    val participantsEndedGame = Players(participants)
+    while (!participantsEndedGame.isAllFinished()) {
+        participants
+            .filter { it.isFinished.not() }
+            .forEach {
+                val inputState = ConsoleInput.inputHitAndStay(it)
+                nextTurn(it, inputState, deck)
+                ConsoleResult.printCardsOfPlayer(it)
+            }
     }
 
     if (dealer.canDraw()) {
@@ -36,32 +45,14 @@ fun main() {
         ConsoleResult.notifyDealerMoreOneCard(dealer)
     }
     ConsoleResult.printCardsAndTotalScoreOfPlayers(allPlayers)
-
-    val gameResults = GameResults.results(dealer as Dealer, participants.map { it as Participant })
-    ConsoleResult.printGameResults(dealer, gameResults)
+    ConsoleResult.printGameResults(dealer, participants, MatchedProfitRule())
 }
 
-private fun playParticipants(
-    player: Player,
-    playersOfWantedEndGame: Players,
-    deck: Deck
-) {
-    if (player.canDraw().not()) {
-        ConsoleResult.notifyParticipantCannotDraw(player)
-        playersOfWantedEndGame.add(player)
-    }
-
-    if (playersOfWantedEndGame.contains(player)) {
+fun nextTurn(participant: Participant, inputState: State, deck: Deck) {
+    if (inputState == State.STAY) {
+        participant.stay()
         return
     }
 
-    val drawOneMoreCard = ConsoleInput.inputGettingOneMoreCard(player)
-    if (drawOneMoreCard && player.canDraw()) {
-        player.draw(deck)
-        ConsoleResult.printCardsOfPlayer(player)
-    }
-
-    if (!drawOneMoreCard) {
-        playersOfWantedEndGame.add(player)
-    }
+    participant.draw(deck)
 }

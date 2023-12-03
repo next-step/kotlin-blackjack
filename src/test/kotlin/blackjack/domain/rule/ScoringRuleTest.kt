@@ -4,7 +4,6 @@ import blackjack.domain.card.Card
 import blackjack.domain.card.CardCharacter
 import blackjack.domain.card.CardShape
 import io.kotest.matchers.shouldBe
-import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
@@ -121,19 +120,6 @@ class ScoringRuleTest {
                     ) to 20,
                 )
             )
-        }
-    }
-
-    @Test
-    fun `총 점수가 특정 점수를 넘으면 한계 점수를 넘었다고 판단`() {
-        val scoringRule = DefaultScoringRule()
-
-        for (score in 1..DefaultScoringRule.THRESHOLD_SCORE) {
-            scoringRule.isOverThreshold(score, DefaultScoringRule.THRESHOLD_SCORE) shouldBe false
-        }
-
-        for (score in DefaultScoringRule.THRESHOLD_SCORE + 1..30) {
-            scoringRule.isOverThreshold(score, DefaultScoringRule.THRESHOLD_SCORE) shouldBe true
         }
     }
 }
