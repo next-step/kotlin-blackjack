@@ -1,18 +1,17 @@
 package dsl
 
 class SkillBuilder {
-    private val softSkills = mutableListOf<String>()
-    private val hardSkills = mutableListOf<String>()
+    private val skills = mutableListOf<Skill>()
 
     fun soft(value: String) {
-        softSkills.add(value)
+        skills.add(SoftSkill(value))
     }
 
     fun hard(value: String) {
-        hardSkills.add(value)
+        skills.add(HardSkill(value))
     }
 
     fun build(): Skills {
-        return Skills(softSkills, hardSkills)
+        return Skills(skills)
     }
 }
