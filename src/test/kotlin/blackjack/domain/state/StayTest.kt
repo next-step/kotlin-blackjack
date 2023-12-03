@@ -19,7 +19,7 @@ class StayTest : StringSpec({
         result shouldBe GameResult.Result.DRAW
     }
 
-    "점수를 비교하여 게임 결과를 반환한다. - 승리" {
+    "점수를 비교하여 게임 결과를 반환한다. - 승리 1" {
         val stay = createStay()
         val otherScore = Score(11)
 
@@ -28,9 +28,27 @@ class StayTest : StringSpec({
         result shouldBe GameResult.Result.WIN
     }
 
-    "점수를 비교하여 게임 결과를 반환한다. - 패배" {
+    "점수를 비교하여 게임 결과를 반환한다. - 승리 2" {
+        val stay = createStay()
+        val otherScore = Score(22)
+
+        val result = stay.calculateResult(otherScore)
+
+        result shouldBe GameResult.Result.WIN
+    }
+
+    "점수를 비교하여 게임 결과를 반환한다. - 패배 1" {
         val stay = createStay()
         val otherScore = Score(13)
+
+        val result = stay.calculateResult(otherScore)
+
+        result shouldBe GameResult.Result.LOSE
+    }
+
+    "점수를 비교하여 게임 결과를 반환한다. - 패배 2" {
+        val stay = createStay()
+        val otherScore = Score(21)
 
         val result = stay.calculateResult(otherScore)
 

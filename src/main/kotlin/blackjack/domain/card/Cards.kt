@@ -54,7 +54,7 @@ class Cards {
     }
 
     companion object {
-        private val BLACKJACK_SCORE = Score(21)
+        val BLACKJACK_SCORE = Score(21)
         private val ACE_SPECIAL_SCORE = Score(10)
     }
 }
