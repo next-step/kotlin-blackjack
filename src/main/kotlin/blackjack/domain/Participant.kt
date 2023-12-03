@@ -4,15 +4,18 @@ abstract class Participant(
     val name: String,
     val cards: Cards,
 ) {
+    val score: Int
+        get() = cards.calculateScore()
+
     fun receiveCard(card: Card) {
         cards.add(card)
     }
 
     fun isBust(): Boolean {
-        return cards.calculateScore() > Game.BLACKJACK_SCORE
+        return score > Game.BLACKJACK_SCORE
     }
 
     fun isBlackjack(): Boolean {
-        return cards.calculateScore() == Game.BLACKJACK_SCORE
+        return score == Game.BLACKJACK_SCORE
     }
 }

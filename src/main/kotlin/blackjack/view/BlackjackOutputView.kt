@@ -29,7 +29,7 @@ object BlackjackOutputView {
         println()
 
         participants.value.forEach {
-            println("${it.name} 카드: ${getCardsString(it)} - 결과: ${it.cards.calculateScore()}")
+            println("${it.name} 카드: ${getCardsString(it)} - 결과: ${it.score}")
         }
     }
 

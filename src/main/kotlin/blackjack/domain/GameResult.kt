@@ -25,9 +25,6 @@ class GameResult(
             return PlayerResult.WIN
         }
 
-        val playerScore = player.cards.calculateScore()
-        val dealerScore = dealer.cards.calculateScore()
-
-        return PlayerResult.of(playerScore, dealerScore)
+        return PlayerResult.of(player.score, dealer.score)
     }
 }
