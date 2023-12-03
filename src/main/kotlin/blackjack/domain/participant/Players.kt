@@ -1,5 +1,7 @@
 package blackjack.domain.participant
 
+import blackjack.domain.GameResult
+
 class Players private constructor(
     val values: List<Player>
 ) {
@@ -12,6 +14,13 @@ class Players private constructor(
         require(values.size >= MIN_PLAYER_COUNT) {
             "플레이어는 최소 ${MIN_PLAYER_COUNT}명 이상이어야 합니다."
         }
+    }
+
+    fun getGameResult(dealer: Dealer): GameResult {
+        val results = values.map { player ->
+            player.compareScore(dealer.calculateScore())
+        }
+        return GameResult(dealer.name(), results)
     }
 
     companion object {

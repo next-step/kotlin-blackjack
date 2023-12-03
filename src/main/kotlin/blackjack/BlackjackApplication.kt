@@ -19,9 +19,13 @@ class BlackjackApplication {
             val dealer = createDealer()
             val players = InputView.readPlayers(dealer)
             printFirstTurnCards(dealer, players)
+
             handCardToAllPlayers(dealer, players)
             handCardToDealer(dealer)
+
             OutputView.printResult(dealer, players)
+            val gameResult = players.getGameResult(dealer)
+            OutputView.printGameResult(gameResult)
         }
 
         private fun createDealer(): Dealer {
