@@ -1,10 +1,9 @@
 package blackjack.domain
 
 class Player(
-    override val name: String,
-) : Participant() {
-    override val cards: Cards = Cards()
-
+    name: String,
+    cards: Cards = Cards(),
+) : Participant(name, cards) {
     fun canReceiveCard(): Boolean {
         return !isBust() && !isBlackjack()
     }

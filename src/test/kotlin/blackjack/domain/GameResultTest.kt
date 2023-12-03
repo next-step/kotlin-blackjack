@@ -11,14 +11,8 @@ class GameResultTest {
         val card1 = Card(Denomination.TEN, Suit.SPADE)
         val card2 = Card(Denomination.TEN, Suit.DIAMOND)
         val card3 = Card(Denomination.TWO, Suit.SPADE)
-        val player = Player("a")
+        val player = Player(name = "a", cards = Cards(card1, card2, card3))
         val dealer = Dealer()
-
-        player.run {
-            receiveCard(card1)
-            receiveCard(card2)
-            receiveCard(card3)
-        }
 
         val gameResult = GameResult(listOf(player), dealer)
         val actual = gameResult.playerResults
@@ -31,18 +25,8 @@ class GameResultTest {
         val card1 = Card(Denomination.TEN, Suit.SPADE)
         val card2 = Card(Denomination.TEN, Suit.DIAMOND)
         val card3 = Card(Denomination.TWO, Suit.CLUB)
-        val player = Player("a")
-        val dealer = Dealer()
-
-        player.run {
-            receiveCard(card1)
-            receiveCard(card2)
-        }
-        dealer.run {
-            receiveCard(card1)
-            receiveCard(card2)
-            receiveCard(card3)
-        }
+        val player = Player(name = "a", cards = Cards(card1, card2))
+        val dealer = Dealer(cards = Cards(card1, card2, card3))
 
         val gameResult = GameResult(listOf(player), dealer)
         val actual = gameResult.playerResults
@@ -55,17 +39,8 @@ class GameResultTest {
         val card1 = Card(Denomination.TEN, Suit.SPADE)
         val card2 = Card(Denomination.TEN, Suit.DIAMOND)
         val card3 = Card(Denomination.TWO, Suit.CLUB)
-        val player = Player("a")
-        val dealer = Dealer()
-
-        player.run {
-            receiveCard(card1)
-            receiveCard(card2)
-        }
-        dealer.run {
-            receiveCard(card1)
-            receiveCard(card3)
-        }
+        val player = Player(name = "a", cards = Cards(card1, card2))
+        val dealer = Dealer(cards = Cards(card1, card3))
 
         val gameResult = GameResult(listOf(player), dealer)
         val actual = gameResult.playerResults
@@ -77,17 +52,8 @@ class GameResultTest {
     fun `플레이어의 점수가 딜러의 점수와 같으면 무승부이다`() {
         val card1 = Card(Denomination.TEN, Suit.SPADE)
         val card2 = Card(Denomination.TEN, Suit.DIAMOND)
-        val player = Player("a")
-        val dealer = Dealer()
-
-        player.run {
-            receiveCard(card1)
-            receiveCard(card2)
-        }
-        dealer.run {
-            receiveCard(card1)
-            receiveCard(card2)
-        }
+        val player = Player(name = "a", cards = Cards(card1, card2))
+        val dealer = Dealer(cards = Cards(card1, card2))
 
         val gameResult = GameResult(listOf(player), dealer)
         val actual = gameResult.playerResults
@@ -100,17 +66,8 @@ class GameResultTest {
         val card1 = Card(Denomination.TEN, Suit.SPADE)
         val card2 = Card(Denomination.TEN, Suit.DIAMOND)
         val card3 = Card(Denomination.TWO, Suit.CLUB)
-        val player = Player("a")
-        val dealer = Dealer()
-
-        player.run {
-            receiveCard(card1)
-            receiveCard(card3)
-        }
-        dealer.run {
-            receiveCard(card1)
-            receiveCard(card2)
-        }
+        val player = Player(name = "a", cards = Cards(card1, card3))
+        val dealer = Dealer(cards = Cards(card1, card2))
 
         val gameResult = GameResult(listOf(player), dealer)
         val actual = gameResult.playerResults
@@ -123,17 +80,8 @@ class GameResultTest {
         val card1 = Card(Denomination.TEN, Suit.SPADE)
         val card2 = Card(Denomination.TEN, Suit.DIAMOND)
         val card3 = Card(Denomination.TWO, Suit.CLUB)
-        val player = Player("a")
-        val dealer = Dealer()
-
-        player.run {
-            receiveCard(card1)
-            receiveCard(card2)
-        }
-        dealer.run {
-            receiveCard(card1)
-            receiveCard(card3)
-        }
+        val player = Player(name = "a", cards = Cards(card1, card2))
+        val dealer = Dealer(cards = Cards(card1, card3))
 
         val gameResult = GameResult(listOf(player), dealer)
         val actual = gameResult.getDealerResult()

@@ -9,7 +9,7 @@ class PlayerTest {
     @Test
     fun `플레이어는 카드를 받을 수 있다`() {
         val card = Card(Denomination.ACE, Suit.SPADE)
-        val player = Player("a")
+        val player = Player(name = "a")
 
         player.receiveCard(card)
 
@@ -21,13 +21,7 @@ class PlayerTest {
         val card1 = Card(Denomination.TEN, Suit.SPADE)
         val card2 = Card(Denomination.TEN, Suit.DIAMOND)
         val card3 = Card(Denomination.TWO, Suit.SPADE)
-        val player = Player("a")
-
-        player.run {
-            receiveCard(card1)
-            receiveCard(card2)
-            receiveCard(card3)
-        }
+        val player = Player(name = "a", cards = Cards(card1, card2, card3))
 
         val actual = player.isBust()
 
@@ -39,13 +33,7 @@ class PlayerTest {
         val card1 = Card(Denomination.TEN, Suit.SPADE)
         val card2 = Card(Denomination.TEN, Suit.DIAMOND)
         val card3 = Card(Denomination.ACE, Suit.SPADE)
-        val player = Player("a")
-
-        player.run {
-            receiveCard(card1)
-            receiveCard(card2)
-            receiveCard(card3)
-        }
+        val player = Player(name = "a", cards = Cards(card1, card2, card3))
 
         val actual = player.isBlackjack()
 
@@ -56,12 +44,7 @@ class PlayerTest {
     fun `플레이어가 버스트, 블랙잭이 아니면 카드를 더 받을 수 있다`() {
         val card1 = Card(Denomination.TEN, Suit.SPADE)
         val card2 = Card(Denomination.TEN, Suit.DIAMOND)
-        val player = Player("a")
-
-        player.run {
-            receiveCard(card1)
-            receiveCard(card2)
-        }
+        val player = Player(name = "a", cards = Cards(card1, card2))
 
         val actual = player.canReceiveCard()
 
@@ -73,13 +56,7 @@ class PlayerTest {
         val card1 = Card(Denomination.TEN, Suit.SPADE)
         val card2 = Card(Denomination.TEN, Suit.DIAMOND)
         val card3 = Card(Denomination.TWO, Suit.DIAMOND)
-        val player = Player("a")
-
-        player.run {
-            receiveCard(card1)
-            receiveCard(card2)
-            receiveCard(card3)
-        }
+        val player = Player(name = "a", cards = Cards(card1, card2, card3))
 
         val actual = player.canReceiveCard()
 
@@ -91,13 +68,7 @@ class PlayerTest {
         val card1 = Card(Denomination.TEN, Suit.SPADE)
         val card2 = Card(Denomination.TEN, Suit.DIAMOND)
         val card3 = Card(Denomination.ACE, Suit.DIAMOND)
-        val player = Player("a")
-
-        player.run {
-            receiveCard(card1)
-            receiveCard(card2)
-            receiveCard(card3)
-        }
+        val player = Player(name = "a", cards = Cards(card1, card2, card3))
 
         val actual = player.canReceiveCard()
 
