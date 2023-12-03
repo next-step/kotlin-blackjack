@@ -7,7 +7,7 @@ import blackjack.domain.state.State
 
 sealed class Participant(
     private val name: ParticipantName,
-    protected val state: State
+    protected var state: State
 ) {
     fun name(): String {
         return name.value
@@ -22,6 +22,6 @@ sealed class Participant(
     }
 
     fun receiveCard(card: Card) {
-        cards().add(card)
+        state = state.receiveCard(card)
     }
 }
