@@ -1,8 +1,8 @@
 package blackjack.domain
 
 class Participants(
-    dealer: Dealer,
-    players: List<Player>,
+    val dealer: Dealer,
+    val players: List<Player>,
 ) {
     val value: List<Participant> = listOf(dealer) + players
 

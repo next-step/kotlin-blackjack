@@ -21,8 +21,8 @@ object BlackjackOutputView {
         println("${participant.name} 카드: ${getCardsString(participant)}")
     }
 
-    fun printDealerReceiveCard() {
-        println("\n${Dealer.name}는 ${Game.DEALER_RECEIVE_CARD_SCORE}이하라 한장의 카드를 더 받았습니다.")
+    fun printDealerReceiveCard(dealer: Dealer) {
+        println("\n${dealer.name}는 ${Game.DEALER_RECEIVE_CARD_SCORE}이하라 한장의 카드를 더 받았습니다.")
     }
 
     fun printCardResult(participants: Participants) {
@@ -33,16 +33,17 @@ object BlackjackOutputView {
         }
     }
 
-    fun printGameResult(players: List<Player>) {
+    fun printGameResult(participants: Participants) {
         println("\n## 최종 승패")
 
-        val playerResults = players.map {
-            it.getResult()
+        val playerResults = participants.players.map {
+            it.getResult(participants.dealer)
         }
 
-        printDealerResult(playerResults)
+        printDealerResult(participants.dealer, playerResults)
 
-        players.zip(playerResults)
+        participants.players
+            .zip(playerResults)
             .forEach { (player, playerResult) ->
                 println("${player.name}: ${playerResult.toOutputString()}")
             }
@@ -54,14 +55,14 @@ object BlackjackOutputView {
             .joinToString { it.toOutputString() }
     }
 
-    private fun printDealerResult(playerResults: List<PlayerResult>) {
+    private fun printDealerResult(dealer: Dealer, playerResults: List<PlayerResult>) {
         val dealerResult = buildString {
-            Dealer.getResult(playerResults)
+            dealer.getResult(playerResults)
                 .forEach { (playerResult, count) ->
                     append("$count${playerResult.toOutputString()} ")
                 }
         }
-        println("${Dealer.name}: $dealerResult")
+        println("${dealer.name}: $dealerResult")
     }
 
     private fun Card.toOutputString(): String {

@@ -9,16 +9,16 @@ class Player(
         return !isBust() && isHit
     }
 
-    fun getResult(): PlayerResult {
+    fun getResult(dealer: Dealer): PlayerResult {
         if (isBust()) {
             return PlayerResult.LOSE
         }
-        if (Dealer.isBust()) {
+        if (dealer.isBust()) {
             return PlayerResult.WIN
         }
 
         val playerScore = cards.calculateScore()
-        val dealerScore = Dealer.cards.calculateScore()
+        val dealerScore = dealer.cards.calculateScore()
 
         return when {
             playerScore > dealerScore -> PlayerResult.WIN

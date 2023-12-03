@@ -10,21 +10,22 @@ import blackjack.view.BlackjackOutputView
 object BlackjackController {
     fun handle() {
         val namesInput = BlackjackInputView.readPlayerNamesInput()
+        val dealer = Dealer()
         val players = namesInput.map { Player(it) }
-        val participants = Participants(Dealer, players)
+        val participants = Participants(dealer, players)
 
         participants.drawInitialCards()
         BlackjackOutputView.printInitialCards(participants)
 
         players.forEach { it.action() }
 
-        if (Dealer.shouldReceiveCard()) {
-            Dealer.receiveCard(Deck.draw())
-            BlackjackOutputView.printDealerReceiveCard()
+        if (dealer.shouldReceiveCard()) {
+            dealer.receiveCard(Deck.draw())
+            BlackjackOutputView.printDealerReceiveCard(dealer)
         }
 
         BlackjackOutputView.printCardResult(participants)
-        BlackjackOutputView.printGameResult(players)
+        BlackjackOutputView.printGameResult(participants)
     }
 
     private fun Player.action() {
