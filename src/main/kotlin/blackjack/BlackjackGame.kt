@@ -2,8 +2,7 @@ package blackjack
 
 import blackjack.domain.Dealer
 import blackjack.domain.Deck
-import blackjack.domain.GameResult
-import blackjack.domain.toGameResults
+import blackjack.domain.GameResultDecider
 import blackjack.domain.Participants
 import blackjack.domain.Player
 import blackjack.domain.Players
@@ -49,19 +48,17 @@ class BlackjackGame {
             this.receiveCard(deck.draw())
             OutputView.printPlayerCards(this.name, this.cards)
         } else {
-            this.turnStand()
+            if (this.canReceiveOneMoreCard()) {
+                this.turnStand()
+            }
         }
     }
 
     private fun showGameResult() {
         OutputView.printGameScore(participants)
-
-        val playerGameResults = players
-            .map { GameResult.resultOfPlayer(it, dealer) }
-            .toGameResults()
-
-        OutputView.printDealerGameResult(playerGameResults.getOpposite())
-        OutputView.printPlayerGameResult(players, playerGameResults)
+        val gameResults = GameResultDecider.decide(players, dealer)
+        OutputView.printDealerGameResult(gameResults.dealerGameResult)
+        OutputView.printPlayerGameResult(gameResults.playerGameResult)
     }
 }
 

@@ -1,6 +1,12 @@
 package blackjack.view
 
-import blackjack.domain.*
+import blackjack.domain.Cards
+import blackjack.domain.Deck
+import blackjack.domain.GameResult
+import blackjack.domain.Participants
+import blackjack.domain.PlayerGameResult
+import blackjack.domain.toScore
+import java.util.EnumMap
 
 object OutputView {
     fun printDealingHeader(playerNames: String) {
@@ -32,23 +38,24 @@ object OutputView {
         participants.players.forEach {
             print("\n${it.name}카드: ${it.cards} - 결과: ${it.cards.toScore()}")
         }
+        println("\n")
     }
 
-    fun printPlayerGameResult(players: Players, gameResults: GameResults) {
-        gameResults.forEachIndexed { index, gameResult ->
-            println("${players[index].name}: ${gameResult.message}")
+    fun printPlayerGameResult(playerGameResult: List<PlayerGameResult>) {
+        playerGameResult.forEach {
+            println("${it.name}: ${it.gameResult.message}")
         }
     }
 
-    fun printDealerGameResult(gameResults: GameResults) {
+    fun printDealerGameResult(dealerGameResult: EnumMap<GameResult, Int>) {
+        print("딜러: ")
+        dealerGameResult.entries.forEach {
+            print("${it.value}${it.key.message} ")
+        }
         println()
-        val result = gameResults.groupingBy { it }.eachCount().toList()
-            .joinToString(" ") { "${it.second}${it.first.message}" }
-        println("\n딜러: $result")
     }
 
     fun printDealerReceiveMessage() {
         println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.")
     }
-
 }

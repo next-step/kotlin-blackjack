@@ -1,15 +1,8 @@
 package blackjack.domain
 
-class GameResults(
-    private val gameResults: List<GameResult>
-): List<GameResult> by gameResults {
-    fun getOpposite(): GameResults {
-        return gameResults
-            .map { it.opposite() }
-            .toGameResults()
-    }
-}
+import java.util.EnumMap
 
-fun List<GameResult>.toGameResults(): GameResults {
-    return GameResults(this)
-}
+data class GameResults(
+    val playerGameResult: List<PlayerGameResult>,
+    val dealerGameResult: EnumMap<GameResult, Int>
+)
