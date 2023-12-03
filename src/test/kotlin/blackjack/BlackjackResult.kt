@@ -71,6 +71,23 @@ class CompareResultTest : FunSpec({
                     ),
                     expected = CompeteResult.DRAW
                 ),
+                DealerCompeteTestData(
+                    dealerHand = Hand(
+                        cards = listOf(
+                            Card(CardNumber.SEVEN, CardShape.SPADE),
+                            Card(CardNumber.JACK, CardShape.SPADE),
+                        ),
+                    ),
+                    playerHand = Hand(
+                        cards = listOf(
+                            Card(CardNumber.TWO, CardShape.CLOVER),
+                            Card(CardNumber.SIX, CardShape.CLOVER),
+                            Card(CardNumber.EIGHT, CardShape.CLOVER),
+                            Card(CardNumber.EIGHT, CardShape.CLOVER),
+                        ),
+                    ),
+                    expected = CompeteResult.WIN
+                ),
             )
         ) { (dealerHand, playerHand, dealerExpected) ->
             val dealer = Dealer(dealerHand)

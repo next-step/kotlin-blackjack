@@ -37,7 +37,7 @@ class BlackjackResult(
         val playerState = player.state
 
         if (dealer.state == State.BUST ||
-            dealer.getScore() < playerScore ||
+            (dealer.getScore() < playerScore && player.state != State.BUST) ||
             (dealer.state != State.BLACKJACK && player.state == State.BLACKJACK)
         ) {
             return CompeteResult.LOSE
