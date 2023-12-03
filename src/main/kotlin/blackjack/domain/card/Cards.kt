@@ -29,6 +29,13 @@ class Cards {
         return calculateScore() == BLACKJACK_SCORE
     }
 
+    fun first(): Cards {
+        val firstCard = cards.first()
+        return Cards().apply {
+            add(firstCard)
+        }
+    }
+
     private fun calculateCardScore(): Score {
         val score = cards.sumOf { it.number.score.value }
         return Score(score)

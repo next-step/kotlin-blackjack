@@ -4,6 +4,7 @@ import blackjack.domain.Score
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.booleans.shouldBeFalse
 import io.kotest.matchers.booleans.shouldBeTrue
+import io.kotest.matchers.equality.shouldBeEqualToComparingFields
 import io.kotest.matchers.shouldBe
 
 class CardsTest : BehaviorSpec({
@@ -33,6 +34,16 @@ class CardsTest : BehaviorSpec({
 
             Then("카드의 총 점수가 반환된다.") {
                 score shouldBe Score(5)
+            }
+        }
+
+        When("첫 번째 카드를 반환하면") {
+            val result = cards.first()
+
+            Then("첫 번째 카드가 반환된다.") {
+                result shouldBeEqualToComparingFields Cards().apply {
+                    add(Card(number = CardNumber.TWO, pattern = CardPattern.CLOVER))
+                }
             }
         }
 

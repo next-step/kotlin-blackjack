@@ -22,11 +22,12 @@ object OutputView {
 
     fun playerCardMessage(participant: Participant) {
         val name = participant.name()
-        val cards = convertPlayerCardMessage(participant.cards())
+        val cards = if (participant is Dealer) participant.cards().first() else participant.cards()
+        val cardMessage = convertPlayerCardMessage(cards)
         val message = String.format(
             PARTICIPANT_CARD_MESSAGE_FORMAT,
             if (participant is Dealer) name else "${name}카드",
-            cards
+            cardMessage,
         )
         println(message)
     }
