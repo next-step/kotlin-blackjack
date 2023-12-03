@@ -1,9 +1,8 @@
-package blackjack.domain.player
+package blackjack.domain.card
 
 import blackjack.domain.Score
-import blackjack.domain.card.Card
 
-class PlayerCards {
+class Cards {
 
     private val cards = mutableListOf<Card>()
     val values: List<Card>
@@ -24,6 +23,10 @@ class PlayerCards {
 
     fun isBust(): Boolean {
         return calculateScore() > BLACKJACK_SCORE
+    }
+
+    fun isBlackjack(): Boolean {
+        return calculateScore() == BLACKJACK_SCORE
     }
 
     private fun calculateCardScore(): Score {
