@@ -66,7 +66,7 @@ object InputView {
 
             else -> UserInput.Failure(
                 "${HitOrStay.Hit.value}(${HitOrStay.Hit.value.uppercase(Locale.getDefault())}) " +
-                        "또는 ${HitOrStay.Stay.value}(${HitOrStay.Stay.value.uppercase(Locale.getDefault())})만 입력 가능합니다."
+                    "또는 ${HitOrStay.Stay.value}(${HitOrStay.Stay.value.uppercase(Locale.getDefault())})만 입력 가능합니다."
             )
         }
     }

@@ -86,8 +86,8 @@ object OutputView {
 
     private fun createDealerResultMessage(gameResult: GameResult): String {
         return "${gameResult.dealerWinCount}${GameResultMessage.WIN.message} " +
-                "${gameResult.dealerDrawCount}${GameResultMessage.DRAW.message} " +
-                "${gameResult.dealerLoseCount}${GameResultMessage.LOSE.message}"
+            "${gameResult.dealerDrawCount}${GameResultMessage.DRAW.message} " +
+            "${gameResult.dealerLoseCount}${GameResultMessage.LOSE.message}"
     }
 
     private fun createPlayerResultMessage(result: GameResult.GameResultByPlayer): String {

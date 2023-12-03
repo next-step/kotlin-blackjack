@@ -75,7 +75,6 @@ class PlayerTest : BehaviorSpec({
             }
         }
     }
-
 })
 
 private fun createPlayer(): Player {

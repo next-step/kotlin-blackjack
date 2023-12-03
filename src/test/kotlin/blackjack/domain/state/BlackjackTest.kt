@@ -41,9 +41,11 @@ class BlackjackTest : StringSpec({
 })
 
 private fun createBlackjack(): Blackjack {
-    val blackjack = Blackjack(cards = Cards().apply {
-        add(Card(number = CardNumber.ACE, pattern = CardPattern.HEART))
-        add(Card(number = CardNumber.TEN, pattern = CardPattern.HEART))
-    })
+    val blackjack = Blackjack(
+        cards = Cards().apply {
+            add(Card(number = CardNumber.ACE, pattern = CardPattern.HEART))
+            add(Card(number = CardNumber.TEN, pattern = CardPattern.HEART))
+        }
+    )
     return blackjack
 }

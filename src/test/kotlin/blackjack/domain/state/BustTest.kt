@@ -21,11 +21,13 @@ class BustTest : StringSpec({
     }
 
     "버스트 상태라면 게임의 결과는 실패이다." {
-        val bust = Bust(cards = Cards().apply {
-            add(Card(number = CardNumber.TEN, pattern = CardPattern.HEART))
-            add(Card(number = CardNumber.TEN, pattern = CardPattern.HEART))
-            add(Card(number = CardNumber.TWO, pattern = CardPattern.HEART))
-        })
+        val bust = Bust(
+            cards = Cards().apply {
+                add(Card(number = CardNumber.TEN, pattern = CardPattern.HEART))
+                add(Card(number = CardNumber.TEN, pattern = CardPattern.HEART))
+                add(Card(number = CardNumber.TWO, pattern = CardPattern.HEART))
+            }
+        )
 
         val result = bust.calculateResult(otherScore = Score(25))
 

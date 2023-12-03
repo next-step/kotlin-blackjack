@@ -6,7 +6,7 @@ import blackjack.domain.card.Cards
 
 sealed class Running(
     private val cards: Cards
-): State {
+) : State {
     override fun cards(): Cards {
         return cards
     }

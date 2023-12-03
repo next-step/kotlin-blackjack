@@ -7,7 +7,7 @@ import blackjack.domain.state.Started
 
 class Dealer(
     private val deck: Deck,
-): Participant(
+) : Participant(
     name = ParticipantName(DEALER_NAME),
     state = Started.handCard(deck.draw(), deck.draw())
 ) {

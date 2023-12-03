@@ -9,10 +9,12 @@ import io.kotest.matchers.types.shouldBeInstanceOf
 
 class HitTest : StringSpec({
     "카드를 추가로 받았는데 점수가 21점이 넘으면 버스트가 된다." {
-        val hit = Hit(cards = Cards().apply {
-            add(Card(number = CardNumber.TEN, pattern = CardPattern.CLOVER))
-            add(Card(number = CardNumber.TEN, pattern = CardPattern.HEART))
-        })
+        val hit = Hit(
+            cards = Cards().apply {
+                add(Card(number = CardNumber.TEN, pattern = CardPattern.CLOVER))
+                add(Card(number = CardNumber.TEN, pattern = CardPattern.HEART))
+            }
+        )
 
         val card = Card(number = CardNumber.TWO, pattern = CardPattern.HEART)
         val newState = hit.receiveCard(card)
