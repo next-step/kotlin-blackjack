@@ -5,6 +5,10 @@ class Player(
 ) : Participant() {
     override val cards: Cards = Cards()
 
+    fun canReceiveCard(isHit: Boolean): Boolean {
+        return !isBust() && isHit
+    }
+
     fun getResult(): PlayerResult {
         if (isBust()) {
             return PlayerResult.LOSE

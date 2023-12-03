@@ -16,7 +16,7 @@ object BlackjackController {
         participants.drawInitialCards()
         BlackjackOutputView.printInitialCards(participants)
 
-        players.forEach { action(it) }
+        players.forEach { it.action() }
 
         if (Dealer.shouldReceiveCard()) {
             Dealer.receiveCard(Deck.draw())
@@ -27,14 +27,14 @@ object BlackjackController {
         BlackjackOutputView.printGameResult(players)
     }
 
-    private fun action(player: Player) {
-        while (!player.isBust() && player.isHit()) {
-            player.receiveCard(Deck.draw())
-            BlackjackOutputView.printCards(player)
+    private fun Player.action() {
+        while (canReceiveCard(isHit())) {
+            receiveCard(Deck.draw())
+            BlackjackOutputView.printCards(this)
         }
     }
 
     private fun Player.isHit(): Boolean {
-        return BlackjackInputView.readCardReceiveInput(this.name)
+        return BlackjackInputView.readCardReceiveInput(name)
     }
 }
