@@ -4,7 +4,6 @@ class Dealer(
     name: String = DEFAULT_NAME,
     cards: Cards = Cards(),
 ) : Participant(name, cards) {
-
     fun shouldReceiveCard(): Boolean {
         return cards.calculateScore() <= Game.DEALER_RECEIVE_CARD_SCORE
     }
