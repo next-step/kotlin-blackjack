@@ -1,12 +1,12 @@
 package blackjack.view.output
 
 import blackjack.domain.card.Card
-import blackjack.domain.result.game.VictoryStatues
-import blackjack.domain.result.game.VictoryStatus
+import blackjack.view.dto.DealerCardsResultDto
 import blackjack.view.dto.DealerHitDto
-import blackjack.view.dto.FinalDealerStateDto
-import blackjack.view.dto.FinalPlayerStateDto
+import blackjack.view.dto.DealerProfitDto
+import blackjack.view.dto.PlayerCardsResultDto
 import blackjack.view.dto.PlayerDto
+import blackjack.view.dto.PlayerProfitDto
 
 object OutputView {
     private const val INITIAL_DISTRIBUTION_MSG = "딜러와 %s에게 2장씩 나누었습니다."
@@ -16,9 +16,9 @@ object OutputView {
     private const val DEALER_STAND_MSG = "딜러는 17이상이라 카드를 받지 않았습니다."
     private const val DEALER_FINAL_CARDS_MSG = "딜러 카드: %s - 결과: %d"
     private const val PLAYER_FINAL_CARDS_MSG = "%s카드: %s - 결과: %d"
-    private const val VICTORY_MSG = "## 최종 승패"
-    private const val DEALER_VICTORY_MSG = "딜러: %s"
-    private const val PLAYER_VICTORY_MSG = "%s: %s"
+    private const val PROFIT_MSG = "## 최종 수익"
+    private const val DEALER_PROFIT_MSG = "딜러: %s"
+    private const val PLAYER_PROFIT_MSG = "%s: %s"
 
     fun drawInitialDistributionResult(
         players: List<PlayerDto>,
@@ -49,17 +49,9 @@ object OutputView {
         }
     }
 
-    fun drawFinalResults(
-        dealer: FinalDealerStateDto,
-        players: List<FinalPlayerStateDto>,
-    ) {
-        drawFinalCards(dealer, players)
-        drawVictoryStatus(dealer, players)
-    }
-
-    private fun drawFinalCards(
-        dealer: FinalDealerStateDto,
-        players: List<FinalPlayerStateDto>,
+    fun drawCardsResults(
+        dealer: DealerCardsResultDto,
+        players: List<PlayerCardsResultDto>,
     ) {
         println()
         println(DEALER_FINAL_CARDS_MSG.format(extractCardsState(dealer.cards), dealer.cardScore))
@@ -68,15 +60,15 @@ object OutputView {
         }
     }
 
-    private fun drawVictoryStatus(
-        dealer: FinalDealerStateDto,
-        players: List<FinalPlayerStateDto>,
+    fun drawProfitResults(
+        dealer: DealerProfitDto,
+        players: List<PlayerProfitDto>,
     ) {
         println()
-        println(VICTORY_MSG)
-        println(DEALER_VICTORY_MSG.format(extractVictoryStates(dealer.victoryStatus)))
+        println(PROFIT_MSG)
+        println(DEALER_PROFIT_MSG.format(dealer.profit))
         players.forEach {
-            println(PLAYER_VICTORY_MSG.format(it.name, extractVictoryState(it.victoryStatus)))
+            println(PLAYER_PROFIT_MSG.format(it.name, it.profit))
         }
     }
 
@@ -85,10 +77,4 @@ object OutputView {
 
     private fun extractCardsState(cards: List<Card>): String =
         cards.joinToString(", ") { CardView.from(it) }
-
-    private fun extractVictoryStates(states: VictoryStatues): String =
-        VictoryStatusView.from(states)
-
-    private fun extractVictoryState(state: VictoryStatus): String =
-        VictoryStatusView.from(state)
 }

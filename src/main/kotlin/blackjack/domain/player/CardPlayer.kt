@@ -14,6 +14,9 @@ interface CardPlayer {
     val isGreaterOrEqualToMaxScore: Boolean
         get() = score.isGreaterOrEqualToMaxScore
 
+    val isBlackJack: Boolean
+        get() = hand.isBlackJackCardSize && score.isBlackJackScore
+
     infix fun isGreaterCardScoreThan(other: Int): Boolean =
         score isGreaterCardScoreThan other
 

@@ -3,6 +3,7 @@ package blackjack.mock
 import blackjack.domain.Action
 import blackjack.domain.Dealer
 import blackjack.domain.GameTable
+import blackjack.domain.batting.Amount
 import blackjack.domain.card.Card
 import blackjack.domain.card.Deck
 import blackjack.domain.card.Hand
@@ -11,8 +12,9 @@ import blackjack.domain.card.Suit
 import blackjack.domain.player.Player
 import blackjack.domain.player.PlayerName
 import blackjack.domain.player.Players
+import blackjack.domain.result.game.Profit
 
-fun card(rank: Rank, suit: Suit = Suit.CLUB): Card = Card(suit, rank)
+fun card(rank: Rank = Rank.TEN, suit: Suit = Suit.CLUB): Card = Card(suit, rank)
 
 fun hand(vararg cards: Card): Hand = Hand(cards.toMutableList())
 
@@ -40,3 +42,6 @@ fun table(
         players ?: players(player("kim", inputAction), player("lee", inputAction)),
         dealer,
     )
+
+fun amount(amount: Int): Amount = amount.toBigDecimal().let(::Amount)
+fun profit(profit: Int): Profit = profit.toBigDecimal().let(::Profit)

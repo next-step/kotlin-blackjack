@@ -8,6 +8,8 @@ class HandScore(
 
     val isGreaterOrEqualToMaxScore: Boolean = cardScore >= BUST_THRESHOLD
 
+    val isBlackJackScore: Boolean = cardScore == BLACK_JACK_SCORE
+
     val gameScore: Int
         get() {
             if (isBust) return BUST_SCORE
@@ -20,6 +22,7 @@ class HandScore(
 
     companion object {
         private const val BUST_THRESHOLD = 21
+        private const val BLACK_JACK_SCORE = 21
         private const val BUST_SCORE = 0
         private const val ACE_BONUS_SCORE = 10
 

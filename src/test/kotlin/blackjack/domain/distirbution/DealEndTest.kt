@@ -20,13 +20,13 @@ class DealEndTest : DescribeSpec({
             val result = dealEnd.deal()
 
             it("결과의 플레이어는 테이블의 플레이어") {
-                result.playersResult.forEachIndexed { index, playerResult ->
-                    playerResult.player shouldBe players.value[index]
+                result.players.value.forEachIndexed { index, player ->
+                    player shouldBe players.value[index]
                 }
             }
 
             it("결과의 딜러는 테이블의 딜러") {
-                result.dealerResults.dealer shouldBe dealer
+                result.dealer shouldBe dealer
             }
         }
     }

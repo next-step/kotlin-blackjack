@@ -9,7 +9,7 @@ import blackjack.domain.player.PlayerNames
 class InputProcessorMock(
     private val playerNames: List<String> = listOf("kim", "lee"),
     private val action: Action = Action.HIT,
-    private val betAmount: Amount = Amount(3_000)
+    private val betAmount: Amount = amount(3_000)
 ) : InputProcessor {
 
     override fun playerNames(): PlayerNames = playerNames.let(PlayerNames::from)

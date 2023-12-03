@@ -8,6 +8,8 @@ import blackjack.domain.distirbution.DealEnd
 import blackjack.domain.distirbution.DealInitialCards
 import blackjack.domain.player.Players
 import blackjack.domain.result.Result
+import blackjack.domain.result.distribution.DealEndResult
+import blackjack.domain.result.game.GameEndResult
 
 class BlackJackGame(
     inputProcessor: InputProcessor,
@@ -17,6 +19,7 @@ class BlackJackGame(
 
     var dealCards: CardDistributor = DealInitialCards(GameTable(players))
         private set
+
     val betBoard: BetBoard = BetBoard.of(players) { player -> inputProcessor.playerBet(player) }
 
     fun run() {
@@ -39,8 +42,10 @@ class BlackJackGame(
     }
 
     private fun endDeal() {
-        val result = dealCards.deal()
-        emitResult(result)
+        val dealEndResult = dealCards.deal() as? DealEndResult
+            ?: throw IllegalArgumentException("배분이 종료되지 않았습니다")
+        betBoard.closeBetting(dealEndResult)
+        emitResult(GameEndResult.of(dealEndResult, betBoard))
     }
 
     companion object {

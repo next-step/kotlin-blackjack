@@ -212,4 +212,20 @@ class HandScoreTest : DescribeSpec({
             }
         }
     }
+
+    describe("isBlackJackScore") {
+        context("블랙잭 점수인 21점이면") {
+            val handScore = HandScore(21)
+            it("true 반환") {
+                handScore.isBlackJackScore shouldBe true
+            }
+        }
+
+        context("블랙잭 점수인 21점이 아니면") {
+            val handScore = HandScore(22)
+            it("false 반환") {
+                handScore.isBlackJackScore shouldBe false
+            }
+        }
+    }
 })
