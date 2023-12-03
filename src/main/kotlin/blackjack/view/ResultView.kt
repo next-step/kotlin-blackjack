@@ -1,6 +1,6 @@
 package blackjack.view
 
-import blackjack.domain.BlackjackMember
+import blackjack.domain.BaseBlackjackMember
 import blackjack.domain.BlackjackRule
 import blackjack.domain.Dealer
 import blackjack.domain.Player
@@ -87,6 +87,6 @@ class ResultView {
     private fun playerText(player: Player): String =
         "${player.name}카드: ${player.getCardList().joinToString { "${it.number.text}${it.shape.text}" }}"
 
-    private fun memberScore(blackjackMember: BlackjackMember): String =
+    private fun memberScore(blackjackMember: BaseBlackjackMember): String =
         "결과: ${blackjackMember.getScore()}"
 }
