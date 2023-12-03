@@ -8,37 +8,30 @@ enum class State {
 
     companion object {
         fun fromPlayer(hand: Hand): State {
-            if (hand.getScore() > BlackjackRule.TARGET_SCORE) {
-                return BUST
-            }
+            val playerScore = hand.getScore()
+            val countOfCard = hand.getCount()
 
-            if (
-                hand.getScore() == BlackjackRule.TARGET_SCORE &&
-                hand.getCount() == BlackjackRule.INITIAL_CARD
-            ) {
-                return BLACKJACK
-            }
+            return when {
+                playerScore > BlackjackRule.TARGET_SCORE -> BUST
+                playerScore == BlackjackRule.TARGET_SCORE &&
+                    countOfCard == BlackjackRule.INITIAL_CARD -> BLACKJACK
 
-            return HIT
+                else -> HIT
+            }
         }
 
         fun fromDealer(hand: Hand): State {
-            if (hand.getScore() > BlackjackRule.TARGET_SCORE) {
-                return BUST
-            }
+            val dealerScore = hand.getScore()
+            val countOfCard = hand.getCount()
 
-            if (
-                hand.getScore() == BlackjackRule.TARGET_SCORE &&
-                hand.getCount() == BlackjackRule.INITIAL_CARD
-            ) {
-                return BLACKJACK
-            }
+            return when {
+                dealerScore > BlackjackRule.TARGET_SCORE -> BUST
+                dealerScore == BlackjackRule.TARGET_SCORE &&
+                    countOfCard == BlackjackRule.INITIAL_CARD -> BLACKJACK
 
-            if (hand.getScore() < BlackjackRule.DEALER_MINIMUM_SCORE) {
-                return HIT
+                dealerScore < BlackjackRule.DEALER_MINIMUM_SCORE -> HIT
+                else -> STAY
             }
-
-            return STAY
         }
     }
 }
