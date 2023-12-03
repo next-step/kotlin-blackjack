@@ -15,13 +15,14 @@ object BlackjackController {
         val players = namesInput.map { Player(it) }
         val participants = Participants(dealer, players)
 
-        participants.drawInitialCards()
+        val deck = Deck()
+        participants.drawInitialCards(deck)
         BlackjackOutputView.printInitialCards(participants)
 
-        players.forEach { it.action() }
+        players.forEach { it.action(deck) }
 
         if (dealer.shouldReceiveCard()) {
-            dealer.receiveCard(Deck.draw())
+            dealer.receiveCard(deck.draw())
             BlackjackOutputView.printDealerReceiveCard(dealer)
         }
 
@@ -31,9 +32,9 @@ object BlackjackController {
         BlackjackOutputView.printGameResult(participants, gameResult)
     }
 
-    private fun Player.action() {
+    private fun Player.action(deck: Deck) {
         while (canReceiveCard() && isHit()) {
-            receiveCard(Deck.draw())
+            receiveCard(deck.draw())
             BlackjackOutputView.printCards(this)
         }
     }

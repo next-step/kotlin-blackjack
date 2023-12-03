@@ -6,10 +6,10 @@ class Participants(
 ) {
     val value: List<Participant> = listOf(dealer) + players
 
-    fun drawInitialCards() {
+    fun drawInitialCards(deck: Deck) {
         value.forEach {
-            it.receiveCard(Deck.draw())
-            it.receiveCard(Deck.draw())
+            it.receiveCard(deck.draw())
+            it.receiveCard(deck.draw())
         }
     }
 }
