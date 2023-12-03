@@ -1,19 +1,29 @@
 package blackjack.domain.participant
 
 import blackjack.domain.Deck
+import blackjack.domain.Score
 import blackjack.domain.card.Card
-import blackjack.domain.state.Start
+import blackjack.domain.state.Started
 
 class Dealer(
     private val deck: Deck,
 ): Participant(
     name = ParticipantName(DEALER_NAME),
-    state = Start.handCard(deck.draw(), deck.draw())
+    state = Started.handCard(deck.draw(), deck.draw())
 ) {
 
-    fun drawCard(): Card = deck.draw()
+    fun handCard(): Card = deck.draw()
+
+    fun canHit(): Boolean {
+        return cards().calculateScore() <= Score(MIN_HIT_SCORE)
+    }
+
+    fun receiveCard(card: Card) {
+        cards().add(card)
+    }
 
     companion object {
         private const val DEALER_NAME = "딜러"
+        private const val MIN_HIT_SCORE = 16
     }
 }
