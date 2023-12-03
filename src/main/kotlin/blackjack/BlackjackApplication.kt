@@ -32,11 +32,11 @@ class BlackjackApplication {
 
         private fun drawCardFirst(players: Players, dealer: Dealer) {
             repeat(INIT_DRAW_CARD_COUNT) {
-                drawCardToAllPlayers(players, dealer)
+                drawCardToParticipants(players, dealer)
             }
         }
 
-        private fun drawCardToAllPlayers(players: Players, dealer: Dealer) {
+        private fun drawCardToParticipants(players: Players, dealer: Dealer) {
             players.forEach { player ->
                 dealer.handCard(player)
             }

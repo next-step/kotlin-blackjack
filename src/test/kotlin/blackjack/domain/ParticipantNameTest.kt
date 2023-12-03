@@ -1,10 +1,9 @@
-package blackjack.domain.player
+package blackjack.domain
 
-import blackjack.domain.ParticipantName
 import io.kotest.assertions.throwables.shouldThrowWithMessage
 import io.kotest.core.spec.style.StringSpec
 
-class PlayerNameTest : StringSpec({
+class ParticipantNameTest : StringSpec({
 
     "플레이어의 이름 길이가 1글자 미만이면 예외가 발생한다." {
         // given

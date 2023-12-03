@@ -2,7 +2,7 @@ package blackjack.view
 
 import blackjack.domain.dealer.Dealer
 import blackjack.domain.player.Player
-import blackjack.domain.player.PlayerCards
+import blackjack.domain.card.Cards
 import blackjack.domain.player.Players
 import blackjack.domain.player.forEach
 
@@ -48,7 +48,7 @@ object OutputView {
         )
     }
 
-    private fun convertPlayerCardMessage(cards: PlayerCards): String {
+    private fun convertPlayerCardMessage(cards: Cards): String {
         return cards.values.joinToString(", ") {
             CardViewCreator.convert(it)
         }

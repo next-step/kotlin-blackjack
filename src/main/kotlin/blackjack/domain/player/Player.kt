@@ -3,10 +3,11 @@ package blackjack.domain.player
 import blackjack.domain.ParticipantName
 import blackjack.domain.Score
 import blackjack.domain.card.Card
+import blackjack.domain.card.Cards
 
 class Player(
     val name: ParticipantName,
-    val cards: PlayerCards = PlayerCards()
+    val cards: Cards = Cards()
 ) {
 
     fun handCard(card: Card) {
