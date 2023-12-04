@@ -3,12 +3,12 @@ package blackjack.participant
 import blackjack.ScoreCalculator
 import blackjack.card.BlackJackCard
 
-abstract class AbstractPlayer(
+class BlackjackStrategy(
     private val scoreCalculator: ScoreCalculator,
-    val name: String
 ) {
     var cards: List<BlackJackCard> = emptyList()
-    val isBust get() = resultScore() > 21
+
+    val isBust get() = resultScore() > BUST
 
     fun drawCard(cards: List<BlackJackCard>) {
         this.cards += cards
@@ -18,7 +18,7 @@ abstract class AbstractPlayer(
         return scoreCalculator.calculateGameScore(cards)
     }
 
-    abstract fun isDealer(): Boolean
-
-    abstract fun shouldDraw(): Boolean
+    companion object {
+        private const val BUST: Int = 21
+    }
 }

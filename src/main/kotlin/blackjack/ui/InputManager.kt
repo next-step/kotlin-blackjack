@@ -1,6 +1,6 @@
 package blackjack.ui
 
-import blackjack.participant.AbstractPlayer
+import blackjack.participant.Player
 
 class InputManager {
     fun inputPlayerNames(): List<String> {
@@ -28,6 +28,15 @@ class InputManager {
             println("${player.name}는 $INPUT_DEALER_MESSAGE")
             return CHOOSE_DRAW
         }
+        println("${player.name}는 $INPUT_SHOULD_DRAW_CARD_MESSAGE")
+        return when (readln()) {
+            "Y", "y" -> CHOOSE_DRAW
+            "N", "n" -> CHOOSE_NOT_DRAW
+            else -> CHOOSE_NOT_DRAW
+        }
+    }
+
+    fun inputShouldDrawCard(player: Player): Int {
         println("${player.name}는 $INPUT_SHOULD_DRAW_CARD_MESSAGE")
         return when (readln()) {
             "Y", "y" -> CHOOSE_DRAW

@@ -1,20 +1,30 @@
 package blackjack.participant
 
 import blackjack.ScoreCalculator
+import blackjack.card.BlackJackCard
 
 class Dealer(
     scoreCalculator: ScoreCalculator
-) : AbstractPlayer(scoreCalculator, DEALER_NAME) {
-    override fun isDealer(): Boolean {
-        return true
+)  {
+    private val blackjackStrategy: BlackjackStrategy = BlackjackStrategy(scoreCalculator)
+
+    val cards get() = blackjackStrategy.cards
+
+    val isBust get() = blackjackStrategy.isBust
+
+    fun drawCard(cards: List<BlackJackCard>) {
+        blackjackStrategy.drawCard(cards)
     }
 
-    override fun shouldDraw(): Boolean {
-        return resultScore() <= DEALER_SHOULD_DRAW_SCORE
+    fun resultScore(): Int {
+        return blackjackStrategy.resultScore()
+    }
+
+    fun shouldDraw(): Boolean {
+        return blackjackStrategy.resultScore() < MAX_DRAW_SCORE
     }
 
     companion object {
-        private const val DEALER_SHOULD_DRAW_SCORE: Int = 16
-        private const val DEALER_NAME: String = "딜러"
+        private const val MAX_DRAW_SCORE: Int = 17
     }
 }

@@ -7,25 +7,32 @@ import blackjack.card.CardPattern
 import blackjack.card.CardPicture
 import blackjack.card.NormalCard
 import blackjack.card.PictureCard
-import blackjack.participant.AbstractPlayer
+import blackjack.participant.Dealer
+import blackjack.participant.Player
 
 class OutputManager {
-    fun printPlayersCards(players: List<AbstractPlayer>) {
+    fun printPlayersAndDealerCards(players: List<Player>, dealer: Dealer) {
+        println("딜러: ${parsingCardsToString(dealer.cards.first())}")
+
         players.forEach {
-            if (it.isDealer()) {
-                println("${it.name}: ${parsingCardsToString(it.cards.first())}")
-                return@forEach
-            }
             println("${it.name}: ${parsingCardsToString(it.cards)}")
         }
     }
 
-    fun printPlayerCards(player: AbstractPlayer) {
+    fun printPlayerCards(player: Player) {
         println("${player.name}: ${parsingCardsToString(player.cards)}")
     }
 
-    fun printPlayerResultGame(player: AbstractPlayer) {
+    fun printDealerCards(dealer: Dealer) {
+        println("딜러: ${parsingCardsToString(dealer.cards)}")
+    }
+
+    fun printPlayerResultGame(player: Player) {
         println("${player.name} 카드: ${parsingCardsToString(player.cards)} - 결과: ${player.resultScore()}")
+    }
+
+    fun printDealerResultGame(dealer: Dealer) {
+        println("딜러 카드: ${parsingCardsToString(dealer.cards)} - 결과: ${dealer.resultScore()}")
     }
 
     fun printResult(gameResult: GameResult) {
@@ -67,9 +74,17 @@ class OutputManager {
         }
     }
 
-    fun printFirstTurn(players: List<AbstractPlayer>) {
+    fun printFirstTurn2(players: List<Player>) {
         val names: String = players.joinToString(", ") { it.name }
 
-        println("${names}에게 2장의 카드를 나누었습니다.")
+        println("딜러와 ${names}에게 2장의 카드를 나누었습니다.")
+    }
+
+    fun printDealerCanDrawMessage() {
+        println(INPUT_DEALER_MESSAGE)
+    }
+
+    companion object {
+        private const val INPUT_DEALER_MESSAGE = "16이하라 한장의 카드를 더 받았습니다."
     }
 }

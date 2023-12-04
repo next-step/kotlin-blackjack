@@ -1,19 +1,19 @@
 package blackjack
 
-import blackjack.participant.AbstractPlayer
+import blackjack.participant.Dealer
+import blackjack.participant.Player
 
 class GameResult(
-    players: List<AbstractPlayer>
+    players: List<Player>,
+    dealer: Dealer
 ) {
     val resultMap: Map<String, String>
 
     init {
-        val dealer = players.first { it.isDealer() }
-        val gamePlayers = players.filter { !it.isDealer() }
 
         val (winCount, loseCount) = when {
-            dealer.isBust -> gamePlayers.partition { !it.isBust }
-            else -> gamePlayers.partition { it.resultScore() < dealer.resultScore() }
+            dealer.isBust -> players.partition { !it.isBust }
+            else -> players.partition { it.resultScore() < dealer.resultScore() }
         }
 
         val playerResult = mutableMapOf<String, String>().apply {
@@ -22,7 +22,7 @@ class GameResult(
         }
 
         resultMap = mapOf(
-            dealer.name to "${winCount.size} 승 ${loseCount.size} 패"
+            "딜러" to "${winCount.size} 승 ${loseCount.size} 패"
         ) + playerResult
     }
 
