@@ -10,10 +10,17 @@ class Dealer() : BlackjackParticipant(DEALER_NAME) {
         return count
     }
 
+    fun calculateProfit(playerProfit: Int) {
+        profit -= playerProfit
+    }
+
     override val canHit: Boolean
-        get() = getScore() < DEALER_TARGET_SCORE
+        get() = getScore() < DEALER_MIN_SCORE && !isBusted
 
     fun compare(player: Player): MatchResult {
+        if (player.isBlackjack && player.cards.cards.size == 2) {
+            return MatchResult.BLACKJACK_WIN
+        }
         if (this.isBusted) return MatchResult.WIN
         if (player.isBusted) return MatchResult.LOSS
         val playerScore = player.getScore()
@@ -26,6 +33,6 @@ class Dealer() : BlackjackParticipant(DEALER_NAME) {
 
     companion object {
         private const val DEALER_NAME = "딜러"
-        private const val DEALER_TARGET_SCORE = 17
+        private const val DEALER_MIN_SCORE = 17
     }
 }

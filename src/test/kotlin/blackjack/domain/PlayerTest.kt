@@ -49,4 +49,11 @@ class PlayerTest {
 
         player.getScore() shouldBe 17
     }
+
+    @Test
+    fun `player 베팅금액을 정할 수 있다`() {
+        val player = Player("test", 10000)
+
+        player.bettingAmount shouldBe 10000
+    }
 }

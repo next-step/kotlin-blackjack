@@ -2,8 +2,9 @@ package blackjack.domain
 
 class Players(private val players: List<Player>) {
 
-    fun getFirstTwoCards(cards: List<Card>, callback: (Player) -> Unit) {
+    fun getFirstTwoCards(cardDeck: Deck, callback: (Player) -> Unit) {
         for (player in players) {
+            val cards = cardDeck.firstDraw()
             player.getFirstDealCards(cards)
             callback(player)
         }
