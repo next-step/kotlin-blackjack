@@ -6,10 +6,10 @@ import blackjack.domain.Score
 
 class Hit(override val cards: Cards) : Running() {
     override fun draw(card: Card): State {
-        cards.add(card)
-        if (Score(cards).isBlackjack()) return Blackjack(cards)
-        if (Score(cards).isBust()) return Bust(cards)
-        return Hit(cards)
+        val newCards = cards + card
+        if (Score(newCards).isBlackjack()) return Blackjack(newCards)
+        if (Score(newCards).isBust()) return Bust(newCards)
+        return Hit(newCards)
     }
 
     fun stand(): Stand {

@@ -3,12 +3,12 @@ package blackjack.domain
 import java.util.Stack
 
 class Deck(
-    cards: List<Card> = RandomCardsGenerator.generate()
+    val cards: Cards = RandomCardsGenerator.generate()
 ) {
     val cardSize
         get() = cardDeck.size
 
-    private val cardDeck = Stack<Card>().apply { addAll(cards) }
+    private val cardDeck = Stack<Card>().apply { addAll(cards.values) }
 
     init {
         require(cards.size == TOTAL_CARD_SIZE) { "52장의 카드가 준비되어야 게임을 시작할 수 있습니다" }

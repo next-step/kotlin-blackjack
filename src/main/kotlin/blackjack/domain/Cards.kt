@@ -1,10 +1,8 @@
 package blackjack.domain
 
 class Cards(
-    values: List<Card> = emptyList()
+    val values: List<Card> = emptyList()
 ) {
-    var values: List<Card> = values
-        private set
     val size
         get() = values.size
 
@@ -12,7 +10,11 @@ class Cards(
         return values.joinToString(",  ")
     }
 
-    fun add(vararg card: Card) {
-        values = values + card
+    operator fun plus(card: Card): Cards {
+        return Cards(values + card)
     }
+}
+
+fun List<Card>.toCards(): Cards {
+    return Cards(this)
 }
