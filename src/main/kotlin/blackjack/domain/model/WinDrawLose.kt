@@ -1,5 +1,5 @@
 package blackjack.domain.model
 
-enum class WinLoseDraw {
+enum class WinDrawLose {
     WIN, LOSE, DRAW
 }

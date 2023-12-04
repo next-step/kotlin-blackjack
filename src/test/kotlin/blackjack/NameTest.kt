@@ -26,8 +26,8 @@ class NameTest : StringSpec({
         }
     }
 
-    "이름에 `pobi`가 들어올 경우 `pobi`를 가진 이름이 생성되어야 한다." {
-        val name = Name.from("pobi")
-        name.name shouldBe "pobi"
+    "이름에 `kim`가 들어올 경우 `kim`를 가진 이름이 생성되어야 한다." {
+        val name = Name.from("kim")
+        name.value shouldBe "kim"
     }
 })

@@ -1,7 +1,7 @@
 package blackjack.view
 
 import blackjack.domain.model.DrawState
-import blackjack.domain.model.Gambler
+import blackjack.domain.model.player.Gambler
 import blackjack.domain.model.Name
 import blackjack.domain.model.Names
 

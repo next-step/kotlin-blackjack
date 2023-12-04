@@ -1,61 +1,53 @@
 package blackjack.controller
 
-import blackjack.domain.model.Dealer
+import blackjack.domain.model.player.Dealer
 import blackjack.domain.model.Deck
-import blackjack.domain.model.Gambler
+import blackjack.domain.model.player.Gambler
 import blackjack.domain.model.Gamblers
-import blackjack.domain.model.Name
 import blackjack.view.InputView
 import blackjack.view.ResultView
 
 object BlackjackController {
 
-    private const val DEALER_NAME = "딜러"
-    private const val DEALER_MAX_HIT_NUMBER = 16
     private const val FIRST_DEAL_COUNT = 2
-    private const val BLACKJACK_NUMBER = 21
 
     fun playBlackJack() {
-        val names = InputView.drawInputNamesView()
-        val gamblers = Gamblers.from(names)
-        val dealer = Dealer.from(Name.from(DEALER_NAME))
-
+        val gamblers = Gamblers.from(InputView.drawInputNamesView())
+        val dealer = Dealer.of()
         val deck: Deck = Deck.all()
 
+        dealFirst(deck, dealer, gamblers)
+
+        ResultView.drawFirstDealCard(dealer, gamblers, FIRST_DEAL_COUNT)
+
+        hitGamblers(deck, gamblers)
+        hitDealer(deck, dealer)
+
+        ResultView.drawGameResult(dealer, gamblers)
+    }
+
+    private fun dealFirst(deck: Deck, dealer: Dealer, gamblers: Gamblers) {
         repeat(FIRST_DEAL_COUNT) {
             deck.peek(dealer)
             deck.peek(gamblers)
         }
-
-        ResultView.drawDealCardDescription(gamblers, FIRST_DEAL_COUNT)
-        ResultView.drawDealerStatus(dealer)
-        ResultView.drawGamblersStatus(gamblers)
-
-        gamblers.forEach { gambler ->
-            choiceHitAndStay(deck, gambler)
-        }
-
-        hitDealer(deck, dealer)
-
-        ResultView.drawDealerStatusResult(dealer, BLACKJACK_NUMBER)
-        ResultView.drawGamblersStatusResult(gamblers, BLACKJACK_NUMBER)
-
-        ResultView.drawVictoryResult(dealer, gamblers)
     }
 
-    private fun choiceHitAndStay(deck: Deck, gambler: Gambler) {
-        while (gambler.shouldDraw(BLACKJACK_NUMBER) && InputView.drawHitAndStay(gambler).isHit()) {
-            deck.peek(gambler)
-            ResultView.drawGamblerStatus(gambler)
+    private fun hitGamblers(deck: Deck, gamblers: Gamblers) {
+        gamblers.forEach { gambler ->
+            hitGambler(deck, gambler)
         }
-        if (gambler.cards.cards.size == FIRST_DEAL_COUNT) {
+    }
+    private fun hitGambler(deck: Deck, gambler: Gambler) {
+        while (gambler.shouldDraw() && InputView.drawHitAndStay(gambler).isHit()) {
+            deck.peek(gambler)
             ResultView.drawGamblerStatus(gambler)
         }
     }
 
     private fun hitDealer(deck: Deck, dealer: Dealer) {
         while (dealer.shouldDraw()) {
-            InputView.drawHitDealer(DEALER_MAX_HIT_NUMBER)
+            ResultView.drawHitDealer(dealer)
             deck.peek(dealer)
         }
     }

@@ -20,9 +20,14 @@ class NamesTest : StringSpec({
         }
     }
 
-    "이름들 생성시 [aaa, bbb]가 들어올 경우 [aaa, bbb]를 가진 이름들이 생성되어야 한다." {
-        val names = Names.from(listOf(Name.from("aaa"), Name.from("bbb")))
+    "이름들 생성시 [kim, lee]가 들어올 경우 [kim, lee]를 가진 이름들이 생성되어야 한다." {
+        val names = Names.from(
+            listOf(
+                Name.from("kim"),
+                Name.from("lee")
+            )
+        )
         names.size shouldBe 2
-        names shouldContainExactly listOf(Name.from("aaa"), Name.from("bbb"))
+        names shouldContainExactly listOf(Name.from("kim"), Name.from("lee"))
     }
 })

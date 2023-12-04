@@ -20,10 +20,17 @@ class GamblersTest : StringSpec({
         }
     }
 
-    "겜블러들 생성시 이름이 [aaa, bbb]가 들어올 경우 [aaa, bbb]를 가진 겜블러들이 생성되어야 한다." {
-        val gamblers = Gamblers.from(Names.from(listOf(Name.from("aaa"), Name.from("bbb"))))
+    "겜블러들 생성시 이름이 [kim, lee]가 들어올 경우 [kim, lee]를 가진 겜블러들이 생성되어야 한다." {
+        val gamblers = Gamblers.from(
+            Names.from(
+                listOf(
+                    Name.from("kim"),
+                    Name.from("lee")
+                )
+            )
+        )
         gamblers.size shouldBe 2
-        gamblers[0].name shouldBe Name("aaa")
-        gamblers[1].name shouldBe Name("bbb")
+        gamblers[0].name shouldBe Name("kim")
+        gamblers[1].name shouldBe Name("lee")
     }
 })
