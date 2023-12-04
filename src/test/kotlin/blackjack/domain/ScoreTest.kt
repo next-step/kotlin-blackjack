@@ -1,30 +1,34 @@
 package blackjack.domain
 
-import io.kotest.core.spec.style.StringSpec
-import io.kotest.data.forAll
-import io.kotest.data.row
+import io.kotest.core.spec.style.BehaviorSpec
+import io.kotest.matchers.booleans.shouldBeFalse
+import io.kotest.matchers.booleans.shouldBeTrue
 import io.kotest.matchers.shouldBe
 
-class ScoreTest : StringSpec({
+class ScoreTest : BehaviorSpec({
 
-    "두 점수의 합을 계산한다." {
-        // given
+    Given("두 점수가 주어졌을 때") {
         val score1 = Score(10)
         val score2 = Score(20)
 
-        // when
-        val result = score1 + score2
+        When("더하게 되면") {
+            val result = score1 + score2
 
-        // then
-        result shouldBe Score(30)
-    }
+            Then("두 점수의 합이 반환된다.") {
+                result shouldBe Score(30)
+            }
+        }
 
-    "인자로 들어온 점수보다 현재 점수가 작으면 true, 크면 false를 반환한다." {
-        forAll(
-            row(Score(10), Score(20), true),
-            row(Score(20), Score(10), false),
-        ) { score, other, expected ->
-            (score < other) shouldBe expected
+        When("큰지 비교했을 때 주어진 값이 더 크면") {
+            Then("true가 반환된다.") {
+                (score1 < score2).shouldBeTrue()
+            }
+        }
+
+        When("작은지 비교했을 때 주어진 값이 더 크면") {
+            Then("false가 반환된다.") {
+                (score1 > score2).shouldBeFalse()
+            }
         }
     }
 })
