@@ -49,7 +49,7 @@ class ResultView {
     }
 
     fun showCompareResultTitle() {
-        println("\n## 최종 승패")
+        println("\n## 최종 수익")
     }
 
     fun showCompareResult(blackjackResult: BlackjackResult) {
@@ -58,27 +58,13 @@ class ResultView {
     }
 
     private fun showPlayerCompareResult(playerCompareResultMap: List<PlayerResult>) {
-        playerCompareResultMap.forEach { (playerName, result) ->
-            println("$playerName: ${result.text}")
+        playerCompareResultMap.forEach {
+            println("${it.player.name}: ${it.getEarnMoney()}")
         }
     }
 
     private fun showDealerCompareResult(dealerResult: DealerResult) {
-        println(
-            StringBuilder("딜러: ").also {
-                if (dealerResult.win > 0) {
-                    it.append("${dealerResult.win}승 ")
-                }
-
-                if (dealerResult.draw > 0) {
-                    it.append("${dealerResult.draw}무 ")
-                }
-
-                if (dealerResult.lose > 0) {
-                    it.append("${dealerResult.lose}패")
-                }
-            }
-        )
+        println("딜러: ${dealerResult.earnMoney}")
     }
 
     private fun dealerText(dealer: Dealer): String =

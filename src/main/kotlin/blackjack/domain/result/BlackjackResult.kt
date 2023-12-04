@@ -12,24 +12,19 @@ class BlackjackResult(
     val playerCompeteResults: List<PlayerResult>
 
     init {
-        var dealerResult = DealerResult()
-        val mutablePlayerResults = mutableListOf<PlayerResult>()
-
-        players.forEach { player ->
-            val dealerResultItem = compete(dealer = dealer, player = player)
-
-            dealerResult = dealerResult.set(dealerResultItem)
-
-            mutablePlayerResults.add(
-                PlayerResult(
-                    playerName = player.name,
-                    competeResult = dealerResultItem.opposite()
-                )
+        playerCompeteResults = players.map { player ->
+            getPlayerEarningRate(player = player, dealer = dealer)
+            PlayerResult(
+                player = player,
+                earningRate = getPlayerEarningRate(dealer = dealer, player = player)
             )
         }
 
-        dealerCompeteResult = dealerResult
-        playerCompeteResults = mutablePlayerResults.toList()
+        dealerCompeteResult = DealerResult(
+            -playerCompeteResults.sumOf {
+                it.getEarnMoney()
+            }
+        )
     }
 
     private fun compete(dealer: Dealer, player: Player): CompeteResult {
@@ -51,5 +46,29 @@ class BlackjackResult(
         }
 
         return CompeteResult.DRAW
+    }
+
+    private fun getPlayerEarningRate(dealer: Dealer, player: Player): Double {
+        val playerScore = player.getScore()
+        val playerState = player.state
+
+        if (dealer.state == State.BUST ||
+            (dealer.getScore() < playerScore && player.state != State.BUST)
+        ) {
+            return 1.0
+        }
+
+        if (dealer.state != State.BLACKJACK && player.state == State.BLACKJACK) {
+            return 1.5
+        }
+
+        if (playerState == State.BUST ||
+            dealer.getScore() > playerScore ||
+            (dealer.state == State.BLACKJACK && player.state != State.BLACKJACK)
+        ) {
+            return -1.0
+        }
+
+        return 0.0
     }
 }
