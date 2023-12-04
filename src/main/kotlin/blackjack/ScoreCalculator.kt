@@ -7,13 +7,13 @@ import blackjack.card.PictureCard
 import kotlin.math.abs
 
 class ScoreCalculator {
-    fun calcScore(card: List<BlackJackCard>): Int {
+    fun calculateGameScore(card: List<BlackJackCard>): Int {
         return card.filterIsInstance<AceCard>().fold(calcScoreToNormalAndPictureCard(card)) { acc, _ ->
-            calcAceScore(acc)
+            calculateAceScore(acc)
         }
     }
 
-    private fun calcAceScore(score: Int): Int {
+    private fun calculateAceScore(score: Int): Int {
         var totalScore = score
         val plusMinAceScore = totalScore + MIN_ACE_SCORE
         val plusMaxAcreScore = totalScore + MAX_ACE_SCORE

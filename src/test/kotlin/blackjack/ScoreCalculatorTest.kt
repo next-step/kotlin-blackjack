@@ -18,7 +18,7 @@ class ScoreCalculatorTest {
     @Test
     fun `숫자 카드의 점수는 카드의 숫자이다`() {
         val card = NormalCard(1, CardPattern.CLOVER)
-        val score = scoreCalculator.calcScore(listOf(card))
+        val score = scoreCalculator.calculateGameScore(listOf(card))
         score shouldBe card.number
     }
 
@@ -28,7 +28,7 @@ class ScoreCalculatorTest {
             NormalCard(1, CardPattern.CLOVER),
             NormalCard(2, CardPattern.CLOVER)
         )
-        val score = scoreCalculator.calcScore(cardList)
+        val score = scoreCalculator.calculateGameScore(cardList)
         score shouldBe 3
     }
 
@@ -37,7 +37,7 @@ class ScoreCalculatorTest {
         val cardList = listOf(
             PictureCard(CardPicture.KING, CardPattern.CLOVER),
         )
-        val score = scoreCalculator.calcScore(cardList)
+        val score = scoreCalculator.calculateGameScore(cardList)
         score shouldBe 10
     }
 
@@ -47,14 +47,14 @@ class ScoreCalculatorTest {
             NormalCard(7, CardPattern.CLOVER),
             PictureCard(CardPicture.KING, CardPattern.CLOVER),
         )
-        val score = scoreCalculator.calcScore(cardList)
+        val score = scoreCalculator.calculateGameScore(cardList)
         score shouldBe 17
     }
 
     @ParameterizedTest
     @MethodSource("createCardList")
     fun `에이스 카드는 1과 11 중 현재 점수에 더했을 때 21과 가장 가까운 숫자로 계산된다`(cards: List<BlackJackCard>, expected: Int) {
-        val score = scoreCalculator.calcScore(cards)
+        val score = scoreCalculator.calculateGameScore(cards)
         score shouldBe expected
     }
 
