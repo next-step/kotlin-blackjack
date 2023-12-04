@@ -4,6 +4,8 @@ import blackjack.card.CardPattern
 import blackjack.card.CardPicture
 import blackjack.card.NormalCard
 import blackjack.card.PictureCard
+import blackjack.participant.Dealer
+import blackjack.participant.Player
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
@@ -28,7 +30,7 @@ class GameResultTest {
                 NormalCard(2, CardPattern.CLOVER),
             )
         )
-        val result = GameResult(listOf(dealer, player))
+        val result = GameResult(listOf(player), dealer)
 
         result.resultMap[name] shouldBe "승"
     }
@@ -52,7 +54,7 @@ class GameResultTest {
                 NormalCard(2, CardPattern.CLOVER),
             )
         )
-        val result = GameResult(listOf(dealer, player))
+        val result = GameResult(listOf(player), dealer)
 
         result.resultMap[name] shouldBe "패"
     }
