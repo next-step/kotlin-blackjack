@@ -1,9 +1,6 @@
 package blackjack.domain
 
 class GameResult(private val dealer: Dealer, private val players: List<Player>) {
-    fun getMatchCount(resultMap: List<Map<Player, MatchResult>>): List<Map<MatchResult, Int>> =
-        resultMap.map { playerMap -> playerMap.values.groupingBy { it }.eachCount() }
-
     fun getResultMap(): List<Map<Player, MatchResult>> {
         var resultMap: MutableList<Map<Player, MatchResult>> = mutableListOf()
         for (player in players) {
@@ -11,5 +8,19 @@ class GameResult(private val dealer: Dealer, private val players: List<Player>) 
             resultMap.add(playerMap)
         }
         return resultMap
+    }
+
+    fun setProfit(): List<Player> {
+        val resultMapList = getResultMap()
+
+        for (resultMap in resultMapList) {
+            for ((player, matchResult) in resultMap) {
+                val profit = matchResult.rate * player.bettingAmount
+                player.profit = profit
+                dealer.calculateProfit(profit.toInt())
+            }
+        }
+
+        return players
     }
 }

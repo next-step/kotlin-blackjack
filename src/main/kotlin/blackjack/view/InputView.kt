@@ -8,6 +8,12 @@ object InputView {
         return readln().replace(" ", "").split(",").map { Player(it) }
     }
 
+    fun getPlayersBettingAmount(player: Player) {
+        println("${player.name} 의 배팅 금액은?")
+        val amount = readln().toInt()
+        player.bettingAmount = amount
+    }
+
     fun askPlayer(playerName: String): Boolean {
         println("\n${playerName}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
         val answer = readln().trim()
