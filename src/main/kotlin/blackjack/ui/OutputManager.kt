@@ -15,12 +15,12 @@ class OutputManager {
         println("딜러: ${parsingCardsToString(dealer.cards.first())}")
 
         players.forEach {
-            println("${it.name}: ${parsingCardsToString(it.cards)}")
+            println("${it.name.value}: ${parsingCardsToString(it.cards)}")
         }
     }
 
     fun printPlayerCards(player: Player) {
-        println("${player.name}: ${parsingCardsToString(player.cards)}")
+        println("${player.name.value}: ${parsingCardsToString(player.cards)}")
     }
 
     fun printDealerCards(dealer: Dealer) {
@@ -28,7 +28,7 @@ class OutputManager {
     }
 
     fun printPlayerResultGame(player: Player) {
-        println("${player.name} 카드: ${parsingCardsToString(player.cards)} - 결과: ${player.resultScore()}")
+        println("${player.name.value} 카드: ${parsingCardsToString(player.cards)} - 결과: ${player.resultScore()}")
     }
 
     fun printDealerResultGame(dealer: Dealer) {
