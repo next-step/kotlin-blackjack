@@ -8,7 +8,6 @@ import blackjack.participant.Dealer
 import blackjack.participant.Name
 import blackjack.participant.Player
 import blackjack.participant.Result
-import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeInstanceOf
 import org.junit.jupiter.api.Test
 
