@@ -7,7 +7,9 @@ import blackjack.card.PictureCard
 import blackjack.participant.Dealer
 import blackjack.participant.Name
 import blackjack.participant.Player
+import blackjack.participant.Result
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.types.shouldBeInstanceOf
 import org.junit.jupiter.api.Test
 
 class GameResultTest {
@@ -33,7 +35,7 @@ class GameResultTest {
         )
         val result = GameResult(listOf(player), dealer)
 
-        result.resultMap[name] shouldBe "승"
+        result.resultMap[player.name].shouldBeInstanceOf<Result.Win>()
     }
 
     @Test
@@ -57,6 +59,6 @@ class GameResultTest {
         )
         val result = GameResult(listOf(player), dealer)
 
-        result.resultMap[name] shouldBe "패"
+        result.resultMap[player.name].shouldBeInstanceOf<Result.Lose>()
     }
 }
