@@ -13,9 +13,6 @@ class Cards(
         return cards
     }
 
-    /**
-     * @description : 카드의 합을 계산한다. 만약 합이 21이 넘는다면 에이스를 1로 계산한다.
-     */
     fun sumCards(): Int {
         if (BLACKJACK < sumCardsWithAce()) {
             return sumOfCardsScore()
@@ -31,9 +28,6 @@ class Cards(
         return sumCards() < BLACKJACK
     }
 
-    /**
-     * @description : 에이스를 포함한 카드의 합을 계산한다. 에이스가 없다면 에이스를 포함하지 않은 카드의 합을 반환한다.
-     */
     private fun sumCardsWithAce(): Int {
         val hasAce = cards.any { it.isAce() }
 
