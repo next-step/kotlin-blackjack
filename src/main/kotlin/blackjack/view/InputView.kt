@@ -7,7 +7,7 @@ object InputView {
         return nicknames.split(",").map { it.trim() }
     }
 
-    fun askHitOrStand(nickname: String): Boolean {
+    fun askWillHit(nickname: String): Boolean {
         println("${nickname}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
         val answer = readln().trim()
         require(answer.isNotBlank()) { "y 또는 n을 입력해주세요." }

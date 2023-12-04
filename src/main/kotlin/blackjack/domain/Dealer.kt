@@ -1,8 +1,8 @@
 package blackjack.domain
 
-class Dealer(name: String) : Participant(name) {
+class Dealer(val name: String) : Participant() {
     override fun receiveCard(card: Card) {
         state = state.draw(card)
-        if (cards.toScore() > Score.DEALER_STAND_THRESHOLD) turnStand()
+        if (state.scoring().value > Score.DEALER_STAND_THRESHOLD) turnStand()
     }
 }

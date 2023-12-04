@@ -4,8 +4,8 @@ import blackjack.domain.Cards
 import blackjack.domain.Deck
 import blackjack.domain.GameResult
 import blackjack.domain.Participants
+import blackjack.domain.Player
 import blackjack.domain.PlayerGameResult
-import blackjack.domain.toScore
 import java.util.EnumMap
 
 object OutputView {
@@ -14,29 +14,27 @@ object OutputView {
     }
 
     fun printParticipantCards(participants: Participants) {
-        participants.dealer.let {
-            printDealerCard(it.name, it.cards)
-        }
+        printDealerCard(participants.dealer.showCards())
         participants.players.forEach {
-            printPlayerCards(it.name, it.cards)
+            printPlayerCards(it)
         }
         println()
     }
 
-    private fun printDealerCard(name: String, cards: Cards) {
-        println("${name}카드: ${cards.values.first()}")
+    private fun printDealerCard(cards: Cards) {
+        println("딜러 카드: ${cards.values.first()}")
     }
 
-    fun printPlayerCards(name: String, cards: Cards) {
-        println("${name}카드: $cards")
+    fun printPlayerCards(player: Player) {
+        println("${player.name}카드: ${player.state.cards}")
     }
 
     fun printGameScore(participants: Participants) {
         participants.dealer.let {
-            print("\n${it.name} 카드: ${it.cards} - 결과: ${it.cards.toScore()}")
+            print("\n딜러 카드: ${it.state.cards} - 결과: ${it.getScore().value}")
         }
         participants.players.forEach {
-            print("\n${it.name}카드: ${it.cards} - 결과: ${it.cards.toScore()}")
+            print("\n${it.name}카드: ${it.state.cards} - 결과: ${it.getScore().value}")
         }
         println("\n")
     }

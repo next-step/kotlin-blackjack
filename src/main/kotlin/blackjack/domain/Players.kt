@@ -8,4 +8,8 @@ class Players(private val players: List<Player>) : List<Player> by players {
     fun getNames(): String {
         return players.joinToString(", ") { it.name }
     }
+
+    fun receiveInitialCards(initialCards: () -> Cards) {
+        players.forEach { it.receiveInitialCards(initialCards.invoke()) }
+    }
 }

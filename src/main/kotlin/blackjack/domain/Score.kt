@@ -5,24 +5,21 @@ import kotlin.math.abs
 class Score(
     private val cards: Cards
 ) {
-    companion object {
-        const val BLACKJACK = 21
-        const val DEALER_STAND_THRESHOLD = 16
-    }
+    val value = toScore()
 
     fun isBlackjack(): Boolean {
-        return cards.size == 2 && calc() == BLACKJACK
+        return cards.size == 2 && value == BLACKJACK
     }
 
     fun isBust(): Boolean {
-        return calc() > BLACKJACK
+        return value > BLACKJACK
     }
 
     fun gapFromBlackjack(): Int {
-        return abs(calc() - BLACKJACK)
+        return abs(value - BLACKJACK)
     }
 
-    fun calc(): Int {
+    private fun toScore(): Int {
         val denominations = cards.values.map { it.denomination }
         var score = denominations.sumOf { it.score }
         var numOfAce = denominations.count { it == Denomination.ACE }
@@ -34,8 +31,9 @@ class Score(
         }
         return score
     }
-}
 
-fun Cards.toScore(): Int {
-    return Score(this).calc()
+    companion object {
+        const val BLACKJACK = 21
+        const val DEALER_STAND_THRESHOLD = 16
+    }
 }

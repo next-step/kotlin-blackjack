@@ -4,15 +4,15 @@ import blackjack.domain.Card
 import blackjack.domain.Cards
 import blackjack.domain.Score
 
-class Hit(val cards: Cards) : Running() {
+class Hit(override val cards: Cards) : Running() {
     override fun draw(card: Card): State {
         cards.add(card)
-        if (Score(cards).isBlackjack()) return Blackjack()
-        if (Score(cards).isBust()) return Bust()
+        if (Score(cards).isBlackjack()) return Blackjack(cards)
+        if (Score(cards).isBust()) return Bust(cards)
         return Hit(cards)
     }
 
     fun stand(): Stand {
-        return Stand()
+        return Stand(cards)
     }
 }

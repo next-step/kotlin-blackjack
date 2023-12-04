@@ -3,9 +3,9 @@ package blackjack.domain
 import java.util.EnumMap
 
 object GameResultDecider {
-    fun decide(players: Players, dealer: Dealer): GameResults {
-        val playerGameResults: List<PlayerGameResult> = players.map {
-            PlayerGameResult(it.name, it versus dealer)
+    fun decide(participants: Participants): GameResults {
+        val playerGameResults: List<PlayerGameResult> = participants.players.map {
+            PlayerGameResult(it.name, it versus participants.dealer)
         }
         val dealerGameResults: EnumMap<GameResult, Int> = EnumMap(GameResult::class.java)
         playerGameResults.forEach {

@@ -19,8 +19,8 @@ class Deck(
         return cardDeck.pop()
     }
 
-    fun draw(size: Int): List<Card> {
-        return List(size) { draw() }
+    fun draw(size: Int): Cards {
+        return Cards(List(size) { draw() })
     }
 
     companion object {

@@ -1,3 +1,5 @@
 package blackjack.domain.state
 
-class Blackjack : Finished()
+import blackjack.domain.Cards
+
+class Blackjack(override val cards: Cards) : Finished()
