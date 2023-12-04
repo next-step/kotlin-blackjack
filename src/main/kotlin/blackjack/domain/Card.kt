@@ -1,5 +1,8 @@
 package blackjack.domain
 
+private const val ACE_LOW_VALUE = 1
+private const val ACE_HIGH_VALUE = 11
+
 enum class Symbol {
     SPADE, HEART, DIAMOND, CLUB
 }
@@ -11,10 +14,21 @@ enum class Rank(val score: Int) {
 }
 
 data class Card(val symbol: Symbol, val rank: Rank) {
-
     companion object {
         val ALL_CARDS: List<Card> = Rank.values().flatMap { rank -> Symbol.values() withRank rank }
     }
+}
+
+fun List<Card>.calculateScore(): Int {
+    var score = this.sumOf { it.rank.score }
+    var countOfAces = this.count { it.rank == Rank.ACE }
+
+    while (score > BLACKJACK && countOfAces > 0) {
+        score -= ACE_HIGH_VALUE - ACE_LOW_VALUE
+        countOfAces -= 1
+    }
+
+    return score
 }
 
 infix fun Symbol.withRank(rank: Rank): Card = Card(this, rank)

@@ -4,29 +4,22 @@ const val BLACKJACK = 21
 
 class GameResult(players: List<Player>, private val dealer: Dealer) {
 
-    val playerResults: Map<Player, GameOutcome>
-    val dealerStats: DealerStats
+    val playerResults: Map<Player, GameReward>
+    val dealerResults: List<GameReward>
 
     init {
-        playerResults = players.associateWith { calculateOutcome(it) }.toMutableMap()
-        dealerStats = calculateDealerStats(players)
+        playerResults = players.associateWith { calculateReward(it) }.toMutableMap()
+        dealerResults = calculateDealerStats(players)
     }
 
-    private fun calculateOutcome(player: Player, participant: Participant = player): GameOutcome {
-        val playerScore = player.calculateScore()
-        val dealerScore = dealer.calculateScore()
-
+    private fun calculateReward(player: Player, participant: Participant = player): GameReward {
         val state = GameOutcomeState.create(participant)
-        return state.calculateOutcome(playerScore, dealerScore)
+        val outcome = state.calculateOutcome(player, dealer)
+
+        return GameReward.create(player.betAmount, outcome, player)
     }
 
-    private fun calculateDealerStats(players: List<Player>): DealerStats {
-        val gameOutcome = players.map { calculateOutcome(it, dealer) }
-        return DealerStats(
-            wins = gameOutcome.count { it == GameOutcome.WIN },
-            losses = gameOutcome.count { it == GameOutcome.LOSE }
-        )
+    private fun calculateDealerStats(players: List<Player>): List<GameReward> {
+        return players.map { calculateReward(it, dealer) }
     }
 }
-
-data class DealerStats(val wins: Int, val losses: Int)

@@ -7,7 +7,7 @@ import blackjack.domain.Participant
 import blackjack.domain.Player
 import blackjack.domain.Rank
 import blackjack.domain.Symbol
-import blackjack.domain.calculateScore
+import blackjack.domain.getScore
 
 object OutputView {
 
@@ -40,14 +40,14 @@ object OutputView {
             val cards = participant.cards.joinToString(SEPARATOR) { card ->
                 "${card.rank.name()}${card.symbol.name()}"
             }
-            println("${nickname}카드: $cards - 결과: ${participant.calculateScore()}")
+            println("${nickname}카드: $cards - 결과: ${participant.getScore()}")
         }
         println()
 
-        println("## 최송 승패")
-        println("딜러: ${result.dealerStats.wins}승 ${result.dealerStats.losses}패")
-        result.playerResults.forEach { (player, outcome) ->
-            println("${player.name.value}: ${outcome.name()}")
+        println("## 최송 수익")
+        println("딜러: ${result.dealerResults.sumOf { it.getValue().toInt() }}")
+        result.playerResults.forEach { (player, gameReward) ->
+            println("${player.name.value}: ${gameReward.getValue().toInt()}")
         }
     }
 

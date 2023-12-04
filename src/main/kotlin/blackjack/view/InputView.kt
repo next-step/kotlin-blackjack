@@ -1,5 +1,6 @@
 package blackjack.view
 
+import blackjack.domain.Amount
 import blackjack.domain.Nickname
 import blackjack.domain.PlayerDecision
 
@@ -10,6 +11,13 @@ object InputView {
     fun readNicknames(): List<Nickname> {
         println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)")
         return readln().split(NICKNAME_DELIMITER).map { Nickname(it.trim()) }
+    }
+
+    fun readBetAmount(nickNames: List<Nickname>): List<Pair<Nickname, Amount>> {
+        return nickNames.map { nickname ->
+            println("${nickname.value}의 배팅 금액은?")
+            nickname to Amount(readln().toDouble())
+        }
     }
 
     fun readHitOrStand(nickname: Nickname): PlayerDecision {
