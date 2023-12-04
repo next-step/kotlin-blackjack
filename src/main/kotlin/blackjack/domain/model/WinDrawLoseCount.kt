@@ -13,6 +13,6 @@ data class WinDrawLoseCount(
     companion object {
 
         private const val TOTAL_MIN_COUNT = 0
-        fun of(winCount: Int, loseCount: Int, drawCount: Int): WinDrawLoseCount = WinDrawLoseCount(winCount, loseCount, drawCount)
+        fun of(winCount: Int, drawCount: Int, loseCount: Int): WinDrawLoseCount = WinDrawLoseCount(winCount, drawCount, loseCount)
     }
 }
