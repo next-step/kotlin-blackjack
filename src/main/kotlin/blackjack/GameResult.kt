@@ -17,8 +17,8 @@ class GameResult(
         }
 
         val playerResult = mutableMapOf<String, String>().apply {
-            winCount.map { this[it.name] = WIN }
-            loseCount.map { this[it.name] = LOSE }
+            winCount.map { this[it.name.value] = WIN }
+            loseCount.map { this[it.name.value] = LOSE }
         }
 
         resultMap = mapOf(

@@ -36,7 +36,7 @@ class OutputManager {
     }
 
     fun printResult(gameResult: GameResult) {
-        gameResult.resultMap.forEach{
+        gameResult.resultMap.forEach {
             println("${it.key} : ${it.value}")
         }
     }
@@ -75,7 +75,7 @@ class OutputManager {
     }
 
     fun printFirstTurn2(players: List<Player>) {
-        val names: String = players.joinToString(", ") { it.name }
+        val names: String = players.joinToString(", ") { it.name.value }
 
         println("딜러와 ${names}에게 2장의 카드를 나누었습니다.")
     }
