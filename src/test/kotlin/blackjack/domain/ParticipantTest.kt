@@ -63,7 +63,7 @@ class ParticipantTest {
     }
 
     @Test
-    fun `getScore 테스트`() {
+    fun `게임 참여자는 현재 상태에서 점수를 얻을 수 있다`() {
         // given
         val participant = Participant(Started(createBlackjackCards()))
         // when

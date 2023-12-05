@@ -25,7 +25,6 @@ open class Participant(state: State = Started()) {
     fun turnStand() {
         state = state.stand()
     }
-
     fun isStand(): Boolean {
         return state is Stand
     }

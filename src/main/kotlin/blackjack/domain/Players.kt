@@ -16,4 +16,5 @@ class Players(private val players: List<Player>) : List<Player> by players {
     operator fun plus(players: Players): Players {
         return Players(this.players + players)
     }
+
 }

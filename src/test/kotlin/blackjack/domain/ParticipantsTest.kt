@@ -48,7 +48,7 @@ class ParticipantsTest {
     }
 
     @Test
-    fun `getGameResult 테스트`() {
+    fun `게임 참여자들로부터 gameResult를 얻을 수 있다`() {
         // given
         // when
         val gameResults = participants.getGameResult()

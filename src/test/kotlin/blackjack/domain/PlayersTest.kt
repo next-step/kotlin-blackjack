@@ -28,7 +28,7 @@ class PlayersTest {
     }
 
     @Test
-    fun `filterReceivable 테스트`() {
+    fun `running 상태의 player들은 filterReceivable 메서드 호출 후 반환된다`() {
         // when
         val receivablePlayer = runningPlayers.filterReceivable()
         val notReceivablePlayer = finishedPlayers.filterReceivable()
@@ -40,14 +40,14 @@ class PlayersTest {
     }
 
     @Test
-    fun `getNames 테스트`() {
+    fun `플레이어들의 이름을 한번에 가져올 수 있다`() {
         // when
         val names = (runningPlayers + finishedPlayers).getNames()
         names shouldBe "player1, player2, player3, player4"
     }
 
     @Test
-    fun `receiveInitialCards 테스트`() {
+    fun `플레이어들은 게임이 시작하면 카드를 일정 개수만큼 수령한다`() {
         // when
         val testPlayers = Players(listOf(Player(name = "player1"), Player(name = "player2")))
         testPlayers.receiveInitialCards {
