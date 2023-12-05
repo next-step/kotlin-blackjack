@@ -1,7 +1,7 @@
 package blackjack.domain
 
 class Players(private val players: List<Player>) : List<Player> by players {
-    fun withHit(): List<Player> {
+    fun filterReceivable(): List<Player> {
         return players.filter { it.canReceiveOneMoreCard() }
     }
 
@@ -11,5 +11,9 @@ class Players(private val players: List<Player>) : List<Player> by players {
 
     fun receiveInitialCards(initialCards: () -> Cards) {
         players.forEach { it.receiveInitialCards(initialCards.invoke()) }
+    }
+
+    operator fun plus(players: Players): Players {
+        return Players(this.players + players)
     }
 }

@@ -5,8 +5,8 @@ import blackjack.domain.state.Stand
 import blackjack.domain.state.Started
 import blackjack.domain.state.State
 
-open class Participant {
-    var state: State = Started()
+open class Participant(state: State = Started()) {
+    var state: State = state
         protected set
 
     open fun receiveCard(card: Card) {
@@ -23,8 +23,7 @@ open class Participant {
     }
 
     fun turnStand() {
-        check(state is Hit) { "Hit 상태가 아닙니다." }
-        state = (state as Hit).stand()
+        state = state.stand()
     }
 
     fun isStand(): Boolean {

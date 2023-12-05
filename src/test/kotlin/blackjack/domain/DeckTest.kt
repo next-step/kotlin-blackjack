@@ -20,7 +20,6 @@ class DeckTest {
         repeat(Deck.TOTAL_CARD_SIZE) {
             deck.draw()
         }
-
         assertThrows<IllegalStateException> { // then
             deck.draw() // when
         }

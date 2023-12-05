@@ -11,8 +11,4 @@ class Hit(override val cards: Cards) : Running() {
         if (Score(newCards).isBust()) return Bust(newCards)
         return Hit(newCards)
     }
-
-    fun stand(): Stand {
-        return Stand(cards)
-    }
 }

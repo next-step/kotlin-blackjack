@@ -7,5 +7,6 @@ import blackjack.domain.Score
 interface State {
     val cards: Cards
     fun draw(card: Card): State
+    fun stand(): State
     fun scoring(): Score
 }

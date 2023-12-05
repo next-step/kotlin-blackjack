@@ -2,111 +2,71 @@ package blackjack.domain
 
 import blackjack.domain.state.Blackjack
 import blackjack.domain.state.Bust
-import blackjack.domain.state.Finished
 import blackjack.domain.state.Hit
-import blackjack.domain.state.Running
-import blackjack.domain.state.Stand
-import org.junit.jupiter.api.Assertions.assertEquals
+import fixtures.createBlackjackCards
+import fixtures.createBustCards
+import fixtures.createUnderBlackjackCards
+import fixtures.createCard
+import fixtures.createCards
+import io.kotest.assertions.assertSoftly
+import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
 
 class PlayerTest {
     @Test
-    fun `게임 시작 후 두 장의 카드를 받고 카드 점수가 21점 미만일 경우 사용자의 상태는 기본적으로 Hit(Running)이다`() {
+    fun `딜러가 Blackjack인 경우 versus 결과 테스트`() {
         // given
-        val player = Player("test")
-
+        val dealer = Dealer(state = Blackjack(createBlackjackCards()))
+        val player1 = Player(name = "player1", state = Bust(createBustCards()))
+        val player2 = Player(name = "player2", state = Blackjack(createBlackjackCards()))
+        val player3 = Player(name = "player3", state = Hit(createUnderBlackjackCards()))
         // when
-        player.receiveInitialCards(listOf(
-            Card(Suit.SPADES, Denomination.ACE),
-            Card(Suit.SPADES, Denomination.TWO)
-        ))
-
+        val playerResult1 = player1 versus dealer
+        val playerResult2 = player2 versus dealer
+        val playerResult3 = player3 versus dealer
         // then
-        assertEquals(true, player.state is Hit)
-        assertEquals(true, player.state is Running)
-    }
-
-    @Test
-    fun `새로운 카드를 받았을 때 카드 점수가 21점일 경우 사용자 상태는 Blackjack(Finished)으로 변경된다`() {
-        // given
-        val player = Player("test")
-        val cardList = listOf(
-            Card(Suit.SPADES, Denomination.TEN),
-            Card(Suit.SPADES, Denomination.THREE),
-            Card(Suit.SPADES, Denomination.EIGHT),
-        )
-        // when
-        cardList.forEach(player::receiveCard)
-        // then
-        assertEquals(true, player.state is Blackjack)
-        assertEquals(true, player.state is Finished)
-    }
-
-    @Test
-    fun `새로운 카드를 받았을 때 카드 점수가 21점일 경우 사용자 상태는 Bust(Finished)로 변경된다`() {
-        // given
-        val player = Player("test")
-        val cardList = listOf(
-            Card(Suit.SPADES, Denomination.KING),
-            Card(Suit.SPADES, Denomination.KING),
-            Card(Suit.SPADES, Denomination.KING),
-        )
-        // when
-        cardList.forEach(player::receiveCard)
-        // then
-        assertEquals(true, player.state is Bust)
-        assertEquals(true, player.state is Finished)
-    }
-
-    @Test
-    fun `새로운 카드를 받았을 때 카드 점수가 21점 미만일 경우에 사용자는 Stand(Finished)로 상태를 바꿀 수 있다`() {
-        // given
-        val player = Player("test")
-        val card = Card(Suit.SPADES, Denomination.ACE)
-        // when
-        player.receiveInitialCards(listOf(
-            Card(Suit.SPADES, Denomination.ACE),
-            Card(Suit.SPADES, Denomination.TWO)
-        ))
-        player.turnStand()
-        // then
-        assertEquals(true, player.state is Stand)
-        assertEquals(true, player.state is Finished)
-    }
-
-    @Test
-    fun `Hit 상태인 플레이어는 카드를 더 받을 수 있다`() {
-        // given
-        val player = Player("test")
-
-        // when
-        player.receiveCard(Card(Suit.SPADES, Denomination.ACE))
-        player.receiveCard(Card(Suit.HEARTS, Denomination.TWO))
-
-        // then
-        assertEquals(true, player.canReceiveOneMoreCard())
-    }
-
-    @Test
-    fun `게임 시작시 받아야 할 카드 개수(INITIAL_DEAL_SIZE)보다 더 적거나 많은 카드를 받는다면 IllegalArgumentException을 발생시킨다`() {
-        // given
-        val player = Player("test")
-        val cards1 = listOf(
-            Card(Suit.SPADES, Denomination.ACE),
-            Card(Suit.SPADES, Denomination.TWO),
-            Card(Suit.SPADES, Denomination.KING),
-        )
-        val cards2 = listOf(
-            Card(Suit.SPADES, Denomination.ACE),
-        )
-
-        assertThrows<IllegalArgumentException> { // then
-            player.receiveInitialCards(cards1) // when
+        assertSoftly {
+            playerResult1 shouldBe GameResult.LOSE
+            playerResult2 shouldBe GameResult.DRAW
+            playerResult3 shouldBe GameResult.LOSE
         }
+    }
 
-        assertThrows<IllegalArgumentException> { // then
-            player.receiveInitialCards(cards2) // when
+    @Test
+    fun `딜러가 Bust인 경우 versus 결과 테스트`() {
+        // given
+        val dealer = Dealer(state = Bust(createBustCards()))
+        val player1 = Player(name = "player1", state = Bust(createBustCards()))
+        val player2 = Player(name = "player2", state = Blackjack(createBlackjackCards()))
+        val player3 = Player(name = "player2", state = Hit(createUnderBlackjackCards()))
+        // when
+        val playerResult1 = player1 versus dealer
+        val playerResult2 = player2 versus dealer
+        val playerResult3 = player3 versus dealer
+        // then
+        assertSoftly {
+            playerResult1 shouldBe GameResult.LOSE
+            playerResult2 shouldBe GameResult.WIN
+            playerResult3 shouldBe GameResult.WIN
         }
+    }
+
+    @Test
+    fun `딜러와 플레이어 모두 Bust나 Blackjack이 아닌 경우 Blackjack과 최대한 가까운 사람이 승리한다`() {
+        // given
+        val dealerCards = createCards(
+            createCard(Suit.CLUBS, Denomination.ACE),
+            createCard(Suit.HEARTS, Denomination.TWO)
+        )
+        val playerCards = createCards(
+            createCard(Suit.DIAMONDS, Denomination.ACE),
+            createCard(Suit.HEARTS, Denomination.QUEEN)
+        )
+        val dealer = Dealer(state = Hit(dealerCards))
+        val player = Player(name = "player", state = Hit(playerCards))
+        // when
+        val playerResult = player versus dealer
+        // then
+        playerResult shouldBe GameResult.WIN
     }
 }

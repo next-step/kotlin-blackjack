@@ -2,7 +2,6 @@ package blackjack
 
 import blackjack.domain.Dealer
 import blackjack.domain.Deck
-import blackjack.domain.GameResultDecider
 import blackjack.domain.Participants
 import blackjack.domain.Player
 import blackjack.domain.Players
@@ -18,7 +17,7 @@ import blackjack.view.OutputView.printPlayerGameResult
 
 class BlackjackGame {
     private val deck = Deck()
-    private val dealer = Dealer("딜러")
+    private val dealer = Dealer()
     private val players = Players(
         InputView.getNicknames().map(::Player)
     )
@@ -47,9 +46,9 @@ class BlackjackGame {
 
     private fun showGameResult() {
         printGameScore(participants)
-        val gameResults = GameResultDecider.decide(participants)
+        val gameResults = participants.getGameResult()
         printDealerGameResult(gameResults.dealerGameResult)
-        printPlayerGameResult(gameResults.playerGameResult)
+        printPlayerGameResult(gameResults.playerGameResults)
     }
 }
 

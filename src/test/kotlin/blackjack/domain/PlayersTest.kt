@@ -1,40 +1,68 @@
 package blackjack.domain
 
-import org.junit.jupiter.api.Assertions.assertEquals
+import blackjack.domain.state.Blackjack
+import blackjack.domain.state.Bust
+import blackjack.domain.state.Hit
+import fixtures.createBlackjackCards
+import fixtures.createUnderBlackjackCards
+import fixtures.createBustCards
+import fixtures.createCard
+import fixtures.createCards
+import io.kotest.assertions.assertSoftly
+import io.kotest.matchers.shouldBe
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 class PlayersTest {
+    private lateinit var runningPlayers: Players
+    private lateinit var finishedPlayers: Players
+
+    @BeforeEach
+    fun setUp() {
+        runningPlayers = Players(
+            listOf(
+                Player(name = "player1", state = Hit(createUnderBlackjackCards())),
+                Player(name = "player2", state = Hit(createUnderBlackjackCards()))
+            )
+        )
+        finishedPlayers = Players(
+            listOf(
+                Player(name = "player3", state = Bust(createBustCards())),
+                Player(name = "player4", state = Blackjack(createBlackjackCards())),
+            )
+        )
+    }
+
     @Test
-    fun `카드를 추가로 받을 수 있는 플레이어들만 필터링한다`() {
-        // given
-        val player1 = Player("player1")
-        val player2 = Player("player2")
-        val player3 = Player("player3")
-
+    fun `filterReceivable 테스트`() {
         // when
-        player1.receiveInitialCards(
-            listOf(
-                Card(Suit.SPADES, Denomination.TEN),
-                Card(Suit.SPADES, Denomination.SIX),
-            )
-        )
-        player2.receiveInitialCards(
-            listOf(
-                Card(Suit.SPADES, Denomination.TEN),
-                Card(Suit.SPADES, Denomination.ACE)
-            )
-        )
-        player3.receiveInitialCards(
-            listOf(
-                Card(Suit.SPADES, Denomination.TWO),
-                Card(Suit.SPADES, Denomination.TWO),
-            )
-        )
-        player3.turnStand()
-
-        val players = Players(listOf(player1, player2, player3))
-
+        val receivablePlayer = runningPlayers.filterReceivable()
+        val notReceivablePlayer = finishedPlayers.filterReceivable()
         // then
-        assertEquals(1, players.withHit().size)
+        assertSoftly {
+            receivablePlayer.size shouldBe 2
+            notReceivablePlayer.size shouldBe 0
+        }
+    }
+
+    @Test
+    fun `getNames 테스트`() {
+        // when
+        val names = (runningPlayers + finishedPlayers).getNames()
+        names shouldBe "player1, player2, player3, player4"
+    }
+
+    @Test
+    fun `receiveInitialCards 테스트`() {
+        // when
+        val testPlayers = Players(listOf(Player(name = "player1"), Player(name = "player2")))
+        testPlayers.receiveInitialCards {
+            createCards(
+                createCard(suit = Suit.CLUBS, denomination = Denomination.TWO),
+                createCard(suit = Suit.DIAMONDS, denomination = Denomination.TWO),
+            )
+        }
+        // then
+        testPlayers.forEach { it.state.cards.size shouldBe 2 }
     }
 }

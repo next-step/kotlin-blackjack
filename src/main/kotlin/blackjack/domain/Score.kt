@@ -5,7 +5,7 @@ import kotlin.math.abs
 class Score(
     private val cards: Cards
 ) {
-    val value = toScore()
+    val value: Int = toScore()
 
     fun isBlackjack(): Boolean {
         return cards.size == 2 && value == BLACKJACK
@@ -34,6 +34,6 @@ class Score(
 
     companion object {
         const val BLACKJACK = 21
-        const val DEALER_STAND_THRESHOLD = 16
+        const val DEALER_STAND_THRESHOLD = 17
     }
 }

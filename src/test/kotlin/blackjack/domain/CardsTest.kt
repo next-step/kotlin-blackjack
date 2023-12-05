@@ -1,31 +1,40 @@
 package blackjack.domain
 
-import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertNotEquals
+import fixtures.createCard
+import fixtures.createCards
+import io.kotest.assertions.assertSoftly
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class CardsTest {
+    private val cards: Cards = createCards(
+        createCard(suit = Suit.CLUBS, denomination = Denomination.TWO),
+        createCard(suit = Suit.HEARTS, denomination = Denomination.TEN),
+        createCard(suit = Suit.SPADES, denomination = Denomination.ACE),
+    )
 
     @Test
-    fun `N장의 카드를 추가할 경우 PlayerCards는 원소 개수가 N만큼 늘어난 새로운 카드 리스트를 갖는다`() {
+    fun `cards에 card를 더하면 새로운 리스트 프로퍼티로 가진 Cards를 생성한다`() {
         // given
-        val cards = Cards(
-            listOf(
-                Card(Suit.SPADES, Denomination.ACE),
-                Card(Suit.HEARTS, Denomination.TEN),
-                Card(Suit.CLUBS, Denomination.TWO),
-            )
-        )
-        val originCardValues = cards.values
+        val card = createCard(suit = Suit.DIAMONDS, denomination = Denomination.TWO)
 
         // when
-        cards.add(
-            Card(Suit.DIAMONDS, Denomination.FIVE),
-            Card(Suit.SPADES, Denomination.FOUR)
-        )
+        val newCards = cards + card
 
         // then
-        assertEquals(5, cards.values.size)
-        assertNotEquals(originCardValues, cards.values)
+        assertSoftly {
+            assertThat(newCards.size).isEqualTo(4)
+            assertThat(newCards).isNotSameAs(cards)
+        }
+    }
+
+    @Test
+    fun `cards 문자열 변환 테스트`() {
+        // given
+        // when
+        val cardsString = cards.toString()
+
+        // then
+        assertThat(cardsString).isEqualTo("2클로버,  10하트,  A스페이드")
     }
 }

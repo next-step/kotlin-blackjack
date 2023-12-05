@@ -11,6 +11,10 @@ open class Started(
         return Hit(cards + card)
     }
 
+    override fun stand(): State {
+        return Stand(cards)
+    }
+
     override fun scoring(): Score {
         return Score(cards)
     }

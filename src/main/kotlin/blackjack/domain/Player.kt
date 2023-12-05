@@ -1,6 +1,12 @@
 package blackjack.domain
 
+import blackjack.domain.state.State
+
 class Player(val name: String) : Participant() {
+    constructor(name: String, state: State) : this(name) {
+        this.state = state
+    }
+
     infix fun versus(dealer: Dealer): GameResult {
         val playerScore = this.getScore()
         val dealerScore = dealer.getScore()
