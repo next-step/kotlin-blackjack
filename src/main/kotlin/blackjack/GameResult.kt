@@ -16,8 +16,8 @@ class GameResult(
         val loser = findLoser(players, dealer)
 
         val playerResult = mutableMapOf<Name, Result>().apply {
-            loser.map { this[it.name] = Result.Lose() }
-            winner.map { this[it.name] = Result.Win() }
+            loser.map { this[it.name] = Result.Lose }
+            winner.map { this[it.name] = Result.Win }
         }
 
         resultMap = mapOf(
