@@ -5,7 +5,7 @@ value class BettingAmount(
     val amount: Int
 ) {
     init {
-        require(amount > 0) { VALID_MESSAGE }
+        require(amount >= 0) { VALID_MESSAGE }
     }
 
     companion object {

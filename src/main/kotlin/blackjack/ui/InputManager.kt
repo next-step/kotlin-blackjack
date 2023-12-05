@@ -8,6 +8,12 @@ class InputManager {
         return inputUserValue().replace("\\s".toRegex(), "").split(",")
     }
 
+    fun inputBettingAmount(player: Player): Int {
+        println()
+        println("${player.name.value}의 베팅 금액은?")
+        return inputUserValue().toInt()
+    }
+
     private fun inputUserValue(): String {
         val input = readln()
         require(input.isNotBlank()) { INPUT_NOT_NULL_MESSAGE }
