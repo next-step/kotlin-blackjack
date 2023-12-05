@@ -27,48 +27,30 @@ class BlackjackResult(
         )
     }
 
-    private fun compete(dealer: Dealer, player: Player): CompeteResult {
-        val playerScore = player.getScore()
-        val playerState = player.state
-
-        if (dealer.state == State.BUST ||
-            (dealer.getScore() < playerScore && player.state != State.BUST) ||
-            (dealer.state != State.BLACKJACK && player.state == State.BLACKJACK)
-        ) {
-            return CompeteResult.LOSE
-        }
-
-        if (playerState == State.BUST ||
-            dealer.getScore() > playerScore ||
-            (dealer.state == State.BLACKJACK && player.state != State.BLACKJACK)
-        ) {
-            return CompeteResult.WIN
-        }
-
-        return CompeteResult.DRAW
-    }
-
     private fun getPlayerEarningRate(dealer: Dealer, player: Player): Double {
-        val playerScore = player.getScore()
-        val playerState = player.state
-
-        if (dealer.state == State.BUST ||
-            (dealer.getScore() < playerScore && player.state != State.BUST)
-        ) {
+        if (isDraw(dealer, player)) {
             return 1.0
         }
 
-        if (dealer.state != State.BLACKJACK && player.state == State.BLACKJACK) {
+        if (isPlayerBlackjack(dealer, player)) {
             return 1.5
         }
 
-        if (playerState == State.BUST ||
-            dealer.getScore() > playerScore ||
-            (dealer.state == State.BLACKJACK && player.state != State.BLACKJACK)
-        ) {
+        if (isDealerWin(dealer, player)) {
             return -1.0
         }
 
         return 0.0
     }
+
+    private fun isDraw(dealer: Dealer, player: Player) = dealer.state == State.BUST ||
+        (dealer.getScore() < player.getScore() && player.state != State.BUST)
+
+    private fun isPlayerBlackjack(dealer: Dealer, player: Player) =
+        dealer.state != State.BLACKJACK && player.state == State.BLACKJACK
+
+    private fun isDealerWin(dealer: Dealer, player: Player) =
+        player.state == State.BUST ||
+            dealer.getScore() > player.getScore() ||
+            (dealer.state == State.BLACKJACK && player.state != State.BLACKJACK)
 }
