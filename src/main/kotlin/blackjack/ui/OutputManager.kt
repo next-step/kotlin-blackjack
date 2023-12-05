@@ -18,6 +18,8 @@ class OutputManager {
         players.forEach {
             println("${it.name.value}: ${parsingCardsToString(it.cards)}")
         }
+
+        printEnter()
     }
 
     fun printPlayerCards(player: Player) {
@@ -33,10 +35,13 @@ class OutputManager {
     }
 
     fun printDealerResultGame(dealer: Dealer) {
+        printEnter()
         println("딜러 카드: ${parsingCardsToString(dealer.cards)} - 결과: ${dealer.resultScore()}")
     }
 
     fun printResult(gameResult: GameResult) {
+        printEnter()
+        println(RESULT_MESSAGE)
         gameResult.resultMap.forEach {
             println("${it.key.value} : ${parsingGameResult(it.value)}")
         }
@@ -84,18 +89,25 @@ class OutputManager {
     }
 
     fun printFirstTurn2(players: List<Player>) {
+        printEnter()
         val names: String = players.joinToString(", ") { it.name.value }
 
         println("딜러와 ${names}에게 2장의 카드를 나누었습니다.")
     }
 
     fun printDealerCanDrawMessage() {
+        printEnter()
         println(DEALER_MESSAGE)
     }
 
+    private fun printEnter() {
+        println()
+    }
+
     companion object {
-        private const val DEALER_MESSAGE = "16이하라 한장의 카드를 더 받았습니다."
+        private const val DEALER_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다."
         private const val WIN = "승"
         private const val LOSE = "패"
+        private const val RESULT_MESSAGE = "## 최종승패"
     }
 }

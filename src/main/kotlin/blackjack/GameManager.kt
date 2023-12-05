@@ -28,11 +28,12 @@ class GameManager(
 
         val result = playBlackJack()
 
+        outputManager.printDealerResultGame(dealer)
+
         players.forEach {
             outputManager.printPlayerResultGame(it)
         }
 
-        outputManager.printDealerResultGame(dealer)
 
         outputManager.printResult(result)
     }
@@ -62,7 +63,6 @@ class GameManager(
         while (dealer.shouldDraw()) {
             outputManager.printDealerCanDrawMessage()
             dealer.drawCard(CardDeck.draw(DRAW_CARD))
-            outputManager.printDealerCards(dealer)
         }
     }
 
