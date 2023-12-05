@@ -1,5 +1,6 @@
 package study
 
+import introduce.domain.Person
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest

@@ -1,5 +1,6 @@
 package study
 
+import introduce.domain.introduce
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.data.forAll
 import io.kotest.data.row
@@ -111,57 +112,4 @@ class DslTest : StringSpec({
             person.languages["English"] shouldBe englishLevel
         }
     }
-
 })
-
-fun introduce(block: Person.() -> Unit): Person {
-    return Person().apply(block)
-}
-
-class Person {
-    lateinit var name: String
-    lateinit var company: String
-    lateinit var skills: Skills
-    lateinit var languages: Languages
-
-    fun name(value: String) {
-        name = value
-    }
-
-    fun company(value: String) {
-        company = value
-    }
-
-    fun skills(block: Skills.() -> Unit) {
-        skills = Skills().apply(block)
-    }
-
-    fun languages(block: Languages.() -> Unit) {
-        languages = Languages().apply(block)
-    }
-}
-
-class Skills {
-    val soft: MutableList<String> = mutableListOf()
-    val hard: MutableList<String> = mutableListOf()
-
-    fun soft(value: String) {
-        soft.add(value)
-    }
-
-    fun hard(value: String) {
-        hard.add(value)
-    }
-}
-
-class Languages {
-    private val languages: MutableMap<String, Int> = mutableMapOf()
-
-    infix fun String.level(level: Int) {
-        languages[this] = level
-    }
-
-    operator fun get(key: String): Int {
-        return languages.getOrDefault(key, 0)
-    }
-}
