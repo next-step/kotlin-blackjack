@@ -1,7 +1,6 @@
 package blackjack.view
 
 import blackjack.model.card.Card
-import blackjack.model.game.MatchResult
 import blackjack.model.game.Rank
 import blackjack.model.player.Dealer
 import blackjack.model.player.Player
@@ -21,10 +20,10 @@ object OutputView {
 
     fun printResult(dealer: Dealer, players: List<Player>) {
         println()
-        println("딜러 카드 : ${getCard(dealer.cards())} - 결과 : ${dealer.cards.calculateScore()}")
+        println("딜러 카드 : ${getCard(dealer.cards())} - 결과 : ${dealer.score()}")
         players.forEach { player ->
             val card = getCard(player.cards())
-            val totalScore = player.cards.calculateScore()
+            val totalScore = player.score()
             println("${player.name} 카드 : $card - 결과 : $totalScore")
         }
     }
@@ -33,12 +32,20 @@ object OutputView {
         println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.")
     }
 
-    fun printMatchResult(matchResult: MatchResult) {
-        val dealerResult = matchResult.dealerResult.groupingBy { it }.eachCount()
+    fun printMatchResult(dealerResult: List<Rank>, playerResults: Map<Player, Rank>) {
+        val dealerResultMap = dealerResult.groupingBy { it }.eachCount()
         println("\n## 최종 승패")
-        println("딜러 : ${dealerResult[Rank.WIN] ?: 0}승 ${dealerResult[Rank.DRAW] ?: 0}무 ${dealerResult[Rank.LOSE] ?: 0}패")
-        matchResult.playerResults.forEach {
+        println("딜러 : ${dealerResultMap[Rank.WIN] ?: 0}승 ${dealerResultMap[Rank.DRAW] ?: 0}무 ${dealerResultMap[Rank.LOSE] ?: 0}패")
+        playerResults.forEach {
             println("${it.key.name} : ${it.value.rank}")
+        }
+    }
+
+    fun printBettingResult(dealerBenefit: Double, playerBenefits: Map<Player, Double>) {
+        println("\n## 최종 수익")
+        println("딜러 : ${if (dealerBenefit != -0.0) dealerBenefit else 0}")
+        playerBenefits.forEach {
+            println("${it.key.name} : ${it.value}")
         }
     }
 

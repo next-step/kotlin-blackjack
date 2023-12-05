@@ -1,121 +1,212 @@
 package blackjack.model.game
 
 import blackjack.model.card.Card
+import blackjack.model.card.CardDeck
 import blackjack.model.card.CardNumber
 import blackjack.model.card.CardSuit
 import blackjack.model.player.Dealer
 import blackjack.model.player.Player
-import io.kotest.core.spec.style.StringSpec
+import blackjack.model.state.playState.gameState.BlackJack
+import blackjack.model.state.playState.gameState.Bust
+import blackjack.model.state.playState.gameState.Stay
+import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 
-class MatchResultTest : StringSpec({
-    fun 딜러_20점(): Dealer {
-        val dealer = Dealer()
-        dealer.draw(Card(CardNumber.JACK, CardSuit.하트))
-        dealer.draw(Card(CardNumber.KING, CardSuit.다이아몬드))
+class MatchResultTest : DescribeSpec({
 
-        return dealer
+    fun 카드덱_18점(): CardDeck {
+        return CardDeck(
+            mutableListOf(
+                Card(CardNumber.JACK, CardSuit.하트),
+                Card(CardNumber.EIGHT, CardSuit.다이아몬드)
+            )
+        )
     }
 
-    fun 딜러_21점(): Dealer {
-        val dealer = Dealer()
-        dealer.draw(Card(CardNumber.ACE, CardSuit.하트))
-        dealer.draw(Card(CardNumber.KING, CardSuit.다이아몬드))
-
-        return dealer
+    fun 카드덱_19점(): CardDeck {
+        return CardDeck(
+            mutableListOf(
+                Card(CardNumber.JACK, CardSuit.하트),
+                Card(CardNumber.NINE, CardSuit.다이아몬드)
+            )
+        )
     }
 
-    fun 딜러_23점(): Dealer {
-        val dealer = Dealer()
-        dealer.draw(Card(CardNumber.SEVEN, CardSuit.하트))
-        dealer.draw(Card(CardNumber.EIGHT, CardSuit.하트))
-        dealer.draw(Card(CardNumber.EIGHT, CardSuit.다이아몬드))
-
-        return dealer
+    fun 카드덱_20점(): CardDeck {
+        return CardDeck(
+            mutableListOf(
+                Card(CardNumber.JACK, CardSuit.하트),
+                Card(CardNumber.KING, CardSuit.다이아몬드)
+            )
+        )
     }
 
-    fun 플레이어_20점(): Player {
-        val player = Player("jason")
-        player.draw(Card(CardNumber.JACK, CardSuit.하트))
-        player.draw(Card(CardNumber.KING, CardSuit.다이아몬드))
-
-        return player
+    fun 카드덱_블랙잭(): CardDeck {
+        return CardDeck(
+            mutableListOf(
+                Card(CardNumber.ACE, CardSuit.하트),
+                Card(CardNumber.KING, CardSuit.다이아몬드)
+            )
+        )
     }
 
-    fun 플레이어_21점(): Player {
-        val player = Player("jason")
-        player.draw(Card(CardNumber.ACE, CardSuit.하트))
-        player.draw(Card(CardNumber.KING, CardSuit.다이아몬드))
-
-        return player
+    fun 카드덱_21점(): CardDeck {
+        return CardDeck(
+            mutableListOf(
+                Card(CardNumber.SIX, CardSuit.하트),
+                Card(CardNumber.SEVEN, CardSuit.클럽),
+                Card(CardNumber.EIGHT, CardSuit.다이아몬드)
+            )
+        )
     }
 
-    fun 플레이어_23점(): Player {
-        val player = Player("jason")
-        player.draw(Card(CardNumber.SEVEN, CardSuit.하트))
-        player.draw(Card(CardNumber.EIGHT, CardSuit.하트))
-        player.draw(Card(CardNumber.EIGHT, CardSuit.다이아몬드))
-
-        return player
+    fun 카드덱_23점(): CardDeck {
+        return CardDeck(
+            mutableListOf(
+                Card(CardNumber.SEVEN, CardSuit.하트),
+                Card(CardNumber.EIGHT, CardSuit.하트),
+                Card(CardNumber.EIGHT, CardSuit.다이아몬드)
+            )
+        )
     }
 
-    "딜러 21점 플레이어 20점이면 딜러가 승리한다" {
-        // given
-        val dealer = 딜러_21점()
-        val player = 플레이어_20점()
+    describe("딜러가 Bust이고") {
+        val dealer = Dealer(Bust(카드덱_23점()))
 
-        // when
-        val matchResult = MatchResult.toResult(dealer, listOf(player))
+        it("플레이어가 Stay이면 플레이어의 승이다") {
+            val player = Player("jason", state = Stay(카드덱_20점()))
 
-        // then
-        matchResult.dealerResult[0] shouldBe Rank.WIN
+            val matchResult = MatchResult.toResult(dealer, listOf(player))
+
+            matchResult.dealerResult[0] shouldBe Rank.LOSE
+        }
+
+        it("플레이어가 Blackjack이면 플레이어의 승이다") {
+            val player = Player("jason", state = BlackJack(카드덱_블랙잭()))
+
+            val matchResult = MatchResult.toResult(dealer, listOf(player))
+
+            matchResult.dealerResult[0] shouldBe Rank.LOSE
+        }
+
+        // 플레이어가 먼저 bust 상태이므로 딜러의 승으로 판단한다
+        it("플레이어가 Bust이면 딜러의 승이다") {
+            val player = Player("jason", state = Bust(카드덱_23점()))
+
+            val matchResult = MatchResult.toResult(dealer, listOf(player))
+
+            matchResult.dealerResult[0] shouldBe Rank.WIN
+        }
     }
 
-    "딜러 23점 플레이어 23점이면 딜러가 승리한다" {
-        // given
-        val dealer = 딜러_23점()
-        val player = 플레이어_23점()
+    describe("딜러가 Blackjack이고") {
+        val dealer = Dealer(BlackJack(카드덱_블랙잭()))
 
-        // when
-        val matchResult = MatchResult.toResult(dealer, listOf(player))
+        it("플레이어가 Stay이면 딜러의 승이다") {
+            val player = Player("jason", state = Stay(카드덱_21점()))
 
-        // then
-        matchResult.dealerResult[0] shouldBe Rank.WIN
+            val matchResult = MatchResult.toResult(dealer, listOf(player))
+
+            matchResult.dealerResult[0] shouldBe Rank.WIN
+        }
+
+        it("플레이어가 Blackjack이면 무승부이다") {
+            val player = Player("jason", state = BlackJack(카드덱_블랙잭()))
+
+            val matchResult = MatchResult.toResult(dealer, listOf(player))
+
+            matchResult.dealerResult[0] shouldBe Rank.DRAW
+        }
+
+        it("플레이어가 Bust이면 딜러의 승이다") {
+            val player = Player("jason", state = Bust(카드덱_23점()))
+
+            val matchResult = MatchResult.toResult(dealer, listOf(player))
+
+            matchResult.dealerResult[0] shouldBe Rank.WIN
+        }
     }
 
-    "딜러 20점 플레이어 20점이면 무승부이다" {
-        // given
-        val dealer = 딜러_20점()
-        val player = 플레이어_20점()
+    describe("딜러가 Stay고") {
+        val dealer = Dealer(Stay(카드덱_19점()))
 
-        // when
-        val matchResult = MatchResult.toResult(dealer, listOf(player))
+        context("플레이어가 Stay이고") {
+            it("딜러보다 점수가 더 높으면 플레이어의 승이다") {
+                val player = Player("jason", state = Stay(카드덱_20점()))
 
-        // then
-        matchResult.dealerResult[0] shouldBe Rank.DRAW
+                val matchResult = MatchResult.toResult(dealer, listOf(player))
+
+                matchResult.dealerResult[0] shouldBe Rank.LOSE
+            }
+
+            it("딜러와 점수가 같으면 무승부이다") {
+                val player = Player("jason", state = Stay(카드덱_19점()))
+
+                val matchResult = MatchResult.toResult(dealer, listOf(player))
+
+                matchResult.dealerResult[0] shouldBe Rank.DRAW
+            }
+
+            it("딜러보다 점수가 더 낮으면 딜러의 승이다") {
+                val player = Player("jason", state = Stay(카드덱_18점()))
+
+                val matchResult = MatchResult.toResult(dealer, listOf(player))
+
+                matchResult.dealerResult[0] shouldBe Rank.WIN
+            }
+        }
+
+        it("플레이어가 Blackjack이면 플레이어의 승이다") {
+            val player = Player("jason", state = BlackJack(카드덱_블랙잭()))
+
+            val matchResult = MatchResult.toResult(dealer, listOf(player))
+
+            matchResult.dealerResult[0] shouldBe Rank.LOSE
+        }
+
+        it("플레이어가 Bust이면 딜러의 승이다") {
+            val player = Player("jason", state = Bust(카드덱_23점()))
+
+            val matchResult = MatchResult.toResult(dealer, listOf(player))
+
+            matchResult.dealerResult[0] shouldBe Rank.WIN
+        }
     }
 
-    "딜러 23점 플레이어 21점이면 플레이어가 승리한다" {
-        // given
-        val dealer = 딜러_23점()
-        val player = 플레이어_21점()
+    describe("배팅 결과") {
+        val playerBettingAmount = 10000.0
 
-        // when
-        val matchResult = MatchResult.toResult(dealer, listOf(player))
+        context("플레이어만 블랙잭이면") {
+            val dealer = Dealer(Bust(카드덱_23점()))
+            val player = Player("jason", bettingAmount = playerBettingAmount, state = BlackJack(카드덱_블랙잭()))
 
-        // then
-        matchResult.dealerResult[0] shouldBe Rank.LOSE
-    }
+            it("플레이어는 1.5배를 딜러에게 받는다") {
+                val matchResult = MatchResult.toResult(dealer, listOf(player))
 
-    "딜러 20점 플레이어 21점이면 플레이어가 승리한다" {
-        // given
-        val dealer = 딜러_20점()
-        val player = 플레이어_21점()
+                matchResult.playerBenefits()[player] shouldBe playerBettingAmount * 1.5
+            }
+        }
 
-        // when
-        val matchResult = MatchResult.toResult(dealer, listOf(player))
+        context("딜러, 플레이어가 블랙잭이면") {
+            val dealer = Dealer(BlackJack(카드덱_블랙잭()))
+            val player = Player("jason", bettingAmount = playerBettingAmount, state = BlackJack(카드덱_블랙잭()))
 
-        // then
-        matchResult.dealerResult[0] shouldBe Rank.LOSE
+            it("플레이어는 배팅금액을 돌려받는다") {
+                val matchResult = MatchResult.toResult(dealer, listOf(player))
+
+                matchResult.playerBenefits()[player] shouldBe playerBettingAmount
+            }
+        }
+
+        context("딜러가 승리하면") {
+            val dealer = Dealer(Stay(카드덱_20점()))
+            val player = Player("jason", bettingAmount = playerBettingAmount, state = Bust(카드덱_23점()))
+
+            it("플레이어는 배팅금액을 잃는다") {
+                val matchResult = MatchResult.toResult(dealer, listOf(player))
+
+                matchResult.playerBenefits()[player] shouldBe -playerBettingAmount
+            }
+        }
     }
 })
