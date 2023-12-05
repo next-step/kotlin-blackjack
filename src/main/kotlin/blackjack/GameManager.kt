@@ -23,7 +23,7 @@ class GameManager(
         players.forEach { it.drawCard(CardDeck.draw(FIRST_DRAW)) }
         dealer.drawCard(CardDeck.draw(FIRST_DRAW))
 
-        outputManager.printFirstTurn2(players)
+        outputManager.printFirstTurn(players)
         outputManager.printPlayersAndDealerCards(players, dealer)
 
         val result = playBlackJack()
@@ -33,8 +33,6 @@ class GameManager(
         players.forEach {
             outputManager.printPlayerResultGame(it)
         }
-
-
         outputManager.printResult(result)
     }
 

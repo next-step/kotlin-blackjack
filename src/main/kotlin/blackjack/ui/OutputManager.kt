@@ -26,10 +26,6 @@ class OutputManager {
         println("${player.name.value}: ${parsingCardsToString(player.cards)}")
     }
 
-    fun printDealerCards(dealer: Dealer) {
-        println("딜러: ${parsingCardsToString(dealer.cards)}")
-    }
-
     fun printPlayerResultGame(player: Player) {
         println("${player.name.value} 카드: ${parsingCardsToString(player.cards)} - 결과: ${player.resultScore()}")
     }
@@ -88,7 +84,7 @@ class OutputManager {
         }
     }
 
-    fun printFirstTurn2(players: List<Player>) {
+    fun printFirstTurn(players: List<Player>) {
         printEnter()
         val names: String = players.joinToString(", ") { it.name.value }
 
