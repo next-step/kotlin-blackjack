@@ -1,8 +1,8 @@
 package blackjack.domain
 
-class Deck {
-    private val cards: MutableList<Card> = INITIAL_CARDS.toMutableList()
-
+class Deck(
+    private val cards: MutableList<Card> = INITIAL_CARDS.toMutableList(),
+) {
     fun draw(): Card {
         if (cards.isEmpty()) {
             cards.addAll(INITIAL_CARDS)

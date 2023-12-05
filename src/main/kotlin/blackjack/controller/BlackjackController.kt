@@ -1,43 +1,46 @@
 package blackjack.controller
 
+import blackjack.domain.Dealer
 import blackjack.domain.Deck
+import blackjack.domain.GameResult
+import blackjack.domain.Participants
 import blackjack.domain.Player
 import blackjack.view.BlackjackInputView
 import blackjack.view.BlackjackOutputView
 
-object BlackjackController {
+class BlackjackController(
+    private val dealer: Dealer,
+    private val deck: Deck,
+) {
     fun handle() {
         val namesInput = BlackjackInputView.readPlayerNamesInput()
         val players = namesInput.map { Player(it) }
-        val deck = Deck()
+        val participants = Participants(dealer, players)
 
-        drawInitialCards(players, deck)
+        participants.drawInitialCards(deck)
+        BlackjackOutputView.printInitialCards(participants)
 
-        BlackjackOutputView.printInitialCards(players)
+        players.forEach { it.action(deck) }
 
-        players.forEach {
-            if (it.isFinished()) return@forEach
-
-            do {
-                val isHit = BlackjackInputView.readCardReceiveInput(it.name)
-                drawIfHit(it, deck, isHit)
-                BlackjackOutputView.printCards(it)
-            } while (isHit && !it.isFinished())
+        if (dealer.shouldReceiveCard()) {
+            dealer.receiveCard(deck.draw())
+            BlackjackOutputView.printDealerReceiveCard(dealer)
         }
 
-        BlackjackOutputView.printResult(players)
+        val gameResult = GameResult(participants.players, participants.dealer)
+
+        BlackjackOutputView.printCardResult(participants)
+        BlackjackOutputView.printGameResult(participants, gameResult)
     }
 
-    private fun drawInitialCards(players: List<Player>, deck: Deck) {
-        players.forEach {
-            it.receiveCard(deck.draw())
-            it.receiveCard(deck.draw())
+    private fun Player.action(deck: Deck) {
+        while (canReceiveCard() && isHit()) {
+            receiveCard(deck.draw())
+            BlackjackOutputView.printCards(this)
         }
     }
 
-    private fun drawIfHit(player: Player, deck: Deck, isHit: Boolean) {
-        if (isHit) {
-            player.receiveCard(deck.draw())
-        }
+    private fun Player.isHit(): Boolean {
+        return BlackjackInputView.readCardReceiveInput(name)
     }
 }

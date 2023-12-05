@@ -1,14 +1,16 @@
 package blackjack.domain
 
-class Cards {
-    private val cards: MutableList<Card> = mutableListOf()
+class Cards(
+    private val cards: MutableList<Card> = mutableListOf(),
+) {
+    constructor(vararg cards: Card) : this(cards.toMutableList())
 
     fun add(card: Card) {
         cards.add(card)
     }
 
     fun get(): List<Card> {
-        return cards
+        return cards.toList()
     }
 
     fun calculateScore(): Int {

@@ -9,6 +9,7 @@ class DeckTest {
     @Test
     fun `덱 하나에는 서로 다른 카드 52장이 들어있다`() {
         val deck = Deck()
+
         val actual = mutableSetOf<Card>()
 
         repeat(52) {
