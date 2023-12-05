@@ -1,13 +1,11 @@
 package blackjack.domain
 
-import blackjack.domain.state.Blackjack
-import blackjack.domain.state.Bust
-import blackjack.domain.state.Hit
-import fixtures.createBlackjackCards
-import fixtures.createUnderBlackjackCards
-import fixtures.createBustCards
-import fixtures.createCard
+import fixtures.createBlackjackPlayer
+import fixtures.createHitPlayer
+import fixtures.createBustPlayer
 import fixtures.createCards
+import fixtures.createCard
+import fixtures.createPlayers
 import io.kotest.assertions.assertSoftly
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.BeforeEach
@@ -19,17 +17,13 @@ class PlayersTest {
 
     @BeforeEach
     fun setUp() {
-        runningPlayers = Players(
-            listOf(
-                Player(name = "player1", state = Hit(createUnderBlackjackCards())),
-                Player(name = "player2", state = Hit(createUnderBlackjackCards()))
-            )
+        runningPlayers = createPlayers(
+            createHitPlayer("player1"),
+            createHitPlayer("player2")
         )
-        finishedPlayers = Players(
-            listOf(
-                Player(name = "player3", state = Bust(createBustCards())),
-                Player(name = "player4", state = Blackjack(createBlackjackCards())),
-            )
+        finishedPlayers = createPlayers(
+            createBustPlayer("player3"),
+            createBlackjackPlayer("player4")
         )
     }
 

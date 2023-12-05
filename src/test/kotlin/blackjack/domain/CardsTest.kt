@@ -3,7 +3,8 @@ package blackjack.domain
 import fixtures.createCard
 import fixtures.createCards
 import io.kotest.assertions.assertSoftly
-import org.assertj.core.api.Assertions.assertThat
+import io.kotest.matchers.shouldBe
+import io.kotest.matchers.shouldNotBe
 import org.junit.jupiter.api.Test
 
 class CardsTest {
@@ -23,8 +24,8 @@ class CardsTest {
 
         // then
         assertSoftly {
-            assertThat(newCards.size).isEqualTo(4)
-            assertThat(newCards).isNotSameAs(cards)
+            newCards.size shouldBe 4
+            newCards shouldNotBe cards
         }
     }
 
@@ -35,6 +36,6 @@ class CardsTest {
         val cardsString = cards.toString()
 
         // then
-        assertThat(cardsString).isEqualTo("2클로버,  10하트,  A스페이드")
+        cardsString shouldBe "2클로버,  10하트,  A스페이드"
     }
 }

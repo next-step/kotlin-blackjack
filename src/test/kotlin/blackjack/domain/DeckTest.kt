@@ -1,8 +1,8 @@
 package blackjack.domain
 
-import org.junit.jupiter.api.Assertions.assertEquals
+import io.kotest.assertions.throwables.shouldThrow
+import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
 
 class DeckTest {
     @Test
@@ -10,7 +10,7 @@ class DeckTest {
         // given, when
         val deck = Deck()
         // then
-        assertEquals(Deck.TOTAL_CARD_SIZE, deck.cardSize)
+        Deck.TOTAL_CARD_SIZE shouldBe deck.cardSize
     }
 
     @Test
@@ -20,7 +20,8 @@ class DeckTest {
         repeat(Deck.TOTAL_CARD_SIZE) {
             deck.draw()
         }
-        assertThrows<IllegalStateException> { // then
+
+        shouldThrow<IllegalStateException> { // then
             deck.draw() // when
         }
     }
@@ -33,6 +34,6 @@ class DeckTest {
         // when
         val cards = deck.draw(numOfDraw)
         // then
-        assertEquals(numOfDraw, cards.size)
+        numOfDraw shouldBe cards.size
     }
 }

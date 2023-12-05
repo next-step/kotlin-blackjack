@@ -1,13 +1,13 @@
 package blackjack.domain
 
-import blackjack.domain.state.Blackjack
-import blackjack.domain.state.Bust
-import blackjack.domain.state.Hit
-import fixtures.createBlackjackCards
-import fixtures.createBustCards
-import fixtures.createUnderBlackjackCards
-import fixtures.createCard
+import fixtures.createBlackjackDealer
+import fixtures.createBlackjackPlayer
+import fixtures.createHitPlayer
+import fixtures.createBustPlayer
+import fixtures.createBustDealer
 import fixtures.createCards
+import fixtures.createCard
+import fixtures.createHitDealer
 import io.kotest.assertions.assertSoftly
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
@@ -16,10 +16,10 @@ class PlayerTest {
     @Test
     fun `딜러가 Blackjack인 경우 versus 결과 테스트`() {
         // given
-        val dealer = Dealer(state = Blackjack(createBlackjackCards()))
-        val player1 = Player(name = "player1", state = Bust(createBustCards()))
-        val player2 = Player(name = "player2", state = Blackjack(createBlackjackCards()))
-        val player3 = Player(name = "player3", state = Hit(createUnderBlackjackCards()))
+        val dealer = createBlackjackDealer()
+        val player1 = createBustPlayer("player1")
+        val player2 = createBlackjackPlayer("player2")
+        val player3 = createHitPlayer("player3")
         // when
         val playerResult1 = player1 versus dealer
         val playerResult2 = player2 versus dealer
@@ -35,10 +35,10 @@ class PlayerTest {
     @Test
     fun `딜러가 Bust인 경우 versus 결과 테스트`() {
         // given
-        val dealer = Dealer(state = Bust(createBustCards()))
-        val player1 = Player(name = "player1", state = Bust(createBustCards()))
-        val player2 = Player(name = "player2", state = Blackjack(createBlackjackCards()))
-        val player3 = Player(name = "player2", state = Hit(createUnderBlackjackCards()))
+        val dealer = createBustDealer()
+        val player1 = createBustPlayer("player1")
+        val player2 = createBlackjackPlayer("player2")
+        val player3 = createHitPlayer("player3")
         // when
         val playerResult1 = player1 versus dealer
         val playerResult2 = player2 versus dealer
@@ -62,8 +62,8 @@ class PlayerTest {
             createCard(Suit.DIAMONDS, Denomination.ACE),
             createCard(Suit.HEARTS, Denomination.QUEEN)
         )
-        val dealer = Dealer(state = Hit(dealerCards))
-        val player = Player(name = "player", state = Hit(playerCards))
+        val dealer = createHitDealer(dealerCards)
+        val player = createHitPlayer("player", playerCards)
         // when
         val playerResult = player versus dealer
         // then

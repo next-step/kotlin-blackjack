@@ -5,6 +5,7 @@ import fixtures.createBustCards
 import fixtures.createCard
 import fixtures.createCards
 import fixtures.createUnderBlackjackCards
+import io.kotest.matchers.shouldBe
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -26,7 +27,7 @@ class ScoreTest {
         // when
         val isBlackjack = Score(cards).isBlackjack()
         // then
-        assertThat(isBlackjack).isFalse()
+        isBlackjack shouldBe false
     }
 
     @Test
@@ -36,7 +37,7 @@ class ScoreTest {
         // when
         val isBust = Score(cards).isBust()
         // then
-        assertThat(isBust).isTrue()
+        isBust shouldBe true
     }
 
     @Test
@@ -50,6 +51,6 @@ class ScoreTest {
         // when
         val gap = Score(cards).gapFromBlackjack()
         // then
-        assertThat(gap).isEqualTo(9)
+        gap shouldBe 9
     }
 }

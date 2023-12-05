@@ -1,10 +1,10 @@
 package blackjack.domain
 
-import blackjack.domain.state.Started
 import fixtures.createCard
 import fixtures.createOverDealerStandCards
+import fixtures.createStartedDealer
 import fixtures.createUnderDealerStandCards
-import org.assertj.core.api.Assertions.assertThat
+import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
@@ -13,7 +13,7 @@ class DealerTest {
     private lateinit var dealer: Dealer
     @BeforeEach
     fun setUp() {
-        dealer = Dealer(state = Started())
+        dealer = createStartedDealer()
     }
 
     @Test
@@ -22,7 +22,7 @@ class DealerTest {
         // when
         dealer.receiveCard(createCard())
         // then
-        assertThat(dealer.state.cards.size).isEqualTo(1)
+        dealer.state.cards.size shouldBe 1
     }
 
     @Test
@@ -32,7 +32,7 @@ class DealerTest {
         // when
         dealer.receiveInitialCards(cards)
         // then
-        assertThat(dealer.canReceiveOneMoreCard()).isTrue()
+        dealer.canReceiveOneMoreCard() shouldBe true
     }
 
     @Test
@@ -42,6 +42,6 @@ class DealerTest {
         // when
         dealer.receiveInitialCards(cards)
         // then
-        assertThat(dealer.canReceiveOneMoreCard()).isFalse()
+        dealer.canReceiveOneMoreCard() shouldBe false
     }
 }

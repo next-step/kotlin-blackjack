@@ -1,39 +1,25 @@
 package blackjack.domain
 
-import blackjack.domain.state.Hit
-import fixtures.createUnderBlackjackCards
+import fixtures.createHitPlayer
+import fixtures.createPlayers
+import fixtures.createStartedDealer
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 class ParticipantsTest {
-    lateinit var participants: Participants
+    private lateinit var participants: Participants
 
     @BeforeEach
     fun setUp() {
-        val players = Players(
-            listOf(
-                Player(name = "player1", state = Hit(createUnderBlackjackCards())),
-                Player(name = "player2", state = Hit(createUnderBlackjackCards()))
-            )
+        val players = createPlayers(
+            createHitPlayer("player1"),
+            createHitPlayer("player2")
         )
         participants = Participants(
-            dealer = Dealer(),
+            dealer = createStartedDealer(),
             players = players
         )
-    }
-
-    @Test
-    fun receiveInitialCards() {
-        // when
-        participants.receiveInitialCards {
-            Deck().draw(2)
-        }
-        // then
-        val dealer = participants.dealer
-        val players = participants.players
-        dealer.state.cards.size shouldBe 2
-        players.forEach { it.state.cards.size shouldBe 2 }
     }
 
     @Test

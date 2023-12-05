@@ -1,7 +1,7 @@
 package blackjack.domain
 
 import fixtures.createCard
-import org.assertj.core.api.Assertions.assertThat
+import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
 class CardTest {
@@ -14,6 +14,6 @@ class CardTest {
         val cardString = card.toString()
 
         // then
-        assertThat(cardString).isEqualTo("10스페이드")
+        cardString shouldBe "10스페이드"
     }
 }
