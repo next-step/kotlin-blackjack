@@ -30,7 +30,7 @@ class GameResult(
             return players.filter { !it.isBust }
         }
 
-        return players.filter { !it.isBust }.filter {  it.resultScore() > dealer.resultScore() }
+        return players.filter { !it.isBust }.filter { it.resultScore() > dealer.resultScore() }
     }
 
     private fun findLoser(players: List<Player>, dealer: Dealer): List<Player> {
