@@ -5,7 +5,7 @@ import blackjack.card.BlackJackCard
 
 class Player(
     val name: Name,
-    scoreCalculator: ScoreCalculator
+    scoreCalculator: ScoreCalculator = ScoreCalculator()
 ) {
 
     private val blackjackStrategy: BlackjackStrategy = BlackjackStrategy(scoreCalculator)

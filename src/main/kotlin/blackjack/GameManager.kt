@@ -68,7 +68,7 @@ class GameManager(
 
     private fun joinPlayers(): List<Player> {
         val playerNames: List<String> = inputManager.inputPlayerNames()
-        return playerNames.map { Player(Name(it), ScoreCalculator()) }
+        return playerNames.map { Player(Name(it)) }
     }
 
     private fun joinDealer(): Dealer {
