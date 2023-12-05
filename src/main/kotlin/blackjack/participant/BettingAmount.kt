@@ -1,7 +1,7 @@
 package blackjack.participant
 
 @JvmInline
-value class BetingAmount(
+value class BettingAmount(
     val amount: Int
 ) {
     init {
