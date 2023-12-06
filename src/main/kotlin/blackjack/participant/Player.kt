@@ -17,6 +17,8 @@ class Player(
 
     val isBust get() = blackjackStrategy.isBust
 
+    val status get() = blackjackStrategy.status
+
     fun drawCard(cards: List<BlackJackCard>) {
         blackjackStrategy.drawCard(cards)
     }
