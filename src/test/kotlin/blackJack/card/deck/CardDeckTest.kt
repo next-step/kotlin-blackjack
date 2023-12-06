@@ -7,7 +7,7 @@ import card.Suit
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class GameDeckTest {
+class CardDeckTest {
 
     @Test
     fun `GameDeck을 생성하고, 카드 반환 요청을 했을 떄, 카드 반환과 카드 인덱스가 증가한다`() {

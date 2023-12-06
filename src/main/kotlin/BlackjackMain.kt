@@ -1,5 +1,5 @@
 import card.CardPack
-import card.deck.GameDeck
+import card.deck.CardDeck
 import player.PlayerFactory
 import player.PlayerGroup
 import view.InputView
@@ -9,9 +9,9 @@ fun main() {
 
     val playerNames = InputView.inputPlayerName()
     val playerGroup = PlayerGroup(PlayerFactory.createPlayerList(playerNames))
-    val gameDeck = GameDeck(CardPack.cards.toMutableList())
+    val cardDeck = CardDeck(CardPack.cards.toMutableList())
 
-    val game = BlackjackGame(cardDeck = gameDeck, playerGroup = playerGroup)
+    val game = BlackjackGame(cardDeck = cardDeck, playerGroup = playerGroup)
 
     OutputView.showGameStart(game.playerGroup)
 

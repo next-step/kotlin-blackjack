@@ -1,11 +1,11 @@
-import card.deck.GameDeck
+import card.deck.CardDeck
 import player.Player
 import player.PlayerGroup
 import player.Status
 import view.InputView
 import view.OutputView
 
-class BlackjackGame(private val cardDeck: GameDeck, val playerGroup: PlayerGroup) {
+class BlackjackGame(private val cardDeck: CardDeck, val playerGroup: PlayerGroup) {
 
     init {
         for (player in playerGroup.playerList) {

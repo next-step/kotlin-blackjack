@@ -2,7 +2,7 @@ package card.deck
 
 import card.PlayingCard
 
-class GameDeck(private val cardList: MutableList<PlayingCard>) {
+class CardDeck(private val cardList: MutableList<PlayingCard>) {
 
     init {
         cardList.shuffle()
