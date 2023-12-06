@@ -7,7 +7,7 @@ import blackjack.domain.player.Player
 import blackjack.domain.player.PlayerName
 
 data class PlayerGameResult(
-    val player: Player,
+    private val player: Player,
     val profit: Profit,
 ) {
 
