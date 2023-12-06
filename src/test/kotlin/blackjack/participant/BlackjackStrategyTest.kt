@@ -6,6 +6,7 @@ import blackjack.card.CardPattern
 import blackjack.card.CardPicture
 import blackjack.card.PictureCard
 import blackjack.participant.status.Blackjack
+import blackjack.participant.status.Bust
 import blackjack.participant.status.Hit
 import blackjack.participant.status.Stand
 import io.kotest.matchers.types.shouldBeInstanceOf
@@ -49,5 +50,19 @@ class BlackjackStrategyTest {
         )
 
         blackjackStrategy.status.shouldBeInstanceOf<Stand>()
+    }
+
+    @Test
+    fun `합이 21이상이면 버스트 상태이다`() {
+        val blackjackStrategy = BlackjackStrategy(ScoreCalculator())
+        blackjackStrategy.drawCard(
+            listOf(
+                PictureCard(CardPicture.JACK, CardPattern.SPADE),
+                PictureCard(CardPicture.JACK, CardPattern.SPADE),
+                PictureCard(CardPicture.JACK, CardPattern.SPADE)
+            )
+        )
+
+        blackjackStrategy.status.shouldBeInstanceOf<Bust>()
     }
 }

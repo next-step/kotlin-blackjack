@@ -3,6 +3,7 @@ package blackjack.participant
 import blackjack.ScoreCalculator
 import blackjack.card.BlackJackCard
 import blackjack.participant.status.Blackjack
+import blackjack.participant.status.Bust
 import blackjack.participant.status.Hit
 import blackjack.participant.status.Stand
 import blackjack.participant.status.Status
@@ -17,8 +18,12 @@ class BlackjackStrategy(
 
     fun drawCard(cards: List<BlackJackCard>) {
         this.cards += cards
-        if (cards.size == NORMAL_DRAW && !isBust2()) {
+        if (!isFirstTurn(cards) && !isBust2()) {
             status = Stand()
+        }
+
+        if (!isFirstTurn(cards) && isBust2()) {
+            status = Bust()
         }
 
         if (isFirstTurn(cards) && isBlackjack()) {
@@ -43,6 +48,5 @@ class BlackjackStrategy(
     companion object {
         private const val BLACKJACK: Int = 21
         private const val FIRST_TURN_DRAW: Int = 2
-        private const val NORMAL_DRAW: Int = 1
     }
 }
