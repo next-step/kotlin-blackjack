@@ -31,7 +31,7 @@ class HandScoreTest : DescribeSpec({
         context("Ace가 없는 카드에서 합이 11이하라면") {
             val hand = hand(card(Rank.TWO), card(Rank.THREE))
 
-            it("모든 점수를 그대로 계산") {
+            it("모든 점수를 그대로 계산한다") {
                 HandScore.from(hand).cardScore shouldBe 5
             }
         }

@@ -19,7 +19,7 @@ class PlayerTest : DescribeSpec({
     describe("Player()") {
         context("플레이어 이름이 주어지면") {
             val name = PlayerName("홍길동")
-            it("플레이어 생성") {
+            it("플레이어가 생성된다") {
                 val result = Player(name, { Action.HIT })
 
                 result.name shouldBe name
@@ -34,7 +34,7 @@ class PlayerTest : DescribeSpec({
 
             player.addCard(card)
 
-            it("플레이가 소유한 카드에 카드가 추가") {
+            it("플레이가 소유한 카드에 해당 카드가 추가된다") {
                 player.hand.cards shouldBe listOf(card)
             }
         }
@@ -46,7 +46,7 @@ class PlayerTest : DescribeSpec({
 
             player.addCard(newCard)
 
-            it("플레이가 소유한 카드에 카드가 추가") {
+            it("플레이가 소유한 카드에 해당 카드가 추가") {
                 player.hand shouldBe Hand(mutableListOf(oldCard, newCard))
             }
         }
@@ -77,14 +77,14 @@ class PlayerTest : DescribeSpec({
     describe("isGreaterOrEqualToMaxScore") {
         context("21을 넘었을 때") {
             val player = player(hand = hand(card(Rank.THREE), card(Rank.TEN), card(Rank.TEN)))
-            it("true 반환") {
+            it("true가 반환된다") {
                 player.isGreaterOrEqualToMaxScore shouldBe true
             }
         }
 
         context("21점일 때") {
             val player = player(hand = hand(card(Rank.ACE), card(Rank.TEN)))
-            it("true 반환") {
+            it("true가 반환된다") {
                 player.isGreaterOrEqualToMaxScore shouldBe true
             }
         }
@@ -92,18 +92,19 @@ class PlayerTest : DescribeSpec({
         context("21을 넘지 않았을 때") {
             val player = player(hand = hand(card(Rank.ACE), card(Rank.ACE), card(Rank.ACE)))
 
-            it("false 반환") {
+            it("false가 반환된다") {
                 player.isGreaterOrEqualToMaxScore shouldBe false
             }
         }
     }
 
     describe("score") {
-        val player = player(hand = hand(card(Rank.ACE), card(Rank.TEN)))
+        context("플레이어가 21점의 카드를 갖고 있었다면") {
+            val player = player(hand = hand(card(Rank.ACE), card(Rank.TEN)))
 
-        context("플레이어의 점수 조회") {
             val result = player.score
-            it("플레이어 점수 반환") {
+
+            it("플레이어 점수는 21점이다") {
                 result.cardScore shouldBe 21
             }
         }
@@ -112,14 +113,14 @@ class PlayerTest : DescribeSpec({
     describe("hitOrStand") {
         context("이미 점수가 최대 점수 21을 넘었다면") {
             val score30Cards = hand(card(Rank.QUEEN), card(Rank.QUEEN), card(Rank.QUEEN))
-            it("HIT을 받아도 STAND가 반환") {
+            it("HIT을 받아도 STAND가 반환된다") {
                 val player = player(action = Action.HIT, hand = score30Cards)
 
                 val result = player.hitOrStand()
 
                 result shouldBe Action.STAND
             }
-            it("STAND를 받으면 STAND가 반환") {
+            it("STAND를 받으면 STAND가 반환된다") {
                 val player = player(action = Action.STAND, hand = score30Cards)
 
                 val result = player.hitOrStand()
@@ -130,14 +131,14 @@ class PlayerTest : DescribeSpec({
 
         context("이미 점수가 최대 점수 21점 이라면") {
             val score21Cards = hand(card(Rank.QUEEN), card(Rank.ACE))
-            it("HIT을 받아도 STAND가 반환") {
+            it("HIT을 받아도 STAND가 반환된다") {
                 val player = player(action = Action.HIT, hand = score21Cards)
 
                 val result = player.hitOrStand()
 
                 result shouldBe Action.STAND
             }
-            it("STAND를 받으면 STAND가 반환") {
+            it("STAND를 받으면 STAND가 반환된다") {
                 val player = player(action = Action.STAND, hand = score21Cards)
 
                 val result = player.hitOrStand()
@@ -149,14 +150,14 @@ class PlayerTest : DescribeSpec({
         context("최대 점수 21을 넘지 않았을 때") {
             val score5Cards = hand(card(Rank.TWO), card(Rank.THREE))
 
-            it("HIT을 받으면 HIT이 반한") {
+            it("HIT을 받으면 HIT이 반한된다") {
                 val player = player(action = Action.HIT, hand = score5Cards)
 
                 val result = player.hitOrStand()
 
                 result shouldBe Action.HIT
             }
-            it("STAND를 받으면 STAND가 반환") {
+            it("STAND를 받으면 STAND가 반환된다") {
                 val player = player(action = Action.STAND, hand = score5Cards)
 
                 val result = player.hitOrStand()
@@ -174,7 +175,7 @@ class PlayerTest : DescribeSpec({
             val player1 = Player(PlayerName("kim"), action, hand)
             val player2 = Player(PlayerName("lee"), action, hand)
 
-            it("다른 플레이어로 취급") {
+            it("다른 플레이어로 취급한다") {
                 player1 shouldNotBe player2
             }
         }
@@ -186,7 +187,7 @@ class PlayerTest : DescribeSpec({
         val player1 = Player(PlayerName("kim"), action, hand(card(Rank.ACE)))
         val player2 = Player(PlayerName("kim"), action, hand(card(Rank.TEN)))
 
-        it("같은 플레이어로 취급") {
+        it("같은 플레이어로 취급한다") {
             player1 shouldBe player2
         }
     }
@@ -194,21 +195,21 @@ class PlayerTest : DescribeSpec({
     describe("isBlackJack") {
         context("플레이어가 블랙잭이면(카드가 2장이며, 해당 카드 합이 21)") {
             val player = player(hand = hand(card(Rank.TEN), card(Rank.ACE)))
-            it("true 반환") {
+            it("true가 반환된다") {
                 player.isBlackJack shouldBe true
             }
         }
 
         context("플레이어 카드가 2장이지만 21점이 아니면") {
             val player = player(hand = hand(card(Rank.TEN), card(Rank.TWO)))
-            it("false 반환") {
+            it("false가 반환된다") {
                 player.isBlackJack shouldBe false
             }
         }
 
         context("플레이어 카드 합이 21이지만 카드 수가 2장 초과면") {
             val player = player(hand = hand(card(Rank.ACE), card(Rank.TEN), card(Rank.TEN)))
-            it("false 반환") {
+            it("false가 반환된다") {
                 player.isBlackJack shouldBe false
             }
         }
@@ -224,79 +225,79 @@ class PlayerTest : DescribeSpec({
         val score10Cards = hand(card(Rank.FIVE), card(Rank.FIVE))
         val score5Cards = hand(card(Rank.TWO), card(Rank.THREE))
 
-        context("플레이어: 버스트") {
+        context("플레이어가 버스트라면") {
             val player = player(hand = score22Cards)
             val dealer = Dealer(player = DealerPlayer(score10Cards))
 
-            it("LOSS") {
+            it("LOSS다") {
                 player.judgeVictory(dealer) shouldBe VictoryStatus.LOSS
             }
         }
-        context("플레이어: 버스트, 딜러: 버스트") {
+        context("플레이어: 버스트 이고 딜러도 버스트라면") {
             val player = player(hand = score22Cards)
             val dealer = Dealer(player = DealerPlayer(hand = score22Cards))
 
-            it("LOSS") {
+            it("LOSS다") {
                 player.judgeVictory(dealer) shouldBe VictoryStatus.LOSS
             }
         }
-        context("플레이어(5) < 딜러(10)") {
+        context("플레이어(5) < 딜러(10) 로 플레이어가 딜러보다 점수가 낮다면") {
             val player = player(hand = score5Cards)
             val dealer = Dealer(player = DealerPlayer(score10Cards))
 
-            it("LOSS") {
+            it("LOSS다") {
                 player.judgeVictory(dealer) shouldBe VictoryStatus.LOSS
             }
         }
-        context("플레이어(21, 블랙잭) > 딜러(5)") {
+        context("플레이어(21, 블랙잭) > 딜러(5) 로 플레이어가 블랙잭으로 딜러보다 점수가 높다면") {
             val player = player(hand = blackJackCards)
             val dealer = Dealer(player = DealerPlayer(score5Cards))
 
-            it("WIN") {
+            it("WIN이다") {
                 player.judgeVictory(dealer) shouldBe VictoryStatus.WIN
             }
         }
-        context("플레이어(10) > 딜러(5)") {
+        context("플레이어(10) > 딜러(5) 로 플레이어가 딜러보다 점수가 높다면") {
             val player = player(hand = score10Cards)
             val dealer = Dealer(player = DealerPlayer(score5Cards))
 
-            it("WIN") {
+            it("WIN이다") {
                 player.judgeVictory(dealer) shouldBe VictoryStatus.WIN
             }
         }
 
-        context("플레이어(10), 딜러: 버스트") {
+        context("플레이어(10)이고 딜러가 버스트라면") {
             val player = player(hand = score10Cards)
             val dealer = Dealer(player = DealerPlayer(score22Cards))
 
-            it("WIN") {
+            it("WIN이다") {
                 player.judgeVictory(dealer) shouldBe VictoryStatus.WIN
             }
         }
 
-        context("플레이어(10) == 딜러(10)") {
+        context("플레이어(10) == 딜러(10)로 점수가 같다면") {
             val player = player(hand = score10Cards)
             val dealer = Dealer(player = DealerPlayer(score10Cards))
 
-            it("PUSH") {
+            it("PUSH다") {
                 player.judgeVictory(dealer) shouldBe VictoryStatus.PUSH
             }
         }
 
-        context("플레이어(블랙잭) == 딜러(블랙잭)") {
+        context("플레이어(블랙잭) == 딜러(블랙잭)로 점수가 같다면") {
             val player = player(hand = blackJackCards)
             val dealer = Dealer(player = DealerPlayer(blackJackCards))
 
-            it("PUSH") {
+            it("PUSH다") {
                 player.judgeVictory(dealer) shouldBe VictoryStatus.PUSH
             }
         }
 
-        context("플레이어(21) == 딜러(블랙잭)") {
+        context("플레이어(21) == 딜러(블랙잭)로 점수가 같다면") {
             val player = player(hand = score21NotBlackJackCards)
             val dealer = Dealer(player = DealerPlayer(blackJackCards))
 
-            it("PUSH") {
+            it("PUSH다") {
                 player.judgeVictory(dealer) shouldBe VictoryStatus.PUSH
             }
         }

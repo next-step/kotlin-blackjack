@@ -14,18 +14,18 @@ class PlayersTest : DescribeSpec({
             val names = PlayerNames(listOf(name1, name2))
 
             val result = Players.of(names) { Action.HIT }
-            it("주어진 이름 순서대로 플레이어들 생성") {
+            it("주어진 이름 순서대로 플레이어들이 생성된다") {
                 result.value[0].name shouldBe name1
                 result.value[1].name shouldBe name2
             }
-            it("첫 이름의 플레이어가 첫 순번") {
+            it("첫 이름의 플레이어가 첫 순번이다") {
                 result.inTurn.name shouldBe name1
             }
         }
 
         context("플레이어가 2명이 아닌 경우") {
             val playerNames = PlayerNames(listOf(PlayerName("홍길동"), PlayerName("베트맨"), PlayerName("아이언맨")))
-            it("플레이어 생성 실패") {
+            it("플레이어 생성에 실패한다") {
                 shouldThrowExactly<IllegalArgumentException> {
                     Players.of(playerNames) { Action.HIT }
                 }
@@ -33,14 +33,14 @@ class PlayersTest : DescribeSpec({
         }
     }
 
-    describe("다음 플레이어에게 차례 넘김") {
+    describe("changePlayer()") {
         val playerList = listOf(player("kim"), player("lee"))
         val players = Players(playerList)
 
         context("플레이어 1이 차례인 경우") {
             players.inTurn shouldBe playerList.first()
             players.changePlayer()
-            it("플레이어 2에게 차례가 넘어감") {
+            it("플레이어 2에게 차례가 넘어간다") {
                 players.inTurn shouldBe playerList.last()
             }
         }
@@ -48,7 +48,7 @@ class PlayersTest : DescribeSpec({
         context("플레이어 2가 차례인 경우") {
             players.inTurn shouldBe playerList.last()
 
-            it("턴이 끝났다는 에러") {
+            it("턴이 끝났다는 에러가 발생한다") {
                 shouldThrowExactly<IllegalArgumentException> {
                     players.changePlayer()
                 }
@@ -56,13 +56,13 @@ class PlayersTest : DescribeSpec({
         }
     }
 
-    describe("마지막 플레이어 차례인지 조회") {
+    describe("isLastTurn") {
         val playerList = listOf(player("kim"), player("lee"))
         val players = Players(playerList)
 
         context("플레이어 1이 차례인 경우") {
             players.inTurn shouldBe playerList.first()
-            it("false 반환") {
+            it("false가 반환된다") {
                 players.isLastTurn shouldBe false
             }
         }
@@ -71,7 +71,7 @@ class PlayersTest : DescribeSpec({
             players.changePlayer()
             players.inTurn shouldBe playerList.last()
 
-            it("true 반환") {
+            it("true가 반환된다") {
                 players.isLastTurn shouldBe true
             }
         }

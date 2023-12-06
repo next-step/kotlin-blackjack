@@ -9,7 +9,6 @@ import io.kotest.matchers.shouldBe
 
 class DealerPlayerTest : DescribeSpec({
     describe("hitOrStand") {
-
         context("16점 이하라면") {
             val score16Cards = hand(
                 card(Rank.EIGHT),
@@ -17,7 +16,7 @@ class DealerPlayerTest : DescribeSpec({
             )
             val player = DealerPlayer(score16Cards)
 
-            it("HIT 반환") {
+            it("HIT가 반환된다") {
                 val result = player.hitOrStand()
 
                 result shouldBe Action.HIT
@@ -31,7 +30,7 @@ class DealerPlayerTest : DescribeSpec({
             )
             val player = DealerPlayer(score20Cards)
 
-            it("STAND 반환") {
+            it("STAND가 반환된다") {
                 val result = player.hitOrStand()
 
                 result shouldBe Action.STAND

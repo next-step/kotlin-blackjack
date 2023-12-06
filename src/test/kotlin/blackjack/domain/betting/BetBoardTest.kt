@@ -22,7 +22,7 @@ import java.math.BigDecimal
 
 class BetBoardTest : DescribeSpec({
     describe("BettingBoard") {
-        context("플레이어 이름으로 베팅 금액 등록 (kim: 3_000원, lee: 4_000원)") {
+        context("플레이어 이름으로 베팅 금액 (kim: 3_000원, lee: 4_000원)이 등록되면") {
             val players = players(player("kim"), player("lee"))
             val kimAmount = amount(3_000)
             val leeAmount = amount(4_000)
@@ -33,7 +33,7 @@ class BetBoardTest : DescribeSpec({
 
             val betBoard: BetBoard = BetBoard.of(players, betAmount)
 
-            it("플레이어 kim 의 베팅 금액은 3_000") {
+            it("플레이어 kim 의 베팅 금액은 3_000이 된다") {
                 val name = PlayerName("kim")
                 val playerBet = betBoard.playerBet(name)
 
@@ -41,7 +41,7 @@ class BetBoardTest : DescribeSpec({
                 (playerBet as? PlayerBet.Placed)?.betAmount shouldBe kimAmount
             }
 
-            it("플레이어 lee 의 베팅 금액은 4_000") {
+            it("플레이어 lee 의 베팅 금액은 4_000이 된다") {
                 val name = PlayerName("lee")
                 val playerBet = betBoard.playerBet(name)
 
@@ -52,7 +52,7 @@ class BetBoardTest : DescribeSpec({
     }
 
     describe("playerProfit") {
-        context("베팅이 완료된 플레이어 (베팅: 1000, 받은돈: 0)") {
+        context("플레이어가 (베팅: 1000, 받은돈: 0) 으로 베팅을 완료했을 때") {
             val name = PlayerName("kim")
             val betAmount = amount(1000)
             val payoutAmount = amount(0)
@@ -66,12 +66,12 @@ class BetBoardTest : DescribeSpec({
 
             val result = betBord.playerProfit(name)
 
-            it("베팅 수익 조회(-1000)") {
+            it("베팅 수익은 -1000이 조회된다") {
                 result.value shouldBe BigDecimal(-1000)
             }
         }
 
-        context("베팅이 완료되지 않은 플레이어") {
+        context("베팅이 완료되지 않은 플레이어의 수익을 조회하면") {
             val name = PlayerName("kim")
             val betAmount = amount(1000)
             val placedBet = PlayerBet.Placed(name, betAmount)
@@ -82,7 +82,7 @@ class BetBoardTest : DescribeSpec({
                 )
             )
 
-            it("수익 조회 실패") {
+            it("수익 조회에 실패한다") {
                 shouldThrowExactly<IllegalStateException> {
                     betBord.playerProfit(name)
                 }
@@ -90,7 +90,7 @@ class BetBoardTest : DescribeSpec({
         }
 
         describe("dealerProfit") {
-            context("플레이어1의 수익: 2000, 플레이어2의 수익: -1000") {
+            context("플레이어1의 수익이 2000, 플레이어2의 수익이 -1000일 때") {
                 val betBoard = BetBoard(
                     mutableMapOf(
                         PlayerName("kim") to PlayerBet.Finished(PlayerName("kim"), amount(2_000), amount(4_000)),
@@ -101,7 +101,7 @@ class BetBoardTest : DescribeSpec({
                 betBoard.playerProfit(PlayerName("kim")) shouldBe profit(2_000)
                 betBoard.playerProfit(PlayerName("lee")) shouldBe profit(-1000)
 
-                it("딜러의 수익 = -(두 플레이어 수익의 합) (-1000)") {
+                it("딜러의 수익은 두 플레이어 수익의 합인 (-1000)이 된다") {
                     betBoard.dealerProfit() shouldBe profit(-1000)
                 }
             }
@@ -112,7 +112,7 @@ class BetBoardTest : DescribeSpec({
                         PlayerName("lee") to PlayerBet.Placed(PlayerName("lee"), amount(5_000))
                     )
                 )
-                it("수익 조회 실패") {
+                it("수익 조회에 실패한다") {
                     shouldThrowExactly<IllegalStateException> {
                         betBord.dealerProfit()
                     }
@@ -121,7 +121,7 @@ class BetBoardTest : DescribeSpec({
         }
 
         describe("closeBetting") {
-            context("딜러를 블랙잭으로 이긴 플레이어") {
+            context("딜러를 블랙잭으로 이긴 플레이어라면") {
                 val betBord = BetBoard(
                     mutableMapOf(
                         PlayerName("kim") to PlayerBet.Placed(PlayerName("kim"), amount(5_000)),
@@ -132,7 +132,7 @@ class BetBoardTest : DescribeSpec({
                 val player = player("kim", hand = hand(card(Rank.ACE), card(Rank.TEN)))
                 val dealer = Dealer(player = DealerPlayer(hand(card(Rank.TEN), card(Rank.TEN))))
 
-                it("베팅 종료시 수익이 1.5배") {
+                it("베팅 종료시 수익이 베팅 금액의 1.5배가 된다") {
                     betBord.closeBetting(DealEndResult(players(player, player("lee")), dealer))
 
                     val expect = (5_000 * 1.5).toBigDecimal()
@@ -140,7 +140,7 @@ class BetBoardTest : DescribeSpec({
                 }
             }
 
-            context("딜러를 일반 숫자로 이긴 플레이어") {
+            context("딜러를 일반 숫자로 이긴 플레이어라면") {
                 val betBord = BetBoard(
                     mutableMapOf(
                         PlayerName("kim") to PlayerBet.Placed(PlayerName("kim"), amount(5_000)),
@@ -151,7 +151,7 @@ class BetBoardTest : DescribeSpec({
                 val player = player("kim", hand = hand(card(Rank.TEN), card(Rank.TEN)))
                 val dealer = Dealer(player = DealerPlayer(hand(card(Rank.TEN), card(Rank.TEN), card(Rank.TEN))))
 
-                it("베팅 종료시 수익이 1배") {
+                it("베팅 종료시 수익이 1배가 된다") {
                     betBord.closeBetting(DealEndResult(players(player, player("lee")), dealer))
 
                     val expect = (5_000 * 1).toBigDecimal()
@@ -159,7 +159,7 @@ class BetBoardTest : DescribeSpec({
                 }
             }
 
-            context("딜러와 둘다 블랙잭으로 무승부인 플레이어") {
+            context("딜러와 플레이어 둘 다 블랙잭으로 무승부라면") {
                 val betBord = BetBoard(
                     mutableMapOf(
                         PlayerName("kim") to PlayerBet.Placed(PlayerName("kim"), amount(5_000)),
@@ -170,14 +170,14 @@ class BetBoardTest : DescribeSpec({
                 val player = player("kim", hand = hand(card(Rank.TEN), card(Rank.ACE)))
                 val dealer = Dealer(player = DealerPlayer(hand(card(Rank.TEN), card(Rank.ACE))))
 
-                it("베팅 종료시 수익은 0") {
+                it("베팅 종료시 수익은 0이다") {
                     betBord.closeBetting(DealEndResult(players(player, player("lee")), dealer))
 
                     betBord.playerProfit(PlayerName("kim")) shouldBe Profit(BigDecimal(0))
                 }
             }
 
-            context("딜러와 둘다 일반 점수로 무승부인 플레이어") {
+            context("딜러와 둘다 일반 점수로 무승부라면") {
                 val betBord = BetBoard(
                     mutableMapOf(
                         PlayerName("kim") to PlayerBet.Placed(PlayerName("kim"), amount(5_000)),
@@ -188,14 +188,14 @@ class BetBoardTest : DescribeSpec({
                 val player = player("kim", hand = hand(card(Rank.TWO), card(Rank.ACE)))
                 val dealer = Dealer(player = DealerPlayer(hand(card(Rank.TWO), card(Rank.ACE))))
 
-                it("베팅 종료시 수익은 0") {
+                it("베팅 종료시 수익은 0이다") {
                     betBord.closeBetting(DealEndResult(players(player, player("lee")), dealer))
 
                     betBord.playerProfit(PlayerName("kim")) shouldBe Profit(BigDecimal(0))
                 }
             }
 
-            context("버스트인 플레이어") {
+            context("플레이어의 카드가 버스트라면") {
                 val betBord = BetBoard(
                     mutableMapOf(
                         PlayerName("kim") to PlayerBet.Placed(PlayerName("kim"), amount(5_000)),
@@ -206,14 +206,14 @@ class BetBoardTest : DescribeSpec({
                 val player = player("kim", hand = hand(card(Rank.TEN), card(Rank.TEN), card(Rank.TEN)))
                 val dealer = Dealer(player = DealerPlayer(hand(card(Rank.TWO), card(Rank.ACE))))
 
-                it("베팅 종료시 수익은 -베팅금액") {
+                it("베팅 종료시 수익은 -베팅금액 이다") {
                     betBord.closeBetting(DealEndResult(players(player, player("lee")), dealer))
 
                     betBord.playerProfit(PlayerName("kim")) shouldBe Profit(BigDecimal(-5000))
                 }
             }
 
-            context("버스트인 플레이어와 딜러도 버스트") {
+            context("플레이어도 딜러도 모두 버스트라면") {
                 val betBord = BetBoard(
                     mutableMapOf(
                         PlayerName("kim") to PlayerBet.Placed(PlayerName("kim"), amount(5_000)),
@@ -224,7 +224,7 @@ class BetBoardTest : DescribeSpec({
                 val player = player("kim", hand = hand(card(Rank.TEN), card(Rank.TEN), card(Rank.TEN)))
                 val dealer = Dealer(player = DealerPlayer(hand(card(Rank.TEN), card(Rank.TEN), card(Rank.TEN))))
 
-                it("베팅 종료시 수익은 -베팅금액") {
+                it("베팅 종료시 수익은 -베팅금액 이다") {
                     betBord.closeBetting(DealEndResult(players(player, player("lee")), dealer))
 
                     betBord.playerProfit(PlayerName("kim")) shouldBe Profit(BigDecimal(-5000))

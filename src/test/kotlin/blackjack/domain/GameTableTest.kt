@@ -16,14 +16,14 @@ import io.kotest.matchers.shouldBe
 
 class GameTableTest : DescribeSpec({
     describe("dealToAll") {
-        context("카드가 모두 한 장도 없는 상태일 때 모두에게 2장씩 지급") {
+        context("카드가 모두 한 장도 없는 상태일 때 모두에게 2장씩 지급하면") {
             val dealer = Dealer()
             val players = players(player(hand = Hand()), player(hand = Hand()))
             val table = GameTable(players, dealer)
 
             table.dealToAll(2)
 
-            it("모두 두장씩 수령") {
+            it("모두 두장씩 수령한다") {
                 table.dealer.hand.cards.size shouldBe 2
                 table.players.value.forEach { player ->
                     player.hand.cards.size shouldBe 2
@@ -38,17 +38,17 @@ class GameTableTest : DescribeSpec({
         val players = players(player(hand = Hand()), player())
         val table = GameTable(players, dealer)
 
-        context("카드 1장 배분") {
+        context("현재 플레이어에게 카드 1장을 배분하면") {
             val playerInTurn = players.inTurn
             playerInTurn.hand.cards.size shouldBe 0
 
             table.dealToPlayerInTurn(1)
 
-            it("차례인 플레이어는 카드 1장 수령") {
+            it("차례인 플레이어는 카드 1장을 수령한다") {
                 playerInTurn.hand.cards.count() shouldBe 1
             }
 
-            it("덱에서는 카드 1장 제거") {
+            it("덱에서는 카드 1장이 제거된다") {
                 dealer.deck.cards.size shouldBe deckCount - 1
             }
         }
@@ -63,7 +63,7 @@ class GameTableTest : DescribeSpec({
 
             table.passPlayerTurnIfNotLastTurn()
 
-            it("플레이어 2에게 차례가 넘어감") {
+            it("플레이어 2에게 차례가 넘어간다") {
                 players.inTurn shouldBe players.value.last()
             }
         }
@@ -89,16 +89,16 @@ class GameTableTest : DescribeSpec({
         val table = GameTable(players(), dealer)
 
         val count = 2
-        context("딜러 카드가 한 장도 없을 때 카드 ${count}장 배분") {
+        context("딜러 카드가 한 장도 없을 때 카드 ${count}장씩 배분하면") {
             dealer.hand.cards.size shouldBe 0
 
             table.dealToDealer(2)
 
-            it("딜러는 ${count}장 카드 수령") {
+            it("딜러는 ${count}장의 카드를 수령한다") {
                 dealer.hand.cards.size shouldBe count
             }
 
-            it("덱에서는 카드 ${count}장 제거") {
+            it("덱에서는 카드 ${count}장이 제거된다") {
                 dealer.deck.cards.size shouldBe deckCount - count
             }
         }
@@ -107,18 +107,18 @@ class GameTableTest : DescribeSpec({
     describe("isLastPlayerTurn") {
         val players = listOf(player("kim"), player("lee"))
         val table = GameTable(Players(players))
-        context("첫 번째 플레이어 턴") {
+        context("첫 번째 플레이어 턴이라면") {
             table.players.inTurn shouldBe players.first()
 
-            it("false 반환") {
+            it("false가 반환된다") {
                 table.isLastPlayerTurn shouldBe false
             }
         }
-        context("마지막 플레이어 턴") {
+        context("마지막 플레이어 턴이라면") {
             table.passPlayerTurnIfNotLastTurn()
             table.players.inTurn shouldBe players.last()
 
-            it("true 반환") {
+            it("true가 반환된다") {
                 table.isLastPlayerTurn shouldBe true
             }
         }
@@ -127,18 +127,18 @@ class GameTableTest : DescribeSpec({
     describe("playerInTurn") {
         val players = listOf(player("kim"), player("lee"))
         val table = GameTable(Players(players))
-        context("첫 번쨰 플레이어 턴") {
+        context("첫 번쨰 플레이어 턴이라면") {
             table.players.inTurn shouldBe players.first()
 
-            it("첫 번째 플레이어 반환") {
+            it("첫 번째 플레이어 반환된다") {
                 table.playerInTurn shouldBe players.first()
             }
         }
-        context("마지막 플레이어 턴") {
+        context("마지막 플레이어 턴이라면") {
             table.passPlayerTurnIfNotLastTurn()
             table.players.inTurn shouldBe players.last()
 
-            it("두 번째 플레이어 반환") {
+            it("두 번째 플레이어 반환된다") {
                 table.playerInTurn shouldBe players.last()
             }
         }
@@ -151,7 +151,7 @@ class GameTableTest : DescribeSpec({
             val table = GameTable(players)
             table.playerInTurn shouldBe hitPlayer
 
-            it("HIT 반환") {
+            it("HIT가 반환된다") {
                 val result = table.playerInTurnAction
 
                 result shouldBe Action.HIT
@@ -164,7 +164,7 @@ class GameTableTest : DescribeSpec({
             val table = GameTable(players)
             table.playerInTurn shouldBe standPlayer
 
-            it("STAND 반환") {
+            it("STAND가 반환된다") {
                 val result = table.playerInTurnAction
 
                 result shouldBe Action.STAND
@@ -177,7 +177,7 @@ class GameTableTest : DescribeSpec({
             val table = GameTable(players)
             table.playerInTurn shouldBe standPlayer
 
-            it("STAND 반환") {
+            it("STAND가 반환된다") {
                 val result = table.playerInTurnAction
 
                 result shouldBe Action.STAND
@@ -191,7 +191,7 @@ class GameTableTest : DescribeSpec({
             val table = GameTable(players(), dealer)
             dealer.hitOrStand() shouldBe Action.HIT
 
-            it("HIT 반환") {
+            it("HIT가 반환된다") {
                 val result = table.dealerAction
 
                 result shouldBe Action.HIT
@@ -203,7 +203,7 @@ class GameTableTest : DescribeSpec({
             val table = GameTable(players(), dealer)
             dealer.hitOrStand() shouldBe Action.STAND
 
-            it("STAND 반환") {
+            it("STAND가 반환된다") {
                 val result = table.dealerAction
 
                 result shouldBe Action.STAND

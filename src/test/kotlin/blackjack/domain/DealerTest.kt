@@ -15,7 +15,7 @@ import io.kotest.matchers.shouldBe
 class DealerTest : DescribeSpec({
     describe("dealCards") {
         val count = 2
-        context("플레이어 1명에게 ${count}장 카드 배분") {
+        context("플레이어 1명에게 ${count}장 카드를 배분하면") {
             val cards = listOf(
                 Card(Suit.CLUB, Rank.ACE),
                 Card(Suit.CLUB, Rank.TWO),
@@ -27,16 +27,16 @@ class DealerTest : DescribeSpec({
 
             dealer.dealCards(count, player)
 
-            it("플레이어에게 카드 전달") {
+            it("플레이어에게 카드가 전달된다") {
                 player.hand.cards shouldBe listOf(cards[3], cards[2])
             }
 
-            it("덱에서 카드에서 제거") {
+            it("덱에서 카드가 제거된다") {
                 dealer.deck.cards shouldBe listOf(cards[0], cards[1])
             }
         }
 
-        context("플레이어 2명에게 ${count}장씩 카드 배분") {
+        context("플레이어 2명에게 ${count}장씩 카드 배분하면") {
             val deckCards = deck(
                 Card(Suit.CLUB, Rank.ACE),
                 Card(Suit.CLUB, Rank.TWO),
@@ -53,12 +53,12 @@ class DealerTest : DescribeSpec({
 
             dealer.dealCards(count, *players.toTypedArray())
 
-            it("플레이어에게 카드 전달") {
+            it("플레이어에게 해당 카드가 전달된다") {
                 players[0].hand.cards.size shouldBe 2
                 players[1].hand.cards.size shouldBe 2
             }
 
-            it("덱에서 카드에서 제거") {
+            it("덱에서 카드는 제거된다") {
                 dealer.deck.cards.size shouldBe 2
             }
         }
@@ -74,14 +74,14 @@ class DealerTest : DescribeSpec({
         val dealer = Dealer(deck(cards))
 
         val count = 2
-        context("자신에게 ${count}장 카드 배분") {
+        context("딜러가 자신에게 ${count}장 카드를 배분하면") {
             dealer dealToSelf count
 
-            it("플레이어에게 카드 전달") {
+            it("플레이어에게 해당 카드기 전달된다") {
                 dealer.hand.cards shouldBe listOf(cards[3], cards[2])
             }
 
-            it("덱에서 카드 제거") {
+            it("덱에서 카드가 제거된다") {
                 dealer.deck.cards shouldBe listOf(cards[0], cards[1])
             }
         }
@@ -91,10 +91,10 @@ class DealerTest : DescribeSpec({
         val dealer = Dealer(
             player = DealerPlayer(hand(card(Rank.ACE), card(Rank.QUEEN)))
         )
-        context("딜러가 가진 카드의 점수 조회") {
+        context("딜러가 가진 카드의 점수를 조회하면") {
             val result = dealer.score
 
-            it("계산된 점수 반환") {
+            it("계산된 점수가 반환된다") {
                 result.cardScore shouldBe 21
             }
         }
@@ -106,21 +106,21 @@ class DealerTest : DescribeSpec({
         context("딜러보다 낮은 점수로 비교하면") {
             val result = dealer isGreaterCardScoreThan 16
 
-            it("참을 반환") {
+            it("참을 반환한다") {
                 result shouldBe true
             }
         }
         context("딜러보다 높은 점수로 비교하면") {
             val result = dealer isGreaterCardScoreThan 21
 
-            it("거짓을 반환") {
+            it("거짓을 반환한다") {
                 result shouldBe false
             }
         }
         context("딜러와 같은 점수로 비교하면") {
             val result = dealer isGreaterCardScoreThan 20
 
-            it("거짓을 반환") {
+            it("거짓을 반환한다") {
                 result shouldBe false
             }
         }
