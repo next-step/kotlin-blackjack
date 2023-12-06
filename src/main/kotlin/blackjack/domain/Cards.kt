@@ -1,29 +1,20 @@
 package blackjack.domain
 
 class Cards(
-    private val _cards: MutableList<Card>
-): MutableList<Card> by _cards {
-    val cards: List<Card>
-        get() = _cards
+    val values: List<Card> = emptyList()
+) {
+    val size
+        get() = values.size
 
     override fun toString(): String {
-        return _cards.joinToString(",  ")
+        return values.joinToString(",  ")
     }
 
-    fun addCard(newCard: Card): Cards {
-        return from(_cards + newCard)
+    operator fun plus(card: Card): Cards {
+        return Cards(values + card)
     }
+}
 
-    fun dec(): Card {
-        check(_cards.isNotEmpty()) { "카드가 모두 소진되었습니다." }
-        return _cards.removeFirst()
-    }
-
-    companion object {
-        const val TOTAL_SIZE = 52
-
-        fun from(cardValues: List<Card>? = null): Cards {
-            return Cards(cardValues?.toMutableList() ?: mutableListOf())
-        }
-    }
+fun List<Card>.toCards(): Cards {
+    return Cards(this)
 }

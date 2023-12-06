@@ -1,76 +1,62 @@
 package blackjack.domain
 
-import org.junit.jupiter.api.Assertions.assertEquals
+import fixtures.createBlackjackPlayer
+import fixtures.createHitPlayer
+import fixtures.createBustPlayer
+import fixtures.createCards
+import fixtures.createCard
+import fixtures.createPlayers
+import io.kotest.assertions.assertSoftly
+import io.kotest.matchers.shouldBe
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
 class PlayersTest {
-    @Test
-    fun `player들은 받은 카드를 나눠가지게 된다`() {
-        // given
-        val players = Players(
-            listOf(
-                Player("player1"),
-                Player("player2"),
-                Player("player3")
-            )
-        )
+    private lateinit var runningPlayers: Players
+    private lateinit var finishedPlayers: Players
 
-        // when
-        players.receiveCards(
-            listOf(
-                Card(Suit.SPADES, Denomination.ACE),
-                Card(Suit.HEARTS, Denomination.TEN),
-                Card(Suit.CLUBS, Denomination.TWO),
-            )
+    @BeforeEach
+    fun setUp() {
+        runningPlayers = createPlayers(
+            createHitPlayer("player1"),
+            createHitPlayer("player2")
         )
-
-        // then
-        assertEquals("A스페이드", players[0].cards.toString())
-        assertEquals("10하트", players[1].cards.toString())
-        assertEquals("2클로버", players[2].cards.toString())
+        finishedPlayers = createPlayers(
+            createBustPlayer("player3"),
+            createBlackjackPlayer("player4")
+        )
     }
 
     @Test
-    fun `getNames 메서드 호출시 player 닉네임 리스트를 반환한다`() {
-        // given
-        val players = Players(
-            listOf(
-                Player("player1"),
-                Player("player2"),
-                Player("player3")
-            )
-        )
-        players.receiveCards(
-            listOf(
-                Card(Suit.SPADES, Denomination.ACE),
-                Card(Suit.HEARTS, Denomination.TEN),
-                Card(Suit.CLUBS, Denomination.TWO),
-            )
-        )
-        val expected = listOf("player1", "player2", "player3")
-
+    fun `running 상태의 player들은 filterReceivable 메서드 호출 후 반환된다`() {
         // when
-        val playerNames = players.getNames()
-
+        val receivablePlayer = runningPlayers.filterReceivable()
+        val notReceivablePlayer = finishedPlayers.filterReceivable()
         // then
-        assertEquals(expected, playerNames)
+        assertSoftly {
+            receivablePlayer.size shouldBe 2
+            notReceivablePlayer.size shouldBe 0
+        }
     }
 
     @Test
-    fun `플레이어 중 hit 의사결정을 내린 사람들만 필터링한다`() {
-        // given
-        val players = Players(
-            listOf(
-                Player("player1"),
-                Player("player2"),
-                Player("player3")
-            )
-        )
-
+    fun `플레이어들의 이름을 한번에 가져올 수 있다`() {
         // when
-        players[0].turnStand()
+        val names = (runningPlayers + finishedPlayers).getNames()
+        names shouldBe "player1, player2, player3, player4"
+    }
 
+    @Test
+    fun `플레이어들은 게임이 시작하면 카드를 일정 개수만큼 수령한다`() {
+        // when
+        val testPlayers = Players(listOf(Player(name = "player1"), Player(name = "player2")))
+        testPlayers.receiveInitialCards {
+            createCards(
+                createCard(suit = Suit.CLUBS, denomination = Denomination.TWO),
+                createCard(suit = Suit.DIAMONDS, denomination = Denomination.TWO),
+            )
+        }
         // then
-        assertEquals(2, players.withHit().size)
+        testPlayers.forEach { it.state.cards.size shouldBe 2 }
     }
 }

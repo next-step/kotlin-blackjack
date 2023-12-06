@@ -1,20 +1,19 @@
 package blackjack.domain
 
-import org.junit.jupiter.api.Assertions.assertEquals
+import fixtures.createCard
+import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
 class CardTest {
     @Test
-    fun `Card 문자열 변환 테스트`() {
+    fun `card 문자열 변환 테스트`() {
         // given
-        val denomination = Denomination.ACE
-        val suit = Suit.SPADES
-        val expected = "A스페이드"
+        val card = createCard()
 
         // when
-        val cardString = Card(denomination = denomination, suit = suit).toString()
+        val cardString = card.toString()
 
         // then
-        assertEquals(expected, cardString)
+        cardString shouldBe "10스페이드"
     }
 }

@@ -1,61 +1,41 @@
 package blackjack.domain
 
-import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Assertions.assertEquals
+import fixtures.createCard
+import fixtures.createCards
+import io.kotest.assertions.assertSoftly
+import io.kotest.matchers.shouldBe
+import io.kotest.matchers.shouldNotBe
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
 
 class CardsTest {
+    private val cards: Cards = createCards(
+        createCard(suit = Suit.CLUBS, denomination = Denomination.TWO),
+        createCard(suit = Suit.HEARTS, denomination = Denomination.TEN),
+        createCard(suit = Suit.SPADES, denomination = Denomination.ACE),
+    )
+
     @Test
-    fun `addCard 메서드 호출 시 특정 카드가 추가된 새로운 Cards 객체가 생성되는지 확인한다`() {
+    fun `cards에 card를 더하면 새로운 리스트 프로퍼티로 가진 Cards를 생성한다`() {
         // given
-        val cards = Cards.from()
-        val newCard = Card(
-            denomination = Denomination.ACE,
-            suit = Suit.SPADES
-        )
+        val card = createCard(suit = Suit.DIAMONDS, denomination = Denomination.TWO)
 
         // when
-        val newCards = cards.addCard(newCard)
+        val newCards = cards + card
 
         // then
-        assertThat(newCards.contains(newCard))
-        assertEquals(1, newCards.size)
-    }
-
-    @Test
-    fun `준비된 카드가 모두 소진되었을 경우 dec 메서드 호출시 IllegalStateException이 발생하는지 확인한다`() {
-        // given
-        val cards = Cards.from()
-
-        assertThrows<IllegalStateException> { // then
-            cards.dec() // when
+        assertSoftly {
+            newCards.size shouldBe 4
+            newCards shouldNotBe cards
         }
     }
 
     @Test
-    fun `준비된 카드 한 장의 카드를 뽑아 반환한다`() {
+    fun `cards 문자열 변환 테스트`() {
         // given
-        val cards = Cards.from()
-        cards.add(
-            Card(
-                denomination = Denomination.ACE,
-                suit = Suit.SPADES
-            )
-        )
-        cards.add(
-            Card(
-                denomination = Denomination.EIGHT,
-                suit = Suit.CLUBS
-            )
-        )
-
         // when
-        val removedCard = cards.dec()
+        val cardsString = cards.toString()
 
         // then
-        assertEquals(1, cards.size)
-        assertEquals(Denomination.ACE, removedCard.denomination)
-        assertEquals(Suit.SPADES, removedCard.suit)
+        cardsString shouldBe "2클로버,  10하트,  A스페이드"
     }
 }

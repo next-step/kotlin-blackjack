@@ -1,40 +1,72 @@
 package blackjack.domain
 
-import org.junit.jupiter.api.Assertions.assertEquals
+import fixtures.createBlackjackDealer
+import fixtures.createBlackjackPlayer
+import fixtures.createHitPlayer
+import fixtures.createBustPlayer
+import fixtures.createBustDealer
+import fixtures.createCards
+import fixtures.createCard
+import fixtures.createHitDealer
+import io.kotest.assertions.assertSoftly
+import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
 class PlayerTest {
     @Test
-    fun `주어진 카드로부터 Score를 계산한다`() {
+    fun `딜러가 Blackjack인 경우 versus 결과 테스트`() {
         // given
-        val player = Player("test")
-        val newCard1 = Card(denomination = Denomination.TEN, suit = Suit.SPADES)
-        val newCard2 = Card(denomination = Denomination.TWO, suit = Suit.HEARTS)
-        player.getCard(newCard1)
-        player.getCard(newCard2)
-
+        val dealer = createBlackjackDealer()
+        val player1 = createBustPlayer("player1")
+        val player2 = createBlackjackPlayer("player2")
+        val player3 = createHitPlayer("player3")
         // when
-        val score = player.getScore()
-
+        val playerResult1 = player1 versus dealer
+        val playerResult2 = player2 versus dealer
+        val playerResult3 = player3 versus dealer
         // then
-        assertEquals(score, 12)
+        assertSoftly {
+            playerResult1 shouldBe GameResult.LOSE
+            playerResult2 shouldBe GameResult.DRAW
+            playerResult3 shouldBe GameResult.LOSE
+        }
     }
 
     @Test
-    fun `블랙잭 점수(21점)이 넘었을 경우 Bust되어 플레이어는 stand로 의사결정을 내린다`() {
+    fun `딜러가 Bust인 경우 versus 결과 테스트`() {
         // given
-        val player = Player("test")
-        val newCard1 = Card(denomination = Denomination.TEN, suit = Suit.SPADES)
-        val newCard2 = Card(denomination = Denomination.JACK, suit = Suit.HEARTS)
-        val newCard3 = Card(denomination = Denomination.QUEEN, suit = Suit.CLUBS)
-
+        val dealer = createBustDealer()
+        val player1 = createBustPlayer("player1")
+        val player2 = createBlackjackPlayer("player2")
+        val player3 = createHitPlayer("player3")
         // when
-        player.getCard(newCard1)
-        player.getCard(newCard2)
-        player.getCard(newCard3)
-
+        val playerResult1 = player1 versus dealer
+        val playerResult2 = player2 versus dealer
+        val playerResult3 = player3 versus dealer
         // then
-        assertEquals(player.getScore(), 30)
-        assertEquals(player.decision, PlayerDecision.STAND)
+        assertSoftly {
+            playerResult1 shouldBe GameResult.LOSE
+            playerResult2 shouldBe GameResult.WIN
+            playerResult3 shouldBe GameResult.WIN
+        }
+    }
+
+    @Test
+    fun `딜러와 플레이어 모두 Bust나 Blackjack이 아닌 경우 Blackjack과 최대한 가까운 사람이 승리한다`() {
+        // given
+        val dealerCards = createCards(
+            createCard(Suit.CLUBS, Denomination.ACE),
+            createCard(Suit.HEARTS, Denomination.TWO)
+        )
+        val playerCards = createCards(
+            createCard(Suit.DIAMONDS, Denomination.ACE),
+            createCard(Suit.HEARTS, Denomination.QUEEN)
+        )
+        val dealer = createHitDealer(dealerCards)
+        val player = createHitPlayer("player", playerCards)
+        // when
+        val playerResult = player versus dealer
+        // then
+        playerResult shouldBe GameResult.WIN
     }
 }

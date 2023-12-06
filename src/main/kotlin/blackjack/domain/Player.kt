@@ -1,34 +1,27 @@
 package blackjack.domain
 
-class Player(
-    val name: String,
-    private var _decision: PlayerDecision = PlayerDecision.HIT
-) {
-    private var _cards = Cards.from()
-    val cards
-        get() = _cards
+import blackjack.domain.state.State
 
-    val decision
-        get() = _decision
+class Player(val name: String) : Participant() {
+    constructor(name: String, state: State) : this(name) {
+        this.state = state
+    }
 
-    fun getCard(card: Card) {
-        _cards = _cards.addCard(card)
-        if (getScore() > Score.BLACKJACK) {
-            turnStand()
+    infix fun versus(dealer: Dealer): GameResult {
+        val playerScore = this.getScore()
+        val dealerScore = dealer.getScore()
+        return when {
+            playerScore.isBust() && dealerScore.isBust() -> GameResult.LOSE
+            dealerScore.isBust() -> GameResult.WIN
+            playerScore.isBust() -> GameResult.LOSE
+            playerScore.isBlackjack() && dealerScore.isBlackjack() -> GameResult.DRAW
+            playerScore.isBlackjack() -> GameResult.WIN
+            dealerScore.isBlackjack() -> GameResult.LOSE
+            playerScore.value == dealerScore.value -> GameResult.DRAW
+            playerScore.gapFromBlackjack() < dealerScore.gapFromBlackjack() -> GameResult.WIN
+            playerScore.gapFromBlackjack() == dealerScore.gapFromBlackjack() -> GameResult.DRAW
+            playerScore.gapFromBlackjack() > dealerScore.gapFromBlackjack() -> GameResult.LOSE
+            else -> GameResult.DRAW
         }
-    }
-
-    fun getScore(): Int {
-        return toScore().calculate()
-    }
-
-    fun turnStand() {
-        _decision = PlayerDecision.STAND
-    }
-
-    private fun toScore(): Score {
-        return Score(
-            _cards.map { it.denomination }
-        )
     }
 }
