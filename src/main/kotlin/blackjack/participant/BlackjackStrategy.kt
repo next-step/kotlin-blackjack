@@ -10,17 +10,19 @@ class BlackjackStrategy(
     private val scoreCalculator: ScoreCalculator,
 ) {
     var cards: List<BlackJackCard> = emptyList()
-    lateinit var status: Status
+    var status: Status = Hit()
 
     val isBust get() = resultScore() > BLACKJACK
 
     fun drawCard(cards: List<BlackJackCard>) {
         this.cards += cards
-        status = Hit()
-        if (cards.size == FIRST_TURN_DRAW && isBlackjack()) {
+
+        if (isFirstTurn(cards) && isBlackjack()) {
             status = Blackjack()
         }
     }
+
+    private fun isFirstTurn(cards: List<BlackJackCard>): Boolean = cards.size == FIRST_TURN_DRAW
 
     fun resultScore(): Int {
         return scoreCalculator.calculateGameScore(cards)
