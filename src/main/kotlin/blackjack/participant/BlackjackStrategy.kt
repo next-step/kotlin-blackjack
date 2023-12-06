@@ -18,16 +18,15 @@ class BlackjackStrategy(
 
     fun drawCard(cards: List<BlackJackCard>) {
         this.cards += cards
-        if (!isFirstTurn(cards) && !isBust2()) {
-            status = Stand()
-        }
 
-        if (!isFirstTurn(cards) && isBust2()) {
-            status = Bust()
-        }
+        changeStatus(cards)
+    }
 
-        if (isFirstTurn(cards) && isBlackjack()) {
-            status = Blackjack()
+    private fun changeStatus(cards: List<BlackJackCard>) {
+        when {
+            !isFirstTurn(cards) && !isBust -> status = Stand()
+            !isFirstTurn(cards) && isBust -> status = Bust()
+            isFirstTurn(cards) && isBlackjack() -> status = Blackjack()
         }
     }
 
@@ -39,10 +38,6 @@ class BlackjackStrategy(
 
     private fun isBlackjack(): Boolean {
         return resultScore() == BLACKJACK
-    }
-
-    private fun isBust2(): Boolean {
-        return resultScore() > BLACKJACK
     }
 
     companion object {
