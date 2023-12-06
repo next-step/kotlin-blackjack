@@ -10,6 +10,6 @@ value class PlayerNames(
 
     companion object {
         fun from(names: List<String>): PlayerNames =
-            names.map(::PlayerName).let(::PlayerNames)
+            PlayerNames(names.map(::PlayerName))
     }
 }

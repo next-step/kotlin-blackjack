@@ -6,8 +6,8 @@ data class Amount(
     val value: BigDecimal,
 ) : Comparable<Amount> {
 
-    operator fun plus(other: Amount): Amount = value.plus(other.value).let(::Amount)
-    operator fun times(count: Int): Amount = value.times(count.toBigDecimal()).let(::Amount)
+    operator fun plus(other: Amount): Amount = Amount(value.plus(other.value))
+    operator fun times(count: Int): Amount = Amount(value.times(count.toBigDecimal()))
 
     operator fun times(count: BigDecimal): Amount =
         Amount(value * count)

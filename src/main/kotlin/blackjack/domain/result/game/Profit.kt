@@ -10,10 +10,10 @@ data class Profit(
     val negative: Profit
         get() = Profit(value.negate())
 
-    operator fun plus(other: Profit): Profit = value.plus(other.value).let(::Profit)
+    operator fun plus(other: Profit): Profit = Profit(value.plus(other.value))
 
     companion object {
         fun of(betAmount: Amount, payoutAmount: Amount): Profit =
-            payoutAmount.value.minus(betAmount.value).let(::Profit)
+            Profit(payoutAmount.value.minus(betAmount.value))
     }
 }

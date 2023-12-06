@@ -30,7 +30,7 @@ data class Players(
         fun of(
             names: PlayerNames,
             desiredAction: (player: Player) -> Action,
-        ) = names.value.map { name -> createPlayer(name, desiredAction) }.let(::Players)
+        ) = Players(names.value.map { name -> createPlayer(name, desiredAction) })
 
         private fun createPlayer(name: PlayerName, desiredAction: (player: Player) -> Action) =
             Player(name, desiredAction)

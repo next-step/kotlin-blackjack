@@ -18,9 +18,9 @@ fun card(rank: Rank = Rank.TEN, suit: Suit = Suit.CLUB): Card = Card(suit, rank)
 
 fun hand(vararg cards: Card): Hand = Hand(cards.toMutableList())
 
-fun deck(vararg cards: Card): Deck = Deck(cards.toMutableList().let(::ArrayDeque))
+fun deck(vararg cards: Card): Deck = Deck(ArrayDeque(cards.toMutableList()))
 
-fun deck(cards: List<Card>): Deck = Deck(cards.let(::ArrayDeque))
+fun deck(cards: List<Card>): Deck = Deck(ArrayDeque(cards))
 
 fun player(
     name: String = "kim",
@@ -43,5 +43,5 @@ fun table(
         dealer,
     )
 
-fun amount(amount: Int): Amount = amount.toBigDecimal().let(::Amount)
-fun profit(profit: Int): Profit = profit.toBigDecimal().let(::Profit)
+fun amount(amount: Int): Amount = Amount(amount.toBigDecimal())
+fun profit(profit: Int): Profit = Profit(profit.toBigDecimal())

@@ -61,7 +61,7 @@ data class BetBoard(
     companion object {
         private val BLACK_JACK_MULTIPLIER = BigDecimal(1.5)
         fun of(players: Players, betAmount: (player: Player) -> Amount): BetBoard =
-            players.value.associate { it.name to it.placeBet(betAmount) }.toMutableMap().let(::BetBoard)
+            BetBoard(players.value.associate { it.name to it.placeBet(betAmount) }.toMutableMap())
 
         private fun Player.placeBet(betAmount: (player: Player) -> Amount): PlayerBet =
             PlayerBet.Placed(this.name, betAmount(this))
