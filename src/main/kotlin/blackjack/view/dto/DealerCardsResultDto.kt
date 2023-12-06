@@ -4,5 +4,5 @@ import blackjack.domain.card.Card
 
 data class DealerCardsResultDto(
     val cards: List<Card>,
-    val cardScore: Int,
+    val score: Int,
 )

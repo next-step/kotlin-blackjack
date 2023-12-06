@@ -1,6 +1,5 @@
 package blackjack.domain.card
 
-import blackjack.mock.card
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 
@@ -39,22 +38,6 @@ class HandTest : DescribeSpec({
             val expect = listOf(Rank.FIVE, Rank.THREE, Rank.FIVE)
             it("rank 반환 ($expect)") {
                 hand.ranks shouldBe expect
-            }
-        }
-    }
-
-    describe("isBlackJackCardSize") {
-        context("블랙잭 조건인 카드가 2장이라면") {
-            val hand = Hand(mutableListOf(card(), card()))
-            it("true 반환") {
-                hand.isBlackJackCardSize shouldBe true
-            }
-        }
-
-        context("블랙잭 조건인 카드가 2장이 아니라면") {
-            val hand = Hand(mutableListOf(card(), card(), card()))
-            it("false 반환") {
-                hand.isBlackJackCardSize shouldBe false
             }
         }
     }

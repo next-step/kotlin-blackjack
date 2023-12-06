@@ -97,4 +97,27 @@ class BlackJackJudgeTest : DescribeSpec({
             }
         }
     }
+
+    describe("isBlackJack") {
+        context("플레이어가 블랙잭이면(카드가 2장이며, 해당 카드 합이 21)") {
+            val player = player(hand = hand(card(Rank.TEN), card(Rank.ACE)))
+            it("true가 반환된다") {
+                BlackJackJudge.isBlackJack(player) shouldBe true
+            }
+        }
+
+        context("플레이어 카드가 2장이지만 21점이 아니면") {
+            val player = player(hand = hand(card(Rank.TEN), card(Rank.TWO)))
+            it("false가 반환된다") {
+                BlackJackJudge.isBlackJack(player) shouldBe false
+            }
+        }
+
+        context("플레이어 카드 합이 21이지만 카드 수가 2장 초과면") {
+            val player = player(hand = hand(card(Rank.ACE), card(Rank.TEN), card(Rank.TEN)))
+            it("false가 반환된다") {
+                BlackJackJudge.isBlackJack(player) shouldBe false
+            }
+        }
+    }
 })

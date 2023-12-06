@@ -56,7 +56,7 @@ data class BetBoard(
         }
 
     private fun calculateWinAmount(player: Player, betAmount: Amount): Amount =
-        if (player.isBlackJack) betAmount * BLACK_JACK_MULTIPLIER + betAmount
+        if (BlackJackJudge.isBlackJack(player)) betAmount * BLACK_JACK_MULTIPLIER + betAmount
         else betAmount * 2
 
     companion object {

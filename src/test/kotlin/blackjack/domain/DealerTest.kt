@@ -95,30 +95,30 @@ class DealerTest : DescribeSpec({
             val result = dealer.score
 
             it("계산된 점수가 반환된다") {
-                result.cardScore shouldBe 21
+                result.value shouldBe 21
             }
         }
     }
 
-    describe("isGreaterCardScoreThan") {
+    describe("isGreaterScoreThan") {
         val score20cards = hand(card(Rank.QUEEN), card(Rank.QUEEN))
         val dealer = DealerPlayer(score20cards)
         context("딜러보다 낮은 점수로 비교하면") {
-            val result = dealer isGreaterCardScoreThan 16
+            val result = dealer isGreaterScoreThan 16
 
             it("참을 반환한다") {
                 result shouldBe true
             }
         }
         context("딜러보다 높은 점수로 비교하면") {
-            val result = dealer isGreaterCardScoreThan 21
+            val result = dealer isGreaterScoreThan 21
 
             it("거짓을 반환한다") {
                 result shouldBe false
             }
         }
         context("딜러와 같은 점수로 비교하면") {
-            val result = dealer isGreaterCardScoreThan 20
+            val result = dealer isGreaterScoreThan 20
 
             it("거짓을 반환한다") {
                 result shouldBe false

@@ -103,7 +103,7 @@ class PlayerTest : DescribeSpec({
             val result = player.score
 
             it("플레이어 점수는 21점이다") {
-                result.cardScore shouldBe 21
+                result.value shouldBe 21
             }
         }
     }
@@ -187,29 +187,6 @@ class PlayerTest : DescribeSpec({
 
         it("같은 플레이어로 취급한다") {
             player1 shouldBe player2
-        }
-    }
-
-    describe("isBlackJack") {
-        context("플레이어가 블랙잭이면(카드가 2장이며, 해당 카드 합이 21)") {
-            val player = player(hand = hand(card(Rank.TEN), card(Rank.ACE)))
-            it("true가 반환된다") {
-                player.isBlackJack shouldBe true
-            }
-        }
-
-        context("플레이어 카드가 2장이지만 21점이 아니면") {
-            val player = player(hand = hand(card(Rank.TEN), card(Rank.TWO)))
-            it("false가 반환된다") {
-                player.isBlackJack shouldBe false
-            }
-        }
-
-        context("플레이어 카드 합이 21이지만 카드 수가 2장 초과면") {
-            val player = player(hand = hand(card(Rank.ACE), card(Rank.TEN), card(Rank.TEN)))
-            it("false가 반환된다") {
-                player.isBlackJack shouldBe false
-            }
         }
     }
 })

@@ -54,9 +54,9 @@ object OutputView {
         players: List<PlayerCardsResultDto>,
     ) {
         println()
-        println(DEALER_FINAL_CARDS_MSG.format(extractCardsState(dealer.cards), dealer.cardScore))
+        println(DEALER_FINAL_CARDS_MSG.format(extractCardsState(dealer.cards), dealer.score))
         players.forEach {
-            println(PLAYER_FINAL_CARDS_MSG.format(it.name, extractCardsState(it.cards), it.cardScore))
+            println(PLAYER_FINAL_CARDS_MSG.format(it.name, extractCardsState(it.cards), it.score))
         }
     }
 

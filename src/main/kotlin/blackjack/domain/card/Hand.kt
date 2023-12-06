@@ -6,6 +6,8 @@ data class Hand(
     val cards: List<Card>
         get() = _cards.toList()
 
+    val cardsCount = _cards.size
+
     val ranks: List<Rank>
         get() = _cards.map { it.rank }
 

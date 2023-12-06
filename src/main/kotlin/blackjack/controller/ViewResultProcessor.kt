@@ -36,9 +36,9 @@ object ViewResultProcessor {
 
     private fun drawCardResult(result: GameEndResult) {
         val dealerDto =
-            DealerCardsResultDto(result.dealerHand.cards, result.dealerScore.cardScore)
+            DealerCardsResultDto(result.dealerHand.cards, result.dealerScore.value)
         val playersDto = result.playerResults.map {
-            PlayerCardsResultDto(it.name.value, it.hand.cards, it.score.cardScore)
+            PlayerCardsResultDto(it.name.value, it.hand.cards, it.score.value)
         }
         OutputView.drawCardsResults(dealerDto, playersDto)
     }
