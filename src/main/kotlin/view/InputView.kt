@@ -1,6 +1,6 @@
 package view
 
-object InputView {
+object InputView : InputViewInterface {
 
     private const val TEXT_INPUT_PROMPT = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)"
     private const val TEXT_HIT_PROMPT_FORMAT = "%s는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)"
@@ -13,7 +13,7 @@ object InputView {
         return inputData
     }
 
-    fun askForHit(playerName: String): String {
+    override fun askForHit(playerName: String): String {
         println(TEXT_HIT_PROMPT_FORMAT.format(playerName))
         return readln()
     }

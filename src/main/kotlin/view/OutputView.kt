@@ -3,7 +3,7 @@ package view
 import player.Player
 import player.PlayerGroup
 
-object OutputView {
+object OutputView : OutputViewInterface {
 
     fun showGameStart(playerGroup: PlayerGroup) {
         val sb = StringBuilder()
@@ -17,7 +17,7 @@ object OutputView {
         println()
     }
 
-    fun showPlayingCard(player: Player) {
+    override fun showPlayingCard(player: Player) {
         println("${player.name}카드: ${player.playerDeck}")
     }
 

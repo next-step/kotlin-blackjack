@@ -11,7 +11,7 @@ fun main() {
     val playerGroup = PlayerGroup(PlayerFactory.createPlayerList(playerNames))
     val cardDeck = CardDeck(CardPack.cards.toMutableList())
 
-    val game = BlackjackGame(cardDeck = cardDeck, playerGroup = playerGroup)
+    val game = BlackjackGame(cardDeck = cardDeck, playerGroup = playerGroup, InputView, OutputView)
 
     OutputView.showGameStart(game.playerGroup)
 
