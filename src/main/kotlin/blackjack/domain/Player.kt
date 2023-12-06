@@ -2,6 +2,7 @@ package blackjack.domain
 
 class Player(
     val name: String,
+    val bet: Int,
     hand: Hand = Hand(),
 ) : BaseBlackjackMember(hand = hand) {
     init {

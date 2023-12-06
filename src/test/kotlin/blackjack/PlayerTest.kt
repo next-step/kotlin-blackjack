@@ -26,7 +26,7 @@ class PlayerTest : FunSpec({
                 "기임영태"
             )
         ) { name ->
-            val player = Player(name)
+            val player = Player(name, 0)
 
             player.name shouldBe name
         }
@@ -35,7 +35,7 @@ class PlayerTest : FunSpec({
         withData(
             listOf(
                 PlayerDrawCardTestData(
-                    player = Player("김영태"),
+                    player = Player("김영태", bet = 0),
                     deck = Deck(
                         listOf(
                             Card(number = CardNumber.ACE, shape = CardShape.SPADE),
@@ -70,7 +70,7 @@ class PlayerTest : FunSpec({
                 )
             )
         ) { cardList ->
-            val player = Player("김영태", hand = Hand(cardList))
+            val player = Player("김영태", bet = 0, hand = Hand(cardList))
 
             player.canDraw() shouldBe (cardList.sumOf { it.number.score } <= BlackjackRule.TARGET_SCORE)
         }
@@ -79,6 +79,7 @@ class PlayerTest : FunSpec({
     context("Player가 처음 뽑은 2장의 점수가 21 미만이면 Hit") {
         val player = Player(
             name = "김영태",
+            bet = 0,
             hand = Hand(
                 listOf(
                     Card(number = CardNumber.ACE, shape = CardShape.SPADE),
@@ -93,6 +94,7 @@ class PlayerTest : FunSpec({
     context("Player의 점수가 21 초과면 Bust") {
         val player = Player(
             name = "김영태",
+            bet = 0,
             hand = Hand(
                 listOf(
                     Card(number = CardNumber.QUEEN, shape = CardShape.SPADE),
@@ -108,6 +110,7 @@ class PlayerTest : FunSpec({
     context("Player가 draw를 멈추면 Stay") {
         val player = Player(
             name = "김영태",
+            bet = 0,
             hand = Hand(
                 listOf(
                     Card(number = CardNumber.ACE, shape = CardShape.SPADE),
@@ -123,6 +126,7 @@ class PlayerTest : FunSpec({
     context("Player가 처음 뽑은 2장의 점수가 21이면 Blackjack") {
         val player = Player(
             name = "김영태",
+            bet = 0,
             hand = Hand(
                 listOf(
                     Card(number = CardNumber.ACE, shape = CardShape.SPADE),

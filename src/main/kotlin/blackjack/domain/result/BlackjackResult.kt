@@ -12,44 +12,45 @@ class BlackjackResult(
     val playerCompeteResults: List<PlayerResult>
 
     init {
-        var dealerResult = DealerResult()
-        val mutablePlayerResults = mutableListOf<PlayerResult>()
-
-        players.forEach { player ->
-            val dealerResultItem = compete(dealer = dealer, player = player)
-
-            dealerResult = dealerResult.set(dealerResultItem)
-
-            mutablePlayerResults.add(
-                PlayerResult(
-                    playerName = player.name,
-                    competeResult = dealerResultItem.opposite()
-                )
+        playerCompeteResults = players.map { player ->
+            getPlayerEarningRate(player = player, dealer = dealer)
+            PlayerResult(
+                player = player,
+                earningRate = getPlayerEarningRate(dealer = dealer, player = player)
             )
         }
 
-        dealerCompeteResult = dealerResult
-        playerCompeteResults = mutablePlayerResults.toList()
+        dealerCompeteResult = DealerResult(
+            -playerCompeteResults.sumOf {
+                it.getEarnMoney()
+            }
+        )
     }
 
-    private fun compete(dealer: Dealer, player: Player): CompeteResult {
-        val playerScore = player.getScore()
-        val playerState = player.state
-
-        if (dealer.state == State.BUST ||
-            (dealer.getScore() < playerScore && player.state != State.BUST) ||
-            (dealer.state != State.BLACKJACK && player.state == State.BLACKJACK)
-        ) {
-            return CompeteResult.LOSE
+    private fun getPlayerEarningRate(dealer: Dealer, player: Player): Double {
+        if (isDraw(dealer, player)) {
+            return 1.0
         }
 
-        if (playerState == State.BUST ||
-            dealer.getScore() > playerScore ||
+        if (isPlayerBlackjack(dealer, player)) {
+            return 1.5
+        }
+
+        if (isDealerWin(dealer, player)) {
+            return -1.0
+        }
+
+        return 0.0
+    }
+
+    private fun isDraw(dealer: Dealer, player: Player) = dealer.state == State.BUST ||
+        (dealer.getScore() < player.getScore() && player.state != State.BUST)
+
+    private fun isPlayerBlackjack(dealer: Dealer, player: Player) =
+        dealer.state != State.BLACKJACK && player.state == State.BLACKJACK
+
+    private fun isDealerWin(dealer: Dealer, player: Player) =
+        player.state == State.BUST ||
+            dealer.getScore() > player.getScore() ||
             (dealer.state == State.BLACKJACK && player.state != State.BLACKJACK)
-        ) {
-            return CompeteResult.WIN
-        }
-
-        return CompeteResult.DRAW
-    }
 }

@@ -39,9 +39,14 @@ class BlackjackController(
     }
 
     private fun getPlayers(): List<Player> {
-        return inputView.getPlayerNames().map {
+        val playerNames = inputView.getPlayerNames()
+
+        val playerBets = inputView.getPlayerBet(playerNames)
+
+        return playerNames.mapIndexed { index, name ->
             Player(
-                name = it,
+                name,
+                playerBets[index],
                 Hand(
                     cards = deck.popMany(count = BlackjackRule.INITIAL_CARD)
                 )

@@ -7,7 +7,6 @@ import blackjack.domain.Dealer
 import blackjack.domain.Hand
 import blackjack.domain.Player
 import blackjack.domain.result.BlackjackResult
-import blackjack.domain.result.CompeteResult
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.datatest.withData
 import io.kotest.matchers.shouldBe
@@ -15,7 +14,8 @@ import io.kotest.matchers.shouldBe
 data class DealerCompeteTestData(
     val dealerHand: Hand,
     val playerHand: Hand,
-    val expected: CompeteResult,
+    val playerBet: Int,
+    val expectedEarning: Int
 )
 
 class CompareResultTest : FunSpec({
@@ -35,7 +35,8 @@ class CompareResultTest : FunSpec({
                             Card(CardNumber.JACK, CardShape.SPADE),
                         ),
                     ),
-                    expected = CompeteResult.WIN
+                    playerBet = 10000,
+                    expectedEarning = -10000
                 ),
                 DealerCompeteTestData(
                     dealerHand = Hand(
@@ -54,7 +55,8 @@ class CompareResultTest : FunSpec({
                             Card(CardNumber.TWO, CardShape.HEART),
                         ),
                     ),
-                    expected = CompeteResult.LOSE
+                    playerBet = 10000,
+                    expectedEarning = 10000
                 ),
                 DealerCompeteTestData(
                     dealerHand = Hand(
@@ -69,7 +71,8 @@ class CompareResultTest : FunSpec({
                             Card(CardNumber.JACK, CardShape.SPADE),
                         ),
                     ),
-                    expected = CompeteResult.DRAW
+                    playerBet = 10000,
+                    expectedEarning = 0
                 ),
                 DealerCompeteTestData(
                     dealerHand = Hand(
@@ -86,16 +89,17 @@ class CompareResultTest : FunSpec({
                             Card(CardNumber.EIGHT, CardShape.CLOVER),
                         ),
                     ),
-                    expected = CompeteResult.WIN
+                    playerBet = 10000,
+                    expectedEarning = -10000
                 ),
             )
-        ) { (dealerHand, playerHand, dealerExpected) ->
+        ) { (dealerHand, playerHand, playerBet, expectedEarning) ->
             val dealer = Dealer(dealerHand)
-            val player = Player("", playerHand)
+            val player = Player("", playerBet, playerHand)
 
             val actual = BlackjackResult(dealer = dealer, players = listOf(player))
 
-            actual.playerCompeteResults[0].competeResult shouldBe dealerExpected.opposite()
+            actual.playerCompeteResults[0].getEarnMoney() shouldBe expectedEarning
         }
     }
 })
