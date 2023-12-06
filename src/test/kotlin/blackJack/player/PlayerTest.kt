@@ -19,7 +19,7 @@ class PlayerTest {
 
         // when : 플레이어가 카드를 받는다.
         player.saveCard(card)
-        val actual = player.playerDeck.cardDeck[0]
+        val actual = player.playerDeck.cardList[0]
 
         // then :
         assertThat(actual).isEqualTo(card)

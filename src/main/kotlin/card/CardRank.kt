@@ -14,14 +14,4 @@ enum class CardRank(val point: Int, val symbol: String) {
     JACK(10, "J"),
     QUEEN(10, "Q"),
     KING(10, "K");
-
-    companion object {
-
-        private val cardNumberList = listOf(
-            ACE, TWO, TREE, FOUR, FIVE, SIX, SEVEN,
-            EIGHT, NINE, TEN, JACK, QUEEN, KING,
-        )
-
-        fun getCardNumberList() = cardNumberList
-    }
 }

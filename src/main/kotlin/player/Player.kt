@@ -1,14 +1,18 @@
 package player
 
 import card.PlayingCard
-import card.deck.PlayerDeck
+import card.deck.Hands
 
-class Player(val name: String) {
+class Player(
+    val name: String,
+    status: Status = Status.START,
+    hands: Hands = Hands(),
+) {
 
-    var status = Status.START
+    var status = status
         private set
 
-    var playerDeck = PlayerDeck()
+    var playerDeck = hands
         private set
 
     fun playDone() {

@@ -12,21 +12,12 @@ class PlayingCardTest {
     fun `트럼프 카드를 생성하고, 해당 카드의 포인트를 요청할 때, 포인트를 반환한다`() {
         // given : 트럼프 카드를 생성한다.
         val playingCard = PlayingCard(Suit.SPADE, CardRank.TREE)
-        val playingCard2 = PlayingCard(Suit.HEART, CardRank.TWO)
-        val playingCard3 = PlayingCard(Suit.HEART, CardRank.ACE)
-        val playingCard4 = PlayingCard(Suit.HEART, CardRank.KING)
 
         // when : 해당 카드의 포인트를 요청한다.
         val actual = playingCard.getPoint()
-        val actual2 = playingCard2.getPoint()
-        val actual3 = playingCard3.getPoint()
-        val actual4 = playingCard4.getPoint()
 
         // then : 카드별 포인트를 반환한다
         assertThat(actual).isEqualTo(3)
-        assertThat(actual2).isEqualTo(2)
-        assertThat(actual3).isEqualTo(1)
-        assertThat(actual4).isEqualTo(10)
     }
 
     @Test

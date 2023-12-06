@@ -1,12 +1,8 @@
-package card.deck
+package blackJack.card.deck
 
 import card.PlayingCard
 
-class GameDeck(private val cardList: MutableList<PlayingCard>) {
-
-    init {
-        cardList.shuffle()
-    }
+class FakeGameDeck(private val cardList: MutableList<PlayingCard>) {
 
     private var index = 0
 
@@ -20,7 +16,6 @@ class GameDeck(private val cardList: MutableList<PlayingCard>) {
     }
 
     private fun resetCard() {
-        cardList.shuffle()
         index = 0
     }
 }
