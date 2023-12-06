@@ -5,7 +5,6 @@ import blackjack.domain.player.Player
 import blackjack.domain.result.game.VictoryStatus
 
 object BlackJackJudge {
-    private const val BUST_THRESHOLD = 21
     private const val BUST_SCORE = 0
     private const val BLACK_JACK_CARD_COUNT = 2
     private const val BLACK_JACK_SCORE = 21
@@ -25,5 +24,5 @@ object BlackJackJudge {
         if (this.isBust()) BUST_SCORE
         else this.score.value
 
-    private fun CardPlayer.isBust() = score.value > BUST_THRESHOLD
+    private fun CardPlayer.isBust() = score.value > BLACK_JACK_SCORE
 }
