@@ -8,9 +8,9 @@ class InputManager {
         return inputUserValue().replace("\\s".toRegex(), "").split(",")
     }
 
-    fun inputBettingAmount(player: Player): Int {
+    fun inputBettingAmount(playerName: String): Int {
         println()
-        println("${player.name.value}의 베팅 금액은?")
+        println("${playerName}의 베팅 금액은?")
         return inputUserValue().toInt()
     }
 

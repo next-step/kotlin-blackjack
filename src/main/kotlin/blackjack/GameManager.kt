@@ -1,6 +1,7 @@
 package blackjack
 
 import blackjack.card.CardDeck
+import blackjack.participant.BettingAmount
 import blackjack.participant.Dealer
 import blackjack.participant.Name
 import blackjack.participant.Player
@@ -68,7 +69,7 @@ class GameManager(
 
     private fun joinPlayers(): List<Player> {
         val playerNames: List<String> = inputManager.inputPlayerNames()
-        return playerNames.map { Player(Name(it)) }
+        return playerNames.map { Player(Name(it), BettingAmount(inputManager.inputBettingAmount(it))) }
     }
 
     private fun joinDealer(): Dealer {

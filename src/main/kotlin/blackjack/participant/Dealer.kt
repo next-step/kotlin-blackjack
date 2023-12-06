@@ -7,6 +7,7 @@ class Dealer(
     scoreCalculator: ScoreCalculator
 )  {
     private val blackjackStrategy: BlackjackStrategy = BlackjackStrategy(scoreCalculator)
+    val bettingAmount: BettingAmount = BettingAmount(0)
 
     val cards get() = blackjackStrategy.cards
 

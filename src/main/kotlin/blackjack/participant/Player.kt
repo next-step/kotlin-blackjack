@@ -8,8 +8,7 @@ class Player(
     val bettingAmount: BettingAmount = BettingAmount(0),
     scoreCalculator: ScoreCalculator = ScoreCalculator()
 ) {
-    constructor(name: Name, scoreCalculator: ScoreCalculator): this(name, BettingAmount(0), scoreCalculator)
-    constructor(name: Name): this(name, BettingAmount(0), ScoreCalculator())
+    constructor(name: Name, scoreCalculator: ScoreCalculator) : this(name, BettingAmount(0), scoreCalculator)
 
     private val blackjackStrategy: BlackjackStrategy = BlackjackStrategy(scoreCalculator)
 
