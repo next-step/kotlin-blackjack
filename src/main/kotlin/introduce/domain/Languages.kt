@@ -1,5 +1,8 @@
 package introduce.domain
 
+import introduce.IntroduceMarker
+
+@IntroduceMarker
 class Languages {
     private val languages: MutableMap<String, Int> = mutableMapOf()
 

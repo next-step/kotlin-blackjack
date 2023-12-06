@@ -1,5 +1,8 @@
 package introduce.domain
 
+import introduce.IntroduceMarker
+
+@IntroduceMarker
 class Person {
     lateinit var name: String
     lateinit var company: String
