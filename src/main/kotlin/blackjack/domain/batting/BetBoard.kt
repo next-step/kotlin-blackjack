@@ -1,5 +1,6 @@
 package blackjack.domain.batting
 
+import blackjack.domain.BlackJackJudge
 import blackjack.domain.Dealer
 import blackjack.domain.player.Player
 import blackjack.domain.player.PlayerName
@@ -48,7 +49,7 @@ data class BetBoard(
         playerBets[name] ?: throw IllegalArgumentException("베팅에 참여한 플레이어가 아닙니다")
 
     private fun Player.payout(dealer: Dealer, betAmount: Amount): Amount =
-        when (this.judgeVictory(dealer)) {
+        when (BlackJackJudge.judgeVictory(this, dealer)) {
             VictoryStatus.WIN -> calculateWinAmount(this, betAmount)
             VictoryStatus.LOSS -> Amount.ZERO
             VictoryStatus.PUSH -> betAmount
