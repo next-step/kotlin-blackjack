@@ -3,6 +3,7 @@ package blackjack.participant
 import blackjack.ScoreCalculator
 import blackjack.card.BlackJackCard
 import blackjack.participant.status.Blackjack
+import blackjack.participant.status.Hit
 import blackjack.participant.status.Status
 
 class BlackjackStrategy(
@@ -15,6 +16,7 @@ class BlackjackStrategy(
 
     fun drawCard(cards: List<BlackJackCard>) {
         this.cards += cards
+        status = Hit()
         if (cards.size == FIRST_TURN_DRAW && isBlackjack()) {
             status = Blackjack()
         }
