@@ -13,4 +13,12 @@ value class BettingAmount(
     fun winToBlackjack(): BettingAmount {
         return BettingAmount((amount * 1.5).roundToInt())
     }
+
+    fun plusAmount(bettingAmount: BettingAmount): BettingAmount {
+        return BettingAmount(amount + bettingAmount.amount)
+    }
+
+    fun minusAmount(bettingAmount: BettingAmount): BettingAmount {
+        return BettingAmount(amount - bettingAmount.amount)
+    }
 }
