@@ -2,8 +2,8 @@ package blackjack.participant.status
 
 import blackjack.participant.BettingAmount
 import blackjack.participant.Result
-import org.junit.jupiter.api.Test
 import io.kotest.matchers.shouldBe
+import org.junit.jupiter.api.Test
 
 class StatusTest {
 
@@ -25,7 +25,7 @@ class StatusTest {
     fun `Bust 상태는 배팅 금액을 잃는다`() {
         val bust = Bust()
         val result = bust.calculateBettingAmount(Result.Win, BettingAmount(1000))
-        result.amount shouldBe 0
+        result.amount shouldBe -1000
     }
 
     @Test
