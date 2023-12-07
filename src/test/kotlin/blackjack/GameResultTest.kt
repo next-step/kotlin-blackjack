@@ -4,10 +4,12 @@ import blackjack.card.CardPattern
 import blackjack.card.CardPicture
 import blackjack.card.NormalCard
 import blackjack.card.PictureCard
+import blackjack.participant.BettingAmount
 import blackjack.participant.Dealer
 import blackjack.participant.Name
 import blackjack.participant.Player
 import blackjack.participant.Result
+import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeInstanceOf
 import org.junit.jupiter.api.Test
 
@@ -15,9 +17,9 @@ class GameResultTest {
     private val scoreCalculator: ScoreCalculator = ScoreCalculator()
 
     @Test
-    fun `딜러가 버스트면 해당 시점에 살아있는 나머지 사용자는 승리한다`() {
+    fun `딜러가 버스트면 해당 시점에 살아있는 나머지 사용자는 베팅 금액을 잃지 않는다`() {
         val name = "홍길동"
-        val player = Player(Name(name), scoreCalculator)
+        val player = Player(Name(name), BettingAmount(1000))
         player.drawCard(
             listOf(
                 NormalCard(9, CardPattern.CLOVER),
@@ -34,13 +36,13 @@ class GameResultTest {
         )
         val result = GameResult(listOf(player), dealer)
 
-        result.resultMap[player.name].shouldBeInstanceOf<Result.Win>()
+        result.resultMap[player.name]?.amount shouldBe 1000
     }
 
     @Test
-    fun `딜러가 버스트여도 사용자가 버스트이면 사용자는 패배한다`() {
+    fun `딜러가 버스트여도 사용자가 버스트이면 사용자는 배팅 금액을 잃는다`() {
         val name = "홍길동"
-        val player = Player(Name(name), scoreCalculator)
+        val player = Player(Name(name), BettingAmount(1000))
         player.drawCard(
             listOf(
                 PictureCard(CardPicture.KING, CardPattern.CLOVER),
@@ -58,6 +60,6 @@ class GameResultTest {
         )
         val result = GameResult(listOf(player), dealer)
 
-        result.resultMap[player.name].shouldBeInstanceOf<Result.Lose>()
+        result.resultMap[player.name]?.amount shouldBe -1000
     }
 }
