@@ -8,7 +8,9 @@ import blackjack.card.NormalCard
 import blackjack.card.PictureCard
 import blackjack.participant.Name
 import blackjack.participant.Player
+import blackjack.participant.status.Bust
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.types.shouldBeInstanceOf
 import org.junit.jupiter.api.Test
 
 class PlayerTest {
@@ -72,6 +74,6 @@ class PlayerTest {
             )
         )
 
-        player.isBust shouldBe true
+        player.status.shouldBeInstanceOf<Bust>()
     }
 }

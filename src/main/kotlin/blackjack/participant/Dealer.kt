@@ -13,8 +13,6 @@ class Dealer(
 
     val cards get() = blackjackStrategy.cards
 
-    val isBust get() = blackjackStrategy.isBust
-
     val status get() = blackjackStrategy.status
 
     fun drawCard(cards: List<BlackJackCard>) {
@@ -45,7 +43,7 @@ class Dealer(
             }
         }
 
-        if (player.isBust) {
+        if (player.status is Bust) {
             bettingAmount = bettingAmount.plusAmount(player.bettingAmount)
             return Result.Lose
         }

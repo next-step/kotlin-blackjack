@@ -18,7 +18,6 @@ class BlackjackStrategy(
 
     fun drawCard(cards: List<BlackJackCard>) {
         this.cards += cards
-
         changeStatus(cards)
     }
 
