@@ -9,7 +9,6 @@ import blackjack.card.NormalCard
 import blackjack.card.PictureCard
 import blackjack.participant.Dealer
 import blackjack.participant.Player
-import blackjack.participant.Result
 
 class OutputManager {
     fun printPlayersAndDealerCards(players: List<Player>, dealer: Dealer) {
@@ -39,15 +38,7 @@ class OutputManager {
         printEnter()
         println(RESULT_MESSAGE)
         gameResult.resultMap.forEach {
-            println("${it.key.value} : ${parsingGameResult(it.value)}")
-        }
-    }
-
-    private fun parsingGameResult(result: Result): String {
-        return when(result) {
-            is Result.Win -> WIN
-            is Result.Lose -> LOSE
-            is Result.DealerResult -> "${result.win} $WIN ${result.lose} $LOSE"
+            println("${it.key.value} : ${it.value.amount}")
         }
     }
 
@@ -102,8 +93,6 @@ class OutputManager {
 
     companion object {
         private const val DEALER_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다."
-        private const val WIN = "승"
-        private const val LOSE = "패"
         private const val RESULT_MESSAGE = "## 최종승패"
     }
 }

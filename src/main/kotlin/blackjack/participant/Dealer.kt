@@ -7,7 +7,7 @@ import blackjack.participant.status.Bust
 
 class Dealer(
     scoreCalculator: ScoreCalculator
-)  {
+) {
     private val blackjackStrategy: BlackjackStrategy = BlackjackStrategy(scoreCalculator)
     var bettingAmount: BettingAmount = BettingAmount(0)
 
@@ -34,12 +34,16 @@ class Dealer(
             return when (status) {
                 is Blackjack -> Result.Lose
                 else -> {
-                    bettingAmount = bettingAmount.minusAmount(player.status.calculateBettingAmount(Result.Win, player.bettingAmount))
+                    bettingAmount = bettingAmount.minusAmount(
+                        player.status.calculateBettingAmount(
+                            Result.Win,
+                            player.bettingAmount
+                        )
+                    )
                     return Result.Win
                 }
             }
         }
-
 
         if (player.isBust) {
             bettingAmount = bettingAmount.plusAmount(player.bettingAmount)
@@ -51,11 +55,12 @@ class Dealer(
             return Result.Win
         }
 
-        return when(resultScore() > player.resultScore()) {
+        return when (resultScore() > player.resultScore()) {
             true -> {
                 bettingAmount = bettingAmount.plusAmount(player.bettingAmount)
                 Result.Lose
             }
+
             else -> Result.Win
         }
     }
