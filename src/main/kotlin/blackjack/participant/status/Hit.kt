@@ -8,11 +8,6 @@ class Hit : Status {
         return when (result) {
             is Result.Win -> bettingAmount
             is Result.Lose -> bettingAmount.changeNegative()
-            else -> throw IllegalArgumentException(ERROR_MESSAGE)
         }
-    }
-
-    companion object {
-        private const val ERROR_MESSAGE: String = "잘못된 값입니다."
     }
 }

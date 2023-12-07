@@ -8,11 +8,6 @@ class Blackjack : Status {
         return when(result) {
             is Result.Win -> bettingAmount.winToBlackjack()
             is Result.Lose -> BettingAmount(0)
-            else -> throw IllegalArgumentException(ERROR_MESSAGE)
         }
-    }
-
-    companion object {
-        private const val ERROR_MESSAGE: String = "잘못된 값입니다."
     }
 }
