@@ -1,11 +1,21 @@
 package blackjack.participant
 
+import kotlin.math.roundToInt
+
 @JvmInline
 value class BettingAmount(
     val amount: Int
 ) {
     init {
         require(amount >= 0) { VALID_MESSAGE }
+    }
+
+    fun changeNegative(): BettingAmount {
+        return BettingAmount(amount * -1)
+    }
+
+    fun winToBlackjack(): BettingAmount {
+        return BettingAmount((amount * 1.5).roundToInt())
     }
 
     companion object {

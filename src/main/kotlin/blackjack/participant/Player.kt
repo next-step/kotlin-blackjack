@@ -2,7 +2,6 @@ package blackjack.participant
 
 import blackjack.ScoreCalculator
 import blackjack.card.BlackJackCard
-import blackjack.participant.status.Status
 
 class Player(
     val name: Name,
