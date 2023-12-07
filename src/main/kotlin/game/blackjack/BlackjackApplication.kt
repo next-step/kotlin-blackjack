@@ -1,5 +1,6 @@
 package game.blackjack
 
+import game.blackjack.domain.Deck
 import game.blackjack.domain.Participant
 
 /*
@@ -24,5 +25,8 @@ import game.blackjack.domain.Participant
 */
 fun main() {
     // 게임에 참여할 사람을 입력받는다.
-    val participant = readln().split(",").map { Participant(it) }
+    val participants = readln().split(",").map { Participant(it) }
+
+    // 총 52장의 카드로 이루어진 게임 덱을 받는다.
+    val deck = Deck()
 }
