@@ -2,6 +2,7 @@ package blackjack.participant
 
 import blackjack.ScoreCalculator
 import blackjack.card.BlackJackCard
+import blackjack.participant.status.Bust
 
 class Dealer(
     scoreCalculator: ScoreCalculator
@@ -25,6 +26,22 @@ class Dealer(
 
     fun shouldDraw(): Boolean {
         return blackjackStrategy.resultScore() < MAX_DRAW_SCORE
+    }
+
+    fun matchingScore(player: Player): Result {
+        if (player.isBust) {
+            return Result.Lose
+        }
+
+        if (status is Bust) {
+            return Result.Win
+        }
+
+        return when(resultScore() > player.resultScore()) {
+            true -> Result.Lose
+            else -> Result.Win
+        }
+
     }
 
     companion object {
