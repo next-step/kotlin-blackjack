@@ -46,4 +46,11 @@ class HandTest : StringSpec({
         hand.isBlackjack() shouldBe false
         hand.isBust() shouldBe true
     }
+
+    "blackjackDiff 테스트" {
+        val hand = Hand(HandCards(mutableListOf(Card(Suit.Spade, Character.Jack), Card(Suit.Clover, Character.Jack))))
+
+        hand.valueSum() shouldBe 20
+        hand.blackjackDiff() shouldBe 1
+    }
 })

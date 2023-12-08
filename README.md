@@ -1,6 +1,6 @@
 # kotlin-blackjack
 
-## step2
+## step3
 - [x] 초기 DeckCards 은 52장의 카드로 이루어진다
 - [x] 초기 DeckCards 의 각 Suit 카드는 13장씩 있어야 한다
 - [x] 초기 DeckCards 는 중복 없는 카드로 이루어져야 한다
@@ -17,3 +17,4 @@
 - [x] Player 가 bust 상태가 되면 hit 할 수 없다
 - [x] Player 가 blackjack 상태가 되면 hit 할 수 없다
 - [x] Player 는 stay 후엔 다시 hit 할 수 없다
+- [x] Dealer 와 Player 의 승패가 정확히 결정된다

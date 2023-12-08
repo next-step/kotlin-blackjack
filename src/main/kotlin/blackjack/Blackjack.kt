@@ -1,11 +1,13 @@
 package blackjack
 
+import blackjack.domain.BlackjackResult
+import blackjack.domain.PlayerResult
 import blackjack.domain.cards.Deck
-import blackjack.domain.cards.HandCards
-import blackjack.domain.player.Hand
+import blackjack.domain.player.Dealer
 import blackjack.domain.player.Player
 import blackjack.domain.player.PlayerState
 import blackjack.view.InputView
+import blackjack.view.InputViewCommand
 import blackjack.view.ResultView
 import blackjack.view.UserInputView
 
@@ -13,14 +15,12 @@ class Blackjack(
     private val inputView: InputView,
     private val resultView: ResultView,
 ) {
-    private val deck = Deck.fullDeck()
-
-    init {
-        deck.shuffle()
-    }
+    private val dealer = Dealer(Deck.fullDeck())
 
     fun simulate() {
         val playerNames = inputView.getPlayerNames()
+
+        dealer.initHand()
 
         val players = createPlayers(playerNames)
 
@@ -30,26 +30,39 @@ class Blackjack(
             processPlayerTurn(player)
         }
 
+        dealer.processTurn {
+            resultView.printDealerTurn(it)
+        }
+
+        resultView.printPlayer(dealer.asPlayer)
         resultView.printResult(players)
+
+        val gameResult = BlackjackResult(
+            players.map { player ->
+                PlayerResult(player, dealer.wins(player))
+            }
+        )
+
+        resultView.printBlackjackResult(gameResult)
     }
 
     private fun processPlayerTurn(player: Player) {
         while (player.state == PlayerState.Hit) {
             val command = inputView.getPlayerCommand(player.name)
-            player.play(command == "y")
+            player.play(command == InputViewCommand.Yes)
+            resultView.printPlayer(player)
         }
     }
 
     private fun createPlayers(playerNames: List<String>): List<Player> {
-        return playerNames.map { Player(it, Hand(HandCards(mutableListOf(deck.draw(), deck.draw())))) }
+        return playerNames.map { Player(it, dealer.createInitialHand()) }
     }
 
     private fun Player.play(isHit: Boolean) {
         if (isHit) {
             hit()
-            val card = deck.draw()
+            val card = dealer.provideCard()
             addCard(card)
-            println("$name: ${hand.handCards}")
         } else {
             stay()
         }

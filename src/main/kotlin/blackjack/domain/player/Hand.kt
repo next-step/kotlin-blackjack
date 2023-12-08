@@ -2,12 +2,16 @@ package blackjack.domain.player
 
 import blackjack.domain.card.Card
 import blackjack.domain.cards.HandCards
+import kotlin.math.abs
 
 data class Hand(val handCards: HandCards) {
     fun addCard(card: Card) {
         handCards.add(card)
     }
+
     fun valueSum(): Int = handCards.cardList.sumOf { it.character.value }
+
+    fun blackjackDiff() = abs(valueSum() - BLACK_JACK)
 
     fun isBlackjack() = valueSum() == BLACK_JACK
 
