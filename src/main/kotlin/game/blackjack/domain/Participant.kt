@@ -1,6 +1,6 @@
 package game.blackjack.domain
 
-class Participant(private val name: String) {
+class Participant(val name: String) {
     private val _cards: MutableList<Card> = mutableListOf()
     val cards: List<Card> get() = _cards.toList()
 
@@ -12,4 +12,3 @@ class Participant(private val name: String) {
         _cards.addAll(cards)
     }
 }
-

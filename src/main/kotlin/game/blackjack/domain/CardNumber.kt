@@ -1,6 +1,6 @@
 package game.blackjack.domain
 
-enum class CardNumber(val number: Int) {
+enum class CardNumber(val value: Int) {
     TWO(2),
     THREE(3),
     FOUR(4),
