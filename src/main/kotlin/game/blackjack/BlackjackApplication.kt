@@ -29,4 +29,7 @@ fun main() {
 
     // 총 52장의 카드로 이루어진 게임 덱을 받는다.
     val deck = Deck()
+
+    // 게임 시작 시 각 참여자들은 2장의 카드를 받는다.
+    participants.forEach { it.drawCard(deck.initialDraw()) }
 }
