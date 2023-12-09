@@ -5,6 +5,6 @@ import blackjack.participant.Result
 
 class Bust : Status {
     override fun calculateBettingAmount(result: Result, bettingAmount: BettingAmount): BettingAmount {
-        return bettingAmount.changeNegative()
+        return -bettingAmount
     }
 }

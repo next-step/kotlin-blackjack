@@ -25,6 +25,6 @@ class Player(
     }
 
     fun shouldDraw(): Boolean {
-        return !blackjackStrategy.isBust
+        return !blackjackStrategy.isBust()
     }
 }

@@ -6,19 +6,24 @@ import kotlin.math.roundToInt
 value class BettingAmount(
     val amount: Int
 ) {
-    fun changeNegative(): BettingAmount {
-        return BettingAmount(amount * -1)
-    }
+//    fun changeNegative(): BettingAmount {
+//        return BettingAmount(amount * -1)
+//    }
 
     fun winToBlackjack(): BettingAmount {
         return BettingAmount((amount * 1.5).roundToInt())
     }
 
-    fun plusAmount(bettingAmount: BettingAmount): BettingAmount {
-        return BettingAmount(amount + bettingAmount.amount)
+    operator fun unaryMinus(): BettingAmount {
+        return BettingAmount(amount * -1)
     }
+
 
     fun minusAmount(bettingAmount: BettingAmount): BettingAmount {
         return BettingAmount(amount - bettingAmount.amount)
     }
+}
+
+infix operator fun BettingAmount.plus(bettingAmount: BettingAmount): BettingAmount {
+    return BettingAmount(amount + bettingAmount.amount)
 }

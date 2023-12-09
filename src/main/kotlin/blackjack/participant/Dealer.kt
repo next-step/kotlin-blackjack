@@ -44,7 +44,7 @@ class Dealer(
         }
 
         if (player.status is Bust) {
-            bettingAmount = bettingAmount.plusAmount(player.bettingAmount)
+            bettingAmount += player.bettingAmount
             return Result.Lose
         }
 
@@ -55,7 +55,7 @@ class Dealer(
 
         return when (resultScore() > player.resultScore()) {
             true -> {
-                bettingAmount = bettingAmount.plusAmount(player.bettingAmount)
+                bettingAmount += player.bettingAmount
                 Result.Lose
             }
 
