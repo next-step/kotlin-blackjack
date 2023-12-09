@@ -17,13 +17,12 @@ value class BettingAmount(
     operator fun unaryMinus(): BettingAmount {
         return BettingAmount(amount * -1)
     }
-
-
-    fun minusAmount(bettingAmount: BettingAmount): BettingAmount {
-        return BettingAmount(amount - bettingAmount.amount)
-    }
 }
 
 infix operator fun BettingAmount.plus(bettingAmount: BettingAmount): BettingAmount {
     return BettingAmount(amount + bettingAmount.amount)
+}
+
+infix operator fun BettingAmount.minus(bettingAmount: BettingAmount): BettingAmount {
+    return BettingAmount(amount - bettingAmount.amount)
 }

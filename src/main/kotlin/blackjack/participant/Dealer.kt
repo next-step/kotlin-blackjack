@@ -32,12 +32,11 @@ class Dealer(
             return when (status) {
                 is Blackjack -> Result.Lose
                 else -> {
-                    bettingAmount = bettingAmount.minusAmount(
-                        player.status.calculateBettingAmount(
+                    bettingAmount -= player.status.calculateBettingAmount(
                             Result.Win,
                             player.bettingAmount
                         )
-                    )
+
                     return Result.Win
                 }
             }
@@ -49,7 +48,7 @@ class Dealer(
         }
 
         if (status is Bust) {
-            bettingAmount = bettingAmount.minusAmount(player.bettingAmount)
+            bettingAmount -= player.bettingAmount
             return Result.Win
         }
 

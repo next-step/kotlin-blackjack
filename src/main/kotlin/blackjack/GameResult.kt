@@ -12,11 +12,10 @@ class GameResult(
     val resultMap: Map<Name, BettingAmount>
 
     init {
-        resultMap = mapOf(Name("딜러") to dealer.bettingAmount) +
-                players.map { player ->
-                    val result = dealer.matchingScore(player)
-                    val bettingAmount = player.status.calculateBettingAmount(result, player.bettingAmount)
-                    player.name to bettingAmount
-                }
+        resultMap = mapOf(Name("딜러") to dealer.bettingAmount) + players.map { player ->
+            val result = dealer.matchingScore(player)
+            val bettingAmount = player.status.calculateBettingAmount(result, player.bettingAmount)
+            player.name to bettingAmount
+        }
     }
 }
