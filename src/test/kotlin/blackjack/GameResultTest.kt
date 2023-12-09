@@ -4,6 +4,8 @@ import blackjack.card.CardPattern
 import blackjack.card.CardPicture
 import blackjack.card.NormalCard
 import blackjack.card.PictureCard
+import blackjack.game.GameResult
+import blackjack.game.ScoreCalculator
 import blackjack.participant.BettingAmount
 import blackjack.participant.Dealer
 import blackjack.participant.Name

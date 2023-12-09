@@ -1,6 +1,6 @@
 package blackjack.ui
 
-import blackjack.GameResult
+import blackjack.game.GameResult
 import blackjack.card.AceCard
 import blackjack.card.BlackJackCard
 import blackjack.card.CardPattern
