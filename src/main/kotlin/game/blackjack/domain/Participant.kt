@@ -1,14 +1,14 @@
 package game.blackjack.domain
 
 class Participant(val name: String) {
-    private val _cards: MutableList<Card> = mutableListOf()
-    val cards: List<Card> get() = _cards.toList()
+    private val _handCards: MutableList<Card> = mutableListOf()
+    val handCards: List<Card> get() = _handCards.toList()
 
     fun drawCard(card: Card) {
-        _cards.add(card)
+        _handCards.add(card)
     }
 
     fun drawCard(cards: List<Card>) {
-        _cards.addAll(cards)
+        _handCards.addAll(cards)
     }
 }

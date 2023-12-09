@@ -32,14 +32,8 @@ fun main() {
 
     // 게임 시작 시 각 참여자들은 2장의 카드를 받는다.
     participants.forEach { it.drawCard(deck.initialDraw()) }
+
+    // 카드를 받을 경우 각 참여자들이 가진 패를 출력한다.
     println(String.format("%s에게 2장을 나누었습니다.", participants.map { it.name }.joinToString(", ")))
-    participants.forEach {
-        println(
-            String.format(
-                "%s카드: %d%s, %d%s", it.name,
-                it.cards[0].number.value, it.cards[0].shape.value,
-                it.cards[1].number.value, it.cards[1].shape.value
-            )
-        )
-    }
+    participants.forEach { println(it) }
 }
