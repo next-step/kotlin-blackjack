@@ -14,7 +14,9 @@ class BlackjackStrategy(
     var cards: List<BlackJackCard> = emptyList()
     var status: Status = Hit()
 
-    val isBust get() = resultScore() > BLACKJACK
+    fun isBust(): Boolean {
+        return resultScore() > BLACKJACK
+    }
 
     fun drawCard(cards: List<BlackJackCard>) {
         this.cards += cards
@@ -23,8 +25,8 @@ class BlackjackStrategy(
 
     private fun changeStatus(cards: List<BlackJackCard>) {
         when {
-            !isFirstTurn(cards) && !isBust -> status = Stand()
-            !isFirstTurn(cards) && isBust -> status = Bust()
+            !isFirstTurn(cards) && !isBust() -> status = Stand()
+            !isFirstTurn(cards) && isBust() -> status = Bust()
             isFirstTurn(cards) && isBlackjack() -> status = Blackjack()
         }
     }
