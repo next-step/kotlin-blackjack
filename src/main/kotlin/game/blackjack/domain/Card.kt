@@ -5,5 +5,3 @@ data class Card(val number: CardNumber, val shape: CardShape) {
         return "${number.value}${shape.value}"
     }
 }
-
-
