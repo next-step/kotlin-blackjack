@@ -1,7 +1,6 @@
 package blackjack
 
 import blackjack.card.CardDeck
-import blackjack.game.GameResult
 import blackjack.game.GameResultGenerator
 import blackjack.game.ScoreCalculator
 import blackjack.participant.BettingAmount
