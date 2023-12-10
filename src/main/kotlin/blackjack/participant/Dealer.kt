@@ -1,7 +1,7 @@
 package blackjack.participant
 
-import blackjack.game.ScoreCalculator
 import blackjack.card.BlackJackCard
+import blackjack.game.ScoreCalculator
 import blackjack.participant.status.Blackjack
 import blackjack.participant.status.Bust
 
@@ -33,9 +33,9 @@ class Dealer(
                 is Blackjack -> Result.Lose
                 else -> {
                     bettingAmount -= player.status.calculateBettingAmount(
-                            Result.Win,
-                            player.bettingAmount
-                        )
+                        Result.Win,
+                        player.bettingAmount
+                    )
 
                     return Result.Win
                 }
