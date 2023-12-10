@@ -11,4 +11,16 @@ class Participant(val name: String) {
     fun drawCard(cards: List<Card>) {
         _handCards.addAll(cards)
     }
+
+    fun isBust(): Boolean {
+        return _handCards.sumOf { it.number.number } > Blackjack.WINNING_SCORE
+    }
+
+    fun isNotBust(): Boolean {
+        return !isBust()
+    }
+
+    override fun toString(): String {
+        return "${name}카드: ${_handCards.map { it.toString() }.joinToString(", ")}"
+    }
 }

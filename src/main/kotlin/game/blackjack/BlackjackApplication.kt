@@ -36,4 +36,16 @@ fun main() {
     // 카드를 받을 경우 각 참여자들이 가진 패를 출력한다.
     println(String.format("%s에게 2장을 나누었습니다.", participants.map { it.name }.joinToString(", ")))
     participants.forEach { println(it) }
+
+    // 카드의 총 숫자가 21 이하면 계속 카드를 뽑을 수 있다.
+    participants.forEach { participant ->
+        while (participant.isNotBust()) {
+            println(String.format("${participant.name}은(는) 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)"))
+            if (readln().trim().lowercase() != "y") {
+                break
+            }
+            participant.drawCard(deck.drawOnce())
+            println(participant)
+        }
+    }
 }
