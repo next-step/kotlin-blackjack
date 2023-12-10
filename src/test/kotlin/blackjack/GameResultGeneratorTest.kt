@@ -5,6 +5,7 @@ import blackjack.card.CardPicture
 import blackjack.card.NormalCard
 import blackjack.card.PictureCard
 import blackjack.game.GameResult
+import blackjack.game.GameResultGenerator
 import blackjack.game.ScoreCalculator
 import blackjack.participant.BettingAmount
 import blackjack.participant.Dealer
@@ -13,7 +14,7 @@ import blackjack.participant.Player
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
-class GameResultTest {
+class GameResultGeneratorTest {
     private val scoreCalculator: ScoreCalculator = ScoreCalculator()
 
     @Test
@@ -34,7 +35,7 @@ class GameResultTest {
                 NormalCard(2, CardPattern.CLOVER),
             )
         )
-        val result = GameResult(listOf(player), dealer)
+        val result = GameResultGenerator.generateGameResult(listOf(player), dealer)
 
         result.resultMap[player.name]?.amount shouldBe 1000
     }
@@ -58,7 +59,7 @@ class GameResultTest {
                 NormalCard(2, CardPattern.CLOVER),
             )
         )
-        val result = GameResult(listOf(player), dealer)
+        val result = GameResultGenerator.generateGameResult(listOf(player), dealer)
 
         result.resultMap[player.name]?.amount shouldBe -1000
     }

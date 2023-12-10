@@ -2,6 +2,7 @@ package blackjack
 
 import blackjack.card.CardDeck
 import blackjack.game.GameResult
+import blackjack.game.GameResultGenerator
 import blackjack.game.ScoreCalculator
 import blackjack.participant.BettingAmount
 import blackjack.participant.Dealer
@@ -29,7 +30,9 @@ class GameManager(
         outputManager.printFirstTurn(players)
         outputManager.printPlayersAndDealerCards(players, dealer)
 
-        val result = playBlackJack()
+        playBlackJack()
+
+        val result = GameResultGenerator.generateGameResult(players, dealer)
 
         outputManager.printDealerResultGame(dealer)
 
@@ -39,13 +42,20 @@ class GameManager(
         outputManager.printResult(result)
     }
 
-    private fun playBlackJack(): GameResult {
+//    private fun playBlackJack(): GameResult {
+//        players.forEach {
+//            playerDraw(it)
+//        }
+//        dealerDraw(dealer)
+//
+//        return GameResult(players, dealer)
+//    }
+
+    private fun playBlackJack() {
         players.forEach {
             playerDraw(it)
         }
         dealerDraw(dealer)
-
-        return GameResult(players, dealer)
     }
 
     private fun playerDraw(player: Player) {
