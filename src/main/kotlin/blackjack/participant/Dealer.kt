@@ -1,7 +1,7 @@
 package blackjack.participant
 
 import blackjack.card.BlackJackCard
-import blackjack.game.ScoreCalculator
+import blackjack.supoort.ScoreCalculator
 
 class Dealer(
     scoreCalculator: ScoreCalculator

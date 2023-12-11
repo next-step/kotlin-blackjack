@@ -1,6 +1,6 @@
 package blackjack.participant
 
-import blackjack.game.ScoreCalculator
+import blackjack.supoort.ScoreCalculator
 import blackjack.card.AceCard
 import blackjack.card.CardPattern
 import blackjack.card.CardPicture

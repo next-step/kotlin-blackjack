@@ -2,7 +2,7 @@ package blackjack.domain
 
 import blackjack.card.CardPattern
 import blackjack.card.NormalCard
-import blackjack.game.ScoreCalculator
+import blackjack.supoort.ScoreCalculator
 import blackjack.participant.Dealer
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test

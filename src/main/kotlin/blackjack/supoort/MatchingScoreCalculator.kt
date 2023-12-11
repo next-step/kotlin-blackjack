@@ -1,4 +1,4 @@
-package blackjack.game
+package blackjack.supoort
 
 import blackjack.participant.BettingAmount
 import blackjack.participant.Dealer

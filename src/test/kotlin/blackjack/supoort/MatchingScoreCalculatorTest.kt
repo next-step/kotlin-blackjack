@@ -1,4 +1,4 @@
-package blackjack.game
+package blackjack.supoort
 
 import blackjack.card.CardPattern
 import blackjack.card.CardPicture
