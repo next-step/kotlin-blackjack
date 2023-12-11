@@ -11,39 +11,28 @@ import blackjack.participant.status.Bust
 
 object MatchingScoreCalculator {
 
-    fun matchingScore(player: Player, dealer: Dealer): Result {
+    fun matchingScoreForDealer(players: List<Player>, dealer: Dealer): BettingAmount {
         var bettingAmount = BettingAmount(0)
-        if (player.status is Blackjack) {
-            return when (dealer.status) {
-                is Blackjack -> Result.Lose
-                else -> {
-                    bettingAmount -= player.status.calculateBettingAmount(
-                        Result.Win,
-                        player.bettingAmount
-                    )
-
-                    return Result.Win
-                }
-            }
-        }
-
-        if (player.status is Bust) {
-            bettingAmount += player.bettingAmount
-            return Result.Lose
-        }
-
-        if (dealer.status is Bust) {
-            bettingAmount -= player.bettingAmount
-            return Result.Win
-        }
-
-        return when (dealer.resultScore() > player.resultScore()) {
-            true -> {
-                bettingAmount += player.bettingAmount
-                Result.Lose
+        players.forEach {
+            if (it.status is Blackjack && dealer.status !is Blackjack) {
+                bettingAmount -= it.status.calculateBettingAmount(
+                    Result.Win,
+                    it.bettingAmount
+                )
             }
 
-            else -> Result.Win
+            if (it.status is Bust) {
+                bettingAmount += it.bettingAmount
+            }
+
+            if (dealer.status is Bust) {
+                bettingAmount -= it.bettingAmount
+            }
+
+            if (dealer.resultScore() > it.resultScore()) {
+                bettingAmount += it.bettingAmount
+            }
         }
+        return bettingAmount
     }
 }

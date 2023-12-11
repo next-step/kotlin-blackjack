@@ -1,11 +1,9 @@
-package blackjack
+package blackjack.supoort
 
 import blackjack.card.CardPattern
 import blackjack.card.CardPicture
 import blackjack.card.NormalCard
 import blackjack.card.PictureCard
-import blackjack.supoort.GameResultGenerator
-import blackjack.supoort.ScoreCalculator
 import blackjack.participant.BettingAmount
 import blackjack.participant.Dealer
 import blackjack.participant.Name
