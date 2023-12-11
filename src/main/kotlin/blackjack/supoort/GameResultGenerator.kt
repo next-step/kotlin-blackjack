@@ -14,7 +14,6 @@ object GameResultGenerator {
 
     fun generateGameResult(players: List<Player>, dealer: Dealer): GameResult {
         val resultMap = mapOf(Name("딜러") to dealer.bettingAmount) + players.map { player ->
-//            val result = dealer.matchingScore(player)
             val result = matchingScore(player, dealer)
             val bettingAmount = player.status.calculateBettingAmount(result, player.bettingAmount)
             player.name to bettingAmount
@@ -24,7 +23,7 @@ object GameResultGenerator {
     }
 
     private fun matchingScore(player: Player, dealer: Dealer): Result {
-        var bettingAmount: BettingAmount = BettingAmount(0)
+        var bettingAmount = BettingAmount(0)
         if (player.status is Blackjack) {
             return when (dealer.status) {
                 is Blackjack -> Result.Lose
