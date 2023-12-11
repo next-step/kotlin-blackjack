@@ -13,7 +13,6 @@ import org.junit.jupiter.api.Test
 class MatchingScoreCalculatorTest {
     private val scoreCalculator: ScoreCalculator = ScoreCalculator()
 
-
     @Test
     fun `플레이어가 블랙잭 상태로 이기면 딜러에게서 배팅금액을 받는다`() {
         val dealer = Dealer(scoreCalculator)

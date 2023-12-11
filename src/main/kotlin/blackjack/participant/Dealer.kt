@@ -8,9 +8,7 @@ class Dealer(
 ) {
     private val blackjackStrategy: BlackjackStrategy = BlackjackStrategy(scoreCalculator)
     var bettingAmount: BettingAmount = BettingAmount(0)
-
     val cards get() = blackjackStrategy.cards
-
     val status get() = blackjackStrategy.status
 
     fun drawCard(cards: List<BlackJackCard>) {
