@@ -1,6 +1,7 @@
 package game.blackjack.domain
 
 enum class CardNumber(val number: Int, val value: String) {
+    ACE(1, "A"),
     TWO(2, "2"),
     THREE(3, "3"),
     FOUR(4, "4"),
@@ -12,6 +13,5 @@ enum class CardNumber(val number: Int, val value: String) {
     TEN(10, "10"),
     JACK(10, "J"),
     QUEEN(10, "Q"),
-    KING(10, "K"),
-    ACE(11, "A")
+    KING(10, "K")
 }

@@ -1,19 +1,18 @@
 package game.blackjack.domain
 
 class Participant(val name: String) {
-    private val _handCards: MutableList<Card> = mutableListOf()
-    val handCards: List<Card> get() = _handCards.toList()
+    val handCards: HandCards = HandCards()
 
     fun drawCard(card: Card) {
-        _handCards.add(card)
+        handCards.add(card)
     }
 
     fun drawCard(cards: List<Card>) {
-        _handCards.addAll(cards)
+        handCards.add(cards)
     }
 
     fun isBust(): Boolean {
-        return _handCards.sumOf { it.number.number } > Blackjack.WINNING_SCORE
+        return handCards.getCurrentScore() > Blackjack.WINNING_SCORE
     }
 
     fun isNotBust(): Boolean {
@@ -21,6 +20,6 @@ class Participant(val name: String) {
     }
 
     override fun toString(): String {
-        return "${name}카드: ${_handCards.map { it.toString() }.joinToString(", ")}"
+        return "${name}카드: ${handCards}"
     }
 }
