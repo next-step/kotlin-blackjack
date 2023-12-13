@@ -19,7 +19,11 @@ class Participant(val name: String) {
         return !isBust()
     }
 
+    fun getScore(): Int {
+        return handCards.getCurrentScore()
+    }
+
     override fun toString(): String {
-        return "${name}카드: ${handCards}"
+        return "${name}카드: $handCards"
     }
 }
