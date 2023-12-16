@@ -1,6 +1,7 @@
 package game.blackjack.ui
 
 import game.blackjack.domain.Participant
+import game.blackjack.domain.Participants
 
 object Input {
     private const val PARTICIPANTS_PROMPT = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)"
@@ -18,17 +19,14 @@ object Input {
 }
 
 object Output {
-    private const val DRAW_INITIAL_CARDS_PROMPT = "%s에게 2장을 나누었습니다."
+    private const val DRAW_INITIAL_CARDS_PROMPT = "%s에게 각각 2장을 나누었습니다."
 
-    fun printInitialCardsDraw(participants: List<Participant>) {
-        println(String.format(DRAW_INITIAL_CARDS_PROMPT, participants.joinToString(", ") { it.name }))
-        participants.forEach { println(it) }
+    fun printInitialCardsDraw(participants: Participants) {
+        println(String.format(DRAW_INITIAL_CARDS_PROMPT, participants.toNames()))
+        println(participants)
     }
 
-    fun printFinalResults(participants: List<Participant>) {
-        participants.forEach {
-            print(it)
-            println(" - 결과: ${it.getScore()}")
-        }
+    fun printFinalResults(participants: Participants) {
+        println(participants.toFinalResult())
     }
 }
