@@ -2,9 +2,17 @@
 
 ## 미션 피드백 링크
 
+- Step 1: [https://github.com/next-step/kotlin-blackjack/pull/702](https://github.com/next-step/kotlin-blackjack/pull/702)
+- Step 2: [https://github.com/next-step/kotlin-blackjack/pull/704](https://github.com/next-step/kotlin-blackjack/pull/704)
+- Step 3: [https://github.com/next-step/kotlin-blackjack/pull/705](https://github.com/next-step/kotlin-blackjack/pull/705)
+
 ## 미션 내용
 
-### STEP 1
+### STEP 2
+
+<details>
+<summary>접기/펼치기</summary>
+<div markdown="1">
 
 #### [요구 사항 분석]
 
@@ -30,3 +38,14 @@
 - [x] 한 플레이어가 더이상 카드를 받지 않으면, 다음 참가자가 게임을 시작한다.
 - [x] 게임이 종료되면 각 플레이어의 현재 패와 결과 점수를 출력한다.
 - [x] 모든 엔티티를 작게 유지하고, indent(인덴트, 들여쓰기) depth를 2를 넘지 않도록 구현한다.
+
+</div>
+</details>
+
+<br>
+
+### STEP 3
+
+#### [피드백]
+
+- [x] View 계층은 입출력 관련 책임만 갖도록 변경한다. (View계층에서 도메인 객체를 생성하는 행위를 이관한다)

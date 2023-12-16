@@ -6,7 +6,7 @@ import game.blackjack.ui.Input
 import game.blackjack.ui.Output
 
 fun main() {
-    val participants = Input.getParticipants()
+    val participants = Input.getParticipantNames().map { Participant(it) }
     val deck = Deck()
 
     drawInitialCards(participants, deck)
