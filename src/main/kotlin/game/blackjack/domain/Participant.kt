@@ -1,6 +1,6 @@
 package game.blackjack.domain
 
-class Participant(val name: String) {
+open class Participant(val name: String) {
     private val handCards: HandCards = HandCards()
 
     fun drawCard(card: Card) = handCards.add(card)

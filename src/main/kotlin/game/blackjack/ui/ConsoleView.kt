@@ -1,5 +1,6 @@
 package game.blackjack.ui
 
+import game.blackjack.domain.Dealer
 import game.blackjack.domain.Participant
 import game.blackjack.domain.Participants
 
@@ -19,10 +20,11 @@ object Input {
 }
 
 object Output {
-    private const val DRAW_INITIAL_CARDS_PROMPT = "%s에게 각각 2장을 나누었습니다."
+    private const val DRAW_INITIAL_CARDS_PROMPT = "딜러와 %s에게 각각 2장을 나누었습니다."
 
-    fun printInitialCardsDraw(participants: Participants) {
+    fun printInitialCardsDraw(dealer: Dealer, participants: Participants) {
         println(String.format(DRAW_INITIAL_CARDS_PROMPT, participants.toNames()))
+        println(dealer)
         println(participants)
     }
 
