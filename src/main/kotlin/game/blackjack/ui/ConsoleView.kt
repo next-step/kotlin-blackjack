@@ -21,6 +21,7 @@ object Input {
 
 object Output {
     private const val DRAW_INITIAL_CARDS_PROMPT = "딜러와 %s에게 각각 2장을 나누었습니다."
+    private const val DEALER_DRAW_ADDITIONAL_CARD_PROMPT = "딜러는 16이하라 한장의 카드를 더 받았습니다."
 
     fun printInitialCardsDraw(dealer: Dealer, participants: Participants) {
         println(String.format(DRAW_INITIAL_CARDS_PROMPT, participants.toNames()))
@@ -30,5 +31,9 @@ object Output {
 
     fun printFinalResults(participants: Participants) {
         println(participants.toFinalResult())
+    }
+
+    fun printDealerDrawAdditionalCard() {
+        println(DEALER_DRAW_ADDITIONAL_CARD_PROMPT)
     }
 }

@@ -20,5 +20,9 @@ fun main() {
     participants.drawAdditionalCards(deck, {
         Input.isDrawAdditionalCard(it)
     }) { println(it) }
+
+    dealer.drawCardIfRequired(deck) {
+        Output.printDealerDrawAdditionalCard()
+    }
     Output.printFinalResults(participants)
 }
