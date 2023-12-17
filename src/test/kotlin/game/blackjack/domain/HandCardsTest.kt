@@ -30,7 +30,7 @@ class HandCardsTest : StringSpec({
             row(Card(KING, SPADE), Card(KING, HEART)),
         ) { card1: Card, card2: Card ->
             val handCards = HandCards()
-            handCards.add(listOf(card1, card2))
+            handCards.addAll(listOf(card1, card2))
             val originScore = handCards.getCurrentScore()
 
             handCards.add(Card(ACE, SPADE))
@@ -48,7 +48,7 @@ class HandCardsTest : StringSpec({
             row(Card(THREE, SPADE), Card(SEVEN, SPADE)),
         ) { card1: Card, card2: Card ->
             val handCards = HandCards()
-            handCards.add(listOf(card1, card2))
+            handCards.addAll(listOf(card1, card2))
             val originScore = handCards.getCurrentScore()
 
             handCards.add(Card(ACE, SPADE))

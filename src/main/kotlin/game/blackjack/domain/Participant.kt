@@ -1,29 +1,19 @@
 package game.blackjack.domain
 
 class Participant(val name: String) {
-    val handCards: HandCards = HandCards()
+    private val handCards: HandCards = HandCards()
 
-    fun drawCard(card: Card) {
-        handCards.add(card)
-    }
+    fun drawCard(card: Card) = handCards.add(card)
 
-    fun drawCard(cards: List<Card>) {
-        handCards.add(cards)
-    }
+    fun drawCards(cards: List<Card>) = handCards.addAll(cards)
 
-    fun isBust(): Boolean {
-        return handCards.getCurrentScore() > Blackjack.WINNING_SCORE
-    }
+    fun isBust() = handCards.getCurrentScore() > Blackjack.WINNING_SCORE
 
-    fun isNotBust(): Boolean {
-        return !isBust()
-    }
+    fun isNotBust() = !isBust()
 
-    fun getScore(): Int {
-        return handCards.getCurrentScore()
-    }
+    fun getScore() = handCards.getCurrentScore()
 
-    override fun toString(): String {
-        return "${name}카드: $handCards"
-    }
+    fun getHandSize() = handCards.size
+
+    override fun toString() = "${name}카드: $handCards"
 }
