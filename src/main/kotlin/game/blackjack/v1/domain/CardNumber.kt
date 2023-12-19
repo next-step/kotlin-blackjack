@@ -1,4 +1,4 @@
-package game.blackjack.domain
+package game.blackjack.v1.domain
 
 enum class CardNumber(private val score: Int, val value: String) {
     ACE(1, "A") {

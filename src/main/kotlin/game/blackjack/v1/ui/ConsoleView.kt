@@ -1,8 +1,8 @@
-package game.blackjack.ui
+package game.blackjack.v1.ui
 
-import game.blackjack.domain.Dealer
-import game.blackjack.domain.Participant
-import game.blackjack.domain.Participants
+import game.blackjack.v1.domain.Dealer
+import game.blackjack.v1.domain.Participant
+import game.blackjack.v1.domain.Participants
 
 object Input {
     private const val PARTICIPANTS_PROMPT = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)"
@@ -24,13 +24,14 @@ object Output {
     private const val DEALER_DRAW_ADDITIONAL_CARD_PROMPT = "딜러는 16이하라 한장의 카드를 더 받았습니다."
 
     fun printInitialCardsDraw(dealer: Dealer, participants: Participants) {
-        println(String.format(DRAW_INITIAL_CARDS_PROMPT, participants.toNames()))
+        println(String.format(DRAW_INITIAL_CARDS_PROMPT, participants.toPlayerNames()))
         println(dealer)
         println(participants)
     }
 
-    fun printFinalResults(participants: Participants) {
-        println(participants.toFinalResult())
+    fun printFinalResults(dealer: Dealer, participants: Participants) {
+        println(dealer.toFinalResult())
+        println(participants.toPlayerFinalResults())
     }
 
     fun printDealerDrawAdditionalCard() {

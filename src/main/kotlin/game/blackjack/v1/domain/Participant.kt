@@ -1,4 +1,4 @@
-package game.blackjack.domain
+package game.blackjack.v1.domain
 
 open class Participant(val name: String) {
     private val handCards: HandCards = HandCards()

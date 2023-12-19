@@ -1,6 +1,6 @@
-package game.blackjack.domain
+package game.blackjack.v1.domain
 
-import game.blackjack.domain.Blackjack.INITIAL_DRAW_COUNT
+import game.blackjack.v1.domain.Blackjack.INITIAL_DRAW_COUNT
 
 class Deck {
     private val cards: ArrayDeque<Card> = ArrayDeque(allCards.shuffled())

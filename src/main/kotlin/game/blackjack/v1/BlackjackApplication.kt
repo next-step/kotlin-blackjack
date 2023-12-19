@@ -1,19 +1,18 @@
-package game.blackjack
+package game.blackjack.v1
 
-import game.blackjack.domain.Dealer
-import game.blackjack.domain.Deck
-import game.blackjack.domain.Participant
-import game.blackjack.domain.Participants
-import game.blackjack.ui.Input
-import game.blackjack.ui.Output
+import game.blackjack.v1.domain.Dealer
+import game.blackjack.v1.domain.Deck
+import game.blackjack.v1.domain.Participant
+import game.blackjack.v1.domain.Participants
+import game.blackjack.v1.ui.Input
+import game.blackjack.v1.ui.Output
 
 fun main() {
     val participantNames = Input.getParticipantNames()
     val dealer = Dealer()
-    val participants = Participants(participantNames.map { Participant(it) })
+    val participants = Participants(dealer, participantNames.map { Participant(it) })
     val deck = Deck()
 
-    dealer.drawCards(deck.initialDraw())
     participants.distributeInitialCards(deck)
     Output.printInitialCardsDraw(dealer, participants)
 
@@ -24,5 +23,5 @@ fun main() {
     dealer.drawCardIfRequired(deck) {
         Output.printDealerDrawAdditionalCard()
     }
-    Output.printFinalResults(participants)
+    Output.printFinalResults(dealer, participants)
 }

@@ -1,4 +1,4 @@
-package game.blackjack.domain
+package game.blackjack.v1.domain
 
 class Dealer : Participant("딜러") {
 
@@ -16,6 +16,8 @@ class Dealer : Participant("딜러") {
         return getScore() <= DEALER_HIT_THRESHOLD
     }
 
+    fun toFinalResult() = toString() + " - 결과: ${getScore()}"
+    
     companion object {
         private const val DEALER_HIT_THRESHOLD = 16
     }

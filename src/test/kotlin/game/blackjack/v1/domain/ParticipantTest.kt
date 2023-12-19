@@ -1,18 +1,18 @@
-package game.blackjack.domain
+package game.blackjack.v1.domain
 
-import game.blackjack.domain.CardNumber.ACE
-import game.blackjack.domain.CardNumber.EIGHT
-import game.blackjack.domain.CardNumber.FIVE
-import game.blackjack.domain.CardNumber.FOUR
-import game.blackjack.domain.CardNumber.JACK
-import game.blackjack.domain.CardNumber.KING
-import game.blackjack.domain.CardNumber.QUEEN
-import game.blackjack.domain.CardNumber.SIX
-import game.blackjack.domain.CardNumber.THREE
-import game.blackjack.domain.CardNumber.TWO
-import game.blackjack.domain.CardShape.DIAMOND
-import game.blackjack.domain.CardShape.HEART
-import game.blackjack.domain.CardShape.SPADE
+import game.blackjack.v1.domain.CardNumber.ACE
+import game.blackjack.v1.domain.CardNumber.EIGHT
+import game.blackjack.v1.domain.CardNumber.FIVE
+import game.blackjack.v1.domain.CardNumber.FOUR
+import game.blackjack.v1.domain.CardNumber.JACK
+import game.blackjack.v1.domain.CardNumber.KING
+import game.blackjack.v1.domain.CardNumber.QUEEN
+import game.blackjack.v1.domain.CardNumber.SIX
+import game.blackjack.v1.domain.CardNumber.THREE
+import game.blackjack.v1.domain.CardNumber.TWO
+import game.blackjack.v1.domain.CardShape.DIAMOND
+import game.blackjack.v1.domain.CardShape.HEART
+import game.blackjack.v1.domain.CardShape.SPADE
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.data.forAll
 import io.kotest.data.row
@@ -38,7 +38,13 @@ class ParticipantTest : StringSpec({
 
     "갖고 있는 패의 총 카드 숫자가 21을 넘으면 bust 여부를 true로 반환한다." {
         val participant = Participant("Alex")
-        participant.drawCards(listOf(Card(KING, DIAMOND), Card(KING, SPADE), Card(KING, HEART)))
+        participant.drawCards(
+            listOf(
+                Card(KING, DIAMOND),
+                Card(KING, SPADE),
+                Card(KING, HEART)
+            )
+        )
 
         participant.isBust() shouldBe true
     }
@@ -52,7 +58,13 @@ class ParticipantTest : StringSpec({
 
     "갖고 있는 패의 총 카드 숫자가 21을 넘으면 bust가 아닌지의 여부를 false로 반환한다." {
         val participant = Participant("Alex")
-        participant.drawCards(listOf(Card(KING, DIAMOND), Card(KING, SPADE), Card(KING, HEART)))
+        participant.drawCards(
+            listOf(
+                Card(KING, DIAMOND),
+                Card(KING, SPADE),
+                Card(KING, HEART)
+            )
+        )
 
         participant.isNotBust() shouldBe false
     }
