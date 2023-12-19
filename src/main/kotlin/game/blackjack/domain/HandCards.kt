@@ -9,10 +9,22 @@ class HandCards {
     fun addAll(cards: List<Card>) = handCards.addAll(cards)
 
     fun getCurrentScore(): Int {
-        var score = 0
-        handCards.forEach { score += it.number.getScore(score) }
+        val score = handCards.sumOf { it.number.getScore() }
+        val aceCount = handCards.count { it.number == CardNumber.ACE }
 
-        return score
+        return reduceAceScoreIfBust(score, aceCount)
+    }
+
+    private fun reduceAceScoreIfBust(score: Int, aceCount: Int): Int {
+        var adjustedScore = score
+        var remainingAces = aceCount
+
+        while (adjustedScore > 21 && remainingAces > 0) {
+            adjustedScore -= 10
+            remainingAces--
+        }
+
+        return adjustedScore
     }
 
     override fun toString() = handCards.joinToString(", ") { it.toString() }
