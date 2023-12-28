@@ -2,9 +2,17 @@
 
 ## 미션 피드백 링크
 
+- Step 1: [https://github.com/next-step/kotlin-blackjack/pull/702](https://github.com/next-step/kotlin-blackjack/pull/702)
+- Step 2: [https://github.com/next-step/kotlin-blackjack/pull/704](https://github.com/next-step/kotlin-blackjack/pull/704)
+- Step 3: [https://github.com/next-step/kotlin-blackjack/pull/705](https://github.com/next-step/kotlin-blackjack/pull/705)
+
 ## 미션 내용
 
-### STEP 1
+### STEP 2
+
+<details>
+<summary>접기/펼치기</summary>
+<div markdown="1">
 
 #### [요구 사항 분석]
 
@@ -30,3 +38,31 @@
 - [x] 한 플레이어가 더이상 카드를 받지 않으면, 다음 참가자가 게임을 시작한다.
 - [x] 게임이 종료되면 각 플레이어의 현재 패와 결과 점수를 출력한다.
 - [x] 모든 엔티티를 작게 유지하고, indent(인덴트, 들여쓰기) depth를 2를 넘지 않도록 구현한다.
+
+</div>
+</details>
+
+<br>
+
+### STEP 3
+
+#### [피드백]
+
+- [x] View 계층은 입출력 관련 책임만 갖도록 변경한다. (View계층에서 도메인 객체를 생성하는 행위를 이관한다)
+- [x] Application 객체의 비즈니스 로직을 도메인 객체로 응집한다.
+- [x] 모든 도메인 객체의 역할과 책임을 재분배하고, 캡슐화를 진행한다.
+- [x] 모든 비즈니스 로직에 대한 단위 테스트를 진행한다.
+
+#### [요구 사항 분석]
+
+- 딜러는 처음 받은 2장의 합계가 16 이하이면 반드시 1장의 카드를 추가로 받아야된다.
+- 딜러는 처음 받은 2장의 합계가 17 이상이면 추가로 카드를 받을 수 없다.
+- 딜러의 카드 패의 총 점수가 21을 초과하면, 플레이어들이 가지고 있는 패에 상관 없이 승리한다.
+- 게임을 완료한 후 각 플레이어별로 승 패를 출력한다.
+
+#### [기능 목록]
+
+- [x] 게임 시작 시 딜러도 카드 2장을 받는다.
+- [x] 딜러는 모든 플레이어가 카드를 다 받은 후에, 게임 시작 시 받은 카드 2장의 합계가 16 이하이면 카드 한장을 추가로 받는다.
+- [x] 게임이 끝나면 각 플레이어별로 승 패를 출력한다.
+- [x] 딜러는 카드 패의 총 점수가 21을 초과하면, 플레이어가 bust인 경우에도 무조건 패배한다.

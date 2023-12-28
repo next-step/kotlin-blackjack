@@ -1,4 +1,4 @@
-package game.blackjack.domain
+package game.blackjack.v1.domain
 
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
@@ -14,8 +14,9 @@ class DeckTest : StringSpec({
 
     "게임 덱의 각 카드는 서로 중복되지 않으면서 52장이다." {
         val deck = Deck()
+        val allCards = List(52) { deck.drawOnce() }
 
-        deck.cards.toSet().size shouldBe 52
+        allCards.toSet().size shouldBe 52
     }
 
     "게임 시작 시 총 2장의 카드를 받는다." {

@@ -1,4 +1,4 @@
-package game.blackjack.domain
+package game.blackjack.v1.domain
 
 enum class CardShape(val value: String) {
     SPADE("스페이드"),
