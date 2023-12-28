@@ -1,6 +1,9 @@
 package game.blackjack.v2.domain
 
 import game.blackjack.v2.domain.participant.Dealer
+import game.blackjack.v2.domain.participant.GameResult.DRAW
+import game.blackjack.v2.domain.participant.GameResult.LOSE
+import game.blackjack.v2.domain.participant.GameResult.WIN
 import game.blackjack.v2.domain.participant.Player
 
 class Participants(val dealer: Dealer, val players: List<Player>) {
@@ -25,4 +28,34 @@ class Participants(val dealer: Dealer, val players: List<Player>) {
     ) {
         dealer.drawCardIfRequired(result)
     }
+
+    fun finishGame() {
+        players.forEach { player ->
+            recordGameResult(player)
+        }
+    }
+
+    private fun recordGameResult(player: Player) {
+        when {
+            dealer.isBust() || player.hasHigherScore(dealer) -> playerWins(player, dealer)
+            player.isBust() || dealer.hasHigherScore(player) -> dealerWins(player, dealer)
+            else -> draw(player, dealer)
+        }
+    }
+
+    private fun playerWins(player: Player, dealer: Dealer) {
+        player.recordResult(WIN)
+        dealer.recordResult(LOSE)
+    }
+
+    private fun dealerWins(player: Player, dealer: Dealer) {
+        player.recordResult(LOSE)
+        dealer.recordResult(WIN)
+    }
+
+    private fun draw(player: Player, dealer: Dealer) {
+        player.recordResult(DRAW)
+        dealer.recordResult(DRAW)
+    }
 }
+ 

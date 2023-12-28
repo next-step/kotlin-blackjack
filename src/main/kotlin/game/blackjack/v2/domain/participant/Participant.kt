@@ -17,4 +17,6 @@ open class Participant(val name: String) {
     fun getScore() = handCards.getCurrentScore()
 
     fun getHandCards() = handCards.get()
+
+    fun hasHigherScore(participant: Participant) = getScore() > participant.getScore()
 }

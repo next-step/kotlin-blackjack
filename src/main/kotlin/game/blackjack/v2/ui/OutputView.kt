@@ -2,11 +2,13 @@ package game.blackjack.v2.ui
 
 import game.blackjack.v2.domain.Participants
 import game.blackjack.v2.domain.participant.Dealer
+import game.blackjack.v2.domain.participant.GameResult
 import game.blackjack.v2.domain.participant.Player
 
 object OutputView {
     private const val DRAW_INITIAL_CARDS_PROMPT = "%s와 %s에게 각각 2장을 나누었습니다."
     private const val DEALER_DRAW_ADDITIONAL_CARD_PROMPT = "딜러는 16이하라 한장의 카드를 더 받았습니다."
+    private const val FINAL_GAME_RESULT_PROMPT = "## 최종 승패"
 
     fun printDrawInitialCardsPrompt(participants: Participants) {
         println(
@@ -64,5 +66,21 @@ object OutputView {
                 }
             }" + " - 결과: ${player.getScore()}"
         })
+    }
+
+    fun printFinalGameResult(participants: Participants) {
+        println(FINAL_GAME_RESULT_PROMPT)
+        println(
+            String.format(
+                "딜러: %d승 %d패",
+                participants.dealer.gameResultRecord[GameResult.WIN],
+                participants.dealer.gameResultRecord[GameResult.LOSE]
+            )
+        )
+        participants.players.forEach {
+            println(
+                String.format("%s: %s", it.name, it.gameResultRecord.description)
+            )
+        }
     }
 }

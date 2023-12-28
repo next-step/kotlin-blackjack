@@ -9,11 +9,13 @@ import game.blackjack.v2.ui.OutputView
 fun main() {
     val participantNames = InputView.getParticipantNames()
     val participants = Participants(Dealer(), participantNames.map { Player(it) })
+    val dealer = participants.dealer
+    val players = participants.players
 
     participants.distributeInitialCards()
     OutputView.printDrawInitialCardsPrompt(participants)
-    OutputView.printDealerHandCards(participants.dealer)
-    OutputView.printPlayersHandCard(participants.players)
+    OutputView.printDealerHandCards(dealer)
+    OutputView.printPlayersHandCard(players)
 
     participants.drawPlayerAdditionalCards({
         InputView.isDrawAdditionalCard(it)
@@ -23,6 +25,10 @@ fun main() {
         OutputView.printDealerDrawAdditionalCardPrompt()
     }
 
-    OutputView.printDealerHandCardsAndScore(participants.dealer)
-    OutputView.printPlayersHandCardsAndScore(participants.players)
+    OutputView.printDealerHandCardsAndScore(dealer)
+    OutputView.printPlayersHandCardsAndScore(players)
+
+    participants.finishGame()
+
+    OutputView.printFinalGameResult(participants)
 }
