@@ -13,7 +13,7 @@ class DealerTest {
     fun `딜러는 발급 받은 첫 카드만 공개한다`() {
         val dealer = Dealer(cardDeck(Card.diamond(Number.TEN), Card.heart(Number.FIVE)))
 
-        val actual = dealer.openedCards
+        val actual = dealer.openCards()
 
         assertThat(actual).containsExactly(Card.diamond(Number.TEN))
     }
@@ -24,7 +24,7 @@ class DealerTest {
 
         dealer.obtain()
 
-        assertThat(dealer.openedCards).containsExactly(Card.diamond(Number.TEN))
+        assertThat(dealer.openCards()).containsExactly(Card.diamond(Number.TEN))
         assertThat(dealer.hands).containsExactlyInAnyOrder(
             Card.diamond(Number.TEN), Card.heart(Number.SIX), Card.spade(Number.ACE)
         )

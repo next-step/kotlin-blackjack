@@ -14,7 +14,7 @@ class PlayerTest {
         )
 
         assertThat(player.name).isEqualTo("pobi")
-        assertThat(player.openedCards).containsExactlyInAnyOrder(
+        assertThat(player.openCards()).containsExactlyInAnyOrder(
             Card.diamond(Number.EIGHT), Card.heart(Number.TEN)
         )
         assertThat(player.hands).containsExactlyInAnyOrder(
@@ -30,7 +30,7 @@ class PlayerTest {
 
         player.obtain()
 
-        assertThat(player.openedCards).containsExactlyInAnyOrder(
+        assertThat(player.openCards()).containsExactlyInAnyOrder(
             Card.diamond(Number.QUEEN), Card.heart(Number.JACK)
         )
         assertThat(player.hands).containsExactlyInAnyOrder(

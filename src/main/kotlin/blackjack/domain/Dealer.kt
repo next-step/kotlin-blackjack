@@ -3,10 +3,12 @@ package blackjack.domain
 class Dealer(
     cardDeck: CardDeck
 ): Participant("딜러", cardDeck) {
-    override val openedCards = listOf(hands.first())
-
     override fun isObtainable(): Boolean {
         return sumOfCards() < 17
+    }
+
+    override fun openCards(): List<Card> {
+        return listOf(hands.first())
     }
 
     fun compareWith(vararg players: Player): Map<String, CompareResult> {

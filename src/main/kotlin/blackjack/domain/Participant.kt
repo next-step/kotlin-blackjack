@@ -5,7 +5,6 @@ abstract class Participant(
     private val cardDeck: CardDeck,
 ) {
     private val cards = Cards(cardDeck.next(), cardDeck.next())
-    abstract val openedCards: List<Card>
 
     val hands
         get() = cards.values
@@ -24,4 +23,5 @@ abstract class Participant(
     }
 
     abstract fun isObtainable(): Boolean
+    abstract fun openCards(): List<Card>
 }

@@ -10,7 +10,7 @@ class BlackJack(
     private val players = names.map { Player(it, cardDeck) }
 
     fun openCardsOfParticipant(): Map<String, List<Card>> {
-        return participants().associate { it.name to it.openedCards }
+        return participants().associate { it.name to it.openCards() }
     }
 
     fun isDealerObtainable(): Boolean {
