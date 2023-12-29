@@ -1,9 +1,11 @@
 package blackjack.domain
 
-class Player (
+class Player(
     name: String,
-    cardDeck: CardDeck,
-) : Participant(name, cardDeck) {
+    card1: Card,
+    card2: Card,
+) : Participant(name, card1, card2) {
+
     override fun isObtainable(): Boolean {
         return sumOfCards() < BLACKJACK_SCORE
     }

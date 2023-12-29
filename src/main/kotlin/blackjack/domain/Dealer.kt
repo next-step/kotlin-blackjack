@@ -1,8 +1,7 @@
 package blackjack.domain
 
-class Dealer(
-    cardDeck: CardDeck
-): Participant("딜러", cardDeck) {
+class Dealer(card1: Card, card2: Card): Participant("딜러", card1, card2) {
+
     override fun isObtainable(): Boolean {
         return sumOfCards() < 17
     }

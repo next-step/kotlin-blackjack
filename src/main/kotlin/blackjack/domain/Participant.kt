@@ -1,17 +1,16 @@
 package blackjack.domain
 
 abstract class Participant(
-    val name: String,
-    private val cardDeck: CardDeck,
+    val name: String, card1: Card, card2: Card,
 ) {
-    private val cards = Cards(cardDeck.next(), cardDeck.next())
+    private val cards = Cards(card1, card2)
 
     val hands
         get() = cards.values
 
-    fun obtain() {
+    fun obtain(card: Card) {
         require(isObtainable()) { "카드를 획득할 수 없습니다." }
-        cards.add(cardDeck.next())
+        cards.add(card)
     }
 
     fun sumOfCards(): Int {

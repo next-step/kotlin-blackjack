@@ -6,8 +6,8 @@ class BlackJack(
     private val cardDeck: CardDeck,
     vararg names: String
 ) {
-    private val dealer = Dealer(cardDeck)
-    private val players = names.map { Player(it, cardDeck) }
+    private val dealer = Dealer(cardDeck.next(), cardDeck.next())
+    private val players = names.map { Player(it, cardDeck.next(), cardDeck.next()) }
 
     fun openCardsOfParticipant(): Map<String, List<Card>> {
         return participants().associate { it.name to it.openCards() }
@@ -18,7 +18,7 @@ class BlackJack(
     }
 
     fun obtainDealerCard(): List<Card> {
-        dealer.obtain()
+        dealer.obtain(cardDeck.next())
         return dealer.hands
     }
 
@@ -29,7 +29,7 @@ class BlackJack(
 
     fun obtainPlayerCard(name: String): List<Card> {
         val player = players.first { it.name == name }
-        player.obtain()
+        player.obtain(cardDeck.next())
         return player.hands
     }
 
