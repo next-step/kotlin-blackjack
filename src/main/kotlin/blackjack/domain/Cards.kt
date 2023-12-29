@@ -1,5 +1,7 @@
 package blackjack.domain
 
+const val BLACKJACK_SCORE = 21
+
 class Cards (
     cards: List<Card>,
 ) {
@@ -10,7 +12,7 @@ class Cards (
     constructor(vararg cards: Card): this(cards.toList())
 
     fun sum(): Int {
-        if (BLACKJACK < sumOfMaximum()) {
+        if (BLACKJACK_SCORE < sumOfMaximum()) {
             return sumOfMinimum()
         }
         return sumOfMaximum()
@@ -31,13 +33,5 @@ class Cards (
 
     fun add(card: Card) {
         cards.add(card)
-    }
-
-    fun isLessThanBlackjack(): Boolean {
-        return sum() < BLACKJACK
-    }
-
-    companion object {
-        private const val BLACKJACK = 21
     }
 }

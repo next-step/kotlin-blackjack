@@ -1,26 +1,41 @@
 package blackjack
 
+import blackjack.domain.BlackJack
 import blackjack.domain.ShuffledCardDeck
-import blackjack.domain.Player
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
 fun main() {
-    val names = InputView.inputNames()
-    val players = names.map { Player(it, ShuffledCardDeck()) }
+    val cardDeck = ShuffledCardDeck()
+    val playerNames = InputView.inputNames()
+    val blackjack = BlackJack(cardDeck, *playerNames.toTypedArray())
 
-    OutputView.printPlayersCards(players)
-    players.forEach { obtainCard(it) }
-    OutputView.printPlayerResult(players)
+    OutputView.printParticipantOpenedCards(blackjack.openCardsOfParticipant())
+    obtainCards(playerNames, blackjack)
+    OutputView.printCompareResults(blackjack.compareResults())
 }
 
-private fun obtainCard(player: Player) {
-    while (isObtainCard(player)) {
-        player.obtain()
-        OutputView.printPlayerCards(player)
+private fun obtainCards(playerNames: List<String>, blackjack: BlackJack) {
+    obtainCardsForPlayers(playerNames, blackjack)
+    obtainCardsForDealer(blackjack)
+    OutputView.printParticipantHands(blackjack.participants())
+}
+
+private fun obtainCardsForDealer(blackjack: BlackJack) {
+    while (blackjack.isDealerObtainable()) {
+        blackjack.obtainDealerCard()
+        OutputView.printObtainDealerCard()
     }
 }
 
-private fun isObtainCard(player: Player): Boolean {
-    return player.isObtainable() && InputView.inputIsObtainCard(player.name)
+private fun obtainCardsForPlayers(playerNames: List<String>, blackjack: BlackJack) {
+    playerNames.forEach { obtainCardsForPlayer(it, blackjack) }
+}
+
+private fun obtainCardsForPlayer(name: String, blackjack: BlackJack) {
+    val wantToTake = { InputView.inputIsObtainCard(name) }
+    while (blackjack.isPlayerObtainable(name, wantToTake)) {
+        val cards = blackjack.obtainPlayerCard(name)
+        OutputView.printParticipantCards(name, cards)
+    }
 }

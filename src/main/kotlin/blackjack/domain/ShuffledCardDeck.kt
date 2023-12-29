@@ -11,8 +11,7 @@ class ShuffledCardDeck: CardDeck {
     }
 
     private fun deck(): Iterator<Card> {
-        return (0 until 4)
-            .flatMap { cards() }
+        return cards()
             .shuffled()
             .iterator()
     }
