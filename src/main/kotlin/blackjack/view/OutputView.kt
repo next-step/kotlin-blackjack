@@ -7,11 +7,12 @@ import blackjack.domain.Participant
 import blackjack.domain.Shape
 
 object OutputView {
-    fun printParticipantOpenedCards(players: List<Participant>) {
-        val names = players.joinToString(separator = ", ") { it.name }
+
+    fun printParticipantOpenedCards(openCards: Map<String, List<Card>>) {
+        val names = openCards.keys.joinToString(separator = ", ")
         println("${names}에게 2장의 카드를 나누었습니다")
-        players.forEach {
-            printParticipantCards(it.name, it.openedCards)
+        openCards.entries.forEach {
+            printParticipantCards(it.key, it.value)
         }
     }
 

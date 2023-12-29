@@ -1,55 +1,41 @@
 package blackjack
 
-import blackjack.domain.Dealer
+import blackjack.domain.BlackJack
 import blackjack.domain.ShuffledCardDeck
-import blackjack.domain.Player
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
 fun main() {
     val cardDeck = ShuffledCardDeck()
-    val (dealer, players) = createParticipants(cardDeck)
-    obtainCards(players, dealer)
-    compareBetweenDealerAndPlayers(dealer, players)
+    val playerNames = InputView.inputNames()
+    val blackjack = BlackJack(cardDeck, *playerNames.toTypedArray())
+
+    OutputView.printParticipantOpenedCards(blackjack.openCardsOfParticipant())
+    obtainCards(playerNames, blackjack)
+    OutputView.printCompareResults(blackjack.compareResults())
 }
 
-private fun createParticipants(cardDeck: ShuffledCardDeck): Pair<Dealer, List<Player>> {
-    val dealer = Dealer(cardDeck)
-    val players = createPlayers(cardDeck)
-    OutputView.printParticipantOpenedCards(listOf(dealer) + players)
-    return Pair(dealer, players)
+private fun obtainCards(playerNames: List<String>, blackjack: BlackJack) {
+    obtainCardsForPlayers(playerNames, blackjack)
+    obtainCardsForDealer(blackjack)
+    OutputView.printParticipantHands(blackjack.participants())
 }
 
-private fun createPlayers(cardDeck: ShuffledCardDeck): List<Player> {
-    val names = InputView.inputNames()
-    return names.map { Player(it, cardDeck) }
-}
-
-private fun obtainCards(players: List<Player>, dealer: Dealer) {
-    players.forEach { obtainPlayerCard(it) }
-    obtainDealerCard(dealer)
-}
-
-private fun obtainPlayerCard(player: Player) {
-    while (isPlayerObtainCard(player)) {
-        player.obtain()
-        OutputView.printParticipantCards(player.name, player.hands)
-    }
-}
-
-private fun isPlayerObtainCard(player: Player): Boolean {
-    return player.isObtainable() && InputView.inputIsObtainCard(player.name)
-}
-
-private fun obtainDealerCard(dealer: Dealer) {
-    while(dealer.isObtainable()) {
-        dealer.obtain()
+private fun obtainCardsForDealer(blackjack: BlackJack) {
+    while (blackjack.isDealerObtainable()) {
+        blackjack.obtainDealerCard()
         OutputView.printObtainDealerCard()
     }
 }
 
-private fun compareBetweenDealerAndPlayers(dealer: Dealer, players: List<Player>) {
-    val compareResults = dealer.compareWith(*players.toTypedArray())
-    OutputView.printParticipantHands(listOf(dealer) + players)
-    OutputView.printCompareResults(compareResults)
+private fun obtainCardsForPlayers(playerNames: List<String>, blackjack: BlackJack) {
+    playerNames.forEach { obtainCardsForPlayer(it, blackjack) }
+}
+
+private fun obtainCardsForPlayer(name: String, blackjack: BlackJack) {
+    val wantToTake = { InputView.inputIsObtainCard(name) }
+    while (blackjack.isPlayerObtainable(name, wantToTake)) {
+        val cards = blackjack.obtainPlayerCard(name)
+        OutputView.printParticipantCards(name, cards)
+    }
 }
