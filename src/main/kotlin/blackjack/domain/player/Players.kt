@@ -15,9 +15,6 @@ data class Players(
     var inTurn: Player = value.first()
         private set
 
-    val isPlayerInTurnOverMaxScore: Boolean
-        get() = inTurn.isBust
-
     val isLastTurn: Boolean
         get() = value.indexOf(inTurn) == value.lastIndex
 
@@ -32,10 +29,10 @@ data class Players(
         private const val PLAYER_COUNT = 2
         fun of(
             names: PlayerNames,
-            actionOf: (player: Player) -> Action,
-        ) = names.value.map { name -> createPlayer(name, actionOf) }.let(::Players)
+            desiredAction: (player: Player) -> Action,
+        ) = Players(names.value.map { name -> createPlayer(name, desiredAction) })
 
-        private fun createPlayer(name: PlayerName, actionOf: (player: Player) -> Action) =
-            Player(name, actionOf)
+        private fun createPlayer(name: PlayerName, desiredAction: (player: Player) -> Action) =
+            Player(name, desiredAction)
     }
 }

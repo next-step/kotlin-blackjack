@@ -26,11 +26,11 @@ class DealToDealerTest : DescribeSpec({
                 table.dealer.hand.cards.size shouldBe 3
             }
 
-            it("배분 결과 참을 반환") {
+            it("배분이 진행되어 배분 결과는 참을 반환한다") {
                 result.isHit shouldBe true
             }
 
-            it("게임의 다음 배분은 종료 상태") {
+            it("게임의 다음 배분은 DealEnd이다") {
                 dealToDealer.nextDistributor.shouldBeTypeOf<DealEnd>()
             }
         }
@@ -48,11 +48,11 @@ class DealToDealerTest : DescribeSpec({
                 table.dealer.hand.cards.size shouldBe 2
             }
 
-            it("배분 결과 거짓을 반환") {
+            it("배분이 진행되지 않아 배분 결과는 거짓을 반환한다") {
                 result.isHit shouldBe false
             }
 
-            it("게임의 다음 배분은 종료 상태") {
+            it("게임의 다음 배분은 DealEnd 이다") {
                 dealToDealer.nextDistributor.shouldBeTypeOf<DealEnd>()
             }
         }

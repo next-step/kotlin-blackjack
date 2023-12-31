@@ -1,5 +1,6 @@
-package blackjack.domain.result.game
+package blackjack.domain.result.distribution
 
+import blackjack.domain.result.game.VictoryStatus
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 

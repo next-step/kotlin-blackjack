@@ -3,11 +3,13 @@ package blackjack.controller
 import blackjack.domain.result.distribution.DealInitialCardResult
 import blackjack.domain.result.distribution.DealToDealerResult
 import blackjack.domain.result.distribution.DealToPlayerResult
-import blackjack.domain.result.game.GameResult
+import blackjack.domain.result.game.GameEndResult
+import blackjack.view.dto.DealerCardsResultDto
 import blackjack.view.dto.DealerHitDto
-import blackjack.view.dto.FinalDealerStateDto
-import blackjack.view.dto.FinalPlayerStateDto
+import blackjack.view.dto.DealerProfitDto
+import blackjack.view.dto.PlayerCardsResultDto
 import blackjack.view.dto.PlayerDto
+import blackjack.view.dto.PlayerProfitDto
 import blackjack.view.output.OutputView
 
 object ViewResultProcessor {
@@ -18,6 +20,7 @@ object ViewResultProcessor {
     }
 
     fun drawPlayerState(result: DealToPlayerResult) {
+        if (result.isSystemStand) return
         val dto = result.player.let { PlayerDto(it.name.value, it.hand.cards) }
         OutputView.drawPlayerCurrentState(dto)
     }
@@ -26,15 +29,24 @@ object ViewResultProcessor {
         OutputView.drawDealerHitStatus(DealerHitDto(result.isHit))
     }
 
-    fun drawGameResult(result: GameResult) {
+    fun drawGameResult(result: GameEndResult) {
+        drawCardResult(result)
+        drawProfitResult(result)
+    }
+
+    private fun drawCardResult(result: GameEndResult) {
+        val dealerDto = DealerCardsResultDto(result.dealerHand.cards, result.dealerScore.value)
+        val playersDto = result.playerResults
+            .map { PlayerCardsResultDto(it.name.value, it.hand.cards, it.score.value) }
+        OutputView.drawCardsResults(dealerDto, playersDto)
+    }
+
+    private fun drawProfitResult(result: GameEndResult) {
         val dealerDto =
-            result.dealerResults.let {
-                FinalDealerStateDto(it.dealer.hand.cards, it.dealer.score.cardScore, it.status)
-            }
-        val playersDto =
-            result.playersResult.map {
-                FinalPlayerStateDto(it.player.name.value, it.player.hand.cards, it.player.score.cardScore, it.status)
-            }
-        OutputView.drawFinalResults(dealerDto, playersDto)
+            DealerProfitDto(result.dealerProfit.value.toString())
+        val playersDto = result.playerResults.map {
+            PlayerProfitDto(it.name.value, it.profit.value.toString())
+        }
+        OutputView.drawProfitResults(dealerDto, playersDto)
     }
 }

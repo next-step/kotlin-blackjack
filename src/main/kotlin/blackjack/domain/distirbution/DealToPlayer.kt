@@ -24,15 +24,14 @@ class DealToPlayer(
             }
         }
 
-        val isSystemStand = (action == Action.STAND && playerInTurn.isBust)
+        val isSystemStand = (action == Action.STAND && playerInTurn.isGreaterOrEqualToMaxScore)
         return DealToPlayerResult(playerInTurn, isSystemStand)
     }
 
     private fun endPlayerDistributionIfLastTurn() {
-        _nextDistributor = when (table.isLastPlayerTurn) {
-            true -> DealToDealer(table)
-            false -> DealToPlayer(table)
-        }
+        _nextDistributor =
+            if (table.isLastPlayerTurn) DealToDealer(table)
+            else DealToPlayer(table)
     }
 
     companion object {

@@ -1,6 +1,7 @@
 package blackjack.controller
 
 import blackjack.domain.Action
+import blackjack.domain.batting.BetAmount
 import blackjack.domain.player.Player
 import blackjack.domain.player.PlayerNames
 import blackjack.view.dto.PlayerNameDto
@@ -8,12 +9,17 @@ import blackjack.view.input.InputView
 
 class ViewInputProcessor : InputProcessor {
     override fun playerNames(): PlayerNames =
-        InputView.playerNames().let(PlayerNames::from)
+        PlayerNames.from(InputView.playerNames())
+
+    override fun playerBet(player: Player): BetAmount =
+        BetAmount(InputView.playerBet(player.nameDto()).toBigDecimal())
 
     override fun playerAction(player: Player): Action {
-        val action = InputView.playerAction(player.let(PlayerNameDto::from))
+        val action = InputView.playerAction(player.nameDto())
         return toPlayerAction(action)
     }
+
+    private fun Player.nameDto(): PlayerNameDto = PlayerNameDto.from(this)
 
     private fun toPlayerAction(action: String): Action = when (action) {
         "y" -> Action.HIT

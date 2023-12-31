@@ -11,14 +11,17 @@ interface CardPlayer {
     val score: HandScore
         get() = HandScore.from(hand)
 
-    val isBust: Boolean
-        get() = score.isBust
+    val isGreaterOrEqualToMaxScore: Boolean
+        get() = score.isGreaterOrEqualToMaxScore
 
-    infix fun isGreaterCardScoreThan(other: Int): Boolean =
-        score isGreaterCardScoreThan other
+    infix fun isSameCardCount(count: Int): Boolean = hand.cardsCount == count
+    infix fun isSameScore(score: Int): Boolean = this.score.value == score
+
+    infix fun isGreaterScoreThan(other: Int): Boolean =
+        score.value > other
 
     fun addCard(card: Card) {
-        require(!isBust) { "버스트라 카드를 더 받을 수 없습니다" }
+        require(score.isGreaterOrEqualToMaxScore.not()) { "최대 점수 이상이라 카드를 더 받을 수 없습니다" }
         hand.add(card)
     }
 
