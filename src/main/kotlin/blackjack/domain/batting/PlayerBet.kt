@@ -8,16 +8,16 @@ sealed interface PlayerBet {
 
     data class Placed(
         override val playerName: PlayerName,
-        val betAmount: Amount,
+        val betAmount: BetAmount,
     ) : PlayerBet
 
     data class Finished(
         override val playerName: PlayerName,
-        val betAmount: Amount,
+        val betAmount: BetAmount,
         val payoutAmount: Amount,
     ) : PlayerBet {
 
-        val profit: Profit = Profit.of(betAmount, payoutAmount)
+        val profit: Profit = Profit.of(betAmount.value, payoutAmount)
         companion object {
             fun of(betPlaced: Placed, payoutAmount: Amount): Finished = Finished(
                 playerName = betPlaced.playerName,

@@ -6,6 +6,10 @@ data class Amount(
     val value: BigDecimal,
 ) : Comparable<Amount> {
 
+    init {
+        require(value >= BigDecimal.ZERO) { "금액은 0이상이어야 합니다" }
+    }
+
     operator fun plus(other: Amount): Amount = Amount(value.plus(other.value))
     operator fun times(count: Int): Amount = Amount(value.times(count.toBigDecimal()))
 
@@ -16,9 +20,5 @@ data class Amount(
 
     companion object {
         val ZERO = Amount(BigDecimal.ZERO)
-        fun betAmount(amount: Int): Amount {
-            require(amount > 0) { "베팅 금액은 0보다 커야 합니다" }
-            return Amount(amount.toBigDecimal())
-        }
     }
 }

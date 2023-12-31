@@ -48,23 +48,27 @@ data class BetBoard(
     private fun findPlayerBet(name: PlayerName): PlayerBet =
         playerBets[name] ?: throw IllegalArgumentException("베팅에 참여한 플레이어가 아닙니다")
 
-    private fun Player.payout(dealer: Dealer, betAmount: Amount): Amount =
+    private fun Player.payout(dealer: Dealer, betAmount: BetAmount): Amount =
         when (BlackJackJudge.judgeVictory(this, dealer)) {
             VictoryStatus.WIN -> calculateWinAmount(this, betAmount)
             VictoryStatus.LOSS -> Amount.ZERO
-            VictoryStatus.PUSH -> betAmount
+            VictoryStatus.PUSH -> betAmount.value
         }
 
-    private fun calculateWinAmount(player: Player, betAmount: Amount): Amount =
-        if (BlackJackJudge.isBlackJack(player)) betAmount * BLACK_JACK_MULTIPLIER + betAmount
-        else betAmount * 2
+    private fun calculateWinAmount(player: Player, betAmount: BetAmount): Amount {
+        val amount = betAmount.value
+        return when (BlackJackJudge.isBlackJack(player)) {
+            true -> amount * BLACK_JACK_MULTIPLIER + amount
+            false -> amount * 2
+        }
+    }
 
     companion object {
         private val BLACK_JACK_MULTIPLIER = BigDecimal(1.5)
-        fun of(players: Players, betAmount: (player: Player) -> Amount): BetBoard =
+        fun of(players: Players, betAmount: (player: Player) -> BetAmount): BetBoard =
             BetBoard(players.value.associate { it.name to it.placeBet(betAmount) }.toMutableMap())
 
-        private fun Player.placeBet(betAmount: (player: Player) -> Amount): PlayerBet =
+        private fun Player.placeBet(betAmount: (player: Player) -> BetAmount): PlayerBet =
             PlayerBet.Placed(this.name, betAmount(this))
     }
 }

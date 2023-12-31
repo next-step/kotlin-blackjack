@@ -1,6 +1,7 @@
 package blackjack.domain.betting
 
 import blackjack.domain.Dealer
+import blackjack.domain.batting.BetAmount
 import blackjack.domain.batting.BetBoard
 import blackjack.domain.batting.PlayerBet
 import blackjack.domain.card.Rank
@@ -24,8 +25,8 @@ class BetBoardTest : DescribeSpec({
     describe("BettingBoard") {
         context("플레이어 이름으로 베팅 금액 (kim: 3_000원, lee: 4_000원)이 등록되면") {
             val players = players(player("kim"), player("lee"))
-            val kimAmount = amount(3_000)
-            val leeAmount = amount(4_000)
+            val kimAmount = BetAmount(amount(3_000))
+            val leeAmount = BetAmount(amount(4_000))
             val betAmount = { player: Player ->
                 if (player.name.value == "kim") kimAmount
                 else leeAmount
@@ -54,13 +55,13 @@ class BetBoardTest : DescribeSpec({
     describe("playerProfit") {
         context("플레이어가 (베팅: 1000, 받은돈: 0) 으로 베팅을 완료했을 때") {
             val name = PlayerName("kim")
-            val betAmount = amount(1000)
+            val betAmount = BetAmount(amount(1000))
             val payoutAmount = amount(0)
             val finishedBet = PlayerBet.Finished(name, betAmount, payoutAmount)
             val betBord = BetBoard(
                 mutableMapOf(
                     name to finishedBet,
-                    PlayerName("lee") to PlayerBet.Finished(PlayerName("lee"), amount(5_000), amount(5_000))
+                    PlayerName("lee") to PlayerBet.Finished(PlayerName("lee"), BetAmount(amount(5_000)), amount(5_000))
                 )
             )
 
@@ -73,12 +74,12 @@ class BetBoardTest : DescribeSpec({
 
         context("베팅이 완료되지 않은 플레이어의 수익을 조회하면") {
             val name = PlayerName("kim")
-            val betAmount = amount(1000)
+            val betAmount = BetAmount(amount(1000))
             val placedBet = PlayerBet.Placed(name, betAmount)
             val betBord = BetBoard(
                 mutableMapOf(
                     name to placedBet,
-                    PlayerName("lee") to PlayerBet.Placed(PlayerName("lee"), amount(5_000))
+                    PlayerName("lee") to PlayerBet.Placed(PlayerName("lee"), BetAmount(amount(5_000)))
                 )
             )
 
@@ -93,8 +94,8 @@ class BetBoardTest : DescribeSpec({
             context("플레이어1의 수익이 2000, 플레이어2의 수익이 -1000일 때") {
                 val betBoard = BetBoard(
                     mutableMapOf(
-                        PlayerName("kim") to PlayerBet.Finished(PlayerName("kim"), amount(2_000), amount(4_000)),
-                        PlayerName("lee") to PlayerBet.Finished(PlayerName("lee"), amount(1_000), amount(0)),
+                        PlayerName("kim") to PlayerBet.Finished(PlayerName("kim"), BetAmount(amount(2_000)), amount(4_000)),
+                        PlayerName("lee") to PlayerBet.Finished(PlayerName("lee"), BetAmount(amount(1_000)), amount(0)),
                     )
                 )
 
@@ -108,8 +109,8 @@ class BetBoardTest : DescribeSpec({
             context("모든 플레이어 베팅이 끝나지 않았다면") {
                 val betBord = BetBoard(
                     mutableMapOf(
-                        PlayerName("kim") to PlayerBet.Placed(PlayerName("kim"), amount(5_000)),
-                        PlayerName("lee") to PlayerBet.Placed(PlayerName("lee"), amount(5_000))
+                        PlayerName("kim") to PlayerBet.Placed(PlayerName("kim"), BetAmount(amount(5_000))),
+                        PlayerName("lee") to PlayerBet.Placed(PlayerName("lee"), BetAmount(amount(5_000)))
                     )
                 )
                 it("수익 조회에 실패한다") {
@@ -124,8 +125,8 @@ class BetBoardTest : DescribeSpec({
             context("딜러를 블랙잭으로 이긴 플레이어라면") {
                 val betBord = BetBoard(
                     mutableMapOf(
-                        PlayerName("kim") to PlayerBet.Placed(PlayerName("kim"), amount(5_000)),
-                        PlayerName("lee") to PlayerBet.Placed(PlayerName("lee"), amount(5_000))
+                        PlayerName("kim") to PlayerBet.Placed(PlayerName("kim"), BetAmount(amount(5_000))),
+                        PlayerName("lee") to PlayerBet.Placed(PlayerName("lee"), BetAmount(amount(5_000)))
                     )
                 )
 
@@ -143,8 +144,8 @@ class BetBoardTest : DescribeSpec({
             context("딜러를 일반 숫자로 이긴 플레이어라면") {
                 val betBord = BetBoard(
                     mutableMapOf(
-                        PlayerName("kim") to PlayerBet.Placed(PlayerName("kim"), amount(5_000)),
-                        PlayerName("lee") to PlayerBet.Placed(PlayerName("lee"), amount(5_000))
+                        PlayerName("kim") to PlayerBet.Placed(PlayerName("kim"), BetAmount(amount(5_000))),
+                        PlayerName("lee") to PlayerBet.Placed(PlayerName("lee"), BetAmount(amount(5_000)))
                     )
                 )
 
@@ -162,8 +163,8 @@ class BetBoardTest : DescribeSpec({
             context("딜러와 플레이어 둘 다 블랙잭으로 무승부라면") {
                 val betBord = BetBoard(
                     mutableMapOf(
-                        PlayerName("kim") to PlayerBet.Placed(PlayerName("kim"), amount(5_000)),
-                        PlayerName("lee") to PlayerBet.Placed(PlayerName("lee"), amount(5_000))
+                        PlayerName("kim") to PlayerBet.Placed(PlayerName("kim"), BetAmount(amount(5_000))),
+                        PlayerName("lee") to PlayerBet.Placed(PlayerName("lee"), BetAmount(amount(5_000)))
                     )
                 )
 
@@ -180,8 +181,8 @@ class BetBoardTest : DescribeSpec({
             context("딜러와 둘다 일반 점수로 무승부라면") {
                 val betBord = BetBoard(
                     mutableMapOf(
-                        PlayerName("kim") to PlayerBet.Placed(PlayerName("kim"), amount(5_000)),
-                        PlayerName("lee") to PlayerBet.Placed(PlayerName("lee"), amount(5_000))
+                        PlayerName("kim") to PlayerBet.Placed(PlayerName("kim"), BetAmount(amount(5_000))),
+                        PlayerName("lee") to PlayerBet.Placed(PlayerName("lee"), BetAmount(amount(5_000)))
                     )
                 )
 
@@ -198,8 +199,8 @@ class BetBoardTest : DescribeSpec({
             context("플레이어의 카드가 버스트라면") {
                 val betBord = BetBoard(
                     mutableMapOf(
-                        PlayerName("kim") to PlayerBet.Placed(PlayerName("kim"), amount(5_000)),
-                        PlayerName("lee") to PlayerBet.Placed(PlayerName("lee"), amount(5_000))
+                        PlayerName("kim") to PlayerBet.Placed(PlayerName("kim"), BetAmount(amount(5_000))),
+                        PlayerName("lee") to PlayerBet.Placed(PlayerName("lee"), BetAmount(amount(5_000)))
                     )
                 )
 
@@ -216,8 +217,8 @@ class BetBoardTest : DescribeSpec({
             context("플레이어도 딜러도 모두 버스트라면") {
                 val betBord = BetBoard(
                     mutableMapOf(
-                        PlayerName("kim") to PlayerBet.Placed(PlayerName("kim"), amount(5_000)),
-                        PlayerName("lee") to PlayerBet.Placed(PlayerName("lee"), amount(5_000))
+                        PlayerName("kim") to PlayerBet.Placed(PlayerName("kim"), BetAmount(amount(5_000))),
+                        PlayerName("lee") to PlayerBet.Placed(PlayerName("lee"), BetAmount(amount(5_000)))
                     )
                 )
 
