@@ -4,7 +4,7 @@ import java.math.BigDecimal
 
 data class Amount(
     val value: BigDecimal,
-) : Comparable<Amount> {
+) {
 
     init {
         require(value >= BigDecimal.ZERO) { "금액은 0이상이어야 합니다" }
@@ -15,7 +15,7 @@ data class Amount(
 
     operator fun times(count: BigDecimal): Amount =
         Amount(value * count)
-    override fun compareTo(other: Amount): Int =
+    operator fun compareTo(other: Amount): Int =
         this.value.compareTo(other.value)
 
     companion object {

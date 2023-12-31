@@ -3,6 +3,9 @@ package blackjack.domain.card
 data class HandScore(
     val value: Int,
 ) {
+    operator fun compareTo(other: HandScore): Int =
+        this.value.compareTo(other.value)
+
     val isGreaterOrEqualToMaxScore: Boolean = value >= MAX_SCORE
 
     companion object {
