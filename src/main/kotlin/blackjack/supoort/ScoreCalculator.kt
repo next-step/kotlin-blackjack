@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.supoort
 
 import blackjack.card.AceCard
 import blackjack.card.BlackJackCard

@@ -1,11 +1,11 @@
 package blackjack.domain
 
-import blackjack.ScoreCalculator
+import org.junit.jupiter.api.Test
+import io.kotest.matchers.shouldBe
 import blackjack.card.CardPattern
 import blackjack.card.NormalCard
+import blackjack.supoort.ScoreCalculator
 import blackjack.participant.Dealer
-import io.kotest.matchers.shouldBe
-import org.junit.jupiter.api.Test
 
 class DealerTest {
     private val scoreCalculator: ScoreCalculator = ScoreCalculator()

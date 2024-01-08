@@ -6,6 +6,7 @@ import blackjack.card.CardPattern
 import blackjack.card.CardPicture
 import blackjack.card.NormalCard
 import blackjack.card.PictureCard
+import blackjack.supoort.ScoreCalculator
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest

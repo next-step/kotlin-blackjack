@@ -1,18 +1,20 @@
 package blackjack.participant
 
-import blackjack.ScoreCalculator
+import blackjack.supoort.ScoreCalculator
 import blackjack.card.BlackJackCard
 
 class Player(
     val name: Name,
-    scoreCalculator: ScoreCalculator
+    val bettingAmount: BettingAmount = BettingAmount(0),
+    scoreCalculator: ScoreCalculator = ScoreCalculator()
 ) {
+    constructor(name: Name, scoreCalculator: ScoreCalculator) : this(name, BettingAmount(0), scoreCalculator)
 
     private val blackjackStrategy: BlackjackStrategy = BlackjackStrategy(scoreCalculator)
 
     val cards get() = blackjackStrategy.cards
 
-    val isBust get() = blackjackStrategy.isBust
+    val status get() = blackjackStrategy.status
 
     fun drawCard(cards: List<BlackJackCard>) {
         blackjackStrategy.drawCard(cards)
@@ -23,6 +25,6 @@ class Player(
     }
 
     fun shouldDraw(): Boolean {
-        return !blackjackStrategy.isBust
+        return !blackjackStrategy.isBust()
     }
 }

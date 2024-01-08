@@ -1,6 +1,9 @@
 package blackjack
 
 import blackjack.card.CardDeck
+import blackjack.supoort.GameResultGenerator
+import blackjack.supoort.ScoreCalculator
+import blackjack.participant.BettingAmount
 import blackjack.participant.Dealer
 import blackjack.participant.Name
 import blackjack.participant.Player
@@ -23,27 +26,24 @@ class GameManager(
         players.forEach { it.drawCard(CardDeck.draw(FIRST_DRAW)) }
         dealer.drawCard(CardDeck.draw(FIRST_DRAW))
 
-        outputManager.printFirstTurn2(players)
+        outputManager.printFirstTurn(players)
         outputManager.printPlayersAndDealerCards(players, dealer)
 
-        val result = playBlackJack()
+        playBlackJack()
 
-        players.forEach {
-            outputManager.printPlayerResultGame(it)
-        }
+        val result = GameResultGenerator.generateGameResult(players, dealer)
 
         outputManager.printDealerResultGame(dealer)
 
+        players.forEach(outputManager::printPlayerResultGame)
         outputManager.printResult(result)
     }
 
-    private fun playBlackJack(): GameResult {
+    private fun playBlackJack() {
         players.forEach {
             playerDraw(it)
         }
         dealerDraw(dealer)
-
-        return GameResult(players, dealer)
     }
 
     private fun playerDraw(player: Player) {
@@ -62,7 +62,6 @@ class GameManager(
         while (dealer.shouldDraw()) {
             outputManager.printDealerCanDrawMessage()
             dealer.drawCard(CardDeck.draw(DRAW_CARD))
-            outputManager.printDealerCards(dealer)
         }
     }
 
@@ -70,7 +69,7 @@ class GameManager(
 
     private fun joinPlayers(): List<Player> {
         val playerNames: List<String> = inputManager.inputPlayerNames()
-        return playerNames.map { Player(Name(it), ScoreCalculator()) }
+        return playerNames.map { Player(Name(it), BettingAmount(inputManager.inputBettingAmount(it))) }
     }
 
     private fun joinDealer(): Dealer {
