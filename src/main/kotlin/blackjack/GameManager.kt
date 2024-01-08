@@ -35,20 +35,9 @@ class GameManager(
 
         outputManager.printDealerResultGame(dealer)
 
-        players.forEach {
-            outputManager.printPlayerResultGame(it)
-        }
+        players.forEach(outputManager::printPlayerResultGame)
         outputManager.printResult(result)
     }
-
-//    private fun playBlackJack(): GameResult {
-//        players.forEach {
-//            playerDraw(it)
-//        }
-//        dealerDraw(dealer)
-//
-//        return GameResult(players, dealer)
-//    }
 
     private fun playBlackJack() {
         players.forEach {

@@ -12,27 +12,17 @@ import blackjack.participant.status.Bust
 object MatchingScoreCalculator {
 
     fun matchingScoreForDealer(players: List<Player>, dealer: Dealer): BettingAmount {
-        var bettingAmount = BettingAmount(0)
-        players.forEach {
-            if (it.status is Blackjack && dealer.status !is Blackjack) {
-                bettingAmount -= it.status.calculateBettingAmount(
-                    Result.Win,
-                    it.bettingAmount
-                )
+        val bettingAmount = players.fold(BettingAmount(0)) { acc, player ->
+            val updatedAmount = when {
+                player.status is Blackjack && dealer.status !is Blackjack -> acc - player.status.calculateBettingAmount(Result.Win, player.bettingAmount)
+                player.status is Bust -> acc + player.bettingAmount
+                dealer.status is Bust -> acc - player.bettingAmount
+                dealer.resultScore() > player.resultScore() -> acc + player.bettingAmount
+                else -> acc
             }
-
-            if (it.status is Bust) {
-                bettingAmount += it.bettingAmount
-            }
-
-            if (dealer.status is Bust) {
-                bettingAmount -= it.bettingAmount
-            }
-
-            if (dealer.resultScore() > it.resultScore()) {
-                bettingAmount += it.bettingAmount
-            }
+            BettingAmount(updatedAmount.amount)
         }
+
         return bettingAmount
     }
 }
