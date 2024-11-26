@@ -39,16 +39,38 @@ class DslTest : StringSpec({
 
         person.company shouldBe "우아한형제들"
     }
+
+    "스킬 정보를 설정한다." {
+        val person = introduce {
+            name("박경철")
+            company("우아한형제들")
+            skills {
+                soft("A passion for problem solving")
+                soft("Good communication skills")
+                hard("Kotlin")
+            }
+        }
+
+        person.softSkills shouldBe listOf("A passion for problem solving", "Good communication skills")
+        person.hardSkills shouldBe listOf("Kotlin")
+    }
 })
 
 private fun introduce(builder: PersonBuilder.() -> Unit): Person =
     PersonBuilder().apply(builder).build()
 
-private class Person(val name: String, val company: String?)
+private class Person(
+    val name: String,
+    val company: String?,
+    val softSkills: List<String>,
+    val hardSkills: List<String>,
+)
 
 private class PersonBuilder {
-    lateinit var name: String
-    var company: String? = null
+    private lateinit var name: String
+    private var company: String? = null
+    private var softSkills: List<String> = emptyList()
+    private var hardSkills: List<String> = emptyList()
 
     fun name(value: String) {
         this.name = value
@@ -58,6 +80,31 @@ private class PersonBuilder {
         this.company = value
     }
 
-    fun build(): Person = Person(this.name, this.company)
+    fun skills(builder: SkillsBuilder.() -> Unit) {
+        val skillsBuilder = SkillsBuilder().apply(builder)
+        this.softSkills = skillsBuilder.softSkills
+        this.hardSkills = skillsBuilder.hardSkills
+    }
+
+    fun build(): Person =
+        Person(
+            name = this.name,
+            company = this.company,
+            softSkills = this.softSkills,
+            hardSkills = this.hardSkills
+        )
+}
+
+private class SkillsBuilder {
+    val softSkills = mutableListOf<String>()
+    val hardSkills = mutableListOf<String>()
+
+    fun soft(value: String) {
+        softSkills.add(value)
+    }
+
+    fun hard(value: String) {
+        hardSkills.add(value)
+    }
 }
 
