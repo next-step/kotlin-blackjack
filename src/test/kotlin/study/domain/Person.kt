@@ -1,11 +1,11 @@
 package study.domain
 
-import study.builder.SkillsBuilder
+import study.domain.Skill.SkillsBuilder
 
 data class Person(
     val name: String,
     val company: String?,
-    val skills: List<String>,
+    val skills: Skill,
     val languages: List<Language>,
 ) {
     companion object {
@@ -17,7 +17,7 @@ data class Person(
     class PersonBuilder {
         private lateinit var name: String
         private var company: String? = null // 회사가 없을 수도 있음
-        private var skills: List<String> = emptyList()
+        private var skills: Skill = Skill(emptyList(), emptyList())
         private var languages: List<Language> = emptyList()
 
         fun name(value: String) {
