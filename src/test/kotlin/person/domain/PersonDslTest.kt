@@ -7,6 +7,7 @@ class PersonDslTest : StringSpec({
     "introduce는 Person을 반환한다." {
         PersonDsl.introduce {
             name("김성민")
+            company("넥스트스텝")
         }.shouldBeInstanceOf<Person>()
     }
 })
