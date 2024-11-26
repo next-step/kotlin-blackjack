@@ -26,34 +26,43 @@ class DslTest {
     @ParameterizedTest
     @ValueSource(strings = ["김보라", "홍길동"])
     fun nameTest(name: String) {
-        val person = introduce {
-            name(name)
-        }
+        val person =
+            introduce {
+                name(name)
+            }
         person.name shouldBe name
     }
 
     @Test
     fun company() {
-        val person = introduce {
-            name("김보라")
-            company("올뺌컴퍼니")
-        }
+        val person =
+            introduce {
+                name("김보라")
+                company("올뺌컴퍼니")
+            }
 
         person.company shouldBe "올뺌컴퍼니"
     }
 
     @Test
     fun skills() {
-        val person = introduce {
-            name("김보라")
-            company("올뺌컴퍼니")
-        }
+        val person =
+            introduce {
+                name("김보라")
+                company("올뺌컴퍼니")
+                skills {
+                    soft("A passion for problem solving")
+                    soft("Good communication skills")
+                    hard("Kotlin")
+                }
+            }
 
-        person.company shouldBe "올뺌컴퍼니"
+        person.skills.size shouldBe 3
+        person.skills.map { it.description } shouldBe
+            listOf(
+                "A passion for problem solving",
+                "Good communication skills",
+                "Kotlin",
+            )
     }
 }
-
-private fun introduce(block: PersonBuilder.() -> Unit): Person {
-    return PersonBuilder().apply(block).build()
-}
-
