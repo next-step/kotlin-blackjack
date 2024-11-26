@@ -8,6 +8,7 @@ class PersonDslTest : StringSpec({
         PersonDsl.introduce {
             name("김성민")
             company("넥스트스텝")
+            skills{}
         }.shouldBeInstanceOf<Person>()
     }
 })
