@@ -3,7 +3,8 @@ package study.builder
 data class Skill(val name: String, val type: SkillType) {
     companion object {
         enum class SkillType {
-            SOFT, HARD
+            SOFT,
+            HARD,
         }
     }
 }
