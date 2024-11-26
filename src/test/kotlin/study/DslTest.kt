@@ -60,6 +60,27 @@ class DslTest {
         person.skills?.soft shouldBe listOf("A passion for problem solving", "Good communication skills")
         person.skills?.hard shouldBe listOf("Kotlin")
     }
+
+    @Test
+    fun languages() {
+        val person =
+            introduce {
+                name("이규원")
+                company("한빛앤")
+                skills {
+                    soft("A passion for problem solving")
+                    soft("Good communication skills")
+                    hard("Kotlin")
+                }
+                languages {
+                    "Korean" level 5
+                    "English" level 3
+                }
+            }
+
+        person.skills?.soft shouldBe listOf("A passion for problem solving", "Good communication skills")
+        person.skills?.hard shouldBe listOf("Kotlin")
+    }
 }
 
 fun introduce(block: PersonBuilder.() -> Unit): Person {
@@ -70,12 +91,14 @@ data class Person(
     val name: String,
     val company: String?,
     val skills: Skills?,
+    val languages: Languages?,
 )
 
 class PersonBuilder {
     private lateinit var name: String
     private var company: String? = null
     private var skills: Skills? = null
+    private var languages: Languages? = null
 
     fun name(value: String) {
         name = value
@@ -89,8 +112,12 @@ class PersonBuilder {
         skills = SkillsBuilder().apply(block).build()
     }
 
+    fun languages(block: LanguageBuilder.() -> Unit) {
+        languages = LanguageBuilder().apply(block).build()
+    }
+
     fun build(): Person {
-        return Person(name, company, skills)
+        return Person(name, company, skills, languages)
     }
 }
 
@@ -113,5 +140,19 @@ class SkillsBuilder {
 
     fun build(): Skills {
         return Skills(soft, hard)
+    }
+}
+
+data class Languages(val languages: Map<String, Int>)
+
+class LanguageBuilder {
+    private val languages = mutableMapOf<String, Int>()
+
+    infix fun String.level(level: Int) {
+        languages[this] = level
+    }
+
+    fun build(): Languages {
+        return Languages(languages)
     }
 }
