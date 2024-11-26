@@ -54,6 +54,25 @@ class DslTest : StringSpec({
         person.softSkills shouldBe listOf("A passion for problem solving", "Good communication skills")
         person.hardSkills shouldBe listOf("Kotlin")
     }
+
+    "언어 정보를 설정한다." {
+        val person = introduce {
+            name("박경철")
+            company("우아한형제들")
+            skills {
+                soft("A passion for problem solving")
+                soft("Good communication skills")
+                hard("Kotlin")
+            }
+            languages {
+                "Korean" level 5
+                "English" level 3
+            }
+        }
+
+        person.languages["Korean"] shouldBe 5
+        person.languages["English"] shouldBe 3
+    }
 })
 
 private fun introduce(builder: PersonBuilder.() -> Unit): Person =
@@ -64,6 +83,7 @@ private class Person(
     val company: String?,
     val softSkills: List<String>,
     val hardSkills: List<String>,
+    val languages: Map<String, Int>,
 )
 
 private class PersonBuilder {
@@ -71,6 +91,7 @@ private class PersonBuilder {
     private var company: String? = null
     private var softSkills: List<String> = emptyList()
     private var hardSkills: List<String> = emptyList()
+    private var languages: MutableMap<String, Int> = mutableMapOf()
 
     fun name(value: String) {
         this.name = value
@@ -86,12 +107,18 @@ private class PersonBuilder {
         this.hardSkills = skillsBuilder.hardSkills
     }
 
+    fun languages(builder: LanguageBuilder.() -> Unit) {
+        val languageBuilder = LanguageBuilder().apply(builder)
+        this.languages = languageBuilder.languages
+    }
+
     fun build(): Person =
         Person(
             name = this.name,
             company = this.company,
             softSkills = this.softSkills,
-            hardSkills = this.hardSkills
+            hardSkills = this.hardSkills,
+            languages = this.languages,
         )
 }
 
@@ -105,6 +132,14 @@ private class SkillsBuilder {
 
     fun hard(value: String) {
         hardSkills.add(value)
+    }
+}
+
+private class LanguageBuilder {
+    val languages = mutableMapOf<String, Int>()
+
+    infix fun String.level(level: Int) {
+        languages[this] = level
     }
 }
 
