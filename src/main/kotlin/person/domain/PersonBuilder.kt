@@ -2,7 +2,7 @@ package person.domain
 
 class PersonBuilder {
     private lateinit var name: String
-    private var company: String? =null
+    private var company: String? = null
     private val hardSkills: MutableList<String> = mutableListOf()
     private val softSkills: MutableList<String> = mutableListOf()
 
@@ -15,7 +15,16 @@ class PersonBuilder {
     }
 
     fun build(): Person = Person(name, company, hardSkills.toList(), softSkills.toList())
-    fun skills(block: () -> Unit) {
+
+    fun skills(block: PersonBuilder.() -> Unit) {
         block()
+    }
+
+    fun soft(value: String) {
+        softSkills.add(value)
+    }
+
+    fun hard(value: String) {
+        hardSkills.add(value)
     }
 }
