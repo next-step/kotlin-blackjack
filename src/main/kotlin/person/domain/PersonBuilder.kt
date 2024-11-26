@@ -27,4 +27,8 @@ class PersonBuilder {
     fun hard(value: String) {
         hardSkills.add(value)
     }
+
+    fun languages(block: PersonBuilder.() -> Unit) {
+        block()
+    }
 }

@@ -13,6 +13,7 @@ class PersonDslTest : StringSpec({
                 soft("Good communication skills")
                 hard("Kotlin")
             }
+            languages {}
         }.shouldBeInstanceOf<Person>()
     }
 })
