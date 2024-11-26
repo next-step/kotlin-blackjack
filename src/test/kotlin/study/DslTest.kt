@@ -65,4 +65,29 @@ class DslTest {
                 "Kotlin",
             )
     }
+
+    @Test
+    fun languages() {
+        val person =
+            introduce {
+                name("김보라")
+                company("올뺌컴퍼니")
+                skills {
+                    soft("A passion for problem solving")
+                    soft("Good communication skills")
+                    hard("Kotlin")
+                }
+                languages {
+                    "Korean" level 5
+                    "English" level 3
+                }
+            }
+
+        person.languages.size shouldBe 2
+        person.languages.map { it } shouldBe
+            listOf(
+                Language(lang = "Korean", level = 5),
+                Language(lang = "English", level = 3),
+            )
+    }
 }

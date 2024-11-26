@@ -7,4 +7,4 @@
 ### 기능 목록
 - [x] Person : name, company 확장함수 사용하여 추가
 - [x] Skill : soft, hard 목록 만들기
-- [ ] language infix 사용
+- [x] language infix 사용
