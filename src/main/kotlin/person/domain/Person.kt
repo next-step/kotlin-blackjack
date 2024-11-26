@@ -1,7 +1,5 @@
 package person.domain
 
-import org.intellij.lang.annotations.Language
-
 class Person(
     val name: String,
     val company: String?,
