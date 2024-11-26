@@ -25,13 +25,10 @@ import study.domain.Person.Companion.introduce
  *
  */
 class DslTest {
-
     @ValueSource(strings = ["안성재"])
     @ParameterizedTest
     fun nameTest(name: String) {
-        val person = introduce {
-            name(name)
-        }
+        val person = introduce { name(name) }
         person.name shouldBe name
     }
 
@@ -57,7 +54,7 @@ class DslTest {
         person.skills shouldBe listOf(
             "A passion for problem solving",
             "Good communication skills",
-            "Kotlin"
+            "Kotlin",
         )
     }
 
@@ -69,7 +66,7 @@ class DslTest {
         }
         person.languages shouldBe listOf(
             Language("Korean", 5),
-            Language("English", 3)
+            Language("English", 3),
         )
     }
 }
