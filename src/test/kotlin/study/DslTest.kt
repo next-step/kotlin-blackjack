@@ -9,32 +9,35 @@ class DslTest {
     @ValueSource(strings = ["홍길동", "홍", "길동"])
     @ParameterizedTest
     fun nameTest(name: String) {
-        val person = introduce {
-            name(name)
-        }.build()
+        val person =
+            introduce {
+                name(name)
+            }.build()
         person.name shouldBe name
     }
 
     @Test
     fun companyTest() {
-        val person = introduce {
-            name("홍길동")
-            company("활빈당")
-        }.build()
+        val person =
+            introduce {
+                name("홍길동")
+                company("활빈당")
+            }.build()
         person.company shouldBe "활빈당"
     }
 
     @Test
     fun skillsTest() {
-        val person = introduce {
-            name("홍길동")
-            company("활빈당")
-            skills {
-                soft("A passion for problem solving")
-                soft("Good communication skills")
-                hard("Kotlin")
-            }
-        }.build()
+        val person =
+            introduce {
+                name("홍길동")
+                company("활빈당")
+                skills {
+                    soft("A passion for problem solving")
+                    soft("Good communication skills")
+                    hard("Kotlin")
+                }
+            }.build()
 
         person.skills.size shouldBe 3
         person.skills[0] shouldBe "soft: A passion for problem solving"
@@ -44,19 +47,20 @@ class DslTest {
 
     @Test
     fun languageTest() {
-        val person = introduce {
-            name("홍길동")
-            company("활빈당")
-            skills {
-                soft("A passion for problem solving")
-                soft("Good communication skills")
-                hard("Kotlin")
-            }
-            language {
-                "Korean" level 5
-                "English" level 3
-            }
-        }.build()
+        val person =
+            introduce {
+                name("홍길동")
+                company("활빈당")
+                skills {
+                    soft("A passion for problem solving")
+                    soft("Good communication skills")
+                    hard("Kotlin")
+                }
+                language {
+                    "Korean" level 5
+                    "English" level 3
+                }
+            }.build()
 
         person.languages.size shouldBe 2
         person.languages[0].name shouldBe "Korean"
