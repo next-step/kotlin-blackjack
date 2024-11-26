@@ -1,8 +1,11 @@
 package person.domain
 
+import org.intellij.lang.annotations.Language
+
 class Person(
     val name: String,
     val company: String?,
-    val toList: List<String>,
-    val toList1: List<String>,
+    val hardSkills: List<String>,
+    val softSkills: List<String>,
+    val languages: Map<String, Int>,
 )

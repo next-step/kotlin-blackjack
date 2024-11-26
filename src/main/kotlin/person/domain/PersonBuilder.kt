@@ -5,6 +5,7 @@ class PersonBuilder {
     private var company: String? = null
     private val hardSkills: MutableList<String> = mutableListOf()
     private val softSkills: MutableList<String> = mutableListOf()
+    private val languages: MutableMap<String, Int> = mutableMapOf()
 
     fun name(value: String) {
         name = value
@@ -13,8 +14,6 @@ class PersonBuilder {
     fun company(value: String?) {
         company = value
     }
-
-    fun build(): Person = Person(name, company, hardSkills.toList(), softSkills.toList())
 
     fun skills(block: PersonBuilder.() -> Unit) {
         block()
@@ -31,4 +30,10 @@ class PersonBuilder {
     fun languages(block: PersonBuilder.() -> Unit) {
         block()
     }
+
+    infix fun String.level(value: Int) {
+        languages[this] = value
+    }
+
+    fun build(): Person = Person(name, company, hardSkills.toList(), softSkills.toList(), languages.toMap())
 }
