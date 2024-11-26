@@ -1,4 +1,3 @@
 package person.domain
 
-class Person {
-}
+class Person(val name: String)
