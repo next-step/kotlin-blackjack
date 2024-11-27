@@ -21,18 +21,18 @@ class SkillsBuilder {
 }
 
 class Skills(
-    softSkills: SoftSkills,
-    hardSkills: HardSkills,
+    softSkills: SoftSkills = SoftSkills(),
+    hardSkills: HardSkills = HardSkills(),
 ) {
     val softSkills = softSkills.softSkills
     val hardSkills = hardSkills.hardSkills
 }
 
-class SoftSkills(softSkills: List<SoftSkill>) {
+class SoftSkills(softSkills: List<SoftSkill> = emptyList()) {
     val softSkills = softSkills.map { it.value }
 }
 
-class HardSkills(hardSkills: List<HardSkill>) {
+class HardSkills(hardSkills: List<HardSkill> = emptyList()) {
     val hardSkills = hardSkills.map { it.value }
 }
 

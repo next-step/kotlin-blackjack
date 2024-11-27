@@ -10,7 +10,7 @@ class LanguagesBuilder {
     infix fun String.level(level: Int) = languages.put(Language(this), Level(level))
 }
 
-data class Languages(val languages: Map<Language, Level>) {
+class Languages(private val languages: Map<Language, Level> = emptyMap()) {
     operator fun get(language: String) = languages[Language(language)]?.value
 }
 

@@ -33,8 +33,8 @@ class DslTest : StringSpec({
                     soft("a passion for problem solving")
                 }
             }
-        person.skills?.softSkills?.get(0) shouldBe "Good communication skills"
-        person.skills?.softSkills?.get(1) shouldBe "a passion for problem solving"
+        person.skills.softSkills[0] shouldBe "Good communication skills"
+        person.skills.softSkills[1] shouldBe "a passion for problem solving"
     }
 
     "hard skills" {
@@ -46,8 +46,8 @@ class DslTest : StringSpec({
                     hard("Spring")
                 }
             }
-        person.skills?.hardSkills?.get(0) shouldBe "Kotlin"
-        person.skills?.hardSkills?.get(1) shouldBe "Spring"
+        person.skills.hardSkills[0] shouldBe "Kotlin"
+        person.skills.hardSkills[1] shouldBe "Spring"
     }
 
     "soft and hard skills" {
@@ -61,10 +61,10 @@ class DslTest : StringSpec({
                     hard("Spring")
                 }
             }
-        person.skills?.softSkills?.get(0) shouldBe "Good communication skills"
-        person.skills?.softSkills?.get(1) shouldBe "a passion for problem solving"
-        person.skills?.hardSkills?.get(0) shouldBe "Kotlin"
-        person.skills?.hardSkills?.get(1) shouldBe "Spring"
+        person.skills.softSkills[0] shouldBe "Good communication skills"
+        person.skills.softSkills[1] shouldBe "a passion for problem solving"
+        person.skills.hardSkills[0] shouldBe "Kotlin"
+        person.skills.hardSkills[1] shouldBe "Spring"
     }
 
     "languages" {
@@ -77,7 +77,7 @@ class DslTest : StringSpec({
                 }
             }
 
-        person.languages?.get("Korean") shouldBe 5
-        person.languages?.get("English") shouldBe 3
+        person.languages["Korean"] shouldBe 5
+        person.languages["English"] shouldBe 3
     }
 })
