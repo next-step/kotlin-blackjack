@@ -1,7 +1,7 @@
 package blackjack
 
 sealed class Rank(val value: Int, val displayName: String) {
-    data object ACE : Rank(1, "A") {
+    object ACE : Rank(1, "A") {
         fun getPossibleValues(): List<Int> = listOf(1, 11)
     }
 
@@ -21,10 +21,11 @@ sealed class Rank(val value: Int, val displayName: String) {
         val QUEEN = Number(10, "Q")
         val KING = Number(10, "K")
 
-        val entries =
+        val entries by lazy {
             listOf(
                 ACE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, TEN,
                 JACK, QUEEN, KING,
             )
+        }
     }
 }
