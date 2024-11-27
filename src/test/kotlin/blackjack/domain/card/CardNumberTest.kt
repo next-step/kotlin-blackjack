@@ -7,13 +7,12 @@ class CardNumberTest : StringSpec({
     "카드는 1~10, Jack(10), Queen(10), King(10), Ace(11)의 값을 갖는다." {
         val numbers =
             listOf(
-                CardNumber.One,
                 CardNumber.Two,
+                CardNumber.Three,
             )
 
         numbers.forEach {
             when (it) {
-                is CardNumber.One -> it.number shouldBe 1
                 is CardNumber.Two -> it.number shouldBe 2
                 is CardNumber.Three -> it.number shouldBe 3
                 is CardNumber.Four -> it.number shouldBe 4

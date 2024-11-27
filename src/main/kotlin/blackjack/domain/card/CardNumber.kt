@@ -1,8 +1,6 @@
 package blackjack.domain.card
 
 sealed class CardNumber(val number: Int) {
-    data object One : CardNumber(1)
-
     data object Two : CardNumber(2)
 
     data object Three : CardNumber(3)
