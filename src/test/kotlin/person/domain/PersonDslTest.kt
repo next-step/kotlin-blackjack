@@ -2,9 +2,12 @@ package person.domain
 
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.collections.shouldContainAll
-import io.kotest.matchers.maps.shouldContainAll
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeInstanceOf
+import person.domain.person.Person
+import person.domain.person.language.Language
+import person.domain.person.language.Languages
+import person.domain.person.skill.*
 
 class PersonDslTest : StringSpec({
     "introduce는 Person을 반환한다." {
@@ -25,8 +28,18 @@ class PersonDslTest : StringSpec({
         person.shouldBeInstanceOf<Person>()
         person.name shouldBe "김성민"
         person.company shouldBe "넥스트스텝"
-        person.hardSkills shouldContainAll listOf("Kotlin")
-        person.softSkills shouldContainAll listOf("A passion for problem solving", "Good communication skills")
-        person.languages shouldContainAll (mapOf("Korean" to 5, "English" to 3))
+        person.skills.skills shouldContainAll Skills(
+            listOf(
+                Skill.HardSkill("Kotlin"),
+                Skill.SoftSkill("A passion for problem solving"),
+                Skill.SoftSkill("Good communication skills"),
+            )
+        ).skills
+        person.languages.values shouldContainAll Languages(
+            listOf(
+                Language("Korean", 5),
+                Language("English", 3),
+            )
+        ).values
     }
 })
