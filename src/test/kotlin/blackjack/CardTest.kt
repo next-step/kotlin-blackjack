@@ -1,8 +1,7 @@
 package blackjack
 
-import io.kotest.matchers.shouldBe
-
 import io.kotest.core.spec.style.DescribeSpec
+import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 
 class CardTest : DescribeSpec({
