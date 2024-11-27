@@ -26,12 +26,12 @@ enum class Rank(val score: Int) {
     TEN(10),
     JACK(10),
     QUEEN(10),
-    KING(10)
+    KING(10),
 }
 
 enum class Suit {
     HEART,
     DIAMOND,
     CLUB,
-    SPADE
+    SPADE,
 }

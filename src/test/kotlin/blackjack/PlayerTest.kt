@@ -32,11 +32,11 @@ class PlayerTest {
             cards = Cards().apply {
                 add(Card.of(Suit.HEART, Rank.ACE))
                 add(Card.of(Suit.HEART, Rank.KING))
-            }
+            },
         )
 
         assertThrows<IllegalStateException>(
-            message = "21점을 초과하여 카드를 받을 수 없습니다. 현재 점수: 21"
+            message = "21점을 초과하여 카드를 받을 수 없습니다. 현재 점수: 21",
         ) {
             player.receiveCard(Card.of(Suit.HEART, Rank.TWO))
         }

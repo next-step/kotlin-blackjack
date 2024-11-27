@@ -16,12 +16,7 @@ class CardsTest {
         "TWO, THREE, KING, 15",
     )
     @ParameterizedTest
-    fun `Cards는 현재 카드의 점수를 계산한다`(
-        rank1: Rank,
-        rank2: Rank,
-        rank3: Rank,
-        expected: Int
-    ) {
+    fun `Cards는 현재 카드의 점수를 계산한다`(rank1: Rank, rank2: Rank, rank3: Rank, expected: Int) {
         val cards = Cards()
         cards.add(Card.of(Suit.HEART, rank1))
         cards.add(Card.of(Suit.HEART, rank2))
@@ -38,12 +33,7 @@ class CardsTest {
         "KING, QUEEN, KING, true",
     )
     @ParameterizedTest
-    fun `Cards는 21점을 초과하는지 확인한다`(
-        rank1: Rank,
-        rank2: Rank,
-        rank3: Rank,
-        expected: Boolean
-    ) {
+    fun `Cards는 21점을 초과하는지 확인한다`(rank1: Rank, rank2: Rank, rank3: Rank, expected: Boolean) {
         val cards = Cards()
         cards.add(Card.of(Suit.HEART, rank1))
         cards.add(Card.of(Suit.HEART, rank2))
