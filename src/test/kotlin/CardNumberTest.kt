@@ -3,21 +3,21 @@ import io.kotest.data.row
 import io.kotest.inspectors.forAll
 import io.kotest.matchers.shouldBe
 
-class CardTest : FreeSpec({
+class CardNumberTest : FreeSpec({
     "카드의 값을 결정한다." - {
         listOf(
-            row(Card.TWO, 2),
-            row(Card.THREE, 3),
-            row(Card.FOUR, 4),
-            row(Card.FIVE, 5),
-            row(Card.SIX, 6),
-            row(Card.SEVEN, 7),
-            row(Card.EIGHT, 8),
-            row(Card.NINE, 9),
-            row(Card.TEN, 10),
-            row(Card.JACK, 10),
-            row(Card.QUEEN, 10),
-            row(Card.KING, 10),
+            row(CardNumber.TWO, 2),
+            row(CardNumber.THREE, 3),
+            row(CardNumber.FOUR, 4),
+            row(CardNumber.FIVE, 5),
+            row(CardNumber.SIX, 6),
+            row(CardNumber.SEVEN, 7),
+            row(CardNumber.EIGHT, 8),
+            row(CardNumber.NINE, 9),
+            row(CardNumber.TEN, 10),
+            row(CardNumber.JACK, 10),
+            row(CardNumber.QUEEN, 10),
+            row(CardNumber.KING, 10),
         )
             .forAll { (card, expected) ->
                 "${card.name}의 값은 ${expected}로 결정한다." - {
@@ -41,7 +41,7 @@ class CardTest : FreeSpec({
         )
             .forAll { (description, hands, expected) ->
                 description - {
-                    Card.ACE.value(hands) shouldBe expected
+                    CardNumber.ACE.value(hands) shouldBe expected
                 }
             }
     }

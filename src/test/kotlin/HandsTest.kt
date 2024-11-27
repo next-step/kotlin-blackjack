@@ -10,26 +10,53 @@ class HandsTest : FreeSpec({
                 "2, 3, 4, A인 경우 합계 20이다.",
                 Hands(
                     mutableListOf(
-                        Card.TWO,
-                        Card.THREE,
-                        Card.FOUR,
-                        Card.ACE
+                        Card(
+                            CardSuit.HEARTS,
+                            CardNumber.TWO,
+                        ),
+                        Card(
+                            CardSuit.SPADES,
+                            CardNumber.THREE,
+                        ),
+                        Card(
+                            CardSuit.DIAMONDS,
+                            CardNumber.FOUR,
+                        ),
+                        Card(
+                            CardSuit.CLUBS,
+                            CardNumber.ACE,
+                        ),
                     )
                 ),
-                20
+                20,
             ),
             row(
                 "2, 3, 4, A, A인 경우 합계 21이다.",
                 Hands(
                     mutableListOf(
-                        Card.TWO,
-                        Card.THREE,
-                        Card.FOUR,
-                        Card.ACE,
-                        Card.ACE,
+                        Card(
+                            CardSuit.HEARTS,
+                            CardNumber.TWO,
+                        ),
+                        Card(
+                            CardSuit.SPADES,
+                            CardNumber.THREE,
+                        ),
+                        Card(
+                            CardSuit.DIAMONDS,
+                            CardNumber.FOUR,
+                        ),
+                        Card(
+                            CardSuit.CLUBS,
+                            CardNumber.ACE,
+                        ),
+                        Card(
+                            CardSuit.DIAMONDS,
+                            CardNumber.ACE,
+                        ),
                     )
                 ),
-                21
+                21,
             ),
         )
             .forAll { (description, hands, expected) ->
