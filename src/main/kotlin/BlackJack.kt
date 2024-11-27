@@ -8,8 +8,11 @@ class Player(
 )
 
 class Hands(
-    val cards: MutableList<Card>,
-)
+    private val cards: MutableList<Card>,
+) {
+    fun totalValue(): Int =
+        cards.fold(0) { acc, card -> acc + card.value(acc) }
+}
 
 enum class Card(
     private val decideCardValue: (Int) -> Int,
