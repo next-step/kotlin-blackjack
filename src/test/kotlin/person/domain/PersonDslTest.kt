@@ -31,19 +31,19 @@ class PersonDslTest : StringSpec({
         person.name shouldBe "김성민"
         person.company shouldBe "넥스트스텝"
         person.skills.skills shouldContainAll
-                Skills(
-                    listOf(
-                        Skill.HardSkill("Kotlin"),
-                        Skill.SoftSkill("A passion for problem solving"),
-                        Skill.SoftSkill("Good communication skills"),
-                    )
-                ).skills
+            Skills(
+                listOf(
+                    Skill.HardSkill("Kotlin"),
+                    Skill.SoftSkill("A passion for problem solving"),
+                    Skill.SoftSkill("Good communication skills"),
+                ),
+            ).skills
         person.languages.values shouldContainAll
-                Languages(
-                    listOf(
-                        Language("Korean", 5),
-                        Language("English", 3),
-                    )
-                ).values
+            Languages(
+                listOf(
+                    Language("Korean", 5),
+                    Language("English", 3),
+                ),
+            ).values
     }
 })
