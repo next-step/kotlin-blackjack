@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.entity
 
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.data.forAll

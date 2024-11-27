@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.entity
 
 enum class Suit(val displayName: String) {
     SPADES("스페이드"),

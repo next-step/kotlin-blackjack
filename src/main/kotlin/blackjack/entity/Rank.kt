@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.entity
 
 sealed class Rank(val value: Int, val displayName: String) {
     object ACE : Rank(1, "A") {

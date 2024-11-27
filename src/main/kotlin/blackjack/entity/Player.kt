@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.entity
 
 class Player(
     val name: String,
