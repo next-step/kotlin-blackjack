@@ -9,7 +9,7 @@ class PlayerTest : FreeSpec({
             row(
                 "2, 3, 4, A인 경우 합계 20이다.",
                 Player(
-                    "테스트",
+                    PlayerName("테스트"),
                     mutableListOf(
                         Card(
                             CardSuit.HEARTS,
@@ -34,7 +34,7 @@ class PlayerTest : FreeSpec({
             row(
                 "2, 3, 4, A, A인 경우 합계 21이다.",
                 Player(
-                    "테스트",
+                    PlayerName("테스트"),
                     mutableListOf(
                         Card(
                             CardSuit.HEARTS,
@@ -69,10 +69,18 @@ class PlayerTest : FreeSpec({
     }
 
     "카드를 핸드에 추가한다." - {
-        val sut = Player("테스트")
+        val sut = Player(PlayerName("테스트"))
 
         sut.addCard(Card(CardSuit.HEARTS, CardNumber.TWO))
 
         sut.currentCards shouldBe listOf(DrawCard(CardSuit.HEARTS, CardNumber.TWO))
+    }
+
+    "카드를 더이상 뽑지 않는다." - {
+        val sut = Player(PlayerName("테스트"))
+
+        sut.stopDraw()
+
+        sut.canDraw() shouldBe false
     }
 })

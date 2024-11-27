@@ -2,7 +2,7 @@ class BlackJackGame(
     private val players: List<Player>,
 ) {
     private val deck: Deck = Deck()
-    private val drawOrder: Int = 0
+    private var drawOrder: Int = 0
 
     fun initialDraw(): List<DrawResult> {
         (1..2).forEach { _ ->
@@ -12,13 +12,38 @@ class BlackJackGame(
         return players
             .map {
                 DrawResult(
-                    playerName = it.name,
+                    playerName = it.name.value,
                     cards = it.currentCards,
                 )
             }
     }
 
-    fun drawPlayer(): Player = players[drawOrder]
+    fun canDrawForAllPlayers(): Boolean = players.any { it.canDraw() }
+
+    fun findDrawPlayer(): PlayerName {
+        val startOrder = drawOrder
+        val targetOrder = (startOrder..< players.size)
+            .first { players[it].canDraw() }
+        drawOrder = (targetOrder + 1) % players.size
+        return players[targetOrder].name
+    }
+
+    fun drawCard(playerName: PlayerName): DrawResult {
+        val player = players.find { it.name == playerName }
+        player?.addCard(deck.draw())
+            ?: throw IllegalArgumentException("존재하지 않는 플레이어입니다.")
+
+        return DrawResult(
+            playerName = playerName.value,
+            cards = player.currentCards,
+        )
+    }
+
+    fun stopDraw(playerName: PlayerName) {
+        players.find { it.name == playerName }
+            ?.stopDraw()
+            ?: throw IllegalArgumentException("존재하지 않는 플레이어입니다.")
+    }
 }
 
 data class DrawResult(
