@@ -12,6 +12,19 @@ class LanguagesBuilder {
 
 class Languages(private val languages: Map<Language, Level> = emptyMap()) {
     operator fun get(language: String) = languages[Language(language)]?.value
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as Languages
+
+        return languages == other.languages
+    }
+
+    override fun hashCode(): Int {
+        return languages.hashCode()
+    }
 }
 
 @JvmInline
