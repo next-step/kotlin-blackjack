@@ -20,5 +20,11 @@ sealed class Rank(val value: Int, val displayName: String) {
         val JACK = Number(10, "J")
         val QUEEN = Number(10, "Q")
         val KING = Number(10, "K")
+
+        val entries =
+            listOf(
+                ACE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, TEN,
+                JACK, QUEEN, KING,
+            )
     }
 }

@@ -41,4 +41,19 @@ class RankTest : DescribeSpec({
             }
         }
     }
+    describe("Rank.entries 리스트는") {
+        it("모든 Rank를 포함해야 한다") {
+            Rank.entries shouldContainExactly
+                listOf(
+                    Rank.ACE,
+                    Rank.TWO, Rank.THREE, Rank.FOUR, Rank.FIVE, Rank.SIX,
+                    Rank.SEVEN, Rank.EIGHT, Rank.NINE, Rank.TEN,
+                    Rank.JACK, Rank.QUEEN, Rank.KING,
+                )
+        }
+
+        it("올바른 개수를 가져야 한다") {
+            Rank.entries.size shouldBe 13
+        }
+    }
 })
