@@ -11,7 +11,7 @@ data class DrawCard(
     val suit: CardSuit,
     val number: CardNumber,
 ) {
-    val drawCardString = "${convertSuit(suit)}${convertNumber(number)}"
+    val drawCardString = "${convertNumber(number)}${convertSuit(suit)}"
 
     private fun convertSuit(suit: CardSuit): String =
         when(suit) {
