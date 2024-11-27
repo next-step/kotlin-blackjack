@@ -1,6 +1,8 @@
 package blackjack.domain
 
+import java.time.LocalDateTime
 import kotlin.enums.EnumEntries
+import kotlin.random.Random
 
 object Deck {
     var cards = initCards()
@@ -22,7 +24,7 @@ object Deck {
 
     fun shuffle() {
         cardIndex = 0
-        cards = cards.shuffled()
+        cards = cards.shuffled(Random(LocalDateTime.now().nano))
     }
 
     fun drawCard(): Card {

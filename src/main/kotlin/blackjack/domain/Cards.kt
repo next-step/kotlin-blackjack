@@ -18,9 +18,7 @@ class Cards(
         return score
     }
 
-    fun isMaxScore(): Boolean {
-        return calculateScore() == MAX_SCORE
-    }
+    fun isOverMaxScore(): Boolean = calculateScore() >= MAX_SCORE
 
     companion object {
         const val MAX_SCORE = 21
