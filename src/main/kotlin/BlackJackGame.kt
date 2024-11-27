@@ -45,7 +45,13 @@ class BlackJackGame(
             ?: throw IllegalArgumentException("존재하지 않는 플레이어입니다.")
     }
 
-    fun result(): List<BlackJackGameResult> = listOf()
+    fun result(): List<BlackJackGameResult> =
+        players.map {
+            BlackJackGameResult(
+                playerName = it.name.value,
+                totalValue = it.totalValue(),
+            )
+        }
 }
 
 data class DrawResult(
