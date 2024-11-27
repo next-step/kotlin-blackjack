@@ -96,4 +96,60 @@ class BlackJackGameTest : StringSpec({
             sut.stopDraw(PlayerName("테스트3"))
         }
     }
+
+    "블랙잭 게임의 최종 결과를 반환한다." {
+        val sut = BlackJackGame(
+            listOf(
+                Player(
+                    name = PlayerName("테스트1"),
+                    cards = mutableListOf(
+                        Card(
+                            CardSuit.HEARTS,
+                            CardNumber.TWO,
+                        ),
+                        Card(
+                            CardSuit.SPADES,
+                            CardNumber.THREE,
+                        ),
+                        Card(
+                            CardSuit.DIAMONDS,
+                            CardNumber.FOUR,
+                        ),
+                        Card(
+                            CardSuit.CLUBS,
+                            CardNumber.ACE,
+                        ),
+                    ),
+                    draw = false,
+                ),
+                Player(
+                    name = PlayerName("테스트2"),
+                    cards = mutableListOf(
+                        Card(
+                            CardSuit.HEARTS,
+                            CardNumber.TWO,
+                        ),
+                        Card(
+                            CardSuit.SPADES,
+                            CardNumber.THREE,
+                        ),
+                        Card(
+                            CardSuit.DIAMONDS,
+                            CardNumber.FOUR,
+                        ),
+                        Card(
+                            CardSuit.CLUBS,
+                            CardNumber.JACK,
+                        ),
+                    ),
+                    draw = false,
+                ),
+            )
+        )
+
+        val actual = sut.result()
+
+        actual[0] shouldBe BlackJackGameResult("테스트1", 20)
+        actual[1] shouldBe BlackJackGameResult("테스트2", 19)
+    }
 })

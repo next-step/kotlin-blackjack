@@ -44,9 +44,16 @@ class BlackJackGame(
             ?.stopDraw()
             ?: throw IllegalArgumentException("존재하지 않는 플레이어입니다.")
     }
+
+    fun result(): List<BlackJackGameResult> = listOf()
 }
 
 data class DrawResult(
     val playerName: String,
     val cards: List<DrawCard>,
+)
+
+data class BlackJackGameResult(
+    val playerName: String,
+    val totalValue: Int,
 )
