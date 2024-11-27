@@ -1,7 +1,21 @@
 class BlackJackGame(
     private val players: List<Player>,
 ) {
-    private var drawOrder = 0
+    private val deck: Deck = Deck()
+
+    fun initialDraw(): List<DrawResult> {
+        (1..2).forEach { _ ->
+            players.forEach { it.addCard(deck.draw()) }
+        }
+
+        return players
+            .map {
+                DrawResult(
+                    playerName = it.name,
+                    cards = it.currentCards,
+                )
+            }
+    }
 }
 
 data class DrawResult(
