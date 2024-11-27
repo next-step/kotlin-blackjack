@@ -3,12 +3,13 @@ import io.kotest.data.row
 import io.kotest.inspectors.forAll
 import io.kotest.matchers.shouldBe
 
-class HandsTest : FreeSpec({
+class PlayerTest : FreeSpec({
     "핸드에 존재하는 카드 값의 총합을 계산한다." - {
         listOf(
             row(
                 "2, 3, 4, A인 경우 합계 20이다.",
-                Hands(
+                Player(
+                    "테스트",
                     mutableListOf(
                         Card(
                             CardSuit.HEARTS,
@@ -32,7 +33,8 @@ class HandsTest : FreeSpec({
             ),
             row(
                 "2, 3, 4, A, A인 경우 합계 21이다.",
-                Hands(
+                Player(
+                    "테스트",
                     mutableListOf(
                         Card(
                             CardSuit.HEARTS,
@@ -64,5 +66,13 @@ class HandsTest : FreeSpec({
                     hands.totalValue() shouldBe expected
                 }
             }
+    }
+
+    "카드를 핸드에 추가한다." - {
+        val sut = Player("테스트")
+
+        sut.addCard(Card(CardSuit.HEARTS, CardNumber.TWO))
+
+        sut.currentCards shouldBe listOf(DrawCard(CardSuit.HEARTS, CardNumber.TWO))
     }
 })

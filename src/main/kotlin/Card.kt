@@ -3,7 +3,14 @@ class Card(
     private val number: CardNumber,
 ) {
     fun value(calculatedValue: Int): Int = number.value(calculatedValue)
+
+    fun toDrawCard(): DrawCard = DrawCard(suit, number)
 }
+
+data class DrawCard(
+    val suit: CardSuit,
+    val number: CardNumber,
+)
 
 enum class CardSuit {
     HEARTS,
