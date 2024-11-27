@@ -2,6 +2,7 @@ class BlackJackGame(
     private val players: List<Player>,
 ) {
     private val deck: Deck = Deck()
+    private val drawOrder: Int = 0
 
     fun initialDraw(): List<DrawResult> {
         (1..2).forEach { _ ->
@@ -16,6 +17,8 @@ class BlackJackGame(
                 )
             }
     }
+
+    fun drawPlayer(): Player = players[drawOrder]
 }
 
 data class DrawResult(
