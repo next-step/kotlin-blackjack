@@ -12,9 +12,17 @@ class Hands(
 )
 
 enum class Card(
-    private val decideCardValue: (Hands) -> Int,
+    private val decideCardValue: (Int) -> Int,
 ) {
-    ACE({ 1 }),
+    ACE({
+        calculatedValue ->
+        if (calculatedValue < 11) {
+            11
+        } else {
+            1
+        }
+
+    }),
     TWO({ 2 }),
     THREE({ 3 }),
     FOUR({ 4 }),
@@ -26,5 +34,7 @@ enum class Card(
     TEN({ 10 }),
     JACK({ 10 }),
     QUEEN({ 10 }),
-    KING({ 10 }),
+    KING({ 10 });
+
+    fun value(calculatedValue: Int): Int = decideCardValue(calculatedValue)
 }
