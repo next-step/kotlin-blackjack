@@ -1,5 +1,6 @@
 package blackjack
 
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.collections.shouldContainExactlyInAnyOrder
 import io.kotest.matchers.collections.shouldHaveSize
@@ -7,35 +8,64 @@ import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 
 class DeckTest : DescribeSpec({
-    describe("Deck 클래스는") {
+    describe("Deck은") {
+        context("초기화할 때") {
+            it("2장의 고유한 카드를 포함해야 한다") {
+                val deck = Deck()
 
-        it("초기화 시 52장의 고유한 카드를 포함해야 한다") {
-            val deck = Deck()
+                deck.cards shouldHaveSize 52
 
-            deck.cards shouldHaveSize 52
+                val expectedCards =
+                    Suit.entries.flatMap { suit ->
+                        Rank.entries.map { rank -> Card(suit, rank) }
+                    }
 
-            val expectedCards =
-                Suit.entries.flatMap { suit ->
-                    Rank.entries.map { rank -> Card(suit, rank) }
-                }
+                deck.cards.shouldContainExactlyInAnyOrder(expectedCards)
+            }
 
-            deck.cards.shouldContainExactlyInAnyOrder(expectedCards)
+            it("카드 순서가 무작위로 섞여야 한다") {
+                val deck1 = Deck()
+                val deck2 = Deck()
+
+                deck1.cards shouldHaveSize 52
+                deck2.cards shouldHaveSize 52
+
+                deck1.cards shouldNotBe deck2.cards
+            }
+
+            it("중복된 카드가 없어야 한다") {
+                val deck = Deck()
+                deck.cards.distinct().size shouldBe 52
+            }
         }
 
-        it("초기화 시 카드 순서가 무작위로 섞여야 한다") {
-            val deck1 = Deck()
-            val deck2 = Deck()
+        context("카드를 분배할 때") {
+            val deck = Deck()
 
-            deck1.cards shouldHaveSize 52
-            deck2.cards shouldHaveSize 52
-
-            // 두 덱의 순서가 다를 가능성이 높음을 확인
-            deck1.cards shouldNotBe deck2.cards
+            it("남은 카드 수가 줄어들어야 한다") {
+                val initialSize = deck.cards.size
+                deck.deal()
+                deck.remainCardCount() shouldBe initialSize - 1
+            }
         }
 
-        it("초기화 시 중복된 카드가 없어야 한다") {
+        context("모든 카드를 분배한 후") {
             val deck = Deck()
-            deck.cards.distinct().size shouldBe 52
+
+            it("더 이상 분배할 수 없어야 한다") {
+                repeat(52) { deck.deal() }
+                shouldThrow<IllegalArgumentException> { deck.deal() }
+            }
+        }
+
+        context("분배된 카드의 순서를 확인할 때") {
+            val deck = Deck()
+
+            it("분배된 카드의 순서는 덱의 초기 순서와 같아야 한다") {
+                val dealtCards = mutableListOf<Card>()
+                repeat(52) { dealtCards.add(deck.deal()) }
+                dealtCards shouldBe deck.cards
+            }
         }
     }
 })
