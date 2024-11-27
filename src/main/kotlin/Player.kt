@@ -10,6 +10,11 @@ class Player(
 
     fun addCard(card: Card): DrawCard {
         cards.add(card)
+
+        if (totalValue() >= 21) {
+            stopDraw()
+        }
+
         return card.toDrawCard()
     }
 
