@@ -14,5 +14,4 @@ class LanguagesBuilder {
     private fun build(): Languages {
         return Languages(languages.toList())
     }
-
 }
