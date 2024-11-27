@@ -149,7 +149,49 @@ class BlackJackGameTest : StringSpec({
 
         val actual = sut.result()
 
-        actual[0] shouldBe BlackJackGameResult("테스트1", 20)
-        actual[1] shouldBe BlackJackGameResult("테스트2", 19)
+        actual[0] shouldBe BlackJackGameResult(
+            playerName = "테스트1",
+            cards = listOf(
+                DrawCard(
+                    CardSuit.HEARTS,
+                    CardNumber.TWO,
+                ),
+                DrawCard(
+                    CardSuit.SPADES,
+                    CardNumber.THREE,
+                ),
+                DrawCard(
+                    CardSuit.DIAMONDS,
+                    CardNumber.FOUR,
+                ),
+                DrawCard(
+                    CardSuit.CLUBS,
+                    CardNumber.ACE,
+                ),
+            ),
+            totalValue = 20
+        )
+        actual[1] shouldBe BlackJackGameResult(
+            playerName = "테스트2",
+            cards = listOf(
+                DrawCard(
+                    CardSuit.HEARTS,
+                    CardNumber.TWO,
+                ),
+                DrawCard(
+                    CardSuit.SPADES,
+                    CardNumber.THREE,
+                ),
+                DrawCard(
+                    CardSuit.DIAMONDS,
+                    CardNumber.FOUR,
+                ),
+                DrawCard(
+                    CardSuit.CLUBS,
+                    CardNumber.JACK,
+                ),
+            ),
+            totalValue = 19
+        )
     }
 })

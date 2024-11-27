@@ -49,6 +49,7 @@ class BlackJackGame(
         players.map {
             BlackJackGameResult(
                 playerName = it.name.value,
+                cards = it.currentCards,
                 totalValue = it.totalValue(),
             )
         }
@@ -61,5 +62,6 @@ data class DrawResult(
 
 data class BlackJackGameResult(
     val playerName: String,
+    val cards: List<DrawCard>,
     val totalValue: Int,
 )
