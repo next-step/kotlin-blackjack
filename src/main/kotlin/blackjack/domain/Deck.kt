@@ -25,6 +25,6 @@ class Deck {
     }
 
     fun drawCard(): Card {
-        return cards.removeFirst()
+        return cards.removeFirstOrNull() ?: throw IllegalStateException("더 이상 카드가 없습니다.")
     }
 }
