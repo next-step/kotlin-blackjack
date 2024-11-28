@@ -105,15 +105,11 @@ data class Person(
     val languages: Map<String, Int>?,
 )
 
-class PersonBuilder {
-    private lateinit var name: String
+class PersonBuilder() {
+    private var name: String? = null
     private var company: String? = null
     private var skills: MutableList<String>? = null
     private var languages: MutableMap<String, Int>? = null
-
-    fun name(value: String) {
-        name = value
-    }
 
     fun company(value: String) {
         company = value
@@ -128,9 +124,41 @@ class PersonBuilder {
     }
 
     fun build(): Person {
+        val name = name ?: throw IllegalArgumentException("이름은 필수입니다.")
         return Person(name, company, skills, languages)
     }
 }
+
+/**
+ *
+ * class PersonBuilder(val name: String) {  // name을 val로 받아서 필수로 초기화
+ *     private var company: String? = null
+ *     private var skills: MutableList<String>? = null
+ *     private var languages: MutableMap<String, Int>? = null
+ *
+ *     fun company(value: String) {
+ *         company = value
+ *     }
+ *
+ *     fun skills(block: SkillsBuilder.() -> Unit) {
+ *         skills = SkillsBuilder().apply(block).build().toMutableList()
+ *     }
+ *
+ *     fun languages(block: LanguagesBuilder.() -> Unit) {
+ *         languages = LanguagesBuilder().apply(block).build().toMutableMap()
+ *     }
+ *
+ *     fun build(): Person {
+ *         return Person(name, company, skills, languages)
+ *     }
+ * }
+ *
+ *
+ * fun introduce(name: String, block: PersonBuilder.() -> Unit): Person {
+ *     return PersonBuilder(name).apply(block).build()
+ * }
+ *
+ */
 
 class SkillsBuilder {
     private val skills = mutableListOf<String>()
