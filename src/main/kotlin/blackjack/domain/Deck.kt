@@ -1,4 +1,4 @@
-package blackjack.domain.deck
+package blackjack.domain
 
 import blackjack.domain.card.Card
 import blackjack.domain.card.CardNumber
@@ -29,6 +29,8 @@ class Deck {
             )
         cards = LinkedList(shapes.flatMap { shape -> numbers.map { number -> Card(shape, number) } }.shuffled())
     }
+
+    fun draw(): Card = cards.poll()
 
     companion object {
         const val DECK_SIZE = 52
