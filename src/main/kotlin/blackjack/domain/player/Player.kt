@@ -2,19 +2,28 @@ package blackjack.domain.player
 
 import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
+import blackjack.view.dto.CardDto
+import blackjack.view.dto.PlayerDto
 
-class Player(val name: String, val cards: Cards = Cards()) {
-    fun receiveCard(card: Card) {
-        check(canReceive(card)) { RECEIVE_CARD_EXCEPTION_MESSAGE }
+class Player(
+    val name: String,
+    val cards: Cards = Cards(),
+) {
+    fun receiveCard(card: Card): Boolean {
+        if (!canReceive(card)) {
+            return false
+        }
         cards.add(card)
+
+        return true
     }
 
     private fun canReceive(card: Card): Boolean {
-        if (cards.sum() == Cards.MAX_CARDS_NUM_SUM) {
+        if (cards.getScore().isBlackJack()) {
             return false
         }
 
-        if (cards.sum() + card.number.value > Cards.MAX_CARDS_NUM_SUM) {
+        if (cards.getScore().isGreaterThanMaxScore(card.number.value)) {
             return false
         }
 
@@ -22,6 +31,10 @@ class Player(val name: String, val cards: Cards = Cards()) {
     }
 
     companion object {
-        private const val RECEIVE_CARD_EXCEPTION_MESSAGE = "카드 숫자 합이 21이 초과하도록 카드를 받을 수 없습니다."
+        fun toDto(player: Player): PlayerDto =
+            PlayerDto(
+                name = player.name,
+                cards = player.cards.getCards().map { card -> CardDto(card.shape.symbol, card.number.value) },
+            )
     }
 }

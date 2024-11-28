@@ -1,6 +1,7 @@
 package blackjack
 
-import blackjack.service.BlackjackService
+import blackjack.domain.BlackjackGame
+import blackjack.domain.deck.DefaultDeckGenerator
 import blackjack.view.input.CreatePlayerInputView
 import blackjack.view.input.PlayerTurnInputView
 import blackjack.view.output.PlayerView
@@ -8,20 +9,23 @@ import blackjack.view.output.ResultView
 import blackjack.view.output.StartPlayersView
 
 fun main() {
-    val createPlayersDto = CreatePlayerInputView.print()
-    val blackjackGameService = BlackjackService(createPlayersDto)
+    val names = CreatePlayerInputView.parse()
+    val blackjackGame = BlackjackGame(names, DefaultDeckGenerator())
 
-    blackjackGameService.start()
-    val playersDto = blackjackGameService.getPlayers()
+    blackjackGame.start()
+    val playersDto = blackjackGame.getPlayers()
     StartPlayersView.print(playersDto)
 
-    playersDto.players.forEach {
-        while (PlayerTurnInputView.print(it.name) == "y") {
-            blackjackGameService.processTurn(it.name)
+    playersDto.players.forEach { player ->
+        while (PlayerTurnInputView.continueDraw(player.name)) {
+            if (!blackjackGame.dealCardToPlayer(player.name))
+                {
+                    break
+                }
         }
-        val playerDto = blackjackGameService.getPlayer(it.name)
+        val playerDto = blackjackGame.getPlayer(player.name)
         PlayerView.print(playerDto)
     }
 
-    ResultView.print(blackjackGameService.getPlayers())
+    ResultView.print(blackjackGame.getPlayers())
 }
