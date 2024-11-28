@@ -8,4 +8,8 @@ class Player(
     fun addCard(card: Card) {
         hand.addCard(card)
     }
+
+    fun describeHand(): String {
+        return hand.describe()
+    }
 }

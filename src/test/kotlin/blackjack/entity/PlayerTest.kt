@@ -34,6 +34,10 @@ class PlayerTest : DescribeSpec({
                 player.addCard(heartsAce)
                 player.hand.cards shouldBe listOf(spadesTen, heartsAce)
             }
+
+            it("손패를 설명할 수 있어야 한다") {
+                player.describeHand() shouldBe "10스페이드, A하트"
+            }
         }
     }
 })
