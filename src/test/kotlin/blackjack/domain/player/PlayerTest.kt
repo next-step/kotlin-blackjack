@@ -32,11 +32,12 @@ class PlayerTest : StringSpec({
 
     "플레이어는 소유한 카드의 다음 받을 카드 포함 소유한 모든 카드 숫자 합이 21이 넘으면 카드를 받을 수 없다." {
         val player = Player(name = "홍길동")
-        val cards = listOf(
-            Card(shape = CardShape.Heart, number = CardNumber.Ten),
-            Card(shape = CardShape.Spade, number = CardNumber.Ten),
-            Card(shape = CardShape.Diamond, number = CardNumber.Ten),
-        )
+        val cards =
+            listOf(
+                Card(shape = CardShape.Heart, number = CardNumber.Ten),
+                Card(shape = CardShape.Spade, number = CardNumber.Ten),
+                Card(shape = CardShape.Diamond, number = CardNumber.Ten),
+            )
 
         shouldThrow<IllegalStateException> { cards.forEach { player.receiveCard(it) } }
     }

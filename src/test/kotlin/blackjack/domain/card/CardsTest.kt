@@ -5,12 +5,13 @@ import io.kotest.matchers.shouldBe
 
 class CardsTest : StringSpec({
     "카드들은 숫자의 합을 반환할 수 있다." {
-        val cards = Cards(
-            mutableListOf(
-                Card(shape = CardShape.Heart, number = CardNumber.Three),
-                Card(shape = CardShape.Heart, number = CardNumber.Two),
+        val cards =
+            Cards(
+                mutableListOf(
+                    Card(shape = CardShape.Heart, number = CardNumber.Three),
+                    Card(shape = CardShape.Heart, number = CardNumber.Two),
+                ),
             )
-        )
 
         cards.sum() shouldBe 5
     }
@@ -25,12 +26,13 @@ class CardsTest : StringSpec({
     }
 
     "카드들의 숫자합은 카드들에 에이스가 포함되어있으면 21을 넘지 않는 선에서 대체값(11)을 합산한 값을 반환한다." {
-        val cards = Cards(
-            mutableListOf(
-                Card(shape = CardShape.Heart, number = CardNumber.Ten),
-                Card(shape = CardShape.Spade, number = CardNumber.Ace),
+        val cards =
+            Cards(
+                mutableListOf(
+                    Card(shape = CardShape.Heart, number = CardNumber.Ten),
+                    Card(shape = CardShape.Spade, number = CardNumber.Ace),
+                ),
             )
-        )
 
         cards.sum() shouldBe 21
     }

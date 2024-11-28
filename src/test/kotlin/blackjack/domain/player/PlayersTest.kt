@@ -14,8 +14,8 @@ class PlayersTest : StringSpec({
                     Player("4"),
                     Player("5"),
                     Player("6"),
-                    Player("7")
-                )
+                    Player("7"),
+                ),
             )
         }
 

@@ -9,7 +9,7 @@ class Cards(private val cards: MutableList<Card> = mutableListOf()) {
 
     fun sum(): Int {
         var totalSum = cards.sumOf { it.number.value }
-        var aceCount = cards.filter { it.number == CardNumber.Ace }.size;
+        var aceCount = cards.filter { it.number == CardNumber.Ace }.size
 
         while (--aceCount >= 0 && isGreaterThanMaxSum(totalSum + CardNumber.Ace.toEleven())) {
             totalSum += CardNumber.Ace.toEleven()

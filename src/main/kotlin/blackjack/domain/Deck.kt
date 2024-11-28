@@ -30,7 +30,7 @@ class Deck {
 
     fun draw(): Card = cards.removeFirst()
 
-    fun add(card: Card){
+    fun add(card: Card) {
         cards.addFirst(card)
     }
 
