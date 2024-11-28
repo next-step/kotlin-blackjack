@@ -12,4 +12,8 @@ class Player(
     fun describeHand(): String {
         return hand.describe()
     }
+
+    fun calculateScore(): Int {
+        return hand.calculateScore()
+    }
 }

@@ -31,5 +31,16 @@ class HandTest : DescribeSpec({
                 hand.describe() shouldBe "A하트, K스페이드"
             }
         }
+        context("점수 계산을 요청한 경우") {
+            val hand =
+                Hand().apply {
+                    addCard(Card(Suit.HEARTS, Rank.ACE))
+                    addCard(Card(Suit.SPADES, Rank.KING))
+                }
+
+            it("현재 점수를 계산한다") {
+                hand.calculateScore() shouldBe 21
+            }
+        }
     }
 })
