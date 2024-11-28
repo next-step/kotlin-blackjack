@@ -19,4 +19,13 @@ class PlayerTest : StringSpec({
         cardResult.shape shouldBe CardShape.Heart
         cardResult.number shouldBe CardNumber.Two
     }
+
+    "플레이어는 카드를 받을 수 있다." {
+        val player = Player(name = "홍길동")
+        val card = Card(shape = CardShape.Heart, number = CardNumber.Ace)
+
+        player.receiveCard(card)
+
+        player.cards.getCards()[0] shouldBe card
+    }
 })
