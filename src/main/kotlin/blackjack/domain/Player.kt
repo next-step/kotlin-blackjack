@@ -1,15 +1,22 @@
 package blackjack.domain
 
 class Player(
-    val name: String,
-    val cards: Cards = Cards(),
-) {
-
-    fun receiveCard(card: Card) {
-        cards.add(card)
+    name: String,
+    cards: Cards = Cards(),
+) : Participant(name, cards) {
+    override fun canDrawCard(): Boolean {
+        return !cards.isOverMaxScore()
     }
 
-    fun canDrawCard(): Boolean {
-        return !cards.isOverMaxScore()
+    fun isWinner(dealer: Dealer): Boolean {
+        if (cards.isBust()) {
+            return false
+        }
+
+        if (dealer.isBust()) {
+            return true
+        }
+
+        return cards.calculateScore() > dealer.cards.calculateScore()
     }
 }

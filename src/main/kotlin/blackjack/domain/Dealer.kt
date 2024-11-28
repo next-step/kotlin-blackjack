@@ -1,15 +1,16 @@
 package blackjack.domain
 
 class Dealer(
-    val cards: Cards = Cards(),
-) {
+    name: String = "딜러",
+    cards: Cards = Cards(),
+) : Participant(name, cards) {
 
-    fun needReceiveCard(): Boolean {
+    override fun canDrawCard(): Boolean {
         return cards.calculateScore() <= THRESHOLD_OF_RECEIVE_CARD
     }
 
-    fun receiveCard(card: Card) {
-        cards.add(card)
+    fun isBust(): Boolean {
+        return cards.isBust()
     }
 
     companion object {

@@ -31,6 +31,10 @@ class Cards(
         return calculateScore() >= MAX_SCORE
     }
 
+    fun isBust(): Boolean {
+        return calculateScore() > MAX_SCORE
+    }
+
     companion object {
         private const val MAX_SCORE = 21
         private const val ACE_HIGH_SCORE = 10
