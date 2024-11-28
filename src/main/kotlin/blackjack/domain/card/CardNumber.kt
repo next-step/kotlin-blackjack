@@ -2,7 +2,7 @@ package blackjack.domain.card
 
 sealed class CardNumber(val value: Int) {
     data object Ace : CardNumber(1) {
-        fun getSwitchedNumber(): Int = SWITCHED_ACE_NUMBER
+        fun toEleven(): Int = ACE_HIGH_VALUE
     }
 
     data object Two : CardNumber(2)
@@ -30,6 +30,6 @@ sealed class CardNumber(val value: Int) {
     data object King : CardNumber(10)
 
     companion object {
-        const val SWITCHED_ACE_NUMBER = 11
+        const val ACE_HIGH_VALUE = 10
     }
 }

@@ -31,6 +31,6 @@ class CardNumberTest : StringSpec({
     }
 
     "Ace는 기본값 1이 아닌 11의 값을 가질 수 있다." {
-        CardNumber.Ace.getSwitchedNumber() shouldBe CardNumber.SWITCHED_ACE_NUMBER
+        CardNumber.Ace.value + CardNumber.Ace.toEleven() shouldBe CardNumber.Ace.value + CardNumber.ACE_HIGH_VALUE
     }
 })
