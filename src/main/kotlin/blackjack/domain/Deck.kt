@@ -1,19 +1,21 @@
 package blackjack.domain
 
-import java.time.LocalDateTime
 import kotlin.enums.EnumEntries
-import kotlin.random.Random
 
-object Deck {
-    var cards = initCards()
-    var cardIndex = 0
+class Deck {
+    val cards: ArrayDeque<Card>
 
-    private fun initCards(): List<Card> {
+    init {
+        cards = initCards()
+    }
+
+    private fun initCards(): ArrayDeque<Card> {
         val suits = Suit.entries
         val ranks = Rank.entries
-        return suits.flatMap { suit ->
+        val cardList = suits.flatMap { suit ->
             initCard(ranks, suit)
         }
+        return ArrayDeque(cardList.shuffled())
     }
 
     private fun initCard(ranks: EnumEntries<Rank>, suit: Suit): List<Card> {
@@ -22,12 +24,7 @@ object Deck {
         }
     }
 
-    fun shuffle() {
-        cardIndex = 0
-        cards = cards.shuffled(Random(LocalDateTime.now().nano))
-    }
-
     fun drawCard(): Card {
-        return cards[cardIndex++]
+        return cards.removeFirst()
     }
 }

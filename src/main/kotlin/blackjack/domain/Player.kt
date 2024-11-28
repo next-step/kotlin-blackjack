@@ -10,7 +10,9 @@ class Player(
         cards.add(card)
     }
 
-    fun canDrawCard(): Boolean = !cards.isOverMaxScore()
+    fun canDrawCard(): Boolean {
+        return !cards.isOverMaxScore()
+    }
 
     private fun checkCanReceiveCard() {
         if (!canDrawCard()) {

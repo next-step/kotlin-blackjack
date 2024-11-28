@@ -7,11 +7,11 @@ object InputView {
         return readln().split(",")
     }
 
-    fun requestCard(playerName: String): String {
+    fun requestCard(playerName: String): Boolean {
         println("${playerName}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
         val request = readln()
         validateRequest(request)
-        return request
+        return request == "y"
     }
 
     private fun validateRequest(request: String) {

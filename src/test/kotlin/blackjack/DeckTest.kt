@@ -8,13 +8,15 @@ class DeckTest {
 
     @Test
     fun `덱은 52장의 카드를 가진다`() {
-        assertThat(Deck.cards.size).isEqualTo(52)
+        val deck = Deck()
+        assertThat(deck.cards.size).isEqualTo(52)
     }
 
     @Test
-    fun `덱은 카드를 섞을 수 있다`() {
-        val beforeShuffle = Deck.cards
-        val afterShuffle = Deck.shuffle()
-        assertThat(beforeShuffle).isNotEqualTo(afterShuffle)
+    fun `덱에서 한장의 카드를 뽑을 수 있다`() {
+        val deck = Deck()
+        val card = deck.drawCard()
+        assertThat(card).isNotNull
+        assertThat(deck.cards.size).isEqualTo(51)
     }
 }
