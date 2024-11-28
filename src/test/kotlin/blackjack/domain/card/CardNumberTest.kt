@@ -13,24 +13,24 @@ class CardNumberTest : StringSpec({
 
         numbers.forEach {
             when (it) {
-                is CardNumber.Two -> it.number shouldBe 2
-                is CardNumber.Three -> it.number shouldBe 3
-                is CardNumber.Four -> it.number shouldBe 4
-                is CardNumber.Five -> it.number shouldBe 5
-                is CardNumber.Six -> it.number shouldBe 6
-                is CardNumber.Seven -> it.number shouldBe 7
-                is CardNumber.Eight -> it.number shouldBe 8
-                is CardNumber.Nine -> it.number shouldBe 9
-                is CardNumber.Ten -> it.number shouldBe 10
-                is CardNumber.Jack -> it.number shouldBe 10
-                is CardNumber.Queen -> it.number shouldBe 10
-                is CardNumber.King -> it.number shouldBe 10
-                is CardNumber.Ace -> it.number shouldBe 11
+                is CardNumber.Ace -> it.value shouldBe 1
+                is CardNumber.Two -> it.value shouldBe 2
+                is CardNumber.Three -> it.value shouldBe 3
+                is CardNumber.Four -> it.value shouldBe 4
+                is CardNumber.Five -> it.value shouldBe 5
+                is CardNumber.Six -> it.value shouldBe 6
+                is CardNumber.Seven -> it.value shouldBe 7
+                is CardNumber.Eight -> it.value shouldBe 8
+                is CardNumber.Nine -> it.value shouldBe 9
+                is CardNumber.Ten -> it.value shouldBe 10
+                is CardNumber.Jack -> it.value shouldBe 10
+                is CardNumber.Queen -> it.value shouldBe 10
+                is CardNumber.King -> it.value shouldBe 10
             }
         }
     }
 
-    "Ace는 기본값 11이 아닌 1의 값을 가질 수 있다." {
+    "Ace는 기본값 1이 아닌 11의 값을 가질 수 있다." {
         CardNumber.Ace.getSwitchedNumber() shouldBe CardNumber.SWITCHED_ACE_NUMBER
     }
 })
