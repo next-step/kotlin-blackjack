@@ -1,6 +1,7 @@
 package test
 
 import dsl.introduce
+import dsl.language.Language
 import dsl.skill.HardSkill
 import dsl.skill.SoftSkill
 import io.kotest.matchers.collections.shouldContainAll
@@ -70,7 +71,49 @@ class DslTest {
             ?.shouldContainAll(hardSKillDescriptions)
     }
 
+    @Test
+    fun introduceLanguage() {
+        val softSKillDescriptions =
+            listOf(
+                "Good Communication skills",
+                "A passion for problem solving",
+            )
+
+        val hardSKillDescriptions =
+            listOf(
+                "Kotlin",
+            )
+
+        val person =
+            introduce {
+                name("오민혁")
+                company("SSG")
+                skills {
+                    soft(softSKillDescriptions[0])
+                    soft(softSKillDescriptions[1])
+                    hard(hardSKillDescriptions[0])
+                }
+                languages {
+                    KOREAN level KOREAN_LEVEL
+                    ENGLISH level ENGLISH_LEVEL
+                }
+            }
+
+        person.languages
+            ?.language
+            ?.get(0) shouldBe Language(country = KOREAN, level = KOREAN_LEVEL)
+        person.languages
+            ?.language
+            ?.get(1) shouldBe Language(country = ENGLISH, level = ENGLISH_LEVEL)
+    }
+
     companion object {
+        private const val KOREAN = "Korean"
+        private const val KOREAN_LEVEL = 5
+
+        private const val ENGLISH = "English"
+        private const val ENGLISH_LEVEL = 3
+
         @JvmStatic
         private fun nameAndCompany() =
             listOf(
