@@ -1,8 +1,7 @@
 package blackjack
 
-import blackjack.view.InputView
+import blackjack.client.BlackJackMachine
 
 fun main() {
-    val inputPlayerNames = InputView.inputPlayerNames()
-    println(inputPlayerNames)
+    BlackJackMachine().play()
 }
