@@ -1,6 +1,6 @@
 package blackjack
 
-import blackjack.client.BlackJackMachine
+import blackjack.machine.BlackJackMachine
 
 fun main() {
     BlackJackMachine().play()
