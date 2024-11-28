@@ -3,11 +3,9 @@ package blackjack.domain
 import blackjack.domain.card.Card
 import blackjack.domain.card.CardNumber
 import blackjack.domain.card.CardShape
-import java.util.LinkedList
-import java.util.Queue
 
 class Deck {
-    val cards: Queue<Card>
+    val cards: ArrayDeque<Card>
 
     init {
         val shapes = listOf(CardShape.Spade, CardShape.Diamond, CardShape.Heart, CardShape.Clover)
@@ -27,10 +25,14 @@ class Deck {
                 CardNumber.King,
                 CardNumber.Ace,
             )
-        cards = LinkedList(shapes.flatMap { shape -> numbers.map { number -> Card(shape, number) } }.shuffled())
+        cards = ArrayDeque(shapes.flatMap { shape -> numbers.map { number -> Card(shape, number) } }.shuffled())
     }
 
-    fun draw(): Card = cards.poll()
+    fun draw(): Card = cards.removeFirst()
+
+    fun add(card: Card){
+        cards.addFirst(card)
+    }
 
     companion object {
         const val DECK_SIZE = 52
