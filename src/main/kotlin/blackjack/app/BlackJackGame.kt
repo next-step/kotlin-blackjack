@@ -2,6 +2,7 @@ package blackjack.app
 
 import blackjack.entity.Deck
 import blackjack.entity.Player
+import blackjack.entity.PlayerResult
 import blackjack.entity.Players
 import blackjack.view.InputView
 import blackjack.view.OutputView
@@ -42,5 +43,20 @@ class BlackJackGame {
                 }
             }
         }
+    }
+
+    fun finishGame(players: Players) {
+        val playerResults =
+            calculateResults(players)
+        outputView.printPlayerResults(playerResults)
+    }
+
+    private fun calculateResults(players: Players): List<PlayerResult> {
+        val playerResults =
+            players.participants.map { player ->
+                val score = player.calculateScore()
+                PlayerResult(player.name, player.describeHand(), score)
+            }
+        return playerResults
     }
 }

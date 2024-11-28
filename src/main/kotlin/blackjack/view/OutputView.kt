@@ -1,6 +1,7 @@
 package blackjack.view
 
 import blackjack.entity.Player
+import blackjack.entity.PlayerResult
 import blackjack.entity.Players
 
 class OutputView {
@@ -14,5 +15,11 @@ class OutputView {
 
     fun printPlayerHand(player: Player) {
         println("${player.name}카드: ${player.describeHand()}")
+    }
+
+    fun printPlayerResults(results: List<PlayerResult>) {
+        results.forEach { result ->
+            println("${result.playerName}카드: ${result.handDescription} - 결과: ${result.score}")
+        }
     }
 }
