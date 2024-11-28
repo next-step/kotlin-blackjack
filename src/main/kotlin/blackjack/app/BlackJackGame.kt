@@ -15,6 +15,7 @@ class BlackJackGame {
         inputView.printMessage("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)")
 
         val input = inputView.readInput()
+        println()
 
         val players =
             input.split(",")
@@ -28,5 +29,18 @@ class BlackJackGame {
         deck = Deck()
         players.initializeHands(deck)
         outputView.printInitialHands(players)
+    }
+
+    fun playTurns(players: Players) {
+        players.participants.forEach { player ->
+            var wantsToHit = true
+            while (wantsToHit) {
+                wantsToHit = inputView.askForHitOrStand(player.name)
+                if (wantsToHit) {
+                    player.addCard(deck.deal())
+                    outputView.printPlayerHand(player)
+                }
+            }
+        }
     }
 }
