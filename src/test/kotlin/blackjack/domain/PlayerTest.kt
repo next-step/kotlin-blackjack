@@ -37,7 +37,6 @@ class PlayerTest {
 
     @Test
     fun playerDoneStatusTest() {
-
         val player = Player("Tester")
         val mockCard = listOf(
             Card("8", SYMBOL.CLUB),
@@ -50,5 +49,36 @@ class PlayerTest {
         }
 
         player.isDone() shouldBe true
+    }
+
+    @Test
+    fun `calculateAceTest - ace should be 1`(){
+        val player = Player("Tester")
+        val mockCard = listOf(
+            Card("A", SYMBOL.CLUB),
+            Card("9", SYMBOL.HEART),
+            Card("9", SYMBOL.HEART)
+        )
+
+        mockCard.forEach { card ->
+            player.drawCard(card)
+        }
+
+        player.calculateCard() shouldBe 19
+    }
+
+    @Test
+    fun `calculateAceTest - ace should be 11`(){
+        val player = Player("Tester")
+        val mockCard = listOf(
+            Card("A", SYMBOL.CLUB),
+            Card("9", SYMBOL.HEART)
+        )
+
+        mockCard.forEach { card ->
+            player.drawCard(card)
+        }
+
+        player.calculateCard() shouldBe 20
     }
 }

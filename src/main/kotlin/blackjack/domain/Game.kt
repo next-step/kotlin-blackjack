@@ -5,6 +5,7 @@ data class Game(val players: List<Player>, val drawer: CardDeckStrategy) {
         onPrintResultCallback: ((List<Player>) -> Unit),
         onTurnCompleted: (Player) -> String,
     ) {
+        drawer.generate()
         initTurn(onPrintResultCallback)
         players.forEach { player ->
             startTurn(player, onTurnCompleted, onPrintResultCallback)
