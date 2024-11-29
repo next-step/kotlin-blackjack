@@ -10,4 +10,11 @@ class CardTest : StringSpec({
             sut.suit shouldBe suit
         }
     }
+    "각 카드의 숫자는 A, 2~10, K, Q, J 가 존재한다" {
+        val suit = Suit.SPADES
+        CardNumber.entries.forEach { cardNumber ->
+            val sut = Card(cardNumber, suit)
+            sut.number shouldBe cardNumber
+        }
+    }
 })
