@@ -9,5 +9,35 @@ class Hand(initialCards: List<Card> = emptyList()) {
         _cards.add(newCard)
     }
 
-    fun sumOfHand(): Int = _cards.sumOf { it.number.baseValue }
+    fun sumOfHand(): Int {
+        val nonAceSum = sumNonAce()
+        val aceCount = _cards.count { it.number == CardNumber.ACE }
+        if (aceCount == 0) {
+            return nonAceSum
+        }
+        return calculateTotalSumWithAceSum(nonAceSum, aceCount)
+    }
+
+    private fun sumNonAce(): Int =
+        _cards
+            .asSequence()
+            .filter { it.number != CardNumber.ACE }
+            .sumOf { it.number.baseValue }
+
+    private fun calculateTotalSumWithAceSum(
+        nonAceSum: Int,
+        aceCount: Int,
+    ): Int {
+        val baseAceSum = aceCount * CardNumber.ACE.baseValue
+        val biggerAceSum = (aceCount - 1) * CardNumber.ACE.baseValue + CardNumber.ACE.biggerValue()
+
+        val baseSum = nonAceSum + baseAceSum
+        val biggerSum = nonAceSum + biggerAceSum
+
+        return if (biggerSum <= BLACKJACK_NUMBER) biggerSum else baseSum
+    }
+
+    companion object {
+        private const val BLACKJACK_NUMBER = 21
+    }
 }
