@@ -263,4 +263,29 @@ class HandTest : StringSpec({
             result shouldBe expected
         }
     }
+
+    "손패는 스스로 파산했는지 체크할 수 있다" {
+        forAll(
+            row(
+                listOf(
+                    Card(CardNumber.NINE, Suit.SPADES),
+                    Card(CardNumber.EIGHT, Suit.HEARTS),
+                    Card(CardNumber.FOUR, Suit.SPADES),
+                ),
+                false,
+            ),
+            row(
+                listOf(
+                    Card(CardNumber.NINE, Suit.SPADES),
+                    Card(CardNumber.EIGHT, Suit.HEARTS),
+                    Card(CardNumber.FIVE, Suit.SPADES),
+                ),
+                true,
+            ),
+        ) { initialCards, expected ->
+            val sut = Hand(initialCards)
+            val result = sut.isBust()
+            result shouldBe expected
+        }
+    }
 })

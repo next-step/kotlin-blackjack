@@ -37,6 +37,10 @@ class Hand(initialCards: List<Card> = emptyList()) {
         return if (biggerSum <= BLACKJACK_NUMBER) biggerSum else baseSum
     }
 
+    fun isBust(): Boolean {
+        return sumOfHand() > BLACKJACK_NUMBER
+    }
+
     companion object {
         private const val BLACKJACK_NUMBER = 21
     }
