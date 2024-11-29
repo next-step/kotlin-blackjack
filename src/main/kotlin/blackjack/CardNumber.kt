@@ -14,4 +14,11 @@ enum class CardNumber(val face: String, val baseValue: Int) {
     JACK("J", 10),
     QUEEN("Q", 10),
     KING("K", 10),
+    ;
+
+    fun biggerValue(): Int = if (this == ACE) ACE_BIGGER_VALUE else this.baseValue
+
+    companion object {
+        private const val ACE_BIGGER_VALUE = 11
+    }
 }

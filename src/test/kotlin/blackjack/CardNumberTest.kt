@@ -9,4 +9,20 @@ class CardNumberTest : StringSpec({
             cardNumber.baseValue shouldBe 10
         }
     }
+
+    "ACE는 biggerValue가 11이다" {
+        val sut = CardNumber.ACE
+
+        sut.baseValue shouldBe 1
+        sut.biggerValue() shouldBe 11
+    }
+
+    "나머지 CardNumber는 biggerValue가 baseValue와 같다" {
+        CardNumber.entries
+            .asSequence()
+            .filter { it != CardNumber.ACE }
+            .forEach { cardNumber ->
+                cardNumber.biggerValue() shouldBe cardNumber.baseValue
+            }
+    }
 })
