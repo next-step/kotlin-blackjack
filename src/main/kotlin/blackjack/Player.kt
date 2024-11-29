@@ -18,6 +18,10 @@ class Player(val name: String, initialCards: List<Card>) {
         _hand.add(newCard)
     }
 
+    fun sumOfHand(): Int {
+        return _hand.sumOf { it.number.baseValue }
+    }
+
     companion object {
         private const val INITIAL_HAND_LENGTH = 2
     }

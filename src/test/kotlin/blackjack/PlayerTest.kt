@@ -3,6 +3,7 @@ package blackjack
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.collections.shouldContainExactlyInAnyOrder
+import io.kotest.matchers.shouldBe
 
 class PlayerTest : StringSpec({
     "플레이어는 이름이 빈 문자열일 수 없다" {
@@ -55,5 +56,19 @@ class PlayerTest : StringSpec({
                 Card(CardNumber.TWO, Suit.SPADES),
                 Card(CardNumber.THREE, Suit.SPADES),
             )
+    }
+
+    "플레이어는 자신이 가진 카드의 숫자 합을 알 수 있다" {
+        val name = "jason"
+        val initialCards =
+            listOf(
+                Card(CardNumber.NINE, Suit.SPADES),
+                Card(CardNumber.EIGHT, Suit.HEARTS),
+            )
+
+        val sut = Player(name = name, initialCards = initialCards)
+
+        val result = sut.sumOfHand()
+        result shouldBe 17
     }
 })
