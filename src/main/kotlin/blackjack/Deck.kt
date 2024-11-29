@@ -1,5 +1,7 @@
 package blackjack
 
+import kotlin.random.Random
+
 class Deck(private val cards: MutableList<Card> = CARDS.toMutableList()) {
     init {
         require(cards.size <= MAXIMUM_CARD_COUNT) {
@@ -8,6 +10,13 @@ class Deck(private val cards: MutableList<Card> = CARDS.toMutableList()) {
     }
 
     fun draw(): Card = cards.removeFirst()
+
+    fun size(): Int = cards.size
+
+    fun shuffle(seed: Long? = null) {
+        val random = seed?.let { Random(it) } ?: Random.Default
+        cards.shuffle(random)
+    }
 
     companion object {
         private const val MAXIMUM_CARD_COUNT = 52

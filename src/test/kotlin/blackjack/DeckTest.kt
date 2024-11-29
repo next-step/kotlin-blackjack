@@ -2,6 +2,7 @@ package blackjack
 
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
+import io.kotest.matchers.booleans.shouldBeFalse
 import io.kotest.matchers.shouldBe
 
 class DeckTest : StringSpec({
@@ -39,5 +40,26 @@ class DeckTest : StringSpec({
         shouldThrow<IllegalArgumentException> {
             Deck(cards = cards)
         }
+    }
+
+    "카드 뭉치에 현재 남아있는 카드 개수를 알 수 있다" {
+        val sut = Deck()
+
+        sut.size() shouldBe 52
+        sut.draw()
+        sut.size() shouldBe 51
+    }
+
+    "카드 뭉치를 셔플하면 카드 뭉치 내부의 카드 순서가 바뀐다" {
+        val notShuffledDeck = Deck()
+        val notShuffledFirstCard = notShuffledDeck.draw()
+
+        val shuffledDeck = Deck()
+        shuffledDeck.shuffle(42)
+        val shuffledFirstCard = shuffledDeck.draw()
+
+        notShuffledDeck.size() shouldBe 51
+        shuffledDeck.size() shouldBe 51
+        (notShuffledFirstCard == shuffledFirstCard).shouldBeFalse()
     }
 })
