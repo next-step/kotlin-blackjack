@@ -1,4 +1,4 @@
-# kotlin-bl
+# kotlin-blackjack
 ## 기능 요구 사항
 
 ### - 플레이어
