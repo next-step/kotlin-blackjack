@@ -24,8 +24,7 @@ data class Game(val players: List<Player>, val drawer: CardDeckStrategy) {
         onTurnStarted: ((Player) -> String),
         onPrintResultCallback: (List<Player>) -> Unit,
     ) {
-        if (currentPlayer.isDone()) return
-        while (onTurnStarted(currentPlayer) == "y") {
+        while (!currentPlayer.isDone() && onTurnStarted(currentPlayer) == "y") {
             val card = CardDeck.drawCard()
             currentPlayer.drawCard(card)
             onPrintResultCallback(listOf(currentPlayer))
