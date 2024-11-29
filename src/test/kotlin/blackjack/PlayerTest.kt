@@ -16,4 +16,23 @@ class PlayerTest : StringSpec({
             Player(name = name, initialCards = initialCards)
         }
     }
+
+    "플레이어는 생성 시에 카드 2장이 필수다" {
+        val name = "jason"
+
+        listOf(
+            listOf(
+                Card(CardNumber.KING, Suit.SPADES),
+            ),
+            listOf(
+                Card(CardNumber.JACK, Suit.SPADES),
+                Card(CardNumber.QUEEN, Suit.SPADES),
+                Card(CardNumber.KING, Suit.SPADES),
+            ),
+        ).forEach { initialCards ->
+            shouldThrow<IllegalArgumentException> {
+                Player(name = name, initialCards = initialCards)
+            }
+        }
+    }
 })
