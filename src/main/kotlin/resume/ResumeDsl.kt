@@ -7,6 +7,7 @@ class PersonBuilder {
     private lateinit var name: String
     private var company: String? = null
     private var skills: Skills = Skills()
+    private var languages: Languages = Languages()
 
     fun name(value: String) {
         name = value
@@ -20,7 +21,11 @@ class PersonBuilder {
         skills = SkillsBuilder().apply(init).build()
     }
 
-    fun build() = Person(name, company, skills)
+    fun languages(init: LanguagesBuilder.() -> Unit) {
+        languages = LanguagesBuilder().apply(init).build()
+    }
+
+    fun build() = Person(name, company, skills, languages)
 }
 
 @ResumeMarker
@@ -36,4 +41,15 @@ class SkillsBuilder {
     }
 
     fun build() = Skills(skills)
+}
+
+@ResumeMarker
+class LanguagesBuilder {
+    private var languages = mutableListOf<Language>()
+
+    infix fun String.level(level: Int) {
+        languages.add(Language(this, level))
+    }
+
+    fun build() = Languages(languages)
 }
