@@ -1,6 +1,6 @@
 package blackjack
 
-enum class CardNumber(val face: String, val number: Int) {
+enum class CardNumber(val face: String, val baseValue: Int) {
     ACE("A", 1),
     TWO("2", 2),
     THREE("3", 3),
