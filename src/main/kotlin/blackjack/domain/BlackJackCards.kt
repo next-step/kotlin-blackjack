@@ -19,8 +19,11 @@ class BlackJackCards(val cards: MutableList<BlackJackCard>) {
                     list.map { listSum -> accSum + listSum }
                 }
             }
+        if (sums.any { it <= 21 }) {
+            return sums.filter { it <= 21 }.max()
+        }
 
-        return sums.filter { it <= 21 }.max()
+        return -1
     }
 
     companion object {

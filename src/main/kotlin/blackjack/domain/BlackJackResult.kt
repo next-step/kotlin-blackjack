@@ -1,6 +1,6 @@
 package blackjack.domain
 
-class BlackJackGame(
+class BlackJackResult(
     val blackJackPlayers: BlackJackPlayers,
     val blackJackCardsMap: BlackJackCardsMap,
 ) {
