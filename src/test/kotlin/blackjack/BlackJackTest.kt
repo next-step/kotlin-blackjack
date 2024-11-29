@@ -33,4 +33,8 @@ class BlackJackTest : StringSpec({
             Cards(listOf(Card(Rank(face), SPADE))).calculateScore() shouldBe 10
         }
     }
+
+    "랭크가 에이스이면 기본점수는 11점이다" {
+        Cards(listOf(Card(Rank("A"), SPADE))).calculateScore() shouldBe 11
+    }
 })
