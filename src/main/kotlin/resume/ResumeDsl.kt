@@ -2,6 +2,7 @@ package resume
 
 fun introduce(init: PersonBuilder.() -> Unit): Person = PersonBuilder().apply(init).build()
 
+@ResumeMarker
 class PersonBuilder {
     lateinit var name: String
     var company: String? = null
