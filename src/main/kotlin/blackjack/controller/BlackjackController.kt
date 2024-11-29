@@ -8,8 +8,15 @@ object BlackjackController {
     private val blackJackService = BlackJackService()
 
     fun start() {
-        val playersInput = InputView.inputName()
-        val players = blackJackService.splitInput(playersInput)
-        ResultView.printSplitCardResult(players[0], players[1])
+        val playersInput = InputView.inputPlayerNames()
+        val playerNames = blackJackService.splitPlayerNames(playersInput)
+
+        val players = blackJackService.createPlayers(playerNames)
+        blackJackService.distributeInitialCards(players)
+
+        ResultView.printSplitCardResult(playerNames)
+
+        val playerCardsInfo = players.map { it.name to it.getCardList() }
+        ResultView.printPlayerCards(playerCardsInfo)
     }
 }
