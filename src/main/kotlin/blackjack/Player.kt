@@ -1,9 +1,9 @@
 package blackjack
 
 class Player(val name: String, initialCards: List<Card>) {
-    private val _hand = initialCards.toMutableList()
+    private val _hand = Hand(initialCards)
     val hand: List<Card>
-        get() = _hand.toList()
+        get() = _hand.cards
 
     init {
         require(name.isNotBlank()) {
@@ -19,7 +19,7 @@ class Player(val name: String, initialCards: List<Card>) {
     }
 
     fun sumOfHand(): Int {
-        return _hand.sumOf { it.number.baseValue }
+        return _hand.sumOfHand()
     }
 
     companion object {
