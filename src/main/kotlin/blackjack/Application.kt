@@ -23,7 +23,5 @@ fun main() {
 
     resultView.printStartMessage(game.players)
     game.startGame(printCallback, turnCallback)
-    game.getResult()
-
     resultView.printGameResult(game.players)
 }
