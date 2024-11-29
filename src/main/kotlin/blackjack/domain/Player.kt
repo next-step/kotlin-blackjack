@@ -1,6 +1,6 @@
 package blackjack.domain
 
-import blackjack.domain.Card.Companion.SPECIAL_NUMBER
+import blackjack.domain.Card.Companion.SpecialNumber
 
 data class Player(val name: String) {
     private var cards = mutableListOf<Card>()
@@ -10,7 +10,7 @@ data class Player(val name: String) {
     }
 
     fun calculateCard(): Int {
-        val aceCards = cards.filter { it.number == SPECIAL_NUMBER.A.name }
+        val aceCards = cards.filter { it.number == SpecialNumber.A.name }
         var currentSum = cards.sumOf { card -> card.getCardNumber(card.number) }
 
         aceCards.forEach { _ ->
