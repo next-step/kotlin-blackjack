@@ -9,6 +9,10 @@ data class Card(val rank: Rank, val suit: Suit) {
         }
     }
 
+    fun display(): String {
+        return "${rank.symbol}${suit.symbol}"
+    }
+
     companion object {
         val ALL_CARDS =
             Rank.entries.flatMap { rank ->
