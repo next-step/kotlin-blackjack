@@ -1,6 +1,7 @@
 package resume
 
 import io.kotest.matchers.shouldBe
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 
@@ -29,14 +30,29 @@ class ResumeTest {
             }
         person.name shouldBe value
     }
+
+    @Test
+    fun company() {
+        val person =
+            introduce {
+                name("Elon Musk")
+                company("DOGE")
+            }
+        person.company shouldBe "DOGE"
+    }
 }
 
 fun introduce(init: Person.() -> Unit) = Person().apply(init)
 
 class Person {
     lateinit var name: String
+    var company: String? = null
 
     fun name(value: String) {
         name = value
+    }
+
+    fun company(value: String) {
+        company = value
     }
 }
