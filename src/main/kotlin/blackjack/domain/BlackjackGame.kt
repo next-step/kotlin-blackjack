@@ -2,36 +2,52 @@ package blackjack.domain
 
 import blackjack.domain.deck.Deck
 import blackjack.domain.deck.DeckGenerator
+import blackjack.domain.player.Dealer
+import blackjack.domain.player.Participant
+import blackjack.domain.player.Participants
 import blackjack.domain.player.Player
-import blackjack.domain.player.Players
-import blackjack.view.dto.PlayerDto
-import blackjack.view.dto.PlayersDto
+import blackjack.view.dto.ParticiapntsDto
+import blackjack.view.dto.ParticipantDto
+import blackjack.view.dto.RecordDto
 
 class BlackjackGame(
+    private val dealer: Dealer,
     names: List<String>,
     deckGenerator: DeckGenerator,
 ) {
     private val deck: Deck = deckGenerator.generate()
-    private val players = Players(names.map { Player(name = it) })
+    private val participants = Participants(listOf(dealer) + names.map { Player(name = it) })
 
     fun start() {
-        players.players.forEach { player ->
+        participants.participants.forEach { player ->
             repeat(CARD_DRAW_COUNT_GAME_START) { player.receiveCard(deck.draw()) }
         }
     }
 
-    fun dealCardToPlayer(name: String): Boolean {
-        val player = players.findPlayer(name)
-        val card = deck.draw()
-        return player.receiveCard(card)
+    fun canDraw(name: String): Boolean {
+        val player = participants.findPlayer(name)
+        return player.canReceive()
     }
 
-    fun getPlayers(): PlayersDto {
-        return Players.toDto(players)
+    fun dealCard(name: String) {
+        val player = participants.findPlayer(name)
+        player.receiveCard(deck.draw())
     }
 
-    fun getPlayer(name: String): PlayerDto {
-        return Player.toDto(players.findPlayer(name))
+    fun getRecords(): RecordDto {
+        val players = participants.participants.filterIsInstance<Player>()
+        return RecordDto(
+            dealerName = dealer.name,
+            records = players.map { it.name to it.isWin(dealer) }.toMap(),
+        )
+    }
+
+    fun getParticipants(): ParticiapntsDto {
+        return Participants.toDto(participants)
+    }
+
+    fun getParticipant(name: String): ParticipantDto {
+        return Participant.toDto(participants.findPlayer(name))
     }
 
     companion object {

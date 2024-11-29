@@ -1,40 +1,24 @@
 package blackjack.domain.player
 
-import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
-import blackjack.view.dto.CardDto
-import blackjack.view.dto.PlayerDto
 
 class Player(
-    val name: String,
-    val cards: Cards = Cards(),
-) {
-    fun receiveCard(card: Card): Boolean {
-        if (!canReceive(card)) {
+    name: String,
+    cards: Cards = Cards(),
+) : Participant(name, cards) {
+    fun isWin(dealer: Dealer): Boolean {
+        if (cards.getScore().isBust()) {
             return false
         }
-        cards.add(card)
 
-        return true
+        if (dealer.cards.getScore().isBust()) {
+            return true
+        }
+
+        return cards.getScore().value > dealer.cards.getScore().value
     }
 
-    private fun canReceive(card: Card): Boolean {
-        if (cards.getScore().isBlackJack()) {
-            return false
-        }
-
-        if (cards.getScore().isGreaterThanMaxScore(card.number.value)) {
-            return false
-        }
-
-        return true
-    }
-
-    companion object {
-        fun toDto(player: Player): PlayerDto =
-            PlayerDto(
-                name = player.name,
-                cards = player.cards.getCards().map { card -> CardDto(card.shape.symbol, card.number.value) },
-            )
+    override fun canReceive(): Boolean {
+        return !cards.getScore().isBust()
     }
 }

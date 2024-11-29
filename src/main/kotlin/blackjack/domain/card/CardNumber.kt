@@ -21,7 +21,7 @@ enum class CardNumber(val value: Int) {
     open fun toEleven(): Int = value
 
     companion object {
-        const val ACE_HIGH_VALUE = 11
+        const val ACE_HIGH_VALUE = 10
         val NUMBER_CACHE = listOf(Two, Three, Four, Five, Six, Seven, Eight, Nine, Ten, Jack, Queen, King, Ace)
     }
 }

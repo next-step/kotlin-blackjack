@@ -1,9 +1,9 @@
 package blackjack.view.output
 
-import blackjack.view.dto.PlayersDto
+import blackjack.view.dto.ParticiapntsDto
 
 object ResultView {
-    fun print(dto: PlayersDto) {
+    fun print(dto: ParticiapntsDto) {
         println()
         dto.players.forEach { player ->
             println(
@@ -11,5 +11,6 @@ object ResultView {
                     { card -> "${card.shape}${card.number}" }} - 결과: ${player.cards.sumOf { it.number }}",
             )
         }
+        println()
     }
 }
