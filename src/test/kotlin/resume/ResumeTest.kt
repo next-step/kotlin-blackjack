@@ -31,11 +31,11 @@ class ResumeTest {
     }
 }
 
-fun introduce(init: Person.() -> Unit) = Person("").apply(init)
+fun introduce(init: Person.() -> Unit) = Person().apply(init)
 
-data class Person(
-    var name: String,
-) {
+class Person {
+    lateinit var name: String
+
     fun name(value: String) {
         name = value
     }
