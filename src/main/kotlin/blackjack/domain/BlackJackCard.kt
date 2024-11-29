@@ -1,3 +1,6 @@
 package blackjack.domain
 
-class BlackJackCard(val shape: BlackJackCardShape, val number: BlackJackCardNumber)
+data class BlackJackCard(
+    val shape: BlackJackCardShape,
+    val number: BlackJackCardNumber,
+)
