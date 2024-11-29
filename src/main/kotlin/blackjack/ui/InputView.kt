@@ -8,6 +8,7 @@ class InputView {
         checkIsValidInput(input)
         input
     }
+    private lateinit var answer: String
 
     fun getPlayers(): List<String> {
         return playersName.replace(" ", "").split(DELIMITER)
@@ -15,6 +16,17 @@ class InputView {
 
     fun checkIsValidInput(input: String) {
         require(input.isNotEmpty())
+    }
+
+    fun printCardDrawMessage(name: String) {
+        println("${name}은/는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
+        val input = readln()
+        checkIsValidInput(input)
+        answer = input
+    }
+
+    fun getUserAnswer(): String {
+        return answer
     }
 
     companion object {
