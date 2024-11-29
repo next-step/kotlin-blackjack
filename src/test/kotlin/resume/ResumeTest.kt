@@ -42,9 +42,14 @@ class ResumeTest {
     }
 }
 
-fun introduce(init: Person.() -> Unit) = Person().apply(init)
+fun introduce(init: PersonBuilder.() -> Unit): Person = PersonBuilder().apply(init).build()
 
-class Person {
+class Person(
+    val name: String,
+    val company: String?,
+)
+
+class PersonBuilder {
     lateinit var name: String
     var company: String? = null
 
@@ -55,4 +60,6 @@ class Person {
     fun company(value: String) {
         company = value
     }
+
+    fun build() = Person(name, company)
 }
