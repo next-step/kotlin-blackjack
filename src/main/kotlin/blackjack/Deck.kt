@@ -1,9 +1,16 @@
 package blackjack
 
 class Deck(private val cards: MutableList<Card> = CARDS.toMutableList()) {
+    init {
+        require(cards.size <= MAXIMUM_CARD_COUNT) {
+            "총 카드 수는 ${MAXIMUM_CARD_COUNT}장을 초과할 수 없습니다: card.size=${cards.size}"
+        }
+    }
+
     fun draw(): Card = cards.removeFirst()
 
     companion object {
+        private const val MAXIMUM_CARD_COUNT = 52
         private val CARDS: List<Card> =
             Suit.entries.flatMap { suit ->
                 CardNumber.entries.map { cardNumber ->

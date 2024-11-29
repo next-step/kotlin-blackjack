@@ -26,4 +26,18 @@ class DeckTest : StringSpec({
             sut.draw()
         }
     }
+
+    "카드 뭉치에 있는 카드 수는 52장을 넘을 수 없다" {
+        val cards =
+            Suit.entries.flatMap { suit ->
+                CardNumber.entries.map { cardNumber ->
+                    Card(cardNumber, suit)
+                }
+            }.toMutableList()
+        cards.add(Card(CardNumber.KING, Suit.SPADES))
+
+        shouldThrow<IllegalArgumentException> {
+            Deck(cards = cards)
+        }
+    }
 })
