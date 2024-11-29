@@ -3,7 +3,7 @@ package blackjack.domain
 import blackjack.domain.Card.Companion.SYMBOL
 
 object CardDeck : CardDeckStrategy {
-    private val cards = mutableListOf<Card>()
+    val cards = mutableListOf<Card>()
 
     init {
         SYMBOL.entries.forEach { symbol ->
