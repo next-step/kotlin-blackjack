@@ -20,7 +20,7 @@ value class Rank(private val value: String) {
         private const val DEFAULT_ACE_SCORE = 11
 
         private const val ACE_VALUE = "A"
-        private val NUMBER_VALUES = listOf("2", "3", "4", "5", "6", "7", "8", "9")
+        private val NUMBER_VALUES = listOf("2", "3", "4", "5", "6", "7", "8", "9", "10")
         private val FACE_VALUES = listOf("J", "Q", "K")
 
         private val RANK_VALUES = NUMBER_VALUES + FACE_VALUES + ACE_VALUE
