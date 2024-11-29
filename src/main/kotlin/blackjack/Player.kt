@@ -22,6 +22,10 @@ class Player(val name: String, initialCards: List<Card>) {
         return _hand.sumOfHand()
     }
 
+    fun isBust(): Boolean {
+        return _hand.isBust()
+    }
+
     companion object {
         private const val INITIAL_HAND_LENGTH = 2
     }

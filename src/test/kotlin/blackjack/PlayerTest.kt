@@ -2,6 +2,8 @@ package blackjack
 
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
+import io.kotest.data.forAll
+import io.kotest.data.row
 import io.kotest.matchers.collections.shouldContainExactlyInAnyOrder
 import io.kotest.matchers.shouldBe
 
@@ -70,5 +72,25 @@ class PlayerTest : StringSpec({
 
         val result = sut.sumOfHand()
         result shouldBe 17
+    }
+
+    "플레이어가 버스트했는지 알 수 있다" {
+        val name = "jason"
+        val initialCards =
+            listOf(
+                Card(CardNumber.NINE, Suit.SPADES),
+                Card(CardNumber.EIGHT, Suit.HEARTS),
+            )
+
+        forAll(
+            row(Card(CardNumber.FIVE, Suit.SPADES), true),
+            row(Card(CardNumber.FOUR, Suit.SPADES), false),
+        ) { card, expected ->
+            val sut = Player(name = name, initialCards = initialCards)
+            sut.receive(card)
+
+            val result = sut.isBust()
+            result shouldBe expected
+        }
     }
 })
