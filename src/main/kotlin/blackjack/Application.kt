@@ -5,20 +5,26 @@ import blackjack.domain.Player
 import blackjack.ui.InputView
 import blackjack.ui.ResultView
 
-
 fun main() {
-
     val inputView = InputView()
     val resultView = ResultView()
-    val players = inputView.getPlayers().map {
-        Player(it)
+    val players = inputView.getPlayers().map { Player(it) }
+
+    val game = Game.createGame(players)
+    val printCallback: ((List<Player>) -> Unit) = {
+        it.forEach { player ->
+            resultView.printPlayerResult(player)
+        }
     }
 
-    val game = Game(players)
-    game.startGame()
+    val turnCallback: ((Player) -> String) = { player ->
+        inputView.printCardDrawMessage(player.name)
+        inputView.getUserAnswer()
+    }
 
+    resultView.printStartMessage(game.players)
+    game.startGame(printCallback, turnCallback)
     game.getResult()
 
-
-    resultView.printGameResult()
+    resultView.printGameResult(game.players)
 }

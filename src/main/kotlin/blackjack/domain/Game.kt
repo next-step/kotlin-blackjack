@@ -1,45 +1,41 @@
 package blackjack.domain
 
-class Game(
-    players: List<Player>,
-    drawer: CardDeck,
-) {
-    var onPlayerTurnCompleted: ((String, Card) -> Unit)? = null
-
-    val players = players
-    val drawer = drawer
-    private var isGameDone = false
-
-    fun startGame() {
-        drawer.generate()
-
-        while(isGameDone){
-            startTurn()
-        }
-
-    }
-
-    fun startTurn(){
+data class Game(val players: List<Player>, val drawer: CardDeckStrategy) {
+    fun startGame(
+        onPrintResultCallback: ((List<Player>) -> Unit),
+        onTurnCompleted: (Player) -> String,
+    ) {
+        initTurn(onPrintResultCallback)
         players.forEach { player ->
-            checkPlayerIsDraw(player)
-            drawCard(player)
-            onPlayerTurnCompleted
+            startTurn(player, onTurnCompleted, onPrintResultCallback)
         }
     }
 
-
-    fun drawCard(player: Player) {
-        player.drawCard(drawer.drawCard())
+    fun initTurn(onPrintResultCallback: ((List<Player>) -> Unit)) {
+        players.forEach { player ->
+            repeat(2) { player.drawCard(CardDeck.drawCard()) }
+        }
+        onPrintResultCallback(players)
     }
 
-    fun checkPlayerIsDraw(player: Player): Boolean {
-        //플레이어의 카드 계산해서 21이상인지 확인
-        val ret = player.calculateCard()
-        return ret < 21
+    fun startTurn(
+        currentPlayer: Player,
+        onTurnStarted: ((Player) -> String),
+        onPrintResultCallback: (List<Player>) -> Unit,
+    ) {
+        if (currentPlayer.isDone()) return
+        while (onTurnStarted(currentPlayer) == "y") {
+            val card = CardDeck.drawCard()
+            currentPlayer.drawCard(card)
+            onPrintResultCallback(listOf(currentPlayer))
+        }
     }
 
-    fun getResult(){
+    fun getResult() = players
 
+    companion object {
+        fun createGame(players: List<Player>, cardDeck: CardDeckStrategy = CardDeck): Game {
+            return Game(players, cardDeck)
+        }
     }
-
 }
