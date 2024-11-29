@@ -1,4 +1,4 @@
 # kotlin-blackjack
 
 # 1단계 - 코틀린 DSL
-- [ ] DslTest 완성
+- [X] DslTest 완성
