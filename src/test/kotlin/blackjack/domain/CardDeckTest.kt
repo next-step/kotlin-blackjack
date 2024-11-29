@@ -5,14 +5,16 @@ import org.junit.jupiter.api.Test
 
 class CardDeckTest {
     @Test
-    fun initCardDeckTest(){
+    fun initCardDeckTest() {
         val cardDeck = CardDeck
+        cardDeck.generate()
         cardDeck.cards.size shouldBe 52
     }
 
     @Test
-    fun drawCardTest(){
+    fun drawCardTest() {
         val cardDeck = CardDeck
+        cardDeck.generate()
         val card = cardDeck.drawCard()
 
         cardDeck.cards.size shouldBe 51

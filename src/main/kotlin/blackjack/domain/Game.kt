@@ -35,7 +35,10 @@ data class Game(val players: List<Player>, val drawer: CardDeckStrategy) {
     fun getResult() = players
 
     companion object {
-        fun createGame(players: List<Player>, cardDeck: CardDeckStrategy = CardDeck): Game {
+        fun createGame(
+            players: List<Player>,
+            cardDeck: CardDeckStrategy = CardDeck,
+        ): Game {
             return Game(players, cardDeck)
         }
     }

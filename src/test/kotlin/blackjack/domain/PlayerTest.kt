@@ -1,17 +1,18 @@
 package blackjack.domain
 
-import org.junit.jupiter.api.Test
 import blackjack.domain.Card.Companion.SYMBOL
 import io.kotest.matchers.shouldBe
+import org.junit.jupiter.api.Test
 
 class PlayerTest {
     @Test
     fun drawCardTest() {
         val player = Player("Tester")
-        val mockCard = listOf(
-            Card("3", SYMBOL.CLUB),
-            Card("4", SYMBOL.HEART)
-        )
+        val mockCard =
+            listOf(
+                Card("3", SYMBOL.CLUB),
+                Card("4", SYMBOL.HEART),
+            )
 
         mockCard.forEach { card ->
             player.drawCard(card)
@@ -23,10 +24,11 @@ class PlayerTest {
     @Test
     fun calculateCardTest() {
         val player = Player("Tester")
-        val mockCard = listOf(
-            Card("3", SYMBOL.CLUB),
-            Card("4", SYMBOL.HEART)
-        )
+        val mockCard =
+            listOf(
+                Card("3", SYMBOL.CLUB),
+                Card("4", SYMBOL.HEART),
+            )
 
         mockCard.forEach { card ->
             player.drawCard(card)
@@ -38,11 +40,12 @@ class PlayerTest {
     @Test
     fun playerDoneStatusTest() {
         val player = Player("Tester")
-        val mockCard = listOf(
-            Card("8", SYMBOL.CLUB),
-            Card("9", SYMBOL.HEART),
-            Card("9", SYMBOL.HEART)
-        )
+        val mockCard =
+            listOf(
+                Card("8", SYMBOL.CLUB),
+                Card("9", SYMBOL.HEART),
+                Card("9", SYMBOL.HEART),
+            )
 
         mockCard.forEach { card ->
             player.drawCard(card)
@@ -52,13 +55,14 @@ class PlayerTest {
     }
 
     @Test
-    fun `calculateAceTest - ace should be 1`(){
+    fun `calculateAceTest - ace should be 1`() {
         val player = Player("Tester")
-        val mockCard = listOf(
-            Card("A", SYMBOL.CLUB),
-            Card("9", SYMBOL.HEART),
-            Card("9", SYMBOL.HEART)
-        )
+        val mockCard =
+            listOf(
+                Card("A", SYMBOL.CLUB),
+                Card("9", SYMBOL.HEART),
+                Card("9", SYMBOL.HEART),
+            )
 
         mockCard.forEach { card ->
             player.drawCard(card)
@@ -68,12 +72,13 @@ class PlayerTest {
     }
 
     @Test
-    fun `calculateAceTest - ace should be 11`(){
+    fun `calculateAceTest - ace should be 11`() {
         val player = Player("Tester")
-        val mockCard = listOf(
-            Card("A", SYMBOL.CLUB),
-            Card("9", SYMBOL.HEART)
-        )
+        val mockCard =
+            listOf(
+                Card("A", SYMBOL.CLUB),
+                Card("9", SYMBOL.HEART),
+            )
 
         mockCard.forEach { card ->
             player.drawCard(card)

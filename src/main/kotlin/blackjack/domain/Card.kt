@@ -6,15 +6,15 @@ data class Card(val number: String, val symbol: SYMBOL) {
     }
 
     fun getCardNumber(number: String): Int {
-        if (SPECIAL_NUMBER.entries.any { it.name == number }) {
-            return when (SPECIAL_NUMBER.valueOf(number)) {
-                SPECIAL_NUMBER.K,
-                SPECIAL_NUMBER.Q,
-                SPECIAL_NUMBER.J ->
-                    SPECIAL_NUMBER.K.value
+        if (SpecialNumber.entries.any { it.name == number }) {
+            return when (SpecialNumber.valueOf(number)) {
+                SpecialNumber.K,
+                SpecialNumber.Q,
+                SpecialNumber.J ->
+                    SpecialNumber.K.value
 
-                SPECIAL_NUMBER.A ->
-                    SPECIAL_NUMBER.A.value
+                SpecialNumber.A ->
+                    SpecialNumber.A.value
             }
         }
         return number.toInt()
@@ -25,10 +25,10 @@ data class Card(val number: String, val symbol: SYMBOL) {
             SPADE("스페이드"),
             HEART("하트"),
             DIAMOND("다이아몬드"),
-            CLUB("클로버")
+            CLUB("클로버"),
         }
 
-        enum class SPECIAL_NUMBER(val value: Int) {
+        enum class SpecialNumber(val value: Int) {
             A(1),
             K(10),
             Q(10),
