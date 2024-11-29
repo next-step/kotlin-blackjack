@@ -40,4 +40,50 @@ class ResumeTest {
             }
         person.company shouldBe "DOGE"
     }
+
+    @Test
+    fun `soft skill`() {
+        val person =
+            introduce {
+                name("Elon Musk")
+                company("DOGE")
+                skills {
+                    soft("A passion for problem solving")
+                }
+            }
+        person.skills.size shouldBe 1
+        person.skills[0] shouldBe SoftSkill("A passion for problem solving")
+    }
+
+    @Test
+    fun `hard skill`() {
+        val person =
+            introduce {
+                name("Elon Musk")
+                company("DOGE")
+                skills {
+                    hard("Shooting rockets into space")
+                }
+            }
+        person.skills.size shouldBe 1
+        person.skills[0] shouldBe HardSkill("Shooting rockets into space")
+    }
+
+    @Test
+    fun `mix of skills`() {
+        val person =
+            introduce {
+                name("Elon Musk")
+                company("DOGE")
+                skills {
+                    soft("A passion for problem solving")
+                    soft("Posting dank memes")
+                    hard("Shooting rockets into space")
+                }
+            }
+        person.skills.size shouldBe 3
+        person.skills[0] shouldBe SoftSkill("A passion for problem solving")
+        person.skills[1] shouldBe SoftSkill("Posting dank memes")
+        person.skills[2] shouldBe HardSkill("Shooting rockets into space")
+    }
 }
