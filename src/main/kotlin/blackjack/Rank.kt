@@ -14,4 +14,9 @@ enum class Rank(val value: Int) {
     JACK(10),
     QUEEN(10),
     KING(10),
+    ;
+
+    fun possibleValues(): List<Int> {
+        return if (this == ACE) listOf(1, 11) else listOf(value)
+    }
 }

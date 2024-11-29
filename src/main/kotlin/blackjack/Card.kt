@@ -1,6 +1,14 @@
 package blackjack
 
 data class Card(val rank: Rank, val suit: Suit) {
+    fun possibleSums(currentSums: List<Int>): List<Int> {
+        return currentSums.flatMap { sum ->
+            rank.possibleValues().map { value ->
+                sum + value
+            }
+        }
+    }
+
     companion object {
         val ALL_CARDS =
             Rank.entries.flatMap { rank ->
