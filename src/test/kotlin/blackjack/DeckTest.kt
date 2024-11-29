@@ -1,5 +1,6 @@
 package blackjack
 
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 
@@ -13,5 +14,16 @@ class DeckTest : StringSpec({
 
         firstCard shouldBe cards[0]
         secondCard shouldBe cards[1]
+    }
+
+    "카드 뭉치는 기본적으로 52장의 카드와 함께 만들어진다" {
+        val sut = Deck()
+        (1..52).map {
+            sut.draw()
+        }
+
+        shouldThrow<NoSuchElementException> {
+            sut.draw()
+        }
     }
 })
