@@ -15,4 +15,5 @@ data class Player(val name: String) {
         return cards.toList()
     }
 
+    fun isDone(): Boolean = calculateCard() > 21
 }
