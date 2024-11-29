@@ -55,4 +55,17 @@ class BlackJackTest : StringSpec({
             cards.calculateScore() shouldBe expected
         }
     }
+
+    "카드목록의 점수는 카드의 점수의 합이다." {
+        table(
+            headers("ranks", "expected"),
+            row(listOf("2", "3", "4"), 9),
+            row(listOf("2", "Q", "J"), 22),
+            row(listOf("J", "Q", "K"), 30),
+            row(listOf("J", "Q", "A"), 21),
+        ).forAll { ranks, expected ->
+            val cards = Cards(cards = ranks.map { Rank(it) }.map { Card(it, SPADE) })
+            cards.calculateScore() shouldBe expected
+        }
+    }
 })
