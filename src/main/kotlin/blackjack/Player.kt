@@ -2,7 +2,7 @@ package blackjack
 
 class Player(val name: String, initialCards: List<Card>) {
     private val _hand = initialCards.toMutableList()
-    private val hand: List<Card>
+    val hand: List<Card>
         get() = _hand.toList()
 
     init {
@@ -12,6 +12,10 @@ class Player(val name: String, initialCards: List<Card>) {
         require(initialCards.size == INITIAL_HAND_LENGTH) {
             "첫 패는 ${INITIAL_HAND_LENGTH}장이어야 한다: initialCards.size=${initialCards.size}"
         }
+    }
+
+    fun receive(newCard: Card) {
+        _hand.add(newCard)
     }
 
     companion object {
