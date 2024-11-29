@@ -1,11 +1,19 @@
 package blackjack.domain
 
-object CardDeck {
-    fun generate(): Map<Card, Boolean> {
+import blackjack.domain.Card.Companion.SYMBOL
 
+object CardDeck : CardDeckStrategy {
+    private val cards = mutableListOf<Card>()
+
+    init {
+        SYMBOL.entries.forEach { symbol ->
+            (2..10).map { it.toString() }.forEach { cards.add(Card(it, symbol)) }
+            listOf("A", "K", "Q", "J").forEach { cards.add(Card(it, symbol)) }
+        }
+        cards.shuffle()
     }
 
-    fun drawCard(): Card {
-
+    override fun drawCard(): Card {
+        return cards.removeFirst()
     }
 }
