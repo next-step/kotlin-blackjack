@@ -8,4 +8,6 @@ class Hand(initialCards: List<Card> = emptyList()) {
     fun add(newCard: Card) {
         _cards.add(newCard)
     }
+
+    fun sumOfHand(): Int = _cards.sumOf { it.number.baseValue }
 }
