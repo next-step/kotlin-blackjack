@@ -15,6 +15,10 @@ class Player(private val name: PlayerName, initialCards: List<Card>) {
         return hand.getCards().joinToString(", ") { it.display() }
     }
 
+    fun isDrawable(): Boolean {
+        return hand.calculateBestTotal() != 0
+    }
+
     fun calculateTotal(): Int {
         return hand.calculateBestTotal()
     }

@@ -9,6 +9,14 @@ class OutputView {
         println()
     }
 
+    fun printPlayerCannotDrawCard(
+        playerName: String,
+        cards: String,
+    ) {
+        println("${playerName}는 카드를 더 받을 수 없습니다.")
+        println("${playerName}카드: $cards")
+    }
+
     fun printSinglePlayerCards(
         playerName: String,
         cards: String,

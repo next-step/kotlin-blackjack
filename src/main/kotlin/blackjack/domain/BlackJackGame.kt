@@ -10,14 +10,9 @@ class BlackJackGame(
         }
     }
 
-    fun askForMoreCards(player: Player): Pair<Boolean, Card?> {
+    fun drawCard(player: Player) {
         val newCard = deck.drawCard()
         player.addCard(newCard)
-        return Pair(true, newCard)
-    }
-
-    fun shouldContinue(response: String): Boolean {
-        return response.lowercase() == "y"
     }
 
     fun getPlayerResults(): Map<String, Pair<String, Int>> {
@@ -28,13 +23,14 @@ class BlackJackGame(
     }
 
     companion object {
-        fun createGame(playerNames: String): BlackJackGame {
-            val deck = Deck()
-            val names = playerNames.split(",").map { it.trim() }
+        fun createGame(
+            playerNames: List<PlayerName>,
+            deck: Deck,
+        ): BlackJackGame {
             val players =
-                names.map { name ->
+                playerNames.map { name ->
                     val handCards = listOf(deck.drawCard(), deck.drawCard())
-                    Player(PlayerName(name), handCards)
+                    Player(name, handCards)
                 }
             return BlackJackGame(players, deck)
         }

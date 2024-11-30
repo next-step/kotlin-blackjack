@@ -1,28 +1,27 @@
 package blackjack
 
+import blackjack.controller.BlackjackGameController
 import blackjack.domain.BlackJackGame
+import blackjack.domain.Deck
+import blackjack.infrastructure.ConsoleBackJackInputAdapter
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
 fun main() {
     val inputView = InputView()
     val outputView = OutputView()
-    val inputPlayerNames = inputView.inputPlayerNames()
-    val blackJackGame = BlackJackGame.createGame(inputPlayerNames)
+    val consoleBackJackInputAdapter = ConsoleBackJackInputAdapter(inputView)
 
-    outputView.printInitialPlayersCards(blackJackGame.getInitialPlayerCards())
+    val gameController = BlackjackGameController(consoleBackJackInputAdapter, outputView)
 
-    blackJackGame.players.forEach { player ->
-        while (true) {
-            val response = inputView.inputMoreCard(player.getName())
-            if (blackJackGame.shouldContinue(response)) {
-                val (_, newCard) = blackJackGame.askForMoreCards(player)
-                newCard?.let { outputView.printSinglePlayerCards(player.getName(), player.displayHand()) }
-            } else {
-                break
-            }
-        }
-    }
+    val playersNames = gameController.getPlayersNames()
+    val deck = Deck()
+    deck.shuffle()
+    val blackJackGame = BlackJackGame.createGame(playersNames, deck)
 
-    outputView.printPlayResult(blackJackGame.getPlayerResults())
+    gameController.announceInitialPlayersCards(blackJackGame)
+
+    gameController.playGame(blackJackGame)
+
+    gameController.announceResult(blackJackGame)
 }
