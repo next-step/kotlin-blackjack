@@ -1,6 +1,6 @@
 package blackjack
 
-class Card(rankName: String, val suit: CardSuit) {
+data class Card(val rankName: String, val suit: Suit) {
     val rank: CardRank = CardRank.from(rankName)
     val name = "$rankName${suit.displayName}"
 

@@ -33,5 +33,4 @@ sealed class CardRank private constructor() {
             }
         }
     }
-
 }
