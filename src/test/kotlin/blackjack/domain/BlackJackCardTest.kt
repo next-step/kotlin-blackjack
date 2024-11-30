@@ -1,10 +1,6 @@
-package blackjack
+package blackjack.domain
 
-import blackjack.domain.BlackJackCardNumber
-import blackjack.domain.BlackJackCardShape
-import blackjack.domain.BlackJackCardsMap
 import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test
 
 class BlackJackCardTest {
@@ -18,8 +14,12 @@ class BlackJackCardTest {
     @Test
     fun `중복된 카드는 지급될수 없다`() {
         val blackJackCardsMap = BlackJackCardsMap()
-        val blackJackCard = blackJackCardsMap.get(BlackJackCardShape.HEART, BlackJackCardNumber.ACE)
-        assertThatThrownBy { blackJackCardsMap.get(BlackJackCardShape.HEART, BlackJackCardNumber.ACE) }
-            .isInstanceOf(IllegalArgumentException::class.java).hasMessage("카드가 이미 사용중이에요")
+        val blackJackCard1 = blackJackCardsMap.get(BlackJackCardShape.HEART, BlackJackCardNumber.ACE)
+        val blackJackCard2 = blackJackCardsMap.get(BlackJackCardShape.HEART, BlackJackCardNumber.ACE)
+
+        assertThat(blackJackCard1.shape).isEqualTo(BlackJackCardShape.HEART)
+        assertThat(blackJackCard1.number).isEqualTo(BlackJackCardNumber.ACE)
+        assertThat(blackJackCard2.shape).isNotEqualTo(BlackJackCardShape.HEART)
+        assertThat(blackJackCard2.number).isNotEqualTo(BlackJackCardNumber.ACE)
     }
 }

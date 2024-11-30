@@ -9,7 +9,7 @@ import blackjack.view.BlackJackView
 
 fun main() {
     val blackJackCardsMap = BlackJackCardsMap()
-    val playerNames = BlackJackView.drawAndGetPlayerName()
+    val playerNames = BlackJackView.getPlayerName()
     val blackJackPlayers =
         BlackJackPlayers(
             playerNames.map {
@@ -23,8 +23,7 @@ fun main() {
 
     blackJackPlayers.players.forEach {
         while (it.isDrawPossible()) {
-            val yn = BlackJackView.drawAndGetPlayerDrawCardYn(it)
-            if (yn.equals("n")) {
+            if (!BlackJackView.getPlayerDrawCardYn(it)) {
                 break
             }
             it.drawCard(blackJackCardsMap.get())

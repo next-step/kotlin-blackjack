@@ -1,17 +1,23 @@
 package blackjack.domain
 
-class BlackJackCards(val cards: MutableList<BlackJackCard>) {
+class BlackJackCards(private val _cards: MutableList<BlackJackCard> = mutableListOf()) {
+    val cards: List<BlackJackCard>
+        get() {
+            return _cards.toList()
+        }
+
     fun addCard(card: BlackJackCard) {
-        require(isCardNumberSumUnder21())
-        cards.add(card)
+        require(isCardNumberSumUnderBlackJackWinCardSum()) { "21을 넘으면 카드를 못뽑아요" }
+        _cards.add(card)
     }
 
-    fun isCardNumberSumUnder21(): Boolean {
-        return cards.sumOf { it.number.values.min() } <= BlackJack_WIN_CARD_SUM
+    fun isCardNumberSumUnderBlackJackWinCardSum(): Boolean {
+        val bestSum = getCardsBestSum()
+        return (bestSum in 1..BLACKJACK_WIN_CARD_SUM)
     }
 
     fun getCardsBestSum(): Int {
-        val cardValues = cards.map { it.number.values }
+        val cardValues = _cards.map { it.number.values }
 
         val sums =
             cardValues.reduce { acc, list ->
@@ -19,14 +25,14 @@ class BlackJackCards(val cards: MutableList<BlackJackCard>) {
                     list.map { listSum -> accSum + listSum }
                 }
             }
-        if (sums.any { it <= 21 }) {
-            return sums.filter { it <= 21 }.max()
+        if (sums.any { it <= BLACKJACK_WIN_CARD_SUM }) {
+            return sums.filter { it <= BLACKJACK_WIN_CARD_SUM }.max()
         }
 
         return -1
     }
 
     companion object {
-        private val BlackJack_WIN_CARD_SUM = 21
+        private val BLACKJACK_WIN_CARD_SUM = 21
     }
 }

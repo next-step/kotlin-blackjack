@@ -1,11 +1,5 @@
-package blackjack
+package blackjack.domain
 
-import blackjack.domain.BlackJackCard
-import blackjack.domain.BlackJackCardNumber
-import blackjack.domain.BlackJackCardShape
-import blackjack.domain.BlackJackCards
-import blackjack.domain.BlackJackCardsMap
-import blackjack.domain.BlackJackPlayer
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test

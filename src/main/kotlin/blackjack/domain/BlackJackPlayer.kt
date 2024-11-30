@@ -13,7 +13,7 @@ class BlackJackPlayer(
     }
 
     fun isDrawPossible(): Boolean {
-        return blackJackCards.isCardNumberSumUnder21()
+        return blackJackCards.isCardNumberSumUnderBlackJackWinCardSum()
     }
 
     fun getBestSum(): Int {
