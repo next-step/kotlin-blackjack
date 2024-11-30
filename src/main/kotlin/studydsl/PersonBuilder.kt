@@ -3,7 +3,8 @@ package studydsl
 class PersonBuilder {
     private lateinit var name: String
     private var company: String? = null
-    private var skills: Skills = Skills()
+    private var skills = Skills()
+    private var languages = Languages()
 
     fun name(value: String) {
         name = value
@@ -13,23 +14,13 @@ class PersonBuilder {
         company = value
     }
 
-    fun skills(init: SkillsBuilder.() -> Unit) {
-        skills = SkillsBuilder().apply(init).build()
+    fun skills(block: SkillsBuilder.() -> Unit) {
+        skills = SkillsBuilder().apply(block).build()
     }
 
-    fun build() = Person(name, company, skills)
-}
-
-class SkillsBuilder {
-    private var skills = mutableListOf<Skill>()
-
-    fun soft(value: String) {
-        skills.add(SoftSkill(value))
+    fun languages(block: LanguagesBuilder.() -> Unit) {
+        languages = LanguagesBuilder().apply(block).build()
     }
 
-    fun hard(value: String) {
-        skills.add(HardSkill(value))
-    }
-
-    fun build() = Skills(skills)
+    fun build() = Person(name, company, skills, languages)
 }
