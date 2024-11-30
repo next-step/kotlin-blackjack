@@ -28,10 +28,10 @@
     - [ ] 카드는 2~10, J, Q, K, A로 구성된다.
     - [ ] A는 1 또는 11로 계산할 수 있다.
 - CardRank
-    - [ ] Ace, Face, Number 타입을 가진다
-    - [ ] Ace는 1 또는 11로 계산할 수 있다
-    - [ ] Face는 10으로 계산할 수 있다
-    - [ ] Number는 2~10까지의 숫자로 계산할 수 있다
+    - [X] Ace, Face, Number 타입을 가진다
+    - [X] Ace는 1 또는 11로 계산할 수 있다
+    - [X] Face는 10으로 계산할 수 있다
+    - [X] Number는 2~10까지의 숫자로 계산할 수 있다
 - Card
     - [ ] `CardRank`, `CardSuit`를 가진다
     - [ ] `CardRank`의 Score 알 수 있다
