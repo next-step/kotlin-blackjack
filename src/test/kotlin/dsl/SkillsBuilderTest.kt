@@ -6,12 +6,13 @@ import org.junit.jupiter.api.Test
 class SkillsBuilderTest {
     @Test
     fun `build skills`() {
-        val skills = SkillsBuilder().apply {
-            soft("soft1")
-            soft("soft2")
-            hard("hard1")
-            "Java" to 2
-        }.build()
+        val skills =
+            SkillsBuilder().apply {
+                soft("soft1")
+                soft("soft2")
+                hard("hard1")
+                "Java" to 2
+            }.build()
 
         assertThat(skills).isEqualTo(
             Skills(
@@ -21,8 +22,8 @@ class SkillsBuilderTest {
                 ),
                 listOf(
                     "hard1",
-                )
-            )
+                ),
+            ),
         )
     }
 }
