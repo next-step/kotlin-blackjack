@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.domain
 
 data class Card(val rankName: String, val suit: Suit) {
     val rank: CardRank = CardRank.from(rankName)

@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.domain
 
 data class Deck(val cards: List<Card>) {
     private val shuffleIndex: ArrayDeque<Int> = cards.indices.shuffled().toCollection(ArrayDeque())

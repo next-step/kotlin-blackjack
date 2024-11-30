@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.domain
 
 fun createDeck(function: DeckBuilder.() -> Unit): Deck {
     return DeckBuilder().apply { function() }.build()

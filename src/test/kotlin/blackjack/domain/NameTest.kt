@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.domain
 
 import org.assertj.core.api.Assertions.assertThatIllegalArgumentException
 import org.junit.jupiter.params.ParameterizedTest

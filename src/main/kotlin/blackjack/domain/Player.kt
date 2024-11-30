@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.domain
 
 data class Player(val playerName: Name, private val hand: Hand = Hand()) {
     val isBust: Boolean

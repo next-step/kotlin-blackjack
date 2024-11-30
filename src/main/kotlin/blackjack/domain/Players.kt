@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.domain
 
 class Players private constructor(private val values: List<Player>) {
     val size: Int = values.size

@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.domain
 
 sealed class CardRank private constructor() {
     abstract fun calculateScore(currentScore: Int): Int
