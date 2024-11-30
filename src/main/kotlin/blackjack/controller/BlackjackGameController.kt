@@ -5,7 +5,8 @@ import blackjack.domain.BlackJackGame
 import blackjack.domain.HitStayChoice
 import blackjack.domain.Player
 import blackjack.domain.PlayerName
-import blackjack.dto.PlayerResponse
+import blackjack.dto.PlayersResponse
+import blackjack.dto.SinglePlayerResponse
 import blackjack.view.OutputView
 
 class BlackjackGameController(
@@ -17,8 +18,8 @@ class BlackjackGameController(
     }
 
     fun announceInitialPlayersCards(blackJackGame: BlackJackGame) {
-        val playerResponse = PlayerResponse(blackJackGame.players)
-        outputView.printInitialPlayersCards(playerResponse)
+        val playersResponse = PlayersResponse(blackJackGame.players)
+        outputView.printInitialPlayersCards(playersResponse)
     }
 
     fun playGame(blackJackGame: BlackJackGame) {
@@ -37,7 +38,7 @@ class BlackjackGameController(
             }
         }
         if (!player.isDrawable()) {
-            outputView.printPlayerCannotDrawCard(player.getName(), player.displayHand())
+            outputView.printPlayerCannotDrawCard(SinglePlayerResponse(player))
         }
     }
 
@@ -49,19 +50,19 @@ class BlackjackGameController(
         return when (moreCardChoice) {
             HitStayChoice.HIT -> {
                 blackJackGame.drawCard(player)
-                outputView.printSinglePlayerCards(player.getName(), player.displayHand())
+                outputView.printSinglePlayerCards(SinglePlayerResponse(player))
                 true
             }
 
             HitStayChoice.STAY -> {
-                outputView.printSinglePlayerCards(player.getName(), player.displayHand())
+                outputView.printSinglePlayerCards(SinglePlayerResponse(player))
                 false
             }
         }
     }
 
     fun announceResult(blackJackGame: BlackJackGame) {
-        val playerResponse = PlayerResponse(blackJackGame.players)
-        outputView.printPlayResult(playerResponse)
+        val playersResponse = PlayersResponse(blackJackGame.players)
+        outputView.printPlayResult(playersResponse)
     }
 }

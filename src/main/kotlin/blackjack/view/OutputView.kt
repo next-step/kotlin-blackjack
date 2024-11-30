@@ -1,29 +1,25 @@
 package blackjack.view
 
-import blackjack.dto.PlayerResponse
+import blackjack.dto.PlayersResponse
+import blackjack.dto.SinglePlayerResponse
 
 class OutputView {
-    fun printInitialPlayersCards(playerResponse: PlayerResponse) {
-        println("\n" + playerResponse.toFormattedStringPlayerNames() + "에게 2장씩 나누었습니다.")
-        println(playerResponse.toFormattedStringPlayerCards())
+    fun printInitialPlayersCards(playersResponse: PlayersResponse) {
+        println("\n" + playersResponse.toFormattedStringPlayerNames() + "에게 2장씩 나누었습니다.")
+        println(playersResponse.toFormattedStringPlayerCards())
     }
 
-    fun printPlayerCannotDrawCard(
-        playerName: String,
-        cards: String,
-    ) {
+    fun printPlayerCannotDrawCard(singlePlayerResponse: SinglePlayerResponse) {
+        val playerName = singlePlayerResponse.toFormattedStringPlayerName()
         println("${playerName}는 카드를 더 받을 수 없습니다.")
-        println("${playerName}카드: $cards")
+        println("${playerName}카드: ${singlePlayerResponse.toFormattedStringPlayerCards()}")
     }
 
-    fun printSinglePlayerCards(
-        playerName: String,
-        cards: String,
-    ) {
-        println("${playerName}카드: $cards")
+    fun printSinglePlayerCards(singlePlayerResponse: SinglePlayerResponse) {
+        println(singlePlayerResponse.toFormattedStringPlayerCards())
     }
 
-    fun printPlayResult(playerResponse: PlayerResponse) {
-        println("\n" + playerResponse.toFormattedStringPlayerResults())
+    fun printPlayResult(playersResponse: PlayersResponse) {
+        println("\n" + playersResponse.toFormattedStringPlayerResults())
     }
 }

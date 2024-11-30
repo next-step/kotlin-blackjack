@@ -2,7 +2,7 @@ package blackjack.dto
 
 import blackjack.domain.Player
 
-class PlayerResponse(private val players: List<Player>) {
+class PlayersResponse(private val players: List<Player>) {
     fun toFormattedStringPlayerNames(): String {
         return players.joinToString(", ") { player -> player.getName() }
     }
