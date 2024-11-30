@@ -10,7 +10,7 @@ import io.kotest.matchers.shouldNotBe
 class DeckTest : DescribeSpec({
     describe("Deck은") {
         context("초기화할 때") {
-            it("2장의 고유한 카드를 포함해야 한다") {
+            it("52장의 고유한 카드를 포함해야 한다") {
                 val deck = Deck()
 
                 deck.cards shouldHaveSize 52
