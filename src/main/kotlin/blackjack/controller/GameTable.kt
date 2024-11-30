@@ -1,29 +1,62 @@
 package blackjack.controller
 
+import blackjack.domain.BlackJackRules.INIT_CARD_DRAW_COUNT
 import blackjack.domain.Deck
 import blackjack.domain.User
+import blackjack.view.InputView
+import blackjack.view.ResultView
 
-private const val INIT_CARD_DRAW_COUNT = 2
+private const val MORE_RECEIVE_CARD = "y"
+private const val STOP_RECEIVE_CARD = "n"
 
 fun main() {
-    println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)")
-    val names = (
-        readlnOrNull()?.split(",")
-            ?.map { it.trim() }
-            ?: throw IllegalArgumentException("잘못된 입력입니다.")
-    )
-
+    val names = InputView.inputNames()
     val deck = Deck.create()
-    val users =
-        names.map { User.create(name = it) }.map { user ->
-            (1..INIT_CARD_DRAW_COUNT).fold(user) { acc, _ ->
-                acc.receiveCard(deck.draw())
-            }
-        }
-    println("${users.joinToString(", ") { it.name }}에게 ${INIT_CARD_DRAW_COUNT}장의 카드를 나누었습니다.")
+    val users = names.map { User.create(name = it) }
+    val initCardReceivedUsers = receiveInitCard(users, deck)
 
-    users.forEach { user ->
-        val cards = user.cards.values.joinToString(", ") { "${it.rank.value}${it.suit.description}" }
-        println("${user.name}카드: $cards")
+    ResultView.printInitCardReceive(users)
+    initCardReceivedUsers.forEach { user -> ResultView.printUserCards(user = user, printScore = false) }
+
+    val allCardReceivedUsers = initCardReceivedUsers.map { user -> receiveCardOrStop(user, deck) }
+
+    allCardReceivedUsers.forEach { user ->
+        ResultView.printUserCards(user = user, printScore = true)
+    }
+}
+
+private fun receiveCardOrStop(
+    user: User,
+    deck: Deck,
+): User {
+    var currentUser = user
+    while (true) {
+        ResultView.printAskReceiveMoreCard(currentUser)
+        if (!currentUser.canReceiveCard()) {
+            ResultView.printCanNotReceivedCard()
+            break
+        }
+        val answer = InputView.inputReceiveMoreCard()
+        when (answer) {
+            MORE_RECEIVE_CARD -> {
+                currentUser = currentUser.receiveCard(deck.draw())
+                ResultView.printUserCards(user = currentUser, printScore = false)
+            }
+
+            STOP_RECEIVE_CARD -> break
+            else -> ResultView.printInvalidAnswer()
+        }
+    }
+    return currentUser
+}
+
+private fun receiveInitCard(
+    users: List<User>,
+    deck: Deck,
+): List<User> {
+    return users.map { user ->
+        (1..INIT_CARD_DRAW_COUNT).fold(user) { acc, _ ->
+            acc.receiveCard(deck.draw())
+        }
     }
 }
