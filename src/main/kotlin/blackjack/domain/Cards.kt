@@ -1,7 +1,5 @@
 package blackjack.domain
 
-import blackjack.domain.Rank.Companion.ACE
-
 data class Cards(private val values: List<Card>) {
     fun isFullScore(): Boolean {
         return calculateScore() >= BLACKJACK_SCORE_LIMIT
@@ -12,8 +10,8 @@ data class Cards(private val values: List<Card>) {
     }
 
     private fun calculateScore(): Int {
-        val totalScore = values.sumOf { it.rank.score }
-        var aceCount = values.count { it.rank == ACE }
+        val totalScore = values.sumOf { it.score }
+        var aceCount = values.count { it.isAce() }
 
         var adjustedScore = totalScore
         while (adjustedScore > BLACKJACK_SCORE_LIMIT && aceCount > 0) {

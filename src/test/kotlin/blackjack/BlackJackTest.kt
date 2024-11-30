@@ -16,10 +16,14 @@ import io.kotest.inspectors.forAll
 import io.kotest.matchers.shouldBe
 
 class BlackJackTest : StringSpec({
-    "카드는 랭크와 문양으로 이루어진다" {
+    "카드는 에이스로 만들어진다면 에이스 카드이다" {
+        val card = Card(Rank("A"), SPADE)
+        card.isAce() shouldBe true
+    }
+
+    "카드는 스페이드로 만들어진다면 에이스 카드가 아니다" {
         val card = Card(Rank("3"), SPADE)
-        card.rank shouldBe Rank("3")
-        card.suit shouldBe SPADE
+        card.isAce() shouldBe false
     }
 
     "카드의 랭크가 2~10,J,Q,K,A가 아닌 경우 예외 발생한다" {
