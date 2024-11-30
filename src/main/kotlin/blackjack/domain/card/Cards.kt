@@ -3,7 +3,7 @@ package blackjack.domain.card
 data class Cards(
     private val _cards: MutableList<Card> = mutableListOf(),
 ) {
-    val cards
+    val cards: List<Card>
         get() = _cards
 
     fun add(card: Card) {
