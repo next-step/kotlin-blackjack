@@ -14,8 +14,18 @@ class PlayersTest : BehaviorSpec({
 
     Given("`Player`에게 카드를 나눠 줄 수 있다") {
         listOf(
-            Player.from("player1") to listOf(Card("A", Suit.SPADE), Card("2", Suit.DIAMOND)),
-            Player.from("player2") to listOf(Card("3", Suit.HEART), Card("4", Suit.CLUB)),
+            Player.from("player1") to createDeck {
+                cards {
+                    "A" to Suit.SPADE
+                    "2" to Suit.DIAMOND
+                }
+            },
+            Player.from("player2") to createDeck {
+                cards {
+                    "3" to Suit.HEART
+                    "4" to Suit.CLUB
+                }
+            }
         ).forEach { (player, cards) ->
             When("`${player.name}`에게 카드를 나눠 준다") {
                 val players = Players.from(listOf("player1", "player2"))

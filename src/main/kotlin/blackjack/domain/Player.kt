@@ -3,17 +3,25 @@ package blackjack.domain
 data class Player(val playerName: Name, private val hand: Hand = Hand()) {
     val isBust: Boolean
         get() = hand.isBust
-    val totalCards: List<Card>
-        get() = hand.totalCards
+    val totalCards: Deck
+        get() = Deck(hand.totalCards)
     val name: String
         get() = playerName.value
 
-    fun receive(cards: List<Card>) {
-        hand.add(cards)
+    fun receive(cards: Deck) {
+        hand.add(cards.values())
     }
 
     fun same(other: Player): Boolean {
         return playerName == other.playerName
+    }
+
+    fun same(other: String): Boolean {
+        return playerName.value == other
+    }
+
+    fun score(): Int {
+        return hand.score
     }
 
     companion object {

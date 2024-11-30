@@ -18,12 +18,10 @@ data class Deck(val cards: List<Card>) {
     }
 
     fun popCards(popCount: Int): Deck {
-        return Deck(
-            ArrayDeque(cards.take(popCount)).also {
-                repeat(popCount) {
-                    pop()
-                }
-            },
-        )
+        return Deck(List(popCount) { pop() })
+    }
+
+    fun values(): List<Card> {
+        return cards.toList()
     }
 }

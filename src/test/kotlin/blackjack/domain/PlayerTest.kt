@@ -18,7 +18,12 @@ class PlayerTest : BehaviorSpec({
 
     Given("`Card`를 받을 수 있다") {
         val player = Player.from("철수")
-        val cards = listOf(Card("A", Suit.SPADE))
+        val cards = createDeck {
+            cards {
+                "A" to Suit.SPADE
+                "K" to Suit.SPADE
+            }
+        }
 
         When("카드를 받을 때") {
             player.receive(cards)
@@ -32,13 +37,15 @@ class PlayerTest : BehaviorSpec({
     Given("`Bust` 상태를 알 수 있다") {
         val player = Player.from("철수")
         val cards =
-            listOf(
-                Card("A", Suit.SPADE),
-                Card("A", Suit.SPADE),
-                Card("K", Suit.SPADE),
-            )
+            createDeck {
+                cards {
+                    "A" to Suit.SPADE
+                    "A" to Suit.SPADE
+                    "K" to Suit.SPADE
+                }
+            }
 
-        When("카드가 ${cards.joinToString { "${it.rank} ${it.suit.displayName}" }} 일때 카드 숫자를 합쳐 21을 초과하는지 알 수 있다") {
+        When("카드가 ${cards.values().joinToString { "${it.rank} ${it.suit.displayName}" }} 일때 카드 숫자를 합쳐 21을 초과하는지 알 수 있다") {
             player.receive(cards)
 
             Then("Bust 상태여야 한다") {
