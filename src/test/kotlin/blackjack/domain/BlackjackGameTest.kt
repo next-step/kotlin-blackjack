@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test
 class BlackjackGameTest {
 
     @Test
-    fun `Draw를 하면 Player는 Card를 얻어야 한다`() {
+    fun `카드를 뽑으면 플레이어는 카드를 얻어야 한다`() {
         // given
         val player = Player("jay")
         val blackjackGame = BlackjackGame(Deck(), listOf(player))
@@ -19,7 +19,7 @@ class BlackjackGameTest {
     }
 
     @Test
-    fun `시작을 하면 Player는 Card를 2장 얻어야 한다`() {
+    fun `게임이 시작을 하면 플레이어는 카드를 2장 얻어야 한다`() {
         // given
         val blackjackGame = BlackjackGame(Deck(), listOf(Player("jay")))
 
