@@ -1,10 +1,10 @@
 package blackjack.domain.card
 
-sealed class CardSuit(val displayName: String) {
-    data object Diamond : CardSuit("다이아몬드")
-    data object Heart : CardSuit("하트")
-    data object Spade : CardSuit("스페이드")
-    data object Club : CardSuit("클로버")
+sealed interface CardSuit {
+    data object Diamond : CardSuit
+    data object Heart : CardSuit
+    data object Spade : CardSuit
+    data object Club : CardSuit
 
     companion object {
         val all = listOf(Diamond, Heart, Spade, Club)
