@@ -8,7 +8,7 @@ import org.junit.jupiter.params.provider.EnumSource
 
 @Suppress("NonAsciiCharacters")
 class CardTest {
-    private val dummySuit = Suit.HEART
+    private val dummySuit = Suit.HEARTS
 
     @ParameterizedTest
     @CsvSource(
