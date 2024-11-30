@@ -3,17 +3,8 @@ package blackjack.domain
 class Hand {
     private val cards = mutableListOf<Card>()
 
-    fun addCard(card: Card): Boolean {
-        if (canAddWithoutExceeding()) {
-            cards.add(card)
-            return true
-        }
-        return false
-    }
-
-    private fun canAddWithoutExceeding(): Boolean {
-        val allPossibleSums = calculateAllPossibleSums()
-        return allPossibleSums.any { it < BLACKJACK_NUMBER }
+    fun addCard(card: Card) {
+        cards.add(card)
     }
 
     fun calculateBestTotal(): Int {
@@ -22,9 +13,11 @@ class Hand {
     }
 
     private fun calculateAllPossibleSums(): List<Int> {
-        return cards.fold(listOf(ZERO)) { sums, card ->
-            card.possibleSums(sums)
+        val sumOf = cards.sumOf { it.rank.value }
+        if (cards.any { it.isAce() }) {
+            return listOf(sumOf, sumOf + 10)
         }
+        return listOf(sumOf)
     }
 
     fun getCards(): List<Card> {

@@ -1,12 +1,8 @@
 package blackjack.domain
 
 data class Card(val rank: Rank, val suit: Suit) {
-    fun possibleSums(currentSums: List<Int>): List<Int> {
-        return currentSums.flatMap { sum ->
-            rank.possibleValues().map { value ->
-                sum + value
-            }
-        }
+    fun isAce(): Boolean {
+        return rank == Rank.ACE
     }
 
     fun display(): String {

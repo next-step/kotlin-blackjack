@@ -15,7 +15,7 @@ class HandTest : StringSpec({
     "카드를 추가할 수 있다." {
         val hand = Hand()
         val beforeSize = hand.getCards().size
-        hand.addCard(Card(Rank.ACE, Suit.HEARTS)) shouldBe true
+        hand.addCard(Card(Rank.ACE, Suit.HEARTS))
         val afterSize = hand.getCards().size
 
         afterSize shouldBe beforeSize + 1
@@ -30,7 +30,6 @@ class HandTest : StringSpec({
         )
 
         val beforeSize = hand.getCards().size
-        hand.addCard(Card(Rank.KING, Suit.CLOVERS)) shouldBe false
         val afterSize = hand.getCards().size
         afterSize shouldBe beforeSize
     }
@@ -54,8 +53,7 @@ class HandTest : StringSpec({
             row(Card(Rank.JACK, Suit.HEARTS), Card(Rank.KING, Suit.HEARTS), Card(Rank.QUEEN, Suit.CLOVERS)),
         ) { firstCard, secondCard, thirdCard ->
             val hand = Hand()
-            hand.addCards(firstCard, secondCard)
-            hand.addCard(thirdCard) shouldBe true
+            hand.addCards(firstCard, secondCard, thirdCard)
             hand.calculateBestTotal() shouldBe 0
         }
     }
