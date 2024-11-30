@@ -1,7 +1,7 @@
 package blackjack.domain
 
 @JvmInline
-value class Rank(private val value: String) {
+value class Rank(val value: String) {
     init {
         require(value in RANK_VALUES) { "랭크는 $RANK_VALUES 에 포함되어야 합니다" }
     }
@@ -26,5 +26,6 @@ value class Rank(private val value: String) {
         private val RANK_VALUES = NUMBER_VALUES + FACE_VALUES + ACE_VALUE
 
         val ACE = Rank(ACE_VALUE)
+        val ALL = RANK_VALUES.map { Rank(it) }
     }
 }

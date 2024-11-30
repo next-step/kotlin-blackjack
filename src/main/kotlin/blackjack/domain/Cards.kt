@@ -1,15 +1,9 @@
 package blackjack.domain
 
-data class Cards(private val values: List<Card>) {
-    fun isFullScore(): Boolean {
-        return calculateScore() >= BLACKJACK_SCORE_LIMIT
-    }
+import blackjack.domain.BlackJackRules.BLACKJACK_SCORE_LIMIT
 
-    fun add(card: Card): Cards {
-        return Cards(values + card)
-    }
-
-    private fun calculateScore(): Int {
+data class Cards(val values: List<Card>) {
+    fun calculateScore(): Int {
         val totalScore = values.sumOf { it.score }
         var aceCount = values.count { it.isAce() }
 
@@ -21,8 +15,11 @@ data class Cards(private val values: List<Card>) {
         return adjustedScore
     }
 
+    fun add(card: Card): Cards {
+        return Cards(values + card)
+    }
+
     companion object {
-        private const val BLACKJACK_SCORE_LIMIT = 21
         private const val ACE_SCORE_DIFFERENCE = 10
     }
 }

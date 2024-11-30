@@ -2,6 +2,7 @@ package blackjack
 
 import blackjack.domain.Card
 import blackjack.domain.Cards
+import blackjack.domain.Deck
 import blackjack.domain.Rank
 import blackjack.domain.Suit
 import blackjack.domain.Suit.SPADE
@@ -14,6 +15,7 @@ import io.kotest.data.row
 import io.kotest.data.table
 import io.kotest.inspectors.forAll
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.shouldNotBe
 
 class BlackJackTest : StringSpec({
     "카드는 에이스로 만들어진다면 에이스 카드이다" {
@@ -50,20 +52,15 @@ class BlackJackTest : StringSpec({
 
     "카드목록의 점수합이 21을 초과할 경우 에이스는 1점으로 보정된다" {
         table(
-            headers("ranks"),
-            // 23 -> 13점
-            row(listOf("A", "2", "10")),
-            // 25 -> 15점
-            row(listOf("A", "2", "2", "K")),
-            // 22 -> 12점
-            row(listOf("A", "A")),
-            // 23점 -> 13점
-            row(listOf("A", "A", "A")),
-            // 23점 -> 23점
-            row(listOf("A", "3", "9")),
-        ).forAll { ranks ->
+            headers("ranks", "expected"),
+            row(listOf("A", "2", "10"), 13),
+            row(listOf("A", "2", "2", "K"), 15),
+            row(listOf("A", "A"), 12),
+            row(listOf("A", "A", "A"), 13),
+            row(listOf("A", "3", "9"), 13),
+        ).forAll { ranks, expected ->
             val cards = Cards(ranks.map { createCard(it) })
-            cards.isFullScore() shouldBe false
+            cards.calculateScore() shouldBe expected
         }
     }
 
@@ -76,33 +73,31 @@ class BlackJackTest : StringSpec({
             row(listOf("5", "5", "4", "3", "2")),
         ).forAll { ranks ->
             val cards = Cards(ranks.map { createCard(it) })
-            User(cards).canReceiveCard() shouldBe true
+            val score = cards.calculateScore()
+            println(score)
+            User("홍길동", cards).canReceiveCard() shouldBe true
         }
     }
 
     "유저는 카드목록의 점수합이 21점 이상할 경우 카드를 더 받을 수 없다" {
         table(
-            headers("ranks"),
-            // 30점
-            row(listOf("J", "Q", "K")),
-            // 21점
-            row(listOf("A", "K")),
-            // 21점
-            row(listOf("Q", "10", "A")),
-            // 21점
-            row(listOf("10", "9", "2")),
-            // 23점
-            row(listOf("10", "10", "3")),
-        ).forAll { ranks ->
+            headers("ranks", "score"),
+            row(listOf("J", "Q", "K"), 30),
+            row(listOf("A", "K"), 21),
+            row(listOf("Q", "10", "A"), 21),
+            row(listOf("10", "9", "2"), 21),
+            row(listOf("10", "10", "3"), 23),
+        ).forAll { ranks, score ->
             val cards = Cards(ranks.map { createCard(it) })
-            User(cards).canReceiveCard() shouldBe false
+            cards.calculateScore() shouldBe score
+            User("홍길동", cards).canReceiveCard() shouldBe false
         }
     }
 
     "유저는 카드 2장을 받은 후 점수 합이 21점인 경우 카드를 더 받지 못한다" {
         val cards = Cards(emptyList())
         val user =
-            User(cards)
+            User("홍길동", cards)
                 .receiveCard(createCard("A"))
                 .receiveCard(createCard("K"))
 
@@ -112,11 +107,24 @@ class BlackJackTest : StringSpec({
     "유저는 카드 2장을 받은 후 점수 합이 21점 미만인 경우 카드를 더 받을 수 있다" {
         val cards = Cards(emptyList())
         val user =
-            User(cards)
+            User("홍길동", cards)
                 .receiveCard(createCard("10"))
                 .receiveCard(createCard("5"))
 
         user.canReceiveCard() shouldBe true
+    }
+
+    "덱에서 카드를 하나 꺼낸다" {
+        val deck = Deck.create()
+        val card = deck.draw()
+        card shouldNotBe null
+    }
+
+    "덱에 카드가 없을 때 카드를 꺼내면 예외 발생한다" {
+        val deck = Deck.create()
+        repeat(52) { deck.draw() }
+
+        shouldThrow<IllegalStateException> { deck.draw() }
     }
 })
 
