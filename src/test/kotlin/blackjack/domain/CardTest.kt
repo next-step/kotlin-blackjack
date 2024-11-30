@@ -1,8 +1,5 @@
 package blackjack.domain
 
-import blackjack.domain.Card
-import blackjack.domain.Rank
-import blackjack.domain.Suit
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 

@@ -51,7 +51,7 @@ object ResultView {
 
     private fun printPlayerWinningInfo(result: PlayerResult) {
         val resultString = if (result.isWinner) "승리" else "패배"
-        println("${result.name} : ${resultString}")
+        println("${result.name} : $resultString")
     }
 
     private fun printDealerWinningInfo(dealerResult: DealerResult) {

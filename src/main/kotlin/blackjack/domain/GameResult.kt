@@ -20,7 +20,7 @@ class DealerResult(
 ) : ParticipantResult(
     name = name,
     score = score,
-    cards = cards
+    cards = cards,
 )
 
 class PlayerResult(
@@ -31,5 +31,5 @@ class PlayerResult(
 ) : ParticipantResult(
     name = name,
     score = score,
-    cards = cards
+    cards = cards,
 )

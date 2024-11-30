@@ -51,7 +51,12 @@ class DealerTest {
             Cards().apply {
                 add(Card.of(Suit.HEART, Rank.ACE))
                 add(Card.of(Suit.SPADE, Rank.KING))
-            } to false
-        ).map { (cards, expected) -> org.junit.jupiter.params.provider.Arguments.of(cards, expected) }
+            } to false,
+        ).map { (cards, expected) ->
+            org.junit.jupiter.params.provider.Arguments.of(
+                cards,
+                expected,
+            )
+        }
     }
 }
