@@ -29,7 +29,7 @@ class DeckTest : BehaviorSpec({
         val deck = Deck(cards)
 
         When("카드를 하나 꺼내면") {
-            val card = deck.pop()
+            val card = deck.popOf(0)
 
             Then("카드를 반환한다") {
                 card shouldBe Card("A", Suit.SPADE)
