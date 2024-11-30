@@ -3,9 +3,13 @@ package blackjack.entity
 import blackjack.entity.GameRules.ACE_EXTRA_VALUE
 import blackjack.entity.GameRules.MAX_SCORE
 
-class Hand(val cards: MutableList<Card> = mutableListOf()) {
+class Hand(cards: List<Card> = emptyList()) {
+    private val _cards: MutableList<Card> = cards.toMutableList()
+
+    val cards: List<Card> get() = _cards
+
     fun addCard(card: Card) {
-        cards.add(card)
+        _cards.add(card)
     }
 
     fun describe(): String {
