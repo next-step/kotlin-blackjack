@@ -1,6 +1,7 @@
 package blackjack.domain
 
-import org.assertj.core.api.Assertions.assertThatThrownBy
+import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.Test
 
 class DeckTest {
@@ -13,9 +14,11 @@ class DeckTest {
             deck.draw()
         }
 
-        // when & then
-        assertThatThrownBy { deck.draw() }.isInstanceOf(IllegalStateException::class.java)
-            .hasMessageContaining("덱의 카드들이 모두 사용되었습니다. 다른 덱을 사용해주세요.")
+        // when
+        val result = assertThrows(IllegalStateException::class.java) { deck.draw() }
+
+        // then
+        assertThat(result.message).isEqualTo("덱의 카드들이 모두 사용되었습니다. 다른 덱을 사용해주세요.")
     }
 
 }
