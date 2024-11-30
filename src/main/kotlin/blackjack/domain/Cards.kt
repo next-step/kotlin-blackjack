@@ -15,6 +15,10 @@ data class Cards(val cards: List<Card>) {
         return adjustedScore
     }
 
+    fun isFullScore(): Boolean {
+        return calculateScore() >= BLACKJACK_SCORE_LIMIT
+    }
+
     companion object {
         private const val BLACKJACK_SCORE_LIMIT = 21
         private const val ACE_SCORE_DIFFERENCE = 10
