@@ -20,17 +20,6 @@ class HandTest : DescribeSpec({
         }
     }
     describe("플레이어 손패는") {
-        context("카드가 추가된 경우") {
-            val hand =
-                Hand().apply {
-                    addCard(Card(Suit.HEARTS, Rank.ACE))
-                    addCard(Card(Suit.SPADES, Rank.KING))
-                }
-
-            it("현재 손패 정보를 반환한다") {
-                hand.describe() shouldBe "A하트, K스페이드"
-            }
-        }
         context("점수 계산을 요청한 경우") {
             val hand =
                 Hand().apply {

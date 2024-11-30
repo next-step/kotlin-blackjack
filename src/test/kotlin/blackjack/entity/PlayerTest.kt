@@ -34,10 +34,6 @@ class PlayerTest : DescribeSpec({
                 player.receiveCard(heartsAce)
                 player.hand.cards shouldBe listOf(spadesTen, heartsAce)
             }
-
-            it("손패를 설명할 수 있어야 한다") {
-                player.describeHand() shouldBe "10스페이드, A하트"
-            }
         }
         context("점수를 계산할 때") {
             val player = Player("Charlie")

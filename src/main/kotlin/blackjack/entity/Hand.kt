@@ -12,10 +12,6 @@ class Hand(cards: List<Card> = emptyList()) {
         _cards.add(card)
     }
 
-    fun describe(): String {
-        return cards.joinToString { it.describe() }
-    }
-
     fun calculateScore(): Int {
         val total = calculateTotal()
         val aceCount = countAces()

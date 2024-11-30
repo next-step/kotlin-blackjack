@@ -55,7 +55,7 @@ class BlackJackGame {
         val playerResults =
             players.participants.map { player ->
                 val score = player.calculateScore()
-                PlayerResult(player.name, player.describeHand(), score)
+                PlayerResult(player.name, player.hand, score)
             }
         return playerResults
     }

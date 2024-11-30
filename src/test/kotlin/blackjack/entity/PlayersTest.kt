@@ -42,10 +42,18 @@ class PlayersTest : DescribeSpec({
                 )
 
             it("모든 플레이어의 이름과 손패 정보를 제공해야 한다") {
-                players.describeHands() shouldContainExactly
+                val result = players.describeHands()
+                result[0].playerName shouldBe "pobi"
+                result[0].hand.cards shouldContainExactly
                     listOf(
-                        PlayerHand("pobi", "A하트, K스페이드"),
-                        PlayerHand("jason", "2클로버, Q다이아몬드"),
+                        Card(Suit.HEARTS, Rank.ACE),
+                        Card(Suit.SPADES, Rank.KING),
+                    )
+                result[1].playerName shouldBe "jason"
+                result[1].hand.cards shouldContainExactly
+                    listOf(
+                        Card(Suit.CLUBS, Rank.TWO),
+                        Card(Suit.DIAMONDS, Rank.QUEEN),
                     )
             }
         }

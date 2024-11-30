@@ -8,6 +8,6 @@ class Players(val participants: List<Player>) {
     }
 
     fun describeHands(): List<PlayerHand> {
-        return participants.map { PlayerHand(it.name, it.describeHand()) }
+        return participants.map { PlayerHand(it.name, it.hand) }
     }
 }
