@@ -34,7 +34,7 @@ class HandTest : BehaviorSpec({
             Hand(createCard(listOf("K", "A", "A")).toMutableList()) to 22,
             Hand(createCard(listOf("A", "K")).toMutableList()) to 21,
             Hand(createCard(listOf("2", "3")).toMutableList()) to 5,
-            Hand(createCard(listOf("9", "Q")).toMutableList(),) to 19,
+            Hand(createCard(listOf("9", "Q")).toMutableList()) to 19,
         ).forEach { (cards, expected) ->
             When("카드 ${cards.totalCards.joinToString { "${it.rank} ${it.suit.displayName}" }} 일때") {
                 Then("점수는 $expected 이어야 함") {
@@ -53,9 +53,9 @@ class HandTest : BehaviorSpec({
 
     Given("`Bust` 상태를 알 수 있다") {
         listOf(
-            Hand(createCard(listOf("A", "A", "K")).toMutableList(),) to true,
-            Hand(createCard(listOf("2", "3")).toMutableList(),) to false,
-            Hand(createCard(listOf("9", "Q")).toMutableList(),) to false,
+            Hand(createCard(listOf("A", "A", "K")).toMutableList()) to true,
+            Hand(createCard(listOf("2", "3")).toMutableList()) to false,
+            Hand(createCard(listOf("9", "Q")).toMutableList()) to false,
         ).forEach { (cards, expected) ->
             When("카드 ${cards.totalCards.joinToString { "${it.rank} ${it.suit.displayName}" }} 일때") {
                 Then("Bust 상태는 $expected 이어야 함") {

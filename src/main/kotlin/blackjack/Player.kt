@@ -1,9 +1,14 @@
 package blackjack
 
-class Player(val playerName: Name, private val hand: Hand = Hand()) {
+data class Player(val playerName: Name, private val hand: Hand = Hand()) {
     fun receive(cards: List<Card>) {
         hand.add(cards)
     }
+
+    fun same(other: Player): Boolean {
+        return playerName == other.playerName
+    }
+
     val isBust: Boolean
         get() = hand.isBust
     val totalCards: List<Card>
