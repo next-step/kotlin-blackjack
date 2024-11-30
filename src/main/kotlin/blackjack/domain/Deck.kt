@@ -20,7 +20,7 @@ class Deck(
         private fun createShuffledDeck(): MutableList<Card> {
             return CardSuit.all.flatMap { suit ->
                 CardRank.all.map { rank ->
-                    Card(suit, rank)
+                    Card.of(suit, rank)
                 }
             }.shuffled().toMutableList()
         }

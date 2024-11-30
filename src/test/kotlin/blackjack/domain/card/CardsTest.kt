@@ -10,7 +10,7 @@ class CardsTest {
         val cards = Cards()
 
         // when
-        cards.add(Card(suit = CardSuit.Heart, rank = CardRank.Ace))
+        cards.add(Card.of(suit = CardSuit.Heart, rank = CardRank.Ace))
 
         // then
         assertThat(cards.cards.size).isEqualTo(1)
@@ -20,8 +20,8 @@ class CardsTest {
     fun `ACE를 포함하고 있는 카드들 중에서 합이 21이 넘지 않으면 ACE의 값은 11이다`() {
         // given
         val cards = Cards()
-        cards.add(Card(CardSuit.Heart, CardRank.Ace))
-        cards.add(Card(CardSuit.Heart, CardRank.Ten))
+        cards.add(Card.of(CardSuit.Heart, CardRank.Ace))
+        cards.add(Card.of(CardSuit.Heart, CardRank.Ten))
 
         // when
         val result = cards.sum()
@@ -34,9 +34,9 @@ class CardsTest {
     fun `ACE를 포함하고 있는 카드들 중에서 합이 21이 넘으면 ACE의 값은 1이다`() {
         // given
         val cards = Cards()
-        cards.add(Card(CardSuit.Heart, CardRank.Ace))
-        cards.add(Card(CardSuit.Heart, CardRank.Ten))
-        cards.add(Card(CardSuit.Heart, CardRank.Eight))
+        cards.add(Card.of(CardSuit.Heart, CardRank.Ace))
+        cards.add(Card.of(CardSuit.Heart, CardRank.Ten))
+        cards.add(Card.of(CardSuit.Heart, CardRank.Eight))
 
         // when
         val result = cards.sum()
@@ -49,9 +49,9 @@ class CardsTest {
     fun `플레이어의 카드 합이 21을 초과하면 Bust 되어야 한다`() {
         // given
         val initCards = mutableListOf(
-            Card(CardSuit.Heart, CardRank.Ten),
-            Card(CardSuit.Heart, CardRank.Nine),
-            Card(CardSuit.Heart, CardRank.Three),
+            Card.of(CardSuit.Heart, CardRank.Ten),
+            Card.of(CardSuit.Heart, CardRank.Nine),
+            Card.of(CardSuit.Heart, CardRank.Three),
         )
         val cards = Cards(initCards)
 

@@ -14,7 +14,7 @@ class PlayerTest {
         val player = Player("jay")
 
         // when
-        player.receivedCard(Card(CardSuit.Heart, CardRank.Ace))
+        player.receivedCard(Card.of(CardSuit.Heart, CardRank.Ace))
 
         // then
         assertThat(player.cards.cards.size).isEqualTo(1)
