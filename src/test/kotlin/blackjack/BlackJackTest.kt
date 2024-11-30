@@ -30,48 +30,40 @@ class BlackJackTest : StringSpec({
 
     "랭크가 숫자이면 점수는 숫자의 값으로 계산된다" {
         listOf("2", "3", "4", "5", "6").forAll { number ->
-            Cards(listOf(createCard(rank = number))).calculateScore() shouldBe number.toInt()
+            Rank(number).score shouldBe number.toInt()
         }
     }
 
     "랭크가 J,Q,K 이면 점수는 10점으로 계산된다" {
         listOf("J", "Q", "K").forAll { face ->
-            Cards(listOf(createCard(rank = face))).calculateScore() shouldBe 10
+            Rank(face).score shouldBe 10
         }
     }
 
     "랭크가 에이스이면 기본점수는 11점이다" {
-        Cards(listOf(createCard(rank = "A"))).calculateScore() shouldBe 11
+        Rank("A").score shouldBe 11
     }
 
-    "카드들의 점수합이 21을 초과할 경우 에이스는 1점으로 보정된다" {
+    "카드목록의 점수합이 21을 초과할 경우 에이스는 1점으로 보정된다" {
         table(
-            headers("ranks", "expected"),
-            row(listOf("A", "2", "10"), 13),
-            row(listOf("A", "2", "2", "K"), 15),
-            row(listOf("A", "A"), 12),
-            row(listOf("A", "A", "A"), 13),
-            row(listOf("A", "3", "9"), 13),
-        ).forAll { ranks, expected ->
-            val cards = Cards(cards = ranks.map { createCard(it) })
-            cards.calculateScore() shouldBe expected
+            headers("ranks"),
+            // 23 -> 13점
+            row(listOf("A", "2", "10")),
+            // 25 -> 15점
+            row(listOf("A", "2", "2", "K")),
+            // 22 -> 12점
+            row(listOf("A", "A")),
+            // 23점 -> 13점
+            row(listOf("A", "A", "A")),
+            // 23점 -> 23점
+            row(listOf("A", "3", "9")),
+        ).forAll { ranks ->
+            val cards = Cards(ranks.map { createCard(it) })
+            cards.isFullScore() shouldBe false
         }
     }
 
-    "카드목록의 점수는 카드의 점수의 합이다." {
-        table(
-            headers("ranks", "expected"),
-            row(listOf("2", "3", "4"), 9),
-            row(listOf("2", "Q", "J"), 22),
-            row(listOf("J", "Q", "K"), 30),
-            row(listOf("J", "Q", "A"), 21),
-        ).forAll { ranks, expected ->
-            val cards = Cards(cards = ranks.map { createCard(it) })
-            cards.calculateScore() shouldBe expected
-        }
-    }
-
-    "카드의 점수합이 21점 미만일 경우 카드를 더 받을 수 있다" {
+    "유저는 카드목록의 점수합이 21점 미만일 경우 카드를 더 받을 수 있다" {
         table(
             headers("ranks"),
             row(listOf("2", "3", "4")),
@@ -79,12 +71,12 @@ class BlackJackTest : StringSpec({
             row(listOf("K", "Q")),
             row(listOf("5", "5", "4", "3", "2")),
         ).forAll { ranks ->
-            val cards = Cards(cards = ranks.map { createCard(it) })
+            val cards = Cards(ranks.map { createCard(it) })
             User(cards).canReceiveCard() shouldBe true
         }
     }
 
-    "카드의 점수합이 21점 이상할 경우 카드를 더 받을 수 없다" {
+    "유저는 카드목록의 점수합이 21점 이상할 경우 카드를 더 받을 수 없다" {
         table(
             headers("ranks"),
             // 30점
@@ -98,9 +90,29 @@ class BlackJackTest : StringSpec({
             // 23점
             row(listOf("10", "10", "3")),
         ).forAll { ranks ->
-            val cards = Cards(cards = ranks.map { createCard(it) })
+            val cards = Cards(ranks.map { createCard(it) })
             User(cards).canReceiveCard() shouldBe false
         }
+    }
+
+    "유저는 카드 2장을 받은 후 점수 합이 21점인 경우 카드를 더 받지 못한다" {
+        val cards = Cards(emptyList())
+        val user =
+            User(cards)
+                .receiveCard(createCard("A"))
+                .receiveCard(createCard("K"))
+
+        user.canReceiveCard() shouldBe false
+    }
+
+    "유저는 카드 2장을 받은 후 점수 합이 21점 미만인 경우 카드를 더 받을 수 있다" {
+        val cards = Cards(emptyList())
+        val user =
+            User(cards)
+                .receiveCard(createCard("10"))
+                .receiveCard(createCard("5"))
+
+        user.canReceiveCard() shouldBe true
     }
 })
 
