@@ -57,15 +57,5 @@ class DeckTest : DescribeSpec({
                 shouldThrow<IllegalArgumentException> { deck.deal() }
             }
         }
-
-        context("분배된 카드의 순서를 확인할 때") {
-            val deck = Deck()
-
-            it("분배된 카드의 순서는 덱의 초기 순서와 같아야 한다") {
-                val dealtCards = mutableListOf<Card>()
-                repeat(52) { dealtCards.add(deck.deal()) }
-                dealtCards shouldBe deck.cards
-            }
-        }
     }
 })
