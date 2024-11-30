@@ -1,5 +1,6 @@
 package blackjack.view
 
+import blackjack.player.Player
 import blackjack.player.Players
 
 object ResultView {
@@ -9,7 +10,12 @@ object ResultView {
 
     fun printPlayersCardStatus(players: Players) {
         players.players.forEach { player ->
-            println("${player.name}카드: ${player.cards.joinToString(", ") { "${it.rank.value}${it.suit.description}" }}")
+            printPlayerCard(player)
         }
+        println()
+    }
+
+    fun printPlayerCard(player: Player) {
+        println("${player.name}카드: ${player.cards.joinToString(", ") { "${it.rank.value}${it.suit.description}" }}")
     }
 }
