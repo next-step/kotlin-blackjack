@@ -45,4 +45,21 @@ class CardsTest {
         assertThat(result).isEqualTo(19)
     }
 
+    @Test
+    fun `플레이어의 카드 합이 21을 초과하면 Bust 되어야 한다`() {
+        // given
+        val initCards = mutableListOf(
+            Card(CardSuit.Heart, CardRank.Ten),
+            Card(CardSuit.Heart, CardRank.Nine),
+            Card(CardSuit.Heart, CardRank.Three),
+        )
+        val cards = Cards(initCards)
+
+        // when
+        val result = cards.isBusted()
+
+        // then
+        assertThat(result).isTrue()
+    }
+
 }

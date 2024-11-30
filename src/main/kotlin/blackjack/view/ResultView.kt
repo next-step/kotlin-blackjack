@@ -16,6 +16,10 @@ object ResultView {
         println(getPlayerInformation(player))
     }
 
+    fun printBusted(player: Player) {
+        println("${player.name}님, 버스트 되었습니다")
+    }
+
     fun printPlayerResult(players: List<Player>) {
         println(buildString {
             players.forEach { player ->

@@ -20,6 +20,8 @@ data class Cards(
         return totalSum
     }
 
+    fun isBusted(): Boolean = sum() > MAX_CARDS_SUM
+
     private fun getAceValue(ace: CardRank.Ace, currentSum: Int): Int {
         return if (currentSum + ace.toEleven() <= MAX_CARDS_SUM) {
             ace.toEleven()
