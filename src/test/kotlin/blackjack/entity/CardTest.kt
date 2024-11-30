@@ -1,8 +1,6 @@
 package blackjack.entity
 
 import io.kotest.core.spec.style.DescribeSpec
-import io.kotest.data.forAll
-import io.kotest.data.row
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 
@@ -34,20 +32,6 @@ class CardTest : DescribeSpec({
                 val card1 = Card(Suit.DIAMONDS, Rank.QUEEN)
                 val card2 = Card(Suit.DIAMONDS, Rank.KING)
                 card1 shouldNotBe card2
-            }
-        }
-    }
-    describe("카드는") {
-        context("정보를 물었을 때") {
-            forAll(
-                row(Card(Suit.HEARTS, Rank.ACE), "A하트"),
-                row(Card(Suit.CLUBS, Rank.KING), "K클로버"),
-                row(Card(Suit.DIAMONDS, Rank.TWO), "2다이아몬드"),
-                row(Card(Suit.SPADES, Rank.QUEEN), "Q스페이드"),
-            ) { card, expectedDescription ->
-                it("자신의 정보를 설명할 수 있어야 한다: $expectedDescription") {
-                    card.describe() shouldBe expectedDescription
-                }
             }
         }
     }

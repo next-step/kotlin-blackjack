@@ -1,5 +1,6 @@
 package blackjack.view
 
+import blackjack.entity.Card
 import blackjack.entity.Hand
 import blackjack.entity.Player
 import blackjack.entity.PlayerResult
@@ -24,5 +25,10 @@ class OutputView {
         }
     }
 
-    private fun formatHand(hand: Hand): String = hand.cards.joinToString(",") { it.describe() }
+    private fun formatHand(hand: Hand): String {
+        return hand.cards
+            .joinToString(",") { it.name() }
+    }
+
+    private fun Card.name() = "${rank.displayName}${suit.displayName}"
 }
