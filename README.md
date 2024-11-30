@@ -33,9 +33,10 @@
     - [X] Face는 10으로 계산할 수 있다
     - [X] Number는 2~10까지의 숫자로 계산할 수 있다
 - Card
-    - [ ] `CardRank`, `CardSuit`를 가진다
-    - [ ] `CardRank`의 Score 알 수 있다
-    - [ ] 이름을 알 수 있다
+    - [X] `CardRank`, `CardSuit`를 가진다
+    - [X] `CardRank`의 Score 알 수 있다
+    - [X] 이름을 알 수 있다
+    - [X] `score` 알 수 있다
 - Hand
     - [ ] `Card`를 추가할 수 있다
     - [ ] `Score`를 계산한다
