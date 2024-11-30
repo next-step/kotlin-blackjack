@@ -1,7 +1,7 @@
 package blackjack.controller
 
 import blackjack.adapter.BlackjackInputAdapter
-import blackjack.domain.BlackJackGame
+import blackjack.domain.BlackjackGame
 import blackjack.domain.HitStayChoice
 import blackjack.domain.Player
 import blackjack.domain.PlayerName
@@ -17,12 +17,12 @@ class BlackjackGameController(
         return inputAdapter.fetchPlayerNames()
     }
 
-    fun announceInitialPlayersCards(blackJackGame: BlackJackGame) {
+    fun announceInitialPlayersCards(blackJackGame: BlackjackGame) {
         val playersResponse = PlayersResponse(blackJackGame.players)
         outputView.printInitialPlayersCards(playersResponse)
     }
 
-    fun playGame(blackJackGame: BlackJackGame) {
+    fun playGame(blackJackGame: BlackjackGame) {
         blackJackGame.players.forEach { player ->
             playTurnForPlayer(player, blackJackGame)
         }
@@ -30,7 +30,7 @@ class BlackjackGameController(
 
     private fun playTurnForPlayer(
         player: Player,
-        blackJackGame: BlackJackGame,
+        blackJackGame: BlackjackGame,
     ) {
         while (player.isDrawable()) {
             if (!processPlayerChoice(player, blackJackGame)) {
@@ -44,7 +44,7 @@ class BlackjackGameController(
 
     private fun processPlayerChoice(
         player: Player,
-        blackJackGame: BlackJackGame,
+        blackJackGame: BlackjackGame,
     ): Boolean {
         val moreCardChoice = inputAdapter.fetchMoreCard(player.getName())
         return when (moreCardChoice) {
@@ -61,7 +61,7 @@ class BlackjackGameController(
         }
     }
 
-    fun announceResult(blackJackGame: BlackJackGame) {
+    fun announceResult(blackJackGame: BlackjackGame) {
         val playersResponse = PlayersResponse(blackJackGame.players)
         outputView.printPlayResult(playersResponse)
     }

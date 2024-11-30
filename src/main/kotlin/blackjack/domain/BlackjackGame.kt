@@ -1,6 +1,6 @@
 package blackjack.domain
 
-class BlackJackGame(
+class BlackjackGame(
     val players: List<Player>,
     private val deck: Deck,
 ) {
@@ -13,13 +13,13 @@ class BlackJackGame(
         fun createGame(
             playerNames: List<PlayerName>,
             deck: Deck,
-        ): BlackJackGame {
+        ): BlackjackGame {
             val players =
                 playerNames.map { name ->
                     val handCards = listOf(deck.drawCard(), deck.drawCard())
                     Player.createNew(name, handCards)
                 }
-            return BlackJackGame(players, deck)
+            return BlackjackGame(players, deck)
         }
     }
 }

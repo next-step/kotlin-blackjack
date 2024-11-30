@@ -1,7 +1,7 @@
 package blackjack
 
 import blackjack.controller.BlackjackGameController
-import blackjack.domain.BlackJackGame
+import blackjack.domain.BlackjackGame
 import blackjack.domain.Deck
 import blackjack.infrastructure.ConsoleBackJackInputAdapter
 import blackjack.view.InputView
@@ -17,7 +17,7 @@ fun main() {
     val playersNames = gameController.getPlayersNames()
     val deck = Deck()
     deck.shuffle()
-    val blackJackGame = BlackJackGame.createGame(playersNames, deck)
+    val blackJackGame = BlackjackGame.createGame(playersNames, deck)
 
     gameController.announceInitialPlayersCards(blackJackGame)
 
