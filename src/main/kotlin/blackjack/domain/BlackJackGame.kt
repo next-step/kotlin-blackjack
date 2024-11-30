@@ -30,7 +30,7 @@ class BlackJackGame(
             val players =
                 playerNames.map { name ->
                     val handCards = listOf(deck.drawCard(), deck.drawCard())
-                    Player(name, handCards)
+                    Player.createNew(name, handCards)
                 }
             return BlackJackGame(players, deck)
         }

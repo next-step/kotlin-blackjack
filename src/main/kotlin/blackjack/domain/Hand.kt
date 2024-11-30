@@ -34,5 +34,13 @@ class Hand {
     companion object {
         private const val BLACKJACK_NUMBER = 21
         private const val ZERO = 0
+
+        fun createInitial(cards: List<Card>): Hand {
+            return Hand().apply {
+                cards.forEach { card ->
+                    addCard(card)
+                }
+            }
+        }
     }
 }
