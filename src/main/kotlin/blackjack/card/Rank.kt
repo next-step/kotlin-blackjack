@@ -2,9 +2,9 @@ package blackjack.card
 
 enum class Rank(
     val value: Int,
-    val alternative: Int? = null,
+    val alternative: Int = value,
 ) {
-    ACE(1, alternative = 11),
+    ACE(11, alternative = 1),
     TWO(2),
     THREE(3),
     FOUR(4),
