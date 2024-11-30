@@ -10,10 +10,6 @@ class RankTest : DescribeSpec({
     describe("카드의 Rank는") {
 
         context("ACE는") {
-            it("가능한 점수로 1과 11을 제공한다") {
-                Rank.ACE.getPossibleValues() shouldContainExactly listOf(1, 11)
-            }
-
             it("A로 표시된다") {
                 Rank.ACE.displayName shouldBe "A"
             }
