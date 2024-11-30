@@ -31,5 +31,5 @@ fun main() {
         }
     }
     BlackJackView.drawBlackJackPlayersCardsWithResult(blackJackPlayers)
-    BlackJackView.drawWinPlayer(BlackJackResult(blackJackPlayers, blackJackCardsMap))
+    BlackJackView.drawWinPlayer(BlackJackResult(blackJackPlayers))
 }
