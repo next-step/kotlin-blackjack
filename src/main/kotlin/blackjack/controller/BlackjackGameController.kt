@@ -3,6 +3,7 @@ package blackjack.controller
 import blackjack.adapter.BlackjackInputAdapter
 import blackjack.domain.BlackJackGame
 import blackjack.domain.HitStayChoice
+import blackjack.domain.Player
 import blackjack.domain.PlayerName
 import blackjack.dto.PlayerResponse
 import blackjack.view.OutputView
@@ -22,20 +23,39 @@ class BlackjackGameController(
 
     fun playGame(blackJackGame: BlackJackGame) {
         blackJackGame.players.forEach { player ->
-            while (true) {
-                if (player.isDrawable()) {
-                    val moreCardChoice = inputAdapter.fetchMoreCard(player.getName())
-                    if (moreCardChoice == HitStayChoice.HIT) {
-                        blackJackGame.drawCard(player)
-                    } else {
-                        outputView.printSinglePlayerCards(player.getName(), player.displayHand())
-                        break
-                    }
-                    outputView.printSinglePlayerCards(player.getName(), player.displayHand())
-                    continue
-                }
-                outputView.printPlayerCannotDrawCard(player.getName(), player.displayHand())
+            playTurnForPlayer(player, blackJackGame)
+        }
+    }
+
+    private fun playTurnForPlayer(
+        player: Player,
+        blackJackGame: BlackJackGame,
+    ) {
+        while (player.isDrawable()) {
+            if (!processPlayerChoice(player, blackJackGame)) {
                 break
+            }
+        }
+        if (!player.isDrawable()) {
+            outputView.printPlayerCannotDrawCard(player.getName(), player.displayHand())
+        }
+    }
+
+    private fun processPlayerChoice(
+        player: Player,
+        blackJackGame: BlackJackGame,
+    ): Boolean {
+        val moreCardChoice = inputAdapter.fetchMoreCard(player.getName())
+        return when (moreCardChoice) {
+            HitStayChoice.HIT -> {
+                blackJackGame.drawCard(player)
+                outputView.printSinglePlayerCards(player.getName(), player.displayHand())
+                true
+            }
+
+            HitStayChoice.STAY -> {
+                outputView.printSinglePlayerCards(player.getName(), player.displayHand())
+                false
             }
         }
     }
