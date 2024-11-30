@@ -5,7 +5,7 @@ class Player(
 ) {
     val hand: Hand = Hand()
 
-    fun addCard(card: Card) {
+    fun receiveCard(card: Card) {
         hand.addCard(card)
     }
 

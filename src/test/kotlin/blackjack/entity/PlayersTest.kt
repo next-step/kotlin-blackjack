@@ -31,12 +31,12 @@ class PlayersTest : DescribeSpec({
                 Players(
                     listOf(
                         Player("pobi").apply {
-                            addCard(Card(Suit.HEARTS, Rank.ACE))
-                            addCard(Card(Suit.SPADES, Rank.KING))
+                            receiveCard(Card(Suit.HEARTS, Rank.ACE))
+                            receiveCard(Card(Suit.SPADES, Rank.KING))
                         },
                         Player("jason").apply {
-                            addCard(Card(Suit.CLUBS, Rank.TWO))
-                            addCard(Card(Suit.DIAMONDS, Rank.QUEEN))
+                            receiveCard(Card(Suit.CLUBS, Rank.TWO))
+                            receiveCard(Card(Suit.DIAMONDS, Rank.QUEEN))
                         },
                     ),
                 )

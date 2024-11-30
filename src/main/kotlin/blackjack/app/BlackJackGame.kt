@@ -38,7 +38,7 @@ class BlackJackGame {
             while (wantsToHit) {
                 wantsToHit = inputView.askForHitOrStand(player.name)
                 if (wantsToHit) {
-                    player.addCard(deck.deal())
+                    player.receiveCard(deck.deal())
                     outputView.printPlayerHand(player)
                 }
             }
