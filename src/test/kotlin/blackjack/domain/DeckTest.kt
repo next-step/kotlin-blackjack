@@ -26,10 +26,10 @@ class DeckTest : BehaviorSpec({
                 Card("A", Suit.SPADE),
                 Card("2", Suit.SPADE),
             )
-        val deck = Deck(cards)
+        val deck = Deck(cards= cards, shuffleIndex = ArrayDeque(listOf(0, 1)))
 
         When("카드를 하나 꺼내면") {
-            val card = deck.popOf(0)
+            val card = deck.pop()
 
             Then("카드를 반환한다") {
                 card shouldBe Card("A", Suit.SPADE)
