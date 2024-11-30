@@ -1,5 +1,6 @@
 package blackjack.machine
 
+import blackjack.card.Card
 import blackjack.player.Player
 import blackjack.player.Players
 import blackjack.view.InputView
@@ -22,7 +23,7 @@ class BlackJackMachine {
                 .also { ResultView.printPlayerCard(player = it) }
         } else {
             player
-                .hitCard()
+                .hitCard(Card.random())
                 .also { ResultView.printPlayerCard(player = it) }
         }
 
