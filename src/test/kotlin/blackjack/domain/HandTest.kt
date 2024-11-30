@@ -21,19 +21,6 @@ class HandTest : StringSpec({
         afterSize shouldBe beforeSize + 1
     }
 
-    "가지고 있는 카드의 합이 21을 초과하면 카드를 추가할 수 없다." {
-        val hand = Hand()
-        hand.addCards(
-            Card(Rank.KING, Suit.HEARTS),
-            Card(Rank.FIVE, Suit.DIAMONDS),
-            Card(Rank.SIX, Suit.DIAMONDS),
-        )
-
-        val beforeSize = hand.getCards().size
-        val afterSize = hand.getCards().size
-        afterSize shouldBe beforeSize
-    }
-
     "카드의 합을 계산할 수 있다." {
         forAll(
             row(Card(Rank.ACE, Suit.HEARTS), Card(Rank.TWO, Suit.DIAMONDS), 13),
@@ -41,6 +28,7 @@ class HandTest : StringSpec({
             row(Card(Rank.KING, Suit.HEARTS), Card(Rank.NINE, Suit.CLOVERS), 19),
             row(Card(Rank.JACK, Suit.HEARTS), Card(Rank.KING, Suit.HEARTS), 20),
             row(Card(Rank.QUEEN, Suit.HEARTS), Card(Rank.FIVE, Suit.HEARTS), 15),
+            row(Card(Rank.ACE, Suit.HEARTS), Card(Rank.ACE, Suit.HEARTS), 12),
         ) { firstCard, secondCard, expected ->
             val hand = Hand()
             hand.addCards(firstCard, secondCard)

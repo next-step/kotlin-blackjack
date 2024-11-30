@@ -21,4 +21,9 @@ class CardTest : StringSpec({
             card.suit shouldBe suit
         }
     }
+
+    "카드가 에이스인지 여부를 반환할 수 있다." {
+        val aceCard = Card(Rank.ACE, Suit.HEARTS)
+        aceCard.isAce() shouldBe true
+    }
 })
