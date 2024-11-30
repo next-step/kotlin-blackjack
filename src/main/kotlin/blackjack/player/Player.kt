@@ -1,19 +1,23 @@
 package blackjack.player
 
 import blackjack.card.Card
+import blackjack.card.Cards
 import blackjack.machine.BlackJackMachine
 
 class Player(
     val name: String,
-    val cards: List<Card>,
+    val cards: Cards,
 ) {
-    fun isHitCard(): Boolean = this.sumOfCard() < BlackJackMachine.BLACKJACK
+    fun isHitCard(): Boolean = cards.sum() < BlackJackMachine.BLACKJACK
 
-    fun hitCard(): Player = Player(name = name, cards = cards + Card.random())
-
-    private fun sumOfCard(): Int = cards.sumOf { it.rank.value }
+    fun hitCard(): Player = Player(name = name, cards = cards.add(Card.random()))
 
     companion object {
-        fun from(name: String): Player = Player(name, cards = List(size = 2) { Card.random() })
+        fun from(name: String): Player = Player(name, cards = Cards(cards = List(size = 2) { Card.random() }))
+
+        fun of(
+            name: String,
+            cards: List<Card>,
+        ): Player = Player(name = name, cards = Cards(cards = cards))
     }
 }

@@ -16,6 +16,6 @@ object ResultView {
     }
 
     fun printPlayerCard(player: Player) {
-        println("${player.name}카드: ${player.cards.joinToString(", ") { "${it.rank.value}${it.suit.description}" }}")
+        println("${player.name}카드: ${player.cards.cards.joinToString(", ") { "${it.rank.value}${it.suit.description}" }}")
     }
 }
