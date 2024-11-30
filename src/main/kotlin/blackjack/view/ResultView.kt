@@ -15,7 +15,26 @@ object ResultView {
         println()
     }
 
-    fun printPlayerCard(player: Player) {
-        println("${player.name}카드: ${player.cards.cards.joinToString(", ") { "${it.rank.value}${it.suit.description}" }}")
+    fun printPlayersCardStatusAndSum(players: Players) {
+        println()
+        players.players.forEach { player ->
+            printPlayerCard(player, sum = player.cards.sum())
+        }
     }
+
+    fun printPlayerCard(
+        player: Player,
+        sum: Int? = null,
+    ) {
+        println(generateCardListString(player, sum))
+    }
+
+    private fun generateCardListString(
+        player: Player,
+        sum: Int? = null,
+    ) = "${player.name}카드: ${player.cards.cards.joinToString(
+        ", ",
+    ) { "${it.rank.value}${it.suit.description}" }} ${sum?.convertToResultString() ?: ""}"
+
+    private fun Int.convertToResultString() = "- 결과: $this"
 }

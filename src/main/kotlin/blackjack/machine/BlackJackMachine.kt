@@ -12,7 +12,8 @@ class BlackJackMachine {
         ResultView.printPlayersName(players = players)
         ResultView.printPlayersCardStatus(players = players)
 
-        players.players.forEach { hitMoreCard(it) }
+        val gameResult = Players(players = players.players.map { hitMoreCard(it) })
+        ResultView.printPlayersCardStatusAndSum(players = gameResult)
     }
 
     private fun hitMoreCard(player: Player): Player =
