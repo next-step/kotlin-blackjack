@@ -6,8 +6,8 @@ import blackjack.view.ResultView
 
 class BlackJackMachine {
     fun play() {
-        val (dealer, player) = InputView.inputPlayerNames().map { Player.from(name = it) }
-        ResultView.printPlayerName(dealer = dealer, player = player)
-        ResultView.printPlayersCardStatus(players = listOf(dealer, player))
+        val (player1, player2) = InputView.inputPlayerNames().map { Player.from(name = it) }
+        ResultView.printPlayerName(player1 = player1, player2 = player2)
+        ResultView.printPlayersCardStatus(players = listOf(player1, player2))
     }
 }

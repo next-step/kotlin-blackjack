@@ -4,10 +4,10 @@ import blackjack.player.Player
 
 object ResultView {
     fun printPlayerName(
-        dealer: Player,
-        player: Player,
+        player1: Player,
+        player2: Player,
     ) {
-        println("${dealer.name}, ${player.name}에게 2장을 나누었습니다.")
+        println("${player1.name}, ${player2.name}에게 2장을 나누었습니다.")
     }
 
     fun printPlayersCardStatus(players: List<Player>) {
