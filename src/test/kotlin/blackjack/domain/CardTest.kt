@@ -28,7 +28,7 @@ class CardTest {
         rank: Rank,
         expected: Int,
     ) {
-        val card = Card(dummySuit, rank)
+        val card = Card.of(dummySuit, rank)
         card.rankValue shouldBe expected
     }
 
@@ -38,13 +38,13 @@ class CardTest {
         names = ["JACK", "QUEEN", "KING"],
     )
     fun `페이스 카드등의 값은 10이다`(rank: Rank) {
-        val card = Card(dummySuit, rank)
+        val card = Card.of(dummySuit, rank)
         card.rankValue shouldBe 10
     }
 
     @Test
     fun `에이스의 값은 1이다`() {
-        val card = Card(dummySuit, Rank.ACE)
+        val card = Card.of(dummySuit, Rank.ACE)
         card.rankValue shouldBe 1
     }
 }
