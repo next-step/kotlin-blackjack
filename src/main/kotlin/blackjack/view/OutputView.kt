@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.view
 
 class OutputView {
     fun printInitialPlayersCards(playerCards: Map<String, String>) {

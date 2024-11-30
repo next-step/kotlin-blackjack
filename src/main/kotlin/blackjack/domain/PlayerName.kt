@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.domain
 
 data class PlayerName(val value: String) {
     init {

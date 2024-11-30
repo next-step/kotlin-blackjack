@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.view
 
 class InputView {
     fun inputPlayerNames(): String {

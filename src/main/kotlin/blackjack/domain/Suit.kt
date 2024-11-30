@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.domain
 
 enum class Suit(val symbol: String) {
     HEARTS("하트"),

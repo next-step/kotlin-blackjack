@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.domain
 
 enum class Rank(val value: Int, val symbol: String) {
     ACE(11, "A"),

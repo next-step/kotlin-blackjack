@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.domain
 
 class Hand {
     private val cards = mutableListOf<Card>()

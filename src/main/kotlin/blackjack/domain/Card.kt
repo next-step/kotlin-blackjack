@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.domain
 
 data class Card(val rank: Rank, val suit: Suit) {
     fun possibleSums(currentSums: List<Int>): List<Int> {

@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.domain
 
 class Player(private val name: PlayerName, initialCards: List<Card>) {
     private val hand =
