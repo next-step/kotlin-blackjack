@@ -83,6 +83,25 @@ class BlackJackTest : StringSpec({
             User(cards).canReceiveCard() shouldBe true
         }
     }
+
+    "카드의 점수합이 21점 이상할 경우 카드를 더 받을 수 없다" {
+        table(
+            headers("ranks"),
+            // 30점
+            row(listOf("J", "Q", "K")),
+            // 21점
+            row(listOf("A", "K")),
+            // 21점
+            row(listOf("Q", "10", "A")),
+            // 21점
+            row(listOf("10", "9", "2")),
+            // 23점
+            row(listOf("10", "10", "3")),
+        ).forAll { ranks ->
+            val cards = Cards(cards = ranks.map { createCard(it) })
+            User(cards).canReceiveCard() shouldBe false
+        }
+    }
 })
 
 private fun createCard(
