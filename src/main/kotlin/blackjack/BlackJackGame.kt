@@ -1,55 +1,44 @@
 package blackjack
 
-import blackjack.domain.Dealer
-import blackjack.domain.Deck
-import blackjack.domain.Participant
+import blackjack.domain.GameRoom
 import blackjack.domain.Player
 import blackjack.ui.InputView
 import blackjack.ui.ResultView
 
 object BlackJackGame {
     fun start() {
-        val dealer = Dealer()
         val names = InputView.getPlayerNames()
         val players = names.map { Player(it) }
-        val participants = listOf(dealer) + players
-        val deck = Deck()
+        val gameRoom = GameRoom(players = players)
 
-        dealCards(participants, deck)
-        ResultView.printFirstPhase(participants)
+        ResultView.printFirstPhase(gameRoom.participants)
 
-        drawPlayerCards(players, deck)
-        drawDealerCards(dealer, deck)
+        drawPlayerCards(gameRoom)
+        drawDealerCards(gameRoom)
 
-        ResultView.printFinalResult(dealer, players)
+        val gameResult = gameRoom.calculateResult()
+        ResultView.printFinalResult(gameResult)
     }
 
-    private fun drawPlayerCards(players: List<Player>, deck: Deck) {
-        players.forEach { player -> requestDrawCards(player, deck) }
+    private fun drawPlayerCards(gameRoom: GameRoom) {
+        gameRoom.players.forEach { player -> requestDrawCards(player, gameRoom) }
     }
 
-    private fun drawDealerCards(dealer: Dealer, deck: Deck) {
-        while (dealer.canDrawCard()) {
-            ResultView.printDealerDrawMessage(dealer)
-            dealer.receiveCard(deck.drawCard())
-        }
-    }
-
-    private fun dealCards(participants: List<Participant>, deck: Deck) {
-        participants.forEach { participant ->
-            participant.receiveCard(deck.drawCard())
-            participant.receiveCard(deck.drawCard())
-        }
-    }
-
-    private fun requestDrawCards(player: Player, deck: Deck) {
+    private fun requestDrawCards(player: Player, gameRoom: GameRoom) {
         while (player.canDrawCard()) {
             val request = InputView.requestCard(player.name)
             if (!request) {
                 break
             }
-            player.receiveCard(deck.drawCard())
+            gameRoom.drawCard(player)
             ResultView.printParticipantsCards(player)
+        }
+    }
+
+    private fun drawDealerCards(gameRoom: GameRoom) {
+        while (gameRoom.dealer.canDrawCard()) {
+            ResultView.printDealerDrawMessage(gameRoom.dealer)
+            gameRoom.drawCard(gameRoom.dealer)
         }
     }
 }

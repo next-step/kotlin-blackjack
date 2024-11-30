@@ -1,8 +1,11 @@
 package blackjack.ui
 
 import blackjack.domain.Dealer
+import blackjack.domain.DealerResult
+import blackjack.domain.GameResult
 import blackjack.domain.Participant
-import blackjack.domain.Player
+import blackjack.domain.ParticipantResult
+import blackjack.domain.PlayerResult
 
 object ResultView {
     fun printFirstPhase(participants: List<Participant>) {
@@ -26,38 +29,37 @@ object ResultView {
         return cards.joinToString(", ") { "${it.rank.score} ${it.suit}" }
     }
 
-    fun printFinalResult(dealer: Dealer, players: List<Player>) {
-        val participants = listOf(dealer) + players
-        participants.forEach { printScoreResult(it) }
-        printWinnerInfos(dealer, players)
+    fun printFinalResult(result: GameResult) {
+        val participantResult = result.playerResults + result.dealerResult
+        participantResult.forEach { printScoreResult(it) }
+        printWinnerInfos(result)
     }
 
-    private fun printScoreResult(participant: Participant) {
-        val score = participant.cards.calculateScore()
-        println("${participant.name} 카드 : ${getCardsToStringInfo(participant)} - 결과 : $score")
+    private fun printScoreResult(result: ParticipantResult) {
+        println("${result.name} 카드 : ${getCardsToStringInfo(result)}" + " - 결과 : ${result.score}")
     }
 
-    private fun printWinnerInfos(dealer: Dealer, players: List<Player>) {
+    private fun printWinnerInfos(result: GameResult) {
         println("## 최종 승패")
-        val playerToWinInfos = getPlayerToWinInfos(players, dealer)
-        val looserCount = playerToWinInfos.count { !it.second }
-        val winnerCount = playerToWinInfos.count { it.second }
-        println("${dealer.name}: ${looserCount}승 ${winnerCount}패")
-        printPlayerWinningInfos(playerToWinInfos)
+        printDealerWinningInfo(result.dealerResult)
+        printPlayerWinningInfos(result.playerResults)
     }
 
-    private fun printPlayerWinningInfos(playerToWinInfos: List<Pair<Player, Boolean>>) {
-        playerToWinInfos.forEach { (player, isWin) ->
-            val result = if (isWin) "승리" else "패배"
-            println("${player.name}: $result")
-        }
+    private fun printPlayerWinningInfos(playerResults: List<PlayerResult>) {
+        playerResults.forEach { printPlayerWinningInfo(it) }
     }
 
-    private fun getPlayerToWinInfos(
-        players: List<Player>,
-        dealer: Dealer,
-    ): List<Pair<Player, Boolean>> {
-        return players.map { it to it.isWinner(dealer) }
+    private fun printPlayerWinningInfo(result: PlayerResult) {
+        val resultString = if (result.isWinner) "승리" else "패배"
+        println("${result.name} : ${resultString}")
+    }
+
+    private fun printDealerWinningInfo(dealerResult: DealerResult) {
+        println("${dealerResult.name} : ${dealerResult.winCount}승 ${dealerResult.loseCount}패")
+    }
+
+    private fun getCardsToStringInfo(participantResult: ParticipantResult): String {
+        return participantResult.cards.joinToString(", ") { "${it.rank.score} ${it.suit}" }
     }
 
     fun printDealerDrawMessage(dealer: Dealer) {
