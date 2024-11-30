@@ -4,17 +4,9 @@ import blackjack.domain.card.Card
 import blackjack.domain.card.CardRank
 import blackjack.domain.card.CardSuit
 
-class Deck {
-
-    private val cards: MutableList<Card> = createShuffledDeck()
-
-    private fun createShuffledDeck(): MutableList<Card> {
-        return CardSuit.all.flatMap { suit ->
-            CardRank.all.map { rank ->
-                Card(suit, rank)
-            }
-        }.shuffled().toMutableList()
-    }
+class Deck(
+    private val cards: MutableList<Card> = createShuffledDeck(),
+) {
 
     fun draw(): Card {
         if (cards.isEmpty()) {
@@ -22,6 +14,16 @@ class Deck {
         }
 
         return cards.removeAt(0)
+    }
+
+    companion object {
+        private fun createShuffledDeck(): MutableList<Card> {
+            return CardSuit.all.flatMap { suit ->
+                CardRank.all.map { rank ->
+                    Card(suit, rank)
+                }
+            }.shuffled().toMutableList()
+        }
     }
 
 }
