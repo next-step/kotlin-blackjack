@@ -1,12 +1,11 @@
 package blackjack.view
 
+import blackjack.dto.PlayerResponse
+
 class OutputView {
-    fun printInitialPlayersCards(playerCards: Map<String, String>) {
-        println("\n${playerCards.keys.map { it }.joinToString(", ")}에게 2장씩 나누었습니다.")
-        playerCards.forEach { (playerName, cards) ->
-            printSinglePlayerCards(playerName, cards)
-        }
-        println()
+    fun printInitialPlayersCards(playerResponse: PlayerResponse) {
+        println("\n" + playerResponse.toFormattedStringPlayerNames() + "에게 2장씩 나누었습니다.")
+        println(playerResponse.toFormattedStringPlayerCards())
     }
 
     fun printPlayerCannotDrawCard(
@@ -24,11 +23,7 @@ class OutputView {
         println("${playerName}카드: $cards")
     }
 
-    fun printPlayResult(results: Map<String, Pair<String, Int>>) {
-        println()
-        results.forEach { (playerName, playerData) ->
-            val (cards, total) = playerData
-            println("${playerName}카드: $cards - 결과: $total")
-        }
+    fun printPlayResult(playerResponse: PlayerResponse) {
+        println("\n" + playerResponse.toFormattedStringPlayerResults())
     }
 }

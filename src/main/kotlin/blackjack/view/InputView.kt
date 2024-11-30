@@ -7,7 +7,7 @@ class InputView {
     }
 
     fun inputMoreCard(playerName: String): String {
-        println("${playerName}은 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
+        println("\n${playerName}은 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
         return readln()
     }
 }

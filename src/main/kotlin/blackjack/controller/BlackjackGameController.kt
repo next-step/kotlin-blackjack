@@ -4,6 +4,7 @@ import blackjack.adapter.BlackjackInputAdapter
 import blackjack.domain.BlackJackGame
 import blackjack.domain.HitStayChoice
 import blackjack.domain.PlayerName
+import blackjack.dto.PlayerResponse
 import blackjack.view.OutputView
 
 class BlackjackGameController(
@@ -15,7 +16,8 @@ class BlackjackGameController(
     }
 
     fun announceInitialPlayersCards(blackJackGame: BlackJackGame) {
-        outputView.printInitialPlayersCards(blackJackGame.getInitialPlayerCards())
+        val playerResponse = PlayerResponse(blackJackGame.players)
+        outputView.printInitialPlayersCards(playerResponse)
     }
 
     fun playGame(blackJackGame: BlackJackGame) {
@@ -39,6 +41,7 @@ class BlackjackGameController(
     }
 
     fun announceResult(blackJackGame: BlackJackGame) {
-        outputView.printPlayResult(blackJackGame.getPlayerResults())
+        val playerResponse = PlayerResponse(blackJackGame.players)
+        outputView.printPlayResult(playerResponse)
     }
 }
