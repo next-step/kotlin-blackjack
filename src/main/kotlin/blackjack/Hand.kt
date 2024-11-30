@@ -1,7 +1,8 @@
 package blackjack
 
 class Hand(private val cards: MutableList<Card> = mutableListOf()) {
-    val score: Int = cards.fold(0) { acc, card -> card.score(acc) }
+    val score: Int
+        get() = cards.fold(0) { acc, card -> card.score(acc) }
     val totalCards: List<Card>
         get() = cards.toList()
     val isBust: Boolean
