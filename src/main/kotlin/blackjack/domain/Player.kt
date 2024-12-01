@@ -15,7 +15,9 @@ class Player(
         private set
 
     enum class Status {
-        PLAYING, STAY, BURST,
+        PLAYING,
+        STAY,
+        BURST,
     }
 
     fun toStay() {

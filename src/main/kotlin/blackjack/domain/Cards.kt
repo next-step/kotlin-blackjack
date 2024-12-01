@@ -26,10 +26,14 @@ class Cards private constructor(
 
     private fun countAces(): Int = cards.count { it.rank == Rank.ACE }
 
-    private fun sumOfNonAceValue(): Int = cards.filter { it.rank != Rank.ACE }
-        .sumOf(Card::value)
+    private fun sumOfNonAceValue(): Int =
+        cards.filter { it.rank != Rank.ACE }
+            .sumOf(Card::value)
 
-    private fun sumTotalValueWithAce(totalValue: Int, aceCount: Int): Int {
+    private fun sumTotalValueWithAce(
+        totalValue: Int,
+        aceCount: Int,
+    ): Int {
         return if (canUseAceAlternativeValue(aceCount, totalValue)) {
             totalValue + ACE_ALTERNATIVE_VALUE + (aceCount - 1)
         } else {
@@ -37,8 +41,10 @@ class Cards private constructor(
         }
     }
 
-    private fun canUseAceAlternativeValue(aceCount: Int, totalValue: Int): Boolean =
-        aceCount > 0 && totalValue + ACE_ALTERNATIVE_VALUE + (aceCount - 1) <= BLACKJACK
+    private fun canUseAceAlternativeValue(
+        aceCount: Int,
+        totalValue: Int,
+    ): Boolean = aceCount > 0 && totalValue + ACE_ALTERNATIVE_VALUE + (aceCount - 1) <= BLACKJACK
 
     override fun toString(): String {
         return cards.joinToString(", ")
@@ -65,7 +71,10 @@ class Cards private constructor(
             shuffle(cards)
         }
 
-        private fun addCardsForSuit(cards: Cards, suit: Suit) {
+        private fun addCardsForSuit(
+            cards: Cards,
+            suit: Suit,
+        ) {
             Rank.entries.forEach { rank ->
                 cards.add(Card(suit, rank))
             }

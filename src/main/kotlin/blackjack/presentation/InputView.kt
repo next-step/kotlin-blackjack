@@ -8,7 +8,7 @@ class InputView {
 
     fun inputHitOrStay(name: String): Boolean {
         println("${name}님은 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
-        return when(readLine()) {
+        return when (readLine()) {
             "y" -> {
                 true
             }
