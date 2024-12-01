@@ -1,6 +1,6 @@
 package blackjack.domain
 
-interface CardDeckStrategy {
+interface Deck {
     fun generate()
 
     fun drawCard(): Card

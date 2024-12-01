@@ -3,7 +3,7 @@ package blackjack.domain
 import blackjack.domain.Card.Companion.SYMBOL
 import blackjack.domain.Card.Companion.SpecialNumber
 
-object CardDeck : CardDeckStrategy {
+object CardDeck : Deck {
     val cards = mutableListOf<Card>()
 
     override fun generate() {
