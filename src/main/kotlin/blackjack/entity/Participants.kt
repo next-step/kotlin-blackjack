@@ -1,8 +1,11 @@
 package blackjack.entity
 
-class Players(val participants: List<Player>) {
+class Participants(
+    val dealer: Dealer,
+    val players: List<Player>,
+) {
     fun initializeHands(deck: Deck) {
-        participants.forEach { player ->
+        players.forEach { player ->
             repeat(2) { player.receiveCard(deck.deal()) }
         }
     }
