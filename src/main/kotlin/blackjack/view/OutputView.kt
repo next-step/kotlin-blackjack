@@ -41,29 +41,29 @@ class OutputView {
     fun printGameResult(gameResults: List<GameResult>) {
         println("\n## 최종 승패")
         gameResults.forEach { result ->
-            when (result.player) {
-                is Dealer -> {
-                    val resultText =
-                        buildString {
-                            if (result.wins > 0) append("${result.wins}승 ")
-                            if (result.loses > 0) append("${result.loses}패 ")
-                            if (result.draws > 0) append("${result.draws}무")
-                        }.trim()
-                    println("딜러: $resultText")
+            val resultText =
+                if (result.player is Dealer) {
+                    formatDealerResult(result)
+                } else {
+                    formatPlayerResult(result)
                 }
-
-                else -> {
-                    val outcome =
-                        when {
-                            result.wins > 0 -> "승"
-                            result.loses > 0 -> "패"
-                            else -> "무"
-                        }
-                    println("${result.player.name}: $outcome")
-                }
-            }
+            println("${result.player.name}: $resultText")
         }
     }
+
+    private fun formatDealerResult(result: GameResult): String =
+        buildString {
+            if (result.wins > 0) append("${result.wins}승 ")
+            if (result.loses > 0) append("${result.loses}패 ")
+            if (result.draws > 0) append("${result.draws}무")
+        }.trim()
+
+    private fun formatPlayerResult(result: GameResult): String =
+        when {
+            result.wins > 0 -> "승"
+            result.loses > 0 -> "패"
+            else -> "무"
+        }
 
     private fun formatHand(hand: Hand): String {
         return hand.cards
