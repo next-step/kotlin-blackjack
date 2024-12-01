@@ -17,15 +17,15 @@ class BlackJackMachine {
     }
 
     private fun hitMoreCard(player: Player): Player =
-        if (!player.isHitCard()) {
-            player
-        } else if (!InputView.isHitCard(player)) {
-            player
-                .also { ResultView.printPlayerCard(player = it) }
-        } else {
-            player
-                .hitCard(Card.random())
-                .also { ResultView.printPlayerCard(player = it) }
+        when {
+            !player.isHitCard() -> player
+            !InputView.isHitCard(player) ->
+                player
+                    .also { ResultView.printPlayerCard(player = it) }
+            else ->
+                player
+                    .hitCard(Card.random())
+                    .also { ResultView.printPlayerCard(player = it) }
         }
 
     companion object {
