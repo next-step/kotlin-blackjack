@@ -3,7 +3,6 @@ package blackjack.domain
 class Player(
     val name: String,
     val cards: Cards = Cards.emptyCards(),
-    status: Status = Status.PLAYING,
 ) {
     val hands: Int
         get() = cards.size
@@ -11,7 +10,7 @@ class Player(
     val score: Int
         get() = cards.calculateTotalValue()
 
-    var status: Status = status
+    var status: Status = Status.PLAYING
         private set
 
     enum class Status {
