@@ -20,6 +20,9 @@ class BlackJackService {
     }
 
     fun splitPlayerNames(input: String): List<String> {
+        if (input.isBlank()) {
+            return emptyList()
+        }
         return input.split(",").map { it.trim() }
     }
 }
