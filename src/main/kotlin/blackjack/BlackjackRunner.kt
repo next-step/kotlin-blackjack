@@ -24,6 +24,7 @@ class BlackjackRunner {
         drawDealer(blackjackGame)
 
         ResultView.printParticipantsResult(blackjackGame.participants)
+        ResultView.printGameResult(blackjackGame.getGameResult())
     }
 
     private fun drawPlayers(blackjackGame: BlackjackGame) {

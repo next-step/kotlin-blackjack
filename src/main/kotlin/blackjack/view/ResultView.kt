@@ -1,10 +1,11 @@
 package blackjack.view
 
-import blackjack.domain.participant.Player
+import blackjack.domain.GameResult
 import blackjack.domain.card.CardRank
 import blackjack.domain.card.CardSuit
 import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Participant
+import blackjack.domain.participant.Player
 
 object ResultView {
 
@@ -32,6 +33,16 @@ object ResultView {
 
     fun printGetCardForDealer() {
         println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
+    }
+
+    fun printGameResult(gameResult: GameResult) {
+        println(buildString {
+            append("## 최종 승패\n")
+            append("${gameResult.dealerResult.dealer.name}: ${gameResult.dealerResult.winCount}승 ${gameResult.dealerResult.loseCount}패\n")
+            gameResult.playersResult.forEach {
+                append("${it.player.name}: ${if (it.isWin) "승" else "패"}\n")
+            }
+        })
     }
 
     private fun getPlayerInformation(participant: Participant): String {
