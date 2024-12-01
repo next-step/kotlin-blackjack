@@ -23,7 +23,7 @@ fun main() {
     drawDealer(blackjackGame)
 
     ResultView.print(blackjackGame.getParticipants())
-    RecordView.print(blackjackGame.getRecords())
+    RecordView.print(blackjackGame.settle())
 }
 
 private fun drawPlayers(
