@@ -10,12 +10,12 @@ import blackjack.view.dto.ParticipantsDto
 import blackjack.view.dto.RecordDto
 
 class BlackjackGame(
-    val dealer: Dealer,
     names: List<String>,
     deckGenerator: DeckGenerator,
 ) {
+    private val dealer: Dealer = Dealer()
     private val deck: Deck = deckGenerator.generate()
-    val participants = Participants(listOf(dealer) + names.map { Player(name = it) })
+    private val participants = Participants(listOf(dealer) + names.map { Player(name = it) })
 
     fun start() {
         participants.participants.forEach { player ->
@@ -31,6 +31,12 @@ class BlackjackGame(
     fun dealCard(name: String) {
         val player = participants.findPlayer(name)
         player.receiveCard(deck.draw())
+    }
+
+    fun dealCardToDealer() {
+        if (dealer.canReceive()) {
+            dealer.receiveCard(deck.draw())
+        }
     }
 
     fun getParticipants(): ParticipantsDto {

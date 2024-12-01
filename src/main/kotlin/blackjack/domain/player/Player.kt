@@ -8,12 +8,12 @@ class Player(
     cards: Cards = Cards(),
 ) : Participant(name, cards) {
     fun isWin(dealer: Dealer): Boolean {
-        if (Score(cards.getScore()).isBust()) {
-            return false
-        }
-
         if (Score(dealer.cards.getScore()).isBust()) {
             return true
+        }
+
+        if (Score(cards.getScore()).isBust()) {
+            return false
         }
 
         return cards.getScore() > dealer.cards.getScore()

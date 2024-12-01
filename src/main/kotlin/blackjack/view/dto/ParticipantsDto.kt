@@ -1,19 +1,19 @@
 package blackjack.view.dto
 
+import blackjack.domain.player.Dealer
 import blackjack.domain.player.Participants
+import blackjack.domain.player.Player
 
-data class ParticipantsDto(val players: List<ParticipantDto>) {
+data class ParticipantsDto(
+    val dealer: ParticipantDto,
+    val players: List<ParticipantDto>,
+) {
     companion object {
         fun from(participants: Participants): ParticipantsDto {
-            val playersDto =
-                participants.participants.map {
-                    ParticipantDto(
-                        name = it.name,
-                        cards = it.cards.getCards().map { card -> CardDto(card.shape.symbol, card.number.value) },
-                    )
-                }
+            val dealer = ParticipantDto.from(participants.participants.single { it is Dealer })
+            val players = participants.participants.filterIsInstance<Player>().map { ParticipantDto.from(it) }
 
-            return ParticipantsDto(playersDto)
+            return ParticipantsDto(dealer, players)
         }
     }
 }
