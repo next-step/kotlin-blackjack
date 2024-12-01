@@ -16,4 +16,11 @@ class BlackJackServiceTest : StringSpec({
         players[0].name shouldBe "kim"
         players[1].name shouldBe "da"
     }
+
+    "초기 카드를 분배한다." {
+        blackjackService.distributeInitialCards(players)
+        players.forEach { player ->
+            player.cards.size shouldBe 2
+        }
+    }
 })
