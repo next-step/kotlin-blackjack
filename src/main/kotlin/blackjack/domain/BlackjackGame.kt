@@ -52,15 +52,15 @@ class BlackjackGame(
 
     fun settle(): List<RecordDto> {
         val players = participants.participants.filterIsInstance<Player>()
-        val records = players.map {
-            val rate = it.calculateRate(dealer)
-            RecordDto(
-                name = it.name,
-                profit = it.betting.applyRate(rate)
-            )
-        }
-        val dealerProfit = records.filter{ it.profit < 0}.map { it.profit }.sumOf { it * (-1) }
-
+        val records =
+            players.map {
+                val rate = it.calculateRate(dealer)
+                RecordDto(
+                    name = it.name,
+                    profit = it.betting.applyRate(rate),
+                )
+            }
+        val dealerProfit = records.filter { it.profit < 0 }.map { it.profit }.sumOf { it * (-1) }
 
         return listOf(RecordDto(name = dealer.name, profit = dealerProfit)) + records
     }

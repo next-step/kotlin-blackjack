@@ -10,11 +10,11 @@ class PlayersTest : StringSpec({
             Participants(
                 listOf(
                     Player(name = "1", betting = Betting(100)),
-                    Player(name ="2", betting = Betting(100)),
+                    Player(name = "2", betting = Betting(100)),
                     Player(name = "3", betting = Betting(100)),
-                    Player(name ="4", betting = Betting(100)),
+                    Player(name = "4", betting = Betting(100)),
                     Player(name = "5", betting = Betting(100)),
-                    Player(name ="6", betting = Betting(100)),
+                    Player(name = "6", betting = Betting(100)),
                     Player(name = "7", betting = Betting(100)),
                 ),
             )

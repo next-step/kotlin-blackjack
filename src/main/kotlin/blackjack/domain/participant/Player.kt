@@ -11,19 +11,20 @@ class Player(
     cards: Cards = Cards(),
 ) : Participant(name, cards) {
     fun calculateRate(dealer: Dealer): Double {
-        if(Score(dealer.cards.getScore()).isBust()) {
+        if (Score(dealer.cards.getScore()).isBust()) {
             return RATE_ONE
         }
 
-        if(Score(cards.getScore()).isBust() || (cards.getScore() < dealer.cards.getScore())) {
+        if (Score(cards.getScore()).isBust() || (cards.getScore() < dealer.cards.getScore())) {
             return NEGATIVE_RATE_ONE
         }
 
-        if(cards.getCards().size == 2 && cards.getScore() == MAX_SCORE){
-            return RATE_ONE_POINTS_FIVE
-        }
+        if (cards.getCards().size == 2 && cards.getScore() == MAX_SCORE)
+            {
+                return RATE_ONE_POINTS_FIVE
+            }
 
-        if(cards.getScore() == MAX_SCORE && dealer.cards.getScore() == MAX_SCORE) {
+        if (cards.getScore() == MAX_SCORE && dealer.cards.getScore() == MAX_SCORE) {
             return RATE_ONE
         }
 

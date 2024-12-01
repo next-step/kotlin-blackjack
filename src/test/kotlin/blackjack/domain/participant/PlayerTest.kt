@@ -41,79 +41,86 @@ class PlayerTest : StringSpec({
         player.canReceive() shouldBe false
     }
 
-
     "calculateRate()는 딜러가 버스트면 플레이어의 패와 상관없이 배당은 1.0 이다" {
         val cards = createBustCardsFixture()
         val dealer = Dealer("", cards = cards)
-        val player= Player(betting = Betting(0), name = "player", cards = createBlackjackCardsFixture())
+        val player = Player(betting = Betting(0), name = "player", cards = createBlackjackCardsFixture())
 
         player.calculateRate(dealer) shouldBe 1.0
     }
 
     "calculateRate()는 플레이어의 처음 두장의 카드가 블랙잭이고 딜러가 버스트가 아니라면 배당은 1.5이다" {
-        val cards = createCardsFixture(
-            Card(shape = CardShape.Heart, number = CardNumber.Five),
-            Card(shape = CardShape.Spade, number = CardNumber.Four),
-        )
+        val cards =
+            createCardsFixture(
+                Card(shape = CardShape.Heart, number = CardNumber.Five),
+                Card(shape = CardShape.Spade, number = CardNumber.Four),
+            )
         val dealer = Dealer("", cards = cards)
-        val player= Player(betting = Betting(0), name = "player", cards = createBlackjackCardsFixture())
+        val player = Player(betting = Betting(0), name = "player", cards = createBlackjackCardsFixture())
 
         player.calculateRate(dealer) shouldBe 1.5
     }
 
     "calculateRate()는 플레이어의 카드가 버스트라면 배당은 -1.0이다" {
-        val cards = createCardsFixture(
-            Card(shape = CardShape.Heart, number = CardNumber.Five),
-            Card(shape = CardShape.Spade, number = CardNumber.Four),
-        )
+        val cards =
+            createCardsFixture(
+                Card(shape = CardShape.Heart, number = CardNumber.Five),
+                Card(shape = CardShape.Spade, number = CardNumber.Four),
+            )
         val dealer = Dealer("", cards = cards)
-        val player= Player(betting = Betting(0), name = "player", cards = createBustCardsFixture())
+        val player = Player(betting = Betting(0), name = "player", cards = createBustCardsFixture())
 
         player.calculateRate(dealer) shouldBe -1.0
     }
 
     "calculateRate()는 딜러, 플레이어 모두 버스트가 아니고 플레이어의 점수가 높으면 배당은 1.0이다" {
-        val dealerCards = createCardsFixture(
-            Card(shape = CardShape.Heart, number = CardNumber.Five),
-            Card(shape = CardShape.Spade, number = CardNumber.Four),
-        )
-        val playerCards = createCardsFixture(
-            Card(shape = CardShape.Heart, number = CardNumber.Five),
-            Card(shape = CardShape.Spade, number = CardNumber.Five),
-        )
+        val dealerCards =
+            createCardsFixture(
+                Card(shape = CardShape.Heart, number = CardNumber.Five),
+                Card(shape = CardShape.Spade, number = CardNumber.Four),
+            )
+        val playerCards =
+            createCardsFixture(
+                Card(shape = CardShape.Heart, number = CardNumber.Five),
+                Card(shape = CardShape.Spade, number = CardNumber.Five),
+            )
         val dealer = Dealer("", cards = dealerCards)
-        val player= Player(betting = Betting(0), name = "player", cards = playerCards)
+        val player = Player(betting = Betting(0), name = "player", cards = playerCards)
 
         player.calculateRate(dealer) shouldBe 1.0
     }
 
     "calculateRate()는 딜러, 플레이어 모두 버스트가 아니고 딜러의 점수가 높으면 배당은 -1.0이다" {
-        val dealerCards = createCardsFixture(
-            Card(shape = CardShape.Heart, number = CardNumber.Five),
-            Card(shape = CardShape.Spade, number = CardNumber.Five),
-        )
-        val playerCards = createCardsFixture(
-            Card(shape = CardShape.Heart, number = CardNumber.Five),
-            Card(shape = CardShape.Spade, number = CardNumber.Four),
-        )
+        val dealerCards =
+            createCardsFixture(
+                Card(shape = CardShape.Heart, number = CardNumber.Five),
+                Card(shape = CardShape.Spade, number = CardNumber.Five),
+            )
+        val playerCards =
+            createCardsFixture(
+                Card(shape = CardShape.Heart, number = CardNumber.Five),
+                Card(shape = CardShape.Spade, number = CardNumber.Four),
+            )
         val dealer = Dealer("", cards = dealerCards)
-        val player= Player(betting = Betting(0), name = "player", cards = playerCards)
+        val player = Player(betting = Betting(0), name = "player", cards = playerCards)
 
         player.calculateRate(dealer) shouldBe -1.0
     }
 
     "calculateRate()는 플레이어 처음 두 장 패가 블랙잭이 아니고 딜러, 플레이어 모두 블랙잭이면 1.0이다" {
-        val dealerCards = createCardsFixture(
-            Card(shape = CardShape.Heart, number = CardNumber.Ten),
-            Card(shape = CardShape.Spade, number = CardNumber.Ace),
-        )
-        val playerCards = createCardsFixture(
-            Card(shape = CardShape.Heart, number = CardNumber.Ten),
-            Card(shape = CardShape.Spade, number = CardNumber.Four),
-            Card(shape = CardShape.Spade, number = CardNumber.Seven),
-        )
+        val dealerCards =
+            createCardsFixture(
+                Card(shape = CardShape.Heart, number = CardNumber.Ten),
+                Card(shape = CardShape.Spade, number = CardNumber.Ace),
+            )
+        val playerCards =
+            createCardsFixture(
+                Card(shape = CardShape.Heart, number = CardNumber.Ten),
+                Card(shape = CardShape.Spade, number = CardNumber.Four),
+                Card(shape = CardShape.Spade, number = CardNumber.Seven),
+            )
         val dealer = Dealer("", cards = dealerCards)
-        val player= Player(betting = Betting(0), name = "player", cards = playerCards)
+        val player = Player(betting = Betting(0), name = "player", cards = playerCards)
 
         player.calculateRate(dealer) shouldBe 1.0
     }
