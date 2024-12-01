@@ -37,4 +37,8 @@ object ResultView {
     ) { "${it.rank.value}${it.suit.description}" }} ${sum?.convertToResultString() ?: ""}"
 
     private fun Int.convertToResultString() = "- 결과: $this"
+
+    fun printWinner(players: Players) {
+        println("승자는 ${players.getWinner()?.let {"${it.name}입니다."} ?: "없습니다."}")
+    }
 }

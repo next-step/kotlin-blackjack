@@ -25,6 +25,7 @@ class BlackJackMachine(
 
             if (roundResults.stream().allMatch { it is RoundResult.Bust }) null else updatedPlayers
         }.lastOrNull()
+            ?.let { ResultView.printWinner(players = it) }
     }
 
     private fun playRoundByPlayer(player: Player): RoundResult {
