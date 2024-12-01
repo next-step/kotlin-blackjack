@@ -1,8 +1,8 @@
 package blackjack.domain
 
-class BlackjackCard private constructor(
+class BlackjackCard(
     val number: CardNumber,
-    val emblem: Emblem,
+    private val emblem: Emblem,
     private var _isUsed: Boolean = false,
 ) {
     val isUsed: Boolean

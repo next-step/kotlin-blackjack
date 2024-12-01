@@ -1,8 +1,10 @@
 package blackjack.domain
 
-class Dealer {
-    private val cardSet = BlackjackCard.defaultSet.shuffled()
-        get() = field.asSequence()
+class Dealer(
+    private val _cardSet: List<BlackjackCard> = BlackjackCard.defaultSet.shuffled(),
+) {
+    private val cardSet
+        get() = _cardSet.asSequence()
             .filterNot { it.isUsed }
             .toList()
 
