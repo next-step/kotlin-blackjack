@@ -2,6 +2,7 @@ package blackjack
 
 import blackjack.domain.BlackjackPlayer
 import blackjack.domain.Dealer
+import blackjack.domain.Player
 import blackjack.view.InputView
 import blackjack.view.ResultView
 
@@ -15,11 +16,15 @@ fun main() {
     ResultView.printPlayersInitInfo(players)
 
     players.forEach { player ->
-        while (InputView.checkDraw(player.name) == "y") {
-            dealer giveCardTo player
-            ResultView.printPlayerCardInfo(player)
-        }
+        checkDraw(player, dealer)
         ResultView.printPlayerCardInfo(player)
     }
     ResultView.printResult(players)
+}
+
+private fun checkDraw(player: Player, dealer: Dealer) {
+    while (InputView.checkDraw(player.name)) {
+        dealer giveCardTo player
+        ResultView.printPlayerCardInfo(player)
+    }
 }
