@@ -12,10 +12,6 @@ data class Player(val playerName: Name, private val hand: Hand = Hand()) {
         hand.add(cards.values())
     }
 
-    fun same(other: Player): Boolean {
-        return playerName == other.playerName
-    }
-
     fun same(other: String): Boolean {
         return playerName.value == other
     }

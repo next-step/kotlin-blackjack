@@ -8,9 +8,9 @@ fun main() {
     val resultView = ResultView()
 
     val names = inputView.inputUserNames()
-    val game = CardGame.fromOf(names)
+    val game = CardGame.fromNames(names)
 
-    game.playerAllHand()
+    game.playerAllDeal()
     resultView.printUserCardCount(names, game.playersSize)
     resultView.printUserCardsOfMap(names.associateWith { game.cardsOf(it) })
 
@@ -27,7 +27,7 @@ private fun handleUserTurn(
     userName: String,
 ) {
     while (inputView.inputMore(userName)) {
-        game.hand(userName)
+        game.deal(userName)
         val userHandCards = game.cardsOf(userName)
         val score = game.scoreOf(userName)
 

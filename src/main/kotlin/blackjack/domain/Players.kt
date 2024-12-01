@@ -5,22 +5,18 @@ class Players private constructor(private val values: List<Player>) : List<Playe
         player: Player,
         deck: Deck,
     ) {
-        find(player).receive(deck)
+        player.receive(deck)
     }
 
     fun deal(
         player: Player,
         deck: Card,
     ) {
-        find(player).receive(Deck(listOf(deck)))
+        player.receive(Deck(listOf(deck)))
     }
 
-    fun findCardOf(player: Player): Deck {
-        return find(player).totalCards
-    }
-
-    private fun find(player: Player): Player {
-        return values.find { it.same(player) } ?: throw IllegalArgumentException("존재하지 않는 사용자입니다.")
+    fun findCardOf(name: String): Deck {
+        return find(name).totalCards
     }
 
     fun find(playerName: String): Player {

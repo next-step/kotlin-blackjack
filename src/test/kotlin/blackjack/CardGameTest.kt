@@ -45,11 +45,11 @@ class CardGameTest : BehaviorSpec({
                 listOf(userA, userB),
             )
         When("사용자 이름을 입력하면") {
-            cardGame.startGame(userA)
-            val actual = cardGame.userHand(userA)
+            cardGame.initGame(userA)
+            val actual = cardGame.cardsOf(userA)
 
             Then("사용자는 두 장의 카드를 가진다") {
-                actual.size() shouldBe 2
+                actual.size shouldBe 2
             }
         }
     }
@@ -67,11 +67,11 @@ class CardGameTest : BehaviorSpec({
                 listOf(userA, userB),
             )
         When("pick 호출하면") {
-            cardGame.hand(userA)
-            val actual = cardGame.userHand(userA)
+            cardGame.deal(userA)
+            val actual = cardGame.cardsOf(userA)
 
             Then("1장의 카드를 가진다") {
-                actual.size() shouldBe 1
+                actual.size shouldBe 1
             }
         }
     }
@@ -90,7 +90,7 @@ class CardGameTest : BehaviorSpec({
                 listOf(userA, userB),
             )
         When("사용자 이름을 입력하면") {
-            cardGame.startGame(userA)
+            cardGame.initGame(userA)
             val actual = cardGame.cardsOf(userA)
 
             Then("사용자는 두 장의 카드를 가진다") {
@@ -111,7 +111,7 @@ class CardGameTest : BehaviorSpec({
                 },
                 listOf(userA),
             )
-        cardGame.startGame(userA)
+        cardGame.initGame(userA)
 
         When("사용자 이름을 입력하면") {
             val actual = cardGame.scoreOf(userA)

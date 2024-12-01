@@ -4,7 +4,6 @@ import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 
 class CardTest : BehaviorSpec({
-
     Given("`CardRank`, `CardSuit`를 가진다") {
         When("Card를 생성하면") {
             Then("CardRank와 CardSuit를 가진다") {

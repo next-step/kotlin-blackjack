@@ -7,29 +7,24 @@ import blackjack.domain.Players
 data class CardGame(private val deck: Deck, private val players: Players) {
     val playersSize: Int = players.size
 
-    fun startGame(name: String) {
+    fun initGame(name: String) {
         val startCardCount = 2
         val roundCards = deck.popCards(startCardCount)
         players.deal(players.find(name), roundCards)
     }
 
-    fun playerAllHand() {
+    fun playerAllDeal() {
         players.forEach { player ->
-            startGame(player.name)
+            initGame(player.name)
         }
     }
 
-    fun userHand(name: String): Deck {
-        return players.findCardOf(players.find(name))
-    }
-
-    fun hand(name: String) {
-        val roundCards = deck.pop()
-        players.deal(players.find(name), roundCards)
+    fun deal(name: String) {
+        players.deal(players.find(name), deck.pop())
     }
 
     fun cardsOf(name: String): List<String> {
-        return players.findCardOf(players.find(name)).values().map { it.name }
+        return players.findCardOf(name).values().map { it.name }
     }
 
     fun scoreOf(name: String): Int {
@@ -43,9 +38,9 @@ data class CardGame(private val deck: Deck, private val players: Players) {
     fun result(): Map<String, Map<List<String>, Int>> {
         return players.associate { player ->
             player.name to
-                mapOf(
-                    player.totalCards.values().map { it.name } to player.score(),
-                )
+                    mapOf(
+                        player.totalCards.values().map { it.name } to player.score(),
+                    )
         }
     }
 
@@ -57,7 +52,7 @@ data class CardGame(private val deck: Deck, private val players: Players) {
             return CardGame(deck, Players.from(users))
         }
 
-        fun fromOf(names: List<String>): CardGame {
+        fun fromNames(names: List<String>): CardGame {
             return from(DeckBuilder.cachedDeck, names)
         }
     }

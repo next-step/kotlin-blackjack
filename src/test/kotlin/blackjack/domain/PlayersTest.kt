@@ -32,7 +32,7 @@ class PlayersTest : BehaviorSpec({
                 players.deal(player, cards)
 
                 Then("`$player`은 $cards 를 가진다") {
-                    players.findCardOf(player) shouldBe cards
+                    players.findCardOf(player.name) shouldBe cards
                 }
             }
         }
