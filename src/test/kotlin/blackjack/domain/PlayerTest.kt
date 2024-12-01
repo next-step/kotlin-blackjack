@@ -20,7 +20,7 @@ class PlayerTest {
     fun `플레이어는 가지고 있는 카드에서 가장 21에 가까운 값을 가져온다`() {
         val dealer = Dealer(
             deck = Deck(
-                listOf(
+                mutableListOf(
                     BlackjackCard(CardNumber.A, Emblem.다이아),
                     BlackjackCard(CardNumber.J, Emblem.다이아),
                     BlackjackCard(CardNumber.Q, Emblem.다이아),
@@ -38,7 +38,7 @@ class PlayerTest {
     fun `A는 11로도 계산될 수 있다`() {
         val dealer = Dealer(
             deck = Deck(
-                listOf(
+                mutableListOf(
                     BlackjackCard(CardNumber.A, Emblem.다이아),
                     BlackjackCard(CardNumber.`2`, Emblem.다이아),
                     BlackjackCard(CardNumber.`8`, Emblem.다이아),
@@ -56,7 +56,7 @@ class PlayerTest {
     fun `21이 넘는 경우 가장 큰 값이 반환 된다`() {
         val dealer = Dealer(
             deck = Deck(
-                listOf(
+                mutableListOf(
                     BlackjackCard(CardNumber.K, Emblem.다이아),
                     BlackjackCard(CardNumber.Q, Emblem.다이아),
                     BlackjackCard(CardNumber.J, Emblem.다이아),

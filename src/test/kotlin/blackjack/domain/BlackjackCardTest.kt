@@ -29,16 +29,4 @@ class BlackjackCardTest {
             score.size shouldBe 1
         }
     }
-
-    @Test
-    fun `이미 사용된 카드는 재사용할 수 없다`() {
-        val card = BlackjackCard.defaultSet.random()
-
-        card.draw()
-
-        val exception = shouldThrowExactly<IllegalStateException> {
-            card.draw()
-        }
-        exception.message shouldContain "이미 사용된 카드입니다. | card: $card"
-    }
 }
