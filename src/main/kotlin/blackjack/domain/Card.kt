@@ -6,4 +6,8 @@ data class Card(
 ) {
     val value: Int
         get() = rank.value
+
+    override fun toString(): String {
+        return "${rank.value}${suit.description}"
+    }
 }

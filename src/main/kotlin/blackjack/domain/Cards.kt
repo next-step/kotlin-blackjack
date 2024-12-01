@@ -40,6 +40,10 @@ class Cards private constructor(
     private fun canUseAceAlternativeValue(aceCount: Int, totalValue: Int): Boolean =
         aceCount > 0 && totalValue + ACE_ALTERNATIVE_VALUE + (aceCount - 1) <= BLACKJACK
 
+    override fun toString(): String {
+        return cards.joinToString(", ")
+    }
+
     companion object {
         private const val BLACKJACK = 21
         private const val ACE_ALTERNATIVE_VALUE = 11
@@ -58,12 +62,17 @@ class Cards private constructor(
             Suit.entries.forEach { suit ->
                 addCardsForSuit(cards, suit)
             }
+            shuffle(cards)
         }
 
         private fun addCardsForSuit(cards: Cards, suit: Suit) {
             Rank.entries.forEach { rank ->
                 cards.add(Card(suit, rank))
             }
+        }
+
+        private fun shuffle(cards: Cards) {
+            cards.cards.shuffle()
         }
     }
 }
