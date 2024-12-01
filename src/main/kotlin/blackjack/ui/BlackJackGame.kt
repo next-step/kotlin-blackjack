@@ -4,14 +4,15 @@ import blackjack.Deck
 import blackjack.Player
 import blackjack.ui.ConsoleInput.Companion.inputDrawAnswer
 import blackjack.ui.ConsoleInput.Companion.inputPlayerNames
+import blackjack.ui.ConsoleOutput.Companion.printAllPlayersWithNameAndHand
+import blackjack.ui.ConsoleOutput.Companion.printAllPlayersWithNameAndHandAndResult
 import blackjack.ui.ConsoleOutput.Companion.printPlayerBust
-import blackjack.ui.ConsoleOutput.Companion.printPlayerNameWithHand
 import blackjack.ui.ConsoleOutput.Companion.printPlayerSumOfHand
+import blackjack.ui.ConsoleOutput.Companion.printPlayerWithNameAndHand
 import blackjack.ui.ConsoleOutput.Companion.printShareInitialCardsToPlayers
 
 fun main() {
     val playerNames = inputPlayerNames()
-    println()
 
     val deck = Deck()
     deck.shuffle()
@@ -19,23 +20,15 @@ fun main() {
     val players = setupPlayers(playerNames, deck)
 
     printShareInitialCardsToPlayers(playerNames)
-    players.forEach { player ->
-        printPlayerNameWithHand(player)
-        println()
-    }
-    println()
+    printAllPlayersWithNameAndHand(players)
 
     players.forEach { player ->
         generateSequence {
             handlePlayerTurn(player, deck)
         }.toList()
     }
-    println()
 
-    players.forEach { player ->
-        printPlayerNameWithHand(player)
-        printPlayerSumOfHand(player)
-    }
+    printAllPlayersWithNameAndHandAndResult(players)
 }
 
 private fun setupPlayers(
@@ -79,14 +72,12 @@ private fun drawCardAndPrintPlayerHand(
 ) {
     val newCard = deck.draw()
     player.receive(newCard)
-    printPlayerNameWithHand(player)
-    println()
+    printPlayerWithNameAndHand(player)
 }
 
 private fun printPlayerHandWhenPlayerFirstTurn(player: Player) {
     if (isInitialState(player)) {
-        printPlayerNameWithHand(player)
-        println()
+        printPlayerWithNameAndHand(player)
     }
 }
 
