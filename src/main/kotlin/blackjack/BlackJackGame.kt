@@ -1,6 +1,6 @@
 package blackjack
 
-import blackjack.domain.Deck
+import blackjack.domain.GameRoom
 import blackjack.domain.Player
 import blackjack.ui.InputView
 import blackjack.ui.ResultView
@@ -9,29 +9,36 @@ object BlackJackGame {
     fun start() {
         val names = InputView.getPlayerNames()
         val players = names.map { Player(it) }
+        val gameRoom = GameRoom(players = players)
 
-        val deck = Deck()
+        ResultView.printFirstPhase(gameRoom.participants)
 
-        players.forEach { player ->
-            player.receiveCard(deck.drawCard())
-            player.receiveCard(deck.drawCard())
-        }
+        drawPlayerCards(gameRoom)
+        drawDealerCards(gameRoom)
 
-        ResultView.printFirstPhase(players)
-
-        players.forEach { player -> requestDrawCards(player, deck) }
-
-        ResultView.printFinalResult(players)
+        val gameResult = gameRoom.calculateResult()
+        ResultView.printFinalResult(gameResult)
     }
 
-    private fun requestDrawCards(player: Player, deck: Deck) {
+    private fun drawPlayerCards(gameRoom: GameRoom) {
+        gameRoom.players.forEach { player -> requestDrawCards(player, gameRoom) }
+    }
+
+    private fun requestDrawCards(player: Player, gameRoom: GameRoom) {
         while (player.canDrawCard()) {
             val request = InputView.requestCard(player.name)
             if (!request) {
                 break
             }
-            player.receiveCard(deck.drawCard())
-            ResultView.printPlayerCards(player)
+            gameRoom.drawCard(player)
+            ResultView.printParticipantsCards(player)
+        }
+    }
+
+    private fun drawDealerCards(gameRoom: GameRoom) {
+        while (gameRoom.dealer.canDrawCard()) {
+            ResultView.printDealerDrawMessage(gameRoom.dealer)
+            gameRoom.drawCard(gameRoom.dealer)
         }
     }
 }

@@ -5,7 +5,16 @@ class Cards(
 ) : List<Card> by cards {
 
     fun add(card: Card): Boolean {
+        checkCanReceiveCard()
         return cards.add(card)
+    }
+
+    private fun checkCanReceiveCard() {
+        if (isOverMaxScore()) {
+            throw IllegalStateException(
+                "21점을 초과하여 카드를 받을 수 없습니다. 현재 점수: ${calculateScore()}",
+            )
+        }
     }
 
     fun calculateScore(): Int {
@@ -20,6 +29,10 @@ class Cards(
 
     fun isOverMaxScore(): Boolean {
         return calculateScore() >= MAX_SCORE
+    }
+
+    fun isBust(): Boolean {
+        return calculateScore() > MAX_SCORE
     }
 
     companion object {
