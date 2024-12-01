@@ -2,7 +2,6 @@ package blackjack
 
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
-import io.kotest.matchers.booleans.shouldBeFalse
 import io.kotest.matchers.shouldBe
 
 class DeckTest : StringSpec({
@@ -51,15 +50,27 @@ class DeckTest : StringSpec({
     }
 
     "카드 뭉치를 셔플하면 카드 뭉치 내부의 카드 순서가 바뀐다" {
-        val notShuffledDeck = Deck()
+        val cards =
+            mutableListOf(
+                Card(CardNumber.QUEEN, Suit.SPADES),
+                Card(CardNumber.KING, Suit.SPADES),
+            )
+        val notShuffledDeck = Deck(cards = cards)
         val notShuffledFirstCard = notShuffledDeck.draw()
 
-        val shuffledDeck = Deck()
-        shuffledDeck.shuffle(42)
+        val shuffledDeck = Deck(cards = cards)
+        shuffledDeck.shuffle(ReverseShuffler())
         val shuffledFirstCard = shuffledDeck.draw()
 
-        notShuffledDeck.size() shouldBe 51
-        shuffledDeck.size() shouldBe 51
-        (notShuffledFirstCard == shuffledFirstCard).shouldBeFalse()
+        notShuffledDeck.size() shouldBe 1
+        shuffledDeck.size() shouldBe 1
+        notShuffledFirstCard shouldBe Card(CardNumber.QUEEN, Suit.SPADES)
+        shuffledFirstCard shouldBe Card(CardNumber.KING, Suit.SPADES)
     }
 })
+
+class ReverseShuffler : Shuffler {
+    override fun shuffle(cards: MutableList<Card>) {
+        cards.reverse()
+    }
+}
