@@ -56,7 +56,10 @@ class Card {
             }
         }
 
-        private fun adjustAceValue(sum: Int, aceCount: Int): Int {
+        private fun adjustAceValue(
+            sum: Int,
+            aceCount: Int,
+        ): Int {
             var adjustedSum = sum
             var remainingAces = aceCount
 
@@ -68,11 +71,9 @@ class Card {
             return adjustedSum
         }
 
-
         private fun extractCardNumber(card: String): String {
             val matchResult = Regex("^([0-9]+|[A-Z])").find(card)
             return matchResult?.value ?: throw IllegalArgumentException(INVALID_CARD_FORMAT)
         }
-
     }
 }

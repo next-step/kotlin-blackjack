@@ -17,8 +17,10 @@ object ResultView {
         }
     }
 
-
-    fun printFinalScores(scores: List<Pair<String, Int>>, players: List<Player>) {
+    fun printFinalScores(
+        scores: List<Pair<String, Int>>,
+        players: List<Player>,
+    ) {
         scores.forEach { (name, score) ->
             val cards = players.first { it.name == name }.cards
             println(PLAYER_RESULT_MESSAGE.format(name, cards.joinToString(", "), score))

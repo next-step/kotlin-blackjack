@@ -26,7 +26,10 @@ object BlackjackController {
         return blackJackService.splitPlayerNames(playersInput)
     }
 
-    private fun splitCards(playerNames: List<String>, players: List<Player>) {
+    private fun splitCards(
+        playerNames: List<String>,
+        players: List<Player>,
+    ) {
         blackJackService.distributeInitialCards(players)
         ResultView.printSplitCardResult(playerNames)
     }
