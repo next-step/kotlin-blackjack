@@ -7,7 +7,7 @@ class Dealer(
     cards: Cards = Cards(),
 ) : Participant(name, cards) {
     override fun canReceive(): Boolean {
-        return cards.getScore().value < ONE_MORE_DRAW_SCORE
+        return cards.getScore() < ONE_MORE_DRAW_SCORE
     }
 
     companion object {

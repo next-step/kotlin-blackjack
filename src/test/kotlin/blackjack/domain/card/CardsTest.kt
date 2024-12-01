@@ -13,7 +13,7 @@ class CardsTest : StringSpec({
                 ),
             )
 
-        cards.getScore().value shouldBe 5
+        cards.getScore() shouldBe 5
     }
 
     "카드들은 새로운 카드를 추가할 수 있다." {
@@ -34,6 +34,6 @@ class CardsTest : StringSpec({
                 ),
             )
 
-        cards.getScore().value shouldBe 21
+        cards.getScore() shouldBe 21
     }
 })

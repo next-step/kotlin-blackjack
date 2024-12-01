@@ -3,7 +3,7 @@ package blackjack.domain.score
 import blackjack.domain.card.CardNumber
 
 @JvmInline
-value class Score(val value: Int) {
+value class Score(private val value: Int) {
     init {
         require(value >= 0) { SCORE_VALUE_EXCEPTION }
     }
@@ -19,14 +19,14 @@ value class Score(val value: Int) {
         fun calculate(
             numbers: List<CardNumber>,
             isContainAce: Boolean,
-        ): Score {
+        ): Int {
             val score = Score(numbers.sumOf { it.value })
 
             if (isContainAce && CardNumber.Ace.toEleven() + score.value <= MAX_SCORE) {
-                return score + Score(CardNumber.Ace.toEleven())
+                return (score + Score(CardNumber.Ace.toEleven())).value
             }
 
-            return score
+            return score.value
         }
     }
 }

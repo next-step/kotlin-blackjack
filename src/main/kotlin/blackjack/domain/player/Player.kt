@@ -1,24 +1,25 @@
 package blackjack.domain.player
 
 import blackjack.domain.card.Cards
+import blackjack.domain.score.Score
 
 class Player(
     name: String,
     cards: Cards = Cards(),
 ) : Participant(name, cards) {
     fun isWin(dealer: Dealer): Boolean {
-        if (cards.getScore().isBust()) {
+        if (Score(cards.getScore()).isBust()) {
             return false
         }
 
-        if (dealer.cards.getScore().isBust()) {
+        if (Score(dealer.cards.getScore()).isBust()) {
             return true
         }
 
-        return cards.getScore().value > dealer.cards.getScore().value
+        return cards.getScore() > dealer.cards.getScore()
     }
 
     override fun canReceive(): Boolean {
-        return !cards.getScore().isBust()
+        return !Score(cards.getScore()).isBust()
     }
 }
