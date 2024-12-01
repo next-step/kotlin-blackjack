@@ -28,4 +28,9 @@ class BlackJackServiceTest : StringSpec({
         val names = blackjackService.splitPlayerNames("")
         names shouldBe emptyList()
     }
+
+    "플레이어 이름에 공백이 포함된 경우 공백을 제거한다." {
+        val names = blackjackService.splitPlayerNames(" kim , da , bo , mi")
+        names shouldBe listOf("kim", "da", "bo", "mi")
+    }
 })
