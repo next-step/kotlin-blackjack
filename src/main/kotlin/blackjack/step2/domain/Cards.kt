@@ -32,10 +32,12 @@ class Cards(private val cards: MutableList<Card>) {
     }
 
     private fun selectBestScore(scores: List<Int>): Int {
-        return scores.filter { it <= 21 }.maxOrNull() ?: scores.min()
+        return scores.filter { it <= BLACKJACK_SCORE }.maxOrNull() ?: scores.min()
     }
 
     companion object {
+        const val BLACKJACK_SCORE = 21
+
         fun of(cards: List<Card>): Cards {
             return Cards(cards.toMutableList())
         }
