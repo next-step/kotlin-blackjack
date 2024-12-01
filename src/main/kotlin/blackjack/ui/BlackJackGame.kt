@@ -26,26 +26,9 @@ fun main() {
     println()
 
     players.forEach { player ->
-        while (true) {
-            val answer = inputDrawAnswer(player)
-            if (answer == DrawAnswer.N) {
-                if (isInitialState(player)) {
-                    printPlayerNameWithHand(player)
-                    println()
-                }
-                break
-            } else if (answer == DrawAnswer.Y) {
-                val newCard = deck.draw()
-                player.receive(newCard)
-                printPlayerNameWithHand(player)
-                println()
-                if (player.isBust()) {
-                    printPlayerBust(player)
-                    printPlayerSumOfHand(player)
-                    break
-                }
-            }
-        }
+        generateSequence {
+            handlePlayerTurn(player, deck)
+        }.toList()
     }
     println()
 
@@ -61,6 +44,50 @@ private fun setupPlayers(
 ) = playerNames.map { playerName ->
     val initialCards = List(2) { deck.draw() }
     Player(name = playerName, initialCards = initialCards)
+}
+
+private fun handlePlayerTurn(
+    player: Player,
+    deck: Deck,
+): Unit? {
+    if (isPlayerBust(player)) return null
+
+    val answer = inputDrawAnswer(player)
+    return when (answer) {
+        DrawAnswer.Y -> {
+            drawCardAndPrintPlayerHand(deck, player)
+        }
+        DrawAnswer.N -> {
+            printPlayerHandWhenPlayerFirstTurn(player)
+            null
+        }
+    }
+}
+
+private fun isPlayerBust(player: Player): Boolean {
+    if (player.isBust()) {
+        printPlayerBust(player)
+        printPlayerSumOfHand(player)
+        return true
+    }
+    return false
+}
+
+private fun drawCardAndPrintPlayerHand(
+    deck: Deck,
+    player: Player,
+) {
+    val newCard = deck.draw()
+    player.receive(newCard)
+    printPlayerNameWithHand(player)
+    println()
+}
+
+private fun printPlayerHandWhenPlayerFirstTurn(player: Player) {
+    if (isInitialState(player)) {
+        printPlayerNameWithHand(player)
+        println()
+    }
 }
 
 private fun isInitialState(player: Player) = player.hand.size == 2
