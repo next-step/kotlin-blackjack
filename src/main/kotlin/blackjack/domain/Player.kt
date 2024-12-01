@@ -1,12 +1,20 @@
 package blackjack.domain
 
-interface Player {
-    val name: String
-    val cards: Set<BlackjackCard>
+class Player(
+    val name: String,
+) {
+    private val cards: MutableSet<BlackjackCard> = mutableSetOf()
+
+    val cardsSize
+        get() = cards.size
     val score: Int
         get() = calculateScore()
 
-    infix fun receive(card: BlackjackCard)
+    fun cardsToString() = cards.joinToString()
+
+    infix fun receive(card: BlackjackCard) {
+        cards.add(card)
+    }
 
     private fun calculateScore(): Int {
         val scores = cards.map { it.number.score }.fold(listOf(0)) { accumulator, scores ->

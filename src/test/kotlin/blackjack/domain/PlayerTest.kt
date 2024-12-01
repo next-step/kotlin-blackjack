@@ -9,11 +9,11 @@ class PlayerTest {
     @Test
     fun `플레이어는 시작과 동시에 두 장의 카드를 가지고 있는다`() {
         val dealer = Dealer()
-        val player = BlackjackPlayer("test")
+        val player = Player("test")
 
         dealer initCardTo player
 
-        player.cards.size shouldBe 2
+        player.cardsSize shouldBe 2
     }
 
     @Test
@@ -27,7 +27,7 @@ class PlayerTest {
                 ),
             ),
         )
-        val player = BlackjackPlayer("test")
+        val player = Player("test")
         dealer initCardTo player
         dealer giveCardTo player
 
@@ -45,7 +45,7 @@ class PlayerTest {
                 ),
             ),
         )
-        val player = BlackjackPlayer("test")
+        val player = Player("test")
         dealer initCardTo player
         dealer giveCardTo player
 
@@ -63,7 +63,7 @@ class PlayerTest {
                 ),
             ),
         )
-        val player = BlackjackPlayer("test")
+        val player = Player("test")
         dealer initCardTo player
         dealer giveCardTo player
 

@@ -1,9 +1,7 @@
 package blackjack.domain
 
-import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.matchers.collections.shouldContain
 import io.kotest.matchers.shouldBe
-import io.kotest.matchers.string.shouldContain
 import org.junit.jupiter.api.Test
 
 class BlackjackCardTest {
