@@ -1,9 +1,9 @@
 package blackjack.view.output
 
-import blackjack.view.dto.ParticiapntsDto
+import blackjack.view.dto.ParticipantsDto
 
 object ResultView {
-    fun print(dto: ParticiapntsDto) {
+    fun print(dto: ParticipantsDto) {
         println()
         dto.players.forEach { player ->
             println(

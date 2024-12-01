@@ -1,12 +1,12 @@
 package blackjack.view.output
 
 import blackjack.domain.player.Dealer
-import blackjack.view.dto.ParticiapntsDto
+import blackjack.view.dto.ParticipantsDto
 
 object StartPlayersView {
     fun print(
         dealer: Dealer,
-        dto: ParticiapntsDto,
+        dto: ParticipantsDto,
     ) {
         println()
         println("${dto.players.joinToString(", ") { player -> player.name }}에게 2장의 카드를 나누었습니다.")
