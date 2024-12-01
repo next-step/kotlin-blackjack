@@ -4,9 +4,7 @@ class Dealer(
     private val _cardSet: List<BlackjackCard> = BlackjackCard.defaultSet.shuffled(),
 ) {
     private val cardSet
-        get() = _cardSet.asSequence()
-            .filterNot { it.isUsed }
-            .toList()
+        get() = _cardSet.filterNot { it.isUsed }
 
     val cardSize
         get() = cardSet.size
