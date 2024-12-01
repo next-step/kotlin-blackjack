@@ -1,17 +1,11 @@
 package blackjack.domain
 
-import blackjack.domain.Card.Companion.SYMBOL
-import blackjack.domain.Card.Companion.SpecialNumber
-
 object CardDeck : Deck {
     val cards = mutableListOf<Card>()
 
-    override fun generate() {
+    override fun fillDeck(newCards: List<Card>) {
         cards.clear()
-        SYMBOL.entries.forEach { symbol ->
-            (2..10).map { it.toString() }.forEach { cards.add(Card(it, symbol)) }
-            SpecialNumber.entries.forEach { card -> cards.add(Card(card.name, symbol)) }
-        }
+        newCards.forEach { cards.add(it) }
         cards.shuffle()
     }
 

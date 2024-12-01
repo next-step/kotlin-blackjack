@@ -1,7 +1,7 @@
 package blackjack.domain
 
 interface Deck {
-    fun generate()
+    fun fillDeck(newCards: List<Card>)
 
     fun drawCard(): Card
 }
