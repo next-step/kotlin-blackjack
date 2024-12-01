@@ -1,24 +1,17 @@
 package blackjack
 
-enum class CardNumber(val face: String, val baseValue: Int) {
-    ACE("A", 1),
-    TWO("2", 2),
-    THREE("3", 3),
-    FOUR("4", 4),
-    FIVE("5", 5),
-    SIX("6", 6),
-    SEVEN("7", 7),
-    EIGHT("8", 8),
-    NINE("9", 9),
-    TEN("10", 10),
-    JACK("J", 10),
-    QUEEN("Q", 10),
-    KING("K", 10),
-    ;
+sealed class CardNumber(val face: String, val baseValue: Int) : Comparable<CardNumber> {
+    data object Ace : CardNumber("A", 1)
 
-    fun biggerValue(): Int = if (this == ACE) ACE_BIGGER_VALUE else this.baseValue
+    data object Jack : CardNumber("J", 10)
 
-    companion object {
-        private const val ACE_BIGGER_VALUE = 11
+    data object Queen : CardNumber("Q", 10)
+
+    data object King : CardNumber("K", 10)
+
+    override fun compareTo(other: CardNumber): Int {
+        return this.baseValue.compareTo(other.baseValue)
     }
 }
+
+data class Number(private val value: Int) : CardNumber(value.toString(), value)

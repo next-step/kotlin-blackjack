@@ -6,7 +6,7 @@ import io.kotest.matchers.shouldBe
 
 class DeckTest : StringSpec({
     "카드 뭉치는 가지고 있는 카드를 한장씩 뽑을 수 있다" {
-        val cards = listOf(Card(CardNumber.ACE, Suit.SPADES), Card(CardNumber.TWO, Suit.SPADES))
+        val cards = listOf(Card(CardNumber.Ace, Suit.SPADES), Card(Number(2), Suit.SPADES))
         val sut = Deck(cards.toMutableList())
 
         val firstCard = sut.draw()
@@ -30,11 +30,11 @@ class DeckTest : StringSpec({
     "카드 뭉치에 있는 카드 수는 52장을 넘을 수 없다" {
         val cards =
             Suit.entries.flatMap { suit ->
-                CardNumber.entries.map { cardNumber ->
+                CardNumberFactory.all().map { cardNumber ->
                     Card(cardNumber, suit)
                 }
             }.toMutableList()
-        cards.add(Card(CardNumber.KING, Suit.SPADES))
+        cards.add(Card(CardNumber.King, Suit.SPADES))
 
         shouldThrow<IllegalArgumentException> {
             Deck(cards = cards)
@@ -52,8 +52,8 @@ class DeckTest : StringSpec({
     "카드 뭉치를 셔플하면 카드 뭉치 내부의 카드 순서가 바뀐다" {
         val cards =
             mutableListOf(
-                Card(CardNumber.QUEEN, Suit.SPADES),
-                Card(CardNumber.KING, Suit.SPADES),
+                Card(CardNumber.Queen, Suit.SPADES),
+                Card(CardNumber.King, Suit.SPADES),
             )
         val notShuffledDeck = Deck(cards = cards)
         val notShuffledFirstCard = notShuffledDeck.draw()
@@ -64,8 +64,8 @@ class DeckTest : StringSpec({
 
         notShuffledDeck.size() shouldBe 1
         shuffledDeck.size() shouldBe 1
-        notShuffledFirstCard shouldBe Card(CardNumber.QUEEN, Suit.SPADES)
-        shuffledFirstCard shouldBe Card(CardNumber.KING, Suit.SPADES)
+        notShuffledFirstCard shouldBe Card(CardNumber.Queen, Suit.SPADES)
+        shuffledFirstCard shouldBe Card(CardNumber.King, Suit.SPADES)
     }
 })
 

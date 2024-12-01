@@ -1,6 +1,10 @@
 package blackjack
 
-class Hand(initialCards: List<Card> = emptyList()) {
+class Hand(
+    initialCards: List<Card> = emptyList(),
+    private val blackJackCardSumCalculator: BlackJackCardSumCalculator =
+        DefaultBlackJackCardSumCalculator(),
+) {
     private val _cards = initialCards.toMutableList()
     val cards: List<Card>
         get() = _cards.toList()
@@ -9,37 +13,9 @@ class Hand(initialCards: List<Card> = emptyList()) {
         _cards.add(newCard)
     }
 
-    fun sumOfHand(): Int {
-        val nonAceSum = sumNonAce()
-        val aceCount = _cards.count { it.number == CardNumber.ACE }
-        if (aceCount == 0) {
-            return nonAceSum
-        }
-        return calculateTotalSumWithAceSum(nonAceSum, aceCount)
-    }
+    fun sumOfHand(): Int = blackJackCardSumCalculator.sum(_cards)
 
-    private fun sumNonAce(): Int =
-        _cards
-            .asSequence()
-            .filter { it.number != CardNumber.ACE }
-            .sumOf { it.number.baseValue }
-
-    private fun calculateTotalSumWithAceSum(
-        nonAceSum: Int,
-        aceCount: Int,
-    ): Int {
-        val baseAceSum = aceCount * CardNumber.ACE.baseValue
-        val biggerAceSum = (aceCount - 1) * CardNumber.ACE.baseValue + CardNumber.ACE.biggerValue()
-
-        val baseSum = nonAceSum + baseAceSum
-        val biggerSum = nonAceSum + biggerAceSum
-
-        return if (biggerSum <= BLACKJACK_NUMBER) biggerSum else baseSum
-    }
-
-    fun isBust(): Boolean {
-        return sumOfHand() > BLACKJACK_NUMBER
-    }
+    fun isBust(): Boolean = sumOfHand() > BLACKJACK_NUMBER
 
     companion object {
         private const val BLACKJACK_NUMBER = 21
