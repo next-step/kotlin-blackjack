@@ -13,17 +13,25 @@ class BlackJackMachine(
     private val deck: Deck,
 ) {
     fun play() {
-        val players = Players.generateFromNames(playerNames = InputView.inputPlayerNames())
+        var players = Players.generateFromNames(playerNames = InputView.inputPlayerNames())
         ResultView.printPlayersName(players = players)
         ResultView.printPlayersCardStatus(players = players)
 
-        val roundResults = players.players.map { playRoundByPlayer(player = it) }
-        ResultView.printPlayersCardStatusAndSum(players = Players.generateFromRoundResults(roundResults = roundResults))
+        var roundResults: List<RoundResult>
+        while (true) {
+            roundResults = players.players.map { playRoundByPlayer(player = it) }
+            players = Players.generateFromRoundResults(roundResults = roundResults)
+            ResultView.printPlayersCardStatusAndSum(players = players)
+
+            if (roundResults.stream().allMatch { it is RoundResult.Bust }) {
+                return
+            }
+        }
     }
 
     private fun playRoundByPlayer(player: Player): RoundResult {
         return when {
-            !player.isHitCard() -> RoundResult.Success(successPlayer = player)
+            !player.isHitCard() -> RoundResult.Bust(bustedPlayer = player)
             !InputView.isHitCard(player) ->
                 RoundResult.Success(
                     player

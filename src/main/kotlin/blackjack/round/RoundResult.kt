@@ -9,6 +9,10 @@ sealed class RoundResult(
         val successPlayer: Player,
     ) : RoundResult(player = successPlayer)
 
+    data class Bust(
+        val bustedPlayer: Player,
+    ) : RoundResult(player = bustedPlayer)
+
     data class NotRemainCardInDeck(
         val failedPlayer: Player,
     ) : RoundResult(player = failedPlayer)
