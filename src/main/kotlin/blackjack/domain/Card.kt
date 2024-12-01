@@ -6,18 +6,18 @@ data class Card(val number: String, val symbol: SYMBOL) {
     }
 
     fun getCardNumber(number: String): Int {
-        if (SpecialNumber.entries.any { it.name == number }) {
-            return when (SpecialNumber.valueOf(number)) {
-                SpecialNumber.K,
-                SpecialNumber.Q,
-                SpecialNumber.J ->
-                    SpecialNumber.K.value
+        if (SpecialNumber.entries.none { it.name == number })
+            return number.toInt()
 
-                SpecialNumber.A ->
-                    SpecialNumber.A.value
-            }
+        return when (SpecialNumber.valueOf(number)) {
+            SpecialNumber.K,
+            SpecialNumber.Q,
+            SpecialNumber.J ->
+                SpecialNumber.K.value
+
+            SpecialNumber.A ->
+                SpecialNumber.A.value
         }
-        return number.toInt()
     }
 
     companion object {
