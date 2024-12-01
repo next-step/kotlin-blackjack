@@ -30,4 +30,14 @@ class CardTest : StringSpec({
             card.drawCards(53)
         }
     }
+
+    "카드를 뽑을 때 0 이하의 수를 요청하면 예외를 던진다." {
+        val card = Card()
+        shouldThrow<IllegalArgumentException> {
+            card.drawCards(0)
+        }
+        shouldThrow<IllegalArgumentException> {
+            card.drawCards(-1)
+        }
+    }
 })
