@@ -8,7 +8,7 @@ import blackjack.view.ResultView
 
 class BlackJackMachine {
     fun play() {
-        val players = Players.generatePlayersFromNames(playerNames = InputView.inputPlayerNames())
+        val players = Players.generateFromNames(playerNames = InputView.inputPlayerNames())
         ResultView.printPlayersName(players = players)
         ResultView.printPlayersCardStatus(players = players)
 
