@@ -2,7 +2,7 @@ package blackjack.domain
 
 class Player(
     val name: String,
-    private val cards: Cards = Cards.emptyCards(),
+    val cards: Cards = Cards.emptyCards(),
     status: Status = Status.PLAYING,
 ) {
     val hands: Int
@@ -27,17 +27,17 @@ class Player(
     }
 
     fun hit(deck: Deck) {
-        checkBurst()
+        if (!isPlayable()) {
+            return
+        }
 
         val card = deck.draw()
         cards.add(card)
         handleBurst()
     }
 
-    private fun checkBurst() {
-        if (status == Status.BURST) {
-            throw IllegalStateException("버스트 상태에서는 카드를 더 뽑을 수 없습니다.")
-        }
+    fun isPlayable(): Boolean {
+        return status == Status.PLAYING
     }
 
     private fun handleBurst() {

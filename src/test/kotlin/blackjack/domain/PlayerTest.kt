@@ -43,15 +43,6 @@ class PlayerTest : StringSpec({
         actual.status shouldBe Player.Status.BURST
     }
 
-    "플레이어는 버스트 상태일 때 히트를 하면 IllegalStateException이 발생한다." {
-        val deck = Deck()
-        val actual = Player("pobi", status = Player.Status.BURST)
-
-        shouldThrow<IllegalStateException> {
-            actual.hit(deck)
-        }
-    }
-
     "플레이어는 스테이 상태가 될 수 있다." {
         val actual = Player("pobi")
 
