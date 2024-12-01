@@ -42,6 +42,14 @@ class BlackjackGame(
     }
 
     private fun Player.compareWonOrNot(dealer: Dealer): Boolean {
+        if (dealer.cards.isBusted()) {
+            return true
+        }
+
+        if (this.cards.isBusted()) {
+            return false
+        }
+
         return this.cards.sum() > dealer.cards.sum()
     }
 
