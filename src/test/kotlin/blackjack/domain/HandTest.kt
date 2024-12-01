@@ -2,6 +2,9 @@ package blackjack.domain
 
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.Arguments
+import org.junit.jupiter.params.provider.MethodSource
 
 @Suppress("NonAsciiCharacters")
 class HandTest {
@@ -39,12 +42,53 @@ class HandTest {
         hand[0] shouldBe Card.of(StubDeck.DUMMY_SUIT, Rank.TWO)
     }
 
-    private fun createHand(vararg ranks: Rank): Hand =
-        Hand(
-            ranks.map { Card.of(DUMMY_SUIT, it) },
-        )
+    @ParameterizedTest
+    @MethodSource
+    fun `블랙잭인지 판별한다`(
+        hand: Hand,
+        expected: Boolean,
+    ) {
+        hand.isBlackjack() shouldBe expected
+    }
+
+    @ParameterizedTest
+    @MethodSource
+    fun `Bust 인지 판별한다`(
+        hand: Hand,
+        expected: Boolean,
+    ) {
+        hand.isBusted() shouldBe expected
+    }
 
     companion object {
         private val DUMMY_SUIT = Suit.SPADES
+
+        private fun createHand(vararg ranks: Rank): Hand =
+            Hand(
+                ranks.map { Card.of(DUMMY_SUIT, it) },
+            )
+
+        @JvmStatic
+        private fun `블랙잭인지 판별한다`(): List<Arguments> =
+            listOf(
+                Arguments.of(createHand(Rank.ACE, Rank.KING), true),
+                Arguments.of(createHand(Rank.ACE, Rank.QUEEN), true),
+                Arguments.of(createHand(Rank.ACE, Rank.JACK), true),
+                Arguments.of(createHand(Rank.ACE, Rank.TWO, Rank.EIGHT), false),
+                Arguments.of(createHand(Rank.TWO, Rank.FOUR), false),
+                Arguments.of(createHand(Rank.TWO, Rank.THREE, Rank.FOUR, Rank.FIVE), false),
+            )
+
+        @JvmStatic
+        private fun `Bust 인지 판별한다`(): List<Arguments> =
+            listOf(
+                // blackjack
+                Arguments.of(createHand(Rank.ACE, Rank.KING), false),
+                // 21
+                Arguments.of(createHand(Rank.ACE, Rank.TWO, Rank.EIGHT), false),
+                // 22
+                Arguments.of(createHand(Rank.TEN, Rank.JACK, Rank.TWO), true),
+                Arguments.of(createHand(Rank.SIX, Rank.SEVEN, Rank.NINE), true),
+            )
     }
 }
