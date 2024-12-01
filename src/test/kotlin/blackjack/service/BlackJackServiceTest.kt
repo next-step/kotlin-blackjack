@@ -23,4 +23,9 @@ class BlackJackServiceTest : StringSpec({
             player.cards.size shouldBe 2
         }
     }
+
+    "빈 문자열을 분리하면 빈 리스트를 반환한다." {
+        val names = blackjackService.splitPlayerNames("")
+        names shouldBe emptyList()
+    }
 })
