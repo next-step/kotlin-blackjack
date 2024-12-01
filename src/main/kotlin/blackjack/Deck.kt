@@ -22,11 +22,10 @@ class Deck(
 
     companion object {
         private const val MAXIMUM_CARD_COUNT = 52
-        private val CARDS: List<Card> =
-            Suit.entries.flatMap { suit ->
-                CardNumber.entries.map { cardNumber ->
-                    Card(cardNumber, suit)
-                }
-            }
+        private val CARDS: List<Card> = Suit.entries.flatMap { it.generateCards() }
     }
+}
+
+fun Suit.generateCards(): List<Card> {
+    return CardNumber.entries.map { cardNumber -> Card(cardNumber, this) }
 }
