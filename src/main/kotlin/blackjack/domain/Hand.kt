@@ -3,7 +3,7 @@ package blackjack.domain
 class Hand(
     cards: List<Card> = emptyList(),
 ) {
-    private val cards = mutableListOf<Card>()
+    val cards = mutableListOf<Card>()
 
     init {
         this.cards.addAll(cards)
