@@ -2,7 +2,6 @@ package blackjack.view
 
 import blackjack.domain.BlackJackPlayer
 import blackjack.domain.BlackJackPlayers
-import blackjack.domain.BlackJackResult
 
 object BlackJackView {
     fun getPlayerName(): List<String> {
@@ -34,8 +33,8 @@ object BlackJackView {
         }
     }
 
-    fun drawWinPlayer(blackJackResult: BlackJackResult) {
+    fun drawWinPlayer(blackJackPlayers: BlackJackPlayers) {
         println("승리자는 ")
-        print(blackJackResult.getWinPlayers().map { it.name }.joinToString(","))
+        print(blackJackPlayers.getWinPlayer().map { it.name }.joinToString(","))
     }
 }

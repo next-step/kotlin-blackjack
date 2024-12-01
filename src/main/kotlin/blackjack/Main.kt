@@ -4,7 +4,6 @@ import blackjack.domain.BlackJackCards
 import blackjack.domain.BlackJackPlayer
 import blackjack.domain.BlackJackPlayerCards
 import blackjack.domain.BlackJackPlayers
-import blackjack.domain.BlackJackResult
 import blackjack.view.BlackJackView
 
 fun main() {
@@ -29,5 +28,5 @@ fun main() {
         }
     }
     BlackJackView.drawBlackJackPlayersCardsWithResult(blackJackPlayers)
-    BlackJackView.drawWinPlayer(BlackJackResult(blackJackPlayers))
+    BlackJackView.drawWinPlayer(blackJackPlayers)
 }

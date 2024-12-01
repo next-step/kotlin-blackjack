@@ -90,4 +90,20 @@ class BlackJackPlayerTest {
             .isInstanceOf(IllegalArgumentException::class.java)
             .hasMessage("21을 넘으면 카드를 못뽑아요")
     }
+
+    @Test
+    fun `플레이어는 자신이 가진 카드의 최적의 합을 구할수 있다`() {
+        val blackJackPlayer =
+            BlackJackPlayer(
+                "사람",
+                BlackJackPlayerCards(
+                    mutableListOf(
+                        BlackJackCard(BlackJackCardShape.HEART, BlackJackCardNumber.QUEEN),
+                        BlackJackCard(BlackJackCardShape.HEART, BlackJackCardNumber.ACE),
+                    ),
+                ),
+            )
+
+        assertThat(blackJackPlayer.getBestSum()).isEqualTo(21)
+    }
 }
