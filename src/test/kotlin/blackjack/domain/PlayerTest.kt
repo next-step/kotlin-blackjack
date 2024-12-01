@@ -22,4 +22,14 @@ class PlayerTest {
         val player = Player("jack")
         player.value shouldBe 0
     }
+
+    @Test
+    fun `덱에서 카드를 뽑을 수 있다`() {
+        val player = Player("jack")
+        val deck = StubDeck.from(Rank.TWO)
+
+        player.drawFrom(deck)
+
+        player.hand[0] shouldBe Card.of(StubDeck.DUMMY_SUIT, Rank.TWO)
+    }
 }

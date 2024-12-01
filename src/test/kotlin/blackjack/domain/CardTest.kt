@@ -8,8 +8,6 @@ import org.junit.jupiter.params.provider.EnumSource
 
 @Suppress("NonAsciiCharacters")
 class CardTest {
-    private val dummySuit = Suit.HEARTS
-
     @ParameterizedTest
     @CsvSource(
         value = [
@@ -28,7 +26,7 @@ class CardTest {
         rank: Rank,
         expected: Int,
     ) {
-        val card = Card.of(dummySuit, rank)
+        val card = Card.of(DUMMY_SUIT, rank)
         card.rankValue shouldBe expected
     }
 
@@ -38,13 +36,17 @@ class CardTest {
         names = ["JACK", "QUEEN", "KING"],
     )
     fun `페이스 카드등의 값은 10이다`(rank: Rank) {
-        val card = Card.of(dummySuit, rank)
+        val card = Card.of(DUMMY_SUIT, rank)
         card.rankValue shouldBe 10
     }
 
     @Test
     fun `에이스의 값은 1이다`() {
-        val card = Card.of(dummySuit, Rank.ACE)
+        val card = Card.of(DUMMY_SUIT, Rank.ACE)
         card.rankValue shouldBe 1
+    }
+
+    companion object {
+        private val DUMMY_SUIT = Suit.HEARTS
     }
 }

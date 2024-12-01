@@ -10,4 +10,8 @@ class Player(
     init {
         require(name.isNotBlank()) { "이름이 빈 문자열입니다." }
     }
+
+    fun drawFrom(deck: Deck) {
+        hand.drawFrom(deck)
+    }
 }

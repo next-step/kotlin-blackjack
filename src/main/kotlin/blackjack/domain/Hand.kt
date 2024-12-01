@@ -9,6 +9,8 @@ class Hand(
         this.cards.addAll(cards)
     }
 
+    operator fun get(index: Int): Card = cards[index]
+
     fun value(): Int {
         val handValue = cards.sumOf { it.rankValue }
         if (isAceExtraValue(handValue)) {

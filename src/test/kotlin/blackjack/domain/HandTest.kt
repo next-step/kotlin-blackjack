@@ -5,8 +5,6 @@ import org.junit.jupiter.api.Test
 
 @Suppress("NonAsciiCharacters")
 class HandTest {
-    private val dummySuit = Suit.SPADES
-
     @Test
     fun `Ace 이외의 카드들의 합을 구한다`() {
         val hand = createHand(Rank.TWO, Rank.THREE, Rank.FOUR, Rank.FIVE)
@@ -31,8 +29,22 @@ class HandTest {
         hand.value() shouldBe 2 + 9 + 1
     }
 
+    @Test
+    fun `덱에서 카드를 뽑을 수 있다`() {
+        val hand = Hand()
+        val deck = StubDeck.from(Rank.TWO)
+
+        hand.drawFrom(deck)
+
+        hand[0] shouldBe Card.of(StubDeck.DUMMY_SUIT, Rank.TWO)
+    }
+
     private fun createHand(vararg ranks: Rank): Hand =
         Hand(
-            ranks.map { Card.of(dummySuit, it) },
+            ranks.map { Card.of(DUMMY_SUIT, it) },
         )
+
+    companion object {
+        private val DUMMY_SUIT = Suit.SPADES
+    }
 }
