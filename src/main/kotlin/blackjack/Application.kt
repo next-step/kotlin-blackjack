@@ -1,7 +1,7 @@
 package blackjack
 
+import blackjack.domain.BlackjackPlayer
 import blackjack.domain.Dealer
-import blackjack.domain.Player
 import blackjack.view.InputView
 import blackjack.view.ResultView
 
@@ -10,7 +10,7 @@ fun main() {
 
     val playerNames = InputView.inputPlayerNames()
     val players = playerNames.map {
-        dealer initCardTo Player(name = it)
+        dealer initCardTo BlackjackPlayer(name = it)
     }
     ResultView.printPlayersInitInfo(players)
 
