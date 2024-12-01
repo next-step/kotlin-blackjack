@@ -1,6 +1,5 @@
 package blackjack.domain
 
-import blackjack.domain.Card.Companion.SYMBOL
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
@@ -10,8 +9,8 @@ class PlayerTest {
         val player = Player("Tester")
         val mockCard =
             listOf(
-                Card("3", SYMBOL.CLUB),
-                Card("4", SYMBOL.HEART),
+                Card.createCard("3", "클로버"),
+                Card.createCard("4", "하트"),
             )
 
         mockCard.forEach { card ->
@@ -26,8 +25,8 @@ class PlayerTest {
         val player = Player("Tester")
         val mockCard =
             listOf(
-                Card("3", SYMBOL.CLUB),
-                Card("4", SYMBOL.HEART),
+                Card.createCard("3", "클로버"),
+                Card.createCard("4", "하트"),
             )
 
         mockCard.forEach { card ->
@@ -42,9 +41,9 @@ class PlayerTest {
         val player = Player("Tester")
         val mockCard =
             listOf(
-                Card("8", SYMBOL.CLUB),
-                Card("9", SYMBOL.HEART),
-                Card("9", SYMBOL.HEART),
+                Card.createCard("8", "클로버"),
+                Card.createCard("9", "하트"),
+                Card.createCard("9", "하트"),
             )
 
         mockCard.forEach { card ->
@@ -59,9 +58,9 @@ class PlayerTest {
         val player = Player("Tester")
         val mockCard =
             listOf(
-                Card("A", SYMBOL.CLUB),
-                Card("9", SYMBOL.HEART),
-                Card("9", SYMBOL.HEART),
+                Card.createCard("A", "클로버"),
+                Card.createCard("9", "하트"),
+                Card.createCard("9", "하트"),
             )
 
         mockCard.forEach { card ->
@@ -76,8 +75,8 @@ class PlayerTest {
         val player = Player("Tester")
         val mockCard =
             listOf(
-                Card("A", SYMBOL.CLUB),
-                Card("9", SYMBOL.HEART),
+                Card.createCard("A", "클로버"),
+                Card.createCard("9", "하트"),
             )
 
         mockCard.forEach { card ->

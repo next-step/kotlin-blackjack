@@ -3,12 +3,12 @@ package blackjack.domain
 data class Game(val players: List<Player>, val drawer: Deck) {
     fun startGame(
         onPrintResultCallback: ((List<Player>) -> Unit),
-        onTurnCompleted: (Player) -> String,
+        onTurnStarted: (Player) -> String,
     ) {
-        drawer.generate()
+        drawer.fillDeck(Card.cards)
         initTurn(onPrintResultCallback)
         players.forEach { player ->
-            startTurn(player, onTurnCompleted, onPrintResultCallback)
+            startTurn(player, onTurnStarted, onPrintResultCallback)
         }
     }
 
@@ -19,7 +19,7 @@ data class Game(val players: List<Player>, val drawer: Deck) {
         onPrintResultCallback(players)
     }
 
-    private fun startTurn(
+    fun startTurn(
         currentPlayer: Player,
         onTurnStarted: ((Player) -> String),
         onPrintResultCallback: (List<Player>) -> Unit,
