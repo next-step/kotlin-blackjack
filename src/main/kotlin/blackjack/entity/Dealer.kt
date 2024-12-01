@@ -18,12 +18,23 @@ class Dealer : Participant("딜러") {
         val playerScores = score.scores
 
         return if (dealerScore > BLACKJACK) {
-            GameResult(this, 0, playerScores.size)
+            GameResult(this, wins = 0, loses = playerScores.size)
         } else {
-            val wins = playerScores.count { closeToBlackjack(it) > closeToBlackjack(dealerScore) }
-            val loses = playerScores.count { closeToBlackjack(it) < closeToBlackjack(dealerScore) }
-            val draws = playerScores.count { closeToBlackjack(it) == closeToBlackjack(dealerScore) }
-            GameResult(this, wins, loses, draws)
+            calculateGameResult(dealerScore, playerScores)
         }
+    }
+
+    private fun calculateGameResult(
+        dealerScore: Int,
+        playerScores: List<Int>,
+    ): GameResult {
+        val dealerDistance = closeToBlackjack(dealerScore)
+        val playerDistances = playerScores.map { closeToBlackjack(it) }
+
+        val wins = playerDistances.count { it > dealerDistance }
+        val loses = playerDistances.count { it < dealerDistance }
+        val draws = playerDistances.count { it == dealerDistance }
+
+        return GameResult(this, wins, loses, draws)
     }
 }
