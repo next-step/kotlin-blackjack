@@ -14,7 +14,7 @@ value class Score(private val value: Int) {
 
     companion object {
         private const val SCORE_VALUE_EXCEPTION = "점수는 음수가 될 수 없습니다."
-        private const val MAX_SCORE = 21
+        const val MAX_SCORE = 21
 
         fun calculate(
             numbers: List<CardNumber>,
