@@ -2,9 +2,9 @@ package blackjack.app
 
 import blackjack.entity.Dealer
 import blackjack.entity.Deck
+import blackjack.entity.GameResult
 import blackjack.entity.Participants
 import blackjack.entity.Player
-import blackjack.entity.PlayerResult
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
@@ -56,17 +56,18 @@ class BlackJackGame {
     }
 
     fun finishGame(participants: Participants) {
-        val playerResults =
-            calculateScore(participants)
-        outputView.printPlayerResults(playerResults)
+        val gameResults = calculateResult(participants)
+        outputView.printGameResult(gameResults)
     }
 
-    private fun calculateScore(participants: Participants): List<PlayerResult> {
-        val playerResults =
-            participants.players.map { player ->
-                val score = player.calculateScore()
-                PlayerResult(player.name, player.hand, score)
-            }
-        return playerResults
+    private fun calculateResult(participants: Participants): List<GameResult> {
+        val dealer = participants.dealer
+        val dealerScore = dealer.calculateScore()
+        outputView.printPlayerResults(dealer.name, dealer.hand, dealerScore)
+
+        participants.players.map { player ->
+            outputView.printPlayerResults(player.name, player.hand, player.calculateScore())
+        }
+        return participants.calculateResult()
     }
 }

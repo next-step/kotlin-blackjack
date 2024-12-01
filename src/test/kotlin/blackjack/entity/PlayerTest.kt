@@ -1,62 +1,59 @@
 package blackjack.entity
 
-import io.kotest.core.spec.style.DescribeSpec
-import io.kotest.matchers.collections.shouldBeEmpty
+import io.kotest.core.spec.style.BehaviorSpec
+import io.kotest.data.forAll
+import io.kotest.data.row
 import io.kotest.matchers.shouldBe
 
-class PlayerTest : DescribeSpec({
-    describe("플레이어는") {
+class PlayerTest : BehaviorSpec({
 
-        context("초기화할 때") {
-            it("이름을 설정할 수 있어야 한다") {
-                val player = Player("Alice")
-                player.name shouldBe "Alice"
-            }
+    Given("플레이어와 딜러의 점수를 비교하여 결과를 계산할 때") {
+        forAll(
+            row(
+                ComparisonScore.Single(22),
+                listOf(Card(Suit.HEARTS, Rank.TEN), Card(Suit.SPADES, Rank.SEVEN)),
+                1,
+                0,
+                0,
+                "딜러가 Bust인 경우",
+            ),
+            row(
+                ComparisonScore.Single(17),
+                listOf(Card(Suit.HEARTS, Rank.TEN), Card(Suit.CLUBS, Rank.TEN)),
+                1,
+                0,
+                0,
+                "플레이어가 딜러보다 21에 가까운 경우",
+            ),
+            row(
+                ComparisonScore.Single(20),
+                listOf(Card(Suit.DIAMONDS, Rank.NINE), Card(Suit.SPADES, Rank.SEVEN)),
+                0,
+                1,
+                0,
+                "딜러가 플레이어보다 21에 가까운 경우",
+            ),
+            row(
+                ComparisonScore.Single(17),
+                listOf(Card(Suit.HEARTS, Rank.TEN), Card(Suit.SPADES, Rank.SEVEN)),
+                0,
+                0,
+                1,
+                "딜러와 플레이어가 동일한 거리인 경우",
+            ),
+        ) { dealerScore, playerCards, expectedWins, expectedLoses, expectedDraws, description ->
 
-            it("빈 손패를 기본 값으로 가져야 한다") {
-                val player = Player("Bob")
-                player.hand.cards.shouldBeEmpty()
-            }
-        }
+            When(description) {
+                val player = Player("Pobi")
+                playerCards.forEach { player.receiveCard(it) }
 
-        context("카드를 추가할 때") {
-            val player = Player("Charlie")
-            val spadesTen = Card(Suit.SPADES, Rank.TEN)
-            val heartsAce = Card(Suit.HEARTS, Rank.ACE)
+                val result = player.calculateResult(dealerScore)
 
-            it("손패에 카드가 추가되어야 한다") {
-                player.receiveCard(spadesTen)
-                player.hand.cards.size shouldBe 1
-                player.hand.cards[0] shouldBe spadesTen
-            }
-
-            it("추가한 카드가 손패 리스트에 포함되어야 한다") {
-                player.receiveCard(heartsAce)
-                player.hand.cards shouldBe listOf(spadesTen, heartsAce)
-            }
-        }
-        context("점수를 계산할 때") {
-            val player = Player("Charlie")
-            val spadesTen = Card(Suit.SPADES, Rank.TEN)
-            val heartsAce = Card(Suit.HEARTS, Rank.ACE)
-            player.receiveCard(spadesTen)
-            player.receiveCard(heartsAce)
-
-            it("현재 손패의 점수를 계산할 수 있어야 한다") {
-                player.calculateScore() shouldBe 21
-            }
-        }
-        context("버스트 상태를 확인할 때") {
-            val player = Player("Charlie")
-            val spadesKing = Card(Suit.SPADES, Rank.KING)
-            val heartsKing = Card(Suit.HEARTS, Rank.KING)
-            val clubsTwo = Card(Suit.CLUBS, Rank.TWO)
-            player.receiveCard(spadesKing)
-            player.receiveCard(heartsKing)
-            player.receiveCard(clubsTwo)
-
-            it("버스트 상태를 반환해야 한다") {
-                player.isBusted() shouldBe true
+                Then("결과는 플레이어: ${expectedWins}승 ${expectedLoses}패 ${expectedDraws}무 이어야 한다") {
+                    result.wins shouldBe expectedWins
+                    result.loses shouldBe expectedLoses
+                    result.draws shouldBe expectedDraws
+                }
             }
         }
     }

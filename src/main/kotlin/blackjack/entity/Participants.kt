@@ -10,4 +10,12 @@ class Participants(
             repeat(2) { player.receiveCard(deck.deal()) }
         }
     }
+
+    fun calculateResult(): List<GameResult> {
+        val dealerScore = ComparisonScore.Single(dealer.calculateScore())
+        val playerScores = ComparisonScore.Multiple(players.map { it.calculateScore() })
+        val dealerResult = dealer.calculateResult(playerScores)
+        val playerResults = players.map { it.calculateResult(dealerScore) }
+        return listOf(dealerResult) + playerResults
+    }
 }
