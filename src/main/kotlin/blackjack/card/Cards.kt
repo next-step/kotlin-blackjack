@@ -20,4 +20,8 @@ data class Cards(
         }
 
     fun add(newCard: Card): Cards = Cards(cards = cards + newCard)
+
+    fun draw(drawCard: Card): Cards? =
+        Cards(cards = cards - drawCard)
+            .takeIf { cards.contains(drawCard) }
 }

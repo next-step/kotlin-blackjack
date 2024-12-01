@@ -10,7 +10,7 @@ class Player(
 ) {
     fun isHitCard(): Boolean = cards.sum() < BlackJackMachine.BLACKJACK
 
-    fun hitCard(newCard: Card): Player = Player(name = name, cards = cards.add(newCard))
+    fun hitCard(card: Card): Player = Player(name = name, cards = cards.add(card))
 
     companion object {
         fun fromName(name: String): Player = Player(name, cards = Cards(cards = List(size = 2) { Card.random() }))

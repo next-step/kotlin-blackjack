@@ -37,7 +37,7 @@ class PlayerTest {
     @MethodSource("generateTestPlayer")
     fun `플레이어의 카드가 추가되는지 확인한다()`(player: Player) {
         val newCard = Card(rank = Rank.FIVE, suit = Suit.DIAMOND)
-        val result = player.hitCard(newCard)
+        val result = player.hitCard(card = newCard)
         result.cards.cards shouldContainAll player.cards.cards + newCard
     }
 
