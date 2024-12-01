@@ -24,7 +24,7 @@ object BlackJackView {
 
     fun drawBlackJackPlayerCards(blackJackPlayer: BlackJackPlayer) {
         print("${blackJackPlayer.name}카드: ")
-        println(blackJackPlayer.blackJackCards.cards.map { "${it.number.name} ${it.shape.name}" }.joinToString(","))
+        println(blackJackPlayer.blackJackPlayerCards.cards.map { "${it.number.name} ${it.shape.name}" }.joinToString(","))
     }
 
     fun drawBlackJackPlayersCardsWithResult(blackJackPlayers: BlackJackPlayers) {

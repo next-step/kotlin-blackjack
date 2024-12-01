@@ -2,22 +2,22 @@ package blackjack.domain
 
 class BlackJackPlayer(
     val name: String,
-    val blackJackCards: BlackJackCards,
+    val blackJackPlayerCards: BlackJackPlayerCards,
 ) {
     init {
-        require(blackJackCards.cards.size == DEFAULT_CARD_NUMBER) { "플레이어는 처음에 2장만 가지고 시작해야해요" }
+        require(blackJackPlayerCards.cards.size == DEFAULT_CARD_NUMBER) { "플레이어는 처음에 2장만 가지고 시작해야해요" }
     }
 
     fun drawCard(blackJackCard: BlackJackCard) {
-        blackJackCards.addCard(blackJackCard)
+        blackJackPlayerCards.addCard(blackJackCard)
     }
 
     fun isDrawPossible(): Boolean {
-        return blackJackCards.isCardNumberSumUnderBlackJackWinCardSum()
+        return blackJackPlayerCards.isCardNumberSumUnderBlackJackWinCardSum()
     }
 
     fun getBestSum(): Int {
-        return blackJackCards.getCardsBestSum()
+        return blackJackPlayerCards.getCardsBestSum()
     }
 
     companion object {

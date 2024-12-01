@@ -1,21 +1,21 @@
 package blackjack
 
 import blackjack.domain.BlackJackCards
-import blackjack.domain.BlackJackCardsMap
 import blackjack.domain.BlackJackPlayer
+import blackjack.domain.BlackJackPlayerCards
 import blackjack.domain.BlackJackPlayers
 import blackjack.domain.BlackJackResult
 import blackjack.view.BlackJackView
 
 fun main() {
-    val blackJackCardsMap = BlackJackCardsMap()
+    val blackJackCards = BlackJackCards.getDefaultCards()
     val playerNames = BlackJackView.getPlayerName()
     val blackJackPlayers =
         BlackJackPlayers(
             playerNames.map {
                 BlackJackPlayer(
                     it,
-                    BlackJackCards(mutableListOf(blackJackCardsMap.get(), blackJackCardsMap.get())),
+                    BlackJackPlayerCards(mutableListOf(blackJackCards.draw(), blackJackCards.draw())),
                 )
             },
         )
@@ -23,10 +23,8 @@ fun main() {
 
     blackJackPlayers.players.forEach {
         while (it.isDrawPossible()) {
-            if (!BlackJackView.getPlayerDrawCardYn(it)) {
-                break
-            }
-            it.drawCard(blackJackCardsMap.get())
+            if (!BlackJackView.getPlayerDrawCardYn(it)) break
+            it.drawCard(blackJackCards.draw())
             BlackJackView.drawBlackJackPlayerCards(it)
         }
     }

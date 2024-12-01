@@ -6,54 +6,20 @@ import org.junit.jupiter.api.Test
 
 class BlackJackCardsTest {
     @Test
-    fun addcardTest() {
-        val blackJackCards =
-            BlackJackCards(
-                mutableListOf(
-                    BlackJackCard(BlackJackCardShape.HEART, BlackJackCardNumber.KING),
-                    BlackJackCard(BlackJackCardShape.HEART, BlackJackCardNumber.JACK),
-                ),
-            )
-        blackJackCards.addCard(BlackJackCard(BlackJackCardShape.HEART, BlackJackCardNumber.ACE))
-        assertThat(blackJackCards.cards.size).isEqualTo(3)
-        assertThat(blackJackCards.cards[2]).isEqualTo(BlackJackCard(BlackJackCardShape.HEART, BlackJackCardNumber.ACE))
+    fun `카드는 에이스(1,11)부터 2~10 JACK(10) QUEEN(10) KING(10)이 있다`() {
+        val blackJackCard =
+            BlackJackCards(mutableListOf(BlackJackCard(BlackJackCardShape.HEART, BlackJackCardNumber.ACE))).draw()
+        assertThat(blackJackCard.number.values).containsExactly(1, 11)
+        assertThat(blackJackCard.shape).isEqualTo(BlackJackCardShape.HEART)
     }
 
     @Test
-    fun `카드 추가 불가 케이스 테스트`() {
+    fun `중복된 카드는 지급될수 없다`() {
         val blackJackCards =
-            BlackJackCards(
-                mutableListOf(
-                    BlackJackCard(BlackJackCardShape.HEART, BlackJackCardNumber.KING),
-                    BlackJackCard(BlackJackCardShape.HEART, BlackJackCardNumber.JACK),
-                    BlackJackCard(BlackJackCardShape.HEART, BlackJackCardNumber.TWO),
-                ),
-            )
-        assertThatThrownBy { blackJackCards.addCard(BlackJackCard(BlackJackCardShape.HEART, BlackJackCardNumber.ACE)) }
+            BlackJackCards(mutableListOf(BlackJackCard(BlackJackCardShape.HEART, BlackJackCardNumber.ACE)))
+        blackJackCards.draw()
+        assertThatThrownBy { blackJackCards.draw() }
             .isInstanceOf(IllegalArgumentException::class.java)
-            .hasMessage("21을 넘으면 카드를 못뽑아요")
-    }
-
-    @Test
-    fun bestSumTest() {
-        val blackJackCards1 =
-            BlackJackCards(
-                mutableListOf(
-                    BlackJackCard(BlackJackCardShape.HEART, BlackJackCardNumber.ACE),
-                    BlackJackCard(BlackJackCardShape.HEART, BlackJackCardNumber.JACK),
-                ),
-            )
-
-        val blackJackCards2 =
-            BlackJackCards(
-                mutableListOf(
-                    BlackJackCard(BlackJackCardShape.DIAMOND, BlackJackCardNumber.ACE),
-                    BlackJackCard(BlackJackCardShape.DIAMOND, BlackJackCardNumber.JACK),
-                    BlackJackCard(BlackJackCardShape.DIAMOND, BlackJackCardNumber.TWO),
-                ),
-            )
-
-        assertThat(blackJackCards1.getCardsBestSum()).isEqualTo(21)
-        assertThat(blackJackCards2.getCardsBestSum()).isEqualTo(13)
+            .hasMessage("카드가 없어요")
     }
 }

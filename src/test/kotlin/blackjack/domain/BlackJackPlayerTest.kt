@@ -10,14 +10,14 @@ class BlackJackPlayerTest {
         val blackJackPlayer =
             BlackJackPlayer(
                 "사람",
-                BlackJackCards(
+                BlackJackPlayerCards(
                     mutableListOf(
                         BlackJackCard(BlackJackCardShape.HEART, BlackJackCardNumber.ACE),
                         BlackJackCard(BlackJackCardShape.HEART, BlackJackCardNumber.JACK),
                     ),
                 ),
             )
-        assertThat(blackJackPlayer.blackJackCards.cards).containsExactly(
+        assertThat(blackJackPlayer.blackJackPlayerCards.cards).containsExactly(
             BlackJackCard(
                 BlackJackCardShape.HEART,
                 BlackJackCardNumber.ACE,
@@ -31,8 +31,15 @@ class BlackJackPlayerTest {
 
     @Test
     fun `2장이 아니면 에러 출력`() {
-        val blackJackCardsMap = BlackJackCardsMap()
-        assertThatThrownBy { BlackJackPlayer("사람", BlackJackCards(MutableList(3) { blackJackCardsMap.get() })) }
+        val blackJackCards =
+            BlackJackCards(
+                mutableListOf(
+                    BlackJackCard(BlackJackCardShape.HEART, BlackJackCardNumber.ACE),
+                    BlackJackCard(BlackJackCardShape.HEART, BlackJackCardNumber.JACK),
+                    BlackJackCard(BlackJackCardShape.HEART, BlackJackCardNumber.KING),
+                ),
+            )
+        assertThatThrownBy { BlackJackPlayer("사람", BlackJackPlayerCards(MutableList(3) { blackJackCards.draw() })) }
             .isInstanceOf(IllegalArgumentException::class.java)
             .hasMessage("플레이어는 처음에 2장만 가지고 시작해야해요")
     }
@@ -42,7 +49,7 @@ class BlackJackPlayerTest {
         val blackJackPlayer =
             BlackJackPlayer(
                 "사람",
-                BlackJackCards(
+                BlackJackPlayerCards(
                     mutableListOf(
                         BlackJackCard(BlackJackCardShape.HEART, BlackJackCardNumber.ACE),
                         BlackJackCard(BlackJackCardShape.HEART, BlackJackCardNumber.JACK),
@@ -50,7 +57,7 @@ class BlackJackPlayerTest {
                 ),
             )
         blackJackPlayer.drawCard(BlackJackCard(BlackJackCardShape.HEART, BlackJackCardNumber.TWO))
-        assertThat(blackJackPlayer.blackJackCards.cards).containsExactly(
+        assertThat(blackJackPlayer.blackJackPlayerCards.cards).containsExactly(
             BlackJackCard(
                 BlackJackCardShape.HEART,
                 BlackJackCardNumber.ACE,
@@ -71,7 +78,7 @@ class BlackJackPlayerTest {
         val blackJackPlayer =
             BlackJackPlayer(
                 "사람",
-                BlackJackCards(
+                BlackJackPlayerCards(
                     mutableListOf(
                         BlackJackCard(BlackJackCardShape.HEART, BlackJackCardNumber.QUEEN),
                         BlackJackCard(BlackJackCardShape.HEART, BlackJackCardNumber.JACK),
