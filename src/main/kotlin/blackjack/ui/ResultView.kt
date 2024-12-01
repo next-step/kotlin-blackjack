@@ -7,20 +7,35 @@ import blackjack.domain.Player
 
 object ResultView {
     private const val COMMA_SEPARATOR = ", "
+    private const val BUSTED = "🪦"
 
-    fun displayInitialState(game: Game) {
+    fun displayState(
+        game: Game,
+        isInitial: Boolean = true,
+    ) {
         val roster = game.players.roster
         val names = roster.map { it.name }
         val message =
             buildString {
                 appendLine()
-                appendLine("${names.joinToString(COMMA_SEPARATOR)}에게 2장의 나누었습니다.")
-                roster.forEach { appendLine(formatPlayer(it)) }
+                if (isInitial) {
+                    appendLine("${names.joinToString(COMMA_SEPARATOR)}에게 2장의 나누었습니다.")
+                }
+                roster.forEach { appendLine(formatPlayer(it, isInitial)) }
             }
-        println(message)
+        print(message)
     }
 
-    private fun formatPlayer(player: Player): String = "${player.name}카드: ${formatHand(player.hand)}"
+    private fun formatPlayer(
+        player: Player,
+        isInitial: Boolean,
+    ): String {
+        val result = "${player.name}카드: ${formatHand(player.hand)}"
+        if (isInitial) {
+            return result
+        }
+        return result + " - 결과: ${if (player.isDone) BUSTED else player.value}"
+    }
 
     private fun formatHand(hand: Hand): String =
         hand.cards

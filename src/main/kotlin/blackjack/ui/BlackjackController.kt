@@ -12,6 +12,11 @@ class BlackjackController(
         val game = blackjackService.initializeGame(names, deck)
 
         // 초기 상태 출력
-        ResultView.displayInitialState(game)
+        ResultView.displayState(game)
+
+        // 게임 진행
+
+        // 게임 결과 출력
+        ResultView.displayState(game, false)
     }
 }
