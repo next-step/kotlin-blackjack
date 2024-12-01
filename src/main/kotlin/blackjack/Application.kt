@@ -17,7 +17,7 @@ fun main() {
         }
     }
     val turnCallback: ((Player) -> String) = { player ->
-        inputView.printCardDrawMessage(player.name)
+        inputView.setUserAnswer(player.name)
         inputView.getUserAnswer()
     }
 
