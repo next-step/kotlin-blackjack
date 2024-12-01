@@ -61,7 +61,7 @@ class CardGameTest : BehaviorSpec({
             }, listOf(userA, userB)
         )
         When("pick 호출하면") {
-            cardGame.pick(userA)
+            cardGame.hand(userA)
             val actual = cardGame.userHand(userA)
 
             Then("1장의 카드를 가진다") {
@@ -97,6 +97,7 @@ class CardGameTest : BehaviorSpec({
             createDeck {
                 cards {
                     "A" to Suit.CLUB
+                    "A" to Suit.DIAMOND
                 }
             }, listOf(userA)
         )
@@ -106,7 +107,7 @@ class CardGameTest : BehaviorSpec({
             val actual = cardGame.scoreOf(userA)
 
             Then("사용자는 두 장의 카드를 가진다") {
-                actual shouldBe 11
+                actual shouldBe 12
             }
         }
     }

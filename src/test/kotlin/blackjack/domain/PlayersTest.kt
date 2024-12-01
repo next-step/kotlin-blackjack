@@ -17,13 +17,11 @@ class PlayersTest : BehaviorSpec({
             Player.from("player1") to createDeck {
                 cards {
                     "A" to Suit.SPADE
-                    "2" to Suit.DIAMOND
                 }
             },
             Player.from("player2") to createDeck {
                 cards {
                     "3" to Suit.HEART
-                    "4" to Suit.CLUB
                 }
             }
         ).forEach { (player, cards) ->

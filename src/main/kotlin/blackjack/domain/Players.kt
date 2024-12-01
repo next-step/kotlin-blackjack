@@ -1,8 +1,6 @@
 package blackjack.domain
 
-class Players private constructor(private val values: List<Player>) {
-    val size: Int = values.size
-
+class Players private constructor(private val values: List<Player>) : List<Player> by values {
     fun deal(
         player: Player,
         deck: Deck,
@@ -28,6 +26,10 @@ class Players private constructor(private val values: List<Player>) {
 
     fun scoreOf(name: String): Int {
         return find(name).score()
+    }
+
+    fun isBust(name: String): Boolean {
+        return find(name).isBust
     }
 
     companion object {

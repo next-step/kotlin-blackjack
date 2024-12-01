@@ -21,7 +21,6 @@ class PlayerTest : BehaviorSpec({
         val cards = createDeck {
             cards {
                 "A" to Suit.SPADE
-                "K" to Suit.SPADE
             }
         }
 

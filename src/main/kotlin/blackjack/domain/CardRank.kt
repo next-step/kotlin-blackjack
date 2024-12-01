@@ -4,8 +4,12 @@ sealed class CardRank private constructor() {
     abstract fun calculateScore(currentScore: Int): Int
 
     data object Ace : CardRank() {
+        private const val SOFT_SCORE = 11
+        private const val HARD_SCORE = 1
+        private const val BUST_SCORE = 21
+
         override fun calculateScore(currentScore: Int): Int {
-            return if (currentScore + 11 > 21) currentScore + 1 else currentScore + 11
+            return if (currentScore + SOFT_SCORE > BUST_SCORE) currentScore + HARD_SCORE else currentScore + SOFT_SCORE
         }
     }
 
@@ -15,7 +19,9 @@ sealed class CardRank private constructor() {
 
     data class Number(val value: Int) : CardRank() {
         init {
-            require(value in 2..9) { "Number 는 2~9 사이의 값 이어야 합니다.: $value" }
+            val numberMin = 2
+            val numberMax = 9
+            require(value in numberMin..numberMax) { "Number 는 ${numberMin}~${numberMax} 사이의 값 이어야 합니다.: $value" }
         }
 
         override fun calculateScore(currentScore: Int): Int = currentScore + value

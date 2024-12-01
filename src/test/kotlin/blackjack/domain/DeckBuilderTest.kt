@@ -10,11 +10,10 @@ class DeckBuilderTest {
             createDeck {
                 cards {
                     "A" to Suit.CLUB
-                    "2" to Suit.SPADE
                 }
             }
 
-        val expected = Deck(listOf(Card("A", Suit.CLUB), Card("2", Suit.SPADE)))
+        val expected = Deck(listOf(Card("A", Suit.CLUB)))
         assertThat(actual).isEqualTo(expected)
     }
 
