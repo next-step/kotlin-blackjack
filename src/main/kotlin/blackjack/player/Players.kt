@@ -7,7 +7,7 @@ class Players(
 ) {
     companion object {
         fun generateFromNames(playerNames: List<String>) = Players(players = playerNames.map { Player.fromName(name = it) })
-
-        fun generateFromRoundResults(roundResults: List<RoundResult>) = Players(players = roundResults.map { it.player })
     }
+
+    fun updateCardStatus(roundResults: List<RoundResult>): Players = Players(players = roundResults.map { it.player })
 }

@@ -13,20 +13,18 @@ class BlackJackMachine(
     private val deck: Deck,
 ) {
     fun play() {
-        var players = Players.generateFromNames(playerNames = InputView.inputPlayerNames())
+        val players = Players.generateFromNames(playerNames = InputView.inputPlayerNames())
         ResultView.printPlayersName(players = players)
         ResultView.printPlayersCardStatus(players = players)
 
-        var roundResults: List<RoundResult>
-        while (true) {
-            roundResults = players.players.map { playRoundByPlayer(player = it) }
-            players = Players.generateFromRoundResults(roundResults = roundResults)
-            ResultView.printPlayersCardStatusAndSum(players = players)
+        generateSequence(players) { current ->
+            val roundResults = current.players.map { playRoundByPlayer(player = it) }
+            val updatedPlayers = current.updateCardStatus(roundResults)
 
-            if (roundResults.stream().allMatch { it is RoundResult.Bust }) {
-                return
-            }
-        }
+            ResultView.printPlayersCardStatusAndSum(players = updatedPlayers)
+
+            if (roundResults.stream().allMatch { it is RoundResult.Bust }) null else updatedPlayers
+        }.lastOrNull()
     }
 
     private fun playRoundByPlayer(player: Player): RoundResult {
