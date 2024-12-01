@@ -14,4 +14,11 @@ class PlayerTest : StringSpec({
         val player = Player("dabomi")
         player.getCardList() shouldBe emptyList()
     }
+
+    "플레이어가 여러 번 카드를 추가한다." {
+        val player = Player("dabomi")
+        player.addCards(listOf("3스페이드"))
+        player.addCards(listOf("2하트"))
+        player.getCardList() shouldBe listOf("3스페이드", "2하트")
+    }
 })
