@@ -8,9 +8,7 @@ value class Score(private val value: Int) {
         require(value >= 0) { SCORE_VALUE_EXCEPTION }
     }
 
-    fun isGreaterThanMaxScore(card: Int) = card + value > MAX_SCORE
-
-    fun isBlackJack() = value == MAX_SCORE
+    fun isBust() = value > MAX_SCORE
 
     operator fun plus(other: Score) = Score(value + other.value)
 
@@ -21,14 +19,14 @@ value class Score(private val value: Int) {
         fun calculate(
             numbers: List<CardNumber>,
             isContainAce: Boolean,
-        ): Score {
+        ): Int {
             val score = Score(numbers.sumOf { it.value })
 
-            if (isContainAce && !score.isGreaterThanMaxScore(CardNumber.Ace.toEleven())) {
-                return score + Score(CardNumber.Ace.toEleven())
+            if (isContainAce && CardNumber.Ace.toEleven() + score.value <= MAX_SCORE) {
+                return (score + Score(CardNumber.Ace.toEleven())).value
             }
 
-            return score
+            return score.value
         }
     }
 }
