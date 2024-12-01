@@ -16,6 +16,7 @@ class Dealer : Participant("딜러") {
 
         val dealerScore = calculateScore()
         val playerScores = score.scores
+
         return if (dealerScore > BLACKJACK) {
             GameResult(this, 0, playerScores.size)
         } else {
