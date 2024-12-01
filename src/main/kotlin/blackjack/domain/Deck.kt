@@ -1,8 +1,8 @@
 package blackjack.domain
 
-class Deck {
+class Deck(
     private val cards: Cards = Cards.fullCards()
-
+) {
     val quantity: Int
         get() = cards.size
 
