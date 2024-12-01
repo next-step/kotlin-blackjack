@@ -10,13 +10,13 @@ fun main() {
 
     val playerNames = InputView.inputPlayerNames()
     val players = playerNames.map {
-        Player(name = it, dealer = dealer)
+        dealer initCardTo Player(name = it)
     }
     ResultView.printPlayersInitInfo(players)
 
     players.forEach { player ->
         while (InputView.checkDraw(player.name) == "y") {
-            player.drawCard()
+            dealer giveCardTo player
             ResultView.printPlayerCardInfo(player)
         }
         ResultView.printPlayerCardInfo(player)

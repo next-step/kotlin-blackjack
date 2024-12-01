@@ -9,7 +9,7 @@ class PlayerTest {
     @Test
     fun `플레이어는 시작과 동시에 두 장의 카드를 가지고 있는다`() {
         val dealer = Dealer()
-        val player = Player("test", dealer)
+        val player = Player("test")
 
         player.cardSet.size shouldBe 2
     }
@@ -23,7 +23,7 @@ class PlayerTest {
                 BlackjackCard(CardNumber.Q, Emblem.다이아),
             ),
         )
-        val player = Player("test", dealer)
+        val player = Player("test")
         player.drawCard()
 
         player.score shouldBe 21
@@ -38,7 +38,7 @@ class PlayerTest {
                 BlackjackCard(CardNumber.`8`, Emblem.다이아),
             ),
         )
-        val player = Player("test", dealer)
+        val player = Player("test")
         player.drawCard()
 
         player.score shouldBe 21
@@ -53,7 +53,7 @@ class PlayerTest {
                 BlackjackCard(CardNumber.J, Emblem.다이아),
             ),
         )
-        val player = Player("test", dealer)
+        val player = Player("test")
         player.drawCard()
 
         player.score shouldBe 30
