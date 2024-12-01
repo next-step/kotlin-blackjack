@@ -1,6 +1,6 @@
 package blackjack.domain
 
-data class Game(val players: List<Player>, val drawer: CardDeckStrategy) {
+data class Game(val players: List<Player>, val drawer: Deck) {
     fun startGame(
         onPrintResultCallback: ((List<Player>) -> Unit),
         onTurnCompleted: (Player) -> String,
@@ -12,19 +12,19 @@ data class Game(val players: List<Player>, val drawer: CardDeckStrategy) {
         }
     }
 
-    fun initTurn(onPrintResultCallback: ((List<Player>) -> Unit)) {
+    private fun initTurn(onPrintResultCallback: ((List<Player>) -> Unit)) {
         players.forEach { player ->
             repeat(2) { player.drawCard(CardDeck.drawCard()) }
         }
         onPrintResultCallback(players)
     }
 
-    fun startTurn(
+    private fun startTurn(
         currentPlayer: Player,
         onTurnStarted: ((Player) -> String),
         onPrintResultCallback: (List<Player>) -> Unit,
     ) {
-        while (!currentPlayer.isDone() && onTurnStarted(currentPlayer) == "y") {
+        while (!currentPlayer.isDone() && onTurnStarted(currentPlayer) == YES) {
             val card = CardDeck.drawCard()
             currentPlayer.drawCard(card)
             onPrintResultCallback(listOf(currentPlayer))
@@ -32,9 +32,11 @@ data class Game(val players: List<Player>, val drawer: CardDeckStrategy) {
     }
 
     companion object {
+        private const val YES = "y"
+
         fun createGame(
             players: List<Player>,
-            cardDeck: CardDeckStrategy = CardDeck,
+            cardDeck: Deck = CardDeck,
         ): Game {
             return Game(players, cardDeck)
         }
