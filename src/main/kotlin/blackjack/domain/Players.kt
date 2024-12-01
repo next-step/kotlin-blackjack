@@ -12,7 +12,15 @@ class Players(
         }
     }
 
+    operator fun get(index: Int): Player = roster[index]
+
+    fun dealRoundOfCardsFrom(deck: Deck) {
+        roster.forEach { it.drawFrom(deck) }
+    }
+
     companion object {
         fun from(names: List<String>): Players = Players(names.map { Player(it) })
+
+        fun from(vararg names: String): Players = from(names.toList())
     }
 }
