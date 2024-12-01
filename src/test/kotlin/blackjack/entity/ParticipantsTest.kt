@@ -24,6 +24,7 @@ class ParticipantsTest : DescribeSpec({
                 participants.players.forEach { player ->
                     player.hand.cards.size shouldBe 2
                 }
+                participants.dealer.hand.cards.size shouldBe 2
             }
         }
     }

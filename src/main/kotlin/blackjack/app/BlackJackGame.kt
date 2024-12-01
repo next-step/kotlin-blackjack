@@ -1,9 +1,10 @@
 package blackjack.app
 
+import blackjack.entity.Dealer
 import blackjack.entity.Deck
+import blackjack.entity.Participants
 import blackjack.entity.Player
 import blackjack.entity.PlayerResult
-import blackjack.entity.Players
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
@@ -12,28 +13,29 @@ class BlackJackGame {
     private val outputView = OutputView()
     private lateinit var deck: Deck
 
-    fun getPlayers(): Players {
+    fun getPlayers(): Participants {
         inputView.printMessage("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)")
 
         val input = inputView.readInput()
         println()
 
+        val dealer = Dealer()
         val players =
             input.split(",")
                 .map { it.trim() }
                 .filter { it.isNotEmpty() }
                 .map { name -> Player(name) }
-        return Players(players)
+        return Participants(dealer, players)
     }
 
-    fun gameStart(players: Players) {
+    fun gameStart(participants: Participants) {
         deck = Deck()
-        players.initializeHands(deck)
-        outputView.printInitialHands(players)
+        participants.initializeHands(deck)
+        outputView.printInitialHands(participants)
     }
 
-    fun playTurns(players: Players) {
-        players.participants.forEach { player ->
+    fun playTurns(participants: Participants) {
+        participants.players.forEach { player ->
             var wantsToHit = true
             while (wantsToHit) {
                 if (player.isBusted()) {
@@ -47,17 +49,21 @@ class BlackJackGame {
                 }
             }
         }
+        if (participants.dealer.shouldDrawCard()) {
+            participants.dealer.receiveCard(deck.deal())
+            outputView.printDealerDrawCard(participants.dealer)
+        }
     }
 
-    fun finishGame(players: Players) {
+    fun finishGame(participants: Participants) {
         val playerResults =
-            calculateResults(players)
+            calculateScore(participants)
         outputView.printPlayerResults(playerResults)
     }
 
-    private fun calculateResults(players: Players): List<PlayerResult> {
+    private fun calculateScore(participants: Participants): List<PlayerResult> {
         val playerResults =
-            players.participants.map { player ->
+            participants.players.map { player ->
                 val score = player.calculateScore()
                 PlayerResult(player.name, player.hand, score)
             }
