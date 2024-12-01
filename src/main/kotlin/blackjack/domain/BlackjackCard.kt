@@ -3,19 +3,7 @@ package blackjack.domain
 class BlackjackCard(
     val number: CardNumber,
     private val emblem: Emblem,
-    private var _isUsed: Boolean = false,
 ) {
-    val isUsed: Boolean
-        get() = _isUsed
-
-    fun draw(): BlackjackCard {
-        check(_isUsed.not()) {
-            error("[BlackjackCard] 이미 사용된 카드입니다. | card: $this")
-        }
-        _isUsed = true
-        return this
-    }
-
     enum class Emblem { 하트, 다이아, 클로버, 스페이드 }
 
     enum class CardNumber(
