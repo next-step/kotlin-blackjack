@@ -1,4 +1,4 @@
-package blackjack.domain.player
+package blackjack.domain.participant
 
 class Participants(val participants: List<Participant>) {
     init {

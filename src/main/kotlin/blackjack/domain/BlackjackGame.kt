@@ -2,9 +2,9 @@ package blackjack.domain
 
 import blackjack.domain.deck.Deck
 import blackjack.domain.deck.DeckGenerator
-import blackjack.domain.player.Dealer
-import blackjack.domain.player.Participants
-import blackjack.domain.player.Player
+import blackjack.domain.participant.Dealer
+import blackjack.domain.participant.Participants
+import blackjack.domain.participant.Player
 import blackjack.view.dto.ParticipantDto
 import blackjack.view.dto.ParticipantsDto
 import blackjack.view.dto.RecordDto

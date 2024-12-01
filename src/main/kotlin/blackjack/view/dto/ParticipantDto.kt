@@ -1,6 +1,6 @@
 package blackjack.view.dto
 
-import blackjack.domain.player.Participant
+import blackjack.domain.participant.Participant
 
 data class ParticipantDto(
     val name: String,

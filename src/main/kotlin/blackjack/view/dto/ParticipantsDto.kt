@@ -1,8 +1,8 @@
 package blackjack.view.dto
 
-import blackjack.domain.player.Dealer
-import blackjack.domain.player.Participants
-import blackjack.domain.player.Player
+import blackjack.domain.participant.Dealer
+import blackjack.domain.participant.Participants
+import blackjack.domain.participant.Player
 
 data class ParticipantsDto(
     val dealer: ParticipantDto,
