@@ -1,6 +1,6 @@
 package blackjack.domain.parser
 
-import blackjack.domain.Player
+import blackjack.domain.participant.Player
 
 object PlayerParser {
 

@@ -1,6 +1,6 @@
 package blackjack.view
 
-import blackjack.domain.Player
+import blackjack.domain.participant.Player
 import blackjack.domain.card.CardRank
 import blackjack.domain.card.CardSuit
 
