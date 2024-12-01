@@ -1,6 +1,7 @@
 package blackjack.player
 
 import blackjack.card.Card
+import blackjack.card.Cards
 import blackjack.card.Rank
 import blackjack.card.Suit
 import io.kotest.matchers.collections.shouldContainAll
@@ -19,7 +20,7 @@ class PlayerTest {
     @Test
     fun `플레이어의 카드의 합이 21 이상이면 카드를 더 받을 수 없다`() {
         val player =
-            Player.of(
+            Player.fromNameAndCards(
                 name = NAME,
                 cards =
                     listOf(
@@ -41,8 +42,19 @@ class PlayerTest {
 
     companion object {
         @JvmStatic
-        private fun generateTestPlayer() = listOf(Player.of(name = NAME, cards = List(size = 2) { Card(rank = Rank.SIX) }))
+        private fun generateTestPlayer() =
+            listOf(
+                Player.fromNameAndCards(
+                    name = NAME,
+                    cards = List(size = 2) { Card(rank = Rank.SIX) },
+                ),
+            )
 
         private const val NAME = "nooblette"
+
+        private fun Player.Companion.fromNameAndCards(
+            name: String,
+            cards: List<Card>,
+        ): Player = Player(name = name, cards = Cards(cards = cards))
     }
 }

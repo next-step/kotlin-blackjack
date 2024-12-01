@@ -13,11 +13,6 @@ class Player(
     fun hitCard(newCard: Card): Player = Player(name = name, cards = cards.add(newCard))
 
     companion object {
-        fun from(name: String): Player = Player(name, cards = Cards(cards = List(size = 2) { Card.random() }))
-
-        fun of(
-            name: String,
-            cards: List<Card>,
-        ): Player = Player(name = name, cards = Cards(cards = cards))
+        fun fromName(name: String): Player = Player(name, cards = Cards(cards = List(size = 2) { Card.random() }))
     }
 }
