@@ -1,8 +1,11 @@
 package blackjack.domain
 
 class Cards private constructor(
-    val cards: MutableSet<Card> = mutableSetOf()
+    private val cards: MutableList<Card> = mutableListOf(),
 ) {
+    val size: Int
+        get() = cards.size
+
     fun add(card: Card) {
         cards.add(card)
     }
@@ -13,25 +16,54 @@ class Cards private constructor(
         return card
     }
 
-    private fun setup() {
-        Suit.entries.forEach(::addCardsForSuit)
+    fun calculateTotalValue(): Int {
+        val nonAceValue = sumOfNonAceValue()
+        val aceCount = countAces()
+        val totalValue = sumTotalValueWithAce(nonAceValue, aceCount)
+
+        return totalValue
     }
 
-    private fun addCardsForSuit(suit: Suit) {
-        Rank.entries.forEach { rank ->
-            cards.add(Card(suit, rank))
+    private fun countAces(): Int = cards.count { it.rank == Rank.ACE }
+
+    private fun sumOfNonAceValue(): Int = cards.filter { it.rank != Rank.ACE }
+        .sumOf(Card::value)
+
+    private fun sumTotalValueWithAce(totalValue: Int, aceCount: Int): Int {
+        return if (canUseAceAlternativeValue(aceCount, totalValue)) {
+            totalValue + ACE_ALTERNATIVE_VALUE + (aceCount - 1)
+        } else {
+            totalValue + aceCount
         }
     }
+
+    private fun canUseAceAlternativeValue(aceCount: Int, totalValue: Int): Boolean =
+        aceCount > 0 && totalValue + ACE_ALTERNATIVE_VALUE + (aceCount - 1) <= BLACKJACK
 
     companion object {
-        fun fullCards(): Cards {
-            val cards = Cards()
-            cards.setup()
-            return cards
-        }
+        private const val BLACKJACK = 21
+        private const val ACE_ALTERNATIVE_VALUE = 11
 
         fun emptyCards(): Cards {
             return Cards()
+        }
+
+        fun fullCards(): Cards {
+            val cards = Cards()
+            setup(cards)
+            return cards
+        }
+
+        private fun setup(cards: Cards) {
+            Suit.entries.forEach { suit ->
+                addCardsForSuit(cards, suit)
+            }
+        }
+
+        private fun addCardsForSuit(cards: Cards, suit: Suit) {
+            Rank.entries.forEach { rank ->
+                cards.add(Card(suit, rank))
+            }
         }
     }
 }
