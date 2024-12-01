@@ -11,6 +11,8 @@ class PlayerTest {
         val dealer = Dealer()
         val player = Player("test")
 
+        dealer initCardTo  player
+
         player.cardSet.size shouldBe 2
     }
 
@@ -24,7 +26,8 @@ class PlayerTest {
             ),
         )
         val player = Player("test")
-        player.drawCard()
+        dealer initCardTo  player
+        dealer giveCardTo player
 
         player.score shouldBe 21
     }
@@ -39,7 +42,8 @@ class PlayerTest {
             ),
         )
         val player = Player("test")
-        player.drawCard()
+        dealer initCardTo  player
+        dealer giveCardTo player
 
         player.score shouldBe 21
     }
@@ -54,7 +58,8 @@ class PlayerTest {
             ),
         )
         val player = Player("test")
-        player.drawCard()
+        dealer initCardTo  player
+        dealer giveCardTo player
 
         player.score shouldBe 30
     }
