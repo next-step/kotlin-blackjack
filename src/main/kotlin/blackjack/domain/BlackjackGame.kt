@@ -1,21 +1,24 @@
 package blackjack.domain
 
+import blackjack.domain.betting.Betting
 import blackjack.domain.deck.Deck
 import blackjack.domain.deck.DeckGenerator
 import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Participants
 import blackjack.domain.participant.Player
+import blackjack.view.dto.CreatePlayersDto
 import blackjack.view.dto.ParticipantDto
 import blackjack.view.dto.ParticipantsDto
 import blackjack.view.dto.RecordDto
 
 class BlackjackGame(
-    names: List<String>,
+    players: List<CreatePlayersDto>,
     deckGenerator: DeckGenerator,
 ) {
     private val dealer: Dealer = Dealer()
     private val deck: Deck = deckGenerator.generate()
-    private val participants = Participants(listOf(dealer) + names.map { Player(name = it) })
+    private val participants =
+        Participants(listOf(dealer) + players.map { Player(name = it.name, betting = Betting(it.betting)) })
 
     fun start() {
         participants.participants.forEach { player ->

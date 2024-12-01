@@ -1,5 +1,6 @@
 package blackjack.domain.participant
 
+import blackjack.domain.betting.Betting
 import blackjack.domain.card.Card
 import blackjack.domain.card.CardNumber
 import blackjack.domain.card.CardShape
@@ -12,7 +13,7 @@ class PlayerTest : StringSpec({
         val card = Card(shape = CardShape.Heart, number = CardNumber.Two)
         val cards = Cards()
         cards.add(card)
-        val player = Player(name = "홍길동", cards = cards)
+        val player = Player(name = "홍길동", cards = cards, betting = Betting(100))
 
         val cardResult = player.cards.getCards()[0]
         player.name shouldBe "홍길동"
@@ -21,7 +22,7 @@ class PlayerTest : StringSpec({
     }
 
     "플레이어는 카드를 받을 수 있다." {
-        val player = Player(name = "홍길동")
+        val player = Player(name = "홍길동", betting = Betting(100))
         val card = Card(shape = CardShape.Heart, number = CardNumber.Ace)
 
         player.receiveCard(card)
@@ -39,7 +40,7 @@ class PlayerTest : StringSpec({
                 ).toMutableList(),
             )
 
-        val player = Player(name = "홍길동", cards = cards)
+        val player = Player(name = "홍길동", cards = cards, betting = Betting(100))
 
         player.canReceive() shouldBe false
     }

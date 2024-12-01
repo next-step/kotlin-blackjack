@@ -1,9 +1,11 @@
 package blackjack.domain.participant
 
+import blackjack.domain.betting.Betting
 import blackjack.domain.card.Cards
 import blackjack.domain.score.Score
 
 class Player(
+    private val betting: Betting,
     name: String,
     cards: Cards = Cards(),
 ) : Participant(name, cards) {

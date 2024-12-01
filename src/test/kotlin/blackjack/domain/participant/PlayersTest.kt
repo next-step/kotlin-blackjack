@@ -1,5 +1,6 @@
 package blackjack.domain.participant
 
+import blackjack.domain.betting.Betting
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
 
@@ -8,13 +9,13 @@ class PlayersTest : StringSpec({
         shouldThrow<IllegalArgumentException> {
             Participants(
                 listOf(
-                    Player("1"),
-                    Player("2"),
-                    Player("3"),
-                    Player("4"),
-                    Player("5"),
-                    Player("6"),
-                    Player("7"),
+                    Player(name = "1", betting = Betting(100)),
+                    Player(name ="2", betting = Betting(100)),
+                    Player(name = "3", betting = Betting(100)),
+                    Player(name ="4", betting = Betting(100)),
+                    Player(name = "5", betting = Betting(100)),
+                    Player(name ="6", betting = Betting(100)),
+                    Player(name = "7", betting = Betting(100)),
                 ),
             )
         }
