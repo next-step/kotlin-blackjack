@@ -14,23 +14,23 @@ import org.junit.jupiter.params.provider.MethodSource
 class PlayerTest {
     @ParameterizedTest
     @MethodSource("generateTestPlayer")
-    fun `플레이어의 카드의 합이 21 미만이면 카드를 더 받을 수 있다`(player: Player) {
-        player.isHitCard() shouldBe true
+    fun `플레이어의 카드의 합이 21 이하면 게임을 진행할 수 있다`(player: Player) {
+        player.isBust() shouldBe false
     }
 
     @Test
-    fun `플레이어의 카드의 합이 21 이상이면 카드를 더 받을 수 없다`() {
+    fun `플레이어의 카드의 합이 21을 초과하면 패배한다`() {
         val player =
             Player.fromNameAndCards(
                 name = NAME,
                 cards =
                     listOf(
-                        CardFixture.generateTestCard(rank = Rank.FIVE),
+                        CardFixture.generateTestCard(rank = Rank.SIX),
                         CardFixture.generateTestCard(rank = Rank.SIX),
                         CardFixture.generateTestCard(rank = Rank.TEN),
                     ),
             )
-        player.isHitCard() shouldBe false
+        player.isBust() shouldBe true
     }
 
     @ParameterizedTest
@@ -47,7 +47,7 @@ class PlayerTest {
             listOf(
                 Player.fromNameAndCards(
                     name = NAME,
-                    cards = List(size = 2) { CardFixture.generateTestCard(rank = Rank.SIX) },
+                    cards = listOf(CardFixture.generateTestCard(rank = Rank.ACE), CardFixture.generateTestCard(rank = Rank.TEN)),
                 ),
             )
 

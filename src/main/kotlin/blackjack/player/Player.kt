@@ -8,7 +8,7 @@ class Player(
     val name: String,
     val cards: Cards,
 ) {
-    fun isHitCard(): Boolean = cards.sum() < BlackJackMachine.BLACKJACK
+    fun isBust(): Boolean = cards.sum() > BlackJackMachine.BLACKJACK
 
     fun hitCard(card: Card): Player = Player(name = name, cards = cards.add(card))
 

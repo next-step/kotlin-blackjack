@@ -30,7 +30,7 @@ class BlackJackMachine(
 
     private fun playRoundByPlayer(player: Player): RoundResult {
         return when {
-            !player.isHitCard() -> RoundResult.Bust(bustedPlayer = player)
+            player.isBust() -> RoundResult.Bust(bustedPlayer = player)
             !InputView.isHitCard(player) ->
                 RoundResult.Success(
                     player
