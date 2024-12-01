@@ -2,8 +2,9 @@ package blackjack
 
 import blackjack.domain.BlackjackGame
 import blackjack.domain.Deck
-import blackjack.domain.participant.Player
 import blackjack.domain.parser.PlayerParser
+import blackjack.domain.participant.Dealer
+import blackjack.domain.participant.Player
 import blackjack.view.InputView
 import blackjack.view.ResultView
 
@@ -12,29 +13,34 @@ class BlackjackRunner {
     fun run() {
         val blackjackGame = BlackjackGame(
             deck = Deck(),
+            dealer = Dealer(),
             players = PlayerParser.parse(InputView.showAndGetPlayers()),
         )
 
         blackjackGame.start()
-        ResultView.printStartCards(blackjackGame.players)
+        ResultView.printStartCards(blackjackGame.participants)
 
-        blackjackGame.players.forEach { player ->
-            while (InputView.showAndGetHitOrNot(player.name)) {
-                blackjackGame.draw(player)
-                ResultView.printPlayerCard(player)
-                if (isBusted(player)) break
-            }
-        }
+        drawPlayers(blackjackGame)
+        drawDealer(blackjackGame)
 
-        ResultView.printPlayerResult(blackjackGame.players)
+        ResultView.printParticipantsResult(blackjackGame.participants)
     }
 
-    private fun isBusted(player: Player): Boolean {
-        if (player.cards.isBusted()) {
-            ResultView.printBusted(player)
-            return true
+    private fun drawPlayers(blackjackGame: BlackjackGame) {
+        blackjackGame.participants.filterIsInstance<Player>().forEach { player ->
+            while (player.canReceiveCard() && InputView.showAndGetHitOrNot(player.name)) {
+                blackjackGame.draw(player)
+                ResultView.printPlayerCard(player)
+            }
         }
-        return false
+    }
+
+    private fun drawDealer(blackjackGame: BlackjackGame) {
+        val dealer = blackjackGame.participants.filterIsInstance<Dealer>().firstOrNull() ?: return
+        while (dealer.canReceiveCard()) {
+            blackjackGame.draw(dealer)
+            ResultView.printGetCardForDealer()
+        }
     }
 
 }

@@ -3,14 +3,18 @@ package blackjack.view
 import blackjack.domain.participant.Player
 import blackjack.domain.card.CardRank
 import blackjack.domain.card.CardSuit
+import blackjack.domain.participant.Dealer
+import blackjack.domain.participant.Participant
 
 object ResultView {
 
-    fun printStartCards(players: List<Player>) {
+    fun printStartCards(participants: List<Participant>) {
+        val dealer = participants.filterIsInstance<Dealer>().firstOrNull() ?: return
         println(buildString {
-            append(players.joinToString { it.name })
+            append("${dealer.name}와 ")
+            append(participants.filterIsInstance<Player>().joinToString { it.name })
             append("에게 2장의 나누었습니다.\n")
-            players.forEach { append("${getPlayerInformation(it)}\n") }
+            participants.forEach { append("${getPlayerInformation(it)}\n") }
         })
     }
 
@@ -18,23 +22,23 @@ object ResultView {
         println(getPlayerInformation(player))
     }
 
-    fun printBusted(player: Player) {
-        println("${player.name}님, 버스트 되었습니다")
-    }
-
-    fun printPlayerResult(players: List<Player>) {
+    fun printParticipantsResult(participants: List<Participant>) {
         println(buildString {
-            players.forEach { player ->
-                append("${getPlayerInformation(player)} - 결과: ${player.cards.sum()}\n")
+            participants.forEach { participant ->
+                append("${getPlayerInformation(participant)} - 결과: ${participant.cards.sum()}\n")
             }
         })
     }
 
-    private fun getPlayerInformation(player: Player): String {
+    fun printGetCardForDealer() {
+        println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
+    }
+
+    private fun getPlayerInformation(participant: Participant): String {
         return buildString {
-            append(player.name)
+            append(participant.name)
             append("카드: ")
-            append(player.cards.cards.joinToString { "${it.rank.name()}${it.suit.name()}" })
+            append(participant.cards.cards.joinToString { "${it.rank.name()}${it.suit.name()}" })
         }
     }
 

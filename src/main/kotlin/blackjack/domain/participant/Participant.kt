@@ -12,4 +12,6 @@ abstract class Participant(
         cards.add(card)
     }
 
+    abstract fun canReceiveCard(): Boolean
+
 }
