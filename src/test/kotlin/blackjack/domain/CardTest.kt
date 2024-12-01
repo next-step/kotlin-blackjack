@@ -23,4 +23,11 @@ class CardTest : StringSpec({
         drawnCards.size shouldBe 5
         card.cardList.size shouldBe 47
     }
+
+    "카드를 뽑을 때 남은 카드 수보다 많은 수를 요청하면 예외를 던진다." {
+        val card = Card()
+        shouldThrow<IllegalArgumentException> {
+            card.drawCards(53)
+        }
+    }
 })
