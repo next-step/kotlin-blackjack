@@ -17,5 +17,10 @@ class CardTest : StringSpec({
         card.cardList.size shouldBe 51
     }
 
-
+    "카드를 여러 장 뽑는다." {
+        val card = Card()
+        val drawnCards = card.drawCards(5)
+        drawnCards.size shouldBe 5
+        card.cardList.size shouldBe 47
+    }
 })
