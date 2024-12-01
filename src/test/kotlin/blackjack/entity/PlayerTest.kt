@@ -46,5 +46,18 @@ class PlayerTest : DescribeSpec({
                 player.calculateScore() shouldBe 21
             }
         }
+        context("버스트 상태를 확인할 때") {
+            val player = Player("Charlie")
+            val spadesKing = Card(Suit.SPADES, Rank.KING)
+            val heartsKing = Card(Suit.HEARTS, Rank.KING)
+            val clubsTwo = Card(Suit.CLUBS, Rank.TWO)
+            player.receiveCard(spadesKing)
+            player.receiveCard(heartsKing)
+            player.receiveCard(clubsTwo)
+
+            it("버스트 상태를 반환해야 한다") {
+                player.isBusted() shouldBe true
+            }
+        }
     }
 })

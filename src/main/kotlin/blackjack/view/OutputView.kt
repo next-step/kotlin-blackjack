@@ -19,6 +19,10 @@ class OutputView {
         println("${player.name}카드: ${formatHand(player.hand)}")
     }
 
+    fun printPlayerBusted(player: Player) {
+        println("${player.name}님의 카드 합이 21을 초과했습니다. 턴을 종료합니다.")
+    }
+
     fun printPlayerResults(results: List<PlayerResult>) {
         results.forEach { result ->
             println("${result.playerName}카드: ${formatHand(result.playHand)} - 결과: ${result.score}")

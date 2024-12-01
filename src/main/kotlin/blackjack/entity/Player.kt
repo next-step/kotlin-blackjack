@@ -12,4 +12,8 @@ class Player(
     fun calculateScore(): Int {
         return hand.calculateScore()
     }
+
+    fun isBusted(): Boolean {
+        return hand.isBusted()
+    }
 }

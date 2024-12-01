@@ -36,6 +36,10 @@ class BlackJackGame {
         players.participants.forEach { player ->
             var wantsToHit = true
             while (wantsToHit) {
+                if (player.isBusted()) {
+                    outputView.printPlayerBusted(player)
+                    break
+                }
                 wantsToHit = inputView.askForHitOrStand(player.name)
                 if (wantsToHit) {
                     player.receiveCard(deck.deal())
