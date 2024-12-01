@@ -56,11 +56,13 @@ class BlackJackGame {
     }
 
     fun finishGame(participants: Participants) {
+        calculateScore(participants)
         val gameResults = calculateResult(participants)
+
         outputView.printGameResult(gameResults)
     }
 
-    private fun calculateResult(participants: Participants): List<GameResult> {
+    private fun calculateScore(participants: Participants) {
         val dealer = participants.dealer
         val dealerScore = dealer.calculateScore()
         outputView.printPlayerResults(dealer.name, dealer.hand, dealerScore)
@@ -68,6 +70,9 @@ class BlackJackGame {
         participants.players.map { player ->
             outputView.printPlayerResults(player.name, player.hand, player.calculateScore())
         }
+    }
+
+    private fun calculateResult(participants: Participants): List<GameResult> {
         return participants.calculateResult()
     }
 }
