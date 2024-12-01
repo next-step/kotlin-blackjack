@@ -13,7 +13,7 @@ class PlayerTest {
 
         dealer initCardTo  player
 
-        player.cardSet.size shouldBe 2
+        player.cards.size shouldBe 2
     }
 
     @Test

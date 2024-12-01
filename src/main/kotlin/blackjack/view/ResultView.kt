@@ -24,5 +24,5 @@ object ResultView {
         }
     }
 
-    private fun makeCardInfo(player: Player) = "${player.name}카드: ${player.cardSet.joinToString()}"
+    private fun makeCardInfo(player: Player) = "${player.name}카드: ${player.cards.joinToString()}"
 }

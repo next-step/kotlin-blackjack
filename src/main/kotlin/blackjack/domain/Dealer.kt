@@ -1,16 +1,19 @@
 package blackjack.domain
 
 class Dealer(
-    private val _cardSet: List<BlackjackCard> = BlackjackCard.defaultSet.shuffled(),
+    private val _cards: List<BlackjackCard> = BlackjackCard.defaultSet.shuffled(),
 ) {
-    private val cardSet
-        get() = _cardSet.filterNot { it.isUsed }
+    private val cards
+        get() = _cards.filterNot { it.isUsed }
 
-    val cardSize
-        get() = cardSet.size
+    val cardsSize
+        get() = cards.size
 
     fun drawCard(): BlackjackCard {
-        return cardSet.firstOrNull()?.draw() ?: throw IllegalStateException("[Dealer] 더이상 남은 패가 존재하지 않습니다.")
+        val topOfCards = cards.firstOrNull()
+
+        return topOfCards?.draw()
+            ?: throw IllegalStateException("[Dealer] 더이상 남은 패가 존재하지 않습니다.")
     }
 
     infix fun initCardTo(player: Player): Player {
