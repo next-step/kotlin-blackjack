@@ -40,7 +40,15 @@ object BlackjackController {
     }
 
     private fun askPickCard(player: Player) {
-        while (InputView.inputPickCard(player.name) == "y") {
+        while (true) {
+            val currentScore = blackJackService.calculateScores(listOf(player))[0].second
+
+            if (currentScore > 21) {
+                break
+            }
+
+            if (InputView.inputPickCard(player.name) != "y") break
+
             player.addCards(blackJackService.card.drawCards(1))
             ResultView.printPlayerCards(listOf(player.name to player.getCardList()))
         }
