@@ -8,7 +8,10 @@ class Players private constructor(private val values: List<Player>) : List<Playe
         find(player).receive(deck)
     }
 
-    fun deal(player: Player, deck: Card) {
+    fun deal(
+        player: Player,
+        deck: Card,
+    ) {
         find(player).receive(Deck(listOf(deck)))
     }
 

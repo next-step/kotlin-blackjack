@@ -10,7 +10,7 @@ data class CardGame(private val deck: Deck, private val players: Players) {
     fun startGame(name: String) {
         val startCardCount = 2
         val roundCards = deck.popCards(startCardCount)
-        players.deal(players.find(name),  roundCards)
+        players.deal(players.find(name), roundCards)
     }
 
     fun playerAllHand() {
@@ -42,14 +42,18 @@ data class CardGame(private val deck: Deck, private val players: Players) {
 
     fun result(): Map<String, Map<List<String>, Int>> {
         return players.associate { player ->
-            player.name to mapOf(
-                player.totalCards.values().map { it.name } to player.score()
-            )
+            player.name to
+                mapOf(
+                    player.totalCards.values().map { it.name } to player.score(),
+                )
         }
     }
 
     companion object {
-        fun from(deck: Deck, users: List<String>): CardGame {
+        fun from(
+            deck: Deck,
+            users: List<String>,
+        ): CardGame {
             return CardGame(deck, Players.from(users))
         }
 

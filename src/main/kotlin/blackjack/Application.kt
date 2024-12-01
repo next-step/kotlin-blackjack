@@ -24,7 +24,7 @@ private fun handleUserTurn(
     game: CardGame,
     resultView: ResultView,
     inputView: InputView,
-    userName: String
+    userName: String,
 ) {
     while (inputView.inputMore(userName)) {
         game.hand(userName)
@@ -40,7 +40,10 @@ private fun handleUserTurn(
     }
 }
 
-private fun displayGameResult(resultView: ResultView, resultDto: Map<String, Map<List<String>, Int>>) {
+private fun displayGameResult(
+    resultView: ResultView,
+    resultDto: Map<String, Map<List<String>, Int>>,
+) {
     resultView.outputProvider("")
     resultDto.forEach { (userName, cardAndScoreMap) ->
         cardAndScoreMap.forEach { (cards, score) ->

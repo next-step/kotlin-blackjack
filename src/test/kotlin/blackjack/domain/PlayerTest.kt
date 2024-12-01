@@ -18,11 +18,12 @@ class PlayerTest : BehaviorSpec({
 
     Given("`Card`를 받을 수 있다") {
         val player = Player.from("철수")
-        val cards = createDeck {
-            cards {
-                "A" to Suit.SPADE
+        val cards =
+            createDeck {
+                cards {
+                    "A" to Suit.SPADE
+                }
             }
-        }
 
         When("카드를 받을 때") {
             player.receive(cards)

@@ -2,7 +2,7 @@ package blackjack.domain
 
 data class Deck(
     val cards: List<Card>,
-    private val shuffleIndex: ArrayDeque<Int> = cards.indices.shuffled().toCollection(ArrayDeque())
+    private val shuffleIndex: ArrayDeque<Int> = cards.indices.shuffled().toCollection(ArrayDeque()),
 ) {
     fun size(): Int {
         return shuffleIndex.size

@@ -21,7 +21,7 @@ sealed class CardRank private constructor() {
         init {
             val numberMin = 2
             val numberMax = 9
-            require(value in numberMin..numberMax) { "Number 는 ${numberMin}~${numberMax} 사이의 값 이어야 합니다.: $value" }
+            require(value in numberMin..numberMax) { "Number 는 $numberMin~$numberMax 사이의 값 이어야 합니다.: $value" }
         }
 
         override fun calculateScore(currentScore: Int): Int = currentScore + value
