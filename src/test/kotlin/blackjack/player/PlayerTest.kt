@@ -1,6 +1,7 @@
 package blackjack.player
 
 import blackjack.card.Card
+import blackjack.card.CardFixture
 import blackjack.card.Cards
 import blackjack.card.Rank
 import blackjack.card.Suit
@@ -24,9 +25,9 @@ class PlayerTest {
                 name = NAME,
                 cards =
                     listOf(
-                        Card(rank = Rank.FIVE),
-                        Card(rank = Rank.SIX),
-                        Card(rank = Rank.TEN),
+                        CardFixture.generateTestCard(rank = Rank.FIVE),
+                        CardFixture.generateTestCard(rank = Rank.SIX),
+                        CardFixture.generateTestCard(rank = Rank.TEN),
                     ),
             )
         player.isHitCard() shouldBe false
@@ -46,7 +47,7 @@ class PlayerTest {
             listOf(
                 Player.fromNameAndCards(
                     name = NAME,
-                    cards = List(size = 2) { Card(rank = Rank.SIX) },
+                    cards = List(size = 2) { CardFixture.generateTestCard(rank = Rank.SIX) },
                 ),
             )
 

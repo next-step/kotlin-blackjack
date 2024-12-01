@@ -8,7 +8,7 @@ class CardsTest {
 
     @Test
     fun sum() {
-        cards = Cards(cards = List(size = 3) { Card(rank = Rank.SIX) })
+        cards = Cards(cards = List(size = 3) { CardFixture.generateTestCard(rank = Rank.SIX) })
         cards.sum() shouldBe 18
     }
 
@@ -18,8 +18,8 @@ class CardsTest {
             Cards(
                 cards =
                     listOf(
-                        Card(rank = Rank.ACE),
-                        Card(rank = Rank.TEN),
+                        CardFixture.generateTestCard(rank = Rank.ACE),
+                        CardFixture.generateTestCard(rank = Rank.TEN),
                     ),
             )
         cards.sum() shouldBe 21
@@ -31,9 +31,9 @@ class CardsTest {
             Cards(
                 cards =
                     listOf(
-                        Card(rank = Rank.ACE),
-                        Card(rank = Rank.ACE),
-                        Card(rank = Rank.ACE),
+                        CardFixture.generateTestCard(rank = Rank.ACE),
+                        CardFixture.generateTestCard(rank = Rank.ACE),
+                        CardFixture.generateTestCard(rank = Rank.ACE),
                     ),
             )
         cards.sum() shouldBe 13
