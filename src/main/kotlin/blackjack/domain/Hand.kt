@@ -13,7 +13,7 @@ class Hand(
 
     fun value(): Int {
         val handValue = cards.sumOf { it.rankValue }
-        if (isAceExtraValue(handValue)) {
+        if (isAceEleven(handValue)) {
             return handValue + ACE_EXTRA_VALUE
         }
         return handValue
@@ -25,15 +25,17 @@ class Hand(
 
     fun isBlackjack(): Boolean = cards.size == 2 && value() == BLACKJACK_VALUE
 
-    private fun hasAce(): Boolean = cards.any { it.rank == Rank.ACE }
-
-    private fun isAceExtraValue(handValue: Int) = hasAce() && handValue <= ACE_EXTRA_VALUE_THRESHOLD
-
     fun isBusted(): Boolean = value() > BLACKJACK_VALUE
 
+    private fun hasAce(): Boolean = cards.any { it.rank == Rank.ACE }
+
+    private fun isAceEleven(handValue: Int) = hasAce() && handValue <= ACE_ELEVEN_THRESHOLD
+
     companion object {
-        private const val ACE_EXTRA_VALUE_THRESHOLD = 11
+        private const val ACE_ELEVEN_THRESHOLD = 11
         private const val ACE_EXTRA_VALUE = 10
         private const val BLACKJACK_VALUE = 21
+
+        fun from(vararg cards: Card): Hand = Hand(cards.toList())
     }
 }

@@ -24,12 +24,46 @@ class PlayerTest {
     }
 
     @Test
-    fun `덱에서 카드를 뽑을 수 있다`() {
+    fun `힛을 하여 덱에서 카드를 뽑을 수 있다`() {
         val player = Player("jack")
         val deck = StubDeck.from(Rank.TWO)
 
-        player.drawFrom(deck)
+        player.hit(deck)
 
         player.hand[0] shouldBe Card.of(StubDeck.DUMMY_SUIT, Rank.TWO)
+    }
+
+    @Test
+    fun `힛을 하여 21점을 넘으면 버스트된다`() {
+        val hand =
+            Hand.from(
+                Card.of(Suit.CLUBS, Rank.KING),
+                Card.of(Suit.CLUBS, Rank.QUEEN),
+            )
+        val player = Player("jack", hand)
+        val deck = StubDeck.from(Rank.JACK)
+
+        player.hit(deck)
+
+        player.isDone shouldBe true
+        player.reasonDone shouldBe PlayerReasonDone.BUSTED
+    }
+
+    @Test
+    fun `스테이, 스탠드 할 수 있다`() {
+        val player = Player("jack")
+
+        player.stand()
+
+        player.isDone shouldBe true
+        player.reasonDone shouldBe PlayerReasonDone.STANDS
+    }
+
+    @Test
+    fun `이미 스탠드해서 턴이 끝난 상태에서는 스탠드 할 수 없다`() {
+        val player = Player("jack")
+        player.stand()
+
+        assertThrows<IllegalStateException> { player.stand() }
     }
 }
