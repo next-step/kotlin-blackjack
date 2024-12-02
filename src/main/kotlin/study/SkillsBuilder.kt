@@ -13,6 +13,6 @@ class SkillsBuilder {
     }
 
     fun build(): Skills {
-        return Skills(soft.toList(), hard.toList())
+        return Skills(soft.map { Skill.Soft(it) }.toList(), hard.map { Skill.Hard(it) }.toList())
     }
 }
