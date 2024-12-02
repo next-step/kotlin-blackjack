@@ -48,7 +48,7 @@ class DeckTest : DescribeSpec({
         context("카드를 뽑는다.") {
             it("MutableList의 첫 인덱스에 있는 카드를 1장 뽑는다.") {
                 val beforeHit = sut.cardList.size
-                sut.hit()
+                sut.draw()
                 val afterHit = sut.cardList.size
 
                 afterHit shouldBe beforeHit - 1
@@ -64,10 +64,10 @@ class DeckTest : DescribeSpec({
                         ),
                     )
 
-                sut.hit()
+                sut.draw()
 
                 assertThrows<IllegalStateException> {
-                    sut.hit()
+                    sut.draw()
                 }
             }
         }

@@ -1,7 +1,7 @@
 package blackjack.domain
 
 data class Deck(val cardList: MutableList<Card> = init()) {
-    fun hit(): Card {
+    fun draw(): Card {
         return cardList.removeFirstOrNull() ?: throw IllegalStateException()
     }
 
