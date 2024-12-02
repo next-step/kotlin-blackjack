@@ -1,6 +1,6 @@
 package blackjack
 
-class GameJudge {
+class GameJudge(private val judgeOutcomeStrategy: BlackJackJudgeOutcomeStrategy = DefaultBlackJackJudgeOutcomeStrategy()) {
     fun judge(
         dealer: Dealer,
         players: List<Player>,
@@ -17,18 +17,7 @@ class GameJudge {
         player: Player,
         dealer: Dealer,
     ): Outcome {
-        if (player.isBust()) {
-            return Outcome.LOSS
-        }
-        if (dealer.isBust()) {
-            return Outcome.WIN
-        }
-
-        return when {
-            player.sumOfHand() > dealer.sumOfHand() -> Outcome.WIN
-            player.sumOfHand() < dealer.sumOfHand() -> Outcome.LOSS
-            else -> Outcome.DRAW
-        }
+        return judgeOutcomeStrategy.judgeOutcome(dealer, player)
     }
 
     fun summarizeDealerResult(gameResults: List<GameResult>): DealerResult {
