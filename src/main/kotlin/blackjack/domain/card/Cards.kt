@@ -11,7 +11,7 @@ class Cards(
 
     fun getCards(): List<Card> = cards
 
-    fun getScore(): Int {
+    fun getScore(): Score {
         val numbers = cards.map { it.number }
         return Score.calculate(numbers, isContainAce(numbers))
     }

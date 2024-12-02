@@ -7,7 +7,7 @@ import io.kotest.matchers.shouldBe
 class BlackjackGameTest : StringSpec({
 
     "start()는 모든 플레이어에게 두 장의 카드를 지급한다." {
-        val blackjackGame = createBlackjackFixture()
+        val blackjackGame = blackjackFixture()
         blackjackGame.start()
         val players = blackjackGame.getParticipants().players
 
@@ -17,18 +17,18 @@ class BlackjackGameTest : StringSpec({
     }
 
     "canDraw()는 플레이어가 카드를 받을 수 있으면 true 를 반환한다." {
-        val blackjackGame = createBlackjackFixture()
+        val blackjackGame = blackjackFixture()
         blackjackGame.canDraw("a") shouldBe true
     }
 
     "canDraw()는 플레이어가 카드를 받을 수 없으면 false 를 반환한다." {
-        val blackjackGame = createBlackjackFixture()
+        val blackjackGame = blackjackFixture()
         repeat(3) { blackjackGame.dealCard("a") }
         blackjackGame.canDraw("a") shouldBe false
     }
 
     "dealCard()는 플레이어에게 카드를 지급한다." {
-        val blackjackGame = createBlackjackFixture()
+        val blackjackGame = blackjackFixture()
         blackjackGame.dealCard("a")
 
         blackjackGame.getParticipant("a").cards.size shouldBe 1

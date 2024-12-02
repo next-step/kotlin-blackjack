@@ -2,8 +2,7 @@ package blackjack
 
 import blackjack.domain.BlackjackGame
 import blackjack.domain.deck.DefaultDeckGenerator
-import blackjack.domain.player.Dealer
-import blackjack.domain.player.Player
+import blackjack.view.dto.CreatePlayersDto
 import blackjack.view.input.CreatePlayerInputView
 import blackjack.view.input.PlayerTurnInputView
 import blackjack.view.output.DealerDrawView
@@ -13,28 +12,26 @@ import blackjack.view.output.ResultView
 import blackjack.view.output.StartPlayersView
 
 fun main() {
-    val names = CreatePlayerInputView.parse()
-    val dealer = Dealer()
-    val blackjackGame = BlackjackGame(dealer, names, DefaultDeckGenerator())
+    val createPlayersDto = CreatePlayerInputView.parse()
+    val blackjackGame = BlackjackGame(createPlayersDto, DefaultDeckGenerator())
 
     blackjackGame.start()
-    val playersDto = blackjackGame.getParticipants()
-    StartPlayersView.print(dealer, playersDto)
+    val participantsDto = blackjackGame.getParticipants()
+    StartPlayersView.print(participantsDto)
 
-    drawPlayers(blackjackGame)
+    drawPlayers(blackjackGame, createPlayersDto)
     drawDealer(blackjackGame)
 
     ResultView.print(blackjackGame.getParticipants())
-    RecordView.print(blackjackGame.getRecords())
+    RecordView.print(blackjackGame.settle())
 }
 
-private fun drawPlayers(blackjackGame: BlackjackGame) {
-    val players = blackjackGame.participants.participants.filterIsInstance<Player>()
-    players.forEach {
-        while (blackjackGame.canDraw(it.name)) {
-            if (!PlayerTurnInputView.continueDraw(it.name)) {
-                break
-            }
+private fun drawPlayers(
+    blackjackGame: BlackjackGame,
+    dto: List<CreatePlayersDto>,
+) {
+    dto.forEach {
+        while (blackjackGame.canDraw(it.name) && PlayerTurnInputView.continueDraw(it.name)) {
             blackjackGame.dealCard(it.name)
         }
         val playerDto = blackjackGame.getParticipant(it.name)
@@ -43,8 +40,6 @@ private fun drawPlayers(blackjackGame: BlackjackGame) {
 }
 
 private fun drawDealer(blackjackGame: BlackjackGame) {
-    if (blackjackGame.canDraw(blackjackGame.dealer.name)) {
-        blackjackGame.dealCard(blackjackGame.dealer.name)
-        DealerDrawView.print(blackjackGame.dealer.name)
-    }
+    blackjackGame.dealCardToDealer()
+    DealerDrawView.print()
 }
