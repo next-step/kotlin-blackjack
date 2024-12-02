@@ -31,6 +31,8 @@ class Hand(
 
     private fun isAceEleven(handValue: Int) = hasAce() && handValue <= ACE_ELEVEN_THRESHOLD
 
+    override fun toString(): String = "Hand(cards=$cards)"
+
     companion object {
         private const val ACE_ELEVEN_THRESHOLD = 11
         private const val ACE_EXTRA_VALUE = 10

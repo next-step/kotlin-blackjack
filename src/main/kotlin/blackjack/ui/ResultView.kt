@@ -23,18 +23,22 @@ object ResultView {
                 }
                 roster.forEach { appendLine(formatPlayer(it, isInitial)) }
             }
-        print(message)
+        println(message)
+    }
+
+    fun displayPlayer(player: Player) {
+        println(formatPlayer(player))
     }
 
     private fun formatPlayer(
         player: Player,
-        isInitial: Boolean,
+        isInitial: Boolean = true,
     ): String {
         val result = "${player.name}카드: ${formatHand(player.hand)}"
         if (isInitial) {
             return result
         }
-        return result + " - 결과: ${if (player.isDone) BUSTED else player.value}"
+        return result + " - 결과: ${if (player.isBusted) BUSTED else player.value}"
     }
 
     private fun formatHand(hand: Hand): String =

@@ -10,6 +10,7 @@ class BlackjackService {
         deck: Deck,
     ): Game {
         val players = Players.from(names)
-        return Game(players, deck).apply { initialDeal() }
+        val game = Game(players, deck)
+        return game.apply { initialDeal() }
     }
 }

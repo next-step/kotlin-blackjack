@@ -7,6 +7,8 @@ class Card private constructor(
     val rankValue: Int
         get() = rank.value
 
+    override fun toString(): String = "Card(suit=$suit, rank=$rank)"
+
     companion object {
         val ALL_CARDS =
             Suit.entries.flatMap { suit ->

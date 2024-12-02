@@ -13,20 +13,11 @@ class Player(
     val isDone: Boolean
         get() = reasonDone != null
 
+    val isBusted: Boolean
+        get() = hand.isBusted()
+
     init {
         require(name.isNotBlank()) { "이름이 빈 문자열입니다." }
-    }
-
-    fun hit(deck: Deck) {
-        hand.drawFrom(deck)
-        if (hand.isBusted()) {
-            done(PlayerReasonDone.BUSTED)
-        }
-    }
-
-    fun stand() {
-        check(!isDone) { "이미 턴이 끝난 상태입니다." }
-        done(PlayerReasonDone.STANDS)
     }
 
     fun initialDrawFrom(deck: Deck) {
@@ -36,6 +27,23 @@ class Player(
         }
     }
 
+    fun hit(deck: Deck) {
+        checkIsNotDone()
+        hand.drawFrom(deck)
+        if (isBusted) {
+            done(PlayerReasonDone.BUSTED)
+        }
+    }
+
+    fun stand() {
+        checkIsNotDone()
+        done(PlayerReasonDone.STANDS)
+    }
+
+    private fun checkIsNotDone() {
+        check(!isDone) { "이미 턴이 끝난 상태입니다." }
+    }
+
     private fun drawFrom(deck: Deck) {
         hand.drawFrom(deck)
     }
@@ -43,4 +51,6 @@ class Player(
     private fun done(reasonDone: PlayerReasonDone) {
         this.reasonDone = reasonDone
     }
+
+    override fun toString(): String = "Player(name='$name', hand=$hand, reasonDone=$reasonDone)"
 }

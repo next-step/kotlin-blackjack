@@ -40,7 +40,25 @@ class PlayersTest {
     }
 
     @Test
-    fun `모든 플레이어들이 종료하기 전까지는 isDone = false`() {
+    fun `모든 플레이어들의 턴 종료시 종료 상태이다`() {
+        val deck = StubDeck.from(Rank.KING, Rank.QUEEN, Rank.JACK, Rank.TEN)
+        // standing player
+        val player1 = Player("black", Hand()).apply { stand() }
+        // busted player
+        val player2 =
+            Player("jack", Hand()).apply {
+                hit(deck)
+                hit(deck)
+                hit(deck)
+            }
+
+        val players = Players(listOf(player1, player2))
+
+        players.isDone shouldBe true
+    }
+
+    @Test
+    fun `모든 플레이어들이 종료하기 전까지는 종료 상태가 아니다`() {
         val deck = StubDeck.from(Rank.KING, Rank.QUEEN, Rank.JACK, Rank.TEN)
         val player1 = Player("black", Hand()).apply { stand() }
         val player2 =
@@ -52,21 +70,5 @@ class PlayersTest {
         val players = Players(listOf(player1, player2))
 
         players.isDone shouldBe false
-    }
-
-    @Test
-    fun `모든 플레이어들의 턴 종료시 isDone = true`() {
-        val deck = StubDeck.from(Rank.KING, Rank.QUEEN, Rank.JACK, Rank.TEN)
-        val player1 = Player("black", Hand()).apply { stand() }
-        val player2 =
-            Player("jack", Hand()).apply {
-                hit(deck)
-                hit(deck)
-                hit(deck)
-            }
-
-        val players = Players(listOf(player1, player2))
-
-        players.isDone shouldBe true
     }
 }
