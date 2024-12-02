@@ -36,7 +36,7 @@ class BlackJackGameTest {
                 ),
             )
         val blackJackGame =
-            BlackJackGame(listOf(blackJackPlayer1, blackJackPlayer2))
+            BlackJackGame(listOf(blackJackPlayer1, blackJackPlayer2), null)
 
         assertThat(blackJackGame.getWinPlayer().get(0).name).isEqualTo("사람2")
     }

@@ -1,6 +1,6 @@
 package blackjack.domain
 
-class BlackJackPlayer(
+open class BlackJackPlayer(
     val name: String,
     val blackJackPlayerCards: BlackJackPlayerCards,
 ) {
@@ -12,7 +12,7 @@ class BlackJackPlayer(
         blackJackPlayerCards.addCard(blackJackCard)
     }
 
-    fun isDrawPossible(): Boolean {
+    open fun isDrawPossible(): Boolean {
         return blackJackPlayerCards.isCardNumberSumUnderBlackJackWinCardSum()
     }
 

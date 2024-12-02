@@ -1,5 +1,6 @@
 package blackjack
 
+import blackjack.domain.BlackJackDealer
 import blackjack.domain.BlackJackDeck
 import blackjack.domain.BlackJackDeckGenerator
 import blackjack.domain.BlackJackGame
@@ -41,6 +42,15 @@ private fun getPlayers(
                     BlackJackPlayerCards(mutableListOf(blackJackDeck.draw(), blackJackDeck.draw())),
                 )
             },
+            BlackJackDealer(
+                "딜러",
+                BlackJackPlayerCards(
+                    mutableListOf(
+                        blackJackDeck.draw(),
+                        blackJackDeck.draw(),
+                    ),
+                ),
+            ),
         )
     return blackJackGame
 }
