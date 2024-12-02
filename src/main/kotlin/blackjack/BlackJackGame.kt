@@ -25,14 +25,14 @@ object BlackJackGame {
     }
 
     private fun requestDrawCards(player: Player, gameRoom: GameRoom) {
-        while (player.canDrawCard()) {
-            val request = InputView.requestCard(player.name)
-            if (!request) {
-                break
-            }
+        while(shouldDrawCard(player)) {
             gameRoom.drawCard(player)
             ResultView.printParticipantsCards(player)
         }
+    }
+
+    private fun shouldDrawCard(player: Player): Boolean {
+        return player.canDrawCard() && InputView.requestCard(player.name)
     }
 
     private fun drawDealerCards(gameRoom: GameRoom) {
