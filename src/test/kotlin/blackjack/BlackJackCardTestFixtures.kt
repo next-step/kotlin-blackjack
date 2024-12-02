@@ -35,6 +35,13 @@ object BlackJackCardTestFixtures {
                 ),
                 21,
             ),
+            row(
+                listOf(
+                    Card(Number(7), Suit.SPADES),
+                    Card(Number(4), Suit.SPADES),
+                ),
+                11,
+            ),
         )
 
     val ace1Rows =
