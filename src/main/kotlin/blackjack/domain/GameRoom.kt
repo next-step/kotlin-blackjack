@@ -9,6 +9,7 @@ class GameRoom(
 
     init {
         dealInitialCards()
+        checkBlackJack()
     }
 
     private fun dealInitialCards() {
@@ -16,6 +17,10 @@ class GameRoom(
             participant.receiveCard(deck.drawCard())
             participant.receiveCard(deck.drawCard())
         }
+    }
+
+    private fun checkBlackJack() {
+        participants.forEach(Participant::checkBlackJack)
     }
 
     fun drawCard(participant: Participant) {
@@ -29,6 +34,7 @@ class GameRoom(
                 cards = player.cards,
                 score = player.cards.calculateScore(),
                 isWinner = player.isWinner(dealer),
+                earningMoney = player.calculateEarningMoney(dealer),
             )
         }
 
@@ -38,6 +44,7 @@ class GameRoom(
             score = dealer.cards.calculateScore(),
             winCount = playerResults.count { !it.isWinner },
             loseCount = playerResults.count { it.isWinner },
+            earningMoney = -(players.sumOf { it.calculateEarningMoney(dealer) }),
         )
 
         return GameResult(dealerResult, playerResults)
