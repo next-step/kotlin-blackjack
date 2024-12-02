@@ -60,7 +60,7 @@ class BlackjackGame(
                     profit = it.betting.applyRate(rate),
                 )
             }
-        val dealerProfit = records.filter { it.profit < 0 }.map { it.profit }.sumOf { it * (-1) }
+        val dealerProfit = -records.sumOf { if (it.profit < 0) it.profit else 0 }
 
         return listOf(RecordDto(name = dealer.name, profit = dealerProfit)) + records
     }
