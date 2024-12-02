@@ -2,13 +2,10 @@ package blackjack.domain
 
 class Player(
     val name: String,
-    val cards: Cards = Cards.emptyCards(),
+    val hands: Hands = Hands(),
 ) {
-    val hands: Int
-        get() = cards.size
-
     val score: Int
-        get() = cards.calculateTotalValue()
+        get() = hands.calculateTotalValue()
 
     var status: PlayerStatus = PlayerStatus.PLAYING
         private set
@@ -25,7 +22,11 @@ class Player(
         }
 
         val card = deck.draw()
-        cards.add(card)
+        hands.add(card)
+        handleBurst()
+    }
+
+    private fun handleBurst() {
         status = status.handleBurst(score)
     }
 }

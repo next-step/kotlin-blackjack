@@ -1,46 +1,23 @@
 package blackjack.domain
 
 import blackjack.fixture.cardFixture
-import blackjack.fixture.cardsFixture
+import blackjack.fixture.handsFixture
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 
-class CardsTest : StringSpec({
-    "52장의 카드를 생성한다." {
-        val actual = Cards.fullCards()
-
-        actual.size shouldBe 52
-    }
-
-    "빈 카드를 생성한다." {
-        val actual = Cards.emptyCards()
-
-        actual.size shouldBe 0
-    }
-
+class HandsTest : StringSpec({
     "카드를 추가한다." {
         val card = cardFixture()
-        val actual = Cards.emptyCards()
+        val actual = Hands()
 
         actual.add(card)
 
         actual.size shouldBe 1
     }
 
-    "카드를 한 장 뽑는다." {
-        val card = Card(Suit.SPADE, Rank.ACE)
-        val cards = Cards.emptyCards()
-        cards.add(card)
-
-        val actual = cards.draw()
-
-        actual shouldBe card
-        cards.size shouldBe 0
-    }
-
     "카드 총 점수를 계산한다." {
         val cards =
-            cardsFixture(
+            handsFixture(
                 listOf(
                     cardFixture(rank = Rank.TWO),
                     cardFixture(rank = Rank.THREE),
@@ -53,9 +30,9 @@ class CardsTest : StringSpec({
         actual shouldBe 15
     }
 
-    "ACE가 있는 경우 21에 가까운 숫자로 점수를 계산한다." {
+    "ACE 1개, TEN 1개인 경우 21점으로 계산한다." {
         val cards =
-            cardsFixture(
+            handsFixture(
                 listOf(
                     cardFixture(rank = Rank.TEN),
                     cardFixture(rank = Rank.ACE),
@@ -67,11 +44,10 @@ class CardsTest : StringSpec({
         actual shouldBe 21
     }
 
-    "ACE가 여러 개 있는 경우 21에 가까운 숫자로 점수를 계산한다." {
+    "ACE 2개인 경우 12점으로 계산한다." {
         val cards =
-            cardsFixture(
+            handsFixture(
                 listOf(
-                    cardFixture(rank = Rank.TEN),
                     cardFixture(rank = Rank.ACE),
                     cardFixture(rank = Rank.ACE),
                 ),
@@ -80,5 +56,20 @@ class CardsTest : StringSpec({
         val actual = cards.calculateTotalValue()
 
         actual shouldBe 12
+    }
+
+    "ACE 2개, NINE 1개인 경우 21점으로 계산한다." {
+        val cards =
+            handsFixture(
+                listOf(
+                    cardFixture(rank = Rank.NINE),
+                    cardFixture(rank = Rank.ACE),
+                    cardFixture(rank = Rank.ACE),
+                ),
+            )
+
+        val actual = cards.calculateTotalValue()
+
+        actual shouldBe 21
     }
 })

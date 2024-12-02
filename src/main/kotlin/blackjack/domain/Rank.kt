@@ -13,5 +13,7 @@ enum class Rank(val value: Int) {
     TEN(10),
     JACK(10),
     QUEEN(10),
-    KING(10),
+    KING(10);
+
+    fun isAce(): Boolean = this == ACE
 }
