@@ -55,8 +55,8 @@ class DslTest {
                 }
             }
 
-        person.skills?.soft shouldBe listOf("A passion for problem solving", "Good communication skills")
-        person.skills?.hard shouldBe listOf("Kotlin")
+        person.skills?.soft shouldBe listOf(Skill.Soft("A passion for problem solving"), Skill.Soft("Good communication skills"))
+        person.skills?.hard shouldBe listOf(Skill.Hard("Kotlin"))
     }
 
     @Test
