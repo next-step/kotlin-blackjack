@@ -12,6 +12,10 @@ class Hand(cards: List<Card> = emptyList()) {
         _cards.add(card)
     }
 
+    fun isBusted(): Boolean {
+        return calculateScore() > MAX_SCORE
+    }
+
     fun calculateScore(): Int {
         val total = calculateTotal()
         val aceCount = countAces()
