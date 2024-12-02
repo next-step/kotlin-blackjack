@@ -24,23 +24,10 @@ class GameJudge {
             return Outcome.WIN
         }
 
-        val outcome =
-            when {
-                player.sumOfHand() > dealer.sumOfHand() -> Outcome.WIN
-                player.sumOfHand() < dealer.sumOfHand() -> Outcome.LOSS
-                else -> Outcome.DRAW
-            }
-        return outcome
+        return when {
+            player.sumOfHand() > dealer.sumOfHand() -> Outcome.WIN
+            player.sumOfHand() < dealer.sumOfHand() -> Outcome.LOSS
+            else -> Outcome.DRAW
+        }
     }
-}
-
-data class GameResult(
-    val player: Player,
-    val outcome: Outcome,
-)
-
-enum class Outcome {
-    WIN,
-    LOSS,
-    DRAW,
 }
