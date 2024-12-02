@@ -5,8 +5,8 @@ import blackjack.domain.card.Card
 import blackjack.domain.card.CardNumber
 import blackjack.domain.card.CardShape
 import blackjack.domain.card.Cards
-import blackjack.domain.createBlackjackCardsFixture
-import blackjack.domain.createBustCardsFixture
+import blackjack.domain.blackjackCardsFixture
+import blackjack.domain.bustCardsFixture
 import blackjack.domain.createCardsFixture
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
@@ -34,7 +34,7 @@ class PlayerTest : StringSpec({
     }
 
     "플레이어는 소유한 카드의 다음 받을 카드 포함 소유한 모든 카드 숫자 합이 21이 넘으면 카드를 받을 수 없다." {
-        val cards = createBustCardsFixture()
+        val cards = bustCardsFixture()
 
         val player = Player(name = "홍길동", cards = cards, betting = Betting(100))
 
@@ -42,9 +42,9 @@ class PlayerTest : StringSpec({
     }
 
     "calculateRate()는 딜러가 버스트면 플레이어의 패와 상관없이 배당은 1.0 이다" {
-        val cards = createBustCardsFixture()
+        val cards = bustCardsFixture()
         val dealer = Dealer("", cards = cards)
-        val player = Player(betting = Betting(0), name = "player", cards = createBlackjackCardsFixture())
+        val player = Player(betting = Betting(0), name = "player", cards = blackjackCardsFixture())
 
         player.calculateRate(dealer) shouldBe 1.0
     }
@@ -56,7 +56,7 @@ class PlayerTest : StringSpec({
                 Card(shape = CardShape.Spade, number = CardNumber.Four),
             )
         val dealer = Dealer("", cards = cards)
-        val player = Player(betting = Betting(0), name = "player", cards = createBlackjackCardsFixture())
+        val player = Player(betting = Betting(0), name = "player", cards = blackjackCardsFixture())
 
         player.calculateRate(dealer) shouldBe 1.5
     }
@@ -68,7 +68,7 @@ class PlayerTest : StringSpec({
                 Card(shape = CardShape.Spade, number = CardNumber.Four),
             )
         val dealer = Dealer("", cards = cards)
-        val player = Player(betting = Betting(0), name = "player", cards = createBustCardsFixture())
+        val player = Player(betting = Betting(0), name = "player", cards = bustCardsFixture())
 
         player.calculateRate(dealer) shouldBe -1.0
     }
