@@ -61,7 +61,7 @@ class DealerTest : BehaviorSpec({
                 val dealer = Dealer()
                 dealerCards.forEach { dealer.receiveCard(it) }
 
-                val score = ComparisonScore.Multiple(playerScores)
+                val score = ComparisonScore.Players(playerScores)
 
                 Then("결과는 딜러: ${expectedWins}승 ${expectedLoses}패 ${expectedDraws}무 이어야 한다") {
                     val result = dealer.calculateResult(score)

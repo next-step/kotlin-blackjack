@@ -7,7 +7,7 @@ class Dealer : Participant("딜러") {
     }
 
     override fun calculateResult(score: ComparisonScore): GameResult {
-        require(score is ComparisonScore.Multiple) { "플레이어 점수는 여러개입니다." }
+        require(score is ComparisonScore.Players) { "플레이어 점수는 여러개입니다." }
 
         val dealerScore = calculateScore()
         val playerScores = score.scores

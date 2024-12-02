@@ -10,7 +10,7 @@ class PlayerTest : BehaviorSpec({
     Given("플레이어와 딜러의 점수를 비교하여 결과를 계산할 때") {
         forAll(
             row(
-                ComparisonScore.Single(22),
+                ComparisonScore.Dealer(22),
                 listOf(Card(Suit.HEARTS, Rank.TEN), Card(Suit.SPADES, Rank.SEVEN)),
                 1,
                 0,
@@ -18,7 +18,7 @@ class PlayerTest : BehaviorSpec({
                 "딜러가 Bust인 경우",
             ),
             row(
-                ComparisonScore.Single(17),
+                ComparisonScore.Dealer(17),
                 listOf(Card(Suit.HEARTS, Rank.TEN), Card(Suit.CLUBS, Rank.TEN)),
                 1,
                 0,
@@ -26,7 +26,7 @@ class PlayerTest : BehaviorSpec({
                 "플레이어가 딜러보다 21에 가까운 경우",
             ),
             row(
-                ComparisonScore.Single(20),
+                ComparisonScore.Dealer(20),
                 listOf(Card(Suit.DIAMONDS, Rank.NINE), Card(Suit.SPADES, Rank.SEVEN)),
                 0,
                 1,
@@ -34,7 +34,7 @@ class PlayerTest : BehaviorSpec({
                 "딜러가 플레이어보다 21에 가까운 경우",
             ),
             row(
-                ComparisonScore.Single(17),
+                ComparisonScore.Dealer(17),
                 listOf(Card(Suit.HEARTS, Rank.TEN), Card(Suit.SPADES, Rank.SEVEN)),
                 0,
                 0,
