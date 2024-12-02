@@ -2,7 +2,7 @@ package blackjack
 
 class BlackJackGame private constructor(
     val players: List<Player>,
-    val deck: Deck,
+    private val deck: Deck,
 ) {
     fun drawSingleCardToPlayer(
         isDrawingCard: Boolean,
