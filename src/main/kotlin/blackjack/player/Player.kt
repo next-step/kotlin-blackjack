@@ -12,6 +12,6 @@ class Player(
     fun hitCard(card: Card): Player = Player(name = name, hand = hand.add(card))
 
     companion object {
-        fun fromName(name: String): Player = Player(name = name)
+        fun ready(name: String): Player = Player(name = name)
     }
 }
