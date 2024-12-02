@@ -6,6 +6,7 @@ import blackjack.domain.Suit
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.collections.shouldContain
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.shouldNotBe
 
 class DeckTest : DescribeSpec({
     describe("deckTest") {
@@ -30,6 +31,13 @@ class DeckTest : DescribeSpec({
                 actual.values.forEach {
                     it shouldBe 4
                 }
+            }
+
+            // fixme: 낮은 확률로 실패할 수 있는 테스트 -> 어떻게 개선할 수 있을까요?
+            it("카드는 셔플되어야 한다") {
+                val originalOrder = sut.cardList.sortedBy { it.number.ordinal }
+                val shuffledOrder = sut.cardList
+                shuffledOrder shouldNotBe originalOrder
             }
         }
     }
