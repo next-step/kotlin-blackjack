@@ -2,7 +2,7 @@ package blackjack
 
 data class Deck(
     private val _cards: MutableList<Card> = CardSuit.entries.flatMap { suit ->
-        CARD_RANGE.map { Card(CardNumber(it), suit) }
+        CardNumber.entries.map { Card(it, suit) }
     }.shuffled().toMutableList()
 ) {
     val cards: List<Card>

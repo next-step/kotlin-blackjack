@@ -1,15 +1,21 @@
 package blackjack
 
-@JvmInline
-value class CardNumber(private val number: Int) {
-    init {
-        require(number in MIN_NUMBER..MAX_NUMBER) {
-            "카드 숫자는 $MIN_NUMBER 이상 $MAX_NUMBER 이하여야 합니다. input = $number"
-        }
-    }
-
-    companion object {
-        private const val MIN_NUMBER = 1
-        private const val MAX_NUMBER = 13
-    }
+enum class CardNumber(
+    val description: String,
+    val score: Int,
+) {
+    ONE("A", 1),
+    TWO("2", 2),
+    THREE("3", 3),
+    FOUR("4", 4),
+    FIVE("5", 5),
+    SIX("6", 6),
+    SEVEN("7", 7),
+    EIGHT("8", 8),
+    NINE("9", 9),
+    TEN("10", 10),
+    JACK("J", 11),
+    QUEEN("Q", 12),
+    KING("K", 13),
+    ;
 }

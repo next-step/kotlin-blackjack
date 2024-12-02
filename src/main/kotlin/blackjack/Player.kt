@@ -1,7 +1,10 @@
 package blackjack
 
 data class Player(
-    private val name: PlayerName,
-    private val cards: Cards
+    val name: PlayerName,
+    val cards: Cards
 ) {
+    override fun toString(): String {
+        return "${name.value}카드: $cards"
+    }
 }
