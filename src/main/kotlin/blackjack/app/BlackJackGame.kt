@@ -49,8 +49,10 @@ class BlackJackGame {
                 }
             }
         }
-        if (participants.dealer.shouldDrawCard()) {
-            participants.dealer.receiveCard(deck.deal())
+    }
+
+    fun playDealerTurn(participants: Participants) {
+        if (participants.playDealerTurn(deck)) {
             outputView.printDealerDrawCard(participants.dealer)
         }
     }

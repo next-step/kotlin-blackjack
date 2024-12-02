@@ -11,6 +11,15 @@ class Participants(
         }
     }
 
+    fun playDealerTurn(deck: Deck): Boolean {
+        return if (dealer.shouldDrawCard()) {
+            dealer.receiveCard(deck.deal())
+            true
+        } else {
+            false
+        }
+    }
+
     fun calculateResult(): List<GameResult> {
         val dealerScore = dealer.calculateScore()
         val playerScores = players.map { it.calculateScore() }
