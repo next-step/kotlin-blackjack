@@ -10,7 +10,7 @@ sealed class CardNumber(val face: String, val baseValue: Int) : Comparable<CardN
     data object King : CardNumber("K", 10)
 
     override fun compareTo(other: CardNumber): Int {
-        return this.baseValue.compareTo(other.baseValue)
+        return this.baseValue compareTo other.baseValue
     }
 }
 
