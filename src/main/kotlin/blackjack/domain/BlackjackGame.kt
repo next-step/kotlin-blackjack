@@ -14,6 +14,7 @@ class BlackjackGame(
             playerNames: List<PlayerName>,
             deck: Deck,
         ): BlackjackGame {
+            deck.shuffle()
             val players =
                 playerNames.map { name ->
                     val handCards = listOf(deck.drawCard(), deck.drawCard())
