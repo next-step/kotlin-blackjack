@@ -16,7 +16,7 @@ object Round {
         }
 
         return deck
-            .draw(card)
+            .draw()
             ?.let { RoundResult.Success(successPlayer = getPlayResult(player = player, card = card)) }
             ?: RoundResult.AlreadyDrawnCard(attemptedPlayer = player)
     }

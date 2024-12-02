@@ -9,13 +9,16 @@ class Deck(
 ) {
     fun isRemainCard(): Boolean = cards.isNotEmpty()
 
-    fun draw(card: Card): Cards? =
-        cards
-            .draw(drawCard = card)
-            ?.also { this.cards = it }
+    fun draw(): Card =
+        cards.draw().let { (drawnCard, remainCards) ->
+            cards = Cards(cards = remainCards)
+            drawnCard
+        }
 }
 
 private fun createFullDeck(): List<Card> =
-    Rank.entries.flatMap { rank ->
-        Suit.entries.map { suit -> Card(rank = rank, suit = suit) }
-    }
+    Rank.entries
+        .flatMap { rank ->
+            Suit.entries
+                .map { suit -> Card(rank = rank, suit = suit) }
+        }.shuffled()

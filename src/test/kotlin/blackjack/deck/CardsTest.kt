@@ -2,24 +2,39 @@ package blackjack.deck
 
 import blackjack.card.CardFixture
 import blackjack.card.Rank
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
 class CardsTest {
-    private lateinit var cards: Cards
-
     @Test
     fun draw() {
-        val initCards = List(size = 3) { CardFixture.generateTestCard(rank = Rank.SIX) }
-        cards = Cards(cards = initCards)
-        val drawCard = CardFixture.generateTestCard(rank = Rank.SIX)
-        cards.draw(drawCard) shouldBe Cards(cards = initCards - drawCard)
+        val cards =
+            Cards(
+                cards =
+                    listOf(
+                        CardFixture.generateTestCard(Rank.ACE),
+                        CardFixture.generateTestCard(Rank.FIVE),
+                        CardFixture.generateTestCard(Rank.SIX),
+                    ),
+            )
+
+        val (drawnCard, remainingCards) = cards.draw()
+
+        drawnCard shouldBe CardFixture.generateTestCard(Rank.ACE)
+        remainingCards shouldBe
+            listOf(
+                CardFixture.generateTestCard(Rank.FIVE),
+                CardFixture.generateTestCard(Rank.SIX),
+            )
     }
 
     @Test
-    fun `목록에 없는 카드를 뽑는 경우 null을 반환한다`() {
-        cards = Cards(cards = List(size = 3) { CardFixture.generateTestCard(rank = Rank.SIX) })
+    fun `카드 목록이 비어있을때 뽑으면 에외를 던진다`() {
+        val cards = Cards(cards = listOf())
 
-        cards.draw(CardFixture.generateTestCard(rank = Rank.TEN)) shouldBe null
+        shouldThrow<IllegalArgumentException> {
+            cards.draw()
+        }
     }
 }

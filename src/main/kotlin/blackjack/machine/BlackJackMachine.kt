@@ -1,11 +1,7 @@
 package blackjack.machine
 
-import blackjack.card.Card
 import blackjack.deck.Deck
-import blackjack.player.Player
 import blackjack.player.Players
-import blackjack.round.Round
-import blackjack.round.RoundResult
 import blackjack.view.InputView
 import blackjack.view.ResultView
 
@@ -13,42 +9,23 @@ class BlackJackMachine(
     private val deck: Deck,
 ) {
     fun play() {
-        val players = Players.generateFromNames(playerNames = InputView.inputPlayerNames())
+        val playerList =
+            Players
+                .generateFromNames(InputView.inputPlayerNames())
+                .players
+                .map { player ->
+                    (1..DEFAULT_HAND_SIZE).fold(player) { updatedPlayer, _ ->
+                        updatedPlayer.hitCard(deck.draw())
+                    }
+                }
+        val players = Players(players = playerList)
+
         ResultView.printPlayersName(players = players)
         ResultView.printPlayersCardStatus(players = players)
-
-        generateSequence(players) { current ->
-            val roundResults = current.players.map { playRoundByPlayer(player = it) }
-            val updatedPlayers = current.updateCardStatus(roundResults)
-
-            ResultView.printPlayersCardStatusAndSum(players = updatedPlayers)
-
-            if (roundResults.stream().allMatch { it is RoundResult.Bust }) null else updatedPlayers
-        }.lastOrNull()
-            ?.let { ResultView.printWinner(players = it) }
-    }
-
-    private fun playRoundByPlayer(player: Player): RoundResult {
-        return when {
-            player.isBust() -> RoundResult.Bust(bustedPlayer = player)
-            !InputView.isHitCard(player) ->
-                RoundResult.Success(
-                    player
-                        .also { ResultView.printPlayerCard(player = player) },
-                )
-
-            else -> {
-                var roundResult: RoundResult = RoundResult.AlreadyDrawnCard(attemptedPlayer = player)
-                while (roundResult is RoundResult.AlreadyDrawnCard) {
-                    roundResult = Round.run(player = player, card = Card.random(), deck = deck)
-                }
-
-                return roundResult
-            }
-        }
     }
 
     companion object {
+        private const val DEFAULT_HAND_SIZE = 2
         const val BLACKJACK = 21
     }
 }
