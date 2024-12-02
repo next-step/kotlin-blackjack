@@ -17,6 +17,9 @@ class Dealer(val name: String = DEALER_NAME, initialCards: List<Card>) {
     fun isInitialState(): Boolean = _hand.cards.size == 2
 
     fun receive(newCard: Card) {
+        check(shouldDrawCard()) {
+            "현재 딜러는 히트할 수 없는 상태입니다: sumOfHand=${sumOfHand()}"
+        }
         _hand.add(newCard)
     }
 

@@ -88,4 +88,21 @@ class DealerTest : StringSpec({
 
         result shouldBe true
     }
+
+    "딜러는 손패 2장의 합이 17점 이상임에도 불구하고 카드를 뽑으려고 하면(히트) 예외를 던진다" {
+        val initialCards =
+            listOf(
+                Card(CardNumber.Jack, Suit.SPADES),
+                Card(Number(7), Suit.SPADES),
+            )
+        val sut = Dealer(initialCards = initialCards)
+
+        sut.shouldDrawCard() shouldBe false
+
+        val newCard = Card(CardNumber.Ace, Suit.SPADES)
+
+        shouldThrow<IllegalStateException> {
+            sut.receive(newCard)
+        }
+    }
 })
