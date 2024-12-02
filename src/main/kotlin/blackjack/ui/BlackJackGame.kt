@@ -1,15 +1,19 @@
 package blackjack.ui
 
+import blackjack.Dealer
 import blackjack.Deck
+import blackjack.GameJudge
 import blackjack.Player
 import blackjack.ui.ConsoleInput.Companion.inputDrawAnswer
 import blackjack.ui.ConsoleInput.Companion.inputPlayerNames
-import blackjack.ui.ConsoleOutput.Companion.printAllPlayersWithNameAndHand
-import blackjack.ui.ConsoleOutput.Companion.printAllPlayersWithNameAndHandAndResult
+import blackjack.ui.ConsoleOutput.Companion.announceDealerDrawOneMoreCard
+import blackjack.ui.ConsoleOutput.Companion.announceGameResults
+import blackjack.ui.ConsoleOutput.Companion.printAllParticipantsWithNameAndHand
+import blackjack.ui.ConsoleOutput.Companion.printAllParticipantsWithNameAndHandAndResult
+import blackjack.ui.ConsoleOutput.Companion.printParticipantWithNameAndHand
 import blackjack.ui.ConsoleOutput.Companion.printPlayerBust
 import blackjack.ui.ConsoleOutput.Companion.printPlayerSumOfHand
-import blackjack.ui.ConsoleOutput.Companion.printPlayerWithNameAndHand
-import blackjack.ui.ConsoleOutput.Companion.printShareInitialCardsToPlayers
+import blackjack.ui.ConsoleOutput.Companion.printShareInitialCardsToParticipants
 
 fun main() {
     val playerNames = inputPlayerNames()
@@ -17,10 +21,11 @@ fun main() {
     val deck = Deck()
     deck.shuffle()
 
+    val dealer = Dealer(List(2) { deck.draw() })
     val players = setupPlayers(playerNames, deck)
 
-    printShareInitialCardsToPlayers(playerNames)
-    printAllPlayersWithNameAndHand(players)
+    printShareInitialCardsToParticipants(dealer, players)
+    printAllParticipantsWithNameAndHand(listOf(dealer) + players)
 
     players.forEach { player ->
         generateSequence {
@@ -28,7 +33,18 @@ fun main() {
         }.toList()
     }
 
-    printAllPlayersWithNameAndHandAndResult(players)
+    if (dealer.shouldDrawCard()) {
+        val newCard = deck.draw()
+        dealer.receive(newCard)
+        announceDealerDrawOneMoreCard()
+    }
+
+    printAllParticipantsWithNameAndHandAndResult(listOf(dealer) + players)
+
+    val gameJudge = GameJudge()
+    val gameResults = gameJudge.judge(dealer, players)
+    val dealerResult = gameJudge.summarizeDealerResult(gameResults)
+    announceGameResults(gameResults, dealerResult)
 }
 
 private fun setupPlayers(
@@ -54,11 +70,11 @@ private fun handlePlayerTurn(
         DrawAnswer.Y -> {
             val newCard = deck.draw()
             player.receive(newCard)
-            printPlayerWithNameAndHand(player)
+            printParticipantWithNameAndHand(player)
         }
         DrawAnswer.N -> {
             if (player.isInitialState()) {
-                printPlayerWithNameAndHand(player)
+                printParticipantWithNameAndHand(player)
             }
             null
         }
