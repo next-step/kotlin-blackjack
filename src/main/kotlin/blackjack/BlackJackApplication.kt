@@ -5,6 +5,7 @@ import blackjack.domain.CardsDeckGenerator
 import blackjack.domain.Player
 import blackjack.view.InputView
 import blackjack.view.ResultView.printDistributedCardsText
+import blackjack.view.ResultView.printPlayerCards
 import blackjack.view.ResultView.printPlayersCards
 
 fun main() {
@@ -20,6 +21,31 @@ class BlackJackApplication {
         printDistributedCardsText(players.map { it.name })
         distributeTwoCards(players, cardDeck)
         printPlayersCards(players)
+
+        hitByPlayers(players, cardDeck)
+        printPlayersCards(players, isShownScore = true)
+    }
+
+    private fun hitByPlayers(
+        players: List<Player>,
+        cardDeck: CardDeck,
+    ) {
+        println()
+        players.forEach { player ->
+            hit(player, cardDeck)
+        }
+    }
+
+    private fun hit(
+        player: Player,
+        cardDeck: CardDeck,
+    ) {
+        while (player.findEnabledMoreCard()) {
+            val answerMoreCard = InputView.inputMoreCard(player.name)
+            if (!answerMoreCard) break
+            player.addCard(cardDeck.pickCard())
+            printPlayerCards(player)
+        }
     }
 
     private fun distributeTwoCards(

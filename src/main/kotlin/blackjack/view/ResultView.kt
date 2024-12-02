@@ -7,6 +7,7 @@ import blackjack.domain.Player
 
 object ResultView {
     private const val TEXT_DISTRIBUTE_TWO_CARDS = "%s에게 2장의 나누었습니다."
+    private const val TEXT_SCORE_RESULT = " - 결과: "
     private const val COMMA = ","
     private const val COLON = ":"
     private const val NAME_HEART = "하트"
@@ -20,9 +21,25 @@ object ResultView {
         println(TEXT_DISTRIBUTE_TWO_CARDS.format(names.joinToString("$COMMA ")))
     }
 
-    fun printPlayersCards(players: List<Player>) {
+    fun printPlayersCards(
+        players: List<Player>,
+        isShownScore: Boolean = false,
+    ) {
+        if (isShownScore) println()
         players.forEach { player: Player ->
-            println("${player.name}${NAME_CARD}$COLON ${player.cards.joinToString(COMMA){ findCardName(it) }}")
+            printPlayerCards(player, isShownScore)
+        }
+    }
+
+    fun printPlayerCards(
+        player: Player,
+        isShownScore: Boolean = false,
+    ) {
+        val playerCardResult = "${player.name}${NAME_CARD}$COLON ${player.deck.allCards.joinToString(COMMA){ findCardName(it) }}"
+        if (isShownScore) {
+            println("${playerCardResult}${TEXT_SCORE_RESULT}${player.findClosestToBlackJackNumber()}")
+        } else {
+            println(playerCardResult)
         }
     }
 
@@ -44,7 +61,7 @@ object ResultView {
             CardNumber.KING,
             -> "${cardNumber.name.first()}"
             else -> {
-                "${cardNumber.ordinal + 1}"
+                "${cardNumber.value}"
             }
         }
 }
