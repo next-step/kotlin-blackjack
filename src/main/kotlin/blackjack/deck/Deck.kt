@@ -7,8 +7,6 @@ import blackjack.card.Suit
 class Deck(
     private var cards: Cards = Cards(cards = createFullDeck()),
 ) {
-    fun isRemainCard(): Boolean = cards.isNotEmpty()
-
     fun draw(): Card =
         cards.draw().let { (drawnCard, remainCards) ->
             cards = Cards(cards = remainCards)
