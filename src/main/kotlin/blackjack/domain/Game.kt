@@ -6,11 +6,21 @@ class Game(
 ) {
     val isDone: Boolean
         get() = players.isDone
+    val currentPlayer: Player
+        get() = players.currentPlayer
 
     fun initialDeal() {
         repeat(INITIAL_ROUNDS) {
             players.dealRoundOfCardsFrom(deck)
         }
+    }
+
+    fun playerHits() {
+        players.hit(deck)
+    }
+
+    fun playerStands() {
+        players.stand()
     }
 
     companion object {

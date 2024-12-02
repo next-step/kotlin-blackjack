@@ -38,4 +38,27 @@ class GameTest {
 
         game.isDone shouldBe true
     }
+
+    @Test
+    fun `차례인 플레이어가 힛한다`() {
+        val players = Players.from("black", "jack")
+        val deck = StubDeck.from(Rank.ACE, Rank.TWO, Rank.THREE, Rank.FOUR, Rank.FIVE)
+        val game = Game(players, deck).apply { initialDeal() }
+
+        game.playerHits()
+
+        game.currentPlayer.hand[2] shouldBe Card.of(StubDeck.DUMMY_SUIT, Rank.FIVE)
+    }
+
+    @Test
+    fun `차례인 플레이어가 스탠드한다`() {
+        val players = Players.from("black", "jack")
+        val deck = StubDeck.from(Rank.ACE, Rank.TWO, Rank.THREE, Rank.FOUR)
+        val game = Game(players, deck).apply { initialDeal() }
+
+        game.playerStands()
+
+        game.players[0].reasonDone shouldBe PlayerReasonDone.STANDS
+        game.currentPlayer shouldBe game.players[1]
+    }
 }
