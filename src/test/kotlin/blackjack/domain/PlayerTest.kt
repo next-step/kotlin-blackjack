@@ -1,6 +1,6 @@
 package blackjack.domain
 
-import blackjack.fixture.cardsFixture
+import blackjack.fixture.handsFixture
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 
@@ -29,7 +29,7 @@ class PlayerTest : StringSpec({
     "플레이어는 히트 시 21점을 넘기면 버스트 상태가 된다." {
         val deck = Deck()
         val cards =
-            cardsFixture(
+            handsFixture(
                 listOf(
                     Card(Suit.SPADE, Rank.TEN),
                     Card(Suit.SPADE, Rank.TEN),
@@ -53,7 +53,7 @@ class PlayerTest : StringSpec({
 
     "플레이어는 점수를 가진다" {
         val cards =
-            cardsFixture(
+            handsFixture(
                 listOf(
                     Card(Suit.SPADE, Rank.TWO),
                     Card(Suit.SPADE, Rank.THREE),

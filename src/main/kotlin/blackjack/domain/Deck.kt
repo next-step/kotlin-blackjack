@@ -1,30 +1,27 @@
 package blackjack.domain
 
-class Deck(
-    private val cards: MutableList<Card> = mutableListOf(),
-) {
+class Deck private constructor() {
+    private val cards: MutableList<Card> = mutableListOf()
+
     val quantity: Int
         get() = cards.size
-    
-    init {
-        generateShuffledCards().also(cards::addAll)
-    }
-
-    private fun generateShuffledCards(): List<Card> {
-        return createDeck().shuffled()
-    }
-
-    private fun createDeck(): List<Card> {
-        return Suit.entries.flatMap { suit -> createCardsForSuit(suit) }
-    }
-
-    private fun createCardsForSuit(suit: Suit): List<Card> {
-        return Rank.entries.map { rank -> Card(suit, rank) }
-    }
 
     fun draw(): Card {
-        check(quantity != 0) { "카드가 모두 소진되었습니다." }
-
+        check(cards.isNotEmpty()) { "카드가 없습니다." }
         return cards.removeFirst()
+    }
+
+    companion object {
+        operator fun invoke(values: List<Card>): Deck = Deck().apply { cards += values }
+
+        operator fun invoke(): Deck = Deck().apply { cards += generateShuffledCards() }
+
+        private fun generateShuffledCards(): List<Card> = createDeck().shuffled()
+
+        private fun createDeck(): List<Card> =
+            Suit.entries.flatMap { suit -> createCardsForSuit(suit) }
+
+        private fun createCardsForSuit(suit: Suit): List<Card> =
+            Rank.entries.map { rank -> Card(suit, rank) }
     }
 }
