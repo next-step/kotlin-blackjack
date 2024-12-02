@@ -1,6 +1,8 @@
 package blackjack.domain
 
-import io.kotest.matchers.collections.shouldContainExactlyInAnyOrder
+import blackjack.support.Fixtures.createBustedPlayer
+import blackjack.support.Fixtures.createStandingPlayer
+import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -13,7 +15,7 @@ class PlayersTest {
 
         val players = Players.from(names)
 
-        players.roster.map { it.name } shouldContainExactlyInAnyOrder names
+        players.roster.map { it.name } shouldContainExactly names
     }
 
     @Test
@@ -29,46 +31,125 @@ class PlayersTest {
 
     @Test
     fun `플레이어들에게 카드 한 장씩 지급한다`() {
-        val players = Players.from("black", "jack", "game")
-        val deck = StubDeck.from(Rank.ACE, Rank.TWO, Rank.THREE)
+        val players = Players.from("black", "jack")
+        val deck = StubDeck.from(Rank.ACE, Rank.TWO)
 
         players.dealRoundOfCardsFrom(deck)
 
         players[0].hand[0] shouldBe Card.of(StubDeck.DUMMY_SUIT, Rank.ACE)
         players[1].hand[0] shouldBe Card.of(StubDeck.DUMMY_SUIT, Rank.TWO)
-        players[2].hand[0] shouldBe Card.of(StubDeck.DUMMY_SUIT, Rank.THREE)
     }
 
     @Test
-    fun `모든 플레이어들의 턴 종료시 종료 상태이다`() {
-        val deck = StubDeck.from(Rank.KING, Rank.QUEEN, Rank.JACK, Rank.TEN)
-        // standing player
-        val player1 = Player("black", Hand()).apply { stand() }
-        // busted player
-        val player2 =
-            Player("jack", Hand()).apply {
-                hit(deck)
-                hit(deck)
-                hit(deck)
-            }
-
-        val players = Players(listOf(player1, player2))
-
+    fun `모든 플레이어들이 턴 종료하면 종료 상태이다`() {
+        val players = Players.from(createStandingPlayer("black"), createBustedPlayer("jack"))
         players.isDone shouldBe true
     }
 
     @Test
     fun `모든 플레이어들이 종료하기 전까지는 종료 상태가 아니다`() {
-        val deck = StubDeck.from(Rank.KING, Rank.QUEEN, Rank.JACK, Rank.TEN)
-        val player1 = Player("black", Hand()).apply { stand() }
-        val player2 =
-            Player("jack", Hand()).apply {
-                hit(deck)
-                hit(deck)
-            }
-
-        val players = Players(listOf(player1, player2))
+        val deck = StubDeck.from(Rank.TWO, Rank.THREE)
+        val players =
+            Players.from(
+                createBustedPlayer("black"),
+                Player("jack").apply {
+                    initialDrawFrom(deck)
+                    initialDrawFrom(deck)
+                },
+            )
 
         players.isDone shouldBe false
     }
+
+    @Test
+    fun `현재 플레이어가 힛을 한다`() {
+        val deck = StubDeck.from(Rank.ACE, Rank.TWO, Rank.THREE, Rank.FOUR, Rank.FIVE)
+        val players = createPlayersFrom(listOf("black", "jack"), deck)
+
+        players.hit(deck)
+
+        players[0].hand.cards shouldContainExactly
+            listOf(
+                Card.of(StubDeck.DUMMY_SUIT, Rank.ACE),
+                Card.of(StubDeck.DUMMY_SUIT, Rank.THREE),
+                Card.of(StubDeck.DUMMY_SUIT, Rank.FIVE),
+            )
+    }
+
+    @Test
+    fun `연속해서 힛 할 있다`() {
+        val deck = StubDeck.from(Rank.ACE, Rank.TWO, Rank.THREE, Rank.FOUR, Rank.FIVE, Rank.SIX)
+        val players = createPlayersFrom(listOf("black", "jack"), deck)
+
+        players.hit(deck)
+        players.hit(deck)
+
+        players[0].hand.cards shouldContainExactly
+            listOf(
+                Card.of(StubDeck.DUMMY_SUIT, Rank.ACE),
+                Card.of(StubDeck.DUMMY_SUIT, Rank.THREE),
+                Card.of(StubDeck.DUMMY_SUIT, Rank.FIVE),
+                Card.of(StubDeck.DUMMY_SUIT, Rank.SIX),
+            )
+    }
+
+    @Test
+    fun `힛을 해서 버스트 상태가 되면 다음 플레이어로 넘어간다`() {
+        val deck = StubDeck.from(Rank.KING, Rank.TWO, Rank.QUEEN, Rank.FOUR, Rank.JACK)
+        val players = createPlayersFrom(listOf("black", "jack"), deck)
+
+        players.hit(deck)
+
+        players.currentPlayer shouldBe players[1]
+    }
+
+    @Test
+    fun `게임이 종료되면 힛할 수 없다`() {
+        val deck = StubDeck.from(Rank.KING, Rank.QUEEN, Rank.JACK, Rank.TEN, Rank.NINE, Rank.EIGHT)
+        val players = createPlayersFrom(listOf("black", "jack"), deck)
+        players.hit(deck)
+        players.hit(deck)
+
+        assertThrows<IllegalStateException> { players.hit(deck) }
+    }
+
+    @Test
+    fun `현재 플레이어가 스탠드할 수 있다`() {
+        val deck = StubDeck.from(Rank.ACE, Rank.TWO, Rank.THREE, Rank.FOUR, Rank.FIVE)
+        val players = createPlayersFrom(listOf("black", "jack"), deck)
+
+        players.stand()
+
+        players[0].reasonDone shouldBe PlayerReasonDone.STANDS
+    }
+
+    @Test
+    fun `스탣드하면 다음 플레이어로 차례가 넘어간다`() {
+        val deck = StubDeck.from(Rank.ACE, Rank.TWO, Rank.THREE, Rank.FOUR, Rank.FIVE)
+        val players = createPlayersFrom(listOf("black", "jack"), deck)
+
+        players.stand()
+
+        players.currentPlayer shouldBe players[1]
+    }
+
+    @Test
+    fun `게임이 종료된 상태에서 스탠드할 수 없다`() {
+        val deck = StubDeck.from(Rank.ACE, Rank.TWO, Rank.THREE, Rank.FOUR, Rank.FIVE)
+        val players = createPlayersFrom(listOf("black", "jack"), deck)
+
+        players.stand()
+        players.stand()
+
+        assertThrows<IllegalStateException> { players.stand() }
+    }
+
+    private fun createPlayersFrom(
+        names: List<String>,
+        deck: Deck,
+    ): Players =
+        Players.from(names).apply {
+            dealRoundOfCardsFrom(deck)
+            dealRoundOfCardsFrom(deck)
+        }
 }
