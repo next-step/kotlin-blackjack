@@ -20,6 +20,9 @@ class GameJudge {
         if (player.isBust()) {
             return Outcome.LOSS
         }
+        if (dealer.isBust()) {
+            return Outcome.WIN
+        }
 
         val outcome =
             when {
