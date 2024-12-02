@@ -1,5 +1,6 @@
 package domain
 
+import blackjack.domain.Card
 import blackjack.domain.CardNumber
 import blackjack.domain.Deck
 import blackjack.domain.Suit
@@ -7,13 +8,14 @@ import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.collections.shouldContain
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
+import org.junit.jupiter.api.assertThrows
 
 class DeckTest : DescribeSpec({
-    describe("deckTest") {
-        context("`Deck`은 4종류의 `Suit`과 13종류의 `CardNumber`를 갖는다.") {
-            lateinit var sut: Deck
-            beforeTest { sut = Deck() }
+    lateinit var sut: Deck
+    beforeTest { sut = Deck() }
 
+    describe("deckTest init test") {
+        context("`Deck`은 4종류의 `Suit`과 13종류의 `CardNumber`를 갖는다.") {
             it("총 52장의 카드가 있다.") {
                 sut.cardList.size shouldBe 52
             }
@@ -38,6 +40,35 @@ class DeckTest : DescribeSpec({
                 val originalOrder = sut.cardList.sortedBy { it.number.ordinal }
                 val shuffledOrder = sut.cardList
                 shuffledOrder shouldNotBe originalOrder
+            }
+        }
+    }
+
+    describe("hit test") {
+        context("카드를 뽑는다.") {
+            it("MutableList의 첫 인덱스에 있는 카드를 1장 뽑는다.") {
+                val beforeHit = sut.cardList.size
+                sut.hit()
+                val afterHit = sut.cardList.size
+
+                afterHit shouldBe beforeHit - 1
+            }
+        }
+
+        context("덱의 size가 1보다 작으면") {
+            it("throw exception") {
+                sut =
+                    Deck(
+                        mutableListOf(
+                            Card(Suit.CLUBS, CardNumber.ACE),
+                        ),
+                    )
+
+                sut.hit()
+
+                assertThrows<IllegalStateException> {
+                    sut.hit()
+                }
             }
         }
     }
