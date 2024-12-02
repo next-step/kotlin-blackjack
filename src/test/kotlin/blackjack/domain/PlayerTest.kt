@@ -66,4 +66,26 @@ class PlayerTest {
 
         assertThrows<IllegalStateException> { player.stand() }
     }
+
+    @Test
+    fun `카드를 지급 받는다`() {
+        val player = Player("jack")
+        val deck = StubDeck.from(Rank.ACE)
+
+        player.initialDrawFrom(deck)
+
+        player.hand[0] shouldBe Card.of(StubDeck.DUMMY_SUIT, Rank.ACE)
+    }
+
+    @Test
+    fun `두 장의 카드를 받아서 블랙젝인 경우, 턴이 종료 된다`() {
+        val player = Player("jack")
+        val deck = StubDeck.from(Rank.ACE, Rank.KING)
+
+        player.initialDrawFrom(deck)
+        player.initialDrawFrom(deck)
+
+        player.isDone shouldBe true
+        player.reasonDone shouldBe PlayerReasonDone.BLACKJACK
+    }
 }
