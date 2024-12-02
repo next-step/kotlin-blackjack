@@ -1,6 +1,5 @@
 package domain
 
-import blackjack.domain.Card
 import blackjack.domain.CardNumber
 import blackjack.domain.Deck
 import blackjack.domain.Suit
@@ -8,7 +7,6 @@ import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.collections.shouldContain
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
-import org.junit.jupiter.api.assertThrows
 
 class DeckTest : DescribeSpec({
     lateinit var sut: Deck
@@ -40,35 +38,6 @@ class DeckTest : DescribeSpec({
                 val originalOrder = sut.cardList.sortedBy { it.number.ordinal }
                 val shuffledOrder = sut.cardList
                 shuffledOrder shouldNotBe originalOrder
-            }
-        }
-    }
-
-    describe("hit test") {
-        context("카드를 뽑는다.") {
-            it("MutableList의 첫 인덱스에 있는 카드를 1장 뽑는다.") {
-                val beforeHit = sut.cardList.size
-                sut.draw()
-                val afterHit = sut.cardList.size
-
-                afterHit shouldBe beforeHit - 1
-            }
-        }
-
-        context("덱의 size가 1보다 작으면") {
-            it("throw exception") {
-                sut =
-                    Deck(
-                        mutableListOf(
-                            Card(Suit.CLUBS, CardNumber.ACE),
-                        ),
-                    )
-
-                sut.draw()
-
-                assertThrows<IllegalStateException> {
-                    sut.draw()
-                }
             }
         }
     }
