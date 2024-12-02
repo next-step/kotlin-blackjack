@@ -1,21 +1,22 @@
 package blackjack.card
 
+import blackjack.player.Hand
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
-class CardsTest {
-    private lateinit var cards: Cards
+class HandTest {
+    private lateinit var cards: Hand
 
     @Test
     fun sum() {
-        cards = Cards(cards = List(size = 3) { CardFixture.generateTestCard(rank = Rank.SIX) })
+        cards = Hand(cards = List(size = 3) { CardFixture.generateTestCard(rank = Rank.SIX) })
         cards.sum() shouldBe 18
     }
 
     @Test
     fun `카드 목록의 ACE가 있으면서 총 합이 21 이하인 경우 ACE는 11을 취한다`() {
         cards =
-            Cards(
+            Hand(
                 cards =
                     listOf(
                         CardFixture.generateTestCard(rank = Rank.ACE),
@@ -28,7 +29,7 @@ class CardsTest {
     @Test
     fun `카드 목록의 ACE가 있으면서 총 합이 21을 넘는 경우 ACE는 1을 취한다`() {
         cards =
-            Cards(
+            Hand(
                 cards =
                     listOf(
                         CardFixture.generateTestCard(rank = Rank.ACE),
@@ -37,20 +38,5 @@ class CardsTest {
                     ),
             )
         cards.sum() shouldBe 13
-    }
-
-    @Test
-    fun draw() {
-        val initCards = List(size = 3) { CardFixture.generateTestCard(rank = Rank.SIX) }
-        cards = Cards(cards = initCards)
-        val drawCard = CardFixture.generateTestCard(rank = Rank.SIX)
-        cards.draw(drawCard) shouldBe Cards(cards = initCards - drawCard)
-    }
-
-    @Test
-    fun `목록에 없는 카드를 뽑는 경우 null을 반환한다`() {
-        cards = Cards(cards = List(size = 3) { CardFixture.generateTestCard(rank = Rank.SIX) })
-
-        cards.draw(CardFixture.generateTestCard(rank = Rank.TEN)) shouldBe null
     }
 }

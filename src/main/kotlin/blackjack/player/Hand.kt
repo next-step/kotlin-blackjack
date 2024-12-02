@@ -1,8 +1,10 @@
-package blackjack.card
+package blackjack.player
 
+import blackjack.card.Card
+import blackjack.card.Rank
 import blackjack.machine.BlackJackMachine
 
-data class Cards(
+data class Hand(
     val cards: List<Card>,
 ) {
     fun sum(): Int =
@@ -19,9 +21,5 @@ data class Cards(
             }
         }
 
-    fun add(newCard: Card): Cards = Cards(cards = cards + newCard)
-
-    fun draw(drawCard: Card): Cards? =
-        Cards(cards = cards - drawCard)
-            .takeIf { cards.contains(drawCard) }
+    fun add(newCard: Card): Hand = Hand(cards = cards + newCard)
 }

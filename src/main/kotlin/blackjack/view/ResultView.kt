@@ -18,7 +18,7 @@ object ResultView {
     fun printPlayersCardStatusAndSum(players: Players) {
         println()
         players.players.forEach { player ->
-            printPlayerCard(player, sum = player.cards.sum())
+            printPlayerCard(player, sum = player.hand.sum())
         }
     }
 
@@ -32,7 +32,7 @@ object ResultView {
     private fun generateCardListString(
         player: Player,
         sum: Int? = null,
-    ) = "${player.name}카드: ${player.cards.cards.joinToString(
+    ) = "${player.name}카드: ${player.hand.cards.joinToString(
         ", ",
     ) { "${it.rank.value}${it.suit.description}" }} ${sum?.convertToResultString() ?: ""}"
 

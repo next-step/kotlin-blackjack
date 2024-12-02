@@ -14,6 +14,6 @@ class Players(
 
     fun getWinner(): Player? =
         players
-            .filter { it.cards.sum() <= BlackJackMachine.BLACKJACK }
-            .maxByOrNull { it.cards.sum() }
+            .filter { it.hand.sum() <= BlackJackMachine.BLACKJACK }
+            .maxByOrNull { it.hand.sum() }
 }

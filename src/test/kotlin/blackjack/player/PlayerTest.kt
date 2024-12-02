@@ -2,7 +2,6 @@ package blackjack.player
 
 import blackjack.card.Card
 import blackjack.card.CardFixture
-import blackjack.card.Cards
 import blackjack.card.Rank
 import blackjack.card.Suit
 import io.kotest.matchers.collections.shouldContainAll
@@ -38,7 +37,7 @@ class PlayerTest {
     fun `플레이어의 카드가 추가되는지 확인한다()`(player: Player) {
         val newCard = Card(rank = Rank.FIVE, suit = Suit.DIAMOND)
         val result = player.hitCard(card = newCard)
-        result.cards.cards shouldContainAll player.cards.cards + newCard
+        result.hand.cards shouldContainAll player.hand.cards + newCard
     }
 
     companion object {
@@ -56,6 +55,6 @@ class PlayerTest {
         private fun Player.Companion.fromNameAndCards(
             name: String,
             cards: List<Card>,
-        ): Player = Player(name = name, cards = Cards(cards = cards))
+        ): Player = Player(name = name, hand = Hand(cards = cards))
     }
 }

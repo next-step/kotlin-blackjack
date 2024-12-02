@@ -1,14 +1,13 @@
 package blackjack.deck
 
 import blackjack.card.Card
-import blackjack.card.Cards
 import blackjack.card.Rank
 import blackjack.card.Suit
 
 class Deck(
     private var cards: Cards = Cards(cards = createFullDeck()),
 ) {
-    fun isRemainCard(): Boolean = cards.cards.isNotEmpty()
+    fun isRemainCard(): Boolean = cards.isNotEmpty()
 
     fun draw(card: Card): Cards? =
         cards
