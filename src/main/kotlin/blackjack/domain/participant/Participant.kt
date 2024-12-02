@@ -1,13 +1,17 @@
-package blackjack.domain
+package blackjack.domain.participant
 
 import blackjack.domain.card.Card
 import blackjack.domain.card.Cards
 
-data class Player(
+abstract class Participant(
     val name: String,
     val cards: Cards = Cards(),
 ) {
+
     fun receivedCard(card: Card) {
         cards.add(card)
     }
+
+    abstract fun canReceiveCard(): Boolean
+
 }
