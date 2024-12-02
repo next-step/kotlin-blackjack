@@ -43,44 +43,24 @@ private fun handlePlayerTurn(
     player: Player,
     deck: Deck,
 ): Unit? {
-    if (isPlayerBust(player)) {
+    if (player.isBust()) {
+        printPlayerBust(player)
+        printPlayerSumOfHand(player)
         return null
     }
 
     val answer = inputDrawAnswer(player)
     return when (answer) {
         DrawAnswer.Y -> {
-            drawCardAndPrintPlayerHand(deck, player)
+            val newCard = deck.draw()
+            player.receive(newCard)
+            printPlayerWithNameAndHand(player)
         }
         DrawAnswer.N -> {
-            printPlayerHandWhenPlayerFirstTurn(player)
+            if (player.isInitialState()) {
+                printPlayerWithNameAndHand(player)
+            }
             null
         }
     }
 }
-
-private fun isPlayerBust(player: Player): Boolean {
-    if (player.isBust()) {
-        printPlayerBust(player)
-        printPlayerSumOfHand(player)
-        return true
-    }
-    return false
-}
-
-private fun drawCardAndPrintPlayerHand(
-    deck: Deck,
-    player: Player,
-) {
-    val newCard = deck.draw()
-    player.receive(newCard)
-    printPlayerWithNameAndHand(player)
-}
-
-private fun printPlayerHandWhenPlayerFirstTurn(player: Player) {
-    if (isInitialState(player)) {
-        printPlayerWithNameAndHand(player)
-    }
-}
-
-private fun isInitialState(player: Player) = player.hand.size == 2

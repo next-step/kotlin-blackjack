@@ -14,17 +14,15 @@ class Player(val name: String, initialCards: List<Card>) {
         }
     }
 
+    fun isInitialState(): Boolean = _hand.cards.size == 2
+
     fun receive(newCard: Card) {
         _hand.add(newCard)
     }
 
-    fun sumOfHand(): Int {
-        return _hand.sumOfHand()
-    }
+    fun sumOfHand(): Int = _hand.sumOfHand()
 
-    fun isBust(): Boolean {
-        return _hand.isBust()
-    }
+    fun isBust(): Boolean = _hand.isBust()
 
     companion object {
         private const val INITIAL_HAND_LENGTH = 2

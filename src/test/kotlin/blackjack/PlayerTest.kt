@@ -93,4 +93,21 @@ class PlayerTest : StringSpec({
             result shouldBe expected
         }
     }
+
+    "플레이어가 시작 상태(손에 2장 소유)인지 알 수 있다" {
+        val name = "jason"
+        val initialCards =
+            listOf(
+                Card(Number(9), Suit.SPADES),
+                Card(Number(8), Suit.HEARTS),
+            )
+
+        val sut = Player(name = name, initialCards = initialCards)
+
+        sut.isInitialState() shouldBe true
+
+        sut.receive(Card(CardNumber.Queen, Suit.SPADES))
+
+        sut.isInitialState() shouldBe false
+    }
 })
