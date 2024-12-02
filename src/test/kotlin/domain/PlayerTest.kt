@@ -23,7 +23,7 @@ class PlayerTest : DescribeSpec({
 
         it("사용자가 소유한 카드리스트에 hit 한 카드를 추가한다.") {
             val card = Card(Suit.SPADES, CardNumber.NINE)
-            player.hit(card)
+            player.receiveCard(card)
 
             player.ownedCards.size shouldBe 1
             player.ownedCards[0] shouldBe card

@@ -4,7 +4,7 @@ data class Player(
     val name: String,
     val ownedCards: MutableList<Card> = mutableListOf(),
 ) {
-    fun hit(card: Card) {
+    fun receiveCard(card: Card) {
         ownedCards.add(card)
     }
 }
