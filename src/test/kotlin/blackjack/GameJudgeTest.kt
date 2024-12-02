@@ -72,4 +72,20 @@ class GameJudgeTest : StringSpec({
 
         results shouldContainExactlyInAnyOrder listOf(GameResult(player, LOSS))
     }
+
+    "게임 심판은 딜러와 플레이어 모두 파산하면 딜러의 승리로 본다" {
+        val initial16Cards = listOf(Card(Number(10), CLUBS), Card(Number(6), CLUBS))
+        val dealer = Dealer(initial16Cards)
+        dealer.receive(Card(Number(6), SPADES))
+
+        val initial18Cards = listOf(Card(Number(9), SPADES), Card(Number(9), DIAMONDS))
+        val player = Player("y2gcoder", initial18Cards)
+        player.receive(Card(Number(4), SPADES))
+
+        val sut = GameJudge()
+
+        val results = sut.judge(dealer, listOf(player))
+
+        results shouldContainExactlyInAnyOrder listOf(GameResult(player, LOSS))
+    }
 })
