@@ -3,6 +3,7 @@ package blackjack
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.collections.shouldContainExactlyInAnyOrder
+import io.kotest.matchers.shouldBe
 
 class DealerTest : StringSpec({
     "딜러는 생성 시에 카드 2장이 필수다" {
@@ -39,5 +40,18 @@ class DealerTest : StringSpec({
                 Card(Number(6), Suit.SPADES),
                 Card(Number(3), Suit.SPADES),
             )
+    }
+
+    "딜러는 자신이 가진 카드의 숫자 합을 알 수 있다" {
+        val initialCards =
+            listOf(
+                Card(Number(9), Suit.SPADES),
+                Card(Number(8), Suit.HEARTS),
+            )
+
+        val sut = Dealer(initialCards = initialCards)
+
+        val result = sut.sumOfHand()
+        result shouldBe 17
     }
 })
