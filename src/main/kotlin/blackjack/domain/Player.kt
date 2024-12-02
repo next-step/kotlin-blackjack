@@ -10,21 +10,13 @@ class Player(
     val score: Int
         get() = cards.calculateTotalValue()
 
-    var status: Status = Status.PLAYING
+    var status: PlayerStatus = PlayerStatus.PLAYING
         private set
 
-    enum class Status {
-        PLAYING,
-        STAY,
-        BURST,
-    }
+    fun isPlayable(): Boolean = status.isPlayable()
 
     fun toStay() {
-        this.status = Status.STAY
-    }
-
-    private fun toBurst() {
-        this.status = Status.BURST
+        this.status = PlayerStatus.STAY
     }
 
     fun hit(deck: Deck) {
@@ -34,16 +26,6 @@ class Player(
 
         val card = deck.draw()
         cards.add(card)
-        handleBurst()
-    }
-
-    fun isPlayable(): Boolean {
-        return status == Status.PLAYING
-    }
-
-    private fun handleBurst() {
-        if (score > 21) {
-            toBurst()
-        }
+        status = status.handleBurst(score)
     }
 }

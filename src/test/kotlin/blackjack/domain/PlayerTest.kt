@@ -40,7 +40,7 @@ class PlayerTest : StringSpec({
 
         actual.hit(deck)
 
-        actual.status shouldBe Player.Status.BURST
+        actual.status shouldBe PlayerStatus.BURST
     }
 
     "플레이어는 스테이 상태가 될 수 있다." {
@@ -48,7 +48,7 @@ class PlayerTest : StringSpec({
 
         actual.toStay()
 
-        actual.status shouldBe Player.Status.STAY
+        actual.status shouldBe PlayerStatus.STAY
     }
 
     "플레이어는 점수를 가진다" {
