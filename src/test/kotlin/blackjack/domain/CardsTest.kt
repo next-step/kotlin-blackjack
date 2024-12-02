@@ -39,4 +39,19 @@ class CardsTest {
 
         assertThat(isOverMaxScore).isEqualTo(expected)
     }
+
+    @CsvSource(
+        "ACE, TWO, false",
+        "ACE, KING, true",
+    )
+    @ParameterizedTest
+    fun `Cards는 21점인지 확인한다`(rank1: Rank, rank2: Rank, expected: Boolean) {
+        val cards = Cards()
+        cards.add(Card.of(Suit.HEART, rank1))
+        cards.add(Card.of(Suit.HEART, rank2))
+
+        val isBlackJack = cards.isBlackJack()
+
+        assertThat(isBlackJack).isEqualTo(expected)
+    }
 }

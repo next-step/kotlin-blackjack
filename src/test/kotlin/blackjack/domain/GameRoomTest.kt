@@ -6,7 +6,7 @@ class GameRoomTest {
 
     @Test
     fun `GameRoon을 만들면 각자 카드가 두장씩 생긴다`() {
-        val players = listOf("a", "b", "c").map { Player(it) }
+        val players = listOf("a", "b", "c").map { Player(name = it, bettingMoney = 1000) }
         val gameRoom = GameRoom(players = players)
 
         gameRoom.participants.forEach {
