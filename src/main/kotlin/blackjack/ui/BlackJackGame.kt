@@ -43,7 +43,9 @@ private fun handlePlayerTurn(
     player: Player,
     deck: Deck,
 ): Unit? {
-    if (isPlayerBust(player)) return null
+    if (isPlayerBust(player)) {
+        return null
+    }
 
     val answer = inputDrawAnswer(player)
     return when (answer) {
