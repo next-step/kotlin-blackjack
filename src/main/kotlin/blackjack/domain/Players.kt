@@ -3,6 +3,9 @@ package blackjack.domain
 class Players(
     val roster: List<Player>,
 ) {
+    val isDone: Boolean
+        get() = roster.all { it.isDone }
+
     init {
         require(roster.isNotEmpty()) { "플레이어 목록이 비어 있습니다" }
 
@@ -15,7 +18,7 @@ class Players(
     operator fun get(index: Int): Player = roster[index]
 
     fun dealRoundOfCardsFrom(deck: Deck) {
-        roster.forEach { it.drawFrom(deck) }
+        roster.forEach { it.initialDrawFrom(deck) }
     }
 
     companion object {

@@ -38,4 +38,35 @@ class PlayersTest {
         players[1].hand[0] shouldBe Card.of(StubDeck.DUMMY_SUIT, Rank.TWO)
         players[2].hand[0] shouldBe Card.of(StubDeck.DUMMY_SUIT, Rank.THREE)
     }
+
+    @Test
+    fun `모든 플레이어들이 종료하기 전까지는 isDone = false`() {
+        val deck = StubDeck.from(Rank.KING, Rank.QUEEN, Rank.JACK, Rank.TEN)
+        val player1 = Player("black", Hand()).apply { stand() }
+        val player2 =
+            Player("jack", Hand()).apply {
+                hit(deck)
+                hit(deck)
+            }
+
+        val players = Players(listOf(player1, player2))
+
+        players.isDone shouldBe false
+    }
+
+    @Test
+    fun `모든 플레이어들의 턴 종료시 isDone = true`() {
+        val deck = StubDeck.from(Rank.KING, Rank.QUEEN, Rank.JACK, Rank.TEN)
+        val player1 = Player("black", Hand()).apply { stand() }
+        val player2 =
+            Player("jack", Hand()).apply {
+                hit(deck)
+                hit(deck)
+                hit(deck)
+            }
+
+        val players = Players(listOf(player1, player2))
+
+        players.isDone shouldBe true
+    }
 }
