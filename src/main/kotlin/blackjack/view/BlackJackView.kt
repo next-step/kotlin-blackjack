@@ -1,7 +1,7 @@
 package blackjack.view
 
+import blackjack.domain.BlackJackGame
 import blackjack.domain.BlackJackPlayer
-import blackjack.domain.BlackJackPlayers
 
 object BlackJackView {
     fun getPlayerName(): List<String> {
@@ -9,8 +9,8 @@ object BlackJackView {
         return readln().split(",")
     }
 
-    fun drawBlackJackPlayersCards(blackJackPlayers: BlackJackPlayers) {
-        blackJackPlayers.players.forEach {
+    fun drawBlackJackPlayersCards(blackJackGame: BlackJackGame) {
+        blackJackGame.players.forEach {
             drawBlackJackPlayerCards(it)
         }
     }
@@ -26,15 +26,15 @@ object BlackJackView {
         println(blackJackPlayer.blackJackPlayerCards.cards.map { "${it.number.name} ${it.shape.name}" }.joinToString(","))
     }
 
-    fun drawBlackJackPlayersCardsWithResult(blackJackPlayers: BlackJackPlayers) {
-        blackJackPlayers.players.forEach {
+    fun drawBlackJackPlayersCardsWithResult(blackJackGame: BlackJackGame) {
+        blackJackGame.players.forEach {
             drawBlackJackPlayerCards(it)
             println(" 결과: ${it.getBestSum()}")
         }
     }
 
-    fun drawWinPlayer(blackJackPlayers: BlackJackPlayers) {
+    fun drawWinPlayer(blackJackGame: BlackJackGame) {
         println("승리자는 ")
-        print(blackJackPlayers.getWinPlayer().map { it.name }.joinToString(","))
+        print(blackJackGame.getWinPlayer().map { it.name }.joinToString(","))
     }
 }

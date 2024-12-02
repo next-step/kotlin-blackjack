@@ -33,6 +33,6 @@ class BlackJackPlayerCards(private val _cards: MutableList<BlackJackCard> = muta
     }
 
     companion object {
-        private val BLACKJACK_WIN_CARD_SUM = 21
+        private const val BLACKJACK_WIN_CARD_SUM = 21
     }
 }

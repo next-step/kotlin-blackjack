@@ -3,11 +3,11 @@ package blackjack.domain
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class BlackJackPlayersTest {
+class BlackJackGameTest {
     @Test
     fun `플레이어 중 카드의 수의 합이 21에 가까운 플레이어가 승리한다`() {
-        val blackJackCards =
-            BlackJackCards(
+        val blackJackDeck =
+            BlackJackDeck(
                 mutableListOf(
                     BlackJackCard(BlackJackCardShape.HEART, BlackJackCardNumber.ACE),
                     BlackJackCard(BlackJackCardShape.HEART, BlackJackCardNumber.JACK),
@@ -20,8 +20,8 @@ class BlackJackPlayersTest {
                 "사람1",
                 BlackJackPlayerCards(
                     mutableListOf(
-                        blackJackCards.draw(),
-                        blackJackCards.draw(),
+                        blackJackDeck.draw(),
+                        blackJackDeck.draw(),
                     ),
                 ),
             )
@@ -30,14 +30,14 @@ class BlackJackPlayersTest {
                 "사람2",
                 BlackJackPlayerCards(
                     mutableListOf(
-                        blackJackCards.draw(),
-                        blackJackCards.draw(),
+                        blackJackDeck.draw(),
+                        blackJackDeck.draw(),
                     ),
                 ),
             )
-        val blackJackPlayers =
-            BlackJackPlayers(listOf(blackJackPlayer1, blackJackPlayer2))
+        val blackJackGame =
+            BlackJackGame(listOf(blackJackPlayer1, blackJackPlayer2))
 
-        assertThat(blackJackPlayers.getWinPlayer().get(0).name).isEqualTo("사람2")
+        assertThat(blackJackGame.getWinPlayer().get(0).name).isEqualTo("사람2")
     }
 }

@@ -21,6 +21,6 @@ class BlackJackPlayer(
     }
 
     companion object {
-        private val DEFAULT_CARD_NUMBER = 2
+        private const val DEFAULT_CARD_NUMBER = 2
     }
 }

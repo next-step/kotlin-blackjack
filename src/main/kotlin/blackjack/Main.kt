@@ -1,32 +1,46 @@
 package blackjack
 
-import blackjack.domain.BlackJackCards
+import blackjack.domain.BlackJackDeck
+import blackjack.domain.BlackJackDeckGenerator
+import blackjack.domain.BlackJackGame
 import blackjack.domain.BlackJackPlayer
 import blackjack.domain.BlackJackPlayerCards
-import blackjack.domain.BlackJackPlayers
 import blackjack.view.BlackJackView
 
 fun main() {
-    val blackJackCards = BlackJackCards.getDefaultCards()
+    val blackJackDeck = BlackJackDeckGenerator.getDefaultDeck()
     val playerNames = BlackJackView.getPlayerName()
-    val blackJackPlayers =
-        BlackJackPlayers(
-            playerNames.map {
-                BlackJackPlayer(
-                    it,
-                    BlackJackPlayerCards(mutableListOf(blackJackCards.draw(), blackJackCards.draw())),
-                )
-            },
-        )
+    val blackJackPlayers = getPlayers(playerNames, blackJackDeck)
     BlackJackView.drawBlackJackPlayersCards(blackJackPlayers)
+    doGame(blackJackPlayers, blackJackDeck)
+    BlackJackView.drawBlackJackPlayersCardsWithResult(blackJackPlayers)
+    BlackJackView.drawWinPlayer(blackJackPlayers)
+}
 
-    blackJackPlayers.players.forEach {
-        while (it.isDrawPossible()) {
-            if (!BlackJackView.getPlayerDrawCardYn(it)) break
-            it.drawCard(blackJackCards.draw())
+private fun doGame(
+    blackJackGame: BlackJackGame,
+    blackJackDeck: BlackJackDeck,
+) {
+    blackJackGame.players.forEach {
+        while (it.isDrawPossible() && BlackJackView.getPlayerDrawCardYn(it)) {
+            it.drawCard(blackJackDeck.draw())
             BlackJackView.drawBlackJackPlayerCards(it)
         }
     }
-    BlackJackView.drawBlackJackPlayersCardsWithResult(blackJackPlayers)
-    BlackJackView.drawWinPlayer(blackJackPlayers)
+}
+
+private fun getPlayers(
+    playerNames: List<String>,
+    blackJackDeck: BlackJackDeck,
+): BlackJackGame {
+    val blackJackGame =
+        BlackJackGame(
+            playerNames.map {
+                BlackJackPlayer(
+                    it,
+                    BlackJackPlayerCards(mutableListOf(blackJackDeck.draw(), blackJackDeck.draw())),
+                )
+            },
+        )
+    return blackJackGame
 }
