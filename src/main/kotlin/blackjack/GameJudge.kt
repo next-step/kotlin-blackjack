@@ -17,6 +17,10 @@ class GameJudge {
         player: Player,
         dealer: Dealer,
     ): Outcome {
+        if (player.isBust()) {
+            return Outcome.LOSS
+        }
+
         val outcome =
             when {
                 player.sumOfHand() > dealer.sumOfHand() -> Outcome.WIN
