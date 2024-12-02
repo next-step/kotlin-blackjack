@@ -1,7 +1,7 @@
 package blackjack
 
-class Player(
-    private val cards: Cards,
-    private val name: PlayerName
+data class Player(
+    private val name: PlayerName,
+    private val cards: Cards
 ) {
 }
