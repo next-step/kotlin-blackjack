@@ -3,6 +3,7 @@ package study
 import io.kotest.matchers.collections.shouldContainExactlyInAnyOrder
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
+import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
@@ -24,6 +25,7 @@ import org.junit.jupiter.params.provider.ValueSource
  *
  */
 class DslTest {
+    @DisplayName("name(name: String)을 통해 Person 객체에 name을 입력할 수 있다")
     @ValueSource(strings = ["홍길동", "양영근"])
     @ParameterizedTest
     fun name(name: String) {
@@ -34,6 +36,7 @@ class DslTest {
         person.name shouldBe name
     }
 
+    @DisplayName("company에 활빈당을 넣으면 해당 Person 객체의 company 필드에 활빈당을 입력하게 된다")
     @Test
     fun company() {
         val person =
@@ -44,6 +47,7 @@ class DslTest {
         person.company shouldBe "활빈당"
     }
 
+    @DisplayName("languages 내에 language 이름과 level을 넣어 person.languages에 language를 추가할 수 있다")
     @Test
     fun languages() {
         val person =
@@ -60,6 +64,7 @@ class DslTest {
         person.languages shouldContainExactlyInAnyOrder listOf(Language("Korean", 5), Language("English", 3))
     }
 
+    @DisplayName("introduce 내에 skills 내에 soft 와 hard를 이용해 person의 SOFT 스킬과 HARD 스킬을 추가할 수 있다")
     @Test
     fun skills() {
         val person =
@@ -84,80 +89,5 @@ class DslTest {
                 Skill(SkillType.SOFT, "Good communication skills"),
                 Skill(SkillType.HARD, "Kotlin"),
             )
-    }
-}
-
-private fun introduce(block: PersonBuilder.() -> Unit): Person {
-    return PersonBuilder().apply(block).build()
-}
-
-data class Person(
-    val name: String,
-    val company: String?,
-    val skills: List<Skill> = emptyList(),
-    val languages: List<Language> = emptyList(),
-)
-
-class PersonBuilder {
-    private lateinit var name: String
-    private var company: String? = null
-    private var skills: MutableList<Skill> = mutableListOf()
-    private var languages: MutableList<Language> = mutableListOf()
-
-    fun name(value: String) {
-        name = value
-    }
-
-    fun company(value: String) {
-        company = value
-    }
-
-    fun skills(block: SkillsBuilder.() -> Unit) {
-        skills.addAll(SkillsBuilder().apply(block).build())
-    }
-
-    fun languages(block: LanguagesBuilder.() -> Unit) {
-        languages.addAll(LanguagesBuilder().apply(block).build())
-    }
-
-    fun build(): Person {
-        return Person(name, company, skills, languages)
-    }
-}
-
-data class Skill(val type: SkillType, val description: String)
-
-enum class SkillType {
-    SOFT,
-    HARD,
-}
-
-class SkillsBuilder {
-    private val skills = mutableListOf<Skill>()
-
-    fun soft(description: String) {
-        skills.add(Skill(SkillType.SOFT, description))
-    }
-
-    fun hard(description: String) {
-        skills.add(Skill(SkillType.HARD, description))
-    }
-
-    fun build(): List<Skill> {
-        return skills
-    }
-}
-
-data class Language(val name: String, val level: Int)
-
-class LanguagesBuilder {
-    private val languages = mutableListOf<Language>()
-
-    infix fun String.level(level: Int) {
-        languages.add(Language(this, level))
-    }
-
-    fun build(): List<Language> {
-        return languages
     }
 }
