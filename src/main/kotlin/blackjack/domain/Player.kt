@@ -6,13 +6,10 @@ class Player(
 ) {
     var reasonDone: PlayerReasonDone? = null
         private set
-
     val value: Int
         get() = hand.value()
-
     val isDone: Boolean
         get() = reasonDone != null
-
     val isBusted: Boolean
         get() = hand.isBusted()
 

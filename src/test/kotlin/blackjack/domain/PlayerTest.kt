@@ -1,5 +1,8 @@
 package blackjack.domain
 
+import blackjack.support.Fixtures.createBlackjackPlayer
+import blackjack.support.Fixtures.createBustedPlayer
+import blackjack.support.Fixtures.createStandingPlayer
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -116,27 +119,5 @@ class PlayerTest {
                 createBustedPlayer(),
                 createStandingPlayer(),
             )
-
-        private fun createBlackjackPlayer(): Player {
-            val deck = StubDeck.from(Rank.ACE, Rank.KING)
-            return Player("jack").apply {
-                initialDrawFrom(deck)
-                initialDrawFrom(deck)
-            }
-        }
-
-        private fun createBustedPlayer(): Player {
-            val deck = StubDeck.from(Rank.KING, Rank.QUEEN, Rank.JACK)
-            return Player("jack").apply {
-                initialDrawFrom(deck)
-                initialDrawFrom(deck)
-                hit(deck)
-            }
-        }
-
-        private fun createStandingPlayer(): Player =
-            Player("jack").apply {
-                stand()
-            }
     }
 }
