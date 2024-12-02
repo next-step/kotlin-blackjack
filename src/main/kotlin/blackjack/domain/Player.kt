@@ -20,23 +20,27 @@ class Player(
     fun hit(deck: Deck) {
         hand.drawFrom(deck)
         if (hand.isBusted()) {
-            reasonDone = PlayerReasonDone.BUSTED
+            done(PlayerReasonDone.BUSTED)
         }
     }
 
     fun stand() {
         check(!isDone) { "이미 턴이 끝난 상태입니다." }
-        reasonDone = PlayerReasonDone.STANDS
+        done(PlayerReasonDone.STANDS)
     }
 
     fun initialDrawFrom(deck: Deck) {
         drawFrom(deck)
         if (hand.isBlackjack()) {
-            reasonDone = PlayerReasonDone.BLACKJACK
+            done(PlayerReasonDone.BLACKJACK)
         }
     }
 
     private fun drawFrom(deck: Deck) {
         hand.drawFrom(deck)
+    }
+
+    private fun done(reasonDone: PlayerReasonDone) {
+        this.reasonDone = reasonDone
     }
 }
