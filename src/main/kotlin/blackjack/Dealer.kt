@@ -24,8 +24,11 @@ class Dealer(val name: String = DEALER_NAME, initialCards: List<Card>) {
 
     fun isBust(): Boolean = _hand.isBust()
 
+    fun shouldDrawCard(): Boolean = sumOfHand() <= DEALER_HIT_THRESHOLD
+
     companion object {
         private const val INITIAL_HAND_LENGTH = 2
         private const val DEALER_NAME = "딜러"
+        private const val DEALER_HIT_THRESHOLD = 16
     }
 }

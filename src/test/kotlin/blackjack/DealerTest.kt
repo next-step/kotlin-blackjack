@@ -75,4 +75,17 @@ class DealerTest : StringSpec({
             result shouldBe expected
         }
     }
+
+    "딜러는 손패의 합이 16점 이하면 카드를 더 받아야 하는 상태이다" {
+        val initialCards =
+            listOf(
+                Card(CardNumber.Jack, Suit.SPADES),
+                Card(Number(6), Suit.SPADES),
+            )
+        val sut = Dealer(initialCards = initialCards)
+
+        val result: Boolean = sut.shouldDrawCard()
+
+        result shouldBe true
+    }
 })
