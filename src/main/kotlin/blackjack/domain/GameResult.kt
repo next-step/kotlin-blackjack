@@ -17,6 +17,7 @@ class DealerResult(
     cards: List<Card>,
     val winCount: Int,
     val loseCount: Int,
+    val earningMoney: Long,
 ) : ParticipantResult(
     name = name,
     score = score,
@@ -28,6 +29,7 @@ class PlayerResult(
     score: Int,
     cards: List<Card>,
     val isWinner: Boolean,
+    val earningMoney: Long,
 ) : ParticipantResult(
     name = name,
     score = score,

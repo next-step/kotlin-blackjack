@@ -19,4 +19,9 @@ object InputView {
             throw IllegalArgumentException("y 또는 n만 입력 가능합니다.")
         }
     }
+
+    fun getBettingMoney(name: String): Long {
+        println("${name}의 배팅 금액은?")
+        return readln().toLong()
+    }
 }
