@@ -14,7 +14,7 @@ class PlayerTest : BehaviorSpec({
                 1,
                 0,
                 0,
-                "딜러가 Bust인 경우",
+                "딜러가 버스트인 경우",
             ),
             row(
                 ComparisonScore.Dealer(17),
@@ -39,6 +39,22 @@ class PlayerTest : BehaviorSpec({
                 0,
                 1,
                 "딜러와 플레이어가 동일한 거리인 경우",
+            ),
+            row(
+                ComparisonScore.Dealer(17),
+                listOf(Card(Suit.HEARTS, Rank.TEN), Card(Suit.SPADES, Rank.SEVEN), Card(Suit.CLUBS, Rank.FIVE)),
+                0,
+                1,
+                0,
+                "플레이어가 버스트인 경우",
+            ),
+            row(
+                ComparisonScore.Dealer(22),
+                listOf(Card(Suit.HEARTS, Rank.TEN), Card(Suit.SPADES, Rank.SEVEN), Card(Suit.CLUBS, Rank.FIVE)),
+                0,
+                0,
+                1,
+                "플레이어와 딜러 모두 버스트인 경우",
             ),
         ) { dealerScore, playerCards, expectedWins, expectedLoses, expectedDraws, description ->
 
