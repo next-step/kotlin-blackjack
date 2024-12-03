@@ -68,5 +68,5 @@
 - [X] CardRank enum을 활용
 - [X] CardBuilder 는 필요한가?
   - 필요 없어서 삭제
-- [ ] Name 과한 일반화
+- [X] Name 과한 일반화
 - [X] `Suit` display name 제거 
