@@ -26,14 +26,11 @@ enum class CardRank(val symbol: String, private val score: Int? = null) {
         return currentScore + (score ?: 0)
     }
 
-    fun isAce(): Boolean {
-        return this == ACE
-    }
-
     companion object {
         fun from(value: String): CardRank {
+            val entries = entries.toTypedArray()
             return entries.find { it.symbol == value }
-                ?: throw IllegalArgumentException("RankType 은 A, J, Q, K, 2~9만 가능합니다: $value")
+                ?: throw IllegalArgumentException("RankType 은 ${entries.joinToString { it.symbol }}만 가능합니다: $value")
         }
     }
 }

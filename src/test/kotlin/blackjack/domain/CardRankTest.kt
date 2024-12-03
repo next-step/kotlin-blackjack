@@ -54,4 +54,13 @@ class CardRankTest : BehaviorSpec({
             }
         }
     }
+
+    Given("범주에 속하지 않는 문자를 넣으면") {
+        val input = "X"
+        When("입력값이 $input 일 때") {
+            Then("IllegalArgumentException이 발생한다") {
+                runCatching { CardRank.from(input) }.isFailure shouldBe true
+            }
+        }
+    }
 })
