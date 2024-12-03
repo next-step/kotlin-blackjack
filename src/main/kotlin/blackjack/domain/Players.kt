@@ -15,20 +15,20 @@ class Players private constructor(private val values: List<Player>) : List<Playe
         find(player.name).receive(Deck(listOf(card)))
     }
 
-    fun findCardOf(name: String): Deck {
-        return find(name).totalCards
-    }
-
-    fun find(playerName: String): Player {
-        return values.find { it.same(playerName) } ?: throw IllegalArgumentException("존재하지 않는 사용자입니다.")
+    fun isBust(name: String): Boolean {
+        return find(name).isBust
     }
 
     fun scoreOf(name: String): Int {
         return find(name).score()
     }
 
-    fun isBust(name: String): Boolean {
-        return find(name).isBust
+    fun findCardOf(name: String): Deck {
+        return find(name).totalCards
+    }
+
+    fun find(playerName: String): Player {
+        return values.find { it.same(playerName) } ?: throw IllegalArgumentException("존재하지 않는 사용자입니다.")
     }
 
     companion object {

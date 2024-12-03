@@ -3,10 +3,7 @@ package blackjack.domain
 enum class CardRank(val symbol: String, private val score: Int? = null) {
     ACE("A") {
         override fun calculateScore(currentScore: Int): Int {
-            val softScore = 11
-            val hardScore = 1
-            val maxScore = 21
-            return if (currentScore + softScore > maxScore) currentScore + hardScore else currentScore + softScore
+            return if (currentScore + ACE_SOFT_SCORE > BUST_SCORE) currentScore + ACE_HARD_SCORE else currentScore + ACE_SOFT_SCORE
         }
     },
     JACK("J", 10),
@@ -27,6 +24,9 @@ enum class CardRank(val symbol: String, private val score: Int? = null) {
     }
 
     companion object {
+        const val ACE_SOFT_SCORE = 11
+        const val ACE_HARD_SCORE = 1
+
         fun from(value: String): CardRank {
             val entries = entries.toTypedArray()
             return entries.find { it.symbol == value }

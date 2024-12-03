@@ -12,12 +12,12 @@ data class Player(val playerName: PlayerName, private val hand: Hand = Hand()) {
         hand.add(cards.values())
     }
 
-    fun same(other: String): Boolean {
-        return playerName.value == other
-    }
-
     fun score(): Int {
         return hand.score
+    }
+
+    fun same(other: String): Boolean {
+        return playerName.value == other
     }
 
     companion object {
