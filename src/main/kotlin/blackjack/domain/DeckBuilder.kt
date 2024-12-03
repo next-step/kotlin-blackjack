@@ -16,8 +16,7 @@ class DeckBuilder {
             throw IllegalArgumentException("카드가 없습니다.")
         }
 
-        val d = Deck(cards)
-        return d
+        return Deck(cards)
     }
 
     companion object {
