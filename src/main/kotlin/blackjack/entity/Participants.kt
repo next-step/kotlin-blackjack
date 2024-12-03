@@ -17,9 +17,8 @@ class Participants(
 
     fun calculateResult(): List<GameResult> {
         val dealerScore = dealer.calculateScore()
-        val playerScores = players.map { it.calculateScore() }
-        val dealerResult = dealer.calculateResult(ComparisonScore.Players(playerScores))
-        val playerResults = players.map { it.calculateResult(ComparisonScore.Dealer(dealerScore)) }
+        val playerResults = players.map { it.calculateResult(dealerScore) }
+        val dealerResult = dealer.calculateResult(playerResults)
         return listOf(dealerResult) + playerResults
     }
 }

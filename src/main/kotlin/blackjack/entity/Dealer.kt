@@ -14,29 +14,10 @@ class Dealer : Participant("딜러") {
         return PlayerAction.STAND
     }
 
-    override fun calculateResult(score: ComparisonScore): GameResult {
-        require(score is ComparisonScore.Players) { "플레이어 점수는 여러개입니다." }
-
-        val dealerScore = calculateScore()
-        val playerScores = score.scores
-
-        return if (dealerScore > BLACKJACK) {
-            GameResult(this, wins = 0, loses = playerScores.size)
-        } else {
-            calculateGameResult(dealerScore, playerScores)
-        }
-    }
-
-    private fun calculateGameResult(
-        dealerScore: Int,
-        playerScores: List<Int>,
-    ): GameResult {
-        val dealerDistance = closeToBlackjack(dealerScore)
-        val playerDistances = playerScores.map { closeToBlackjack(it) }
-
-        val wins = playerDistances.count { it > dealerDistance }
-        val loses = playerDistances.count { it < dealerDistance }
-        val draws = playerDistances.count { it == dealerDistance }
+    fun calculateResult(playerResults: List<GameResult>): GameResult {
+        val wins = playerResults.sumOf { it.loses }
+        val loses = playerResults.sumOf { it.wins }
+        val draws = playerResults.sumOf { it.draws }
 
         return GameResult(this, wins, loses, draws)
     }
