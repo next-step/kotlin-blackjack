@@ -15,4 +15,8 @@ object CardNumberFactory {
     }
 
     fun all(): List<CardNumber> = listOf(ACE, JACK, QUEEN, KING) + numbers.values
+
+    fun allMap(transform: (CardNumber) -> Card): List<Card> {
+        return all().map(transform)
+    }
 }

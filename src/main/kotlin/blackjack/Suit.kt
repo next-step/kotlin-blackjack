@@ -9,4 +9,10 @@ enum class Suit(val koreanName: String) {
     fun generateAllCards(): List<Card> {
         return CardNumberFactory.all().map { Card(it, this) }
     }
+
+    companion object {
+        fun flatMap(transform: (Suit) -> Iterable<Card>): List<Card> {
+            return Suit.entries.flatMap(transform)
+        }
+    }
 }
