@@ -1,7 +1,5 @@
 package blackjack.entity
 
-import blackjack.entity.Participant.Companion.BLACKJACK
-
 class Player(name: String) : Participant(name) {
     override fun calculateResult(score: ComparisonScore): GameResult {
         require(score is ComparisonScore.Dealer) { "딜러 점수는 하나입니다." }
@@ -17,12 +15,12 @@ class Player(name: String) : Participant(name) {
         wantsToHit: Boolean,
     ): PlayerAction =
         when {
+            !wantsToHit -> PlayerAction.STAND
             isBusted() -> PlayerAction.BURST
-            wantsToHit -> {
+            else -> {
                 receiveCard(deck.deal())
                 PlayerAction.HIT
             }
-            else -> PlayerAction.STAND
         }
 
     private fun calculateGameResult(
