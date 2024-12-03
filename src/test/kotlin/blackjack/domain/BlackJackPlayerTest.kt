@@ -31,15 +31,15 @@ class BlackJackPlayerTest {
 
     @Test
     fun `2장이 아니면 에러 출력`() {
-        val blackJackCards =
-            BlackJackCards(
+        val blackJackDeck =
+            BlackJackDeck(
                 mutableListOf(
                     BlackJackCard(BlackJackCardShape.HEART, BlackJackCardNumber.ACE),
                     BlackJackCard(BlackJackCardShape.HEART, BlackJackCardNumber.JACK),
                     BlackJackCard(BlackJackCardShape.HEART, BlackJackCardNumber.KING),
                 ),
             )
-        assertThatThrownBy { BlackJackPlayer("사람", BlackJackPlayerCards(MutableList(3) { blackJackCards.draw() })) }
+        assertThatThrownBy { BlackJackPlayer("사람", BlackJackPlayerCards(MutableList(3) { blackJackDeck.draw() })) }
             .isInstanceOf(IllegalArgumentException::class.java)
             .hasMessage("플레이어는 처음에 2장만 가지고 시작해야해요")
     }
