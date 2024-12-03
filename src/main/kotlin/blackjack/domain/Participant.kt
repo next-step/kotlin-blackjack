@@ -17,5 +17,13 @@ abstract class Participant(private val name: PlayerName, private val hand: Hand)
         return name.value
     }
 
+    fun compare(other: Participant): GameMatchResult {
+        return when {
+            calculateTotal() > other.calculateTotal() -> GameMatchResult.WIN
+            calculateTotal() < other.calculateTotal() -> GameMatchResult.LOSE
+            else -> GameMatchResult.DRAW
+        }
+    }
+
     abstract fun isDrawable(): Boolean
 }
