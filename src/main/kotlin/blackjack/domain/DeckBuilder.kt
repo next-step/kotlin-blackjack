@@ -24,9 +24,8 @@ class DeckBuilder {
         val cachedDeck: Deck = generateFullDeck()
 
         private fun generateFullDeck(): Deck {
-            val ranks = listOf("A", "2", "3", "4", "5", "6", "7", "8", "9", "J", "Q", "K", "J")
             val suits = Suit.entries.toTypedArray()
-            return ranks.flatMap { rank ->
+            return CardRank.symbols().flatMap { rank ->
                 suits.map { suit ->
                     Card.of(rank, suit)
                 }

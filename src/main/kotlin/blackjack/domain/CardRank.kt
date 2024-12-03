@@ -28,9 +28,12 @@ enum class CardRank(val symbol: String, private val score: Int? = null) {
         const val ACE_HARD_SCORE = 1
 
         fun from(value: String): CardRank {
-            val entries = entries.toTypedArray()
             return entries.find { it.symbol == value }
-                ?: throw IllegalArgumentException("RankType 은 ${entries.joinToString { it.symbol }}만 가능합니다: $value")
+                ?: throw IllegalArgumentException("RankType 은 ${symbols()}만 가능합니다: $value")
+        }
+
+        fun symbols(): List<String> {
+            return entries.map { it.symbol }.toList()
         }
     }
 }
