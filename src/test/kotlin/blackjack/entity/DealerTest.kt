@@ -73,4 +73,31 @@ class DealerTest : BehaviorSpec({
             }
         }
     }
+    Given("딜러가 자신의 행동을 결정할 때") {
+        When("점수가 16 이하인 경우") {
+            val dealer = Dealer()
+            val deck = Deck()
+            dealer.receiveCard(Card(Suit.HEARTS, Rank.TEN))
+            dealer.receiveCard(Card(Suit.SPADES, Rank.SIX))
+
+            Then("딜러는 카드를 추가로 받고, 상태가 DRAW가 된다") {
+                val action = dealer.playTurn(deck)
+
+                action shouldBe PlayerAction.DRAW
+            }
+        }
+
+        When("점수가 17 이상인 경우") {
+            val dealer = Dealer()
+            val deck = Deck()
+            dealer.receiveCard(Card(Suit.HEARTS, Rank.TEN))
+            dealer.receiveCard(Card(Suit.SPADES, Rank.SEVEN))
+
+            Then("딜러는 카드를 추가로 받지 않고, 상태가 STAND가 된다") {
+                val action = dealer.playTurn(deck)
+
+                action shouldBe PlayerAction.STAND
+            }
+        }
+    }
 })

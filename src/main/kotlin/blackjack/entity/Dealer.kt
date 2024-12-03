@@ -6,6 +6,14 @@ class Dealer : Participant("딜러") {
         return score <= 16
     }
 
+    fun playTurn(deck: Deck): PlayerAction {
+        if (shouldDrawCard()) {
+            receiveCard(deck.deal())
+            return PlayerAction.DRAW
+        }
+        return PlayerAction.STAND
+    }
+
     override fun calculateResult(score: ComparisonScore): GameResult {
         require(score is ComparisonScore.Players) { "플레이어 점수는 여러개입니다." }
 
