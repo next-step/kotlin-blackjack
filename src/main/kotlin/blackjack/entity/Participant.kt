@@ -1,7 +1,5 @@
 package blackjack.entity
 
-import kotlin.math.abs
-
 abstract class Participant(val name: String) {
     companion object {
         const val BLACKJACK = 21
@@ -22,8 +20,6 @@ abstract class Participant(val name: String) {
     }
 
     fun closeToBlackjack(score: Int): Int {
-        return abs(BLACKJACK - score)
+        return BLACKJACK - score
     }
-
-    abstract fun calculateResult(score: ComparisonScore): GameResult
 }

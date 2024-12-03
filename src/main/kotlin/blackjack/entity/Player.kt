@@ -14,10 +14,7 @@ class Player(name: String) : Participant(name) {
             }
         }
 
-    override fun calculateResult(score: ComparisonScore): GameResult {
-        require(score is ComparisonScore.Dealer) { "딜러 점수는 하나입니다." }
-
-        val dealerScore = score.score
+    fun calculateResult(dealerScore: Int): GameResult {
         val playerScore = calculateScore()
 
         return calculateGameResult(playerScore, dealerScore)
