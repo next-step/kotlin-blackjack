@@ -4,4 +4,5 @@ enum class PlayerAction {
     HIT,
     STAND,
     BURST,
+    DRAW,
 }
