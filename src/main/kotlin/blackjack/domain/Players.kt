@@ -5,14 +5,14 @@ class Players private constructor(private val values: List<Player>) : List<Playe
         player: Player,
         deck: Deck,
     ) {
-        player.receive(deck)
+        find(player.name).receive(deck)
     }
 
     fun deal(
         player: Player,
-        deck: Card,
+        card: Card,
     ) {
-        player.receive(Deck(listOf(deck)))
+        find(player.name).receive(Deck(listOf(card)))
     }
 
     fun findCardOf(name: String): Deck {
