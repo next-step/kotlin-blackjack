@@ -1,5 +1,6 @@
 package blackjack
 
+import blackjack.CardGame.Companion.INITIAL_CARD_COUNT
 import blackjack.ui.InputView
 import blackjack.ui.ResultView
 
@@ -11,13 +12,13 @@ fun main() {
     val game = CardGame.fromNames(names)
 
     game.playerAllDeal()
-    resultView.printUserCardCount(names, game.playersSize)
-    resultView.printUserCardsOfMap(names.associateWith { game.cardsOf(it) })
+    resultView.printUserCardCount(names, INITIAL_CARD_COUNT)
+    resultView.printUserCards(game.roundResult())
 
     names.forEach { userName -> handleUserTurn(game, resultView, inputView, userName) }
 
     val resultDto = game.result()
-    displayGameResult(resultView, resultDto)
+    resultView.printResult(resultDto)
 }
 
 private fun handleUserTurn(
@@ -29,25 +30,10 @@ private fun handleUserTurn(
     while (inputView.inputMore(userName)) {
         game.deal(userName)
         val userHandCards = game.cardsOf(userName)
-        val score = game.scoreOf(userName)
-
-        resultView.printUserCards(userName, userHandCards)
-        resultView.printResult(userName, userHandCards, score)
+        resultView.printRound(userName, userHandCards)
 
         if (game.isBust(userName)) {
             break
-        }
-    }
-}
-
-private fun displayGameResult(
-    resultView: ResultView,
-    resultDto: Map<String, Map<List<String>, Int>>,
-) {
-    resultView.outputProvider("")
-    resultDto.forEach { (userName, cardAndScoreMap) ->
-        cardAndScoreMap.forEach { (cards, score) ->
-            resultView.printResult(userName, cards, score)
         }
     }
 }

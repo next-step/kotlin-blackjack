@@ -60,3 +60,13 @@
   - [X] 두 장의 카드를 가지고 시작한다
   - [X] 지정 유저의 카드를 추가한다
   - [X] 유저 카드를 알 수 있다
+
+## 2단계 피드백
+- [X] startCardCount 상수화
+- [X] Card 정적팩토리 메소드 활용
+- [X] toString 활용
+- [X] CardRank enum을 활용
+- [X] CardBuilder 는 필요한가?
+  - 필요 없어서 삭제
+- [X] Name 과한 일반화
+- [X] `Suit` display name 제거 

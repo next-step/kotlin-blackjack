@@ -1,5 +1,6 @@
 package blackjack.ui
 
+import blackjack.domain.Suit
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
@@ -18,25 +19,30 @@ class ResultViewTest {
 
     @Test
     fun `유저 카드 출력`() {
-        // given
         var expected = ""
         val customOutputProvider: (String) -> Unit = { message -> expected = message }
         val resultView = ResultView(customOutputProvider)
 
-        resultView.printUserCards("userA", listOf("2하트", "2스페이드"))
+        resultView.printRound("userA", mapOf("2" to listOf(Suit.HEART.name, Suit.SPADE.name)))
 
         assertThat(expected).contains("userA카드: 2하트, 2스페이드")
     }
 
     @Test
     fun `결과 출력`() {
-        // given
-        var expected = ""
-        val customOutputProvider: (String) -> Unit = { message -> expected = message }
+        var actualMessage = ""
+        val customOutputProvider: (String) -> Unit = { message -> actualMessage = message }
         val resultView = ResultView(customOutputProvider)
 
-        resultView.printResult("userA", listOf("2하트", "8스페이드", "A클로버"), 21)
+        resultView.printResult(
+            mapOf(
+                "userA" to
+                    mapOf(
+                        mapOf("2" to listOf(Suit.HEART.name, Suit.SPADE.name)) to 4,
+                    ),
+            ),
+        )
 
-        assertThat(expected).contains("userA카드: 2하트, 8스페이드, A클로버 - 결과: 21")
+        assertThat(actualMessage).contains("userA카드: 2하트, 2스페이드 - 결과: 4")
     }
 }

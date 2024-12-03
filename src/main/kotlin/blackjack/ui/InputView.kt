@@ -1,11 +1,8 @@
 package blackjack.ui
 
-typealias UserNames = List<String>
-typealias UserMore = Boolean
-typealias UserCards = List<String>
 typealias UserName = String
-typealias Score = Int
-typealias Result = Map<String, List<String>>
+typealias UserNames = List<UserName>
+typealias UserMore = Boolean
 
 class InputView(val inputProvider: () -> String? = { readln() }) {
     fun inputUserNames(): UserNames {
