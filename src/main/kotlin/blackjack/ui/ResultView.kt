@@ -53,7 +53,7 @@ class ResultView(val outputProvider: (String) -> Unit = { println(it) }) {
     }
 
     companion object {
-       private val VIEW_SUIT: ViewSuits =
+        private val VIEW_SUIT: ViewSuits =
             mapOf(
                 "HEART" to "하트",
                 "DIAMOND" to "다이아몬드",

@@ -4,6 +4,7 @@ import blackjack.domain.Card
 import blackjack.domain.Deck
 import blackjack.domain.DeckBuilder
 import blackjack.domain.Players
+import blackjack.ui.RoundResult
 import blackjack.ui.UserCards
 import blackjack.ui.ViewResult
 
@@ -43,10 +44,17 @@ data class CardGame(private val deck: Deck, private val players: Players) {
         return players.isBust(name)
     }
 
-    private fun groupCardsByRank(cards: List<Card>) = cards.groupBy { it.rank.symbol }
-        .map { (rank, cards) ->
-            rank to cards.map { it.suit.name }
-        }.toMap()
+    fun roundResult(): RoundResult {
+        return players.associate { player ->
+            player.name to groupCardsByRank(player.totalCards.values())
+        }
+    }
+
+    private fun groupCardsByRank(cards: List<Card>) =
+        cards.groupBy { it.rank.symbol }
+            .map { (rank, cards) ->
+                rank to cards.map { it.suit.name }
+            }.toMap()
 
     companion object {
         const val INITIAL_CARD_COUNT = 2

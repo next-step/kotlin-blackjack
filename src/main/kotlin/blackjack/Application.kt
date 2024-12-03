@@ -13,7 +13,7 @@ fun main() {
 
     game.playerAllDeal()
     resultView.printUserCardCount(names, INITIAL_CARD_COUNT)
-    resultView.printUserCards(names.associateWith { game.cardsOf(it) })
+    resultView.printUserCards(game.roundResult())
 
     names.forEach { userName -> handleUserTurn(game, resultView, inputView, userName) }
 
