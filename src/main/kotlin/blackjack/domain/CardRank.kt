@@ -1,42 +1,39 @@
 package blackjack.domain
 
-sealed class CardRank private constructor() {
-    abstract fun calculateScore(currentScore: Int): Int
-
-    data object Ace : CardRank() {
-        private const val SOFT_SCORE = 11
-        private const val HARD_SCORE = 1
-        private const val BUST_SCORE = 21
-
+enum class CardRank(val symbol: String, private val score: Int? = null) {
+    ACE("A") {
         override fun calculateScore(currentScore: Int): Int {
-            return if (currentScore + SOFT_SCORE > BUST_SCORE) currentScore + HARD_SCORE else currentScore + SOFT_SCORE
+            val softScore = 11
+            val hardScore = 1
+            val maxScore = 21
+            return if (currentScore + softScore > maxScore) currentScore + hardScore else currentScore + softScore
         }
+    },
+    JACK("J", 10),
+    QUEEN("Q", 10),
+    KING("K", 10),
+    TWO("2", 2),
+    THREE("3", 3),
+    FOUR("4", 4),
+    FIVE("5", 5),
+    SIX("6", 6),
+    SEVEN("7", 7),
+    EIGHT("8", 8),
+    NINE("9", 9),
+    ;
+
+    open fun calculateScore(currentScore: Int): Int {
+        return currentScore + (score ?: 0)
     }
 
-    data object Face : CardRank() {
-        override fun calculateScore(currentScore: Int): Int = currentScore + 10
-    }
-
-    data class Number(val value: Int) : CardRank() {
-        init {
-            val numberMin = 2
-            val numberMax = 9
-            require(value in numberMin..numberMax) { "Number 는 $numberMin~$numberMax 사이의 값 이어야 합니다.: $value" }
-        }
-
-        override fun calculateScore(currentScore: Int): Int = currentScore + value
+    fun isAce(): Boolean {
+        return this == ACE
     }
 
     companion object {
-        private val allowedValues = listOf("A", "J", "Q", "K") + (2..9).map { it.toString() }
-
         fun from(value: String): CardRank {
-            return when (value) {
-                "A" -> Ace
-                "J", "Q", "K" -> Face
-                in allowedValues -> Number(value.toInt())
-                else -> throw IllegalArgumentException("RankType 은 A, J, Q, K, 2~9 만 가능합니다.: $value")
-            }
+            return entries.find { it.symbol == value }
+                ?: throw IllegalArgumentException("RankType 은 A, J, Q, K, 2~9만 가능합니다: $value")
         }
     }
 }

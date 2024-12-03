@@ -7,9 +7,9 @@ import io.kotest.matchers.shouldBe
 class CardRankTest : BehaviorSpec({
     Given("Ace, Face, Number 타입을 가진다") {
         listOf(
-            "A" to CardRank.Ace,
-            "K" to CardRank.Face,
-            "9" to CardRank.Number(9),
+            "A" to CardRank.ACE,
+            "K" to CardRank.KING,
+            "9" to CardRank.NINE,
         ).forEach { (input, expected) ->
             When("입력값이 $input 일 때") {
                 Then("CardRank는 $expected 이어야 한다") {
@@ -26,7 +26,7 @@ class CardRankTest : BehaviorSpec({
         ).forAll { (value, expected) ->
             When("입력값이 $value 일 때") {
                 Then("결과는 $expected 이어야 한다") {
-                    CardRank.Ace.calculateScore(value) shouldBe expected
+                    CardRank.from("A").calculateScore(value) shouldBe expected
                 }
             }
         }
@@ -36,20 +36,20 @@ class CardRankTest : BehaviorSpec({
         val expected = 10
         When("Face일 때") {
             Then("결과는 $expected 이어야 한다") {
-                CardRank.Face.calculateScore(0) shouldBe expected
+                CardRank.from("K").calculateScore(0) shouldBe expected
             }
         }
     }
 
     Given("Number는 2~10까지의 숫자로 계산할 수 있다") {
         listOf(
-            2 to 2,
-            5 to 5,
-            9 to 9,
-        ).forAll { (value, expected) ->
-            When("입력값이 $value 일 때") {
+            CardRank.TWO to 2,
+            CardRank.FIVE to 5,
+            CardRank.NINE to 9,
+        ).forAll { (cardRank, expected) ->
+            When("입력값이 $cardRank 일 때") {
                 Then("결과는 $expected 이어야 한다") {
-                    CardRank.Number(value).calculateScore(0) shouldBe expected
+                    cardRank.calculateScore(0) shouldBe expected
                 }
             }
         }
