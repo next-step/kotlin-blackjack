@@ -7,7 +7,7 @@ import io.kotest.matchers.shouldBe
 class HandTest : BehaviorSpec({
     fun createCard(cards: List<String>): List<Card> {
         return cards.map {
-            Card(it, Suit.SPADE)
+            Card.of(it, Suit.SPADE)
         }
     }
 
@@ -17,7 +17,7 @@ class HandTest : BehaviorSpec({
             createCard(listOf("2", "3")),
             createCard(listOf("9", "Q")),
         ).forEach { cards ->
-            When("카드 ${cards.joinToString { "${it.rank} ${it.suit.displayName}" }} 일때") {
+            When("카드 ${cards.joinToString { "${it.rank} ${it.suit}" }} 일때") {
                 val hand = Hand()
                 hand.add(cards)
 
@@ -36,7 +36,7 @@ class HandTest : BehaviorSpec({
             Hand(createCard(listOf("2", "3")).toMutableList()) to 5,
             Hand(createCard(listOf("9", "Q")).toMutableList()) to 19,
         ).forEach { (cards, expected) ->
-            When("카드 ${cards.totalCards.joinToString { "${it.rank} ${it.suit.displayName}" }} 일때") {
+            When("카드 ${cards.totalCards.joinToString { "${it.rank} ${it.suit}" }} 일때") {
                 Then("점수는 $expected 이어야 함") {
                     cards.score shouldBe expected
                 }
@@ -57,7 +57,7 @@ class HandTest : BehaviorSpec({
             Hand(createCard(listOf("2", "3")).toMutableList()) to false,
             Hand(createCard(listOf("9", "Q")).toMutableList()) to false,
         ).forEach { (cards, expected) ->
-            When("카드 ${cards.totalCards.joinToString { "${it.rank} ${it.suit.displayName}" }} 일때") {
+            When("카드 ${cards.totalCards.joinToString { "${it.rank} ${it.suit}" }} 일때") {
                 Then("Bust 상태는 $expected 이어야 함") {
                     cards.isBust shouldBe expected
                 }
