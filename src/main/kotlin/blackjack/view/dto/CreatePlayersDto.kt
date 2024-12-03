@@ -1,6 +1,6 @@
 package blackjack.view.dto
 
-data class RecordDto(
+data class CreatePlayersDto(
     val name: String,
-    val profit: Int,
+    val betting: Int,
 )

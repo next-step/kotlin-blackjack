@@ -1,4 +1,4 @@
-package blackjack.domain.player
+package blackjack.domain.participant
 
 class Participants(val participants: List<Participant>) {
     init {
@@ -6,6 +6,10 @@ class Participants(val participants: List<Participant>) {
     }
 
     fun findPlayer(name: String) = participants.find { it.name == name } ?: throw IllegalStateException(NOT_FOUND_PLAYER_EXCEPTION_MESSAGE)
+
+    fun extractDealer(): Dealer = participants.filterIsInstance<Dealer>().single()
+
+    fun extractPlayers(): List<Player> = participants.filterIsInstance<Player>()
 
     companion object {
         private const val MIN_PLAYER_COUNT = 1
