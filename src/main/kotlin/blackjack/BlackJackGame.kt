@@ -1,5 +1,6 @@
 package blackjack
 
+import blackjack.domain.BettingMoney
 import blackjack.domain.GameRoom
 import blackjack.domain.Player
 import blackjack.ui.InputView
@@ -8,8 +9,7 @@ import blackjack.ui.ResultView
 object BlackJackGame {
     fun start() {
         val names = InputView.getPlayerNames()
-        val bettingMoneys = names.map { name -> InputView.getBettingMoney(name) }
-        val players = getPlayers(names, bettingMoneys)
+        val players = names.map { name -> getPlayer(name) }
         val gameRoom = GameRoom(players = players)
 
         ResultView.printFirstPhase(gameRoom.participants)
@@ -21,14 +21,12 @@ object BlackJackGame {
         ResultView.printFinalResult(gameResult)
     }
 
-    private fun getPlayers(names: List<String>, bettingMoneys: List<Long>): List<Player> {
-        return names.zip(bettingMoneys)
-            .map { (name, bettingMoney) ->
-                Player(
-                    name = name,
-                    bettingMoney = bettingMoney,
-                )
-            }
+    private fun getPlayer(name: String): Player {
+        val bettingMoney = InputView.getBettingMoney(name)
+        return Player(
+            name = name,
+            bettingMoney = BettingMoney(bettingMoney),
+        )
     }
 
     private fun drawPlayerCards(gameRoom: GameRoom) {

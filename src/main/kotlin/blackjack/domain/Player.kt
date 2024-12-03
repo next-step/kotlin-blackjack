@@ -3,7 +3,7 @@ package blackjack.domain
 class Player(
     name: String,
     cards: Cards = Cards(),
-    val bettingMoney: Long,
+    val bettingMoney: BettingMoney,
 ) : Participant(name, cards) {
     override fun canDrawCard(): Boolean {
         return !cards.isOverMaxScore()
@@ -25,13 +25,13 @@ class Player(
         if (isBlackJack) {
             return calcBlackJackEarningMoney(dealer)
         }
-        return if (isWinner(dealer)) bettingMoney else -bettingMoney
+        return if (isWinner(dealer)) bettingMoney.getMoney() else bettingMoney.getMinusMoney()
     }
 
     private fun Player.calcBlackJackEarningMoney(dealer: Dealer): Long {
         if (dealer.isBlackJack) {
             return 0L
         }
-        return (bettingMoney * 1.5).toLong()
+        return (bettingMoney.getBlackJackMultipleMoney())
     }
 }
