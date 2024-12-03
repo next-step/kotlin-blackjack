@@ -62,9 +62,11 @@
   - [X] 유저 카드를 알 수 있다
 
 ## 2단계 피드백
-- [ ] startCardCount 상수화
-- [ ] Card 정적팩토리 메소드 활용
-- [ ] toString 활용
-- [ ] CardRank enum을 활용
-- [ ] CardBuilder 는 필요한가?
+- [X] startCardCount 상수화
+- [X] Card 정적팩토리 메소드 활용
+- [X] toString 활용
+- [X] CardRank enum을 활용
+- [X] CardBuilder 는 필요한가?
+  - 필요 없어서 삭제
 - [ ] Name 과한 일반화
+- [X] `Suit` display name 제거 

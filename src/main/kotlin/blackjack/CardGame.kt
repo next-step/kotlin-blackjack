@@ -1,8 +1,11 @@
 package blackjack
 
+import blackjack.domain.Card
 import blackjack.domain.Deck
 import blackjack.domain.DeckBuilder
 import blackjack.domain.Players
+import blackjack.ui.UserCards
+import blackjack.ui.ViewResult
 
 data class CardGame(private val deck: Deck, private val players: Players) {
     val playersSize: Int = players.size
@@ -22,8 +25,14 @@ data class CardGame(private val deck: Deck, private val players: Players) {
         players.deal(players.find(name), deck.pop())
     }
 
-    fun cardsOf(name: String): List<String> {
-        return players.findCardOf(name).values().map { it.name }
+    fun cardsOf(name: String): UserCards {
+        return groupCardsByRank(players.findCardOf(name).values())
+    }
+
+    fun result(): ViewResult {
+        return players.associate { player ->
+            player.name to mapOf(groupCardsByRank(player.totalCards.values()) to player.score())
+        }
     }
 
     fun scoreOf(name: String): Int {
@@ -34,14 +43,10 @@ data class CardGame(private val deck: Deck, private val players: Players) {
         return players.isBust(name)
     }
 
-    fun result(): Map<String, Map<List<String>, Int>> {
-        return players.associate { player ->
-            player.name to
-                    mapOf(
-                        player.totalCards.values().map { it.name } to player.score(),
-                    )
-        }
-    }
+    private fun groupCardsByRank(cards: List<Card>) = cards.groupBy { it.rank.symbol }
+        .map { (rank, cards) ->
+            rank to cards.map { it.suit.name }
+        }.toMap()
 
     companion object {
         const val INITIAL_CARD_COUNT = 2
