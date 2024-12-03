@@ -8,8 +8,7 @@ data class CardGame(private val deck: Deck, private val players: Players) {
     val playersSize: Int = players.size
 
     fun initGame(name: String) {
-        val startCardCount = 2
-        val roundCards = deck.popCards(startCardCount)
+        val roundCards = deck.popCards(INITIAL_CARD_COUNT)
         players.deal(players.find(name), roundCards)
     }
 
@@ -45,6 +44,8 @@ data class CardGame(private val deck: Deck, private val players: Players) {
     }
 
     companion object {
+        const val INITIAL_CARD_COUNT = 2
+
         fun from(
             deck: Deck,
             users: List<String>,
