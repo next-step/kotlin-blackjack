@@ -3,7 +3,7 @@ package blackjack.view
 import blackjack.domain.BlackJackGame
 import blackjack.domain.BlackJackPlayer
 
-object BlackJackView {
+object BlackJackInputView {
     fun getPlayerName(): List<String> {
         println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)")
         return readln().split(",")
@@ -13,6 +13,7 @@ object BlackJackView {
         blackJackGame.players.forEach {
             drawBlackJackPlayerCards(it)
         }
+        drawBlackJackPlayerCards(blackJackGame.dealer)
     }
 
     fun getPlayerDrawCardYn(blackJackPlayer: BlackJackPlayer): Boolean {
@@ -24,17 +25,5 @@ object BlackJackView {
     fun drawBlackJackPlayerCards(blackJackPlayer: BlackJackPlayer) {
         print("${blackJackPlayer.name}카드: ")
         println(blackJackPlayer.blackJackPlayerCards.cards.map { "${it.number.name} ${it.shape.name}" }.joinToString(","))
-    }
-
-    fun drawBlackJackPlayersCardsWithResult(blackJackGame: BlackJackGame) {
-        blackJackGame.players.forEach {
-            drawBlackJackPlayerCards(it)
-            println(" 결과: ${it.getBestSum()}")
-        }
-    }
-
-    fun drawWinPlayer(blackJackGame: BlackJackGame) {
-        println("승리자는 ")
-        print(blackJackGame.getWinPlayer().map { it.name }.joinToString(","))
     }
 }

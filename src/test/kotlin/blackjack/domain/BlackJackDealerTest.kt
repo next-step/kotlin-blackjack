@@ -14,7 +14,7 @@ class BlackJackDealerTest {
                     BlackJackCard(BlackJackCardShape.HEART, BlackJackCardNumber.ACE),
                 ),
             )
-        val blackJackPlayerCards = BlackJackPlayerCards(mutableListOf(blackJackDeck.draw(), blackJackDeck.draw()))
+        val blackJackPlayerCards = BlackJackPlayerCards.byDeck(blackJackDeck)
         val blackJackDealer = BlackJackDealer("dealer", blackJackPlayerCards)
 
         if (blackJackDealer.isDrawPossible()) {
@@ -39,12 +39,12 @@ class BlackJackDealerTest {
         val blackJackDeck =
             BlackJackDeck(
                 listOf(
-                    BlackJackCard(BlackJackCardShape.SPADE, BlackJackCardNumber.SEVEN),
+                    BlackJackCard(BlackJackCardShape.SPADE, BlackJackCardNumber.ACE),
                     BlackJackCard(BlackJackCardShape.SPADE, BlackJackCardNumber.JACK),
-                    BlackJackCard(BlackJackCardShape.HEART, BlackJackCardNumber.TWO),
+                    BlackJackCard(BlackJackCardShape.HEART, BlackJackCardNumber.FIVE),
                 ),
             )
-        val blackJackPlayerCards = BlackJackPlayerCards(mutableListOf(blackJackDeck.draw(), blackJackDeck.draw()))
+        val blackJackPlayerCards = BlackJackPlayerCards.byDeck(blackJackDeck)
         val blackJackDealer = BlackJackDealer("dealer", blackJackPlayerCards)
 
         if (blackJackDealer.isDrawPossible()) {
@@ -55,7 +55,7 @@ class BlackJackDealerTest {
         assertThat(blackJackDealer.blackJackPlayerCards.cards).containsExactly(
             BlackJackCard(
                 BlackJackCardShape.HEART,
-                BlackJackCardNumber.TWO,
+                BlackJackCardNumber.FIVE,
             ),
             BlackJackCard(
                 BlackJackCardShape.SPADE,
@@ -63,7 +63,7 @@ class BlackJackDealerTest {
             ),
             BlackJackCard(
                 BlackJackCardShape.SPADE,
-                BlackJackCardNumber.SEVEN,
+                BlackJackCardNumber.ACE,
             ),
         )
     }
