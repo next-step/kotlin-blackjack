@@ -5,10 +5,10 @@ fun createDeck(function: DeckBuilder.() -> Unit): Deck {
 }
 
 class DeckBuilder {
-    private var cards: List<Card> = emptyList()
+    private val cards: MutableList<Card> = mutableListOf()
 
-    fun cards(block: CardBuilder.() -> Unit) {
-        cards = CardBuilder().apply(block).build()
+    infix fun String.to(suit: Suit) {
+        cards.add(Card.of(this, suit))
     }
 
     fun build(): Deck {
@@ -16,22 +16,19 @@ class DeckBuilder {
             throw IllegalArgumentException("카드가 없습니다.")
         }
 
-        return Deck(cards)
+        val d = Deck(cards)
+        return d
     }
 
     companion object {
         val cachedDeck: Deck = generateFullDeck()
-
-        fun createDeck(): Deck {
-            return cachedDeck.copy()
-        }
 
         private fun generateFullDeck(): Deck {
             val ranks = listOf("A", "2", "3", "4", "5", "6", "7", "8", "9", "J", "Q", "K", "J")
             val suits = Suit.entries.toTypedArray()
             return ranks.flatMap { rank ->
                 suits.map { suit ->
-                    Card(rank, suit)
+                    Card.of(rank, suit)
                 }
             }.let {
                 Deck(it.shuffled())

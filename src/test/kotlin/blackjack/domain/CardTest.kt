@@ -7,9 +7,9 @@ class CardTest : BehaviorSpec({
     Given("`CardRank`, `CardSuit`를 가진다") {
         When("Card를 생성하면") {
             Then("CardRank와 CardSuit를 가진다") {
-                val actual = Card("A", Suit.SPADE)
+                val actual = Card.of("A", Suit.SPADE)
 
-                actual.rank shouldBe CardRank.Ace
+                actual.rank shouldBe CardRank.ACE
                 actual.suit shouldBe Suit.SPADE
             }
         }
@@ -17,9 +17,9 @@ class CardTest : BehaviorSpec({
 
     Given("`Score` 알 수 있다") {
         listOf(
-            Card("A", Suit.SPADE) to 11,
-            Card("J", Suit.SPADE) to 10,
-            Card("9", Suit.SPADE) to 9,
+            Card.of("A", Suit.SPADE) to 11,
+            Card.of("J", Suit.SPADE) to 10,
+            Card.of("9", Suit.SPADE) to 9,
         ).forEach { (card, expectedScore) ->
             When("${card.rank}일 때") {
                 Then("${expectedScore}로 계산할 수 있다") {
@@ -31,14 +31,14 @@ class CardTest : BehaviorSpec({
 
     Given("이름을 알 수 있다") {
         listOf(
-            Card("A", Suit.SPADE) to "A스페이드",
-            Card("A", Suit.HEART) to "A하트",
-            Card("J", Suit.DIAMOND) to "J다이아몬드",
-            Card("9", Suit.CLUB) to "9클로버",
+            Card.of("A", Suit.SPADE) to CardRank.ACE,
+            Card.of("A", Suit.HEART) to CardRank.ACE,
+            Card.of("J", Suit.DIAMOND) to CardRank.JACK,
+            Card.of("9", Suit.CLUB) to CardRank.NINE,
         ).forEach { (card, expected) ->
             When("CardSuit가 ${card.suit}일 때") {
-                Then("$expected 로 표시된다") {
-                    card.name shouldBe expected
+                Then("rank는 $expected 이다") {
+                    card.rank shouldBe expected
                 }
             }
         }
