@@ -12,12 +12,7 @@ class Participants(
     }
 
     fun playDealerTurn(deck: Deck): Boolean {
-        return if (dealer.shouldDrawCard()) {
-            dealer.receiveCard(deck.deal())
-            true
-        } else {
-            false
-        }
+        return dealer.playTurn(deck) == PlayerAction.DRAW
     }
 
     fun calculateResult(): List<GameResult> {
