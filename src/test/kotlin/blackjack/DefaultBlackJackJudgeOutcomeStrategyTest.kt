@@ -98,4 +98,17 @@ class DefaultBlackJackJudgeOutcomeStrategyTest : StringSpec({
 
         result shouldBe Outcome.LOSS
     }
+
+    "결과 판단 전략은 플레이어만 블랙잭일 때 플레이어의 블랙잭 승리 선언을 할 수 있다" {
+        val dealer = Dealer(initial16Cards)
+        dealer.receive(Card(Number(5), SPADES))
+
+        val player = Player("y2gcoder", blackjackCards)
+
+        val sut = DefaultBlackJackJudgeOutcomeStrategy()
+
+        val result = sut.judgeOutcome(dealer, player)
+
+        result shouldBe Outcome.BLACKJACK
+    }
 })

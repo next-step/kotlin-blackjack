@@ -5,17 +5,11 @@ class DefaultBlackJackJudgeOutcomeStrategy : BlackJackJudgeOutcomeStrategy {
         dealer: Dealer,
         player: Player,
     ): Outcome {
-        if (player.isBust()) {
-            return Outcome.LOSS
-        }
-        if (dealer.isBust()) {
-            return Outcome.WIN
-        }
-        if (dealer.isBlackJack()) {
-            return Outcome.LOSS
-        }
-
         return when {
+            player.isBust() -> Outcome.LOSS
+            dealer.isBust() -> Outcome.WIN
+            dealer.isBlackJack() -> Outcome.LOSS
+            player.isBlackJack() -> Outcome.BLACKJACK
             player.sumOfHand() > dealer.sumOfHand() -> Outcome.WIN
             player.sumOfHand() < dealer.sumOfHand() -> Outcome.LOSS
             else -> Outcome.DRAW
