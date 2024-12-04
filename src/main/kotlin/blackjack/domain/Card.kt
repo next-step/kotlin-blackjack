@@ -3,28 +3,24 @@ package blackjack.domain
 import kotlin.random.Random
 
 class Card {
-    private val cardShape = listOf("하트", "클로버", "스페이드", "다이아")
-    private val cardNumber = listOf("A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K")
-    val cardList = mutableListOf<String>()
+    val cardList = mutableListOf<Pair<CardNumber, CardShape>>()
 
     init {
         createCard()
     }
 
     private fun createCard() {
-        for (shape in cardShape) {
-            for (number in cardNumber) {
-                cardList.add("$number$shape")
+        for (shape in CardShape.values()) {
+            for (number in CardNumber.values()) {
+                cardList.add(number to shape)
             }
         }
     }
 
-    fun drawCards(count: Int): List<String> {
-        val drawnCards = mutableListOf<String>()
+    fun drawCards(count: Int): List<Pair<CardNumber, CardShape>> {
+        val drawnCards = mutableListOf<Pair<CardNumber, CardShape>>()
 
-        if (count <= 0) {
-            throw IllegalArgumentException(DRAW_CARD_EXCEPTION_MESSAGE)
-        }
+        if (count <= 0) throw IllegalArgumentException(DRAW_CARD_EXCEPTION_MESSAGE)
 
         repeat(count) {
             val randomIndex = Random.nextInt(cardList.size)
