@@ -70,7 +70,8 @@ class ConsoleOutput {
                     "${gameResult.player.name}: ${when (gameResult.outcome) {
                         Outcome.WIN -> "승"
                         Outcome.LOSS -> "패"
-                        Outcome.DRAW -> "비김"
+                        Outcome.PUSH -> "비김"
+                        Outcome.BLACKJACK -> "블랙잭"
                     }}",
                 )
             }
