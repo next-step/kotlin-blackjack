@@ -1,11 +1,11 @@
 package blackjack
 
-class Bank(accounts: Map<Participant, Long> = emptyMap()) {
-    private val accounts: MutableMap<Participant, Long> = accounts.toMutableMap()
+class Bank(accounts: Map<Participant, Double> = emptyMap()) {
+    private val accounts: MutableMap<Participant, Double> = accounts.toMutableMap()
 
     fun bet(
         participant: Participant,
-        betAmount: Long = 0,
+        betAmount: Double = 0.0,
     ) {
         if (participant is Player) {
             require(betAmount > 0) {
@@ -15,8 +15,8 @@ class Bank(accounts: Map<Participant, Long> = emptyMap()) {
         accounts[participant] = betAmount
     }
 
-    fun balance(participant: Participant): Long {
-        return accounts[participant] ?: 0
+    fun balance(participant: Participant): Double {
+        return accounts[participant] ?: 0.0
     }
 
     fun settleBets(gameResult: GameResult) {
@@ -37,6 +37,10 @@ class Bank(accounts: Map<Participant, Long> = emptyMap()) {
             Outcome.LOSS -> {
                 accounts[dealerAccount.first] = accounts[dealerAccount.first]!! + betAmount
                 accounts[playerAccount.first] = accounts[playerAccount.first]!! - betAmount
+            }
+            Outcome.BLACKJACK -> {
+                accounts[dealerAccount.first] = accounts[dealerAccount.first]!! - (betAmount * 1.5)
+                accounts[playerAccount.first] = accounts[playerAccount.first]!! + (betAmount * 1.5)
             }
             else -> TODO()
         }

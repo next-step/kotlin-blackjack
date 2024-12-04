@@ -1,5 +1,6 @@
 package blackjack
 
+import blackjack.InitialCardsTestFixtures.blackjackCards
 import blackjack.InitialCardsTestFixtures.initial16Cards
 import blackjack.InitialCardsTestFixtures.initial18Cards
 import blackjack.InitialCardsTestFixtures.initial20Cards
@@ -13,7 +14,7 @@ class BankTest : StringSpec({
 
         val sut = Bank()
 
-        sut.bet(dealer, 0)
+        sut.bet(dealer, 0.0)
 
         sut.balance(dealer) shouldBe 0
     }
@@ -23,7 +24,7 @@ class BankTest : StringSpec({
 
         val sut = Bank()
 
-        sut.bet(player, 1)
+        sut.bet(player, 1.0)
 
         sut.balance(player) shouldBe 1
     }
@@ -33,7 +34,7 @@ class BankTest : StringSpec({
 
         val sut = Bank()
 
-        shouldThrow<IllegalArgumentException> { sut.bet(player, 0) }
+        shouldThrow<IllegalArgumentException> { sut.bet(player, 0.0) }
     }
 
     "은행은 각 참가자의 잔고를 확인할 수 있다" {
@@ -42,8 +43,8 @@ class BankTest : StringSpec({
 
         val sut = Bank()
 
-        sut.bet(dealer, 0)
-        sut.bet(player, 1)
+        sut.bet(dealer, 0.0)
+        sut.bet(player, 1.0)
 
         sut.balance(dealer) shouldBe 0
         sut.balance(player) shouldBe 1
@@ -62,8 +63,8 @@ class BankTest : StringSpec({
         val player = Player("pobi", initial20Cards)
 
         val sut = Bank()
-        sut.bet(dealer, 0)
-        sut.bet(player, 1000)
+        sut.bet(dealer, 0.0)
+        sut.bet(player, 1000.0)
 
         val gameResult = GameResult(player, Outcome.WIN)
 
@@ -78,8 +79,8 @@ class BankTest : StringSpec({
         val player = Player("pobi", initial18Cards)
 
         val sut = Bank()
-        sut.bet(dealer, 0)
-        sut.bet(player, 1000)
+        sut.bet(dealer, 0.0)
+        sut.bet(player, 1000.0)
 
         val gameResult = GameResult(player, Outcome.LOSS)
 
@@ -95,8 +96,8 @@ class BankTest : StringSpec({
         player.receive(Card(Number(4), Suit.SPADES))
 
         val sut = Bank()
-        sut.bet(dealer, 0)
-        sut.bet(player, 1000)
+        sut.bet(dealer, 0.0)
+        sut.bet(player, 1000.0)
 
         val gameResult = GameResult(player, Outcome.LOSS)
 
@@ -112,8 +113,8 @@ class BankTest : StringSpec({
         val player = Player("y2gcoder", initial20Cards)
 
         val sut = Bank()
-        sut.bet(dealer, 0)
-        sut.bet(player, 1000)
+        sut.bet(dealer, 0.0)
+        sut.bet(player, 1000.0)
 
         val gameResult = GameResult(player, Outcome.WIN)
 
@@ -121,5 +122,21 @@ class BankTest : StringSpec({
 
         sut.balance(dealer) shouldBe -1000
         sut.balance(player) shouldBe 2000
+    }
+
+    "은행은 플레이어 블랙잭 승리에 대해 참가자들에게 정산할 수 있다(플레이어 +1.5, 딜러 -1.5)" {
+        val dealer = Dealer(initial16Cards)
+        val player = Player("y2gcoder", blackjackCards)
+
+        val sut = Bank()
+        sut.bet(dealer, 0.0)
+        sut.bet(player, 1000.0)
+
+        val gameResult = GameResult(player, Outcome.BLACKJACK)
+
+        sut.settleBets(gameResult)
+
+        sut.balance(dealer) shouldBe -1500
+        sut.balance(player) shouldBe 2500
     }
 })
