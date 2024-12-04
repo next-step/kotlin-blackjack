@@ -11,6 +11,9 @@ class DefaultBlackJackJudgeOutcomeStrategy : BlackJackJudgeOutcomeStrategy {
         if (dealer.isBust()) {
             return Outcome.WIN
         }
+        if (dealer.isBlackJack()) {
+            return Outcome.LOSS
+        }
 
         return when {
             player.sumOfHand() > dealer.sumOfHand() -> Outcome.WIN

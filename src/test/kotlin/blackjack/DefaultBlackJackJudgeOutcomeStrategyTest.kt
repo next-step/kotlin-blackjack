@@ -1,5 +1,6 @@
 package blackjack
 
+import blackjack.InitialCardsTestFixtures.blackjackCards
 import blackjack.InitialCardsTestFixtures.initial16Cards
 import blackjack.InitialCardsTestFixtures.initial18Cards
 import blackjack.InitialCardsTestFixtures.initial19Cards
@@ -8,7 +9,7 @@ import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 
 class DefaultBlackJackJudgeOutcomeStrategyTest : StringSpec({
-    "게임 심판은 딜러보다 플레이어의 손패 합이 높을 때 각 플레이어들이 딜러에게 이겼다고 판단한다" {
+    "결과 판단 전략은 딜러보다 플레이어의 손패 합이 높을 때 각 플레이어들이 딜러에게 이겼다고 판단한다" {
         val dealer = Dealer(initial18Cards)
 
         val player = Player("jason", initial19Cards)
@@ -20,7 +21,7 @@ class DefaultBlackJackJudgeOutcomeStrategyTest : StringSpec({
         result shouldBe Outcome.WIN
     }
 
-    "게임 심판은 딜러보다 플레이어 손패 합이 낮을 때 각 플레이들이 딜러에게 졌다고 판단한다" {
+    "결과 판단 전략은 딜러보다 플레이어 손패 합이 낮을 때 각 플레이들이 딜러에게 졌다고 판단한다" {
         val dealer = Dealer(initial19Cards)
 
         val player = Player("y2gcoder", initial18Cards)
@@ -32,7 +33,7 @@ class DefaultBlackJackJudgeOutcomeStrategyTest : StringSpec({
         result shouldBe Outcome.LOSS
     }
 
-    "게임 심판은 딜러와 플레이어의 손패 합이 같으면 각 플레이어들이 딜러와 비겼다고 판단한다" {
+    "결과 판단 전략은 딜러와 플레이어의 손패 합이 같으면 각 플레이어들이 딜러와 비겼다고 판단한다" {
         val dealer = Dealer(initial19Cards)
 
         val player = Player("y2gcoder", initial18Cards)
@@ -45,7 +46,7 @@ class DefaultBlackJackJudgeOutcomeStrategyTest : StringSpec({
         result shouldBe Outcome.DRAW
     }
 
-    "게임 심판은 플레이어가 파산했을 때는 해당 플레이어는 패배하고 딜러가 승리한 것으로 한다" {
+    "결과 판단 전략은 플레이어가 파산했을 때는 해당 플레이어는 패배하고 딜러가 승리한 것으로 한다" {
         val dealer = Dealer(initial19Cards)
 
         val player = Player("y2gcoder", initial18Cards)
@@ -58,7 +59,7 @@ class DefaultBlackJackJudgeOutcomeStrategyTest : StringSpec({
         result shouldBe Outcome.LOSS
     }
 
-    "게임 심판은 딜러와 플레이어 모두 파산하면 딜러의 승리로 본다" {
+    "결과 판단 전략은 딜러와 플레이어 모두 파산하면 딜러의 승리로 본다" {
         val dealer = Dealer(initial16Cards)
         dealer.receive(Card(Number(6), SPADES))
 
@@ -72,7 +73,7 @@ class DefaultBlackJackJudgeOutcomeStrategyTest : StringSpec({
         result shouldBe Outcome.LOSS
     }
 
-    "게임 심판은 딜러가 파산했을 때 플레이어가 파산하지 않았다면 플레이어의 승리로 본다" {
+    "결과 판단 전략은 딜러가 파산했을 때 플레이어가 파산하지 않았다면 플레이어의 승리로 본다" {
         val dealer = Dealer(initial16Cards)
         dealer.receive(Card(Number(6), SPADES))
 
@@ -83,5 +84,18 @@ class DefaultBlackJackJudgeOutcomeStrategyTest : StringSpec({
         val result = sut.judgeOutcome(dealer, player)
 
         result shouldBe Outcome.WIN
+    }
+
+    "결과 판단 전략은 딜러만 블랙잭일 때 플레이어의 손패 합과 상관없이 플레이어의 패배로 판단한다" {
+        val dealer = Dealer(blackjackCards)
+
+        val player = Player("y2gcoder", initial16Cards)
+        player.receive(Card(Number(5), SPADES))
+
+        val sut = DefaultBlackJackJudgeOutcomeStrategy()
+
+        val result = sut.judgeOutcome(dealer, player)
+
+        result shouldBe Outcome.LOSS
     }
 })
