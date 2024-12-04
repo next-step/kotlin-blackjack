@@ -29,8 +29,8 @@ class BlackjackGameTest {
         blackjackGame.start()
 
         // then
-
-        assertThat(blackjackGame.players[0].cards.cards.size).isEqualTo(2)
+        val players = blackjackGame.participants.filterIsInstance<Player>()
+        assertThat(players[0].cards.cards.size).isEqualTo(2)
     }
 
 }
