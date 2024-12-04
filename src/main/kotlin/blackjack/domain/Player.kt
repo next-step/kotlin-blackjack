@@ -26,10 +26,10 @@ class Player(
 
         val card = deck.draw()
         hands.add(card)
-        handleBurst()
+        handleStatus()
     }
 
-    private fun handleBurst() {
-        status = status.handleBurst(score)
+    private fun handleStatus() {
+        status = status.handleStatus(score)
     }
 }
