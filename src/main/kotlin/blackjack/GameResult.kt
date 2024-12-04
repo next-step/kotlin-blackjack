@@ -8,6 +8,6 @@ data class GameResult(
 enum class Outcome {
     WIN,
     LOSS,
-    DRAW,
+    PUSH,
     BLACKJACK,
 }

@@ -1,6 +1,7 @@
 package blackjack
 
 import blackjack.InitialCardsTestFixtures.blackjackCards
+import blackjack.InitialCardsTestFixtures.blackjackCards2
 import blackjack.InitialCardsTestFixtures.initial16Cards
 import blackjack.InitialCardsTestFixtures.initial18Cards
 import blackjack.InitialCardsTestFixtures.initial19Cards
@@ -33,7 +34,7 @@ class DefaultBlackJackJudgeOutcomeStrategyTest : StringSpec({
         result shouldBe Outcome.LOSS
     }
 
-    "결과 판단 전략은 딜러와 플레이어의 손패 합이 같으면 각 플레이어들이 딜러와 비겼다고 판단한다" {
+    "결과 판단 전략은 딜러와 플레이어의 손패 합이 같으면 PUSH라고 판단한다" {
         val dealer = Dealer(initial19Cards)
 
         val player = Player("y2gcoder", initial18Cards)
@@ -43,7 +44,7 @@ class DefaultBlackJackJudgeOutcomeStrategyTest : StringSpec({
 
         val result = sut.judgeOutcome(dealer, player)
 
-        result shouldBe Outcome.DRAW
+        result shouldBe Outcome.PUSH
     }
 
     "결과 판단 전략은 플레이어가 파산했을 때는 해당 플레이어는 패배하고 딜러가 승리한 것으로 한다" {
@@ -110,5 +111,17 @@ class DefaultBlackJackJudgeOutcomeStrategyTest : StringSpec({
         val result = sut.judgeOutcome(dealer, player)
 
         result shouldBe Outcome.BLACKJACK
+    }
+
+    "결과 판단 전략은 플레이어와 딜러가 모두 블랙잭일 때 PUSH 선언을 할 수 있다" {
+        val dealer = Dealer(blackjackCards)
+
+        val player = Player("y2gcoder", blackjackCards2)
+
+        val sut = DefaultBlackJackJudgeOutcomeStrategy()
+
+        val result = sut.judgeOutcome(dealer, player)
+
+        result shouldBe Outcome.PUSH
     }
 })
