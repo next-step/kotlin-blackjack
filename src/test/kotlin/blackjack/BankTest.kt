@@ -71,4 +71,20 @@ class BankTest : StringSpec({
         sut.balance(dealer) shouldBe -1000
         sut.balance(player) shouldBe 2000
     }
+
+    "은행은 게임 결과로 딜러가 플레이어에게 점수로 승리했을 때 참가자들에게 정산해줄 수 있다" {
+        val dealer = Dealer(initial20Cards)
+        val player = Player("pobi", initial18Cards)
+
+        val sut = Bank()
+        sut.bet(dealer, 0)
+        sut.bet(player, 1000)
+
+        val gameResult = GameResult(player, Outcome.LOSS)
+
+        sut.settleBets(gameResult)
+
+        sut.balance(dealer) shouldBe 1000
+        sut.balance(player) shouldBe 0
+    }
 })

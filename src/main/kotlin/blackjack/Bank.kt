@@ -34,6 +34,10 @@ class Bank(accounts: Map<Participant, Long> = emptyMap()) {
                 accounts[dealerAccount.first] = accounts[dealerAccount.first]!! - betAmount
                 accounts[playerAccount.first] = accounts[playerAccount.first]!! + betAmount
             }
+            Outcome.LOSS -> {
+                accounts[dealerAccount.first] = accounts[dealerAccount.first]!! + betAmount
+                accounts[playerAccount.first] = accounts[playerAccount.first]!! - betAmount
+            }
             else -> TODO()
         }
     }
