@@ -42,7 +42,7 @@ enum class CardType(val displayName: String) {
     SEVEN(displayName = "7"),
     EIGHT(displayName = "8"),
     NINE(displayName = "9"),
-    TEN(displayName = "10"), ;
+    ;
 
     companion object {
         fun toDisplayNameOf(rank: CardRank): String {
