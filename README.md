@@ -71,8 +71,7 @@
 - [X] Name 과한 일반화
 - [X] `Suit` display name 제거 
 ## 2단계 피드백 (2)
-- [ ] Suit 표현 방식 고도화
-- [ ] CardRank.symbol 추상화
+- [X] CardRank.symbol 추상화
 
 # 3단계 - 블랙잭(딜러)
 
