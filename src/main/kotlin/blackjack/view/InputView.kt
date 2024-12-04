@@ -1,5 +1,7 @@
 package blackjack.view
 
+import blackjack.domain.participant.PlayerAction
+
 object InputView {
 
     fun showAndGetPlayers(): String {
@@ -7,9 +9,13 @@ object InputView {
         return readln()
     }
 
-    fun showAndGetHitOrNot(playerName: String): Boolean {
+    fun showAndGetPlayerAction(playerName: String): PlayerAction {
         println("${playerName}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
-        return readln() == "y"
+        return if (readln() == "y") {
+            PlayerAction.HIT
+        } else {
+            PlayerAction.STAY
+        }
     }
 
 }
