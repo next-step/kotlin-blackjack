@@ -9,8 +9,8 @@ class Deck {
     }
 
     private fun createDeck() {
-        for (shape in CardShape.values()) {
-            for (number in CardNumber.values()) {
+        for (shape in CardShape.entries) {
+            for (number in CardNumber.entries) {
                 cards.add(Card.create(number, shape))
             }
         }
@@ -22,6 +22,7 @@ class Deck {
 
     fun drawCards(count: Int): List<Card> {
         if (count <= 0) throw IllegalArgumentException(DRAW_CARD_EXCEPTION_MESSAGE)
+        if (count > cards.size) throw IllegalArgumentException(NOT_ENOUGH_CARD_LEFT_EXCEPTION_MESSAGE)
 
         return List(count) { cards.removeAt(0) }
     }
@@ -30,5 +31,6 @@ class Deck {
 
     companion object {
         private const val DRAW_CARD_EXCEPTION_MESSAGE = "1장 이상의 카드를 뽑아야 합니다."
+        private const val NOT_ENOUGH_CARD_LEFT_EXCEPTION_MESSAGE = "남은 카드가 부족합니다."
     }
 }

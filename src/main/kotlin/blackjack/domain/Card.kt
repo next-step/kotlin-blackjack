@@ -7,7 +7,7 @@ class Card() {
         private set
 
     override fun toString(): String {
-        return "$number of $shape"
+        return "${number.number}${shape.displayName}"
     }
 
     companion object {
@@ -22,34 +22,23 @@ class Card() {
         }
 
         fun calculateCardValue(cards: List<String>): Int {
-            val sum = cards.sumOf { calculateSingleCardValue(it) }
+            val nonAceSum = cards
+                .filter { extractCardNumber(it) != "A" }
+                .sumOf { calculateSingleCardValue(it) }
+
             val aceCount = cards.count { extractCardNumber(it) == "A" }
 
-            return adjustAceValue(sum, aceCount)
+            val aceValue = if (aceCount > 0) {
+                val potentialSum = nonAceSum + 11 + (aceCount - 1) * 1
+                if (potentialSum > 21) aceCount else 11 + (aceCount - 1)
+            } else 0
+
+            return nonAceSum + aceValue
         }
 
         private fun calculateSingleCardValue(card: String): Int {
             val number = extractCardNumber(card)
-            return if (number == "A") {
-                11
-            } else {
-                faceCardValues[number] ?: number.toInt()
-            }
-        }
-
-        private fun adjustAceValue(
-            sum: Int,
-            aceCount: Int,
-        ): Int {
-            var adjustedSum = sum
-            var remainingAces = aceCount
-
-            while (adjustedSum > 21 && remainingAces > 0) {
-                adjustedSum -= 10
-                remainingAces--
-            }
-
-            return adjustedSum
+            return faceCardValues[number] ?: number.toInt()
         }
 
         private fun extractCardNumber(card: String): String {
