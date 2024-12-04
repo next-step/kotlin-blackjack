@@ -10,16 +10,24 @@ data class Card(val number: CardNumber, val shape: CardShape) {
         private val faceCardValues = mapOf("J" to 10, "Q" to 10, "K" to 10, "A" to (1 or 11))
 
         fun calculateCardValue(cards: List<Card>): Int {
-            val nonAceSum = cards
-                .filter { extractCardNumber(it) != "A" }
-                .sumOf { calculateSingleCardValue(it) }
+            val nonAceSum =
+                cards
+                    .filter { extractCardNumber(it) != "A" }
+                    .sumOf { calculateSingleCardValue(it) }
 
             val aceCount = cards.count { extractCardNumber(it) == "A" }
 
-            val aceValue = if (aceCount > 0) {
-                val potentialSum = nonAceSum + 11 + (aceCount - 1) * 1
-                if (potentialSum > 21) aceCount else 11 + (aceCount - 1)
-            } else 0
+            val aceValue =
+                if (aceCount > 0) {
+                    val potentialSum = nonAceSum + 11 + (aceCount - 1) * 1
+                    if (potentialSum > 21) {
+                        aceCount
+                    } else {
+                        11 + (aceCount - 1)
+                    }
+                } else {
+                    0
+                }
 
             return nonAceSum + aceValue
         }

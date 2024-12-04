@@ -4,7 +4,7 @@ import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 
-class DeckTest : StringSpec ({
+class DeckTest : StringSpec({
     "카드를 생성한다." {
         val deck = Deck()
         deck.cards.size shouldBe 52

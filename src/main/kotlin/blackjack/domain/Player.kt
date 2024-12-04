@@ -1,8 +1,6 @@
 package blackjack.domain
 
-class Player(val name: String, cards: List<Card> = emptyList()) {
-    var cards: List<Card> = cards
-
+class Player(val name: String, var cards: List<Card> = emptyList()) {
     fun addCards(newCards: List<Card>) {
         cards = cards + newCards.map { it }
     }
