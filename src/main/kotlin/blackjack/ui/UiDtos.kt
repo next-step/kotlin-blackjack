@@ -50,3 +50,21 @@ enum class CardType(val displayName: String) {
         }
     }
 }
+
+enum class MatchType(val displayName: String) {
+    WIN(displayName = "승"),
+    LOSS(displayName = "패"),
+    DRAW(displayName = "무")
+    ;
+}
+
+data class FinalWinnerResults(
+    val dealerResult: DealerResult,
+    val playerResults: Map<Name, MatchType>
+)
+
+data class DealerResult(
+    val wins: Int = 0,
+    val losses: Int = 0,
+    val draws: Int = 0
+)
