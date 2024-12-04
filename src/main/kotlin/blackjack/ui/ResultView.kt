@@ -41,21 +41,20 @@ object ResultView {
 
     private fun printWinnerInfos(result: GameResult) {
         println("## 최종 승패")
-        printDealerWinningInfo(result.dealerResult)
-        printPlayerWinningInfos(result.playerResults)
+        printDealerEarningMoney(result.dealerResult)
+        printPlayerEarningMoneys(result.playerResults)
     }
 
-    private fun printPlayerWinningInfos(playerResults: List<PlayerResult>) {
-        playerResults.forEach { printPlayerWinningInfo(it) }
+    private fun printDealerEarningMoney(dealerResult: DealerResult) {
+        println("${dealerResult.name} : ${dealerResult.earningMoney}")
     }
 
-    private fun printPlayerWinningInfo(result: PlayerResult) {
-        val resultString = if (result.isWinner) "승리" else "패배"
-        println("${result.name} : $resultString")
+    private fun printPlayerEarningMoneys(playerResults: List<PlayerResult>) {
+        playerResults.forEach { printPlayerEarningMoney(it) }
     }
 
-    private fun printDealerWinningInfo(dealerResult: DealerResult) {
-        println("${dealerResult.name} : ${dealerResult.winCount}승 ${dealerResult.loseCount}패")
+    private fun printPlayerEarningMoney(playerResult: PlayerResult) {
+        println("${playerResult.name} : ${playerResult.earningMoney}")
     }
 
     private fun getCardsToStringInfo(participantResult: ParticipantResult): String {
