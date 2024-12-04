@@ -13,7 +13,7 @@ data class Card(
             rankName: String,
             suit: Suit,
         ): Card {
-            return Card(CardRank.from(rankName), suit)
+            return Card(CardRank.valueOf(rankName), suit)
         }
     }
 }

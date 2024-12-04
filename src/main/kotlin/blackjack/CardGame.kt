@@ -45,7 +45,7 @@ data class CardGame(private val deck: Deck, private val players: Players) {
     }
 
     private fun groupCardsByRank(cards: List<Card>) =
-        cards.groupBy { it.rank.symbol }
+        cards.groupBy { it.rank.name }
             .map { (rank, cards) ->
                 rank to cards.map { it.suit.name }
             }.toMap()

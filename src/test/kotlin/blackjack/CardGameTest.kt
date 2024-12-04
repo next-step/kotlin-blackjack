@@ -43,7 +43,7 @@ class CardGameTest : BehaviorSpec({
         val cardGame =
             CardGame.from(
                 createDeck {
-                    "J" to Suit.SPADE
+                    CardRank.JACK to Suit.SPADE
                 },
                 listOf(userA, userB),
             )
@@ -80,7 +80,7 @@ class CardGameTest : BehaviorSpec({
                     mapOf(
                         userA to
                             mapOf(
-                                mapOf("A" to listOf("DIAMOND", "HEART")) to 12,
+                                mapOf("ACE" to listOf("DIAMOND", "HEART")) to 12,
                             ),
                     )
             }

@@ -20,7 +20,7 @@ class PlayerTest : BehaviorSpec({
         val player = Player.from("철수")
         val cards =
             createDeck {
-                "A" to Suit.SPADE
+                CardRank.ACE to Suit.SPADE
             }
 
         When("카드를 받을 때") {
@@ -36,9 +36,9 @@ class PlayerTest : BehaviorSpec({
         val player = Player.from("철수")
         val cards =
             createDeck {
-                "A" to Suit.SPADE
-                "A" to Suit.SPADE
-                "K" to Suit.SPADE
+                CardRank.ACE to Suit.SPADE
+                CardRank.ACE to Suit.SPADE
+                CardRank.KING to Suit.SPADE
             }
 
         When(
