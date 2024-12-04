@@ -11,11 +11,6 @@ import blackjack.ui.ViewResult
 data class CardGame(private val deck: Deck, private val players: Players) {
     val playersSize: Int = players.size
 
-    fun initGame(name: String) {
-        val roundCards = deck.popCards(INITIAL_CARD_COUNT)
-        players.deal(players.find(name), roundCards)
-    }
-
     fun playerAllDeal() {
         players.forEach { player ->
             initGame(player.name)
@@ -26,8 +21,14 @@ data class CardGame(private val deck: Deck, private val players: Players) {
         players.deal(players.find(name), deck.pop())
     }
 
-    fun cardsOf(name: String): UserCards {
+    fun userCardOf(name: String): UserCards {
         return groupCardsByRank(players.findCardOf(name).values())
+    }
+
+    fun roundResult(): RoundResult {
+        return players.associate { player ->
+            player.name to groupCardsByRank(player.totalCards.values())
+        }
     }
 
     fun result(): ViewResult {
@@ -36,18 +37,13 @@ data class CardGame(private val deck: Deck, private val players: Players) {
         }
     }
 
-    fun scoreOf(name: String): Int {
-        return players.scoreOf(name)
-    }
-
     fun isBust(name: String): Boolean {
         return players.isBust(name)
     }
 
-    fun roundResult(): RoundResult {
-        return players.associate { player ->
-            player.name to groupCardsByRank(player.totalCards.values())
-        }
+    private fun initGame(name: String) {
+        val roundCards = deck.popCards(INITIAL_CARD_COUNT)
+        players.deal(players.find(name), roundCards)
     }
 
     private fun groupCardsByRank(cards: List<Card>) =

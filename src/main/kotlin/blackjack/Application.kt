@@ -29,7 +29,7 @@ private fun handleUserTurn(
 ) {
     while (inputView.inputMore(userName)) {
         game.deal(userName)
-        val userHandCards = game.cardsOf(userName)
+        val userHandCards = game.userCardOf(userName)
         resultView.printRound(userName, userHandCards)
 
         if (game.isBust(userName)) {
