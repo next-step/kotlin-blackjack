@@ -1,7 +1,9 @@
 package blackjack
 
-import blackjack.application.BlackjackApplication
+import blackjack.application.BlackjackGame
 
 fun main() {
-    BlackjackApplication.start()
+    val blackjackGame = BlackjackGame()
+
+    blackjackGame.start()
 }

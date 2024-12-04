@@ -1,27 +1,28 @@
 package blackjack.application
 
 import blackjack.domain.Deck
+import blackjack.domain.INITIAL_DRAW_COUNT
 import blackjack.domain.Player
 import blackjack.presentation.InputView
 import blackjack.presentation.OutputView
 
-object BlackjackApplication {
-    private val inputView: InputView = InputView()
-    private val outputView: OutputView = OutputView()
-    private val deck: Deck = Deck()
-
+class BlackjackGame(
+    private val inputView: InputView = InputView(),
+    private val outputView: OutputView = OutputView(),
+    private val deck: Deck = Deck(),
+) {
     fun start() {
         val names = inputView.inputNames()
         val players = names.map(::Player)
 
-        initialDeal(players)
+        initialDraw(players)
         players.forEach(::progress)
         outputView.printResult(players)
     }
 
-    private fun initialDeal(players: List<Player>) {
+    private fun initialDraw(players: List<Player>) {
         players.forEach { player ->
-            repeat(2) {
+            repeat(INITIAL_DRAW_COUNT) {
                 hit(player)
             }
         }
