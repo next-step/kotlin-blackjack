@@ -18,10 +18,8 @@ class Deck private constructor() {
 
         private fun generateShuffledCards(): List<Card> = createDeck().shuffled()
 
-        private fun createDeck(): List<Card> =
-            Suit.entries.flatMap { suit -> createCardsForSuit(suit) }
+        private fun createDeck(): List<Card> = Suit.entries.flatMap { suit -> createCardsForSuit(suit) }
 
-        private fun createCardsForSuit(suit: Suit): List<Card> =
-            Rank.entries.map { rank -> Card(suit, rank) }
+        private fun createCardsForSuit(suit: Suit): List<Card> = Rank.entries.map { rank -> Card(suit, rank) }
     }
 }
