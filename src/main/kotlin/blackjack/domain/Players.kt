@@ -19,10 +19,6 @@ class Players private constructor(private val values: List<Player>) : List<Playe
         return find(name).isBust
     }
 
-    fun scoreOf(name: String): Int {
-        return find(name).score()
-    }
-
     fun findCardOf(name: String): Deck {
         return find(name).totalCards
     }

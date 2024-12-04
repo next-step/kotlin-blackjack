@@ -16,12 +16,15 @@ class CardGameTest : BehaviorSpec({
         val userB = "userB"
         val cardGame =
             CardGame.from(
-                createDeck {
-                    "A" to Suit.CLUB
-                    "A" to Suit.SPADE
-                    "9" to Suit.SPADE
-                    "9" to Suit.CLUB
-                },
+                Deck(
+                    listOf(
+                        Card(CardRank.ACE, Suit.CLUB),
+                        Card(CardRank.ACE, Suit.SPADE),
+                        Card(CardRank.NINE, Suit.SPADE),
+                        Card(CardRank.EIGHT, Suit.SPADE),
+                    ),
+                    ArrayDeque(listOf(0, 1, 2, 3)),
+                ),
                 listOf(userA, userB),
             )
         When("사용자는 카드를 받고 시작한다") {
