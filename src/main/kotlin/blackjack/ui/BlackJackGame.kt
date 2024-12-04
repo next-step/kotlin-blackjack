@@ -1,13 +1,15 @@
 package blackjack.ui
 
+import blackjack.Bank
 import blackjack.Dealer
 import blackjack.Deck
 import blackjack.GameJudge
 import blackjack.Player
+import blackjack.ui.ConsoleInput.Companion.inputBetAmountPerPlayer
 import blackjack.ui.ConsoleInput.Companion.inputDrawAnswer
 import blackjack.ui.ConsoleInput.Companion.inputPlayerNames
 import blackjack.ui.ConsoleOutput.Companion.announceDealerDrawOneMoreCard
-import blackjack.ui.ConsoleOutput.Companion.announceGameResults
+import blackjack.ui.ConsoleOutput.Companion.announceProfits
 import blackjack.ui.ConsoleOutput.Companion.printAllParticipantsWithNameAndHand
 import blackjack.ui.ConsoleOutput.Companion.printAllParticipantsWithNameAndHandAndResult
 import blackjack.ui.ConsoleOutput.Companion.printParticipantWithNameAndHand
@@ -24,6 +26,10 @@ fun main() {
     val dealer = Dealer(List(2) { deck.draw() })
     val players = setupPlayers(playerNames, deck)
 
+    val bank = Bank()
+
+    betAllParticipants(bank, dealer, players)
+
     printShareInitialCardsToParticipants(dealer, players)
     printAllParticipantsWithNameAndHand(listOf(dealer) + players)
 
@@ -39,8 +45,10 @@ fun main() {
 
     val gameJudge = GameJudge()
     val gameResults = gameJudge.judge(dealer, players)
-    val dealerResult = gameJudge.summarizeDealerResult(gameResults)
-    announceGameResults(gameResults, dealerResult)
+
+    bank.settleBets(gameResults)
+    val profits = bank.profits()
+    announceProfits(profits)
 }
 
 private fun setupPlayers(
@@ -49,6 +57,18 @@ private fun setupPlayers(
 ) = playerNames.map { playerName ->
     val initialCards = List(2) { deck.draw() }
     Player(name = playerName, initialCards = initialCards)
+}
+
+private fun betAllParticipants(
+    bank: Bank,
+    dealer: Dealer,
+    players: List<Player>,
+) {
+    bank.bet(dealer)
+    players.forEach {
+        val inputBetAmount = inputBetAmountPerPlayer(it.name)
+        bank.bet(it, inputBetAmount)
+    }
 }
 
 private fun handlePlayerTurn(

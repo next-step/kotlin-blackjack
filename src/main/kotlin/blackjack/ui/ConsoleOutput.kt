@@ -1,10 +1,8 @@
 package blackjack.ui
 
 import blackjack.Dealer
-import blackjack.DealerResult
-import blackjack.GameResult
-import blackjack.Outcome
 import blackjack.Participant
+import blackjack.ParticipantProfit
 import blackjack.Player
 
 class ConsoleOutput {
@@ -34,6 +32,7 @@ class ConsoleOutput {
             participants.forEach { participant ->
                 printPlayerWithNameAndHandAndResult(participant)
             }
+            println()
         }
 
         private fun printPlayerWithNameAndHandAndResult(participant: Participant) {
@@ -59,21 +58,11 @@ class ConsoleOutput {
             println()
         }
 
-        fun announceGameResults(
-            gameResults: List<GameResult>,
-            dealerResult: DealerResult,
-        ) {
-            println("## 최종 승패")
-            println("딜러: ${dealerResult.winCount}승 ${dealerResult.lossCount}패")
-            gameResults.forEach { gameResult ->
-                println(
-                    "${gameResult.player.name}: ${when (gameResult.outcome) {
-                        Outcome.WIN -> "승"
-                        Outcome.LOSS -> "패"
-                        Outcome.PUSH -> "비김"
-                        Outcome.BLACKJACK -> "블랙잭"
-                    }}",
-                )
+        fun announceProfits(profits: List<ParticipantProfit>) {
+            println("## 최종 수익")
+            profits.forEach {
+                print("${it.participant.name}: ")
+                println(it.profit)
             }
         }
     }

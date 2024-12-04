@@ -10,7 +10,6 @@ import blackjack.Outcome.WIN
 import blackjack.Suit.SPADES
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.collections.shouldContainExactlyInAnyOrder
-import io.kotest.matchers.shouldBe
 
 class GameJudgeTest : StringSpec({
     "게임 심판은 딜러보다 플레이어의 손패 합이 높을 때 각 플레이어들이 딜러에게 이겼다고 판단한다" {
@@ -90,26 +89,5 @@ class GameJudgeTest : StringSpec({
         val results = sut.judge(dealer, listOf(player))
 
         results shouldContainExactlyInAnyOrder listOf(GameResult(player, WIN))
-    }
-
-    "게임 심판은 딜러의 승패 요약도 반환할 수 있다" {
-        val player1 = Player("pobi", initial20Cards)
-
-        val player2 = Player("jason", initial19Cards)
-
-        val player3 = Player("y2gcoder", initial18Cards)
-
-        val gameResults =
-            listOf(
-                GameResult(player1, WIN),
-                GameResult(player2, PUSH),
-                GameResult(player3, LOSS),
-            )
-
-        val sut = GameJudge()
-        val result = sut.summarizeDealerResult(gameResults)
-
-        result.winCount shouldBe 1
-        result.lossCount shouldBe 1
     }
 })

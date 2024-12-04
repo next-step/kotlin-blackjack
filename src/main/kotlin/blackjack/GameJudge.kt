@@ -19,12 +19,4 @@ class GameJudge(private val judgeOutcomeStrategy: BlackJackJudgeOutcomeStrategy 
     ): Outcome {
         return judgeOutcomeStrategy.judgeOutcome(dealer, player)
     }
-
-    fun summarizeDealerResult(gameResults: List<GameResult>): DealerResult {
-        val dealerWinCount = gameResults.count { it.outcome == Outcome.LOSS }
-        val dealerLossCount = gameResults.count { it.outcome == Outcome.WIN }
-        return DealerResult(dealerWinCount, dealerLossCount)
-    }
 }
-
-data class DealerResult(val winCount: Int, val lossCount: Int)
