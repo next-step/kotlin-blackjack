@@ -34,6 +34,15 @@ class Bank(accounts: List<ParticipantAccount> = emptyList()) {
         settleOutCome(gameResult.outcome, dealerAccount, playerAccount)
     }
 
+    fun profits(): List<ParticipantProfit> {
+        return accounts.map {
+            ParticipantProfit(
+                it.participant,
+                it.currentBalance - it.initialBalance,
+            )
+        }
+    }
+
     private fun settleOutCome(
         outcome: Outcome,
         dealerAccount: ParticipantAccount,
@@ -109,4 +118,9 @@ data class ParticipantAccount(
     val participant: Participant,
     val initialBalance: Double = 0.0,
     val currentBalance: Double = 0.0,
+)
+
+data class ParticipantProfit(
+    val participant: Participant,
+    val profit: Double,
 )

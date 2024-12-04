@@ -190,4 +190,25 @@ class BankTest : StringSpec({
         sut.balance(dealer) shouldBe 0
         sut.balance(player) shouldBe 1000
     }
+
+    "은행은 각 참가자의 수익률을 도출할 수 있다" {
+        val dealer = Dealer(initial18Cards)
+        val player1 = Player("pobi", initial20Cards)
+        val player2 = Player("jason", initial16Cards)
+
+        val sut =
+            Bank(
+                listOf(
+                    ParticipantAccount(dealer, 0.0, 10000.0),
+                    ParticipantAccount(player1, 10000.0, 20000.0),
+                    ParticipantAccount(player2, 20000.0, 0.0),
+                ),
+            )
+
+        val results = sut.profits()
+
+        results.find { it.participant == dealer }?.profit shouldBe 10000.0
+        results.find { it.participant == player1 }?.profit shouldBe 10000.0
+        results.find { it.participant == player2 }?.profit shouldBe -20000.0
+    }
 })
