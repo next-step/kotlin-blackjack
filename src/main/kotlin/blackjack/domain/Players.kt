@@ -36,6 +36,47 @@ class Players private constructor(private val values: List<Player>) : List<Playe
         }
     }
 
+    fun dealerWinScore(dealer: Dealer): Triple<Int, Int, Int> {
+        var dealerWins = 0
+        var dealerLosses = 0
+        var dealerDraws = 0
+        forEach { player ->
+            when (player.isWin(dealer)) {
+                MatchType.WIN -> {
+                    dealerLosses++
+                }
+                MatchType.LOSS -> {
+                    dealerWins++
+                }
+                else -> {
+                    dealerDraws++
+                }
+            }
+        }
+        return Triple(dealerWins, dealerLosses, dealerDraws)
+    }
+
+    fun playerWinScores(dealer: Dealer): Map<String, MatchType> {
+        val playerResults = mutableMapOf<String, MatchType>()
+        forEach { player ->
+            val playerName = player.name
+
+            when (player.isWin(dealer)) {
+                MatchType.WIN -> {
+                    playerResults[playerName] = MatchType.WIN
+                }
+                MatchType.LOSS -> {
+                    playerResults[playerName] = MatchType.LOSS
+                }
+                else -> {
+                    playerResults[playerName] = MatchType.DRAW
+                }
+            }
+        }
+
+        return playerResults
+    }
+
     companion object {
         fun from(names: List<String>): Players {
             return Players(names.map { Player(EntrantName(it)) })

@@ -54,29 +54,14 @@ data class CardGame(private val deck: Deck, private val players: Players, val de
     }
 
     fun getFinalWinnerResults(): FinalWinnerResults {
-        val playerResults = mutableMapOf<Name, UIMatchType>()
-        var dealerWins = 0
-        var dealerLosses = 0
-        var dealerDraws = 0
-
-        players.forEach { player ->
-            val playerName = player.name
-
-            when (player.isWin(dealer)) {
-                MatchType.WIN -> {
-                    playerResults[playerName] = UIMatchType.WIN
-                    dealerLosses++
-                }
-                MatchType.LOSS -> {
-                    playerResults[playerName] = UIMatchType.LOSS
-                    dealerWins++
-                }
-                else -> {
-                    playerResults[playerName] = UIMatchType.DRAW
-                    dealerDraws++
-                }
+        val playerResults: Map<Name, UIMatchType> = players.playerWinScores(dealer).mapValues {
+            when (it.value) {
+                MatchType.WIN -> UIMatchType.WIN
+                MatchType.LOSS -> UIMatchType.LOSS
+                else -> UIMatchType.DRAW
             }
         }
+        val (dealerWins, dealerLosses, dealerDraws) = players.dealerWinScore(dealer)
 
         val dealerResult = DealerResult(wins = dealerWins, losses = dealerLosses, draws = dealerDraws)
         return FinalWinnerResults(dealerResult = dealerResult, playerResults = playerResults)
