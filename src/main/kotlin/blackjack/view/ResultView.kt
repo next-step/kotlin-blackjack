@@ -1,5 +1,6 @@
 package blackjack.view
 
+import blackjack.domain.Card
 import blackjack.domain.Player
 
 object ResultView {
@@ -11,7 +12,7 @@ object ResultView {
         println(SPLIT_CARD_RESULT_MESSAGE.format(playerNames[0], playerNames[1]))
     }
 
-    fun printPlayerCards(players: List<Pair<String, List<String>>>) {
+    fun printPlayerCards(players: List<Pair<String, List<Card>>>) {
         players.forEach { (name, cards) ->
             println(PLAYER_CARD_MESSAGE.format(name, cards.joinToString(", ")))
         }

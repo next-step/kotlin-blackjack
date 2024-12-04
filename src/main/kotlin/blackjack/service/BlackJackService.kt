@@ -5,7 +5,6 @@ import blackjack.domain.Deck
 import blackjack.domain.Player
 
 class BlackJackService {
-    val card = Card()
     val deck = Deck()
 
     fun createPlayers(names: List<String>): List<Player> {

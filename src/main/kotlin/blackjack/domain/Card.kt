@@ -1,11 +1,6 @@
 package blackjack.domain
 
-class Card() {
-    lateinit var number: CardNumber
-        private set
-    lateinit var shape: CardShape
-        private set
-
+data class Card(val number: CardNumber, val shape: CardShape) {
     override fun toString(): String {
         return "${number.number}${shape.displayName}"
     }
@@ -14,14 +9,7 @@ class Card() {
         private const val INVALID_CARD_FORMAT = "잘못된 카드 형식입니다."
         private val faceCardValues = mapOf("J" to 10, "Q" to 10, "K" to 10, "A" to (1 or 11))
 
-        fun create(number: CardNumber, shape: CardShape): Card {
-            val card = Card()
-            card.number = number
-            card.shape = shape
-            return card
-        }
-
-        fun calculateCardValue(cards: List<String>): Int {
+        fun calculateCardValue(cards: List<Card>): Int {
             val nonAceSum = cards
                 .filter { extractCardNumber(it) != "A" }
                 .sumOf { calculateSingleCardValue(it) }
@@ -36,13 +24,13 @@ class Card() {
             return nonAceSum + aceValue
         }
 
-        private fun calculateSingleCardValue(card: String): Int {
+        private fun calculateSingleCardValue(card: Card): Int {
             val number = extractCardNumber(card)
             return faceCardValues[number] ?: number.toInt()
         }
 
-        private fun extractCardNumber(card: String): String {
-            val matchResult = Regex("^([0-9]+|[A-Z])").find(card)
+        private fun extractCardNumber(card: Card): String {
+            val matchResult = Regex("^([0-9]+|[A-Z])").find(card.toString())
             return matchResult?.value ?: throw IllegalArgumentException(INVALID_CARD_FORMAT)
         }
     }

@@ -11,7 +11,7 @@ class Deck {
     private fun createDeck() {
         for (shape in CardShape.entries) {
             for (number in CardNumber.entries) {
-                cards.add(Card.create(number, shape))
+                cards.add(Card(number, shape))
             }
         }
     }
