@@ -1,5 +1,6 @@
 package blackjack
 
+import blackjack.InitialCardsTestFixtures.blackjackCards
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.data.forAll
 import io.kotest.data.row
@@ -77,6 +78,24 @@ class HandTest : StringSpec({
             val sut = Hand(initialCards)
             val result = sut.isBust()
             result shouldBe expected
+        }
+    }
+
+    "손패는 블랙잭인지 체크할 수 있다" {
+        forAll(
+            row(blackjackCards, true),
+            row(
+                listOf(
+                    Card(CardNumber.Jack, Suit.SPADES),
+                    Card(Number(9), Suit.SPADES),
+                    Card(Number(2), Suit.SPADES),
+                ),
+                false,
+            ),
+        ) { initialCards, expected ->
+            val sut = Hand(initialCards)
+
+            sut.isBlackJack() shouldBe expected
         }
     }
 })

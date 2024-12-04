@@ -8,4 +8,6 @@ object InitialCardsTestFixtures {
     val initial19Cards = listOf(Card(Number(10), Suit.CLUBS), Card(Number(9), Suit.CLUBS))
 
     val initial16Cards = listOf(Card(Number(10), Suit.CLUBS), Card(Number(6), Suit.CLUBS))
+
+    val blackjackCards = listOf(Card(CardNumber.Ace, Suit.SPADES), Card(CardNumber.Jack, Suit.SPADES))
 }
