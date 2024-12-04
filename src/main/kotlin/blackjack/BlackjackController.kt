@@ -1,9 +1,11 @@
-package blackjack.ui
+package blackjack
 
 import blackjack.application.BlackjackService
 import blackjack.domain.Deck
 import blackjack.domain.Game
 import blackjack.domain.Player
+import blackjack.ui.InputView
+import blackjack.ui.ResultView
 
 class BlackjackController(
     private val blackjackService: BlackjackService,
