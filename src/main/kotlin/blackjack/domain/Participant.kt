@@ -1,6 +1,15 @@
 package blackjack.domain
 
+import blackjack.domain.state.Initial
+import blackjack.domain.state.State
+
 abstract class Participant(private val name: PlayerName, private val hand: Hand) {
+    protected var state: State = Initial.initialState(hand)
+
+    fun stay() {
+        state = state.stay()
+    }
+
     fun addCard(card: Card) {
         hand.addCard(card)
     }

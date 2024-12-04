@@ -35,14 +35,20 @@ class BlackjackGameController(
         player: Player,
         blackJackGame: BlackjackGame,
     ) {
-        while (player.isDrawable()) {
-            if (!processPlayerChoice(player, blackJackGame)) {
-                break
-            }
+        while (shouldContinueDrawing(player, blackJackGame)) {
+            outputView.printSinglePlayerCards(SinglePlayerResponse(player))
         }
+        notifyPlayerCannotDraw(player)
+    }
+
+    private fun shouldContinueDrawing(
+        player: Player,
+        blackJackGame: BlackjackGame,
+    ): Boolean {
         if (!player.isDrawable()) {
-            outputView.printPlayerCannotDrawCard(SinglePlayerResponse(player))
+            return false
         }
+        return processPlayerChoice(player, blackJackGame)
     }
 
     private fun processPlayerChoice(
@@ -53,14 +59,17 @@ class BlackjackGameController(
         return when (moreCardChoice) {
             HitStayChoice.HIT -> {
                 blackJackGame.drawCard(player)
-                outputView.printSinglePlayerCards(SinglePlayerResponse(player))
                 true
             }
-
             HitStayChoice.STAY -> {
-                outputView.printSinglePlayerCards(SinglePlayerResponse(player))
                 false
             }
+        }
+    }
+
+    private fun notifyPlayerCannotDraw(player: Player) {
+        if (!player.isDrawable()) {
+            outputView.printPlayerCannotDrawCard(SinglePlayerResponse(player))
         }
     }
 

@@ -5,7 +5,7 @@ class Dealer(
     private val hand: Hand,
 ) : Participant(name, hand) {
     override fun isDrawable(): Boolean {
-        return hand.calculateBestTotal() in 1..16
+        return !state.isFinished() && hand.calculateBestTotal() in 1..16
     }
 
     fun getFirstCard(): String {

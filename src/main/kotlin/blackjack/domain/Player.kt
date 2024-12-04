@@ -5,7 +5,7 @@ class Player(
     private val hand: Hand,
 ) : Participant(name, hand) {
     override fun isDrawable(): Boolean {
-        return hand.calculateBestTotal() != 0
+        return !state.isFinished() && !hand.isBust()
     }
 
     companion object {
