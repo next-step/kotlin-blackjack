@@ -43,12 +43,14 @@ object ResultView {
     }
 
     fun printGameResult(gameResult: GameResult) {
+        val playersResult = gameResult.playersResult.joinToString(separator = "\n") {
+            "${it.player.name}: ${if (it.isWin) "승" else "패"}"
+        }
+
         println(buildString {
             append("## 최종 승패\n")
-            append("${gameResult.dealerResult.dealer.name}: ${gameResult.dealerResult.winCount}승 ${gameResult.dealerResult.loseCount}패\n")
-            gameResult.playersResult.forEach {
-                append("${it.player.name}: ${if (it.isWin) "승" else "패"}\n")
-            }
+            append("${gameResult.dealerName}: ${gameResult.dealerWinCount}승 ${gameResult.dealerLoseCount}패\n")
+            append(playersResult)
         })
     }
 

@@ -24,19 +24,16 @@ class BlackjackGame(
     fun getGameResult(): GameResult {
         val dealer = participants.filterIsInstance<Dealer>().first()
         val players = participants.filterIsInstance<Player>()
-        val dealerResultBuilder = DealerGameResultBuilder(dealer)
 
         val playersResult: List<PlayerGameResult> = players.map { player ->
-            val playerWin = player.compareWonOrNot(dealer)
-            dealerResultBuilder.record(!playerWin)
             PlayerGameResult(
                 player = player,
-                isWin = playerWin,
+                isWin = player.compareWonOrNot(dealer),
             )
         }
 
         return GameResult(
-            dealerResult = dealerResultBuilder.build(),
+            dealerName = dealer.name,
             playersResult = playersResult,
         )
     }
@@ -51,14 +48,6 @@ class BlackjackGame(
         }
 
         return this.cards.sum() > dealer.cards.sum()
-    }
-
-    private fun DealerGameResultBuilder.record(isWin: Boolean) {
-        if (isWin) {
-            this.win()
-        } else {
-            this.lose()
-        }
     }
 
     companion object {
