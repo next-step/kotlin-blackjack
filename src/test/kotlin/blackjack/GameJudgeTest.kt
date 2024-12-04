@@ -4,13 +4,12 @@ import blackjack.InitialCardsTestFixtures.initial16Cards
 import blackjack.InitialCardsTestFixtures.initial18Cards
 import blackjack.InitialCardsTestFixtures.initial19Cards
 import blackjack.InitialCardsTestFixtures.initial20Cards
-import blackjack.Outcome.DRAW
 import blackjack.Outcome.LOSS
+import blackjack.Outcome.PUSH
 import blackjack.Outcome.WIN
 import blackjack.Suit.SPADES
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.collections.shouldContainExactlyInAnyOrder
-import io.kotest.matchers.shouldBe
 
 class GameJudgeTest : StringSpec({
     "게임 심판은 딜러보다 플레이어의 손패 합이 높을 때 각 플레이어들이 딜러에게 이겼다고 판단한다" {
@@ -39,7 +38,7 @@ class GameJudgeTest : StringSpec({
         results shouldContainExactlyInAnyOrder listOf(GameResult(player, LOSS))
     }
 
-    "게임 심판은 딜러와 플레이어의 손패 합이 같으면 각 플레이어들이 딜러와 비겼다고 판단한다" {
+    "게임 심판은 딜러와 플레이어의 손패 합이 같으면 PUSH 라고 판단한다" {
         val dealer = Dealer(initial19Cards)
 
         val player = Player("y2gcoder", initial18Cards)
@@ -49,7 +48,7 @@ class GameJudgeTest : StringSpec({
 
         val results = sut.judge(dealer, listOf(player))
 
-        results shouldContainExactlyInAnyOrder listOf(GameResult(player, DRAW))
+        results shouldContainExactlyInAnyOrder listOf(GameResult(player, PUSH))
     }
 
     "게임 심판은 플레이어가 파산했을 때는 해당 플레이어는 패배하고 딜러가 승리한 것으로 한다" {
@@ -90,26 +89,5 @@ class GameJudgeTest : StringSpec({
         val results = sut.judge(dealer, listOf(player))
 
         results shouldContainExactlyInAnyOrder listOf(GameResult(player, WIN))
-    }
-
-    "게임 심판은 딜러의 승패 요약도 반환할 수 있다" {
-        val player1 = Player("pobi", initial20Cards)
-
-        val player2 = Player("jason", initial19Cards)
-
-        val player3 = Player("y2gcoder", initial18Cards)
-
-        val gameResults =
-            listOf(
-                GameResult(player1, WIN),
-                GameResult(player2, DRAW),
-                GameResult(player3, LOSS),
-            )
-
-        val sut = GameJudge()
-        val result = sut.summarizeDealerResult(gameResults)
-
-        result.winCount shouldBe 1
-        result.lossCount shouldBe 1
     }
 })

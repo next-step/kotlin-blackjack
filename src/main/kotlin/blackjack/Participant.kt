@@ -22,6 +22,8 @@ sealed class Participant(val name: String, initialCards: List<Card>) {
 
     fun isBust(): Boolean = _hand.isBust()
 
+    fun isBlackJack(): Boolean = _hand.isBlackJack()
+
     companion object {
         private const val INITIAL_HAND_LENGTH = 2
     }
