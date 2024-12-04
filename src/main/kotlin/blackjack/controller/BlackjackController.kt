@@ -49,7 +49,7 @@ object BlackjackController {
 
             if (InputView.inputPickCard(player.name) != "y") break
 
-            player.addCards(blackJackService.card.drawCards(1))
+            player.addCards(blackJackService.deck.drawCards(1))
             ResultView.printPlayerCards(listOf(player.name to player.getCardList()))
         }
     }

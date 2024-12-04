@@ -1,10 +1,12 @@
 package blackjack.service
 
 import blackjack.domain.Card
+import blackjack.domain.Deck
 import blackjack.domain.Player
 
 class BlackJackService {
     val card = Card()
+    val deck = Deck()
 
     fun createPlayers(names: List<String>): List<Player> {
         return names.map { Player(it) }
@@ -13,7 +15,7 @@ class BlackJackService {
     fun distributeInitialCards(players: List<Player>) {
         repeat(2) {
             players.forEach { player ->
-                val drawnCards = card.drawCards(1)
+                val drawnCards = deck.drawCards(1)
                 player.addCards(drawnCards)
             }
         }

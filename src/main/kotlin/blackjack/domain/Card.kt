@@ -1,40 +1,25 @@
 package blackjack.domain
 
-import kotlin.random.Random
+class Card() {
+    lateinit var number: CardNumber
+        private set
+    lateinit var shape: CardShape
+        private set
 
-class Card {
-    val cardList = mutableListOf<Pair<CardNumber, CardShape>>()
-
-    init {
-        createCard()
-    }
-
-    private fun createCard() {
-        for (shape in CardShape.values()) {
-            for (number in CardNumber.values()) {
-                cardList.add(number to shape)
-            }
-        }
-    }
-
-    fun drawCards(count: Int): List<Pair<CardNumber, CardShape>> {
-        val drawnCards = mutableListOf<Pair<CardNumber, CardShape>>()
-
-        if (count <= 0) throw IllegalArgumentException(DRAW_CARD_EXCEPTION_MESSAGE)
-
-        repeat(count) {
-            val randomIndex = Random.nextInt(cardList.size)
-            val card = cardList.removeAt(randomIndex)
-            drawnCards.add(card)
-        }
-
-        return drawnCards
+    override fun toString(): String {
+        return "$number of $shape"
     }
 
     companion object {
-        private const val DRAW_CARD_EXCEPTION_MESSAGE = "1장 이상의 카드를 뽑아야 합니다."
         private const val INVALID_CARD_FORMAT = "잘못된 카드 형식입니다."
         private val faceCardValues = mapOf("J" to 10, "Q" to 10, "K" to 10, "A" to (1 or 11))
+
+        fun create(number: CardNumber, shape: CardShape): Card {
+            val card = Card()
+            card.number = number
+            card.shape = shape
+            return card
+        }
 
         fun calculateCardValue(cards: List<String>): Int {
             val sum = cards.sumOf { calculateSingleCardValue(it) }
