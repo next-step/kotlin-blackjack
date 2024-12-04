@@ -44,5 +44,17 @@ class HandTest : DescribeSpec({
                 hand.isBusted() shouldBe true
             }
         }
+
+        context("점수가 21점인 경우") {
+            val hand =
+                Hand().apply {
+                    addCard(Card(Suit.SPADES, Rank.KING))
+                    addCard(Card(Suit.DIAMONDS, Rank.ACE))
+                }
+
+            it("블랙잭 상태를 반환한다") {
+                hand.isBlackJack() shouldBe true
+            }
+        }
     }
 })
