@@ -70,7 +70,7 @@ class BankTest : StringSpec({
 
         val gameResult = GameResult(player, Outcome.WIN)
 
-        sut.settleBets(gameResult)
+        sut.settleBet(gameResult)
 
         sut.balance(dealer) shouldBe -1000
         sut.balance(player) shouldBe 2000
@@ -86,7 +86,7 @@ class BankTest : StringSpec({
 
         val gameResult = GameResult(player, Outcome.LOSS)
 
-        sut.settleBets(gameResult)
+        sut.settleBet(gameResult)
 
         sut.balance(dealer) shouldBe 1000
         sut.balance(player) shouldBe 0
@@ -103,7 +103,7 @@ class BankTest : StringSpec({
 
         val gameResult = GameResult(player, Outcome.LOSS)
 
-        sut.settleBets(gameResult)
+        sut.settleBet(gameResult)
 
         sut.balance(dealer) shouldBe 1000
         sut.balance(player) shouldBe 0
@@ -120,7 +120,7 @@ class BankTest : StringSpec({
 
         val gameResult = GameResult(player, Outcome.WIN)
 
-        sut.settleBets(gameResult)
+        sut.settleBet(gameResult)
 
         sut.balance(dealer) shouldBe -1000
         sut.balance(player) shouldBe 2000
@@ -136,7 +136,7 @@ class BankTest : StringSpec({
 
         val gameResult = GameResult(player, Outcome.BLACKJACK)
 
-        sut.settleBets(gameResult)
+        sut.settleBet(gameResult)
 
         sut.balance(dealer) shouldBe -1500
         sut.balance(player) shouldBe 2500
@@ -153,7 +153,7 @@ class BankTest : StringSpec({
 
         val gameResult = GameResult(player, Outcome.LOSS)
 
-        sut.settleBets(gameResult)
+        sut.settleBet(gameResult)
 
         sut.balance(dealer) shouldBe 1000
         sut.balance(player) shouldBe 0
@@ -169,7 +169,7 @@ class BankTest : StringSpec({
 
         val gameResult = GameResult(player, Outcome.PUSH)
 
-        sut.settleBets(gameResult)
+        sut.settleBet(gameResult)
 
         sut.balance(dealer) shouldBe 0
         sut.balance(player) shouldBe 1000
@@ -185,7 +185,7 @@ class BankTest : StringSpec({
 
         val gameResult = GameResult(player, Outcome.PUSH)
 
-        sut.settleBets(gameResult)
+        sut.settleBet(gameResult)
 
         sut.balance(dealer) shouldBe 0
         sut.balance(player) shouldBe 1000
@@ -210,5 +210,28 @@ class BankTest : StringSpec({
         results.find { it.participant == dealer }?.profit shouldBe 10000.0
         results.find { it.participant == player1 }?.profit shouldBe 10000.0
         results.find { it.participant == player2 }?.profit shouldBe -20000.0
+    }
+
+    "은행은 경기 결과들을 받아 정산할 수 있다" {
+        val dealer = Dealer(initial18Cards)
+        val player1 = Player("pobi", initial20Cards)
+        val player2 = Player("jason", initial16Cards)
+
+        val sut = Bank()
+        sut.bet(dealer, 0.0)
+        sut.bet(player1, 1000.0)
+        sut.bet(player2, 2000.0)
+
+        val gameResults =
+            listOf(
+                GameResult(player1, Outcome.WIN),
+                GameResult(player2, Outcome.LOSS),
+            )
+
+        sut.settleBets(gameResults)
+
+        sut.balance(dealer) shouldBe 1000.0
+        sut.balance(player1) shouldBe 2000.0
+        sut.balance(player2) shouldBe 0.0
     }
 })

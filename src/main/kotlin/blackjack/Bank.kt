@@ -25,7 +25,9 @@ class Bank(accounts: List<ParticipantAccount> = emptyList()) {
         return accounts.find { it.participant == participant }?.currentBalance ?: 0.0
     }
 
-    fun settleBets(gameResult: GameResult) {
+    fun settleBets(gameResults: List<GameResult>) = gameResults.forEach(::settleBet)
+
+    fun settleBet(gameResult: GameResult) {
         val dealerAccount = findDealerAccount()
         val playerAccount =
             findAccount(gameResult.player)
