@@ -31,5 +31,18 @@ class HandTest : DescribeSpec({
                 hand.calculateScore() shouldBe 21
             }
         }
+
+        context("점수가 21점을 초과한 경우") {
+            val hand =
+                Hand().apply {
+                    addCard(Card(Suit.SPADES, Rank.KING))
+                    addCard(Card(Suit.DIAMONDS, Rank.KING))
+                    addCard(Card(Suit.CLUBS, Rank.TWO))
+                }
+
+            it("버스트 상태를 반환한다") {
+                hand.isBusted() shouldBe true
+            }
+        }
     }
 })
