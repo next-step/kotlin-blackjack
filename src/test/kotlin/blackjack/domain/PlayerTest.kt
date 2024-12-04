@@ -14,16 +14,16 @@ class PlayerTest : StringSpec({
     "초기의 플레이어의 핸드는 비어있어야 한다" {
         val actual = Player("pobi")
 
-        actual.hands shouldBe 0
+        actual.handSize shouldBe 0
     }
 
-    "플레이어는 덱에서 카드를 한 장 뽑을 수 있다." {
+    "플레이어는 히트 시 핸드에 카드를 한 장 추가한다." {
         val deck = Deck()
         val actual = Player("pobi")
 
         actual.hit(deck)
 
-        actual.hands shouldBe 1
+        actual.handSize shouldBe 1
     }
 
     "플레이어는 히트 시 21점을 넘기면 버스트 상태가 된다." {

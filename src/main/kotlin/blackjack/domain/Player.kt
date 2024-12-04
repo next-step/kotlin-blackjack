@@ -7,6 +7,9 @@ class Player(
     val score: Int
         get() = hands.calculateTotalValue()
 
+    val handSize: Int
+        get() = hands.size
+
     var status: PlayerStatus = PlayerStatus.PLAYING
         private set
 
