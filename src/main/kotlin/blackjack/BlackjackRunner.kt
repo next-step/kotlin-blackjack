@@ -31,7 +31,7 @@ class BlackjackRunner {
         blackjackGame.participants.filterIsInstance<Player>().forEach { player ->
             while (player.canReceiveCard() && InputView.showAndGetHitOrNot(player.name)) {
                 blackjackGame.draw(player)
-                ResultView.printPlayerCard(player)
+                ResultView.printPlayerInformation(player)
             }
         }
     }
