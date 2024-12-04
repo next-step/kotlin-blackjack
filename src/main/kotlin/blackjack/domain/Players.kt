@@ -29,7 +29,7 @@ class Players private constructor(private val values: List<Player>) : List<Playe
 
     companion object {
         fun from(names: List<String>): Players {
-            return Players(names.map { Player(PlayerName(it)) })
+            return Players(names.map { Player(EntrantName(it)) })
         }
     }
 }

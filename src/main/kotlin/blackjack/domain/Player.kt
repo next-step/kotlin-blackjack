@@ -1,6 +1,6 @@
 package blackjack.domain
 
-data class Player(val playerName: PlayerName, private val hand: Hand = Hand()) {
+data class Player(val playerName: EntrantName, private val hand: Hand = Hand()) {
     val isBust: Boolean
         get() = hand.isBust
     val totalCards: Deck
@@ -22,7 +22,7 @@ data class Player(val playerName: PlayerName, private val hand: Hand = Hand()) {
 
     companion object {
         fun from(name: String): Player {
-            return Player(playerName = PlayerName(name))
+            return Player(playerName = EntrantName(name))
         }
     }
 }
