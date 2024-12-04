@@ -16,7 +16,6 @@ class Bank(accounts: List<ParticipantAccount> = emptyList()) {
             ParticipantAccount(
                 participant = participant,
                 initialBalance = betAmount,
-                currentBalance = betAmount,
             ),
         )
     }
@@ -40,7 +39,7 @@ class Bank(accounts: List<ParticipantAccount> = emptyList()) {
         return accounts.map {
             ParticipantProfit(
                 it.participant,
-                it.currentBalance - it.initialBalance,
+                it.profit,
             )
         }
     }
@@ -88,8 +87,8 @@ class Bank(accounts: List<ParticipantAccount> = emptyList()) {
         playerAccount: ParticipantAccount,
         playerAdjustment: Double,
     ) {
-        accounts.updateAccount(dealerAccount, dealerAccount.currentBalance + dealerAdjustment)
-        accounts.updateAccount(playerAccount, playerAccount.currentBalance + playerAdjustment)
+        accounts.updateAccount(dealerAccount, dealerAdjustment)
+        accounts.updateAccount(playerAccount, playerAdjustment)
     }
 
     private fun MutableList<ParticipantAccount>.updateAccount(
@@ -98,7 +97,7 @@ class Bank(accounts: List<ParticipantAccount> = emptyList()) {
     ) {
         val index = indexOf(account)
         if (index != -1) {
-            this[index] = account.copy(currentBalance = newBalance)
+            this[index] = account.updateBalance(newBalance)
         }
     }
 
@@ -115,14 +114,3 @@ class Bank(accounts: List<ParticipantAccount> = emptyList()) {
         private const val BLACKJACK_BET_MULTIPLIER = 1.5
     }
 }
-
-data class ParticipantAccount(
-    val participant: Participant,
-    val initialBalance: Double = 0.0,
-    val currentBalance: Double = 0.0,
-)
-
-data class ParticipantProfit(
-    val participant: Participant,
-    val profit: Double,
-)

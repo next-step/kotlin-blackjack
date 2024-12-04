@@ -21,6 +21,16 @@ class BankTest : StringSpec({
         sut.balance(dealer) shouldBe 0
     }
 
+    "은행은 딜러가 베팅할 때 베팅 금액을 생략하면 0.0으로 베팅한다" {
+        val dealer = Dealer(initial18Cards)
+
+        val sut = Bank()
+
+        sut.bet(dealer)
+
+        sut.balance(dealer) shouldBe 0
+    }
+
     "은행은 플레이어의 베팅 금액을 받는다" {
         val player = Player("pobi", initial18Cards)
 
@@ -199,9 +209,9 @@ class BankTest : StringSpec({
         val sut =
             Bank(
                 listOf(
-                    ParticipantAccount(dealer, 0.0, 10000.0),
-                    ParticipantAccount(player1, 10000.0, 20000.0),
-                    ParticipantAccount(player2, 20000.0, 0.0),
+                    ParticipantAccount(dealer, Balance(0.0, 10000.0)),
+                    ParticipantAccount(player1, Balance(10000.0, 20000.0)),
+                    ParticipantAccount(player2, Balance(20000.0, 0.0)),
                 ),
             )
 
@@ -233,5 +243,28 @@ class BankTest : StringSpec({
         sut.balance(dealer) shouldBe 1000.0
         sut.balance(player1) shouldBe 2000.0
         sut.balance(player2) shouldBe 0.0
+    }
+
+    "은행은 정산하고자 할 때 딜러가 베팅한 상태여야 한다" {
+        val player = Player("pobi", initial20Cards)
+
+        val sut = Bank()
+        sut.bet(player, 1000.0)
+
+        val gameResult = GameResult(player, Outcome.WIN)
+
+        shouldThrow<IllegalStateException> { sut.settleBet(gameResult) }
+    }
+
+    "은행은 정산하고자 할 때 정산 대상 플레이어가 베팅한 상태야야 한다" {
+        val dealer = Dealer(initial18Cards)
+        val player = Player("pobi", initial20Cards)
+
+        val sut = Bank()
+        sut.bet(dealer)
+
+        val gameResult = GameResult(player, Outcome.WIN)
+
+        shouldThrow<IllegalStateException> { sut.settleBet(gameResult) }
     }
 })
