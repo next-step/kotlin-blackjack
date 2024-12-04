@@ -10,6 +10,7 @@ typealias RoundResult = Map<Name, UserCards>
 typealias ViewResult = Map<Name, Map<UserCards, Score>>
 
 typealias UserCards = Map<CardRank, List<CardSuit>>
+
 fun UserCards.toPrettyString(): String {
     return this.entries.joinToString(separator = ", ") { (rank, suits) ->
         suits.joinToString(separator = ", ") { "${CardType.toDisplayNameOf(rank)}${UiSuit.toDisplayNameOf(it)}" }
@@ -51,20 +52,19 @@ enum class CardType(val displayName: String) {
     }
 }
 
-enum class MatchType(val displayName: String) {
+enum class UIMatchType(val displayName: String) {
     WIN(displayName = "승"),
     LOSS(displayName = "패"),
-    DRAW(displayName = "무")
-    ;
+    DRAW(displayName = "무"),
 }
 
 data class FinalWinnerResults(
     val dealerResult: DealerResult,
-    val playerResults: Map<Name, MatchType>
+    val playerResults: Map<Name, UIMatchType>,
 )
 
 data class DealerResult(
     val wins: Int = 0,
     val losses: Int = 0,
-    val draws: Int = 0
+    val draws: Int = 0,
 )

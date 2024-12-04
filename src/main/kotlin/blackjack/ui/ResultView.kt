@@ -22,9 +22,31 @@ class ResultView(val outputProvider: (String) -> Unit = { println(it) }) {
         outputProvider("${name}카드: ${cards.toPrettyString()}")
     }
 
+    fun printResult(
+        dealerResults: ViewResult,
+        finalRoundResults: ViewResult,
+    ) {
+        printResult(dealerResults)
+        printResult(finalRoundResults)
+    }
+
     fun printResult(result: ViewResult) {
         result.forEach { (userName, cards) ->
             printCards(cards, userName)
+        }
+    }
+
+    fun printDealerTurnStart(dealerHitScore: Int) {
+        outputProvider("딜러는 ${dealerHitScore}점 이하라 한장의 카드를 더 받았습니다.")
+    }
+
+    fun printFinalWinner(finalWinnerResults: FinalWinnerResults) {
+        outputProvider("\n## 최종 승패")
+        outputProvider(
+            "딜러: ${finalWinnerResults.dealerResult.wins}${UIMatchType.WIN.displayName} ${finalWinnerResults.dealerResult.losses}${UIMatchType.LOSS.displayName} ${finalWinnerResults.dealerResult.draws}${UIMatchType.DRAW.displayName}",
+        )
+        finalWinnerResults.playerResults.forEach { (name, result) ->
+            outputProvider("$name: ${result.displayName}")
         }
     }
 
@@ -43,9 +65,5 @@ class ResultView(val outputProvider: (String) -> Unit = { println(it) }) {
         cards.forEach { (cards, score) ->
             printResult(userName, cards, score)
         }
-    }
-
-    fun printDealerTurnStart(dealerHitScore: Int) {
-        outputProvider("딜러는 ${dealerHitScore}점 이하라 한장의 카드를 더 받았습니다.")
     }
 }

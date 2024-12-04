@@ -27,7 +27,10 @@ class Players private constructor(private val values: List<Player>) : List<Playe
         return values.find { it.same(playerName) } ?: throw IllegalArgumentException("존재하지 않는 사용자입니다.")
     }
 
-    fun dealInitialCards(deck: Deck, initialCardCount: Int) {
+    fun dealInitialCards(
+        deck: Deck,
+        initialCardCount: Int,
+    ) {
         forEach { player ->
             player.receive(deck.popCards(initialCardCount))
         }

@@ -20,8 +20,10 @@ fun main() {
 
     handleDealerTurn(game, resultView)
 
-    val resultDto = game.getFinalResults()
-    resultView.printResult(resultDto)
+    resultView.printResult(game.getDealerResults(), game.getFinalRoundResults())
+
+    val finalWinnerResults = game.getFinalWinnerResults()
+    resultView.printFinalWinner(finalWinnerResults)
 }
 
 private fun handleUserTurn(

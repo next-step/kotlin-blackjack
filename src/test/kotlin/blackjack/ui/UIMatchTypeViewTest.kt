@@ -4,7 +4,7 @@ import blackjack.domain.Suit
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class ResultViewTest {
+class UIMatchTypeViewTest {
     @Test
     fun `게임을 시작하면 딜러와 유저들은 카드를 받는다`() {
         // given

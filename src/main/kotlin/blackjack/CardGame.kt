@@ -1,9 +1,17 @@
 package blackjack
 
-import blackjack.domain.*
-import blackjack.ui.RoundResult
-import blackjack.ui.UserCards
+import blackjack.domain.Card
+import blackjack.domain.Dealer
+import blackjack.domain.Deck
+import blackjack.domain.DeckBuilder
+import blackjack.domain.MatchType
+import blackjack.domain.Players
+import blackjack.ui.DealerResult
+import blackjack.ui.FinalWinnerResults
 import blackjack.ui.Name
+import blackjack.ui.RoundResult
+import blackjack.ui.UIMatchType
+import blackjack.ui.UserCards
 import blackjack.ui.ViewResult
 
 data class CardGame(private val deck: Deck, private val players: Players, val dealer: Dealer) {
@@ -35,10 +43,43 @@ data class CardGame(private val deck: Deck, private val players: Players, val de
         }
     }
 
-    fun getFinalResults(): ViewResult {
+    fun getFinalRoundResults(): ViewResult {
         return players.associate { player ->
             player.name to mapOf(groupCardsByRank(player.totalCards.values()) to player.score())
         }
+    }
+
+    fun getDealerResults(): ViewResult {
+        return mapOf(dealerName to mapOf(groupCardsByRank(dealer.totalCards.values()) to dealer.score()))
+    }
+
+    fun getFinalWinnerResults(): FinalWinnerResults {
+        val playerResults = mutableMapOf<Name, UIMatchType>()
+        var dealerWins = 0
+        var dealerLosses = 0
+        var dealerDraws = 0
+
+        players.forEach { player ->
+            val playerName = player.name
+
+            when (player.isWin(dealer)) {
+                MatchType.WIN -> {
+                    playerResults[playerName] = UIMatchType.WIN
+                    dealerLosses++
+                }
+                MatchType.LOSS -> {
+                    playerResults[playerName] = UIMatchType.LOSS
+                    dealerWins++
+                }
+                else -> {
+                    playerResults[playerName] = UIMatchType.DRAW
+                    dealerDraws++
+                }
+            }
+        }
+
+        val dealerResult = DealerResult(wins = dealerWins, losses = dealerLosses, draws = dealerDraws)
+        return FinalWinnerResults(dealerResult = dealerResult, playerResults = playerResults)
     }
 
     fun isPlayerBust(name: String): Boolean {
@@ -62,7 +103,10 @@ data class CardGame(private val deck: Deck, private val players: Players, val de
             return CardGame(DeckBuilder.cachedDeck, Players.from(users), Dealer())
         }
 
-        fun from(deck: Deck, users: List<String>): CardGame {
+        fun from(
+            deck: Deck,
+            users: List<String>,
+        ): CardGame {
             return CardGame(deck, Players.from(users), Dealer())
         }
     }
