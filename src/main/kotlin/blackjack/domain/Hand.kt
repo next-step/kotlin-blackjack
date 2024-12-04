@@ -24,6 +24,10 @@ class Hand {
         return cards.toList()
     }
 
+    fun getFirstCard(): String {
+        return cards[ZERO].display()
+    }
+
     companion object {
         private const val BLACKJACK_NUMBER = 21
         private const val ZERO = 0

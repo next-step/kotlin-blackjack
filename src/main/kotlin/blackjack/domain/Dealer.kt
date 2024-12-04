@@ -5,7 +5,15 @@ class Dealer(
     private val hand: Hand,
 ) : Participant(name, hand) {
     override fun isDrawable(): Boolean {
-        return hand.calculateBestTotal() <= 16
+        return hand.calculateBestTotal() in 1..16
+    }
+
+    fun getFirstCard(): String {
+        return hand.getFirstCard()
+    }
+
+    fun getDealerName(): String {
+        return name.value
     }
 
     companion object {

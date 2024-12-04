@@ -2,10 +2,12 @@ package blackjack.controller
 
 import blackjack.adapter.BlackjackInputAdapter
 import blackjack.domain.BlackjackGame
+import blackjack.domain.Dealer
 import blackjack.domain.HitStayChoice
 import blackjack.domain.Player
 import blackjack.domain.PlayerName
-import blackjack.dto.PlayersResponse
+import blackjack.dto.GameResultResponse
+import blackjack.dto.ParticipantsResponse
 import blackjack.dto.SinglePlayerResponse
 import blackjack.view.OutputView
 
@@ -18,14 +20,15 @@ class BlackjackGameController(
     }
 
     fun announceInitialPlayersCards(blackJackGame: BlackjackGame) {
-        val playersResponse = PlayersResponse(blackJackGame.players)
-        outputView.printInitialPlayersCards(playersResponse)
+        val participantsResponse = ParticipantsResponse(blackJackGame.participants)
+        outputView.printInitialCards(participantsResponse)
     }
 
     fun playGame(blackJackGame: BlackjackGame) {
-        blackJackGame.players.forEach { player ->
+        blackJackGame.getPlayers().forEach { player ->
             playTurnForPlayer(player, blackJackGame)
         }
+        processDealerTurn(blackJackGame.getDealer(), blackJackGame)
     }
 
     private fun playTurnForPlayer(
@@ -61,8 +64,21 @@ class BlackjackGameController(
         }
     }
 
+    private fun processDealerTurn(
+        dealer: Dealer,
+        blackJackGame: BlackjackGame,
+    ) {
+        while (dealer.isDrawable()) {
+            blackJackGame.drawCard(dealer)
+            outputView.printDealerDrawAnnounceMessage()
+        }
+    }
+
     fun announceResult(blackJackGame: BlackjackGame) {
-        val playersResponse = PlayersResponse(blackJackGame.players)
-        outputView.printPlayResult(playersResponse)
+        val participantsResponse = ParticipantsResponse(blackJackGame.participants)
+        outputView.printPlayResult(participantsResponse)
+
+        val gameResult = blackJackGame.makeGameResult()
+        outputView.printGameResult(GameResultResponse(gameResult))
     }
 }
