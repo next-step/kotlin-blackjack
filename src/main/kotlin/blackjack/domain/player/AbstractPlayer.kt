@@ -1,13 +1,13 @@
-package blackjack.domain
+package blackjack.domain.player
 
+import blackjack.domain.Card
 import blackjack.domain.Card.Companion.SpecialNumber
 
-data class Player(val name: String) {
-    private var cards = mutableListOf<Card>()
+abstract class AbstractPlayer {
+    protected var cards = mutableListOf<Card>()
 
-    fun drawCard(newCard: Card) {
-        cards.add(newCard)
-    }
+    abstract fun drawCard(newCard: Card)
+    abstract fun isBust(): Boolean
 
     fun calculateCard(): Int {
         val aceCards = cards.filter { it.number == SpecialNumber.A.name }
@@ -23,6 +23,4 @@ data class Player(val name: String) {
     fun getAllCards(): List<Card> {
         return cards.toList()
     }
-
-    fun isDone(): Boolean = calculateCard() > 21
 }

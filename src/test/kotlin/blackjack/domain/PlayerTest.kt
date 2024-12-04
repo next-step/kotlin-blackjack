@@ -1,5 +1,6 @@
 package blackjack.domain
 
+import blackjack.domain.player.Player
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
@@ -23,6 +24,7 @@ class PlayerTest {
     @Test
     fun calculateCardTest() {
         val player = Player("Tester")
+
         val mockCard =
             listOf(
                 Card.createCard("3", "클로버"),
@@ -50,7 +52,7 @@ class PlayerTest {
             player.drawCard(card)
         }
 
-        player.isDone() shouldBe true
+        player.isBust() shouldBe true
     }
 
     @Test
