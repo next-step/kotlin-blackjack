@@ -1,6 +1,6 @@
 package blackjack.domain
 
-data class Player(val playerName: EntrantName, private val hand: Hand = Hand()) {
+open class Player(val playerName: EntrantName, private val hand: Hand = Hand()) {
     val isBust: Boolean
         get() = hand.isBust
     val totalCards: Deck
