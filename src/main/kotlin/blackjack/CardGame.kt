@@ -9,8 +9,6 @@ import blackjack.ui.UserCards
 import blackjack.ui.ViewResult
 
 data class CardGame(private val deck: Deck, private val players: Players) {
-    val playersSize: Int = players.size
-
     fun playerAllDeal() {
         players.forEach { player ->
             initGame(player.name)

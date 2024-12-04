@@ -11,26 +11,6 @@ import io.kotest.matchers.maps.shouldContainAll
 import io.kotest.matchers.shouldBe
 
 class CardGameTest : BehaviorSpec({
-    Given("사용자를 가진다") {
-        val userA = "userA"
-        val userB = "userB"
-        val users = listOf(userA, userB)
-        When("사용자 이름을 입력하면") {
-            val cardGame =
-                CardGame.from(
-                    createDeck {
-                        "A" to Suit.CLUB
-                        "9" to Suit.SPADE
-                    },
-                    users,
-                )
-
-            Then("사용자를 가진다") {
-                cardGame.playersSize shouldBe 2
-            }
-        }
-    }
-
     Given("게임을 시작하면 ") {
         val userA = "userA"
         val userB = "userB"
@@ -39,6 +19,8 @@ class CardGameTest : BehaviorSpec({
                 createDeck {
                     "A" to Suit.CLUB
                     "A" to Suit.SPADE
+                    "9" to Suit.SPADE
+                    "9" to Suit.CLUB
                 },
                 listOf(userA, userB),
             )
