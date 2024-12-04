@@ -33,11 +33,7 @@ fun main() {
         }.toList()
     }
 
-    if (dealer.shouldDrawCard()) {
-        val newCard = deck.draw()
-        dealer.receive(newCard)
-        announceDealerDrawOneMoreCard()
-    }
+    handleDealerTurn(dealer, deck)
 
     printAllParticipantsWithNameAndHandAndResult(listOf(dealer) + players)
 
@@ -78,5 +74,16 @@ private fun handlePlayerTurn(
             }
             null
         }
+    }
+}
+
+private fun handleDealerTurn(
+    dealer: Dealer,
+    deck: Deck,
+) {
+    if (dealer.shouldDrawCard()) {
+        val newCard = deck.draw()
+        dealer.receive(newCard)
+        announceDealerDrawOneMoreCard()
     }
 }
