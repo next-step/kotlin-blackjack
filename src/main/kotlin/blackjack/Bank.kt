@@ -1,6 +1,8 @@
 package blackjack
 
-class Bank(val accounts: MutableMap<Participant, Long> = mutableMapOf()) {
+class Bank(accounts: Map<Participant, Long> = emptyMap()) {
+    private val accounts: MutableMap<Participant, Long> = accounts.toMutableMap()
+
     fun bet(
         participant: Participant,
         betAmount: Long = 0,
@@ -11,5 +13,9 @@ class Bank(val accounts: MutableMap<Participant, Long> = mutableMapOf()) {
             }
         }
         accounts[participant] = betAmount
+    }
+
+    fun balance(participant: Participant): Long {
+        return accounts[participant] ?: 0
     }
 }
