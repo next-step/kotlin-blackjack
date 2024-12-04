@@ -4,9 +4,10 @@ import blackjack.domain.Card
 import blackjack.domain.Game
 import blackjack.domain.Hand
 import blackjack.domain.Player
+import blackjack.domain.Rank
+import blackjack.domain.Suit
 
 object ResultView {
-    private const val COMMA_SEPARATOR = ", "
     private const val BUSTED = "🪦"
 
     fun displayState(
@@ -19,7 +20,7 @@ object ResultView {
             buildString {
                 appendLine()
                 if (isInitial) {
-                    appendLine("${names.joinToString(COMMA_SEPARATOR)}에게 2장의 나누었습니다.")
+                    appendLine("${names.joinToString()}에게 2장의 나누었습니다.")
                 }
                 roster.forEach { appendLine(formatPlayer(it, isInitial)) }
             }
@@ -41,10 +42,32 @@ object ResultView {
         return result + " - 결과: ${if (player.isBusted) BUSTED else player.value}"
     }
 
-    private fun formatHand(hand: Hand): String =
-        hand.cards
-            .map { formatCard(it) }
-            .joinToString(COMMA_SEPARATOR)
+    private fun formatHand(hand: Hand): String = hand.cards.joinToString { formatCard(it) }
 
-    private fun formatCard(card: Card): String = "${card.rank.display}${card.suit.display}"
+    private fun formatCard(card: Card): String = "${formatRank(card.rank)}${formatSuit(card.suit)}"
+
+    private fun formatRank(rank: Rank): String =
+        when (rank) {
+            Rank.ACE -> "A"
+            Rank.TWO -> "2"
+            Rank.THREE -> "3"
+            Rank.FOUR -> "4"
+            Rank.FIVE -> "5"
+            Rank.SIX -> "6"
+            Rank.SEVEN -> "7"
+            Rank.EIGHT -> "8"
+            Rank.NINE -> "9"
+            Rank.TEN -> "10"
+            Rank.JACK -> "J"
+            Rank.QUEEN -> "Q"
+            Rank.KING -> "K"
+        }
+
+    private fun formatSuit(suit: Suit): String =
+        when (suit) {
+            Suit.HEARTS -> "하트"
+            Suit.DIAMONDS -> "다이아몬드"
+            Suit.CLUBS -> "클로버"
+            Suit.SPADES -> "스페이드"
+        }
 }
