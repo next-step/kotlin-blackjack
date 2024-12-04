@@ -7,6 +7,10 @@ class Hand {
         cards.add(card)
     }
 
+    fun isBust(): Boolean {
+        return calculateBestTotal() > BLACKJACK_NUMBER || calculateBestTotal() == ZERO
+    }
+
     fun calculateBestTotal(): Int {
         val possibleSums = calculateAllPossibleSums()
         return possibleSums.filter { it <= BLACKJACK_NUMBER }.maxOrNull() ?: ZERO
@@ -18,6 +22,10 @@ class Hand {
             return listOf(sumOf, sumOf + 10)
         }
         return listOf(sumOf)
+    }
+
+    fun isBlackjack(): Boolean {
+        return cards.size == 2 && calculateBestTotal() == BLACKJACK_NUMBER
     }
 
     fun getCards(): List<Card> {
