@@ -1,13 +1,13 @@
 package blackjack.ui
 
-typealias UserName = String
-typealias UserNames = List<UserName>
+typealias Name = String
+typealias UserNames = List<Name>
 typealias UserMore = Boolean
 typealias Score = Int
 typealias CardRank = String
 typealias CardSuit = String
-typealias RoundResult = Map<UserName, UserCards>
-typealias ViewResult = Map<UserName, Map<UserCards, Score>>
+typealias RoundResult = Map<Name, UserCards>
+typealias ViewResult = Map<Name, Map<UserCards, Score>>
 
 typealias UserCards = Map<CardRank, List<CardSuit>>
 fun UserCards.toPrettyString(): String {

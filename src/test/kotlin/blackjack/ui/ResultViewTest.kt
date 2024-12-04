@@ -6,15 +6,15 @@ import org.junit.jupiter.api.Test
 
 class ResultViewTest {
     @Test
-    fun `유저의 이름과 장수를 출력한다`() {
+    fun `게임을 시작하면 딜러와 유저들은 카드를 받는다`() {
         // given
         var expected = ""
         val customOutputProvider: (String) -> Unit = { message -> expected = message }
         val resultView = ResultView(customOutputProvider)
 
-        resultView.printUserCardCount(listOf("userA", "userB"), 2)
+        resultView.printUserCardCount("딜러", listOf("userA", "userB"), 2)
 
-        assertThat(expected).contains("userA, userB에게 2장의 나누었습니다.")
+        assertThat(expected).isEqualTo("딜러와 userA, userB에게 2장의 나누었습니다.")
     }
 
     @Test
@@ -23,7 +23,7 @@ class ResultViewTest {
         val customOutputProvider: (String) -> Unit = { message -> expected = message }
         val resultView = ResultView(customOutputProvider)
 
-        resultView.printRound("userA", mapOf("2" to listOf(Suit.HEART.name, Suit.SPADE.name)))
+        resultView.printRound("userA", mapOf(CardType.TWO.name to listOf(Suit.HEART.name, Suit.SPADE.name)))
 
         assertThat(expected).contains("userA카드: 2하트, 2스페이드")
     }
@@ -38,7 +38,7 @@ class ResultViewTest {
             mapOf(
                 "userA" to
                     mapOf(
-                        mapOf("2" to listOf(Suit.HEART.name, Suit.SPADE.name)) to 4,
+                        mapOf(CardType.TWO.name to listOf(Suit.HEART.name, Suit.SPADE.name)) to 4,
                     ),
             ),
         )

@@ -1,6 +1,7 @@
 package blackjack
 
 import blackjack.CardGame.Companion.INITIAL_CARD_COUNT
+import blackjack.domain.Dealer.Companion.DEALER_HIT_SCORE
 import blackjack.ui.InputView
 import blackjack.ui.ResultView
 
@@ -9,15 +10,17 @@ fun main() {
     val resultView = ResultView()
 
     val names = inputView.inputUserNames()
-    val game = CardGame.fromNames(names)
+    val game = CardGame.create(names)
 
-    game.playerAllDeal()
-    resultView.printUserCardCount(names, INITIAL_CARD_COUNT)
-    resultView.printUserCards(game.roundResult())
+    game.startGame()
+    resultView.printUserCardCount(game.dealerName, game.getAllPlayersNames(), INITIAL_CARD_COUNT)
+    resultView.printUserCards(game.getRoundResults())
 
     names.forEach { userName -> handleUserTurn(game, resultView, inputView, userName) }
 
-    val resultDto = game.result()
+    handleDealerTurn(game, resultView)
+
+    val resultDto = game.getFinalResults()
     resultView.printResult(resultDto)
 }
 
@@ -28,12 +31,22 @@ private fun handleUserTurn(
     userName: String,
 ) {
     while (inputView.inputMore(userName)) {
-        game.deal(userName)
-        val userHandCards = game.userCardOf(userName)
+        game.dealCardToPlayer(userName)
+        val userHandCards = game.getPlayerCards(userName)
         resultView.printRound(userName, userHandCards)
 
-        if (game.isBust(userName)) {
+        if (game.isPlayerBust(userName)) {
             break
         }
+    }
+}
+
+private fun handleDealerTurn(
+    game: CardGame,
+    resultView: ResultView,
+) {
+    if (game.dealerShouldAddCard) {
+        resultView.printDealerTurnStart(DEALER_HIT_SCORE)
+        game.dealCardToDealer()
     }
 }

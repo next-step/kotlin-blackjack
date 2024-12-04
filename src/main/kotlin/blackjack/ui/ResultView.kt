@@ -2,10 +2,11 @@ package blackjack.ui
 
 class ResultView(val outputProvider: (String) -> Unit = { println(it) }) {
     fun printUserCardCount(
-        names: UserNames,
+        dealerName: Name,
+        userNames: UserNames,
         count: Int,
     ) {
-        outputProvider("${names.joinToString(", ")}에게 ${count}장의 나누었습니다.")
+        outputProvider("${dealerName}와 ${userNames.joinToString(", ")}에게 ${count}장의 나누었습니다.")
     }
 
     fun printUserCards(users: RoundResult) {
@@ -15,7 +16,7 @@ class ResultView(val outputProvider: (String) -> Unit = { println(it) }) {
     }
 
     fun printRound(
-        name: UserName,
+        name: Name,
         cards: UserCards,
     ) {
         outputProvider("${name}카드: ${cards.toPrettyString()}")
@@ -28,7 +29,7 @@ class ResultView(val outputProvider: (String) -> Unit = { println(it) }) {
     }
 
     private fun printResult(
-        name: UserName,
+        name: Name,
         cards: UserCards,
         score: Score,
     ) {
@@ -37,10 +38,14 @@ class ResultView(val outputProvider: (String) -> Unit = { println(it) }) {
 
     private fun printCards(
         cards: Map<UserCards, Score>,
-        userName: UserName,
+        userName: Name,
     ) {
         cards.forEach { (cards, score) ->
             printResult(userName, cards, score)
         }
+    }
+
+    fun printDealerTurnStart(dealerHitScore: Int) {
+        outputProvider("딜러는 ${dealerHitScore}점 이하라 한장의 카드를 더 받았습니다.")
     }
 }

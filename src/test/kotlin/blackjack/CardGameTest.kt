@@ -22,14 +22,16 @@ class CardGameTest : BehaviorSpec({
                         Card(CardRank.ACE, Suit.SPADE),
                         Card(CardRank.NINE, Suit.SPADE),
                         Card(CardRank.EIGHT, Suit.SPADE),
+                        Card(CardRank.EIGHT, Suit.SPADE),
+                        Card(CardRank.EIGHT, Suit.SPADE),
                     ),
-                    ArrayDeque(listOf(0, 1, 2, 3)),
+                    ArrayDeque(listOf(0, 1, 2, 3, 4, 5)),
                 ),
                 listOf(userA, userB),
             )
         When("사용자는 카드를 받고 시작한다") {
-            cardGame.playerAllDeal()
-            val actual = cardGame.userCardOf(userA)
+            cardGame.startGame()
+            val actual = cardGame.getPlayerCards(userA)
 
             Then("사용자는 두 장의 카드를 가진다") {
                 actual["A"]?.shouldContainAll(listOf("CLUB", "SPADE"))
@@ -48,8 +50,8 @@ class CardGameTest : BehaviorSpec({
                 listOf(userA, userB),
             )
         When("pick 호출하면") {
-            cardGame.deal(userA)
-            val actual = cardGame.userCardOf(userA)
+            cardGame.dealCardToPlayer(userA)
+            val actual = cardGame.getPlayerCards(userA)
 
             Then("1장의 카드를 가진다") {
                 actual.size shouldBe 1
@@ -72,17 +74,17 @@ class CardGameTest : BehaviorSpec({
                     listOf(userA),
                 )
 
-            cardGame.deal(userA)
-            cardGame.deal(userA)
+            cardGame.dealCardToPlayer(userA)
+            cardGame.dealCardToPlayer(userA)
             Then("번호를 그룹화하고 문양들을 가진다.") {
-                val actual = cardGame.result()
+                val actual = cardGame.getFinalResults()
                 actual shouldContainAll
-                    mapOf(
-                        userA to
-                            mapOf(
-                                mapOf("ACE" to listOf("DIAMOND", "HEART")) to 12,
-                            ),
-                    )
+                        mapOf(
+                            userA to
+                                    mapOf(
+                                        mapOf("ACE" to listOf("DIAMOND", "HEART")) to 12,
+                                    ),
+                        )
             }
         }
     }

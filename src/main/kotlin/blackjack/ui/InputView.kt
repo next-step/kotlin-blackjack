@@ -7,7 +7,7 @@ class InputView(val inputProvider: () -> String? = { readln() }) {
         return inputProvider()?.split(",") ?: throw IllegalArgumentException("입력이 없습니다.")
     }
 
-    fun inputMore(name: UserName): UserMore {
+    fun inputMore(name: Name): UserMore {
         println("$name 는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
 
         return inputProvider()?.let {

@@ -1,9 +1,9 @@
 package blackjack.domain
 
-val DEALER_NAME = EntrantName("Dealer")
+val DEALER_NAME = EntrantName("딜러")
 
 class Dealer : Player(DEALER_NAME, Hand()) {
-    private val shouldAddCard: Boolean
+    val shouldAddCard: Boolean
         get() = super.score() < DEALER_HIT_SCORE
 
     fun additionalCard(deck: Card) {
