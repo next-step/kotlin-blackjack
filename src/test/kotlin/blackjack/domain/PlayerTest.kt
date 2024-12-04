@@ -7,7 +7,7 @@ class PlayerTest : StringSpec({
     "플레이어가 새로운 카드를 추가한다." {
         val player = Player("dabomi")
         player.addCards(listOf(Card.create(CardNumber.TWO, CardShape.HEART), Card.create(CardNumber.THREE, CardShape.SPADE)))
-        player.getCardList() shouldBe listOf("TWO of HEART", "THREE of SPADE")
+        player.getCardList() shouldBe listOf("2하트", "3스페이드")
     }
 
     "플레이어가 빈 카드 리스트를 반환한다." {
@@ -19,6 +19,6 @@ class PlayerTest : StringSpec({
         val player = Player("dabomi")
         player.addCards(listOf(Card.create(CardNumber.THREE, CardShape.SPADE)))
         player.addCards(listOf(Card.create(CardNumber.TWO, CardShape.HEART)))
-        player.getCardList() shouldBe listOf("THREE of SPADE", "TWO of HEART")
+        player.getCardList() shouldBe listOf("3스페이드", "2하트")
     }
 })
