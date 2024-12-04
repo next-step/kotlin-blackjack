@@ -1,8 +1,10 @@
 package blackjack
 
 import blackjack.InitialCardsTestFixtures.blackjackCards
+import blackjack.InitialCardsTestFixtures.blackjackCards2
 import blackjack.InitialCardsTestFixtures.initial16Cards
 import blackjack.InitialCardsTestFixtures.initial18Cards
+import blackjack.InitialCardsTestFixtures.initial18Cards2
 import blackjack.InitialCardsTestFixtures.initial20Cards
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
@@ -155,5 +157,37 @@ class BankTest : StringSpec({
 
         sut.balance(dealer) shouldBe 1000
         sut.balance(player) shouldBe 0
+    }
+
+    "은행은 PUSH(플레이어 핸드 == 딜러 핸드)일 때 참가자들에게 정산할 수 있다" {
+        val dealer = Dealer(initial18Cards)
+        val player = Player("y2gcoder", initial18Cards2)
+
+        val sut = Bank()
+        sut.bet(dealer, 0.0)
+        sut.bet(player, 1000.0)
+
+        val gameResult = GameResult(player, Outcome.PUSH)
+
+        sut.settleBets(gameResult)
+
+        sut.balance(dealer) shouldBe 0
+        sut.balance(player) shouldBe 1000
+    }
+
+    "은행은 PUSH(플레이어 블랙잭 == 딜러 블랙잭)일 때 참가자들에게 정산할 수 있다" {
+        val dealer = Dealer(blackjackCards)
+        val player = Player("y2gcoder", blackjackCards2)
+
+        val sut = Bank()
+        sut.bet(dealer, 0.0)
+        sut.bet(player, 1000.0)
+
+        val gameResult = GameResult(player, Outcome.PUSH)
+
+        sut.settleBets(gameResult)
+
+        sut.balance(dealer) shouldBe 0
+        sut.balance(player) shouldBe 1000
     }
 })

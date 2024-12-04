@@ -42,7 +42,7 @@ class Bank(accounts: Map<Participant, Double> = emptyMap()) {
                 accounts[dealerAccount.first] = accounts[dealerAccount.first]!! - (betAmount * 1.5)
                 accounts[playerAccount.first] = accounts[playerAccount.first]!! + (betAmount * 1.5)
             }
-            else -> TODO()
+            Outcome.PUSH -> Unit
         }
     }
 }
