@@ -110,5 +110,16 @@ class PlayerTest : BehaviorSpec({
                 action shouldBe PlayerAction.BURST
             }
         }
+        When("플레이어가 카드를 추가로 받은 결과로 버스트 상태가 된 경우") {
+            val player = Player("pobi")
+            val deck = Deck()
+            player.receiveCard(Card(Suit.SPADES, Rank.KING))
+            player.receiveCard(Card(Suit.DIAMONDS, Rank.KING))
+
+            Then("PlayerAction.BURST를 반환해야 한다") {
+                val action = player.playTurn(deck, wantsToHit = true)
+                action shouldBe PlayerAction.BURST
+            }
+        }
     }
 })

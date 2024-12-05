@@ -1,6 +1,8 @@
 package blackjack.entity
 
-class Player(name: String) : Participant(name) {
+class Player(
+    name: String,
+) : Participant(name) {
     fun playTurn(
         deck: Deck,
         wantsToHit: Boolean,
@@ -10,7 +12,7 @@ class Player(name: String) : Participant(name) {
             isBusted() -> PlayerAction.BURST
             else -> {
                 receiveCard(deck.deal())
-                PlayerAction.HIT
+                if (isBusted()) PlayerAction.BURST else PlayerAction.HIT
             }
         }
 
