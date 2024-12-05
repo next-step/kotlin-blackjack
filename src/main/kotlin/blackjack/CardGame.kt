@@ -4,18 +4,12 @@ import blackjack.domain.Card
 import blackjack.domain.Dealer
 import blackjack.domain.Deck
 import blackjack.domain.DeckBuilder
-import blackjack.domain.MatchType
 import blackjack.domain.Players
-import blackjack.ui.DealerResult
-import blackjack.ui.FinalWinnerResults
-import blackjack.ui.Name
-import blackjack.ui.RoundResult
-import blackjack.ui.UIMatchType
+import blackjack.ui.UserName
 import blackjack.ui.UserCards
-import blackjack.ui.ViewResult
 
 data class CardGame(private val deck: Deck, private val players: Players, val dealer: Dealer) {
-    val dealerName: Name
+    val dealerName: UserName
         get() = dealer.name
     val dealerShouldAddCard: Boolean
         get() = dealer.shouldAddCard
@@ -33,53 +27,27 @@ data class CardGame(private val deck: Deck, private val players: Players, val de
         dealer.receive(Deck(listOf(deck.pop())))
     }
 
-    fun getPlayerCards(name: String): UserCards {
+    fun playerCards(name: String): UserCards {
         return groupCardsByRank(players.findCardOf(name).values())
-    }
-
-    fun getRoundResults(): RoundResult {
-        return players.associate { player ->
-            player.name to groupCardsByRank(player.totalCards.values())
-        }
-    }
-
-    fun getFinalRoundResults(): ViewResult {
-        return players.associate { player ->
-            player.name to mapOf(groupCardsByRank(player.totalCards.values()) to player.score())
-        }
-    }
-
-    fun getDealerResults(): ViewResult {
-        return mapOf(dealerName to mapOf(groupCardsByRank(dealer.totalCards.values()) to dealer.score()))
-    }
-
-    fun getFinalWinnerResults(): FinalWinnerResults {
-        val playerResults: Map<Name, UIMatchType> = players.playerWinScores(dealer).mapValues {
-            when (it.value) {
-                MatchType.WIN -> UIMatchType.WIN
-                MatchType.LOSS -> UIMatchType.LOSS
-                else -> UIMatchType.DRAW
-            }
-        }
-        val (dealerWins, dealerLosses, dealerDraws) = players.dealerWinScore(dealer)
-
-        val dealerResult = DealerResult(wins = dealerWins, losses = dealerLosses, draws = dealerDraws)
-        return FinalWinnerResults(dealerResult = dealerResult, playerResults = playerResults)
     }
 
     fun isPlayerBust(name: String): Boolean {
         return players.isBust(name)
     }
 
-    fun getAllPlayersNames(): List<Name> {
+    fun allPlayersNames(): List<UserName> {
         return players.map { it.name }
     }
 
-    private fun groupCardsByRank(cards: List<Card>) =
+    private fun groupCardsByRank(cards: List<Card>) : Map<String, List<String>> =
         cards.groupBy { it.rank.name }
             .map { (rank, cards) ->
                 rank to cards.map { it.suit.name }
             }.toMap()
+
+    fun resultEvaluator(): GameResultEvaluator {
+        return GameResultEvaluator(players, dealer)
+    }
 
     companion object {
         const val INITIAL_CARD_COUNT = 2
