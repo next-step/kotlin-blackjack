@@ -1,0 +1,61 @@
+
+## Step 2
+### 기능 요구사항
+블랙잭 게임을 변형한 프로그램을 구현한다. 블랙잭 게임은 딜러와 플레이어 중 카드의 합이 21 또는 21에 가장 가까운 숫자를 가지는 쪽이 이기는 게임이다.
+
+- [x] 카드의 숫자 계산은 카드 숫자를 기본으로 한다
+  - [x] Ace는 1 또는 11로 계산할 수 있다.
+  - [x] King, Queen, Jack은 각각 10으로 계산한다.
+- [x] 게임을 시작하면 플레이어는 두 장의 카드를 지급 받는다.
+- [x] 두 장의 카드 숫자를 합쳐 21을 초과하지 않으면서 21에 가깝게 만들면 이긴다. 
+- [x] 21을 넘지 않을 경우 원한다면 얼마든지 카드를 계속 뽑을 수 있다.
+
+
+### 실행 결과
+```declarative
+게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)
+pobi,jason
+
+pobi, jason에게 2장의 나누었습니다.
+pobi카드: 2하트, 8스페이드
+jason카드: 7클로버, K스페이드
+
+pobi는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)
+y
+pobi카드: 2하트, 8스페이드, A클로버
+pobi는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)
+n
+jason은 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)
+n
+jason카드: 7클로버, K스페이드
+
+pobi카드: 2하트, 8스페이드, A클로버 - 결과: 21
+jason카드: 7클로버, K스페이드 - 결과: 17
+```
+
+### 프로그래밍 요구 사항
+- [x] 모든 기능을 TDD로 구현해 단위 테스트가 존재해야 한다. 단, UI(System.out, System.in) 로직은 제외
+- [x] indent(인덴트, 들여쓰기) depth를 2를 넘지 않도록 구현한다. 1까지만 허용한다.
+- [x] 모든 엔티티를 작게 유지한다.
+- [x] 함수(또는 메서드)의 길이가 15라인을 넘어가지 않도록 구현한다.
+- [x] 기능을 구현하기 전에 README.md 파일에 구현할 기능 목록을 정리해 추가한다.
+- [x] git의 commit 단위는 앞 단계에서 README.md 파일에 정리한 기능 목록 단위로 추가한다.
+
+### 구현할 기능 목록
+- Application
+  - [x] BlackJackController
+  - [x] BlackJackSrvice
+  - [x] MainApplication
+- Presentation
+  - [x] InputView
+  - [x] ResultView
+    
+- Domain
+  - [x] Card
+  - [x] Cards
+  - [x] CardDispenser
+  - [x] Name
+  - [x] Player
+  - [x] Players
+  - [x] Status
+  - [x] Turn
