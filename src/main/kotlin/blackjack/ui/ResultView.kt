@@ -2,8 +2,8 @@ package blackjack.ui
 
 class ResultView(val outputProvider: (String) -> Unit = { println(it) }) {
     fun printScoreResult(roundResults: List<RoundResult>) {
-        roundResults.forEach { (userName, cards, score) ->
-            printScoreResult(userName, cards, score)
+        roundResults.forEach { (playerName, cards, score) ->
+            printScoreResult(playerName, cards, score)
         }
     }
 

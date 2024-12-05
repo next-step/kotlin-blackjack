@@ -15,6 +15,29 @@ fun UserCards.toPrettyString(): String {
     }
 }
 
+data class FinalWinnerResults(
+    val dealerResult: DealerResult,
+    val playerResults: Map<UserName, UIMatchType>,
+)
+
+data class DealerResult(
+    val wins: Int = 0,
+    val losses: Int = 0,
+    val draws: Int = 0,
+)
+
+data class RoundResult(val userName: UserName, val cards: Map<CardRank, List<CardSuit>>, val score: CardScore) {
+    companion object {
+        fun from(
+            userName: UserName,
+            cards: Map<CardRank, List<CardSuit>>,
+            score: CardScore,
+        ): RoundResult {
+            return RoundResult(userName, cards, score)
+        }
+    }
+}
+
 enum class UiSuit(val displayName: String) {
     HEART(displayName = "하트"),
     DIAMOND(displayName = "다이아몬드"),
@@ -54,27 +77,4 @@ enum class UIMatchType(val displayName: String) {
     WIN(displayName = "승"),
     LOSS(displayName = "패"),
     DRAW(displayName = "무"),
-}
-
-data class FinalWinnerResults(
-    val dealerResult: DealerResult,
-    val playerResults: Map<UserName, UIMatchType>,
-)
-
-data class DealerResult(
-    val wins: Int = 0,
-    val losses: Int = 0,
-    val draws: Int = 0,
-)
-
-data class RoundResult(val userName: UserName, val cards: Map<CardRank, List<CardSuit>>, val score: CardScore) {
-    companion object {
-        fun from(
-            userName: UserName,
-            cards: Map<CardRank, List<CardSuit>>,
-            score: CardScore,
-        ): RoundResult {
-            return RoundResult(userName, cards, score)
-        }
-    }
 }

@@ -12,18 +12,8 @@ import blackjack.ui.UIMatchType
 const val DEALER_NAME = "딜러"
 
 class GameResultEvaluator(private val players: Players, private val dealer: Dealer) {
-    private fun groupCardsByRank(cards: List<Card>): Map<String, List<String>> =
-        cards.groupBy { it.rank.name }
-            .map { (rank, cards) ->
-                rank to cards.map { it.suit.name }
-            }.toMap()
-
     fun evaluateRounds(): List<RoundResult> {
         val roundResults = mutableListOf<RoundResult>()
-        players.forEach {
-            val roundResult = RoundResult.from(it.name, groupCardsByRank(it.totalCards.cards), it.score().value)
-            roundResults.add(roundResult)
-        }
 
         roundResults.add(
             RoundResult.from(
@@ -33,6 +23,11 @@ class GameResultEvaluator(private val players: Players, private val dealer: Deal
             ),
         )
 
+        players.forEach {
+            val roundResult = RoundResult.from(it.name, groupCardsByRank(it.totalCards.cards), it.score().value)
+            roundResults.add(roundResult)
+        }
+
         return roundResults
     }
 
@@ -40,7 +35,7 @@ class GameResultEvaluator(private val players: Players, private val dealer: Deal
         val resultStatistics = dealer.dealerResult(players)
 
         val playerResults =
-            dealer.judge(players).mapValues { (_, matchType) ->
+            dealer.playerResult(players).mapValues { (_, matchType) ->
                 when (matchType) {
                     MatchType.WIN -> UIMatchType.WIN
                     MatchType.LOSE -> UIMatchType.LOSS
@@ -57,4 +52,10 @@ class GameResultEvaluator(private val players: Players, private val dealer: Deal
             playerResults,
         )
     }
+
+    private fun groupCardsByRank(cards: List<Card>): Map<String, List<String>> =
+        cards.groupBy { it.rank.name }
+            .map { (rank, cards) ->
+                rank to cards.map { it.suit.name }
+            }.toMap()
 }

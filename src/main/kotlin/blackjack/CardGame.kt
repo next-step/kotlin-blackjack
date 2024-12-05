@@ -4,6 +4,7 @@ import blackjack.domain.Card
 import blackjack.domain.Dealer
 import blackjack.domain.Deck
 import blackjack.domain.DeckBuilder
+import blackjack.domain.Player
 import blackjack.domain.Players
 import blackjack.ui.UserCards
 import blackjack.ui.UserName
@@ -11,7 +12,7 @@ import blackjack.ui.UserName
 data class CardGame(private val deck: Deck, private val players: Players, val dealer: Dealer) {
     val dealerName: UserName
         get() = dealer.name
-    val dealerShouldAddCard: Boolean
+    private val dealerShouldAddCard: Boolean
         get() = dealer.shouldAddCard
 
     fun startGame() {
@@ -19,24 +20,52 @@ data class CardGame(private val deck: Deck, private val players: Players, val de
         players.dealInitialCards(deck, INITIAL_CARD_COUNT)
     }
 
-    fun dealCardToPlayer(name: String) {
-        players.deal(players.find(name), deck.pop())
+    fun handleUserTurn(action: (Player) -> Boolean) {
+        players.forEach { currentUser ->
+            processPlayerTurn(action, currentUser)
+        }
     }
 
-    fun dealCardToDealer() {
-        dealer.receive(Deck(listOf(deck.pop())))
+    fun handleDealerTurn(action: () -> Unit) {
+        if (dealerShouldAddCard) {
+            action()
+            dealCardToDealer()
+        }
+    }
+
+    fun dealCardToPlayer(name: String) {
+        players.deal(players.find(name), deck.pop())
     }
 
     fun playerCards(name: String): UserCards {
         return groupCardsByRank(players.findCardOf(name).values())
     }
 
-    fun isPlayerBust(name: String): Boolean {
+    fun resultEvaluator(): GameResultEvaluator {
+        return GameResultEvaluator(players, dealer)
+    }
+    
+    fun allPlayersNames(): List<UserName> {
+        return players.map { it.name }
+    }
+
+
+    private fun dealCardToDealer() {
+        dealer.receive(Deck(listOf(deck.pop())))
+    }
+
+    private fun isPlayerBust(name: String): Boolean {
         return players.isBust(name)
     }
 
-    fun allPlayersNames(): List<UserName> {
-        return players.map { it.name }
+    private fun processPlayerTurn(
+        action: (Player) -> Boolean,
+        currentUser: Player,
+    ) {
+        while (action(currentUser)) {
+            dealCardToPlayer(currentUser.name)
+            if (isPlayerBust(currentUser.name)) break
+        }
     }
 
     private fun groupCardsByRank(cards: List<Card>): Map<String, List<String>> =
@@ -44,10 +73,6 @@ data class CardGame(private val deck: Deck, private val players: Players, val de
             .map { (rank, cards) ->
                 rank to cards.map { it.suit.name }
             }.toMap()
-
-    fun resultEvaluator(): GameResultEvaluator {
-        return GameResultEvaluator(players, dealer)
-    }
 
     companion object {
         const val INITIAL_CARD_COUNT = 2
