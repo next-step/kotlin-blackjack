@@ -9,7 +9,7 @@ import blackjack.ui.FinalWinnerResults
 import blackjack.ui.RoundResult
 import blackjack.ui.UIMatchType
 
-const val DEALER_NAME = "DEALER"
+const val DEALER_NAME = "딜러"
 
 class GameResultEvaluator(private val players: Players, private val dealer: Dealer) {
     private fun groupCardsByRank(cards: List<Card>): Map<String, List<String>> =
@@ -37,7 +37,8 @@ class GameResultEvaluator(private val players: Players, private val dealer: Deal
     }
 
     fun finalMatchEvaluate(): FinalWinnerResults {
-        val (win, lose, draw) = dealer.dealerWinScore(players)
+        val resultStatistics = dealer.dealerResult(players)
+
         val playerResults =
             dealer.judge(players).mapValues { (_, matchType) ->
                 when (matchType) {
@@ -47,6 +48,13 @@ class GameResultEvaluator(private val players: Players, private val dealer: Deal
                 }
             }
 
-        return FinalWinnerResults(DealerResult(wins = win, losses = lose, draws = draw), playerResults)
+        return FinalWinnerResults(
+            DealerResult(
+                wins = resultStatistics.winCount,
+                losses = resultStatistics.loseCount,
+                draws = resultStatistics.drawCount,
+            ),
+            playerResults,
+        )
     }
 }

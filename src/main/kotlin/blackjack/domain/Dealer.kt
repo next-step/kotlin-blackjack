@@ -18,25 +18,26 @@ class Dealer : Player(DEALER_NAME, Hand()) {
         }
     }
 
-    fun dealerWinScore(players: Players): Triple<Int, Int, Int> {
-        var dealerWins = 0
-        var dealerLosses = 0
-        var dealerDraws = 0
+    fun dealerResult(players: Players): ResultStatistics {
+        var resultStatistics = ResultStatistics()
         players.forEach { player ->
-            when (dealerMatch(player)) {
-                MatchType.WIN -> {
-                    dealerWins++
+            resultStatistics =
+                when (dealerMatch(player)) {
+                    MatchType.WIN -> {
+                        resultStatistics.increment(MatchType.WIN)
+                    }
+
+                    MatchType.LOSE -> {
+                        resultStatistics.increment(MatchType.LOSE)
+                    }
+
+                    else -> {
+                        resultStatistics.increment(MatchType.DRAW)
+                    }
                 }
-                MatchType.LOSE -> {
-                    dealerLosses++
-                }
-                else -> {
-                    dealerDraws++
-                }
-            }
         }
 
-        return Triple(dealerWins, dealerLosses, dealerDraws)
+        return resultStatistics
     }
 
     private fun judgePlayer(player: Player): MatchType {
