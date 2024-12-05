@@ -17,6 +17,8 @@ class BlackJackGame private constructor(
     }
 
     companion object {
+        private const val DEFAULT_CARD_COUNT = 2
+
         fun createGame(
             players: List<Player>,
             deck: Deck,
@@ -28,7 +30,7 @@ class BlackJackGame private constructor(
             players: List<Player>,
             deck: Deck,
         ): List<Player> {
-            players.forEach { player -> (1..2).forEach { _ -> player.addCard(deck.getSingleCard()) } }
+            players.forEach { player -> repeat(DEFAULT_CARD_COUNT) { player.addCard(deck.getSingleCard()) } }
             return players
         }
     }
