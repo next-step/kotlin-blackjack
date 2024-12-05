@@ -1,6 +1,6 @@
 package blackjack
 
-class PlayerCards() {
+class PlayerCards {
     private val _cards: MutableList<Card> = mutableListOf()
     val cards: List<Card> get() = _cards.toList()
 
