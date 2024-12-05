@@ -30,6 +30,10 @@ class OutputView {
         println("${dealer.name}는 16이하라 한장의 카드를 더 받았습니다.\n")
     }
 
+    fun printPlayerBlackjack(player: Player) {
+        println("${player.name}님은 블랙잭입니다. 게임을 종료합니다.\n")
+    }
+
     fun printPlayerResults(
         playerName: String,
         playerHand: Hand,
