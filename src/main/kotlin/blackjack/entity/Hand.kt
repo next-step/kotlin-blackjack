@@ -16,8 +16,10 @@ class Hand(cards: List<Card> = emptyList()) {
         return calculateScore() > MAX_SCORE
     }
 
-    fun isBlackJack(): Boolean {
-        return cards.size == 2 && calculateScore() == MAX_SCORE
+    fun isBlackjack(): Boolean {
+        return cards.size == 2 &&
+            cards.any { it.rank == Rank.ACE } &&
+            cards.any { it.rank.value == 10 }
     }
 
     fun calculateScore(): Int {

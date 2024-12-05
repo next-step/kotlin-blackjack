@@ -53,7 +53,7 @@ class HandTest : DescribeSpec({
                 }
 
             it("블랙잭 상태를 반환한다") {
-                hand.isBlackJack() shouldBe true
+                hand.isBlackjack() shouldBe true
             }
         }
     }
