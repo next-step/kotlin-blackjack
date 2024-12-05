@@ -4,9 +4,20 @@ class Card private constructor(
     val suit: Suit,
     val rank: Rank,
 ) {
-    val face: Face = Face.UP
+    var face: Face = Face.UP
+        private set
     val rankValue: Int
         get() = rank.value
+    val isFaceUp: Boolean
+        get() = face == Face.UP
+
+    fun flip() {
+        if (face == Face.UP) {
+            face = Face.DOWN
+        } else {
+            face = Face.UP
+        }
+    }
 
     companion object {
         val ALL_CARDS =

@@ -42,7 +42,7 @@ object ResultView {
         return result + " - 결과: ${if (player.isBusted) BUSTED else player.value}"
     }
 
-    private fun formatHand(hand: Hand): String = hand.cards.joinToString { formatCard(it) }
+    private fun formatHand(hand: Hand): String = hand.cards.filter { it.isFaceUp }.joinToString { formatCard(it) }
 
     private fun formatCard(card: Card): String = "${formatRank(card.rank)}${formatSuit(card.suit)}"
 

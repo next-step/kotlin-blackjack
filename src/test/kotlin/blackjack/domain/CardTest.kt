@@ -52,6 +52,19 @@ class CardTest {
         card.face shouldBe Face.UP
     }
 
+    @Test
+    fun `카드를 뒤집을 수 있다`() {
+        val card = Card.of(DUMMY_SUIT, Rank.ACE)
+
+        card.flip()
+
+        card.face shouldBe Face.DOWN
+
+        card.flip()
+
+        card.face shouldBe Face.UP
+    }
+
     companion object {
         private val DUMMY_SUIT = Suit.HEARTS
     }
