@@ -13,6 +13,6 @@ class Dealer : Player(DEALER_NAME, Hand()) {
     }
 
     companion object {
-        const val DEALER_HIT_SCORE = 17
+        val DEALER_HIT_SCORE = Score(17)
     }
 }

@@ -4,7 +4,7 @@ data class Card(
     val rank: CardRank,
     val suit: Suit,
 ) {
-    fun score(otherScore: Int): Int {
+    fun score(otherScore: Score): Score {
         return rank.calculateScore(otherScore)
     }
 

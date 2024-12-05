@@ -38,7 +38,7 @@ class HandTest : BehaviorSpec({
         ).forEach { (cards, expected) ->
             When("카드 ${cards.totalCards.joinToString { "${it.rank} ${it.suit}" }} 일때") {
                 Then("점수는 $expected 이어야 함") {
-                    cards.score shouldBe expected
+                    cards.score.value shouldBe expected
                 }
             }
         }

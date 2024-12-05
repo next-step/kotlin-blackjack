@@ -17,13 +17,13 @@ class CardTest : BehaviorSpec({
 
     Given("`Score` 알 수 있다") {
         listOf(
-            Card(CardRank.ACE, Suit.SPADE) to 11,
-            Card(CardRank.JACK, Suit.SPADE) to 10,
-            Card(CardRank.NINE, Suit.SPADE) to 9,
+            Card(CardRank.ACE, Suit.SPADE) to Score(11),
+            Card(CardRank.JACK, Suit.SPADE) to Score(10),
+            Card(CardRank.NINE, Suit.SPADE) to Score(9),
         ).forEach { (card, expectedScore) ->
             When("${card.rank}일 때") {
                 Then("${expectedScore}로 계산할 수 있다") {
-                    card.score(0) shouldBe expectedScore
+                    card.score(Score(0)) shouldBe expectedScore
                 }
             }
         }

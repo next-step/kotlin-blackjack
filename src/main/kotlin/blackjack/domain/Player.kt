@@ -7,12 +7,14 @@ open class Player(val playerName: EntrantName, private val hand: Hand = Hand()) 
         get() = Deck(hand.totalCards)
     val name: String
         get() = playerName.value
+    val bustGap: Int
+        get() = hand.bustGap()
 
     fun receive(cards: Deck) {
         hand.add(cards.values())
     }
 
-    fun score(): Int {
+    fun score(): Score {
         return hand.score
     }
 
