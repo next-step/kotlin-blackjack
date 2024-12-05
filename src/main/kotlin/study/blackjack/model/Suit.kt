@@ -14,9 +14,7 @@ enum class Suit(
     ;
 
     companion object {
-        fun findSuit(
-            code: Int,
-        ): Suit? {
+        fun findSuit(code: Int): Suit? {
             return entries.find { it.code == code }
         }
     }

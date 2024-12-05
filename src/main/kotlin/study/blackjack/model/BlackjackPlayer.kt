@@ -1,28 +1,35 @@
 package study.blackjack.model
 
-import study.blackjack.BlackjackGameService.Companion.BLACKJACK
-
 /**
  * @author 이상준
  */
 class BlackjackPlayer(
-    val name: String,
-    cards: MutableList<Card> = mutableListOf(),
+    private val name: String,
+    private val cards: Cards = Cards(),
 ) {
-    var cards: MutableList<Card> = cards
-        private set
+    private var match: Match = Match.WAIT
 
-    fun addCard(card: Card) {
-        cards.add(card)
+    fun name(): String {
+        return name
     }
 
-    fun calculateScore(): Int {
-        val totalScore = cards.sumOf { it.score() }
+    fun addCard(card: Card) {
+        this.cards.addCard(card)
+    }
 
-        return if (totalScore > BLACKJACK) {
-            cards.sumOf { it.score(false) }
-        } else {
-            totalScore
-        }
+    fun addAllCards(cards: Cards) {
+        this.cards.addAllCards(cards)
+    }
+
+    fun cards(): Cards {
+        return cards
+    }
+
+    fun result(): String {
+        return this.match.text
+    }
+
+    fun match(dealer: BlackjackPlayer) {
+        this.match = Match.of(this.cards().calculateScore(), dealer.cards().calculateScore())
     }
 }
