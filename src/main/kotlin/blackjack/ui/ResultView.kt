@@ -1,43 +1,32 @@
 package blackjack.ui
 
 class ResultView(val outputProvider: (String) -> Unit = { println(it) }) {
+    fun printScoreResult(roundResults: List<RoundResult>) {
+        roundResults.forEach { (userName, cards, score) ->
+            printScoreResult(userName, cards, score)
+        }
+    }
+
+    private fun printScoreResult(
+        name: UserName,
+        cards: UserCards,
+        score: Score,
+    ) {
+        outputProvider("${name}카드: ${cards.toPrettyString()} - 결과: $score")
+    }
+
     fun printUserCardCount(
-        dealerName: Name,
+        dealerName: UserName,
         userNames: UserNames,
         count: Int,
     ) {
         outputProvider("${dealerName}와 ${userNames.joinToString(", ")}에게 ${count}장의 나누었습니다.")
     }
 
-    fun printUserCards(users: RoundResult) {
-        users.forEach { (name, cards) ->
-            printRound(name, cards)
+    fun printUserCards(roundResults: List<RoundResult>) {
+        roundResults.forEach { (name, cards) ->
+            outputProvider("${name}카드: ${cards.toPrettyString()}")
         }
-    }
-
-    fun printRound(
-        name: Name,
-        cards: UserCards,
-    ) {
-        outputProvider("${name}카드: ${cards.toPrettyString()}")
-    }
-
-    fun printResult(
-        dealerResults: ViewResult,
-        finalRoundResults: ViewResult,
-    ) {
-        printResult(dealerResults)
-        printResult(finalRoundResults)
-    }
-
-    fun printResult(result: ViewResult) {
-        result.forEach { (userName, cards) ->
-            printCards(cards, userName)
-        }
-    }
-
-    fun printDealerTurnStart(dealerHitScore: Int) {
-        outputProvider("딜러는 ${dealerHitScore}점 이하라 한장의 카드를 더 받았습니다.")
     }
 
     fun printFinalWinner(finalWinnerResults: FinalWinnerResults) {
@@ -50,20 +39,14 @@ class ResultView(val outputProvider: (String) -> Unit = { println(it) }) {
         }
     }
 
-    private fun printResult(
-        name: Name,
+    fun printRound(
+        name: UserName,
         cards: UserCards,
-        score: Score,
     ) {
-        outputProvider("${name}카드: ${cards.toPrettyString()} - 결과: $score")
+        outputProvider("${name}카드: ${cards.toPrettyString()}")
     }
 
-    private fun printCards(
-        cards: Map<UserCards, Score>,
-        userName: Name,
-    ) {
-        cards.forEach { (cards, score) ->
-            printResult(userName, cards, score)
-        }
+    fun printDealerTurnStart(dealerHitScore: Int) {
+        outputProvider("딜러는 ${dealerHitScore}점 이하라 한장의 카드를 더 받았습니다.")
     }
 }

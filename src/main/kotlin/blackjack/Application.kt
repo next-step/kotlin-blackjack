@@ -11,19 +11,18 @@ fun main() {
 
     val names = inputView.inputUserNames()
     val game = CardGame.create(names)
+    val resultEvaluator = game.resultEvaluator()
 
     game.startGame()
-    resultView.printUserCardCount(game.dealerName, game.getAllPlayersNames(), INITIAL_CARD_COUNT)
-    resultView.printUserCards(game.getRoundResults())
+    resultView.printUserCardCount(game.dealerName, game.allPlayersNames(), INITIAL_CARD_COUNT)
+    resultView.printUserCards(resultEvaluator.evaluateRounds())
 
     names.forEach { userName -> handleUserTurn(game, resultView, inputView, userName) }
 
     handleDealerTurn(game, resultView)
 
-    resultView.printResult(game.getDealerResults(), game.getFinalRoundResults())
-
-    val finalWinnerResults = game.getFinalWinnerResults()
-    resultView.printFinalWinner(finalWinnerResults)
+    resultView.printScoreResult(resultEvaluator.evaluateRounds())
+    resultView.printFinalWinner(resultEvaluator.winMatchEvaluate())
 }
 
 private fun handleUserTurn(
@@ -34,7 +33,7 @@ private fun handleUserTurn(
 ) {
     while (inputView.inputMore(userName)) {
         game.dealCardToPlayer(userName)
-        val userHandCards = game.getPlayerCards(userName)
+        val userHandCards = game.playerCards(userName)
         resultView.printRound(userName, userHandCards)
 
         if (game.isPlayerBust(userName)) {
@@ -48,7 +47,7 @@ private fun handleDealerTurn(
     resultView: ResultView,
 ) {
     if (game.dealerShouldAddCard) {
-        resultView.printDealerTurnStart(DEALER_HIT_SCORE)
+        resultView.printDealerTurnStart(DEALER_HIT_SCORE.value)
         game.dealCardToDealer()
     }
 }

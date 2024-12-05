@@ -2,6 +2,6 @@ package blackjack.domain
 
 enum class MatchType {
     WIN,
-    LOSS,
+    LOSE,
     DRAW,
 }
