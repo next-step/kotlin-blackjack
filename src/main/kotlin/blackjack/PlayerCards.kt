@@ -3,9 +3,11 @@ package blackjack
 class PlayerCards() {
     private val cards: MutableList<Card> = mutableListOf()
 
-    fun addCard(card: Card?) {
-        if (card != null) {
+    fun addCard(card: Card?): Boolean {
+        return if (card != null) {
             this.cards.add(card)
+        } else {
+            false
         }
     }
 
@@ -31,6 +33,6 @@ class PlayerCards() {
     }
 
     companion object {
-        private const val GAME_LIMIT_NUMBER = 21
+        const val GAME_LIMIT_NUMBER = 21
     }
 }

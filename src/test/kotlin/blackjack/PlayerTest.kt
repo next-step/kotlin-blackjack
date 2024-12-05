@@ -19,7 +19,7 @@ class PlayerTest : StringSpec({
         player.addCard(createBasicCard(CardNumber.TEN, CardMark.HEART))
         player.addCard(createBasicCard(CardNumber.TEN, CardMark.HEART))
 
-        player.couldAddCard() shouldBe false
+        player.addCard(createBasicCard(CardNumber.TWO, CardMark.HEART)) shouldBe false
     }
 
     "유저는 한장의 카드를 패에 추가할 수 있다." {

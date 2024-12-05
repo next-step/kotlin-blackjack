@@ -8,8 +8,12 @@ class Player(
         validateName(name)
     }
 
-    fun addCard(card: Card?) {
-        cards.addCard(card)
+    fun addCard(card: Card?): Boolean {
+        return if (couldAddCard()) {
+            cards.addCard(card)
+        } else {
+            false
+        }
     }
 
     fun getCards(): List<Card> {
@@ -20,8 +24,8 @@ class Player(
         return cards.calculateCardsMaxSum()
     }
 
-    fun couldAddCard(): Boolean {
-        return false
+    private fun couldAddCard(): Boolean {
+        return cards.calculateCardsMaxSum() < PlayerCards.GAME_LIMIT_NUMBER
     }
 
     private fun validateName(name: String) {
