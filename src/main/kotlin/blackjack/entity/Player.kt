@@ -10,6 +10,7 @@ class Player(
         when {
             !wantsToHit -> PlayerAction.STAND
             isBusted() -> PlayerAction.BURST
+            isBlackjack() -> PlayerAction.BLACKJACK
             else -> {
                 receiveCard(deck.deal())
                 if (isBusted()) PlayerAction.BURST else PlayerAction.HIT

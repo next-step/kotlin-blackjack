@@ -121,5 +121,16 @@ class PlayerTest : BehaviorSpec({
                 action shouldBe PlayerAction.BURST
             }
         }
+        When("플레이어가 블랙잭 상태인 경우") {
+            val player = Player("Pobi")
+            val deck = Deck()
+            player.receiveCard(Card(Suit.SPADES, Rank.ACE))
+            player.receiveCard(Card(Suit.DIAMONDS, Rank.KING))
+            val action = player.playTurn(deck, true)
+
+            Then("플레이어의 행동은 Blackjack이어야 한다") {
+                action shouldBe PlayerAction.BLACKJACK
+            }
+        }
     }
 })
