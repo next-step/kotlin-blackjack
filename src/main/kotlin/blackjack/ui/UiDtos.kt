@@ -1,15 +1,13 @@
 package blackjack.ui
 
-typealias Name = String
-typealias UserNames = List<Name>
+typealias UserName = String
+typealias UserNames = List<UserName>
 typealias UserMore = Boolean
 typealias Score = Int
 typealias CardRank = String
 typealias CardSuit = String
-typealias RoundResult = Map<Name, UserCards>
-typealias ViewResult = Map<Name, Map<UserCards, Score>>
-
 typealias UserCards = Map<CardRank, List<CardSuit>>
+typealias CardScore = Int
 
 fun UserCards.toPrettyString(): String {
     return this.entries.joinToString(separator = ", ") { (rank, suits) ->
@@ -60,7 +58,7 @@ enum class UIMatchType(val displayName: String) {
 
 data class FinalWinnerResults(
     val dealerResult: DealerResult,
-    val playerResults: Map<Name, UIMatchType>,
+    val playerResults: Map<UserName, UIMatchType>,
 )
 
 data class DealerResult(
@@ -68,3 +66,12 @@ data class DealerResult(
     val losses: Int = 0,
     val draws: Int = 0,
 )
+
+
+data class RoundResult(val userName: UserName, val cards: Map<CardRank, List<CardSuit>>, val score: CardScore) {
+    companion object {
+        fun from(userName: UserName, cards: Map<CardRank, List<CardSuit>>, score: CardScore): RoundResult {
+            return RoundResult(userName, cards, score)
+        }
+    }
+}
