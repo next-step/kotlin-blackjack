@@ -22,6 +22,22 @@ open class Player(val playerName: EntrantName, private val hand: Hand = Hand()) 
         return playerName.value == other
     }
 
+    fun matchToStatistics(other: Player): ResultStatistics {
+        return when (match(other)) {
+            MatchType.WIN -> WIN_STATISTICS
+            MatchType.LOSE -> LOSE_STATISTICS
+            else -> DRAW_STATISTICS
+        }
+    }
+
+    private fun match(other: Player): MatchType {
+        return when {
+            isBust -> MatchType.LOSE
+            other.isBust -> MatchType.WIN
+            else -> MatchType.evaluate(bustGap, other.bustGap)
+        }
+    }
+
     companion object {
         fun from(name: String): Player {
             return Player(playerName = EntrantName(name))
