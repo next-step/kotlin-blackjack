@@ -4,16 +4,8 @@ class BlackJackGame private constructor(
     val players: List<Player>,
     private val deck: Deck,
 ) {
-    fun drawSingleCardToPlayer(
-        isDrawingCard: Boolean,
-        player: Player,
-    ): Boolean {
-        return if (isDrawingCard) {
-            player.addCard(deck.getSingleCard())
-            true
-        } else {
-            false
-        }
+    fun drawSingleCardToPlayer(player: Player, ): Boolean {
+        return player.addCard(deck.getSingleCard())
     }
 
     companion object {

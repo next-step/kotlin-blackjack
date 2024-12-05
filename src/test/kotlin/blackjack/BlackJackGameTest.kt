@@ -18,23 +18,13 @@ class BlackJackGameTest : StringSpec({
         }
     }
 
-    "유저가 카드를 뽑기로 결정하면 하나의 카드를 제공한다." {
+    "유저에게 하나의 카드를 제공한다." {
         val game = BlackJackGame.createGame(createPlayers(2), Deck())
         val player = game.players[0]
 
-        val result = game.drawSingleCardToPlayer(true, game.players[0])
+        val result = game.drawSingleCardToPlayer( game.players[0])
 
         result shouldBe true
         player.getCards().size shouldBe 3
-    }
-
-    "유저가 카드를 뽑지 않기로 결정하면 뽑지 않는다." {
-        val game = BlackJackGame.createGame(createPlayers(2), Deck())
-        val player = game.players[0]
-
-        val result = game.drawSingleCardToPlayer(false, game.players[0])
-
-        result shouldBe false
-        player.getCards().size shouldBe 2
     }
 })

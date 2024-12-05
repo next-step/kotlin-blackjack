@@ -8,12 +8,7 @@ fun main() {
     OutputView.printDefaultPlayerCards(blackJackGame.players)
 
     blackJackGame.players.forEach { player ->
-        while (
-            player.couldAddCard() &&
-            blackJackGame.drawSingleCardToPlayer(
-                InputView.isDrawingCard(player),
-                player,
-            )
+        while (InputView.isDrawingCard(player) && blackJackGame.drawSingleCardToPlayer(player)
         ) {
             OutputView.printPlayerCards(player)
         }
