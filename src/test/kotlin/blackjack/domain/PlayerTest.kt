@@ -7,6 +7,7 @@ import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 
 @Suppress("NonAsciiCharacters")
@@ -66,9 +67,12 @@ class PlayerTest {
         player.hand[0] shouldBe Card.of(StubDeck.DUMMY_SUIT, Rank.TWO)
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "{index} 플레이어 상태 = {1}")
     @MethodSource("donePlayers")
-    fun `턴이 종료된 경우, 힛을 할 수 없다`(player: Player) {
+    fun `턴이 종료된 경우, 힛을 할 수 없다`(
+        player: Player,
+        description: String,
+    ) {
         val deck = StubDeck.from(Rank.TWO, Rank.THREE)
         assertThrows<IllegalStateException> { player.hit(deck) }
     }
@@ -76,7 +80,7 @@ class PlayerTest {
     @Test
     fun `힛을 하여 21점을 넘으면 버스트된다`() {
         val hand =
-            Hand.from(
+            Hand(
                 Card.of(Suit.CLUBS, Rank.KING),
                 Card.of(Suit.CLUBS, Rank.QUEEN),
             )
@@ -99,9 +103,12 @@ class PlayerTest {
         player.reasonDone shouldBe PlayerReasonDone.STANDS
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "{index} 플레이어 상태 = {1}")
     @MethodSource("donePlayers")
-    fun `이미 턴이 끝난 상태에서는 스탠드 할 수 없다`(player: Player) {
+    fun `이미 턴이 끝난 상태에서는 스탠드 할 수 없다`(
+        player: Player,
+        description: String,
+    ) {
         assertThrows<IllegalStateException> { player.stand() }
     }
 
@@ -115,9 +122,9 @@ class PlayerTest {
         @JvmStatic
         fun donePlayers() =
             listOf(
-                createBlackjackPlayer(),
-                createBustedPlayer(),
-                createStandingPlayer(),
+                Arguments.of(createBlackjackPlayer(), "블랙잭"),
+                Arguments.of(createBustedPlayer(), "버스트"),
+                Arguments.of(createStandingPlayer(), "스탠드"),
             )
     }
 }

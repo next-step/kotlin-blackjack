@@ -42,7 +42,7 @@ class PlayersTest {
 
     @Test
     fun `모든 플레이어들이 턴 종료하면 종료 상태이다`() {
-        val players = Players.from(createStandingPlayer("black"), createBustedPlayer("jack"))
+        val players = Players(createStandingPlayer("black"), createBustedPlayer("jack"))
         players.isDone shouldBe true
     }
 
@@ -50,7 +50,7 @@ class PlayersTest {
     fun `모든 플레이어들이 종료하기 전까지는 종료 상태가 아니다`() {
         val deck = StubDeck.from(Rank.TWO, Rank.THREE)
         val players =
-            Players.from(
+            Players(
                 createBustedPlayer("black"),
                 Player("jack").apply {
                     initialDrawFrom(deck)

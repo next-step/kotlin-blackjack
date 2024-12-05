@@ -42,20 +42,22 @@ class HandTest {
         hand[0] shouldBe Card.of(StubDeck.DUMMY_SUIT, Rank.TWO)
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "{index} 핸드 = {2}")
     @MethodSource
     fun `블랙잭인지 판별한다`(
         hand: Hand,
         expected: Boolean,
+        description: String,
     ) {
         hand.isBlackjack() shouldBe expected
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "{index} 핸드 = {2}")
     @MethodSource
     fun `Bust 인지 판별한다`(
         hand: Hand,
         expected: Boolean,
+        description: String,
     ) {
         hand.isBusted() shouldBe expected
     }
@@ -71,24 +73,24 @@ class HandTest {
         @JvmStatic
         private fun `블랙잭인지 판별한다`(): List<Arguments> =
             listOf(
-                Arguments.of(createHand(Rank.ACE, Rank.KING), true),
-                Arguments.of(createHand(Rank.ACE, Rank.QUEEN), true),
-                Arguments.of(createHand(Rank.ACE, Rank.JACK), true),
-                Arguments.of(createHand(Rank.ACE, Rank.TWO, Rank.EIGHT), false),
-                Arguments.of(createHand(Rank.TWO, Rank.FOUR), false),
-                Arguments.of(createHand(Rank.TWO, Rank.THREE, Rank.FOUR, Rank.FIVE), false),
+                Arguments.of(createHand(Rank.ACE, Rank.KING), true, "A, K"),
+                Arguments.of(createHand(Rank.ACE, Rank.QUEEN), true, "A, Q"),
+                Arguments.of(createHand(Rank.ACE, Rank.JACK), true, "A, J"),
+                Arguments.of(createHand(Rank.ACE, Rank.TWO, Rank.EIGHT), false, "A, 2, 8"),
+                Arguments.of(createHand(Rank.TWO, Rank.FOUR), false, "2, 4"),
+                Arguments.of(createHand(Rank.TWO, Rank.THREE, Rank.FOUR, Rank.FIVE), false, "2, 3, 4, 5"),
             )
 
         @JvmStatic
         private fun `Bust 인지 판별한다`(): List<Arguments> =
             listOf(
                 // blackjack
-                Arguments.of(createHand(Rank.ACE, Rank.KING), false),
+                Arguments.of(createHand(Rank.ACE, Rank.KING), false, "A, K"),
                 // 21
-                Arguments.of(createHand(Rank.ACE, Rank.TWO, Rank.EIGHT), false),
+                Arguments.of(createHand(Rank.ACE, Rank.TWO, Rank.EIGHT), false, "A, 2, 8"),
                 // 22
-                Arguments.of(createHand(Rank.TEN, Rank.JACK, Rank.TWO), true),
-                Arguments.of(createHand(Rank.SIX, Rank.SEVEN, Rank.NINE), true),
+                Arguments.of(createHand(Rank.TEN, Rank.JACK, Rank.TWO), true, "10, J, 2"),
+                Arguments.of(createHand(Rank.SIX, Rank.SEVEN, Rank.NINE), true, "6, 7, 9"),
             )
     }
 }

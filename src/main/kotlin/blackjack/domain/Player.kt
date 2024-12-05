@@ -48,6 +48,4 @@ class Player(
     private fun done(reasonDone: PlayerReasonDone) {
         this.reasonDone = reasonDone
     }
-
-    override fun toString(): String = "Player(name='$name', hand=$hand, reasonDone=$reasonDone)"
 }

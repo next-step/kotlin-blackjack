@@ -5,6 +5,8 @@ class Hand(
 ) {
     val cards = cards.toMutableList()
 
+    constructor(vararg cards: Card) : this(cards.toList())
+
     operator fun get(index: Int): Card = cards[index]
 
     fun value(): Int {
@@ -27,13 +29,9 @@ class Hand(
 
     private fun isAceEleven(handValue: Int) = hasAce() && handValue <= ACE_ELEVEN_THRESHOLD
 
-    override fun toString(): String = "Hand(cards=$cards)"
-
     companion object {
         private const val ACE_ELEVEN_THRESHOLD = 11
         private const val ACE_EXTRA_VALUE = 10
         private const val BLACKJACK_VALUE = 21
-
-        fun from(vararg cards: Card): Hand = Hand(cards.toList())
     }
 }
