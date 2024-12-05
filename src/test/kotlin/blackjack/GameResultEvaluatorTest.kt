@@ -1,11 +1,11 @@
 package blackjack
 
-import blackjack.domain.CardRank
 import blackjack.domain.Card
-import blackjack.domain.Suit
-import blackjack.domain.Deck
+import blackjack.domain.CardRank
 import blackjack.domain.Dealer
+import blackjack.domain.Deck
 import blackjack.domain.Players
+import blackjack.domain.Suit
 import blackjack.ui.DealerResult
 import blackjack.ui.FinalWinnerResults
 import blackjack.ui.RoundResult
@@ -18,7 +18,6 @@ import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 import java.util.stream.Stream
 
-
 class GameResultEvaluatorTest {
     @Test
     fun `라운드 카드와 점수를 알 수 있다`() {
@@ -26,17 +25,17 @@ class GameResultEvaluatorTest {
         val dealer = Dealer()
         players.deal(
             players.find("userA"),
-            Deck(listOf(Card(CardRank.TWO, Suit.HEART), Card(CardRank.TWO, Suit.SPADE)))
+            Deck(listOf(Card(CardRank.TWO, Suit.HEART), Card(CardRank.TWO, Suit.SPADE))),
         )
         players.deal(
             players.find("userB"),
-            Deck(listOf(Card(CardRank.ACE, Suit.HEART), Card(CardRank.ACE, Suit.SPADE)))
+            Deck(listOf(Card(CardRank.ACE, Suit.HEART), Card(CardRank.ACE, Suit.SPADE))),
         )
         dealer.receive(
-            Deck(listOf(Card(CardRank.TWO, Suit.HEART), Card(CardRank.THREE, Suit.SPADE)))
+            Deck(listOf(Card(CardRank.TWO, Suit.HEART), Card(CardRank.THREE, Suit.SPADE))),
         )
-
         val gameResultEvaluator = GameResultEvaluator(players, dealer)
+
         val actual = gameResultEvaluator.evaluateRounds()
 
         assertAll(
@@ -47,8 +46,8 @@ class GameResultEvaluatorTest {
                     RoundResult(
                         DEALER_NAME,
                         mapOf("TWO" to listOf("HEART"), "THREE" to listOf("SPADE")),
-                        5
-                    )
+                        5,
+                    ),
                 )
             },
         )
@@ -62,24 +61,24 @@ class GameResultEvaluatorTest {
         dealerCards: List<Card>,
         userAResult: UIMatchType,
         userBResult: UIMatchType,
-        dealerResult: DealerResult
+        dealerResult: DealerResult,
     ) {
         val players = Players.from(listOf("userA", "userB"))
         val dealer = Dealer()
         players.deal(
             players.find("userA"),
-            Deck(userACards)
+            Deck(userACards),
         )
         players.deal(
             players.find("userB"),
-            Deck(userBCards)
+            Deck(userBCards),
         )
         dealer.receive(
-            Deck(dealerCards)
+            Deck(dealerCards),
         )
-
         val gameResultEvaluator = GameResultEvaluator(players, dealer)
-        val actual: FinalWinnerResults = gameResultEvaluator.winMatchEvaluate()
+
+        val actual: FinalWinnerResults = gameResultEvaluator.finalMatchEvaluate()
 
         assertAll(
             { assertThat(actual.playerResults["userA"]).isEqualTo(userAResult) },

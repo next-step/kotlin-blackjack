@@ -5,8 +5,8 @@ import blackjack.domain.Dealer
 import blackjack.domain.Deck
 import blackjack.domain.DeckBuilder
 import blackjack.domain.Players
-import blackjack.ui.UserName
 import blackjack.ui.UserCards
+import blackjack.ui.UserName
 
 data class CardGame(private val deck: Deck, private val players: Players, val dealer: Dealer) {
     val dealerName: UserName
@@ -39,7 +39,7 @@ data class CardGame(private val deck: Deck, private val players: Players, val de
         return players.map { it.name }
     }
 
-    private fun groupCardsByRank(cards: List<Card>) : Map<String, List<String>> =
+    private fun groupCardsByRank(cards: List<Card>): Map<String, List<String>> =
         cards.groupBy { it.rank.name }
             .map { (rank, cards) ->
                 rank to cards.map { it.suit.name }

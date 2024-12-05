@@ -5,12 +5,8 @@ import blackjack.domain.CardRank
 import blackjack.domain.Deck
 import blackjack.domain.Suit
 import blackjack.domain.createDeck
-import blackjack.ui.DealerResult
-import blackjack.ui.FinalWinnerResults
-import blackjack.ui.UIMatchType
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.collections.shouldContainAll
-import io.kotest.matchers.maps.shouldContainAll
 import io.kotest.matchers.shouldBe
 
 class CardGameTest : BehaviorSpec({

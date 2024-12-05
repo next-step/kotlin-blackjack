@@ -1,9 +1,9 @@
 package blackjack
 
+import blackjack.domain.Card
 import blackjack.domain.Dealer
 import blackjack.domain.MatchType
 import blackjack.domain.Players
-import blackjack.domain.Card
 import blackjack.ui.DealerResult
 import blackjack.ui.FinalWinnerResults
 import blackjack.ui.RoundResult
@@ -29,22 +29,23 @@ class GameResultEvaluator(private val players: Players, private val dealer: Deal
             RoundResult.from(
                 DEALER_NAME,
                 groupCardsByRank(dealer.totalCards.cards),
-                dealer.score().value
-            )
+                dealer.score().value,
+            ),
         )
 
         return roundResults
     }
 
-    fun winMatchEvaluate(): FinalWinnerResults {
+    fun finalMatchEvaluate(): FinalWinnerResults {
         val (win, lose, draw) = dealer.dealerWinScore(players)
-        val playerResults = dealer.judge(players).mapValues { (_, matchType) ->
-            when (matchType) {
-                MatchType.WIN -> UIMatchType.WIN
-                MatchType.LOSE -> UIMatchType.LOSS
-                MatchType.DRAW -> UIMatchType.DRAW
+        val playerResults =
+            dealer.judge(players).mapValues { (_, matchType) ->
+                when (matchType) {
+                    MatchType.WIN -> UIMatchType.WIN
+                    MatchType.LOSE -> UIMatchType.LOSS
+                    MatchType.DRAW -> UIMatchType.DRAW
+                }
             }
-        }
 
         return FinalWinnerResults(DealerResult(wins = win, losses = lose, draws = draw), playerResults)
     }

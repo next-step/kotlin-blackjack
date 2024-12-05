@@ -22,7 +22,7 @@ fun main() {
     handleDealerTurn(game, resultView)
 
     resultView.printScoreResult(resultEvaluator.evaluateRounds())
-    resultView.printFinalWinner(resultEvaluator.winMatchEvaluate())
+    resultView.printFinalWinner(resultEvaluator.finalMatchEvaluate())
 }
 
 private fun handleUserTurn(

@@ -14,20 +14,32 @@ class ResultViewTest {
 
         resultView.printScoreResult(
             listOf(
-                RoundResult("유저A", mapOf(
-                    CardType.TWO.name to listOf(Suit.HEART.name),
-                    CardType.EIGHT.name to listOf(Suit.SPADE.name),
-                    CardType.ACE.name to listOf(Suit.SPADE.name),
-                ), 21),
-                RoundResult("유저B", mapOf(
-                    CardType.SEVEN.name to listOf(Suit.SPADE.name),
-                    CardType.KING.name to listOf(Suit.SPADE.name),
-                ), 17),
-                RoundResult("딜러", mapOf(
-                    CardType.THREE.name to listOf(Suit.DIAMOND.name),
-                    CardType.NINE.name to listOf(Suit.SPADE.name),
-                    CardType.EIGHT.name to listOf(Suit.DIAMOND.name),
-                ), 20),
+                RoundResult(
+                    "유저A",
+                    mapOf(
+                        CardType.TWO.name to listOf(Suit.HEART.name),
+                        CardType.EIGHT.name to listOf(Suit.SPADE.name),
+                        CardType.ACE.name to listOf(Suit.SPADE.name),
+                    ),
+                    21,
+                ),
+                RoundResult(
+                    "유저B",
+                    mapOf(
+                        CardType.SEVEN.name to listOf(Suit.SPADE.name),
+                        CardType.KING.name to listOf(Suit.SPADE.name),
+                    ),
+                    17,
+                ),
+                RoundResult(
+                    "딜러",
+                    mapOf(
+                        CardType.THREE.name to listOf(Suit.DIAMOND.name),
+                        CardType.NINE.name to listOf(Suit.SPADE.name),
+                        CardType.EIGHT.name to listOf(Suit.DIAMOND.name),
+                    ),
+                    20,
+                ),
             ),
         )
 
@@ -69,7 +81,7 @@ class ResultViewTest {
 
         resultView.printScoreResult(
             listOf(
-                RoundResult("userA", mapOf(CardType.TWO.name to listOf(Suit.HEART.name, Suit.SPADE.name)), 4)
+                RoundResult("userA", mapOf(CardType.TWO.name to listOf(Suit.HEART.name, Suit.SPADE.name)), 4),
             ),
         )
 
@@ -84,7 +96,7 @@ class ResultViewTest {
 
         resultView.printUserCards(
             listOf(
-                RoundResult("userA", mapOf(CardType.TWO.name to listOf(Suit.HEART.name, Suit.SPADE.name)) ,4),
+                RoundResult("userA", mapOf(CardType.TWO.name to listOf(Suit.HEART.name, Suit.SPADE.name)), 4),
             ),
         )
 
@@ -99,7 +111,7 @@ class ResultViewTest {
 
         resultView.printScoreResult(
             listOf(
-                RoundResult("userA", mapOf(CardType.TWO.name to listOf(Suit.HEART.name, Suit.SPADE.name)), 4)
+                RoundResult("userA", mapOf(CardType.TWO.name to listOf(Suit.HEART.name, Suit.SPADE.name)), 4),
             ),
         )
 
@@ -131,5 +143,4 @@ class ResultViewTest {
         val customOutputProvider: (String) -> Unit = { message -> messages.add(message) }
         return ResultView(customOutputProvider)
     }
-
 }

@@ -67,10 +67,13 @@ data class DealerResult(
     val draws: Int = 0,
 )
 
-
 data class RoundResult(val userName: UserName, val cards: Map<CardRank, List<CardSuit>>, val score: CardScore) {
     companion object {
-        fun from(userName: UserName, cards: Map<CardRank, List<CardSuit>>, score: CardScore): RoundResult {
+        fun from(
+            userName: UserName,
+            cards: Map<CardRank, List<CardSuit>>,
+            score: CardScore,
+        ): RoundResult {
             return RoundResult(userName, cards, score)
         }
     }
