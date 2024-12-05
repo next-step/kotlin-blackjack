@@ -59,5 +59,16 @@ class ParticipantTest : DescribeSpec({
                 player.isBusted() shouldBe true
             }
         }
+        context("블랙잭 상태를 확인할 때") {
+            val player = Player("Charlie")
+            val spadesKing = Card(Suit.SPADES, Rank.KING)
+            val diamondsAce = Card(Suit.DIAMONDS, Rank.ACE)
+            player.receiveCard(spadesKing)
+            player.receiveCard(diamondsAce)
+
+            it("블랙잭 상태를 반환해야 한다") {
+                player.isBlackjack() shouldBe true
+            }
+        }
     }
 })
