@@ -1,5 +1,10 @@
 package blackjack
 
+import blackjack.domain.Card
+import blackjack.domain.CardMark
+import blackjack.domain.CardNumber
+import blackjack.domain.Deck
+
 class FixedDeck : Deck {
     override fun draw(): Card? {
         return CACHED_CARDS.removeLastOrNull()

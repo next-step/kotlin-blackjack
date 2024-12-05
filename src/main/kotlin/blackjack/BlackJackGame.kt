@@ -1,5 +1,8 @@
 package blackjack
 
+import blackjack.domain.Deck
+import blackjack.domain.Player
+
 class BlackJackGame private constructor(
     val players: List<Player>,
     private val deck: Deck,

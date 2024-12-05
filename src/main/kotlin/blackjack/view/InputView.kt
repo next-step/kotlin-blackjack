@@ -1,4 +1,6 @@
-package blackjack
+package blackjack.view
+
+import blackjack.domain.Player
 
 object InputView {
     private const val SEPARATOR = ","

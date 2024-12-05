@@ -1,5 +1,6 @@
 package blackjack
 
+import blackjack.infrastructure.RandomDeck
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 

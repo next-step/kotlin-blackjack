@@ -1,4 +1,9 @@
-package blackjack
+package blackjack.infrastructure
+
+import blackjack.domain.Card
+import blackjack.domain.CardMark
+import blackjack.domain.CardNumber
+import blackjack.domain.Deck
 
 class RandomDeck : Deck {
     override fun draw(): Card? {

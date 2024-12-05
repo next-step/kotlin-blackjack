@@ -1,4 +1,7 @@
-package blackjack
+package blackjack.view
+
+import blackjack.domain.CardMark
+import blackjack.domain.Player
 
 object OutputView {
     private const val SPADE_STR = "스페이드"
