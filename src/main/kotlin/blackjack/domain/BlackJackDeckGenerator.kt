@@ -9,7 +9,7 @@ object BlackJackDeckGenerator {
     private fun getBlackCardsPerShape() =
         { shape: BlackJackCardShape ->
             BlackJackCardNumber.entries.map { number ->
-                BlackJackCard(
+                BlackJackCard.get(
                     shape,
                     number,
                 )

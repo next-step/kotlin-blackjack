@@ -1,7 +1,7 @@
 package blackjack.view
 
-import blackjack.domain.BlackJackGame
-import blackjack.domain.BlackJackPlayer
+import blackjack.domain.BlackJackDealer
+import blackjack.domain.BlackJackNormalPlayer
 
 object BlackJackInputView {
     fun getPlayerName(): List<String> {
@@ -9,21 +9,29 @@ object BlackJackInputView {
         return readln().split(",")
     }
 
-    fun drawBlackJackPlayersCards(blackJackGame: BlackJackGame) {
-        blackJackGame.players.forEach {
-            drawBlackJackPlayerCards(it)
+    fun drawBlackJackPlayersCards(
+        blackJackNormalPlayers: List<BlackJackNormalPlayer>,
+        blackJackDealer: BlackJackDealer,
+    ) {
+        blackJackNormalPlayers.forEach {
+            drawBlackJackNormalPlayerCards(it)
         }
-        drawBlackJackPlayerCards(blackJackGame.dealer)
+        drawBlackJackDealerCards(blackJackDealer)
     }
 
-    fun getPlayerDrawCardYn(blackJackPlayer: BlackJackPlayer): Boolean {
-        println("${blackJackPlayer.name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
+    fun getPlayerDrawCardYn(blackJackNormalPlayer: BlackJackNormalPlayer): Boolean {
+        println("${blackJackNormalPlayer.name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
         val yn = readln()
         return yn == "y"
     }
 
-    fun drawBlackJackPlayerCards(blackJackPlayer: BlackJackPlayer) {
-        print("${blackJackPlayer.name}카드: ")
-        println(blackJackPlayer.blackJackPlayerCards.cards.map { "${it.number.name} ${it.shape.name}" }.joinToString(","))
+    fun drawBlackJackNormalPlayerCards(blackJackNormalPlayer: BlackJackNormalPlayer) {
+        print("${blackJackNormalPlayer.name}카드: ")
+        println(blackJackNormalPlayer.blackJackPlayerCards.cards.map { "${it.number.name} ${it.shape.name}" }.joinToString(","))
+    }
+
+    fun drawBlackJackDealerCards(blackJackDealer: BlackJackDealer) {
+        print("딜러 카드: ")
+        println(blackJackDealer.blackJackPlayerCards.cards.map { "${it.number.name} ${it.shape.name}" }.joinToString(","))
     }
 }

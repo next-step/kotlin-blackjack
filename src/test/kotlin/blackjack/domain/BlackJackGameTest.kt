@@ -9,12 +9,12 @@ class BlackJackGameTest {
         val blackJackDeck =
             BlackJackDeck(
                 mutableListOf(
-                    BlackJackCard(BlackJackCardShape.HEART, BlackJackCardNumber.ACE),
-                    BlackJackCard(BlackJackCardShape.HEART, BlackJackCardNumber.JACK),
-                    BlackJackCard(BlackJackCardShape.HEART, BlackJackCardNumber.QUEEN),
-                    BlackJackCard(BlackJackCardShape.HEART, BlackJackCardNumber.KING),
-                    BlackJackCard(BlackJackCardShape.SPADE, BlackJackCardNumber.KING),
-                    BlackJackCard(BlackJackCardShape.SPADE, BlackJackCardNumber.QUEEN),
+                    BlackJackCard.get(BlackJackCardShape.HEART, BlackJackCardNumber.ACE),
+                    BlackJackCard.get(BlackJackCardShape.HEART, BlackJackCardNumber.JACK),
+                    BlackJackCard.get(BlackJackCardShape.HEART, BlackJackCardNumber.QUEEN),
+                    BlackJackCard.get(BlackJackCardShape.HEART, BlackJackCardNumber.KING),
+                    BlackJackCard.get(BlackJackCardShape.SPADE, BlackJackCardNumber.KING),
+                    BlackJackCard.get(BlackJackCardShape.SPADE, BlackJackCardNumber.QUEEN),
                 ),
             )
         val blackJackDealer =
@@ -22,18 +22,18 @@ class BlackJackGameTest {
                 blackJackPlayerCards = BlackJackPlayerCards.byDeck(blackJackDeck),
             )
 
-        val blackJackPlayer1 =
-            BlackJackPlayer(
+        val blackJackNormalPlayer1 =
+            BlackJackNormalPlayer(
                 "사람1",
                 BlackJackPlayerCards.byDeck(blackJackDeck),
             )
-        val blackJackPlayer2 =
-            BlackJackPlayer(
+        val blackJackNormalPlayer2 =
+            BlackJackNormalPlayer(
                 "사람2",
                 BlackJackPlayerCards.byDeck(blackJackDeck),
             )
         val blackJackGame =
-            BlackJackGame(listOf(blackJackPlayer1, blackJackPlayer2), blackJackDealer)
+            BlackJackGame(listOf(blackJackNormalPlayer1, blackJackNormalPlayer2), blackJackDealer)
         val gameResult = blackJackGame.getGameResult()
         assertThat(gameResult.playerResults.first { it.name == "사람1" }.result).isEqualTo(BlackJackPlayResult.DRAW)
         assertThat(gameResult.playerResults.first { it.name == "사람2" }.result).isEqualTo(BlackJackPlayResult.WIN)

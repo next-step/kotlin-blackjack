@@ -4,18 +4,24 @@ import blackjack.domain.BlackJackDealer
 import blackjack.domain.BlackJackDeck
 import blackjack.domain.BlackJackDeckGenerator
 import blackjack.domain.BlackJackGame
-import blackjack.domain.BlackJackPlayer
+import blackjack.domain.BlackJackNormalPlayer
 import blackjack.domain.BlackJackPlayerCards
-import blackjack.view.BlackJackResultView
 import blackjack.view.BlackJackInputView
+import blackjack.view.BlackJackResultView
 
 fun main() {
     val blackJackDeck = BlackJackDeckGenerator.getDefaultDeck()
     val playerNames = BlackJackInputView.getPlayerName()
     val blackJackGame = getGame(playerNames, blackJackDeck)
-    BlackJackInputView.drawBlackJackPlayersCards(blackJackGame)
+    BlackJackInputView.drawBlackJackPlayersCards(blackJackGame.players, blackJackGame.dealer)
     doGame(blackJackGame, blackJackDeck)
-    BlackJackResultView.drawBlackJackResult(blackJackGame)
+    drawResult(blackJackGame)
+}
+
+private fun drawResult(blackJackGame: BlackJackGame) {
+    BlackJackResultView.drawBlackJackPlayersCardsWithResult(blackJackGame.players)
+    BlackJackResultView.drawBlackJackDealerWithResult(blackJackGame.dealer)
+    BlackJackResultView.drawGameResult(blackJackGame.getGameResult())
 }
 
 private fun doGame(
@@ -23,13 +29,11 @@ private fun doGame(
     blackJackDeck: BlackJackDeck,
 ) {
     blackJackGame.players.forEach {
-        while (it.isDrawPossible() && BlackJackInputView.getPlayerDrawCardYn(it)) {
-            it.drawCard(blackJackDeck.draw())
-            BlackJackInputView.drawBlackJackPlayerCards(it)
+        while (BlackJackInputView.getPlayerDrawCardYn(it) && it.drawCard(blackJackDeck)) {
+            BlackJackInputView.drawBlackJackNormalPlayerCards(it)
         }
     }
-    while (blackJackGame.dealer.isDrawPossible()) {
-        blackJackGame.dealer.drawCard(blackJackDeck.draw())
+    if (blackJackGame.dealer.drawCard(blackJackDeck)) {
         println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
     }
 }
@@ -38,14 +42,12 @@ private fun getGame(
     playerNames: List<String>,
     blackJackDeck: BlackJackDeck,
 ): BlackJackGame {
-    val blackJackGame =
-        BlackJackGame(
-            playerNames.map {
-                BlackJackPlayer(it, BlackJackPlayerCards.byDeck(blackJackDeck))
-            },
-            BlackJackDealer(
-                blackJackPlayerCards = BlackJackPlayerCards.byDeck(blackJackDeck),
-            ),
-        )
-    return blackJackGame
+    return BlackJackGame(
+        playerNames.map {
+            BlackJackNormalPlayer(it, BlackJackPlayerCards.byDeck(blackJackDeck))
+        },
+        BlackJackDealer(
+            blackJackPlayerCards = BlackJackPlayerCards.byDeck(blackJackDeck),
+        ),
+    )
 }

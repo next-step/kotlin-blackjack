@@ -1,11 +1,19 @@
 package blackjack.domain
 
 class BlackJackDealer(
-    name: String = "딜러",
-    blackJackPlayerCards: BlackJackPlayerCards,
-) : BlackJackPlayer(name, blackJackPlayerCards) {
-    override fun isDrawPossible(): Boolean {
-        return blackJackPlayerCards.getCardsBestSum() in 1..DEALER_DRAW_THRESHOLD
+    val blackJackPlayerCards: BlackJackPlayerCards,
+) : BlackJackPlayer {
+    override fun drawCard(blackJackDeck: BlackJackDeck): Boolean {
+        var drawFlag = false
+        while (blackJackPlayerCards.getCardsBestSum() in 1..DEALER_DRAW_THRESHOLD) {
+            blackJackPlayerCards.addCard(blackJackDeck.draw())
+            drawFlag = true
+        }
+        return drawFlag
+    }
+
+    override fun getBestSum(): Int {
+        return blackJackPlayerCards.getCardsBestSum()
     }
 
     companion object {

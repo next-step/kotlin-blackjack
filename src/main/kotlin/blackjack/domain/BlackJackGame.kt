@@ -1,7 +1,7 @@
 package blackjack.domain
 
 class BlackJackGame(
-    val players: List<BlackJackPlayer>,
+    val players: List<BlackJackNormalPlayer>,
     val dealer: BlackJackDealer,
 ) {
     fun getGameResult(): BlackJackGameResult {
@@ -15,5 +15,9 @@ class BlackJackGame(
         val winCount = playerResults.filter { it.result == BlackJackPlayResult.WIN }.size
         val loseCount = playerResults.filter { it.result == BlackJackPlayResult.LOSE }.size
         return BlackJackGameResult(playerResults, BlackJackDealerResult(winCount, loseCount))
+    }
+
+    fun getPlayersBestSum(): List<Int> {
+        return players.map { it.getBestSum() }
     }
 }
