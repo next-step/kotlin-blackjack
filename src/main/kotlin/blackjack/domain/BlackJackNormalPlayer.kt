@@ -9,11 +9,15 @@ open class BlackJackNormalPlayer(
     }
 
     override fun drawCard(blackJackDeck: BlackJackDeck): Boolean {
-        if (blackJackPlayerCards.isCardNumberSumUnderBlackJackWinCardSum()) {
+        if (drawPossible()) {
             blackJackPlayerCards.addCard(blackJackDeck.draw())
             return true
         }
         return false
+    }
+
+    fun drawPossible(): Boolean {
+        return blackJackPlayerCards.isCardNumberSumUnderBlackJackWinCardSum()
     }
 
     override fun getBestSum(): Int {

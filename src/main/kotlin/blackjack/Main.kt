@@ -29,7 +29,8 @@ private fun doGame(
     blackJackDeck: BlackJackDeck,
 ) {
     blackJackGame.players.forEach {
-        while (BlackJackInputView.getPlayerDrawCardYn(it) && it.drawCard(blackJackDeck)) {
+        while (it.drawPossible() && BlackJackInputView.getPlayerDrawCardYn(it)) {
+            it.drawCard(blackJackDeck)
             BlackJackInputView.drawBlackJackNormalPlayerCards(it)
         }
     }
