@@ -5,6 +5,7 @@ import blackjack.entity.Deck
 import blackjack.entity.GameResult
 import blackjack.entity.Participants
 import blackjack.entity.Player
+import blackjack.entity.PlayerAction
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
@@ -36,18 +37,26 @@ class BlackJackGame {
 
     fun playTurns(participants: Participants) {
         participants.players.forEach { player ->
-            var wantsToHit = true
-            while (wantsToHit) {
-                if (player.isBusted()) {
-                    outputView.printPlayerBusted(player)
-                    break
-                }
+            var wantsToHit: Boolean
+            do {
                 wantsToHit = inputView.askForHitOrStand(player.name)
-                if (wantsToHit) {
-                    player.receiveCard(deck.deal())
-                    outputView.printPlayerHand(player)
+                val action = player.playTurn(deck, wantsToHit)
+                when (action) {
+                    PlayerAction.HIT -> outputView.printPlayerHand(player)
+                    PlayerAction.BURST -> {
+                        outputView.printPlayerBusted(player)
+                        break
+                    }
+
+                    PlayerAction.BLACKJACK -> {
+                        outputView.printPlayerBlackjack(player)
+                        break
+                    }
+
+                    PlayerAction.STAND -> break
+                    PlayerAction.DRAW -> continue
                 }
-            }
+            } while (action == PlayerAction.HIT)
         }
     }
 
