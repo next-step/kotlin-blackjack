@@ -2,34 +2,34 @@ package blackjack
 
 class Player(
     val name: String,
-    private val cards: PlayerCards = PlayerCards(),
+    private val hand: PlayerCards = PlayerCards(),
 ) {
     init {
         validateName(name)
     }
 
     fun addCard(card: Card?): Boolean {
-        return cards.addCard(card)
+        return hand.addCard(card)
     }
 
     fun addCards(newCards: List<Card>): Boolean {
-        return cards.addCards(newCards)
+        return hand.addCards(newCards)
     }
 
     fun getCards(): List<Card> {
-        return cards.cards
+        return hand.cards
     }
 
     fun getCardsMaxSum(): Int {
-        return cards.calculateCardsMaxSum()
+        return hand.calculateCardsMaxSum()
     }
 
     fun couldDraw(): Boolean {
-        return cards.calculateCardsMaxSum() < PlayerCards.GAME_LIMIT_NUMBER
+        return hand.calculateCardsMaxSum() < PlayerCards.GAME_LIMIT_NUMBER
     }
 
     fun isBust(): Boolean {
-        return cards.calculateCardsMaxSum() == PlayerCards.ZERO
+        return hand.calculateCardsMaxSum() == PlayerCards.ZERO
     }
 
     private fun validateName(name: String) {
