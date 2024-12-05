@@ -5,6 +5,7 @@ import blackjack.domain.Deck
 import blackjack.domain.Game
 import blackjack.domain.Player
 import blackjack.ui.InputView
+import blackjack.ui.PlayerCommand
 import blackjack.ui.ResultView
 
 class BlackjackController(
@@ -29,22 +30,27 @@ class BlackjackController(
         while (!game.isDone) {
             val player = game.currentPlayer
             val command = InputView.getCommand(player)
-            handle(command, game, player)
+            handle(command, game)
+            ifHitDisplayPlayer(command, player)
         }
     }
 
     private fun handle(
-        command: String,
+        command: PlayerCommand,
         game: Game,
+    ) {
+        if (command.isHit) {
+            game.playerHits()
+        }
+        game.playerStands()
+    }
+
+    private fun ifHitDisplayPlayer(
+        command: PlayerCommand,
         player: Player,
     ) {
-        when (command.lowercase()) {
-            "y" -> {
-                game.playerHits()
-                ResultView.displayPlayer(player)
-            }
-            "n" -> game.playerStands()
-            else -> throw IllegalArgumentException("예는 y, 아니오는 n으로 입력해주세요.")
+        if (command.isHit) {
+            ResultView.displayPlayer(player)
         }
     }
 }

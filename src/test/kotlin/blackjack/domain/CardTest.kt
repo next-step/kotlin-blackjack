@@ -35,7 +35,7 @@ class CardTest {
         value = Rank::class,
         names = ["JACK", "QUEEN", "KING"],
     )
-    fun `페이스 카드등의 값은 10이다`(rank: Rank) {
+    fun `페이스 카드의 값은 10이다`(rank: Rank) {
         val card = Card.of(DUMMY_SUIT, rank)
         card.rankValue shouldBe 10
     }
