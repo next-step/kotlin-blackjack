@@ -17,7 +17,7 @@ class Player(
     }
 
     fun getCards(): List<Card> {
-        return cards.getCards()
+        return cards.cards
     }
 
     fun getCardsMaxSum(): Int {

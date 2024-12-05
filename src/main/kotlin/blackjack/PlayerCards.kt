@@ -1,18 +1,15 @@
 package blackjack
 
 class PlayerCards() {
-    private val cards: MutableList<Card> = mutableListOf()
+    private val _cards: MutableList<Card> = mutableListOf()
+    val cards: List<Card> get() = _cards.toList()
 
     fun addCard(card: Card?): Boolean {
         return if (card != null) {
-            this.cards.add(card)
+            this._cards.add(card)
         } else {
             false
         }
-    }
-
-    fun getCards(): List<Card> {
-        return cards.toList()
     }
 
     fun calculateCardsMaxSum(): Int {
