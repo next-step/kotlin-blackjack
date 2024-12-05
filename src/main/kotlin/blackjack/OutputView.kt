@@ -15,7 +15,7 @@ object OutputView {
         println(
             "${player.name}카드: ${
                 player.getCards().joinToString { it.number.symbol + convertMarkToString(it.mark) }
-            }"
+            } - 결과: ${player.getCardsMaxSum()}",
         )
     }
 
@@ -23,10 +23,15 @@ object OutputView {
         players.forEach { "${printPlayerCards(it)} - 결과: ${it.getCardsMaxSum()}" }
     }
 
-    private fun convertMarkToString(mark: CardMark) = when (mark) {
-        CardMark.SPADE -> SPADE_STR
-        CardMark.HEART -> HEART_STR
-        CardMark.DIAMOND -> DIAMOND_STR
-        CardMark.CLOVER -> CLOVER_STR
+    private fun convertMarkToString(mark: CardMark) =
+        when (mark) {
+            CardMark.SPADE -> SPADE_STR
+            CardMark.HEART -> HEART_STR
+            CardMark.DIAMOND -> DIAMOND_STR
+            CardMark.CLOVER -> CLOVER_STR
+        }
+
+    fun printBustMessage(player: Player) {
+        println("${player.name} 유저가 bust 되었습니다.")
     }
 }

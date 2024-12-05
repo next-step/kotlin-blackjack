@@ -14,12 +14,16 @@ class PlayerTest : StringSpec({
 
     "유저의 패가 21이 넘어갈 경우 패를 추가할 수 없다." {
         val player = Player("user1")
+        val listOfCards =
+            listOf(
+                createAceCard(),
+                createBasicCard(CardNumber.TEN, CardMark.HEART),
+                createBasicCard(CardNumber.TEN, CardMark.HEART),
+            )
 
-        player.addCard(createAceCard())
-        player.addCard(createBasicCard(CardNumber.TEN, CardMark.HEART))
-        player.addCard(createBasicCard(CardNumber.TEN, CardMark.HEART))
+        player.addCards(listOfCards)
 
-        player.addCard(createBasicCard(CardNumber.TWO, CardMark.HEART)) shouldBe false
+        player.couldDraw() shouldBe false
     }
 
     "유저는 한장의 카드를 패에 추가할 수 있다." {
@@ -28,5 +32,19 @@ class PlayerTest : StringSpec({
         player.addCard(createAceCard())
 
         player.getCards() shouldBe listOf(createAceCard())
+    }
+
+    "유저의 패가 21을 넘게 되면 버스트가 된다." {
+        val player = Player("user1")
+        val listOfCards =
+            listOf(
+                createBasicCard(CardNumber.TEN, CardMark.HEART),
+                createBasicCard(CardNumber.TEN, CardMark.HEART),
+                createBasicCard(CardNumber.TEN, CardMark.HEART),
+            )
+
+        player.addCards(listOfCards)
+
+        player.isBust() shouldBe true
     }
 })

@@ -2,16 +2,16 @@ package blackjack
 
 object InputView {
     private const val SEPARATOR = ","
-    private const val YES = "y"
+    private const val DRAW = "y"
 
     fun getPlayers(): List<Player> {
         val userNames = getUserNames()
         return userNames.map { Player(it) }
     }
 
-    fun isDrawingCard(player: Player): Boolean {
-        println("${player}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
-        return readln() == YES
+    fun drawOrStay(player: Player): Boolean {
+        println("${player.name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
+        return readln() == DRAW
     }
 
     private fun getUserNames(): List<String> {

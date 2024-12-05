@@ -12,10 +12,14 @@ class PlayerCards {
         }
     }
 
+    fun addCards(cards: List<Card>): Boolean {
+        return this._cards.addAll(cards)
+    }
+
     fun calculateCardsMaxSum(): Int {
         val allCasesOfSum = getAllCasesOfSum()
         return allCasesOfSum.filter { it <= GAME_LIMIT_NUMBER }
-            .max()
+            .maxOrNull() ?: ZERO
     }
 
     private fun getAllCasesOfSum(): List<Int> {
@@ -31,5 +35,6 @@ class PlayerCards {
 
     companion object {
         const val GAME_LIMIT_NUMBER = 21
+        const val ZERO = 0
     }
 }

@@ -8,9 +8,15 @@ fun main() {
     OutputView.printDefaultPlayerCards(blackJackGame.players)
 
     blackJackGame.players.forEach { player ->
-        while (InputView.isDrawingCard(player) && blackJackGame.drawSingleCardToPlayer(player)
+        while (
+            (player.couldDraw() && InputView.drawOrStay(player)) &&
+            blackJackGame.drawSingleCardToPlayer(player)
         ) {
             OutputView.printPlayerCards(player)
+            if (player.isBust()) {
+                OutputView.printBustMessage(player)
+                break
+            }
         }
     }
 

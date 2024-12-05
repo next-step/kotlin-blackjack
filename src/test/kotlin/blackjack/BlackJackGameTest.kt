@@ -22,7 +22,7 @@ class BlackJackGameTest : StringSpec({
         val game = BlackJackGame.createGame(createPlayers(2), Deck())
         val player = game.players[0]
 
-        val result = game.drawSingleCardToPlayer( game.players[0])
+        val result = game.drawSingleCardToPlayer(game.players[0])
 
         result shouldBe true
         player.getCards().size shouldBe 3
