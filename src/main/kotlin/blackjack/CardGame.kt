@@ -20,9 +20,17 @@ data class CardGame(private val deck: Deck, private val players: Players, val de
         players.dealInitialCards(deck, INITIAL_CARD_COUNT)
     }
 
-    fun handleUserTurn(action: (Player) -> Boolean) {
+    fun handleUserTurn(
+        action: (
+            Player,
+            UserCards,
+        ) -> Boolean,
+    ) {
         players.forEach { currentUser ->
-            processPlayerTurn(action, currentUser)
+            while (action(currentUser, playerCards(currentUser.name))) {
+                dealCardToPlayer(currentUser.name)
+                if (isPlayerBust(currentUser.name)) break
+            }
         }
     }
 
@@ -44,11 +52,10 @@ data class CardGame(private val deck: Deck, private val players: Players, val de
     fun resultEvaluator(): GameResultEvaluator {
         return GameResultEvaluator(players, dealer)
     }
-    
+
     fun allPlayersNames(): List<UserName> {
         return players.map { it.name }
     }
-
 
     private fun dealCardToDealer() {
         dealer.receive(Deck(listOf(deck.pop())))
@@ -56,16 +63,6 @@ data class CardGame(private val deck: Deck, private val players: Players, val de
 
     private fun isPlayerBust(name: String): Boolean {
         return players.isBust(name)
-    }
-
-    private fun processPlayerTurn(
-        action: (Player) -> Boolean,
-        currentUser: Player,
-    ) {
-        while (action(currentUser)) {
-            dealCardToPlayer(currentUser.name)
-            if (isPlayerBust(currentUser.name)) break
-        }
     }
 
     private fun groupCardsByRank(cards: List<Card>): Map<String, List<String>> =

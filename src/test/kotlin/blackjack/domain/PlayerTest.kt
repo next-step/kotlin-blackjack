@@ -19,9 +19,10 @@ class PlayerTest : BehaviorSpec({
 
     Given("`Card`를 받을 수 있다") {
         val player = Player.from("철수")
-        val cards = createDeck {
-            CardRank.ACE to Suit.SPADE
-        }
+        val cards =
+            createDeck {
+                CardRank.ACE to Suit.SPADE
+            }
 
         When("카드를 받을 때") {
             player.receive(cards)
@@ -34,11 +35,12 @@ class PlayerTest : BehaviorSpec({
 
     Given("`Bust` 상태를 알 수 있다") {
         val player = Player.from("철수")
-        val cards = createDeck {
-            CardRank.ACE to Suit.SPADE
-            CardRank.ACE to Suit.SPADE
-            CardRank.KING to Suit.SPADE
-        }
+        val cards =
+            createDeck {
+                CardRank.ACE to Suit.SPADE
+                CardRank.ACE to Suit.SPADE
+                CardRank.KING to Suit.SPADE
+            }
 
         When(
             "카드가 ${
@@ -56,14 +58,16 @@ class PlayerTest : BehaviorSpec({
     Given("플레이어는 통계를 계산한다") {
         val player = Player.from("철수")
         val other = Player.from("영희")
-        val cards = createDeck {
-            CardRank.ACE to Suit.SPADE
-            CardRank.KING to Suit.SPADE
-        }
-        val otherCards = createDeck {
-            CardRank.ACE to Suit.SPADE
-            CardRank.TWO to Suit.SPADE
-        }
+        val cards =
+            createDeck {
+                CardRank.ACE to Suit.SPADE
+                CardRank.KING to Suit.SPADE
+            }
+        val otherCards =
+            createDeck {
+                CardRank.ACE to Suit.SPADE
+                CardRank.TWO to Suit.SPADE
+            }
 
         player.receive(cards)
         other.receive(otherCards)
