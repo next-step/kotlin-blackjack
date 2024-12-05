@@ -5,7 +5,11 @@ class BlackJackGame private constructor(
     private val deck: Deck,
 ) {
     fun drawSingleCardToPlayer(player: Player): Boolean {
-        return player.addCard(deck.getSingleCard())
+        return player.addCard(deck.draw())
+    }
+
+    fun hasBlackJackPlayer(): Boolean {
+        return players.any { it.isBlackJack() }
     }
 
     companion object {
@@ -22,7 +26,7 @@ class BlackJackGame private constructor(
             players: List<Player>,
             deck: Deck,
         ): List<Player> {
-            players.forEach { player -> repeat(DEFAULT_CARD_COUNT) { player.addCard(deck.getSingleCard()) } }
+            players.forEach { player -> repeat(DEFAULT_CARD_COUNT) { player.addCard(deck.draw()) } }
             return players
         }
     }

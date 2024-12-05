@@ -32,6 +32,10 @@ class Player(
         return hand.calculateCardsMaxSum() == PlayerCards.ZERO
     }
 
+    fun isBlackJack(): Boolean {
+        return hand.calculateCardsMaxSum() == PlayerCards.GAME_LIMIT_NUMBER
+    }
+
     private fun validateName(name: String) {
         require(name.isNotBlank()) { "유저의 이름은 공백일 수 없습니다." }
     }
