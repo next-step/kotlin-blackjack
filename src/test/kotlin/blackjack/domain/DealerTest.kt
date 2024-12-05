@@ -11,7 +11,7 @@ class DealerTest {
 
         dealer.additionalCard(Card(CardRank.TWO, Suit.DIAMOND))
 
-        assertThat(dealer.score()).isEqualTo(18)
+        assertThat(dealer.score()).isEqualTo(Score(18))
     }
 
     @Test
@@ -21,6 +21,6 @@ class DealerTest {
 
         dealer.additionalCard(Card(CardRank.TWO, Suit.DIAMOND))
 
-        assertThat(dealer.score()).isEqualTo(17)
+        assertThat(dealer.score()).isEqualTo(Score(17))
     }
 }

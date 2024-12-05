@@ -22,16 +22,6 @@ open class Player(val playerName: EntrantName, private val hand: Hand = Hand()) 
         return playerName.value == other
     }
 
-    fun isWin(dealer: Dealer): MatchType {
-        return when {
-            isBust -> MatchType.LOSS
-            dealer.isBust -> MatchType.WIN
-            score() > dealer.score() -> MatchType.WIN
-            score() < dealer.score() -> MatchType.LOSS
-            else -> MatchType.DRAW
-        }
-    }
-
     companion object {
         fun from(name: String): Player {
             return Player(playerName = EntrantName(name))
