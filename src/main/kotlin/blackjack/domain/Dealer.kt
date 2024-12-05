@@ -27,11 +27,11 @@ class Dealer : Player(DEALER_NAME, Hand()) {
         return resultStatistics
     }
 
-    private fun matchOf(player: Player): MatchType {
+    private fun matchOf(other: Player): MatchType {
         return when {
             isBust -> MatchType.WIN
-            player.isBust -> MatchType.LOSE
-            else -> MatchType.evaluate(player.bustGap, bustGap)
+            other.isBust -> MatchType.LOSE
+            else -> MatchType.evaluate(other.bustGap, bustGap)
         }
     }
 
