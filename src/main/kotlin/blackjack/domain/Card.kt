@@ -4,10 +4,9 @@ class Card private constructor(
     val suit: Suit,
     val rank: Rank,
 ) {
+    val face: Face = Face.UP
     val rankValue: Int
         get() = rank.value
-
-    override fun toString(): String = "Card(suit=$suit, rank=$rank)"
 
     companion object {
         val ALL_CARDS =

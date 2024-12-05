@@ -46,6 +46,12 @@ class CardTest {
         card.rankValue shouldBe 1
     }
 
+    @Test
+    fun `카드는 디폴트로 앞면이 보인다`() {
+        val card = Card.of(DUMMY_SUIT, Rank.ACE)
+        card.face shouldBe Face.UP
+    }
+
     companion object {
         private val DUMMY_SUIT = Suit.HEARTS
     }
