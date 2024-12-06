@@ -1,6 +1,7 @@
 package blackjack.ui
 
 import blackjack.domain.Card
+import blackjack.domain.Dealer
 import blackjack.domain.Game
 import blackjack.domain.Hand
 import blackjack.domain.Player
@@ -20,8 +21,9 @@ object ResultView {
             buildString {
                 appendLine()
                 if (isInitial) {
-                    appendLine("${names.joinToString()}에게 2장의 나누었습니다.")
+                    appendLine("딜러와 ${names.joinToString()}에게 2장의 나누었습니다.")
                 }
+                appendLine(formatDealer(game.dealer, isInitial))
                 roster.forEach { appendLine(formatPlayer(it, isInitial)) }
             }
         println(message)
@@ -40,6 +42,17 @@ object ResultView {
             return result
         }
         return result + " - 결과: ${if (player.isBusted) BUSTED else player.value}"
+    }
+
+    private fun formatDealer(
+        dealer: Dealer,
+        isInitial: Boolean,
+    ): String {
+        val result = "딜러: ${formatHand(dealer.hand)}"
+        if (isInitial) {
+            return result
+        }
+        return result + " - 결과: ${if (dealer.isBusted) BUSTED else dealer.value}"
     }
 
     private fun formatHand(hand: Hand): String = hand.cards.filter { it.isFaceUp }.joinToString { formatCard(it) }
