@@ -1,6 +1,7 @@
 package blackjack.domain
 
 import io.kotest.assertions.throwables.shouldThrow
+import io.kotest.assertions.throwables.shouldThrowWithMessage
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 
@@ -195,5 +196,24 @@ class BlackJackGameTest : StringSpec({
             ),
             totalValue = 19
         )
+    }
+
+    "아직 모든 플레이어의 턴이 종료되지 않았다면 결과를 반환할 수 없다." {
+        val sut = BlackJackGame(
+            listOf(
+                Player(
+                    name = PlayerName("테스트1"),
+                    draw = true,
+                ),
+                Player(
+                    name = PlayerName("테스트2"),
+                    draw = false,
+                ),
+            )
+        )
+
+        shouldThrowWithMessage<IllegalStateException>("모든 플레이어의 턴이 종료되지 않았습니다.") {
+            sut.result()
+        }
     }
 })

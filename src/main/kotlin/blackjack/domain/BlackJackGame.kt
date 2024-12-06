@@ -41,20 +41,31 @@ class BlackJackGame(
         )
     }
 
-    fun stopDraw(playerName: PlayerName) {
-        players.find { it.name == playerName }
+    fun stopDraw(playerName: PlayerName): DrawResult {
+        val player = players.find { it.name == playerName }
+        player
             ?.stopDraw()
             ?: throw IllegalArgumentException("존재하지 않는 플레이어입니다.")
+
+        return DrawResult(
+            playerName = playerName.value,
+            cards = player.currentCards,
+        )
     }
 
-    fun result(): List<BlackJackGameResult> =
-        players.map {
+    fun result(): List<BlackJackGameResult> {
+        check(isAllPlayerStopDraw()) { "모든 플레이어의 턴이 종료되지 않았습니다."}
+
+        return players.map {
             BlackJackGameResult(
                 playerName = it.name.value,
                 cards = it.currentCards,
                 totalValue = it.totalValue(),
             )
         }
+    }
+
+    private fun isAllPlayerStopDraw(): Boolean = players.all { !it.canDraw() }
 }
 
 data class DrawResult(
