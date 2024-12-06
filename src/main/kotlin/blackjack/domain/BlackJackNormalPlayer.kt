@@ -27,4 +27,8 @@ open class BlackJackNormalPlayer(
     fun win() {
         profit += bet
     }
+
+    fun lose() {
+        profit -= bet
+    }
 }
