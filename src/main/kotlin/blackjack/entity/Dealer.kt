@@ -19,11 +19,9 @@ class Dealer : Participant("딜러") {
     }
 
     fun calculateResult(playerResults: List<GameResult>): GameResult {
-        val wins = playerResults.sumOf { it.loses }
-        val loses = playerResults.sumOf { it.wins }
-        val draws = playerResults.sumOf { it.draws }
+        val playerEarned = playerResults.sumOf { it.earning }
 
-        return GameResult(this, wins, loses, draws)
+        return GameResult(this, -playerEarned)
     }
 
     companion object {

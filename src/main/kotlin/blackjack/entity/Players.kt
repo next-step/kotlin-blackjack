@@ -9,7 +9,7 @@ class Players(
         }
     }
 
-    fun calculateResult(dealerScore: Int): List<GameResult> = players.map { it.calculateResult(dealerScore) }
+    fun calculateResult(dealer: Dealer): List<GameResult> = players.map { it.calculateResult(dealer) }
 
     override fun iterator(): Iterator<Player> = players.iterator()
 }

@@ -2,7 +2,7 @@ package blackjack.entity
 
 class Player(
     name: String,
-    bettingAmount: BettingAmount,
+    val bettingAmount: BettingAmount,
 ) : Participant(name) {
     fun playTurn(
         deck: Deck,
@@ -18,42 +18,25 @@ class Player(
             }
         }
 
-    fun calculateResult(dealerScore: Int): GameResult {
+    fun calculateResult(dealer: Dealer): GameResult {
         val playerScore = calculateScore()
 
-        return calculateGameResult(playerScore, dealerScore)
+        return calculateGameResult(playerScore, dealer)
     }
 
     private fun calculateGameResult(
         playerScore: Int,
-        dealerScore: Int,
+        dealer: Dealer,
     ): GameResult {
+        val dealerScore = dealer.calculateScore()
         return when {
-            isBusted() -> handlePlayerBust(dealerScore)
-            dealerScore > BLACKJACK -> GameResult(this, wins = 1)
-            else -> compareScores(playerScore, dealerScore)
-        }
-    }
-
-    private fun handlePlayerBust(dealerScore: Int): GameResult {
-        return if (dealerScore > BLACKJACK) {
-            GameResult(this, draws = 1)
-        } else {
-            GameResult(this, loses = 1)
-        }
-    }
-
-    private fun compareScores(
-        playerScore: Int,
-        dealerScore: Int,
-    ): GameResult {
-        val playerDistance = closeToBlackjack(playerScore)
-        val dealerDistance = closeToBlackjack(dealerScore)
-
-        return when {
-            playerDistance < dealerDistance -> GameResult(this, wins = 1)
-            playerDistance > dealerDistance -> GameResult(this, loses = 1)
-            else -> GameResult(this, draws = 1)
+            isBlackjack() && dealer.isBlackjack() -> GameResult(this, earning = bettingAmount.amount)
+            isBlackjack() -> GameResult(this, earning = (bettingAmount.amount * 1.5).toInt())
+            isBusted() -> GameResult(this, -bettingAmount.amount)
+            dealer.isBusted() -> GameResult(this, bettingAmount.amount)
+            playerScore > dealerScore -> GameResult(this, bettingAmount.amount)
+            playerScore < dealerScore -> GameResult(this, -bettingAmount.amount)
+            else -> GameResult(this)
         }
     }
 }

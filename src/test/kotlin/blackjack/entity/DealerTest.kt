@@ -61,48 +61,42 @@ class DealerTest : BehaviorSpec({
         When("플레이어가 모두 딜러에게 승리한 경우") {
             val playerResults =
                 listOf(
-                    GameResult(Player("pobi", BettingAmount(1000)), wins = 1, loses = 0, draws = 0),
-                    GameResult(Player("jason", BettingAmount(2000)), wins = 1, loses = 0, draws = 0),
+                    GameResult(Player("pobi", BettingAmount(1000)), 1000),
+                    GameResult(Player("jason", BettingAmount(2000)), 2000),
                 )
 
-            Then("딜러는 모든 플레이어에게 패배한다") {
+            Then("딜러는 손실한다") {
                 val dealerResult = dealer.calculateResult(playerResults)
 
-                dealerResult.wins shouldBe 0
-                dealerResult.loses shouldBe 2
-                dealerResult.draws shouldBe 0
+                dealerResult.earning shouldBe -3000
             }
         }
 
         When("딜러가 모든 플레이어를 이긴 경우") {
             val playerResults =
                 listOf(
-                    GameResult(Player("pobi", BettingAmount(1000)), wins = 0, loses = 1, draws = 0),
-                    GameResult(Player("jason", BettingAmount(2000)), wins = 0, loses = 1, draws = 0),
+                    GameResult(Player("pobi", BettingAmount(1000)), -1000),
+                    GameResult(Player("jason", BettingAmount(2000)), -2000),
                 )
 
-            Then("딜러는 모든 플레이어에게 승리한다") {
+            Then("딜러는 모든 플레이어에게 베팅금을 얻는다") {
                 val dealerResult = dealer.calculateResult(playerResults)
 
-                dealerResult.wins shouldBe 2
-                dealerResult.loses shouldBe 0
-                dealerResult.draws shouldBe 0
+                dealerResult.earning shouldBe 3000
             }
         }
 
         When("딜러와 플레이어가 모두 무승부일 경우") {
             val playerResults =
                 listOf(
-                    GameResult(Player("pobi", BettingAmount(1000)), wins = 0, loses = 0, draws = 1),
-                    GameResult(Player("jason", BettingAmount(2000)), wins = 0, loses = 0, draws = 1),
+                    GameResult(Player("pobi", BettingAmount(1000)), 0),
+                    GameResult(Player("jason", BettingAmount(2000)), 0),
                 )
 
             Then("딜러는 모든 플레이어와 무승부로 처리된다") {
                 val dealerResult = dealer.calculateResult(playerResults)
 
-                dealerResult.wins shouldBe 0
-                dealerResult.loses shouldBe 0
-                dealerResult.draws shouldBe 2
+                dealerResult.earning shouldBe 0
             }
         }
     }
