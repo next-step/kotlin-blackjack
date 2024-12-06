@@ -44,4 +44,38 @@ class PlayerTest : StringSpec({
             player.calculateTotal() shouldBe expected
         }
     }
+
+    "딜러와 결과를 비교해 승패를 반환할 수 있다." {
+        forAll(
+            row(
+                listOf(Card(Rank.ACE, Suit.HEARTS), Card(Rank.TWO, Suit.DIAMONDS)),
+                listOf(Card(Rank.ACE, Suit.HEARTS), Card(Rank.TWO, Suit.DIAMONDS)),
+                GameMatchResult.DRAW,
+            ),
+            row(
+                listOf(Card(Rank.ACE, Suit.HEARTS), Card(Rank.THREE, Suit.DIAMONDS)),
+                listOf(Card(Rank.ACE, Suit.HEARTS), Card(Rank.TWO, Suit.DIAMONDS)),
+                GameMatchResult.WIN,
+            ),
+            row(
+                listOf(Card(Rank.ACE, Suit.HEARTS), Card(Rank.THREE, Suit.DIAMONDS)),
+                listOf(Card(Rank.ACE, Suit.HEARTS), Card(Rank.FOUR, Suit.DIAMONDS)),
+                GameMatchResult.LOSE,
+            ),
+            row(
+                listOf(Card(Rank.TEN, Suit.HEARTS), Card(Rank.KING, Suit.DIAMONDS), Card(Rank.FIVE, Suit.DIAMONDS)),
+                listOf(Card(Rank.ACE, Suit.HEARTS), Card(Rank.FOUR, Suit.DIAMONDS)),
+                GameMatchResult.LOSE,
+            ),
+            row(
+                listOf(Card(Rank.ACE, Suit.HEARTS), Card(Rank.FOUR, Suit.DIAMONDS)),
+                listOf(Card(Rank.TEN, Suit.HEARTS), Card(Rank.KING, Suit.DIAMONDS), Card(Rank.FIVE, Suit.DIAMONDS)),
+                GameMatchResult.WIN,
+            ),
+        ) { playerCards, dealerCards, expected ->
+            val player = Player.createNew(PlayerName("dino"), playerCards)
+            val dealer = Dealer(PlayerName("dealer"), Hand.createInitial(dealerCards))
+            player.compareWithDealer(dealer) shouldBe expected
+        }
+    }
 })
