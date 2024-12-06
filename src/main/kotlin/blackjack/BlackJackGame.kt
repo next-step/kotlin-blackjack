@@ -7,7 +7,7 @@ class BlackJackGame(
     private var drawOrder: Int = 0
 
     fun initialDraw(): List<DrawResult> {
-        (1..2).forEach { _ ->
+        repeat(2) { _ ->
             players.forEach { it.addCard(deck.draw()) }
         }
 
