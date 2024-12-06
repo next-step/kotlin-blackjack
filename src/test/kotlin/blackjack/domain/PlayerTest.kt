@@ -4,21 +4,72 @@ import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 
 class PlayerTest : StringSpec({
-    "플레이어가 새로운 카드를 추가한다." {
+    "이름과 초기 빈 카드 목록을 가진다." {
         val player = Player("dabomi")
-        player.addCards(listOf(Card(CardNumber.TWO, CardShape.HEART), Card(CardNumber.THREE, CardShape.SPADE)))
-        player.getCardList() shouldBe listOf(Card(CardNumber.TWO, CardShape.HEART), Card(CardNumber.THREE, CardShape.SPADE))
+        player.name shouldBe "dabomi"
+        player.cards shouldBe emptyList()
+        player.score shouldBe 0
     }
 
-    "플레이어가 빈 카드 리스트를 반환한다." {
+    "카드를 추가하면 카드 목록이 갱신된다." {
         val player = Player("dabomi")
-        player.getCardList() shouldBe emptyList()
+        val newCards = listOf(
+            Card(CardNumber.TEN, CardShape.HEART),
+            Card(CardNumber.FIVE, CardShape.CLUB)
+        )
+        player.addCards(newCards)
+
+        player.cards.size shouldBe 2
+        player.cards shouldBe newCards
     }
 
-    "플레이어가 여러 번 카드를 추가한다." {
+    "점수는 카드 점수를 정확히 계산한다. - 일반 카드 조합" {
         val player = Player("dabomi")
-        player.addCards(listOf(Card(CardNumber.THREE, CardShape.SPADE)))
-        player.addCards(listOf(Card(CardNumber.TWO, CardShape.HEART)))
-        player.getCardList() shouldBe listOf(Card(CardNumber.THREE, CardShape.SPADE), Card(CardNumber.TWO, CardShape.HEART))
+        player.addCards(
+            listOf(
+                Card(CardNumber.TEN, CardShape.HEART),
+                Card(CardNumber.SIX, CardShape.CLUB)
+            )
+        )
+
+        player.score shouldBe 16
+    }
+
+    "점수는 ACE를 11로 계산한다." {
+        val player = Player("dabomi")
+        player.addCards(
+            listOf(
+                Card(CardNumber.FIVE, CardShape.HEART),
+                Card(CardNumber.ACE, CardShape.SPADE)
+            )
+        )
+
+        player.score shouldBe 16
+    }
+
+    "점수는 ACE를 1로 계산한다. - 합이 21을 초과하는 경우" {
+        val player = Player("dabomi")
+        player.addCards(
+            listOf(
+                Card(CardNumber.TEN, CardShape.HEART),
+                Card(CardNumber.SIX, CardShape.CLUB),
+                Card(CardNumber.ACE, CardShape.DIAMOND)
+            )
+        )
+
+        player.score shouldBe 17
+    }
+
+    "점수는 여러 ACE를 적절히 계산한다." {
+        val player = Player("dabomi")
+        player.addCards(
+            listOf(
+                Card(CardNumber.ACE, CardShape.HEART),
+                Card(CardNumber.ACE, CardShape.CLUB),
+                Card(CardNumber.NINE, CardShape.SPADE)
+            )
+        )
+
+        player.score shouldBe 21
     }
 })

@@ -2,7 +2,7 @@ package blackjack.domain
 
 data class Card(val number: CardNumber, val shape: CardShape) {
     override fun toString(): String {
-        return "${number.number}${shape.displayName}"
+        return "${number.value}${shape.displayName}"
     }
 
     companion object {
@@ -10,36 +10,26 @@ data class Card(val number: CardNumber, val shape: CardShape) {
         private val faceCardValues = mapOf("J" to 10, "Q" to 10, "K" to 10, "A" to (1 or 11))
 
         fun calculateCardValue(cards: List<Card>): Int {
-            val nonAceSum =
-                cards
-                    .filter { extractCardNumber(it) != "A" }
-                    .sumOf { calculateSingleCardValue(it) }
+            val nonAceSum = cards
+                .filter { it.number != CardNumber.ACE }
+                .sumOf { calculateSingleCardValue(it) }
 
-            val aceCount = cards.count { extractCardNumber(it) == "A" }
+            val aceCount = cards.count { it.number == CardNumber.ACE }
 
-            val aceValue =
-                if (aceCount > 0) {
-                    val potentialSum = nonAceSum + 11 + (aceCount - 1) * 1
-                    if (potentialSum > 21) {
-                        aceCount
-                    } else {
-                        11 + (aceCount - 1)
-                    }
+            var totalScore = nonAceSum
+            repeat(aceCount) {
+                if (totalScore + 11 <= 21) {
+                    totalScore += 11
                 } else {
-                    0
+                    totalScore += 1
                 }
+            }
 
-            return nonAceSum + aceValue
+            return totalScore
         }
 
         private fun calculateSingleCardValue(card: Card): Int {
-            val number = extractCardNumber(card)
-            return faceCardValues[number] ?: number.toInt()
-        }
-
-        private fun extractCardNumber(card: Card): String {
-            val matchResult = Regex("^([0-9]+|[A-Z])").find(card.toString())
-            return matchResult?.value ?: throw IllegalArgumentException(INVALID_CARD_FORMAT)
+            return faceCardValues[card.number.name] ?: card.number.value
         }
     }
 }

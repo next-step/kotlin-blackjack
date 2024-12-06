@@ -1,14 +1,24 @@
 package blackjack.domain
 
-class Player(val name: String, var cards: List<Card> = emptyList()) {
+class Player(val name: String) {
+    private val _cards = mutableListOf<Card>()
+    val cards: List<Card> get() = _cards.toList()
+    val score: Int get() = calculateScore()
+
     fun addCards(newCards: List<Card>) {
-        cards = cards + newCards.map { it }
+        _cards.addAll(newCards)
     }
 
-    fun getCardList(): List<Card> = cards.toList()
+    private fun calculateScore(): Int {
+        val nonAceSum = _cards.filter { it.number != CardNumber.ACE }
+            .sumOf { it.number.value }
+        val aceCount = _cards.count { it.number == CardNumber.ACE }
 
-    override fun toString(): String {
-        val cardDescriptions = cards.joinToString(", ") { it.toString() }
-        return "$name 카드: $cardDescriptions"
+        return if (aceCount > 0) {
+            val aceMaxValue = nonAceSum + 11 + (aceCount - 1)
+            if (aceMaxValue > 21) nonAceSum + aceCount else aceMaxValue
+        } else {
+            nonAceSum
+        }
     }
 }
