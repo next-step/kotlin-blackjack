@@ -35,7 +35,7 @@ class UserTest : StringSpec({
         ).forAll { ranks, score ->
             val cards = Cards(ranks.map { createCard(it) })
 
-            cards.calculateScore() shouldBe score
+            cards.score shouldBe score
             User("홍길동", cards).canReceiveCard() shouldBe false
         }
     }

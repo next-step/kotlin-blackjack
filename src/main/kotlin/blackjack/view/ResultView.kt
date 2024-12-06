@@ -1,6 +1,6 @@
 package blackjack.view
 
-import blackjack.domain.BlackJackRules.INIT_CARD_DRAW_COUNT
+import blackjack.domain.GameTable.INIT_CARD_DRAW_COUNT
 import blackjack.domain.User
 
 object ResultView {
@@ -13,7 +13,7 @@ object ResultView {
         printScore: Boolean,
     ) {
         val cards = user.cards.values.joinToString(", ") { "${it.rank.value}${it.suit.description}" }
-        val scoreText = "- 결과: ${user.cards.calculateScore()}"
+        val scoreText = "- 결과: ${user.cards.score}"
         println("${user.name}카드: $cards ${if (printScore) scoreText else ""}")
     }
 
@@ -23,9 +23,5 @@ object ResultView {
 
     fun printCanNotReceivedCard() {
         println("더 이상 카드를 받을 수 없습니다")
-    }
-
-    fun printInvalidAnswer() {
-        println("잘못된 입력입니다. y 또는 n 을 입력하세요")
     }
 }

@@ -20,7 +20,7 @@ class CardsTest : StringSpec({
         ).forAll { ranks, expected ->
             val cards = Cards(ranks.map { createCard(it) })
 
-            cards.calculateScore() shouldBe expected
+            cards.score shouldBe expected
         }
     }
 })

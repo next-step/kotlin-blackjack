@@ -1,13 +1,11 @@
 package blackjack.domain
 
-import blackjack.domain.BlackJackRules.BLACKJACK_SCORE_LIMIT
-
 data class User(
     val name: String,
     val cards: Cards,
 ) {
     fun canReceiveCard(): Boolean {
-        return cards.calculateScore() < BLACKJACK_SCORE_LIMIT
+        return cards.isScoreLowerThanLimit()
     }
 
     fun receiveCard(card: Card): User {
