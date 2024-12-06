@@ -1,6 +1,6 @@
 package blackjack.domain
 
-class Hand(
+open class Hand(
     cards: List<Card> = emptyList(),
 ) {
     val cards = cards.toMutableList()
@@ -17,7 +17,7 @@ class Hand(
         return handValue
     }
 
-    fun drawFrom(deck: Deck) {
+    open fun drawFrom(deck: Deck) {
         cards.add(deck.draw())
     }
 
