@@ -1,8 +1,10 @@
 package blackjack.machine
 
+import blackjack.dealer.Dealer
 import blackjack.deck.Deck
 import blackjack.player.Player
 import blackjack.player.Players
+import blackjack.rule.Rule
 import blackjack.view.InputView
 import blackjack.view.ResultView
 
@@ -20,13 +22,15 @@ class BlackJackMachine(
                     }
                 }
         var players = Players(players = playerList)
+        var dealer = Dealer.ready(initialCards = listOf(deck.draw(), deck.draw()))
 
-        ResultView.printPlayersName(players = players)
-        ResultView.printPlayersCardStatus(players = players)
+        ResultView.printPlayerNamesAndDealer(players = players, dealer = dealer)
+        ResultView.printPlayersCardStatus(players = players, dealer = dealer)
 
         while (isGameActive(players = players)) {
             players = Players(players = players.players.map { playTurn(it) })
-            ResultView.printPlayersCardStatusAndSum(players = players)
+            dealer = playDealerTurn(dealer)
+            ResultView.printPlayersCardStatusAndSum(players = players, dealer = dealer)
         }
     }
 
@@ -40,6 +44,15 @@ class BlackJackMachine(
                 player
                     .hitCard(deck.draw())
                     .also { ResultView.printPlayerCard(it) }
+        }
+
+    private fun playDealerTurn(dealer: Dealer): Dealer =
+        if (dealer.isDraw()) {
+            dealer
+                .hitCard(deck.draw())
+                .also { ResultView.printDealerDrawCard() }
+        } else {
+            dealer
         }
 
     private fun isGameActive(players: Players) = players.players.any { !it.isBust() }
