@@ -3,7 +3,7 @@ package blackjack
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 
-class BlackJackGameTest : StringSpec ({
+class BlackJackGameTest : StringSpec({
 
     "블랙잭은 게임 플레이어와 카드 덱 조합으로 진행된다." {
         // Arrange:

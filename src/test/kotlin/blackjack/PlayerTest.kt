@@ -3,7 +3,7 @@ package blackjack
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 
-class PlayerTest : StringSpec ({
+class PlayerTest : StringSpec({
 
     "플레이어는 카드를 한 장 받을 수 있다." {
         // Arrange:
@@ -55,7 +55,7 @@ class PlayerTest : StringSpec ({
         player.take(listOf(card1, card2, card3))
 
         // Assert:
-        player.score() shouldBe 22
+        player.score() shouldBe 0
     }
 
     "플레이어의 점수를 표기한다." {

@@ -3,7 +3,7 @@ package blackjack
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 
-class CardTest : StringSpec ({
+class CardTest : StringSpec({
     "카드는 숫자와 모양으로 구성된다." {
         // Arrange:
         val number = CardNumber.ONE
