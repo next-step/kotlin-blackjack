@@ -6,7 +6,6 @@ import blackjack.entity.GameResult
 import blackjack.entity.Hand
 import blackjack.entity.Participants
 import blackjack.entity.Player
-import blackjack.entity.Rank
 import blackjack.entity.Rank.ACE
 import blackjack.entity.Rank.EIGHT
 import blackjack.entity.Rank.FIVE
@@ -89,32 +88,42 @@ class OutputView {
             .joinToString(", ") { it.name() }
     }
 
-    private fun displayRank(rank: Rank): String {
-        return when (rank) {
-            ACE -> "A"
-            TWO -> "2"
-            THREE -> "3"
-            FOUR -> "4"
-            FIVE -> "5"
-            SIX -> "6"
-            SEVEN -> "7"
-            EIGHT -> "8"
-            NINE -> "9"
-            TEN -> "10"
-            JACK -> "J"
-            QUEEN -> "Q"
-            KING -> "K"
-        }
-    }
+    private fun Card.name() = "${rankDisplay[rank]}${suitDisplay[suit]}"
 
-    private fun displaySuit(suit: Suit): String {
-        return when (suit) {
-            Suit.SPADES -> "스페이드"
-            Suit.HEARTS -> "하트"
-            Suit.DIAMONDS -> "다이아몬드"
-            Suit.CLUBS -> "클로버"
-        }
-    }
+    companion object {
+        private const val SPADE_DISPLAY = "스페이드"
+        private const val HEART_DISPLAY = "하트"
+        private const val DIAMOND_DISPLAY = "다이아몬드"
+        private const val CLUB_DISPLAY = "클로버"
 
-    private fun Card.name() = "${displayRank(rank)}${displaySuit(suit)}"
+        private const val ACE_DISPLAY = "A"
+        private const val JACK_DISPLAY = "J"
+        private const val QUEEN_DISPLAY = "Q"
+        private const val KING_DISPLAY = "K"
+
+        private val rankDisplay =
+            mapOf(
+                ACE to ACE_DISPLAY,
+                TWO to "2",
+                THREE to "3",
+                FOUR to "4",
+                FIVE to "5",
+                SIX to "6",
+                SEVEN to "7",
+                EIGHT to "8",
+                NINE to "9",
+                TEN to "10",
+                JACK to JACK_DISPLAY,
+                QUEEN to QUEEN_DISPLAY,
+                KING to KING_DISPLAY,
+            )
+
+        private val suitDisplay =
+            mapOf(
+                Suit.SPADES to SPADE_DISPLAY,
+                Suit.HEARTS to HEART_DISPLAY,
+                Suit.DIAMONDS to DIAMOND_DISPLAY,
+                Suit.CLUBS to CLUB_DISPLAY,
+            )
+    }
 }
