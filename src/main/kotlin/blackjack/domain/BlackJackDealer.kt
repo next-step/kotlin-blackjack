@@ -29,6 +29,10 @@ class BlackJackDealer(
         profit -= bet
     }
 
+    fun draw() {
+
+    }
+
     companion object {
         private const val DEALER_DRAW_THRESHOLD = 16
     }
