@@ -2,9 +2,11 @@ package blackjack
 
 class Player(
     val name: PlayerName,
-    private val cards: MutableList<Card> = mutableListOf(),
     private var draw: Boolean = true,
+    cards: List<Card> = listOf(),
 ) {
+    private val cards: MutableList<Card> = cards.toMutableList()
+
     val currentCards: List<DrawCard>
         get() = cards
             .map { it.toDrawCard() }
