@@ -9,7 +9,7 @@ class Player(
     }
 
     override fun getInitialCard(): List<Card> {
-        return hand.getSpecificRangeCards(0, 1)
+        return hand.getSpecificRangeCards(0, 2)
     }
 
     fun compareWithDealer(dealer: Dealer): GameMatchResult {
