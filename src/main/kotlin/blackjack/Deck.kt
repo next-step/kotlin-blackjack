@@ -1,13 +1,8 @@
 package blackjack
 
-data class Deck(
-    private val _cards: MutableList<Card> = CardSuit.entries.flatMap { suit ->
-        CardNumber.entries.map { Card(it, suit) }
-    }.shuffled().toMutableList()
-) {
-    val cards: List<Card>
-        get() = _cards.toList()
+import blackjack.Cards.Companion.createCardPack
 
+data class Deck(private val _cards: MutableList<Card> = createCardPack().shuffled().toMutableList()) {
     init {
         require(_cards.size == NUMBER_OF_CARDS) { "카드의 수가 52장이 아닙니다." }
     }

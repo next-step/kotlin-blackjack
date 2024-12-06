@@ -1,4 +1,3 @@
 package blackjack
 
-class Players(val players: List<Player>) {
-}
+data class Players(val player: List<Player>)

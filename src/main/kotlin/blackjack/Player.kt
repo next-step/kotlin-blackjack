@@ -4,14 +4,6 @@ data class Player(
     val name: PlayerName,
     var cards: Cards = Cards(),
 ) {
-    override fun toString(): String {
-        return "${name.value}카드: $cards"
-    }
-
-    fun isNotBust(): Boolean {
-        return cards.isBust().not()
-    }
-
     fun take(newCard: Card) {
         cards.add(newCard)
     }
@@ -20,7 +12,15 @@ data class Player(
         cards.addAll(newCards)
     }
 
+    fun isNotBust(): Boolean {
+        return cards.isBust().not()
+    }
+
     fun score(): Int {
-        return cards.sum()
+        return cards.bestScore()
+    }
+
+    override fun toString(): String {
+        return "${name.value}카드: $cards"
     }
 }
