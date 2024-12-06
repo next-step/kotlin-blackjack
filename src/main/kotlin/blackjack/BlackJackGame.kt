@@ -3,7 +3,7 @@ package blackjack
 class BlackJackGame(
     private val players: List<Player>,
 ) {
-    private val deck: Deck = Deck()
+    private val deck: Deck = Deck.randomCardDeck()
     private var drawOrder: Int = 0
 
     fun initialDraw(): List<DrawResult> {

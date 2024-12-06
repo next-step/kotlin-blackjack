@@ -11,8 +11,8 @@ class PlayerTest : FreeSpec({
             row(
                 "2, 3, 4, A인 경우 합계 20이다.",
                 Player(
-                    PlayerName("테스트"),
-                    mutableListOf(
+                    name = PlayerName("테스트"),
+                    cards = listOf(
                         Card(
                             CardSuit.HEARTS,
                             CardNumber.TWO,
@@ -29,15 +29,15 @@ class PlayerTest : FreeSpec({
                             CardSuit.CLUBS,
                             CardNumber.ACE,
                         ),
-                    )
+                    ),
                 ),
                 20,
             ),
             row(
                 "2, 3, 4, A, A인 경우 합계 21이다.",
                 Player(
-                    PlayerName("테스트"),
-                    mutableListOf(
+                    name = PlayerName("테스트"),
+                    cards = listOf(
                         Card(
                             CardSuit.HEARTS,
                             CardNumber.TWO,
