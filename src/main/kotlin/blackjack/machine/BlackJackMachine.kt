@@ -27,7 +27,7 @@ class BlackJackMachine(
         ResultView.printPlayerNamesAndDealer(players = players, dealer = dealer)
         ResultView.printPlayersCardStatus(players = players, dealer = dealer)
 
-        while (isGameActive(players = players)) {
+        while (Rule.isGameActive(players = players, dealer = dealer)) {
             players = Players(players = players.players.map { playTurn(it) })
             dealer = playDealerTurn(dealer)
             ResultView.printPlayersCardStatusAndSum(players = players, dealer = dealer)
@@ -54,8 +54,6 @@ class BlackJackMachine(
         } else {
             dealer
         }
-
-    private fun isGameActive(players: Players) = players.players.any { !it.isBust() }
 
     companion object {
         private const val DEFAULT_HAND_SIZE = 2
