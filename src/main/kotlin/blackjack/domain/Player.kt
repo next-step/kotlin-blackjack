@@ -8,6 +8,10 @@ class Player(
         return !state.isFinished() && !hand.isBust()
     }
 
+    override fun getInitialCard(): List<Card> {
+        return hand.getCards()
+    }
+
     fun compareWithDealer(dealer: Dealer): GameMatchResult {
         return when {
             calculateTotal() > dealer.calculateTotal() -> GameMatchResult.WIN

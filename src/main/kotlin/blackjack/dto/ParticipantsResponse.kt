@@ -7,21 +7,16 @@ class ParticipantsResponse(private val participants: Participants) {
         return participants.players.joinToString(", ") { player -> player.getName() }
     }
 
-    fun toFormattedStringDealerInitialCard(): String {
-        val dealer = participants.dealer
-        return "${dealer.getDealerName()}카드: ${dealer.getFirstCard()}"
-    }
-
-    fun toFormattedStringPlayerCards(): String {
-        return participants.players.joinToString("\n") { player ->
-            "${player.getName()}: ${player.displayHand()}"
+    fun toFormattedStringInitialParticipantsCard(): String {
+        return participants.getAllParticipants().joinToString("\n") { participant ->
+            "${participant.getName()}: ${participant.getInitialCard().joinToString(", ") { it.display() }}"
         }
     }
 
     fun toFormattedStringPlayerResults(): String {
         return participants.getAllParticipants().joinToString("\n") { player ->
             val total = player.calculateTotal()
-            "${player.getName()}: ${player.displayHand()} - $total"
+            "${player.getName()}: ${player.getCards().joinToString(", ") { it.display() }} - $total"
         }
     }
 }

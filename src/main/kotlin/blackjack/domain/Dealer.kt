@@ -8,12 +8,8 @@ class Dealer(
         return !state.isFinished() && hand.calculateBestTotal() in 1..16
     }
 
-    fun getFirstCard(): String {
-        return hand.getFirstCard()
-    }
-
-    fun getDealerName(): String {
-        return name.value
+    override fun getInitialCard(): List<Card> {
+        return listOf(hand.getFirstCard())
     }
 
     companion object {

@@ -7,8 +7,7 @@ import blackjack.dto.SinglePlayerResponse
 class OutputView {
     fun printInitialCards(participantsResponse: ParticipantsResponse) {
         println("\n" + participantsResponse.toFormattedStringPlayerNames() + "에게 2장씩 나누었습니다.")
-        println(participantsResponse.toFormattedStringDealerInitialCard())
-        println(participantsResponse.toFormattedStringPlayerCards())
+        println(participantsResponse.toFormattedStringInitialParticipantsCard())
     }
 
     fun printPlayerCannotDrawCard(singlePlayerResponse: SinglePlayerResponse) {

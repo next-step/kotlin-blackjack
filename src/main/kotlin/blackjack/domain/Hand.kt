@@ -32,8 +32,8 @@ class Hand {
         return cards.toList()
     }
 
-    fun getFirstCard(): String {
-        return cards[ZERO].display()
+    fun getFirstCard(): Card {
+        return cards[ZERO]
     }
 
     companion object {

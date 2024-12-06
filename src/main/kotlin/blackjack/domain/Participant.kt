@@ -6,16 +6,12 @@ import blackjack.domain.state.State
 abstract class Participant(private val name: PlayerName, private val hand: Hand) {
     protected var state: State = Initial.initialState(hand)
 
-    fun stay() {
-        state = state.stay()
-    }
-
     fun addCard(card: Card) {
         hand.addCard(card)
     }
 
-    fun displayHand(): String {
-        return hand.getCards().joinToString(", ") { it.display() }
+    fun getCards(): List<Card> {
+        return hand.getCards()
     }
 
     fun calculateTotal(): Int {
@@ -27,4 +23,6 @@ abstract class Participant(private val name: PlayerName, private val hand: Hand)
     }
 
     abstract fun isDrawable(): Boolean
+
+    abstract fun getInitialCard(): List<Card>
 }
