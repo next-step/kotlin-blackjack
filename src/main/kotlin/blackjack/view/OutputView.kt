@@ -6,6 +6,21 @@ import blackjack.entity.GameResult
 import blackjack.entity.Hand
 import blackjack.entity.Participants
 import blackjack.entity.Player
+import blackjack.entity.Rank
+import blackjack.entity.Rank.ACE
+import blackjack.entity.Rank.EIGHT
+import blackjack.entity.Rank.FIVE
+import blackjack.entity.Rank.FOUR
+import blackjack.entity.Rank.JACK
+import blackjack.entity.Rank.KING
+import blackjack.entity.Rank.NINE
+import blackjack.entity.Rank.QUEEN
+import blackjack.entity.Rank.SEVEN
+import blackjack.entity.Rank.SIX
+import blackjack.entity.Rank.TEN
+import blackjack.entity.Rank.THREE
+import blackjack.entity.Rank.TWO
+import blackjack.entity.Suit
 
 class OutputView {
     fun printInitialHands(participants: Participants) {
@@ -74,5 +89,32 @@ class OutputView {
             .joinToString(", ") { it.name() }
     }
 
-    private fun Card.name() = "${rank.displayName}${suit.displayName}"
+    private fun displayRank(rank: Rank): String {
+        return when (rank) {
+            ACE -> "A"
+            TWO -> "2"
+            THREE -> "3"
+            FOUR -> "4"
+            FIVE -> "5"
+            SIX -> "6"
+            SEVEN -> "7"
+            EIGHT -> "8"
+            NINE -> "9"
+            TEN -> "10"
+            JACK -> "J"
+            QUEEN -> "Q"
+            KING -> "K"
+        }
+    }
+
+    private fun displaySuit(suit: Suit): String {
+        return when (suit) {
+            Suit.SPADES -> "스페이드"
+            Suit.HEARTS -> "하트"
+            Suit.DIAMONDS -> "다이아몬드"
+            Suit.CLUBS -> "클로버"
+        }
+    }
+
+    private fun Card.name() = "${displayRank(rank)}${displaySuit(suit)}"
 }
