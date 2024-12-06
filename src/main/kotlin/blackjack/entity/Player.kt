@@ -31,12 +31,22 @@ class Player(
         val dealerScore = dealer.calculateScore()
         return when {
             isBlackjack() && dealer.isBlackjack() -> GameResult(this, earning = bettingAmount.amount)
-            isBlackjack() -> GameResult(this, earning = (bettingAmount.amount * 1.5).toInt())
-            isBusted() -> GameResult(this, -bettingAmount.amount)
-            dealer.isBusted() -> GameResult(this, bettingAmount.amount)
-            playerScore > dealerScore -> GameResult(this, bettingAmount.amount)
-            playerScore < dealerScore -> GameResult(this, -bettingAmount.amount)
+            isBlackjack() -> GameResult(this, earning = blackjackEarning())
+            isBusted() -> GameResult(this, lossEarning())
+            dealer.isBusted() -> GameResult(this, winEarning())
+            playerScore > dealerScore -> GameResult(this, winEarning())
+            playerScore < dealerScore -> GameResult(this, lossEarning())
             else -> GameResult(this)
         }
+    }
+
+    private fun blackjackEarning(): Int = (bettingAmount.amount * BLACKJACK_MULTIPLIER).toInt()
+
+    private fun winEarning(): Int = bettingAmount.amount
+
+    private fun lossEarning(): Int = -bettingAmount.amount
+
+    companion object {
+        private const val BLACKJACK_MULTIPLIER = 1.5
     }
 }
