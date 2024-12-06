@@ -14,9 +14,9 @@ class Card private constructor(
     fun flip() {
         if (face == Face.UP) {
             face = Face.DOWN
-        } else {
-            face = Face.UP
+            return
         }
+        face = Face.UP
     }
 
     companion object {

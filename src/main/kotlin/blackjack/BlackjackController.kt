@@ -41,6 +41,7 @@ class BlackjackController(
     ) {
         if (command.isHit) {
             game.playerHits()
+            return
         }
         game.playerStands()
     }
