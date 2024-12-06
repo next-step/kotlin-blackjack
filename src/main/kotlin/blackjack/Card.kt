@@ -1,3 +1,5 @@
+package blackjack
+
 class Card(
     private val suit: CardSuit,
     private val number: CardNumber,

@@ -1,3 +1,5 @@
+package blackjack
+
 class Player(
     val name: PlayerName,
     private val cards: MutableList<Card> = mutableListOf(),

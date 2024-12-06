@@ -1,3 +1,5 @@
+package blackjack
+
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.data.row
 import io.kotest.inspectors.forAll

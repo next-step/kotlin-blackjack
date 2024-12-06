@@ -1,6 +1,4 @@
-package view
-
-import BlackJackGameResult
+package blackjack
 
 class ResultView {
     fun printBlackJackGameResult(blackJackGameResults: List<BlackJackGameResult>) {

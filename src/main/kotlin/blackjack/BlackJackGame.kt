@@ -1,3 +1,5 @@
+package blackjack
+
 class BlackJackGame(
     private val players: List<Player>,
 ) {

@@ -1,9 +1,4 @@
-package view
-
-import BlackJackGame
-import DrawResult
-import Player
-import PlayerName
+package blackjack
 
 class InputView {
     fun inputBlackJack(): BlackJackGame {

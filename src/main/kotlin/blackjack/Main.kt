@@ -1,5 +1,4 @@
-import view.InputView
-import view.ResultView
+package blackjack
 
 fun main() {
     val inputView = InputView()
