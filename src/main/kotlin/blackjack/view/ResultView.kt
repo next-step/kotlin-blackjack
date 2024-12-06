@@ -7,6 +7,7 @@ class ResultView {
     fun printInitialDraw(inititalDrawResult: List<DrawResult>) {
         val playerNames = inititalDrawResult.joinToString(",") { it.playerName }
         println("${playerNames}에게 2장을 나누었습니다.")
+        printDrawResult(inititalDrawResult)
     }
 
     fun printDrawResult(drawResult: List<DrawResult>) {
