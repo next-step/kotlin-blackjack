@@ -61,8 +61,8 @@ class DealerTest : BehaviorSpec({
         When("플레이어가 모두 딜러에게 승리한 경우") {
             val playerResults =
                 listOf(
-                    GameResult(Player("pobi"), wins = 1, loses = 0, draws = 0),
-                    GameResult(Player("jason"), wins = 1, loses = 0, draws = 0),
+                    GameResult(Player("pobi", BettingAmount(1000)), wins = 1, loses = 0, draws = 0),
+                    GameResult(Player("jason", BettingAmount(2000)), wins = 1, loses = 0, draws = 0),
                 )
 
             Then("딜러는 모든 플레이어에게 패배한다") {
@@ -77,8 +77,8 @@ class DealerTest : BehaviorSpec({
         When("딜러가 모든 플레이어를 이긴 경우") {
             val playerResults =
                 listOf(
-                    GameResult(Player("pobi"), wins = 0, loses = 1, draws = 0),
-                    GameResult(Player("jason"), wins = 0, loses = 1, draws = 0),
+                    GameResult(Player("pobi", BettingAmount(1000)), wins = 0, loses = 1, draws = 0),
+                    GameResult(Player("jason", BettingAmount(2000)), wins = 0, loses = 1, draws = 0),
                 )
 
             Then("딜러는 모든 플레이어에게 승리한다") {
@@ -93,8 +93,8 @@ class DealerTest : BehaviorSpec({
         When("딜러와 플레이어가 모두 무승부일 경우") {
             val playerResults =
                 listOf(
-                    GameResult(Player("pobi"), wins = 0, loses = 0, draws = 1),
-                    GameResult(Player("jason"), wins = 0, loses = 0, draws = 1),
+                    GameResult(Player("pobi", BettingAmount(1000)), wins = 0, loses = 0, draws = 1),
+                    GameResult(Player("jason", BettingAmount(2000)), wins = 0, loses = 0, draws = 1),
                 )
 
             Then("딜러는 모든 플레이어와 무승부로 처리된다") {

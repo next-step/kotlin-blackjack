@@ -2,6 +2,7 @@ package blackjack.entity
 
 class Player(
     name: String,
+    bettingAmount: BettingAmount,
 ) : Participant(name) {
     fun playTurn(
         deck: Deck,

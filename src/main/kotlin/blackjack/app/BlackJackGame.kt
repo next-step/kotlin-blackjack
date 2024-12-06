@@ -1,5 +1,6 @@
 package blackjack.app
 
+import blackjack.entity.BettingAmount
 import blackjack.entity.Dealer
 import blackjack.entity.Deck
 import blackjack.entity.GameResult
@@ -16,16 +17,21 @@ class BlackJackGame {
 
     fun getPlayers(): Participants {
         inputView.printMessage("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)")
-
         val input = inputView.readInput()
         println()
 
         val dealer = Dealer()
-        val players =
+        val playerName =
             input.split(",")
                 .map { it.trim() }
                 .filter { it.isNotEmpty() }
-                .map { name -> Player(name) }
+        val players =
+            playerName.map {
+                val bet = inputView.askForBet(it)
+                println()
+                Player(it, BettingAmount(bet))
+            }
+
         return Participants(dealer, players)
     }
 

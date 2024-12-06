@@ -59,7 +59,7 @@ class PlayerTest : BehaviorSpec({
         ) { dealerScore, playerCards, expectedWins, expectedLoses, expectedDraws, description ->
 
             When(description) {
-                val player = Player("Pobi")
+                val player = Player("Pobi", BettingAmount(1000))
                 playerCards.forEach { player.receiveCard(it) }
 
                 val result = player.calculateResult(dealerScore)
@@ -75,7 +75,7 @@ class PlayerTest : BehaviorSpec({
 
     Given("게임 턴을 진행시") {
         When("플레이어가 Hit을 선택한 경우") {
-            val player = Player("Pobi")
+            val player = Player("Pobi", BettingAmount(1000))
             val deck = Deck()
             val action = player.playTurn(deck, true)
 
@@ -89,7 +89,7 @@ class PlayerTest : BehaviorSpec({
         }
 
         When("플레이어가 Stand을 선택한 경우") {
-            val player = Player("Pobi")
+            val player = Player("Pobi", BettingAmount(1000))
             val deck = Deck()
             val action = player.playTurn(deck, false)
 
@@ -99,7 +99,7 @@ class PlayerTest : BehaviorSpec({
         }
 
         When("플레이어가 버스트 상태인 경우") {
-            val player = Player("Pobi")
+            val player = Player("Pobi", BettingAmount(1000))
             val deck = Deck()
             player.receiveCard(Card(Suit.SPADES, Rank.KING))
             player.receiveCard(Card(Suit.DIAMONDS, Rank.KING))
@@ -111,7 +111,7 @@ class PlayerTest : BehaviorSpec({
             }
         }
         When("플레이어가 카드를 추가로 받은 결과로 버스트 상태가 된 경우") {
-            val player = Player("pobi")
+            val player = Player("pobi", BettingAmount(1000))
             val deck = Deck()
             player.receiveCard(Card(Suit.SPADES, Rank.KING))
             player.receiveCard(Card(Suit.DIAMONDS, Rank.KING))
@@ -122,7 +122,7 @@ class PlayerTest : BehaviorSpec({
             }
         }
         When("플레이어가 블랙잭 상태인 경우") {
-            val player = Player("Pobi")
+            val player = Player("Pobi", BettingAmount(1000))
             val deck = Deck()
             player.receiveCard(Card(Suit.SPADES, Rank.ACE))
             player.receiveCard(Card(Suit.DIAMONDS, Rank.KING))

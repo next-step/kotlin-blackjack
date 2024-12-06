@@ -13,8 +13,8 @@ class ParticipantsTest : DescribeSpec({
                 Participants(
                     dealer,
                     listOf(
-                        Player("pobi"),
-                        Player("jason"),
+                        Player("pobi", BettingAmount(1000)),
+                        Player("jason", BettingAmount(1000)),
                     ),
                 )
 

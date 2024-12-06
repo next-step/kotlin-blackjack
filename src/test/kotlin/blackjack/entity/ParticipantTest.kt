@@ -9,18 +9,18 @@ class ParticipantTest : DescribeSpec({
 
         context("초기화할 때") {
             it("이름을 설정할 수 있어야 한다") {
-                val player = Player("Alice")
+                val player = Player("Alice", BettingAmount(1000))
                 player.name shouldBe "Alice"
             }
 
             it("빈 손패를 기본 값으로 가져야 한다") {
-                val player = Player("Bob")
+                val player = Player("Bob", BettingAmount(1000))
                 player.hand.cards.shouldBeEmpty()
             }
         }
 
         context("카드를 추가할 때") {
-            val player = Player("Charlie")
+            val player = Player("Charlie", BettingAmount(1000))
             val spadesTen = Card(Suit.SPADES, Rank.TEN)
             val heartsAce = Card(Suit.HEARTS, Rank.ACE)
 
@@ -36,7 +36,7 @@ class ParticipantTest : DescribeSpec({
             }
         }
         context("점수를 계산할 때") {
-            val player = Player("Charlie")
+            val player = Player("Charlie", BettingAmount(1000))
             val spadesTen = Card(Suit.SPADES, Rank.TEN)
             val heartsAce = Card(Suit.HEARTS, Rank.ACE)
             player.receiveCard(spadesTen)
@@ -47,7 +47,7 @@ class ParticipantTest : DescribeSpec({
             }
         }
         context("버스트 상태를 확인할 때") {
-            val player = Player("Charlie")
+            val player = Player("Charlie", BettingAmount(1000))
             val spadesKing = Card(Suit.SPADES, Rank.KING)
             val heartsKing = Card(Suit.HEARTS, Rank.KING)
             val clubsTwo = Card(Suit.CLUBS, Rank.TWO)
@@ -60,7 +60,7 @@ class ParticipantTest : DescribeSpec({
             }
         }
         context("블랙잭 상태를 확인할 때") {
-            val player = Player("Charlie")
+            val player = Player("Charlie", BettingAmount(1000))
             val spadesKing = Card(Suit.SPADES, Rank.KING)
             val diamondsAce = Card(Suit.DIAMONDS, Rank.ACE)
             player.receiveCard(spadesKing)
