@@ -1,5 +1,6 @@
 package blackjack.domain
 
+import blackjack.domain.StubDeck.Companion.DUMMY_SUIT
 import blackjack.support.Fixtures.createBustedPlayer
 import blackjack.support.Fixtures.createStandingPlayer
 import io.kotest.matchers.collections.shouldContainExactly
@@ -36,8 +37,8 @@ class PlayersTest {
 
         players.dealRoundOfCardsFrom(deck)
 
-        players[0].hand[0] shouldBe Card.of(StubDeck.DUMMY_SUIT, Rank.ACE)
-        players[1].hand[0] shouldBe Card.of(StubDeck.DUMMY_SUIT, Rank.TWO)
+        players[0].hand[0] shouldBe Card(DUMMY_SUIT, Rank.ACE)
+        players[1].hand[0] shouldBe Card(DUMMY_SUIT, Rank.TWO)
     }
 
     @Test
@@ -70,9 +71,9 @@ class PlayersTest {
 
         players[0].hand.cards shouldContainExactly
             listOf(
-                Card.of(StubDeck.DUMMY_SUIT, Rank.ACE),
-                Card.of(StubDeck.DUMMY_SUIT, Rank.THREE),
-                Card.of(StubDeck.DUMMY_SUIT, Rank.FIVE),
+                Card(DUMMY_SUIT, Rank.ACE),
+                Card(DUMMY_SUIT, Rank.THREE),
+                Card(DUMMY_SUIT, Rank.FIVE),
             )
     }
 
@@ -86,10 +87,10 @@ class PlayersTest {
 
         players[0].hand.cards shouldContainExactly
             listOf(
-                Card.of(StubDeck.DUMMY_SUIT, Rank.ACE),
-                Card.of(StubDeck.DUMMY_SUIT, Rank.THREE),
-                Card.of(StubDeck.DUMMY_SUIT, Rank.FIVE),
-                Card.of(StubDeck.DUMMY_SUIT, Rank.SIX),
+                Card(DUMMY_SUIT, Rank.ACE),
+                Card(DUMMY_SUIT, Rank.THREE),
+                Card(DUMMY_SUIT, Rank.FIVE),
+                Card(DUMMY_SUIT, Rank.SIX),
             )
     }
 

@@ -39,7 +39,7 @@ class HandTest {
 
         hand.drawFrom(deck)
 
-        hand[0] shouldBe Card.of(StubDeck.DUMMY_SUIT, Rank.TWO)
+        hand[0] shouldBe Card(StubDeck.DUMMY_SUIT, Rank.TWO)
     }
 
     @ParameterizedTest(name = "{index} 핸드 = {2}")
@@ -67,7 +67,7 @@ class HandTest {
 
         private fun createHand(vararg ranks: Rank): Hand =
             Hand(
-                ranks.map { Card.of(DUMMY_SUIT, it) },
+                ranks.map { Card(DUMMY_SUIT, it) },
             )
 
         @JvmStatic

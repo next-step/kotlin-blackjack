@@ -13,7 +13,7 @@ class DealerHandTest {
 
         hand.drawFrom(deck)
 
-        hand[0] shouldBe Card.of(StubDeck.DUMMY_SUIT, Rank.TWO)
+        hand[0] shouldBe Card(StubDeck.DUMMY_SUIT, Rank.TWO)
     }
 
     @Test

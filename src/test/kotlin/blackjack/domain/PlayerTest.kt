@@ -1,5 +1,6 @@
 package blackjack.domain
 
+import blackjack.domain.StubDeck.Companion.DUMMY_SUIT
 import blackjack.support.Fixtures.createBlackjackPlayer
 import blackjack.support.Fixtures.createBustedPlayer
 import blackjack.support.Fixtures.createStandingPlayer
@@ -42,7 +43,7 @@ class PlayerTest {
 
         player.initialDrawFrom(deck)
 
-        player.hand[0] shouldBe Card.of(StubDeck.DUMMY_SUIT, Rank.ACE)
+        player.hand[0] shouldBe Card(DUMMY_SUIT, Rank.ACE)
     }
 
     @Test
@@ -64,7 +65,7 @@ class PlayerTest {
 
         player.hit(deck)
 
-        player.hand[0] shouldBe Card.of(StubDeck.DUMMY_SUIT, Rank.TWO)
+        player.hand[0] shouldBe Card(DUMMY_SUIT, Rank.TWO)
     }
 
     @ParameterizedTest(name = "{index} 플레이어 상태 = {1}")
@@ -81,8 +82,8 @@ class PlayerTest {
     fun `힛을 하여 21점을 넘으면 버스트된다`() {
         val hand =
             Hand(
-                Card.of(Suit.CLUBS, Rank.KING),
-                Card.of(Suit.CLUBS, Rank.QUEEN),
+                Card(Suit.CLUBS, Rank.KING),
+                Card(Suit.CLUBS, Rank.QUEEN),
             )
         val player = Player("jack", hand)
         val deck = StubDeck.from(Rank.JACK)
