@@ -1,9 +1,9 @@
 package blackjack.view
 
-import blackjack.BlackJackGame
-import blackjack.DrawResult
-import blackjack.Player
-import blackjack.PlayerName
+import blackjack.domain.BlackJackGame
+import blackjack.domain.DrawResult
+import blackjack.domain.Player
+import blackjack.domain.PlayerName
 
 class InputView {
     fun inputBlackJack(): BlackJackGame {

@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.domain
 
 class BlackJackGame(
     private val players: List<Player>,

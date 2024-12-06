@@ -1,6 +1,6 @@
 package blackjack.view
 
-import blackjack.BlackJackGameResult
+import blackjack.domain.BlackJackGameResult
 
 class ResultView {
     fun printBlackJackGameResult(blackJackGameResults: List<BlackJackGameResult>) {

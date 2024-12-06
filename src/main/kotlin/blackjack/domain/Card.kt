@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.domain
 
 class Card(
     private val suit: CardSuit,
