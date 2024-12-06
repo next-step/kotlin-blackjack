@@ -4,9 +4,9 @@ import blackjack.entity.BettingAmount
 import blackjack.entity.Dealer
 import blackjack.entity.Deck
 import blackjack.entity.GameResult
-import blackjack.entity.Participants
 import blackjack.entity.Player
 import blackjack.entity.PlayerAction
+import blackjack.entity.Players
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
@@ -14,13 +14,13 @@ class BlackJackGame {
     private val inputView = InputView()
     private val outputView = OutputView()
     private lateinit var deck: Deck
+    private val dealer = Dealer()
 
-    fun getPlayers(): Participants {
+    fun getPlayers(): Players {
         inputView.printMessage("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)")
         val input = inputView.readInput()
         println()
 
-        val dealer = Dealer()
         val playerName =
             input.split(",")
                 .map { it.trim() }
@@ -32,23 +32,24 @@ class BlackJackGame {
                 Player(it, BettingAmount(bet))
             }
 
-        return Participants(dealer, players)
+        return Players(players)
     }
 
-    fun gameStart(participants: Participants) {
+    fun gameStart(players: Players) {
         deck = Deck()
-        participants.initializeHands(deck)
-        outputView.printInitialHands(participants)
+        dealer.initializeHand(deck)
+        players.initializeHands(deck)
+        outputView.printInitialHands(players, dealer)
     }
 
-    fun playTurn(participants: Participants) {
-        participants.players.forEach(::playPlayerTurn)
-        handleDealerAction(participants)
+    fun playTurn(players: Players) {
+        players.forEach(::playPlayerTurn)
+        handleDealerAction()
     }
 
-    fun finishGame(participants: Participants) {
-        calculateScore(participants)
-        val gameResults = calculateResult(participants)
+    fun finishGame(players: Players) {
+        calculateScore(players)
+        val gameResults = calculateResult(players)
 
         outputView.printGameResult(gameResults)
     }
@@ -86,23 +87,25 @@ class BlackJackGame {
         }
     }
 
-    private fun handleDealerAction(participants: Participants) {
-        if (participants.playDealerTurn(deck)) {
-            outputView.printDealerDrawCard(participants.dealer)
+    private fun handleDealerAction() {
+        if (dealer.playTurn(deck) == PlayerAction.DRAW) {
+            outputView.printDealerDrawCard(dealer)
         }
     }
 
-    private fun calculateScore(participants: Participants) {
-        val dealer = participants.dealer
+    private fun calculateScore(players: Players) {
         val dealerScore = dealer.calculateScore()
         outputView.printPlayerResults(dealer.name, dealer.hand, dealerScore)
 
-        participants.players.map { player ->
+        players.players.map { player ->
             outputView.printPlayerResults(player.name, player.hand, player.calculateScore())
         }
     }
 
-    private fun calculateResult(participants: Participants): List<GameResult> {
-        return participants.calculateResult()
+    private fun calculateResult(players: Players): List<GameResult> {
+        val dealerScore = dealer.calculateScore()
+        val playerResults = players.calculateResult(dealerScore)
+        val dealerResult = dealer.calculateResult(playerResults)
+        return listOf(dealerResult) + playerResults
     }
 }

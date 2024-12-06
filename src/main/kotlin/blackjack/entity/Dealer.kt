@@ -1,6 +1,10 @@
 package blackjack.entity
 
 class Dealer : Participant("딜러") {
+    fun initializeHand(deck: Deck) {
+        repeat(2) { receiveCard(deck.deal()) }
+    }
+
     fun shouldDrawCard(): Boolean {
         val score = calculateScore()
         return score <= 16

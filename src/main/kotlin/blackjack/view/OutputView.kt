@@ -4,8 +4,8 @@ import blackjack.entity.Card
 import blackjack.entity.Dealer
 import blackjack.entity.GameResult
 import blackjack.entity.Hand
-import blackjack.entity.Participants
 import blackjack.entity.Player
+import blackjack.entity.Players
 import blackjack.entity.Rank.ACE
 import blackjack.entity.Rank.EIGHT
 import blackjack.entity.Rank.FIVE
@@ -22,11 +22,13 @@ import blackjack.entity.Rank.TWO
 import blackjack.entity.Suit
 
 class OutputView {
-    fun printInitialHands(participants: Participants) {
-        val dealer = participants.dealer
-        println("${dealer.name}와 ${participants.players.joinToString { it.name }}에게 2장의 카드를 나누었습니다.")
+    fun printInitialHands(
+        players: Players,
+        dealer: Dealer,
+    ) {
+        println("${dealer.name}와 ${players.players.joinToString { it.name }}에게 2장의 카드를 나누었습니다.")
         println("${dealer.name}: ${formatHand(dealer.hand)}")
-        participants.players.forEach {
+        players.players.forEach {
             println("${it.name}: ${formatHand(it.hand)}")
         }
         println()
