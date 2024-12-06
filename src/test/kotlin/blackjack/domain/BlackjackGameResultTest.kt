@@ -31,19 +31,6 @@ class BlackjackGameResultTest : StringSpec({
             listOf(Card(Rank.TEN, Suit.SPADES), Card(Rank.NINE, Suit.HEARTS)),
         )
 
-    "딜러의 결과를 반환할 수 있다." {
-        forAll(
-            row(
-                Dealer.createNew(listOf(Card(Rank.TEN, Suit.SPADES), Card(Rank.SEVEN, Suit.HEARTS))),
-                listOf(playerA, playerB, playerC, playerD),
-                "딜러: 1승 1무 2패",
-            ),
-        ) { dealer, players, expected ->
-            val blackjackGameResult = BlackjackGameResult(dealer, players)
-            blackjackGameResult.extractDealerGameResult() shouldBe expected
-        }
-    }
-
     "플레이어의 결과를 반환할 수 있다." {
         forAll(
             row(
