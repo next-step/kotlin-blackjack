@@ -12,11 +12,10 @@ import org.junit.jupiter.api.assertThrows
 class PlayersTest {
     @Test
     fun `이름들로 플레이어들을 생성할 수 있다`() {
-        val names = listOf("black", "jack", "game")
+        val players = Players.from("black", "jack", "game")
 
-        val players = Players.from(names)
-
-        players.roster.map { it.name } shouldContainExactly names
+        val names = players.roster.map { it.name }
+        names shouldContainExactly listOf("black", "jack", "game")
     }
 
     @Test
@@ -143,6 +142,17 @@ class PlayersTest {
         players.stand()
 
         assertThrows<IllegalStateException> { players.stand() }
+    }
+
+    @Test
+    fun `딜러가 블랙잭인 경우 각 플레이어들의 턴을 종료한다`() {
+        val players = Players.from("black", "jack")
+
+        players.dealerDealtBlackjack()
+
+        players.isDone shouldBe true
+        players[0].reasonDone shouldBe PlayerReasonDone.DEALER_DEALT_BLACKJACK
+        players[1].reasonDone shouldBe PlayerReasonDone.DEALER_DEALT_BLACKJACK
     }
 
     private fun createPlayersFrom(

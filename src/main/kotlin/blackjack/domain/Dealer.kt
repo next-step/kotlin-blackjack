@@ -7,6 +7,8 @@ class Dealer(
         get() = hand.value()
     val isBusted: Boolean
         get() = hand.isBusted()
+    val isBlackjack: Boolean
+        get() = hand.isBlackjack()
 
     fun initialDrawFrom(deck: Deck) {
         hand.drawFrom(deck)

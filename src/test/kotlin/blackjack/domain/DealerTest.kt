@@ -48,12 +48,34 @@ class DealerTest {
         dealer.mustDrawCard() shouldBe expected
     }
 
+    @ParameterizedTest(name = "{index} 카드 = {2}")
+    @MethodSource
+    fun `블랙잭인지 리턴한다`(
+        deck: Deck,
+        expected: Boolean,
+        description: String,
+    ) {
+        val dealer =
+            Dealer().apply {
+                initialDrawFrom(deck)
+                initialDrawFrom(deck)
+            }
+        dealer.isBlackjack shouldBe expected
+    }
+
     companion object {
         @JvmStatic
         fun `합계가 16인 경우 반드시 카드를 뽑아야 한다`(): List<Arguments> =
             listOf(
                 Arguments.of(StubDeck.from(Rank.SIX, Rank.TEN), true, "16"),
                 Arguments.of(StubDeck.from(Rank.JACK, Rank.SEVEN), false, "17"),
+            )
+
+        @JvmStatic
+        fun `블랙잭인지 리턴한다`(): List<Arguments> =
+            listOf(
+                Arguments.of(StubDeck.from(Rank.ACE, Rank.KING), true, "A, K"),
+                Arguments.of(StubDeck.from(Rank.QUEEN, Rank.JACK), false, "Q, J"),
             )
     }
 }

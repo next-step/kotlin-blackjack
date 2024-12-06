@@ -36,6 +36,10 @@ class Players(
         skipToNextPlayerIfDone()
     }
 
+    fun dealerDealtBlackjack() {
+        roster.forEach(Player::dealerDealtBlackjack)
+    }
+
     private fun checkIsNotDone() {
         check(!isDone) { "모든 플레이어가 종료했습니다." }
     }

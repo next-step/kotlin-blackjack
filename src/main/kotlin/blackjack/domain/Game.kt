@@ -15,6 +15,9 @@ class Game(
             players.dealRoundOfCardsFrom(deck)
             dealer.initialDrawFrom(deck)
         }
+        if (dealer.isBlackjack) {
+            players.dealerDealtBlackjack()
+        }
     }
 
     fun playerHits() {

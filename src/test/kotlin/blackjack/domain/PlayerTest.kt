@@ -119,6 +119,15 @@ class PlayerTest {
         Player("jack").isBusted shouldBe false
     }
 
+    @Test
+    fun `딜러가 블랙잭이라 플레이어 턴이 종료된다`() {
+        val player = Player("jack")
+
+        player.dealerDealtBlackjack()
+
+        player.reasonDone shouldBe PlayerReasonDone.DEALER_DEALT_BLACKJACK
+    }
+
     companion object {
         @JvmStatic
         fun donePlayers() =

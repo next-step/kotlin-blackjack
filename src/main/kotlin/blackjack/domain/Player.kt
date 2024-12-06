@@ -37,6 +37,10 @@ class Player(
         done(PlayerReasonDone.PLAYER_STANDS)
     }
 
+    fun dealerDealtBlackjack() {
+        done(PlayerReasonDone.DEALER_DEALT_BLACKJACK)
+    }
+
     private fun checkIsNotDone() {
         check(!isDone) { "이미 턴이 끝난 상태입니다." }
     }

@@ -71,6 +71,17 @@ class GameTest {
     }
 
     @Test
+    fun `딜러가 블랙잭이면 바로 게임을 종료한다`() {
+        val deck = StubDeck.from(Rank.TWO, Rank.THREE, Rank.ACE, Rank.FOUR, Rank.FIVE, Rank.KING)
+        val players = Players.from("black", "jack")
+
+        val game = Game(players, deck).apply { initialDeal() }
+
+        game.players[0].reasonDone shouldBe PlayerReasonDone.DEALER_DEALT_BLACKJACK
+        game.players[1].reasonDone shouldBe PlayerReasonDone.DEALER_DEALT_BLACKJACK
+    }
+
+    @Test
     fun `모든 플레이어들의 턴이 종료했으면 게임도 종료 상태이다`() {
         val players =
             Players(
