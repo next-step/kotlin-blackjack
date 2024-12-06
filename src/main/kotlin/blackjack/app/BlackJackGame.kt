@@ -35,35 +35,9 @@ class BlackJackGame {
         outputView.printInitialHands(participants)
     }
 
-    fun playTurns(participants: Participants) {
-        participants.players.forEach { player ->
-            var wantsToHit: Boolean
-            do {
-                wantsToHit = inputView.askForHitOrStand(player.name)
-                val action = player.playTurn(deck, wantsToHit)
-                when (action) {
-                    PlayerAction.HIT -> outputView.printPlayerHand(player)
-                    PlayerAction.BURST -> {
-                        outputView.printPlayerBusted(player)
-                        break
-                    }
-
-                    PlayerAction.BLACKJACK -> {
-                        outputView.printPlayerBlackjack(player)
-                        break
-                    }
-
-                    PlayerAction.STAND -> break
-                    PlayerAction.DRAW -> continue
-                }
-            } while (action == PlayerAction.HIT)
-        }
-    }
-
-    fun playDealerTurn(participants: Participants) {
-        if (participants.playDealerTurn(deck)) {
-            outputView.printDealerDrawCard(participants.dealer)
-        }
+    fun playTurn(participants: Participants) {
+        participants.players.forEach(::playPlayerTurn)
+        handleDealerAction(participants)
     }
 
     fun finishGame(participants: Participants) {
@@ -71,6 +45,45 @@ class BlackJackGame {
         val gameResults = calculateResult(participants)
 
         outputView.printGameResult(gameResults)
+    }
+
+    private fun playPlayerTurn(player: Player) {
+        generateSequence {
+            val wantsToHit = inputView.askForHitOrStand(player.name)
+            val action = player.playTurn(deck, wantsToHit)
+            handlePlayerAction(player, action)
+        }.toList()
+    }
+
+    private fun handlePlayerAction(
+        player: Player,
+        action: PlayerAction,
+    ): PlayerAction? {
+        return when (action) {
+            PlayerAction.HIT -> {
+                outputView.printPlayerHand(player)
+                action
+            }
+
+            PlayerAction.BURST -> {
+                outputView.printPlayerBusted(player)
+                null
+            }
+
+            PlayerAction.BLACKJACK -> {
+                outputView.printPlayerBlackjack(player)
+                null
+            }
+
+            PlayerAction.STAND -> null
+            PlayerAction.DRAW -> action
+        }
+    }
+
+    private fun handleDealerAction(participants: Participants) {
+        if (participants.playDealerTurn(deck)) {
+            outputView.printDealerDrawCard(participants.dealer)
+        }
     }
 
     private fun calculateScore(participants: Participants) {
