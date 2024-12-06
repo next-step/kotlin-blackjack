@@ -3,6 +3,7 @@ package blackjack.view
 import blackjack.domain.BlackJackDealer
 import blackjack.domain.BlackJackGameResult
 import blackjack.domain.BlackJackNormalPlayer
+import blackjack.domain.BlackJackPlayer
 import blackjack.view.BlackJackInputView.drawBlackJackPlayerCards
 
 object BlackJackResultView {
@@ -21,5 +22,13 @@ object BlackJackResultView {
     fun drawGameResult(blackJackGameResult: BlackJackGameResult) {
         blackJackGameResult.playerResults.forEach { println("${it.name}: ${it.result.resultString}") }
         println("딜러: ${blackJackGameResult.dealerResult.winCount}승 ${blackJackGameResult.dealerResult.lossCount}패")
+    }
+
+    fun drawGameProfit(
+        blackJackDealer: BlackJackDealer,
+        blackJackPlayers: List<BlackJackPlayer>,
+    ) {
+        println("${blackJackDealer.name}: ${blackJackDealer.profit}")
+        blackJackPlayers.forEach { println("${it.name}: ${it.profit}") }
     }
 }

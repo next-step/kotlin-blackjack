@@ -31,12 +31,16 @@ object BlackJackInputView {
         println(blackJackPlayer.blackJackPlayerCards.cards.map { "${it.number.name} ${it.shape.name}" }.joinToString(","))
     }
 
-    fun getPlayerBets(playerNames: List<String>): List<Int> {
-        val result = mutableListOf<Int>()
+    fun getPlayerBets(playerNames: List<String>): Map<String, Int> {
+        val bets = mutableListOf<Int>()
         playerNames.forEach {
             println("${it}의 배팅 금액은?")
-            result.add(readln().toInt())
+            bets.add(readln().toInt())
         }
-        return result.toList()
+        val result = mutableMapOf<String, Int>()
+        for (i in 0..bets.size - 1) {
+            result.put(playerNames[i], bets[i])
+        }
+        return result.toMap()
     }
 }

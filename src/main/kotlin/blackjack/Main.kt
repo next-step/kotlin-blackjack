@@ -13,9 +13,11 @@ fun main() {
     val blackJackDeck = BlackJackDeckGenerator.getDefaultDeck()
     val playerNames = BlackJackInputView.getPlayerName()
     val playerBets = BlackJackInputView.getPlayerBets(playerNames)
-    val blackJackGame = getGame(playerNames, blackJackDeck)
+    val blackJackGame = getGame(playerBets, blackJackDeck)
     BlackJackInputView.drawBlackJackPlayersCards(blackJackGame.players, blackJackGame.dealer)
     doGame(blackJackGame, blackJackDeck)
+    val gameResult = blackJackGame.getGameResult()
+    blackJackGame.calculateProfit(gameResult.playerResults)
     drawResult(blackJackGame)
 }
 
@@ -23,6 +25,7 @@ private fun drawResult(blackJackGame: BlackJackGame) {
     BlackJackResultView.drawBlackJackPlayersCardsWithResult(blackJackGame.players)
     BlackJackResultView.drawBlackJackDealerWithResult(blackJackGame.dealer)
     BlackJackResultView.drawGameResult(blackJackGame.getGameResult())
+    BlackJackResultView.drawGameProfit(blackJackGame.dealer, blackJackGame.players)
 }
 
 private fun doGame(
@@ -41,12 +44,12 @@ private fun doGame(
 }
 
 private fun getGame(
-    playerNames: List<String>,
+    playerBets: Map<String, Int>,
     blackJackDeck: BlackJackDeck,
 ): BlackJackGame {
     return BlackJackGame(
-        playerNames.map {
-            BlackJackNormalPlayer(it, BlackJackPlayerCards.byDeck(blackJackDeck))
+        playerBets.map {
+            BlackJackNormalPlayer(it.key, BlackJackPlayerCards.byDeck(blackJackDeck), bet = it.value)
         },
         BlackJackDealer(
             blackJackPlayerCards = BlackJackPlayerCards.byDeck(blackJackDeck),
