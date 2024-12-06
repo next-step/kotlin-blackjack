@@ -25,6 +25,10 @@ open class BlackJackNormalPlayer(
     }
 
     fun win() {
+        if (blackJackPlayerCards.isBlackJack()) {
+            profit += (bet * BLACKJACK_PROFIT_RATE).toInt()
+            return
+        }
         profit += bet
     }
 

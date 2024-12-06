@@ -13,5 +13,6 @@ abstract class BlackJackPlayer(
 
     companion object {
         const val DEFAULT_CARD_NUMBER = 2
+        const val BLACKJACK_PROFIT_RATE = 1.5
     }
 }

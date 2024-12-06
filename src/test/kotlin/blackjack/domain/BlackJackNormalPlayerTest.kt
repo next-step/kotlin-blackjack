@@ -168,4 +168,21 @@ class BlackJackNormalPlayerTest {
         blackJackNormalPlayer.draw()
         assertThat(blackJackNormalPlayer.profit).isEqualTo(0)
     }
+
+    @Test
+    fun `카드의 합이 블랙잭21으로 이기면 150퍼센트를 얻는다`() {
+        val blackJackNormalPlayer =
+            BlackJackNormalPlayer(
+                "사람",
+                BlackJackPlayerCards(
+                    mutableListOf(
+                        BlackJackCard.get(BlackJackCardShape.HEART, BlackJackCardNumber.TEN),
+                        BlackJackCard.get(BlackJackCardShape.HEART, BlackJackCardNumber.ACE),
+                    ),
+                ),
+                bet = 10000,
+            )
+        blackJackNormalPlayer.win()
+        assertThat(blackJackNormalPlayer.profit).isEqualTo(15000)
+    }
 }

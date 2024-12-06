@@ -9,7 +9,7 @@ data class BlackJackCard private constructor(
 
         fun get(
             blackJackCardShape: BlackJackCardShape,
-            blackJackCardNumber: BlackJackCardNumber
+            blackJackCardNumber: BlackJackCardNumber,
         ): BlackJackCard {
             return blackJackCards.getOrPut(
                 Pair(blackJackCardShape, blackJackCardNumber),
