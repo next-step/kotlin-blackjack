@@ -3,6 +3,7 @@ package blackjack.domain
 abstract class BlackJackPlayer(
     val name: String,
     val blackJackPlayerCards: BlackJackPlayerCards,
+    var profit: Int,
 ) {
     abstract fun drawCard(blackJackDeck: BlackJackDeck)
 

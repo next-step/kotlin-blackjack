@@ -39,5 +39,4 @@ object BlackJackInputView {
         }
         return result.toList()
     }
-
 }

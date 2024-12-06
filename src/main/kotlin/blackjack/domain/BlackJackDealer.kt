@@ -3,7 +3,8 @@ package blackjack.domain
 class BlackJackDealer(
     name: String = "딜러",
     blackJackPlayerCards: BlackJackPlayerCards,
-) : BlackJackPlayer(name, blackJackPlayerCards) {
+    profit: Int = 0,
+) : BlackJackPlayer(name, blackJackPlayerCards, profit) {
     override fun drawCard(blackJackDeck: BlackJackDeck) {
         while (dealerDrawPossible()) {
             blackJackPlayerCards.addCard(blackJackDeck.draw())

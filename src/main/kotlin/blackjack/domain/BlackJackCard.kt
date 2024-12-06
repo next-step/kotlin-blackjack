@@ -5,12 +5,15 @@ data class BlackJackCard private constructor(
     val number: BlackJackCardNumber,
 ) {
     companion object {
-        val blackJackCards: MutableMap<Pair<BlackJackCardShape, BlackJackCardNumber>, BlackJackCard> = mutableMapOf()
-        fun get(blackJackCardShape: BlackJackCardShape, blackJackCardNumber: BlackJackCardNumber): BlackJackCard {
+        private val blackJackCards: MutableMap<Pair<BlackJackCardShape, BlackJackCardNumber>, BlackJackCard> = mutableMapOf()
+
+        fun get(
+            blackJackCardShape: BlackJackCardShape,
+            blackJackCardNumber: BlackJackCardNumber
+        ): BlackJackCard {
             return blackJackCards.getOrPut(
-                Pair(blackJackCardShape, blackJackCardNumber)
+                Pair(blackJackCardShape, blackJackCardNumber),
             ) { BlackJackCard(blackJackCardShape, blackJackCardNumber) }
         }
     }
 }
-
