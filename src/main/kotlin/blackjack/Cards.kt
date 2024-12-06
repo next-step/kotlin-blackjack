@@ -1,18 +1,24 @@
 package blackjack
 
-data class Cards(val cards: List<Card>) {
+data class Cards(
+    private val _cards: MutableList<Card> = mutableListOf()
+) {
     override fun toString(): String {
-        return cards.joinToString(", ")
+        return _cards.joinToString(", ")
     }
 
     fun isBust(): Boolean {
         return sum() >= BLACKJACK
     }
 
-    fun sum() = cards.sumOf { it.number.score }
+    fun sum() = _cards.sumOf { it.number.score }
 
-    fun addWith(card: Card): Cards {
-        return Cards(cards + card)
+    fun add(card: Card) {
+        _cards.add(card)
+    }
+
+    fun addAll(cards: List<Card>) {
+        _cards.addAll(cards)
     }
 
     companion object {

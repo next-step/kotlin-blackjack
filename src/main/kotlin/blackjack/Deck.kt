@@ -17,13 +17,10 @@ data class Deck(
     }
 
     fun pick(): Card {
-        return this.pick(DEFAULT_PICK_COUNT).first()
-    }
+        require(_cards.size >= DEFAULT_PICK_COUNT) { "더 이상 뽑을 카드가 없습니다." }
 
-    fun pick(count: Int): List<Card> {
-        require(count <= _cards.size) { "카드의 수가 부족합니다." }
-        val card = _cards.take(count)
-        _cards.removeAll(card)
+        val card = _cards.take(DEFAULT_PICK_COUNT).first()
+        _cards.remove(card)
         return card
     }
 
