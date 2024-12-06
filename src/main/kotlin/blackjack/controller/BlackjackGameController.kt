@@ -48,10 +48,10 @@ class BlackjackGameController(
         if (!player.isDrawable()) {
             return false
         }
-        return processPlayerChoice(player, blackJackGame)
+        return isPlayerWantMore(player, blackJackGame)
     }
 
-    private fun processPlayerChoice(
+    private fun isPlayerWantMore(
         player: Player,
         blackJackGame: BlackjackGame,
     ): Boolean {
