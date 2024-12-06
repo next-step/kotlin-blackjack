@@ -1,11 +1,10 @@
 package blackjack.domain
 
 import io.kotest.core.spec.style.StringSpec
-import io.kotest.matchers.shouldBe
 import io.kotest.matchers.collections.shouldHaveSize
+import io.kotest.matchers.shouldBe
 
 class GameTest : StringSpec({
-
     "초기화 시 플레이어마다 2장의 카드가 분배된다." {
         val playerNames = listOf("kim", "da")
         val game = Game(playerNames)
@@ -25,9 +24,10 @@ class GameTest : StringSpec({
             listOf(
                 Card.of(CardNumber.TEN, CardShape.HEART),
                 Card.of(CardNumber.TEN, CardShape.CLUB),
-                Card.of(CardNumber.TWO, CardShape.SPADE)
-            )
+                Card.of(CardNumber.TWO, CardShape.SPADE),
+            ),
         )
+
         game.canContinue(player) shouldBe false
     }
 

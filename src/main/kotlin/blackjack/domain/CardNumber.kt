@@ -13,7 +13,8 @@ enum class CardNumber(private val points: Int) {
     TEN(10),
     JACK(10),
     QUEEN(10),
-    KING(10);
+    KING(10),
+    ;
 
     fun getPoints(): Int = points
 }

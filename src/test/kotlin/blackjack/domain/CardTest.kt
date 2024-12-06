@@ -4,43 +4,12 @@ import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 
 class CardTest : StringSpec({
-    "카드 목록에서 점수를 계산한다. - 일반 카드 조합" {
-        val cardList = listOf(
-            Card.of(CardNumber.TEN, CardShape.CLUB),
-            Card.of(CardNumber.EIGHT, CardShape.DIAMOND),
-            Card.of(CardNumber.QUEEN, CardShape.SPADE),
-            Card.of(CardNumber.ACE, CardShape.HEART),
-        )
-        val score = Card.calculateCardValue(cardList)
-        score shouldBe 29
-    }
+    "동일한 숫자와 모양에 대해 동일한 인스턴스를 반환해야 한다." {
+        val number = CardNumber.ACE
+        val shape = CardShape.HEART
+        val card1 = Card.of(number, shape)
+        val card2 = Card.of(number, shape)
 
-    "카드 목록에서 점수를 계산한다. - A가 11로 계산되는 경우" {
-        val cardList = listOf(
-            Card.of(CardNumber.FIVE, CardShape.HEART),
-            Card.of(CardNumber.ACE, CardShape.CLUB),
-        )
-        val score = Card.calculateCardValue(cardList)
-        score shouldBe 16
-    }
-
-    "카드 목록에서 점수를 계산한다. - A가 1로 계산되는 경우" {
-        val cardList = listOf(
-            Card.of(CardNumber.TEN, CardShape.HEART),
-            Card.of(CardNumber.SIX, CardShape.SPADE),
-            Card.of(CardNumber.ACE, CardShape.DIAMOND),
-        )
-        val score = Card.calculateCardValue(cardList)
-        score shouldBe 17
-    }
-
-    "카드 목록에서 점수를 계산한다. - A가 여러 장 있는 경우" {
-        val cardList = listOf(
-            Card.of(CardNumber.ACE, CardShape.HEART),
-            Card.of(CardNumber.ACE, CardShape.CLUB),
-            Card.of(CardNumber.NINE, CardShape.SPADE),
-        )
-        val score = Card.calculateCardValue(cardList)
-        score shouldBe 21
+        card1 shouldBe card2
     }
 })

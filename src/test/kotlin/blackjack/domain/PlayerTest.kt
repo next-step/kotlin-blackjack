@@ -13,12 +13,13 @@ class PlayerTest : StringSpec({
 
     "카드를 추가하면 카드 목록이 갱신된다." {
         val player = Player("dabomi")
-        val newCards = listOf(
-            Card.of(CardNumber.TEN, CardShape.HEART),
-            Card.of(CardNumber.FIVE, CardShape.CLUB)
-        )
-        player.addCards(newCards)
+        val newCards =
+            listOf(
+                Card.of(CardNumber.TEN, CardShape.HEART),
+                Card.of(CardNumber.FIVE, CardShape.CLUB),
+            )
 
+        player.addCards(newCards)
         player.cards.size shouldBe 2
         player.cards shouldBe newCards
     }
@@ -28,8 +29,8 @@ class PlayerTest : StringSpec({
         player.addCards(
             listOf(
                 Card.of(CardNumber.TEN, CardShape.HEART),
-                Card.of(CardNumber.SIX, CardShape.CLUB)
-            )
+                Card.of(CardNumber.SIX, CardShape.CLUB),
+            ),
         )
 
         player.score shouldBe 16
@@ -40,8 +41,8 @@ class PlayerTest : StringSpec({
         player.addCards(
             listOf(
                 Card.of(CardNumber.FIVE, CardShape.HEART),
-                Card.of(CardNumber.ACE, CardShape.SPADE)
-            )
+                Card.of(CardNumber.ACE, CardShape.SPADE),
+            ),
         )
 
         player.score shouldBe 16
@@ -53,8 +54,8 @@ class PlayerTest : StringSpec({
             listOf(
                 Card.of(CardNumber.TEN, CardShape.HEART),
                 Card.of(CardNumber.SIX, CardShape.CLUB),
-                Card.of(CardNumber.ACE, CardShape.DIAMOND)
-            )
+                Card.of(CardNumber.ACE, CardShape.DIAMOND),
+            ),
         )
 
         player.score shouldBe 17
@@ -66,8 +67,8 @@ class PlayerTest : StringSpec({
             listOf(
                 Card.of(CardNumber.ACE, CardShape.HEART),
                 Card.of(CardNumber.ACE, CardShape.CLUB),
-                Card.of(CardNumber.NINE, CardShape.SPADE)
-            )
+                Card.of(CardNumber.NINE, CardShape.SPADE),
+            ),
         )
 
         player.score shouldBe 21
