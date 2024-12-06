@@ -14,7 +14,7 @@ class PlayerTest : StringSpec({
     "카드를 추가로 뽑을 수 있는 상황인지 확인할 수 있다." {
         forAll(
             row(listOf(Card(Rank.ACE, Suit.HEARTS), Card(Rank.TWO, Suit.DIAMONDS)), true),
-            row(listOf(Card(Rank.ACE, Suit.SPADES), Card(Rank.TEN, Suit.DIAMONDS)), true),
+            row(listOf(Card(Rank.ACE, Suit.SPADES), Card(Rank.TEN, Suit.DIAMONDS)), false),
             row(listOf(Card(Rank.JACK, Suit.HEARTS), Card(Rank.KING, Suit.HEARTS)), true),
             row(
                 listOf(Card(Rank.EIGHT, Suit.HEARTS), Card(Rank.EIGHT, Suit.DIAMONDS), Card(Rank.SIX, Suit.DIAMONDS)),
