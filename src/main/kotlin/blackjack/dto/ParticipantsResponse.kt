@@ -1,5 +1,6 @@
 package blackjack.dto
 
+import blackjack.domain.Card
 import blackjack.domain.Participants
 
 class ParticipantsResponse(private val participants: Participants) {
@@ -16,7 +17,20 @@ class ParticipantsResponse(private val participants: Participants) {
     fun toFormattedStringPlayerResults(): String {
         return participants.getAllParticipants().joinToString("\n") { player ->
             val total = player.calculateTotal()
-            "${player.getName()}: ${player.getAllCards().joinToString(", ") { it.display() }} - $total"
+            val cards = player.getAllCards()
+
+            val scoreDisplay = formattedStringSpecificCase(cards, total)
+
+            "${player.getName()}: ${cards.joinToString(", ") { it.display() }} - $scoreDisplay"
         }
+    }
+
+    private fun formattedStringSpecificCase(
+        cards: List<Card>,
+        total: Int,
+    ) = when {
+        cards.size == 2 && total == 21 -> "Blackjack"
+        total == 0 -> "Bust"
+        else -> total.toString()
     }
 }
