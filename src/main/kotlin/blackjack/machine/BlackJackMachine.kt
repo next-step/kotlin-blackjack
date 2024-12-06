@@ -25,12 +25,12 @@ class BlackJackMachine(
         var dealer = Dealer.ready(initialCards = listOf(deck.draw(), deck.draw()))
 
         ResultView.printPlayerNamesAndDealer(players = players, dealer = dealer)
-        ResultView.printPlayersCardStatus(players = players, dealer = dealer)
+        ResultView.printPlayersCardStatus(players = dealer.convertToPlayers().add(players))
 
         while (Rule.isGameActive(players = players, dealer = dealer)) {
             players = Players(players = players.players.map { playTurn(it) })
             dealer = playDealerTurn(dealer)
-            ResultView.printPlayersCardStatusAndSum(players = players, dealer = dealer)
+            ResultView.printPlayersCardStatusAndSum(players = dealer.convertToPlayers().add(players))
         }
 
         ResultView.printWinner(players = players, dealer = dealer)

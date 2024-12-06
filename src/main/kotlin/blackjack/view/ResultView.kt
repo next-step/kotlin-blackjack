@@ -16,22 +16,15 @@ object ResultView {
     private fun printPlayersName(players: Players): String =
         "${players.players.joinToString { it.name }}에게 ${players.players.size}장을 나누었습니다."
 
-    fun printPlayersCardStatus(players: Players, dealer: Dealer) {
-        println("${dealer.name}카드: ${dealer.hand.cards.joinToString(
-            ", ",
-        ) { "${it.rank.value}${it.suit.description}" }}")
-
+    fun printPlayersCardStatus(players: Players) {
         players.players.forEach { player ->
             printPlayerCard(player)
         }
         println()
     }
 
-    fun printPlayersCardStatusAndSum(players: Players, dealer: Dealer) {
+    fun printPlayersCardStatusAndSum(players: Players) {
         println()
-        println("${dealer.name}카드: ${dealer.hand.cards.joinToString(
-            ", ",
-        ) { "${it.rank.value}${it.suit.description}" }} ${dealer.hand.sum().convertToResultString()}")
         players.players.forEach { player ->
             printPlayerCard(player, sum = player.hand.sum())
         }
