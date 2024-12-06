@@ -1,4 +1,9 @@
-package blackjack
+package blackjack.view
+
+import blackjack.BlackJackGame
+import blackjack.DrawResult
+import blackjack.Player
+import blackjack.PlayerName
 
 class InputView {
     fun inputBlackJack(): BlackJackGame {
@@ -32,7 +37,7 @@ class InputView {
 
     private fun printDrawResult(drawResult: List<DrawResult>) {
         drawResult.forEach {
-            val displayCards = it.cards.joinToString(", ") { drawCard -> drawCard.drawCardString }
+            val displayCards = it.cards.joinToString(", ") { drawCard -> CardExpression.of(drawCard).value }
             println("${it.playerName}카드: $displayCards")
         }
     }
