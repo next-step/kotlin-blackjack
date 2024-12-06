@@ -120,7 +120,7 @@ class PlayersTest {
 
         players.stand()
 
-        players[0].reasonDone shouldBe PlayerReasonDone.STANDS
+        players[0].reasonDone shouldBe PlayerReasonDone.PLAYER_STANDS
     }
 
     @Test

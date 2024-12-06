@@ -20,7 +20,7 @@ class Player(
     fun initialDrawFrom(deck: Deck) {
         drawFrom(deck)
         if (hand.isBlackjack()) {
-            done(PlayerReasonDone.BLACKJACK)
+            done(PlayerReasonDone.PLAYER_HAS_BLACKJACK)
         }
     }
 
@@ -28,13 +28,13 @@ class Player(
         checkIsNotDone()
         hand.drawFrom(deck)
         if (isBusted) {
-            done(PlayerReasonDone.BUSTED)
+            done(PlayerReasonDone.PLAYER_BUSTED)
         }
     }
 
     fun stand() {
         checkIsNotDone()
-        done(PlayerReasonDone.STANDS)
+        done(PlayerReasonDone.PLAYER_STANDS)
     }
 
     private fun checkIsNotDone() {

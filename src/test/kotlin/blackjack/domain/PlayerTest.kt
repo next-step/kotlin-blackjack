@@ -54,7 +54,7 @@ class PlayerTest {
         player.initialDrawFrom(deck)
 
         player.isDone shouldBe true
-        player.reasonDone shouldBe PlayerReasonDone.BLACKJACK
+        player.reasonDone shouldBe PlayerReasonDone.PLAYER_HAS_BLACKJACK
     }
 
     @Test
@@ -90,7 +90,7 @@ class PlayerTest {
         player.hit(deck)
 
         player.isDone shouldBe true
-        player.reasonDone shouldBe PlayerReasonDone.BUSTED
+        player.reasonDone shouldBe PlayerReasonDone.PLAYER_BUSTED
     }
 
     @Test
@@ -100,7 +100,7 @@ class PlayerTest {
         player.stand()
 
         player.isDone shouldBe true
-        player.reasonDone shouldBe PlayerReasonDone.STANDS
+        player.reasonDone shouldBe PlayerReasonDone.PLAYER_STANDS
     }
 
     @ParameterizedTest(name = "{index} 플레이어 상태 = {1}")
