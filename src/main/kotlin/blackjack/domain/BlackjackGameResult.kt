@@ -8,7 +8,7 @@ class BlackjackGameResult(
 
     init {
         players.forEach { player ->
-            result[player] = player.compare(dealer)
+            result[player] = player.compareWithDealer(dealer)
         }
     }
 

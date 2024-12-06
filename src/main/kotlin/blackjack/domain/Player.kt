@@ -8,6 +8,14 @@ class Player(
         return !state.isFinished() && !hand.isBust()
     }
 
+    fun compareWithDealer(dealer: Dealer): GameMatchResult {
+        return when {
+            calculateTotal() > dealer.calculateTotal() -> GameMatchResult.WIN
+            calculateTotal() < dealer.calculateTotal() -> GameMatchResult.LOSE
+            else -> GameMatchResult.DRAW
+        }
+    }
+
     companion object {
         fun createNew(
             playerName: PlayerName,
