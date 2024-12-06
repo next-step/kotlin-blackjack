@@ -19,6 +19,34 @@ class Card private constructor(
         face = Face.UP
     }
 
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+        if (other !is Card) {
+            return false
+        }
+
+        if (suit != other.suit) {
+            return false
+        }
+        if (rank != other.rank) {
+            return false
+        }
+        if (face != other.face) {
+            return false
+        }
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = suit.hashCode()
+        result = 31 * result + rank.hashCode()
+        result = 31 * result + face.hashCode()
+        return result
+    }
+
     companion object {
         val ALL_CARDS =
             Suit.entries.flatMap { suit ->
