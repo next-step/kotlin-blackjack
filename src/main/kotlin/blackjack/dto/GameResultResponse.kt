@@ -15,24 +15,20 @@ class GameResultResponse(private val gameResult: BlackjackGameResult) {
         return "$formattedDealerResult\n$formattedPlayerResults"
     }
 
-    private fun calculateDealerResults(): Triple<Int, Int, Int> {
-        return gameResult.extractPlayerGameResult().values.fold(Triple(0, 0, 0)) { (wins, draws, losses), gameResult ->
-            when (gameResult) {
-                GameMatchResult.WIN -> Triple(wins, draws, losses + 1)
-                GameMatchResult.LOSE -> Triple(wins + 1, draws, losses)
-                GameMatchResult.DRAW -> Triple(wins, draws + 1, losses)
-            }
-        }
+    private fun calculateDealerResults(): Map<GameMatchResult, Int> {
+        return gameResult.extractPlayerGameResult()
+            .values
+            .groupingBy { it }
+            .eachCount()
     }
 
-    private fun formatDealerGameResults(results: Triple<Int, Int, Int>): String {
-        val (wins, draws, losses) = results
-        val resultStrings = mutableListOf<String>()
-
-        if (wins > 0) resultStrings.add("$wins 승")
-        if (draws > 0) resultStrings.add("$draws 무")
-        if (losses > 0) resultStrings.add("$losses 패")
-
+    private fun formatDealerGameResults(results: Map<GameMatchResult, Int>): String {
+        val resultStrings =
+            listOfNotNull(
+                results[GameMatchResult.WIN]?.let { "$it 패" },
+                results[GameMatchResult.DRAW]?.let { "$it 무" },
+                results[GameMatchResult.LOSE]?.let { "$it 승" },
+            )
         return "딜러: " + resultStrings.joinToString(" ")
     }
 
