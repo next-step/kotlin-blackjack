@@ -14,11 +14,10 @@ object BlackjackController {
         game.players.forEach { ResultView.printPlayerCards(listOf(it.name to it.cards)) }
 
         game.players.forEach { player ->
-            while (game.canContinue(player)) {
-                if (InputView.inputPickCard(player.name) != "y") break
-                game.drawCardForPlayer(player)
-                ResultView.printPlayerCards(listOf(player.name to player.cards))
+            game.handlePlayerTurn(player) { playerName ->
+                InputView.inputPickCard(playerName)
             }
+            ResultView.printPlayerCards(listOf(player.name to player.cards))
         }
 
         ResultView.printFinalScores(game.players.map { it.name to it.score }, game.players)
