@@ -37,4 +37,8 @@ open class BlackJackNormalPlayer(
     }
 
     fun draw() {}
+
+    fun isBlackJackPlayer(): Boolean {
+        return blackJackPlayerCards.isBlackJack()
+    }
 }

@@ -71,42 +71,48 @@ class BlackJackDealerTest {
 
     @Test
     fun `딜러는 이기면 상대의 판돈 만큼 이익을 얻는다`() {
-        val blackJackDealer = BlackJackDealer(
-            blackJackPlayerCards = BlackJackPlayerCards(
-                mutableListOf(
-                    BlackJackCard.get(BlackJackCardShape.SPADE, BlackJackCardNumber.TWO),
-                    BlackJackCard.get(BlackJackCardShape.SPADE, BlackJackCardNumber.ACE),
-                )
+        val blackJackDealer =
+            BlackJackDealer(
+                blackJackPlayerCards =
+                    BlackJackPlayerCards(
+                        mutableListOf(
+                            BlackJackCard.get(BlackJackCardShape.SPADE, BlackJackCardNumber.TWO),
+                            BlackJackCard.get(BlackJackCardShape.SPADE, BlackJackCardNumber.ACE),
+                        ),
+                    ),
             )
-        )
         blackJackDealer.win(1000)
         assertThat(blackJackDealer.profit).isEqualTo(1000)
     }
 
     @Test
     fun `딜러는 지면 상대의 판돈 만큼 손해를 본다`() {
-        val blackJackDealer = BlackJackDealer(
-            blackJackPlayerCards = BlackJackPlayerCards(
-                mutableListOf(
-                    BlackJackCard.get(BlackJackCardShape.SPADE, BlackJackCardNumber.TWO),
-                    BlackJackCard.get(BlackJackCardShape.SPADE, BlackJackCardNumber.ACE),
-                )
+        val blackJackDealer =
+            BlackJackDealer(
+                blackJackPlayerCards =
+                    BlackJackPlayerCards(
+                        mutableListOf(
+                            BlackJackCard.get(BlackJackCardShape.SPADE, BlackJackCardNumber.TWO),
+                            BlackJackCard.get(BlackJackCardShape.SPADE, BlackJackCardNumber.ACE),
+                        ),
+                    ),
             )
-        )
-        blackJackDealer.lose(1000)
+        blackJackDealer.lose(1000, false)
         assertThat(blackJackDealer.profit).isEqualTo(-1000)
     }
 
     @Test
     fun `딜러는 비기면 이익에 변화가 없다`() {
-        val blackJackDealer = BlackJackDealer(
-            blackJackPlayerCards = BlackJackPlayerCards(
-                mutableListOf(
-                    BlackJackCard.get(BlackJackCardShape.SPADE, BlackJackCardNumber.TWO),
-                    BlackJackCard.get(BlackJackCardShape.SPADE, BlackJackCardNumber.ACE),
-                )
+        val blackJackDealer =
+            BlackJackDealer(
+                blackJackPlayerCards =
+                    BlackJackPlayerCards(
+                        mutableListOf(
+                            BlackJackCard.get(BlackJackCardShape.SPADE, BlackJackCardNumber.TWO),
+                            BlackJackCard.get(BlackJackCardShape.SPADE, BlackJackCardNumber.ACE),
+                        ),
+                    ),
             )
-        )
         blackJackDealer.draw()
         assertThat(blackJackDealer.profit).isEqualTo(0)
     }

@@ -24,4 +24,21 @@ class BlackJackGame(
         }
         return false
     }
+
+    fun calculateProfit(playerResults: List<BlackJackPlayerResult>) {
+        playerResults.forEach { result ->
+            val normalPlayer = players.find { it.name.equals(result.name) } ?: throw IllegalArgumentException("이상해요")
+            when (result.result) {
+                BlackJackPlayResult.WIN -> {
+                    normalPlayer.win()
+                    dealer.lose(normalPlayer.bet, normalPlayer.isBlackJackPlayer())
+                }
+                BlackJackPlayResult.LOSE -> {
+                    normalPlayer.lose()
+                    dealer.win(normalPlayer.bet)
+                }
+                BlackJackPlayResult.DRAW -> {}
+            }
+        }
+    }
 }
