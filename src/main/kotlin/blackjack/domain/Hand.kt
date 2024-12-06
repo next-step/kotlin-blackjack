@@ -8,7 +8,7 @@ class Hand {
     }
 
     fun isBust(): Boolean {
-        return calculateBestTotal() > BLACKJACK_NUMBER || calculateBestTotal() == ZERO
+        return calculateBestTotal() == ZERO
     }
 
     fun calculateBestTotal(): Int {
