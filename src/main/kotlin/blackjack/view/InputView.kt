@@ -10,7 +10,11 @@ object InputView {
         return names
     }
 
-    fun inputReceiveMoreCard(): String {
-        return readlnOrNull() ?: throw IllegalArgumentException("잘못된 입력입니다")
+    fun inputReceiveMoreCard(): Boolean {
+        return when (readlnOrNull()) {
+            "y" -> true
+            "n" -> false
+            else -> throw IllegalArgumentException("잘못된 입력입니다")
+        }
     }
 }
