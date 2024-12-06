@@ -8,6 +8,6 @@ class SinglePlayerResponse(private val player: Player) {
     }
 
     fun toFormattedStringPlayerCards(): String {
-        return player.getCards().joinToString(", ") { it.display() }
+        return player.getAllCards().joinToString(", ") { it.display() }
     }
 }

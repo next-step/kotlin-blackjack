@@ -16,7 +16,7 @@ class ParticipantsResponse(private val participants: Participants) {
     fun toFormattedStringPlayerResults(): String {
         return participants.getAllParticipants().joinToString("\n") { player ->
             val total = player.calculateTotal()
-            "${player.getName()}: ${player.getCards().joinToString(", ") { it.display() }} - $total"
+            "${player.getName()}: ${player.getAllCards().joinToString(", ") { it.display() }} - $total"
         }
     }
 }

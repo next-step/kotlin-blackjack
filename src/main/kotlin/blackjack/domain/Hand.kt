@@ -11,6 +11,10 @@ class Hand {
         return calculateBestTotal() == ZERO
     }
 
+    fun isBlackjack(): Boolean {
+        return cards.size == 2 && calculateBestTotal() == BLACKJACK_NUMBER
+    }
+
     fun calculateBestTotal(): Int {
         val possibleSums = calculateAllPossibleSums()
         return possibleSums.filter { it <= BLACKJACK_NUMBER }.maxOrNull() ?: ZERO
@@ -24,16 +28,15 @@ class Hand {
         return listOf(sumOf)
     }
 
-    fun isBlackjack(): Boolean {
-        return cards.size == 2 && calculateBestTotal() == BLACKJACK_NUMBER
-    }
-
-    fun getCards(): List<Card> {
+    fun getAllCards(): List<Card> {
         return cards.toList()
     }
 
-    fun getFirstCard(): Card {
-        return cards[ZERO]
+    fun getSpecificRangeCards(
+        start: Int,
+        end: Int,
+    ): List<Card> {
+        return cards.subList(start, end)
     }
 
     companion object {

@@ -9,7 +9,7 @@ class Dealer(
     }
 
     override fun getInitialCard(): List<Card> {
-        return listOf(hand.getFirstCard())
+        return hand.getSpecificRangeCards(0, 0)
     }
 
     companion object {

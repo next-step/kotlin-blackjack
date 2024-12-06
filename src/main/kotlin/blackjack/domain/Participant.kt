@@ -10,16 +10,16 @@ abstract class Participant(private val name: PlayerName, private val hand: Hand)
         hand.addCard(card)
     }
 
-    fun getCards(): List<Card> {
-        return hand.getCards()
-    }
-
     fun calculateTotal(): Int {
         return hand.calculateBestTotal()
     }
 
     fun getName(): String {
         return name.value
+    }
+
+    fun getAllCards(): List<Card> {
+        return hand.getAllCards()
     }
 
     abstract fun isDrawable(): Boolean
