@@ -95,7 +95,7 @@ class GameTest {
     }
 
     @Test
-    fun `차례인 플레이어가 힛한다`() {
+    fun `플레이어가 힛하면 덱에서 카드를 뽑는다`() {
         val players = Players.from("black", "jack")
         val game = Game(players, deck).apply { initialDeal() }
 
@@ -105,13 +105,32 @@ class GameTest {
     }
 
     @Test
-    fun `차례인 플레이어가 스탠드한다`() {
+    fun `플레이어가 힛하면 플레이어의 턴이 계속된다`() {
+        val players = Players.from("black", "jack")
+        val game = Game(players, deck).apply { initialDeal() }
+
+        game.playerHits()
+
+        game.currentPlayer shouldBe game.players[0]
+    }
+
+    @Test
+    fun `플레이어가 스탠드하면 플레이어의 턴이 종료한다`() {
         val players = Players.from("black", "jack")
         val game = Game(players, deck).apply { initialDeal() }
 
         game.playerStands()
 
         game.players[0].reasonDone shouldBe PlayerReasonDone.PLAYER_STANDS
+    }
+
+    @Test
+    fun `플레이러가 스탠드하면 다음 선수로 턴이 넘어간다`() {
+        val players = Players.from("black", "jack")
+        val game = Game(players, deck).apply { initialDeal() }
+
+        game.playerStands()
+
         game.currentPlayer shouldBe game.players[1]
     }
 }
