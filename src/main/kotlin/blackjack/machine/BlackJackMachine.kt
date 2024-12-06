@@ -32,6 +32,8 @@ class BlackJackMachine(
             dealer = playDealerTurn(dealer)
             ResultView.printPlayersCardStatusAndSum(players = players, dealer = dealer)
         }
+
+        ResultView.printWinner(players = players, dealer = dealer)
     }
 
     private fun playTurn(player: Player): Player =
@@ -40,6 +42,7 @@ class BlackJackMachine(
             !InputView.isHitCard(player) ->
                 player
                     .also { ResultView.printPlayerCard(it) }
+
             else ->
                 player
                     .hitCard(deck.draw())
