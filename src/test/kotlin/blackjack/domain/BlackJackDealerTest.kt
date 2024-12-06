@@ -15,7 +15,7 @@ class BlackJackDealerTest {
                 ),
             )
         val blackJackPlayerCards = BlackJackPlayerCards.byDeck(blackJackDeck)
-        val blackJackDealer = BlackJackDealer(blackJackPlayerCards)
+        val blackJackDealer = BlackJackDealer(blackJackPlayerCards = blackJackPlayerCards)
 
         blackJackDealer.drawCard(blackJackDeck)
 
@@ -44,7 +44,7 @@ class BlackJackDealerTest {
                 ),
             )
         val blackJackPlayerCards = BlackJackPlayerCards.byDeck(blackJackDeck)
-        val blackJackDealer = BlackJackDealer(blackJackPlayerCards)
+        val blackJackDealer = BlackJackDealer(blackJackPlayerCards = blackJackPlayerCards)
 
         blackJackDealer.drawCard(blackJackDeck)
 

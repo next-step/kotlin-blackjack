@@ -1,9 +1,14 @@
 package blackjack.domain
 
-interface BlackJackPlayer {
-    fun drawCard(blackJackDeck: BlackJackDeck): Boolean
+abstract class BlackJackPlayer(
+    val name: String,
+    val blackJackPlayerCards: BlackJackPlayerCards,
+) {
+    abstract fun drawCard(blackJackDeck: BlackJackDeck)
 
-    fun getBestSum(): Int
+    abstract fun getBestSum(): Int
+
+    abstract fun drawPossible(): Boolean
 
     companion object {
         const val DEFAULT_CARD_NUMBER = 2

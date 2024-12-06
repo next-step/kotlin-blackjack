@@ -2,6 +2,7 @@ package blackjack.view
 
 import blackjack.domain.BlackJackDealer
 import blackjack.domain.BlackJackNormalPlayer
+import blackjack.domain.BlackJackPlayer
 
 object BlackJackInputView {
     fun getPlayerName(): List<String> {
@@ -14,9 +15,9 @@ object BlackJackInputView {
         blackJackDealer: BlackJackDealer,
     ) {
         blackJackNormalPlayers.forEach {
-            drawBlackJackNormalPlayerCards(it)
+            drawBlackJackPlayerCards(it)
         }
-        drawBlackJackDealerCards(blackJackDealer)
+        drawBlackJackPlayerCards(blackJackDealer)
     }
 
     fun getPlayerDrawCardYn(blackJackNormalPlayer: BlackJackNormalPlayer): Boolean {
@@ -25,13 +26,9 @@ object BlackJackInputView {
         return yn == "y"
     }
 
-    fun drawBlackJackNormalPlayerCards(blackJackNormalPlayer: BlackJackNormalPlayer) {
-        print("${blackJackNormalPlayer.name}카드: ")
-        println(blackJackNormalPlayer.blackJackPlayerCards.cards.map { "${it.number.name} ${it.shape.name}" }.joinToString(","))
+    fun drawBlackJackPlayerCards(blackJackPlayer: BlackJackPlayer) {
+        print("${blackJackPlayer.name}카드: ")
+        println(blackJackPlayer.blackJackPlayerCards.cards.map { "${it.number.name} ${it.shape.name}" }.joinToString(","))
     }
 
-    fun drawBlackJackDealerCards(blackJackDealer: BlackJackDealer) {
-        print("딜러 카드: ")
-        println(blackJackDealer.blackJackPlayerCards.cards.map { "${it.number.name} ${it.shape.name}" }.joinToString(","))
-    }
 }

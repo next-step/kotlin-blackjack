@@ -3,19 +3,18 @@ package blackjack.view
 import blackjack.domain.BlackJackDealer
 import blackjack.domain.BlackJackGameResult
 import blackjack.domain.BlackJackNormalPlayer
-import blackjack.view.BlackJackInputView.drawBlackJackDealerCards
-import blackjack.view.BlackJackInputView.drawBlackJackNormalPlayerCards
+import blackjack.view.BlackJackInputView.drawBlackJackPlayerCards
 
 object BlackJackResultView {
     fun drawBlackJackPlayersCardsWithResult(blackJackNormalPlayer: List<BlackJackNormalPlayer>) {
         blackJackNormalPlayer.forEach {
-            drawBlackJackNormalPlayerCards(it)
+            drawBlackJackPlayerCards(it)
             println("결과: ${it.getBestSum()}")
         }
     }
 
     fun drawBlackJackDealerWithResult(blackJackDealer: BlackJackDealer) {
-        drawBlackJackDealerCards(blackJackDealer)
+        drawBlackJackPlayerCards(blackJackDealer)
         println("결과: ${blackJackDealer.getBestSum()}")
     }
 

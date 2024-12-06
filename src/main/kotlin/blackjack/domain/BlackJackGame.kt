@@ -12,8 +12,16 @@ class BlackJackGame(
                     BlackJackPlayResult.getResult(it.getBestSum(), dealer.getBestSum()),
                 )
             }
-        val winCount = playerResults.filter { it.result == BlackJackPlayResult.LOSE }.size
-        val loseCount = playerResults.filter { it.result == BlackJackPlayResult.WIN }.size
+        val winCount = playerResults.filter { it.result == BlackJackPlayResult.LOSE }.count()
+        val loseCount = playerResults.filter { it.result == BlackJackPlayResult.WIN }.count()
         return BlackJackGameResult(playerResults, BlackJackDealerResult(winCount, loseCount))
+    }
+
+    fun dealerDraw(blackJackDeck: BlackJackDeck): Boolean {
+        if (dealer.drawPossible()) {
+            dealer.drawCard(blackJackDeck)
+            return true
+        }
+        return false
     }
 }

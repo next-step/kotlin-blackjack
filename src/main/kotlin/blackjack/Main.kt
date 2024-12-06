@@ -31,10 +31,10 @@ private fun doGame(
     blackJackGame.players.forEach {
         while (it.drawPossible() && BlackJackInputView.getPlayerDrawCardYn(it)) {
             it.drawCard(blackJackDeck)
-            BlackJackInputView.drawBlackJackNormalPlayerCards(it)
+            BlackJackInputView.drawBlackJackPlayerCards(it)
         }
     }
-    if (blackJackGame.dealer.drawCard(blackJackDeck)) {
+    if (blackJackGame.dealerDraw(blackJackDeck)) {
         println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
     }
 }

@@ -37,7 +37,7 @@ class BlackJackGameTest {
         val gameResult = blackJackGame.getGameResult()
         assertThat(gameResult.playerResults.first { it.name == "사람1" }.result).isEqualTo(BlackJackPlayResult.DRAW)
         assertThat(gameResult.playerResults.first { it.name == "사람2" }.result).isEqualTo(BlackJackPlayResult.WIN)
-        assertThat(gameResult.dealerResult.winCount).isEqualTo(1)
-        assertThat(gameResult.dealerResult.lossCount).isEqualTo(0)
+        assertThat(gameResult.dealerResult.winCount).isEqualTo(0)
+        assertThat(gameResult.dealerResult.lossCount).isEqualTo(1)
     }
 }
