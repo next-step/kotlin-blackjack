@@ -11,7 +11,7 @@ class Player(val name: String) {
 
     private fun calculateScore(): Int {
         val nonAceSum = _cards.filter { it.number != CardNumber.ACE }
-            .sumOf { it.number.value }
+            .sumOf { it.number.getPoints() }
         val aceCount = _cards.count { it.number == CardNumber.ACE }
 
         return if (aceCount > 0) {

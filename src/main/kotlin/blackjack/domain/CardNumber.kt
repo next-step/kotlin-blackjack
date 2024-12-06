@@ -1,6 +1,6 @@
 package blackjack.domain
 
-enum class CardNumber(val value: Int) {
+enum class CardNumber(private val points: Int) {
     ACE(1),
     TWO(2),
     THREE(3),
@@ -13,5 +13,7 @@ enum class CardNumber(val value: Int) {
     TEN(10),
     JACK(10),
     QUEEN(10),
-    KING(10),
+    KING(10);
+
+    fun getPoints(): Int = points
 }

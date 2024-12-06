@@ -4,8 +4,8 @@ class Deck {
     val cards = mutableListOf<Card>()
 
     init {
-        CardShape.values().forEach { shape ->
-            CardNumber.values().forEach { number ->
+        CardShape.entries.forEach { shape ->
+            CardNumber.entries.forEach { number ->
                 cards.add(Card(number, shape))
             }
         }
