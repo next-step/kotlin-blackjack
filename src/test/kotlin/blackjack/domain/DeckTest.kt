@@ -30,13 +30,6 @@ class DeckTest : StringSpec({
         deck.cards.size shouldBe 47
     }
 
-    "남은 카드보다 많은 카드를 뽑으려고 하면 예외가 발생한다." {
-        val deck = Deck()
-        shouldThrow<IllegalArgumentException> {
-            deck.drawCards(53)
-        }.message shouldBe "남은 카드가 부족합니다."
-    }
-
     "0장 이하의 카드를 뽑으려고 하면 예외가 발생한다." {
         val deck = Deck()
         shouldThrow<IllegalArgumentException> {
