@@ -3,6 +3,7 @@ package blackjack.domain
 class Game(
     val players: Players,
     val deck: Deck,
+    val dealer: Dealer = Dealer(),
 ) {
     val isDone: Boolean
         get() = players.isDone
@@ -12,6 +13,7 @@ class Game(
     fun initialDeal() {
         repeat(INITIAL_ROUNDS) {
             players.dealRoundOfCardsFrom(deck)
+            dealer.initialDrawFrom(deck)
         }
     }
 

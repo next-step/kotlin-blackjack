@@ -10,13 +10,13 @@ class BlackjackServiceTest {
     @Test
     fun `게임을 초기화한다`() {
         val sut = BlackjackService()
-        val names = listOf("black", "jack", "game")
+        val names = listOf("black", "jack")
         val deck = StubDeck.from(Rank.ACE, Rank.TWO, Rank.THREE, Rank.KING, Rank.QUEEN, Rank.JACK)
 
         val game = sut.initializeGame(names, deck)
 
         game.players[0].value shouldBe 21
         game.players[1].value shouldBe 12
-        game.players[2].value shouldBe 13
+        game.dealer.value shouldBe 13
     }
 }
