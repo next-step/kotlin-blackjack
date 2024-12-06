@@ -15,22 +15,23 @@ class Player(
     fun addCard(card: Card): DrawCard {
         cards.add(card)
 
-        if (totalValue() >= 21) {
+        if (isBust()) {
             stopDraw()
         }
 
         return card.toDrawCard()
     }
 
+    private fun isBust(): Boolean = totalValue() > 21
+
+    fun totalValue(): Int =
+        cards.fold(0) { acc, card -> acc + card.value(acc) }
+
     fun canDraw(): Boolean = draw
 
     fun stopDraw() {
         draw = false
     }
-
-    fun totalValue(): Int =
-        cards.fold(0) { acc, card -> acc + card.value(acc) }
-
 }
 
 @JvmInline
