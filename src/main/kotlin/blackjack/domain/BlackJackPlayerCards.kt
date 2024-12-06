@@ -33,7 +33,7 @@ class BlackJackPlayerCards(private val _cards: MutableList<BlackJackCard> = muta
     }
 
     fun isBlackJack(): Boolean {
-        return getCardsBestSum().equals(BLACKJACK_NUMBER)
+        return getCardsBestSum().equals(BLACKJACK_NUMBER) && cards.size == 2
     }
 
     companion object {

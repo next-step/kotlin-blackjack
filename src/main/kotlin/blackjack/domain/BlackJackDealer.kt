@@ -21,6 +21,10 @@ class BlackJackDealer(
         return blackJackPlayerCards.getCardsBestSum()
     }
 
+    fun win(bet: Int) {
+        profit += bet
+    }
+
     companion object {
         private const val DEALER_DRAW_THRESHOLD = 16
     }
