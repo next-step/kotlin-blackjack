@@ -6,7 +6,7 @@ class Deck {
     init {
         CardShape.entries.forEach { shape ->
             CardNumber.entries.forEach { number ->
-                cards.add(Card(number, shape))
+                cards.add(Card.of(number, shape))
             }
         }
         cards.shuffle()

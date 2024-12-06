@@ -23,9 +23,9 @@ class GameTest : StringSpec({
 
         player.addCards(
             listOf(
-                Card(CardNumber.TEN, CardShape.HEART),
-                Card(CardNumber.TEN, CardShape.CLUB),
-                Card(CardNumber.TWO, CardShape.SPADE)
+                Card.of(CardNumber.TEN, CardShape.HEART),
+                Card.of(CardNumber.TEN, CardShape.CLUB),
+                Card.of(CardNumber.TWO, CardShape.SPADE)
             )
         )
         game.canContinue(player) shouldBe false

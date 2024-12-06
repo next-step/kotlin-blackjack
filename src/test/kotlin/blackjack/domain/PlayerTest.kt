@@ -14,8 +14,8 @@ class PlayerTest : StringSpec({
     "카드를 추가하면 카드 목록이 갱신된다." {
         val player = Player("dabomi")
         val newCards = listOf(
-            Card(CardNumber.TEN, CardShape.HEART),
-            Card(CardNumber.FIVE, CardShape.CLUB)
+            Card.of(CardNumber.TEN, CardShape.HEART),
+            Card.of(CardNumber.FIVE, CardShape.CLUB)
         )
         player.addCards(newCards)
 
@@ -27,8 +27,8 @@ class PlayerTest : StringSpec({
         val player = Player("dabomi")
         player.addCards(
             listOf(
-                Card(CardNumber.TEN, CardShape.HEART),
-                Card(CardNumber.SIX, CardShape.CLUB)
+                Card.of(CardNumber.TEN, CardShape.HEART),
+                Card.of(CardNumber.SIX, CardShape.CLUB)
             )
         )
 
@@ -39,8 +39,8 @@ class PlayerTest : StringSpec({
         val player = Player("dabomi")
         player.addCards(
             listOf(
-                Card(CardNumber.FIVE, CardShape.HEART),
-                Card(CardNumber.ACE, CardShape.SPADE)
+                Card.of(CardNumber.FIVE, CardShape.HEART),
+                Card.of(CardNumber.ACE, CardShape.SPADE)
             )
         )
 
@@ -51,9 +51,9 @@ class PlayerTest : StringSpec({
         val player = Player("dabomi")
         player.addCards(
             listOf(
-                Card(CardNumber.TEN, CardShape.HEART),
-                Card(CardNumber.SIX, CardShape.CLUB),
-                Card(CardNumber.ACE, CardShape.DIAMOND)
+                Card.of(CardNumber.TEN, CardShape.HEART),
+                Card.of(CardNumber.SIX, CardShape.CLUB),
+                Card.of(CardNumber.ACE, CardShape.DIAMOND)
             )
         )
 
@@ -64,9 +64,9 @@ class PlayerTest : StringSpec({
         val player = Player("dabomi")
         player.addCards(
             listOf(
-                Card(CardNumber.ACE, CardShape.HEART),
-                Card(CardNumber.ACE, CardShape.CLUB),
-                Card(CardNumber.NINE, CardShape.SPADE)
+                Card.of(CardNumber.ACE, CardShape.HEART),
+                Card.of(CardNumber.ACE, CardShape.CLUB),
+                Card.of(CardNumber.NINE, CardShape.SPADE)
             )
         )
 
