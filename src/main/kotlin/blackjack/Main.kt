@@ -12,6 +12,7 @@ import blackjack.view.BlackJackResultView
 fun main() {
     val blackJackDeck = BlackJackDeckGenerator.getDefaultDeck()
     val playerNames = BlackJackInputView.getPlayerName()
+    val playerBets = BlackJackInputView.getPlayerBets(playerNames)
     val blackJackGame = getGame(playerNames, blackJackDeck)
     BlackJackInputView.drawBlackJackPlayersCards(blackJackGame.players, blackJackGame.dealer)
     doGame(blackJackGame, blackJackDeck)
