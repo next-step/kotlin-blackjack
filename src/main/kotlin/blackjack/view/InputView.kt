@@ -20,4 +20,9 @@ class InputView {
             }
         }
     }
+
+    fun askForBet(playerName: String): Int {
+        printMessage("${playerName}의 베팅 금액을 입력하세요.")
+        return readLine()?.toIntOrNull() ?: 0
+    }
 }

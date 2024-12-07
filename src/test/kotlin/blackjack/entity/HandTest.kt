@@ -1,6 +1,8 @@
 package blackjack.entity
 
 import io.kotest.core.spec.style.DescribeSpec
+import io.kotest.data.forAll
+import io.kotest.data.row
 import io.kotest.matchers.collections.shouldBeEmpty
 import io.kotest.matchers.shouldBe
 
@@ -42,6 +44,68 @@ class HandTest : DescribeSpec({
 
             it("버스트 상태를 반환한다") {
                 hand.isBusted() shouldBe true
+            }
+        }
+        context("처음 두 장이 블랙잭 조건을 만족하는지 확인할 때") {
+            forAll(
+                row(
+                    listOf(
+                        Card(Suit.HEARTS, Rank.ACE),
+                        Card(Suit.SPADES, Rank.KING),
+                    ),
+                    true,
+                    "ACE와 K가 있는 경우 블랙잭",
+                ),
+                row(
+                    listOf(
+                        Card(Suit.CLUBS, Rank.ACE),
+                        Card(Suit.DIAMONDS, Rank.QUEEN),
+                    ),
+                    true,
+                    "ACE와 Q가 있는 경우 블랙잭",
+                ),
+                row(
+                    listOf(
+                        Card(Suit.HEARTS, Rank.ACE),
+                        Card(Suit.SPADES, Rank.TEN),
+                    ),
+                    true,
+                    "ACE와 10이 있는 경우 블랙잭",
+                ),
+                row(
+                    listOf(
+                        Card(Suit.HEARTS, Rank.ACE),
+                        Card(Suit.SPADES, Rank.EIGHT),
+                    ),
+                    false,
+                    "ACE와 8이 있는 경우 블랙잭이 아님",
+                ),
+                row(
+                    listOf(
+                        Card(Suit.HEARTS, Rank.NINE),
+                        Card(Suit.SPADES, Rank.TEN),
+                    ),
+                    false,
+                    "9와 10이 있는 경우 블랙잭이 아님",
+                ),
+                row(
+                    listOf(
+                        Card(Suit.HEARTS, Rank.ACE),
+                        Card(Suit.SPADES, Rank.TEN),
+                        Card(Suit.CLUBS, Rank.TWO),
+                    ),
+                    false,
+                    "ACE와 10, 추가 카드가 있는 경우 블랙잭이 아님",
+                ),
+            ) { cards, expectedResult, description ->
+                val hand =
+                    Hand().apply {
+                        cards.forEach { addCard(it) }
+                    }
+
+                it(description) {
+                    hand.isBlackjack() shouldBe expectedResult
+                }
             }
         }
     }
