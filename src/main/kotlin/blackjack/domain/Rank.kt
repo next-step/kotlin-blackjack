@@ -22,6 +22,9 @@ enum class Rank(
     fun isAce(): Boolean = this == ACE
 
     companion object {
+        private const val ACE_ALTERNATIVE_VALUE = 11
+        private const val BLACKJACK_VALUE = 21
+
         fun calculateTotalValue(ranks: List<Rank>): Int {
             val nonAceValue = ranks.filterNot(Rank::isAce).sumOf(Rank::value)
             val aceCount = ranks.count(Rank::isAce)
