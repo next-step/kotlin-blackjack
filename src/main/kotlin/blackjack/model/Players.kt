@@ -1,22 +1,18 @@
 package blackjack.model
 
-class Players private constructor(private val players: List<Player>) {
+class Players(players: List<Player>) {
+    private val _players = players.toList()
+    val players: List<Player>
+        get() = _players.toList()
+
     init {
         val duplicateNames =
             players.groupBy { it.name }
                 .filter { it.value.size > 1 }
                 .keys
 
-        if (duplicateNames.isNotEmpty()) {
-            throw IllegalArgumentException("중복된 플레이어 이름이 있습니다")
-        }
+        if (duplicateNames.isNotEmpty()) throw IllegalArgumentException("중복된 플레이어 이름이 있습니다")
     }
 
-    fun getPlayers(): List<Player> = players.toList()
-
-    fun getPlayerNames(): String = players.joinToString(",") { it.name }
-
-    companion object {
-        fun from(players: List<Player>): Players = Players(players)
-    }
+    fun getPlayerNames(): String = _players.joinToString(",") { it.name }
 }

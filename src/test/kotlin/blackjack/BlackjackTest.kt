@@ -95,13 +95,24 @@ class BlackjackTest {
         }.message shouldBe "남는 카드가 없습니다."
     }
 
-    @DisplayName("플레이어는 카드를 더 받을지 덜 받을지 선택할 수 있다.")
+    @DisplayName("플레이어는 'y'혹은 'n'가 아닌 문자를 입력 시 예외가 발생한다.")
     @Test
-    fun `game test1`() {
+    fun `game test2`() {
+        val blackjackController = BlackjackController()
+        val player = Player("aaa")
+        shouldThrow<IllegalArgumentException> {
+            blackjackController.checkPlayerRequest("nn", player)
+        }.message shouldBe "'y'혹은 'n'로만 입력해주세요."
     }
 
     @DisplayName("플레이어가 카드를 받지 않을 때까지 계속 받을 수 있다.")
     @Test
-    fun `game test2`() {
+    fun `game test3`() {
+        val blackjackController = BlackjackController()
+        val player = Player("aaa")
+        // 처음에 2개를 가져가기 때문
+        repeat(50) {
+            blackjackController.checkPlayerRequest("y", player)
+        }
     }
 }

@@ -22,8 +22,8 @@ class Cards(cards: Set<Card> = setOf()) {
         }
 
         // 에이스의 값을 11로 변경할 수 있는지 확인하고, 가능하면 변경
-        while (aceCount > 0 && total + 10 <= 21) {
-            total += 10
+        while (aceCount > 0 && total + ACE_VALUE <= WINNING_NUMBER) {
+            total += ACE_VALUE
             aceCount--
         }
 
@@ -32,5 +32,10 @@ class Cards(cards: Set<Card> = setOf()) {
 
     override fun toString(): String {
         return _cards.toString()
+    }
+
+    companion object {
+        const val WINNING_NUMBER = 21
+        const val ACE_VALUE = 10
     }
 }

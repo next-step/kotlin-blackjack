@@ -6,7 +6,7 @@ import blackjack.model.Players
 class BlackjackController {
     fun createPlayers(playerNamesInput: String): Players {
         val playersNames = playerNamesInput.split()
-        val players = Players.from(playersNames.map(::Player))
+        val players = Players(playersNames.map(::Player))
         return players
     }
 
