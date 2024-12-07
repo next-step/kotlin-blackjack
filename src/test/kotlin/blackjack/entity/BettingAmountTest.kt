@@ -26,22 +26,22 @@ class BettingAmountTest : DescribeSpec({
                 negativeException.message shouldBe "베팅 금액은 0보다 커야합니다."
             }
         }
-        context("플레이어가 BUst 상태인 경우") {
-            it("모든 금액을 잃는다") {
-                val bettingAmount = BettingAmount(100)
-                bettingAmount.loseIfBusted(true) shouldBe -100
-            }
-        }
-        context("플레이어가 Bust 상태가 아닌 경우") {
-            it("금액 변화가 없다") {
-                val bettingAmount = BettingAmount(100)
-                bettingAmount.loseIfBusted(false) shouldBe 0
-            }
-        }
         context("플레이어가 패배한 경우") {
             it("베팅 금액만큼 잃는다") {
                 val bettingAmount = BettingAmount(100)
                 bettingAmount.loseBet() shouldBe -100
+            }
+        }
+        context("플레이어가 승리한 경우") {
+            it("베팅 금액만큼 얻는다") {
+                val bettingAmount = BettingAmount(100)
+                bettingAmount.winBet() shouldBe 100
+            }
+        }
+        context("플레이어가 블랙잭으로 승리한 경우") {
+            it("베팅 금액의 1.5배만큼 얻는다") {
+                val bettingAmount = BettingAmount(100)
+                bettingAmount.winBlackjack() shouldBe 150
             }
         }
     }
