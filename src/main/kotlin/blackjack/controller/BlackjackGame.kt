@@ -12,12 +12,27 @@ class BlackjackGame(
 ) {
     fun start() {
         val gameTable = GameTable(getUsers(), Deck.create())
-        val initCardReceivedUsers = gameTable.dealInitCard()
+        val allCardReceivedUsers = playGame(gameTable)
+        printGameResult(allCardReceivedUsers)
+    }
 
-        println()
+    private fun getUsers(): List<User> {
+        return inputView.inputNames().map { User.create(name = it) }
+    }
+
+    private fun playGame(gameTable: GameTable): List<User> {
+        val initCardReceivedUsers = setUpInitCard(gameTable)
+        return processTurn(initCardReceivedUsers)
+    }
+
+    private fun setUpInitCard(gameTable: GameTable): List<User> {
+        val initCardReceivedUsers = gameTable.dealInitCard()
         resultView.printInitCardReceive(initCardReceivedUsers)
         initCardReceivedUsers.forEach { resultView.printUserCards(user = it, printScore = false) }
+        return initCardReceivedUsers
+    }
 
+    private fun processTurn(initCardReceivedUsers: List<User>): List<User> {
         val allCardReceivedUsers =
             initCardReceivedUsers.map { user ->
                 var currentUser = user
@@ -37,14 +52,13 @@ class BlackjackGame(
                 }
                 currentUser
             }
+        return allCardReceivedUsers
+    }
 
+    private fun printGameResult(allCardReceivedUsers: List<User>) {
         println()
         allCardReceivedUsers.forEach { user ->
             resultView.printUserCards(user = user, printScore = true)
         }
-    }
-
-    private fun getUsers(): List<User> {
-        return inputView.inputNames().map { User.create(name = it) }
     }
 }

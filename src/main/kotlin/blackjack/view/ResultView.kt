@@ -5,6 +5,7 @@ import blackjack.domain.User
 
 object ResultView {
     fun printInitCardReceive(users: List<User>) {
+        println()
         println("${users.joinToString(", ") { it.name }}에게 ${INIT_CARD_DRAW_COUNT}장의 카드를 나누었습니다.")
     }
 
