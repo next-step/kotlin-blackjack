@@ -2,7 +2,9 @@ package blackjack.view
 
 class InputView {
     fun getPlayerNamesInput() = getIntput(PLAYER_NAMES) ?: throw RuntimeException("플레이어가 입력되지 않았습니다.")
-    fun getPlayerRequestInput(playerName: String) = getIntput(playerName + ADDITIONAL_CARD_REQUEST) ?: throw RuntimeException("플레이어가 답변하지 않았습니다.")
+
+    fun getPlayerRequestInput(playerName: String) =
+        getIntput(playerName + ADDITIONAL_CARD_REQUEST) ?: throw RuntimeException("플레이어가 답변하지 않았습니다.")
 
     private fun getIntput(message: String): String? {
         println(message)

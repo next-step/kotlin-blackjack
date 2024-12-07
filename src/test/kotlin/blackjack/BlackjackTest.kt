@@ -1,5 +1,7 @@
 package blackjack
 
+import blackjack.model.Card
+import blackjack.model.Player
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.BeforeEach
@@ -9,7 +11,6 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 
 class BlackjackTest {
-
     @BeforeEach
     fun setUp() {
         Card.resetAllCards()
@@ -97,12 +98,10 @@ class BlackjackTest {
     @DisplayName("플레이어는 카드를 더 받을지 덜 받을지 선택할 수 있다.")
     @Test
     fun `game test1`() {
-
     }
 
     @DisplayName("플레이어가 카드를 받지 않을 때까지 계속 받을 수 있다.")
     @Test
     fun `game test2`() {
-
     }
 }

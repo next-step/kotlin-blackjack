@@ -7,7 +7,10 @@ class BlackjackController {
         return players
     }
 
-    fun checkPlayerRequest(answerInput: String, player: Player): Boolean =
+    fun checkPlayerRequest(
+        answerInput: String,
+        player: Player,
+    ): Boolean =
         when (answerInput.lowercase()) {
             REFUSE_INPUT -> true
             ACCEPT_INPUT -> {
