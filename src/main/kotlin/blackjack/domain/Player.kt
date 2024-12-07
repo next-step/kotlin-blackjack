@@ -4,14 +4,14 @@ class Player(
     val name: String,
     val hand: Hand = Hand(),
 ) {
-    var reasonDone: PlayerReasonDone? = null
-        private set
     val value: Int
         get() = hand.value()
-    val isDone: Boolean
-        get() = reasonDone != null
     val isBusted: Boolean
         get() = hand.isBusted()
+    var reasonDone: PlayerReasonDone? = null
+        private set
+    val isDone: Boolean
+        get() = reasonDone != null
 
     init {
         require(name.isNotBlank()) { "이름이 빈 문자열입니다." }

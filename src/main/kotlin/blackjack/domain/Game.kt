@@ -28,6 +28,10 @@ class Game(
         players.stand()
     }
 
+    fun dealerTurn() {
+        dealer.flipHoleCardUp()
+    }
+
     companion object {
         private const val INITIAL_ROUNDS = 2
     }

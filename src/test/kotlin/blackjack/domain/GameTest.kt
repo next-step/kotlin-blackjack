@@ -133,4 +133,24 @@ class GameTest {
 
         game.currentPlayer shouldBe game.players[1]
     }
+
+    @Test
+    fun `딜러의 턴은 아직 결과가 정해지지 않은 플레이어가 있는 경우에만 진행한다`() {
+        TODO("Not yet implemented")
+    }
+
+    @Test
+    fun `딜러의 턴이 시작하면 두번졔 카드를 뒤집는다`() {
+        val players = Players.from("black", "jack")
+        val game = Game(players, deck).apply { initialDeal() }
+
+        game.dealerTurn()
+
+        game.dealer.hand[1].isFaceUp shouldBe true
+    }
+
+    @Test
+    fun `딜러는 16점이하이면 한 장의 카드를 뽑는다`() {
+        TODO("Not yet implemented")
+    }
 }
