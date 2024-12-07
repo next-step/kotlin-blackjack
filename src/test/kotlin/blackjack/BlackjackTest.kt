@@ -1,5 +1,7 @@
 package blackjack
 
+import io.kotest.assertions.throwables.shouldThrow
+import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
@@ -10,22 +12,37 @@ class BlackjackTest {
     @DisplayName("게임에 참여할 사람의 이름을 입력받는다.")
     @ParameterizedTest
     @ValueSource(strings = ["aaa,bbb"])
-    fun `input test1`(input: String) {
-
+    fun `parsing test1`(input: String) {
+        val playerNames = input.split(",")
+        playerNames shouldBe listOf("aaa", "bbb")
     }
 
     @DisplayName("이름은 쉼표를 기준으로 구분한다.")
     @ParameterizedTest
-    @ValueSource(strings = ["aaa,bbb", "aaa, bbb", "aaa , bbb", "aaa|bbb", "aaa;bbb"])
-    fun `input test2`(input: String) {
+    @ValueSource(strings = ["aaa,bbb", "aaa, bbb", "aaa , bbb"])
+    fun `parsing test2`(input: String) {
+        val playerNames = input.split(",")
+        playerNames shouldBe listOf("aaa", "bbb")
+    }
 
+    @DisplayName("이름은 쉼표가 아니면 예외를 던진다.")
+    @ParameterizedTest
+    @ValueSource(strings = ["aaa|bbb", "aaa;bbb"])
+    fun `parsing test3`(input: String) {
+        val playerNames = input.split(",")
+        shouldThrow<IllegalArgumentException> {
+            val players = playerNames.map { Player(name = it) }
+            players
+        }.message shouldBe "이름이 잘못 입력되었습니다."
     }
 
     @DisplayName("공백은 이름으로 인식하지 않는다.")
     @ParameterizedTest
-    @ValueSource(strings = ["", "aaa,", "aaa,,", "aaa,,bbb", ",aaa"])
-    fun `input test3`(input: String) {
-
+    @ValueSource(strings = [",aaa,,bbb"])
+    fun `parsing test4`(input: String) {
+        val playerNames = input.split(",")
+        val players = playerNames.map { Player(name = it) }
+        players shouldBe listOf(Player("aaa"), Player("bbb"))
     }
 
     @DisplayName("플레이어는 처음 2장의 카드를 받는다")
