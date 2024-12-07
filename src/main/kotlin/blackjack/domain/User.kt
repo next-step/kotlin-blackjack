@@ -4,11 +4,11 @@ data class User(
     val name: String,
     val cards: Cards,
 ) {
-    fun canReceiveCard(): Boolean {
+    fun canHit(): Boolean {
         return cards.isScoreLowerThanLimit()
     }
 
-    fun receiveCard(card: Card): User {
+    fun hit(card: Card): User {
         return this.copy(cards = cards.add(card))
     }
 

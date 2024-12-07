@@ -20,7 +20,7 @@ class UserTest : StringSpec({
         ).forAll { ranks ->
             val cards = Cards(ranks.map { createCard(it) })
 
-            User("홍길동", cards).canReceiveCard() shouldBe true
+            User("홍길동", cards).canHit() shouldBe true
         }
     }
 
@@ -36,7 +36,7 @@ class UserTest : StringSpec({
             val cards = Cards(ranks.map { createCard(it) })
 
             cards.score shouldBe score
-            User("홍길동", cards).canReceiveCard() shouldBe false
+            User("홍길동", cards).canHit() shouldBe false
         }
     }
 
@@ -44,19 +44,19 @@ class UserTest : StringSpec({
         val cards = Cards(emptyList())
         val user =
             User("홍길동", cards)
-                .receiveCard(createCard("A"))
-                .receiveCard(createCard("K"))
+                .hit(createCard("A"))
+                .hit(createCard("K"))
 
-        user.canReceiveCard() shouldBe false
+        user.canHit() shouldBe false
     }
 
     "유저는 카드 2장을 받은 후 점수 합이 21점 미만인 경우 카드를 더 받을 수 있다" {
         val cards = Cards(emptyList())
         val user =
             User("홍길동", cards)
-                .receiveCard(createCard("10"))
-                .receiveCard(createCard("5"))
+                .hit(createCard("10"))
+                .hit(createCard("5"))
 
-        user.canReceiveCard() shouldBe true
+        user.canHit() shouldBe true
     }
 })

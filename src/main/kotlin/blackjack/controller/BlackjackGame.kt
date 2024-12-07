@@ -38,10 +38,10 @@ class BlackjackGame(
     }
 
     private fun turn(user: User): User {
-        return if (user.canReceiveCard() && inputView.inputReceiveMoreCard(user)) {
-            val updatedUser = user.receiveCard(Deck.create().draw())
-            resultView.printUserCard(user = updatedUser, printScore = false)
-            turn(updatedUser)
+        return if (user.canHit() && inputView.inputHit(user)) {
+            val hitUser = user.hit(Deck.create().draw())
+            resultView.printUserCard(user = hitUser, printScore = false)
+            turn(hitUser)
         } else {
             user
         }

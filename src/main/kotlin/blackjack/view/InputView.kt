@@ -12,7 +12,7 @@ object InputView {
         return names
     }
 
-    fun inputReceiveMoreCard(user: User): Boolean {
+    fun inputHit(user: User): Boolean {
         println("${user.name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
         return when (readlnOrNull()) {
             "y" -> true
