@@ -1,6 +1,5 @@
 package blackjack.ui
 
-import blackjack.domain.Suit
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
@@ -16,27 +15,27 @@ class ResultViewTest {
             listOf(
                 RoundResult(
                     "유저A",
-                    mapOf(
-                        CardType.TWO.name to listOf(Suit.HEART.name),
-                        CardType.EIGHT.name to listOf(Suit.SPADE.name),
-                        CardType.ACE.name to listOf(Suit.SPADE.name),
+                    listOf(
+                        DisplayCard.from("TWO", "HEART"),
+                        DisplayCard.from("EIGHT", "SPADE"),
+                        DisplayCard.from("ACE", "SPADE"),
                     ),
                     21,
                 ),
                 RoundResult(
                     "유저B",
-                    mapOf(
-                        CardType.SEVEN.name to listOf(Suit.SPADE.name),
-                        CardType.KING.name to listOf(Suit.SPADE.name),
+                    listOf(
+                        DisplayCard.from("SEVEN", "SPADE"),
+                        DisplayCard.from("KING", "SPADE"),
                     ),
                     17,
                 ),
                 RoundResult(
                     "딜러",
-                    mapOf(
-                        CardType.THREE.name to listOf(Suit.DIAMOND.name),
-                        CardType.NINE.name to listOf(Suit.SPADE.name),
-                        CardType.EIGHT.name to listOf(Suit.DIAMOND.name),
+                    listOf(
+                        DisplayCard.from("THREE", "DIAMOND"),
+                        DisplayCard.from("NINE", "SPADE"),
+                        DisplayCard.from("EIGHT", "DIAMOND"),
                     ),
                     20,
                 ),
@@ -68,7 +67,10 @@ class ResultViewTest {
         val customOutputProvider: (String) -> Unit = { message -> expected = message }
         val resultView = ResultView(customOutputProvider)
 
-        resultView.printRound("userA", mapOf(CardType.TWO.name to listOf(Suit.HEART.name, Suit.SPADE.name)))
+        resultView.printRound(
+            "userA",
+            listOf(DisplayCard.from("TWO", "HEART"), DisplayCard.from("TWO", "SPADE")),
+        )
 
         assertThat(expected).contains("userA카드: 2하트, 2스페이드")
     }
@@ -81,7 +83,11 @@ class ResultViewTest {
 
         resultView.printScoreResult(
             listOf(
-                RoundResult("userA", mapOf(CardType.TWO.name to listOf(Suit.HEART.name, Suit.SPADE.name)), 4),
+                RoundResult(
+                    "userA",
+                    listOf(DisplayCard.from("TWO", "HEART"), DisplayCard.from("TWO", "SPADE")),
+                    4,
+                ),
             ),
         )
 
@@ -96,7 +102,11 @@ class ResultViewTest {
 
         resultView.printUserCards(
             listOf(
-                RoundResult("userA", mapOf(CardType.TWO.name to listOf(Suit.HEART.name, Suit.SPADE.name)), 4),
+                RoundResult(
+                    "userA",
+                    listOf(DisplayCard.from("TWO", "HEART"), DisplayCard.from("TWO", "SPADE")),
+                    4,
+                ),
             ),
         )
 
@@ -111,7 +121,11 @@ class ResultViewTest {
 
         resultView.printScoreResult(
             listOf(
-                RoundResult("userA", mapOf(CardType.TWO.name to listOf(Suit.HEART.name, Suit.SPADE.name)), 4),
+                RoundResult(
+                    "userA",
+                    listOf(DisplayCard.from("TWO", "HEART"), DisplayCard.from("TWO", "SPADE")),
+                    4,
+                ),
             ),
         )
 

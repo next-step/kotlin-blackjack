@@ -99,3 +99,9 @@
 - PlayerName
 - [X] 게임을 시작하면 딜러와 유저들은 카드를 받는다
 - [X] 최종 승패를 출력한다
+
+## 3단계 피드백
+- [X] `DisplayCardType` 으로 카드 타입과 모양을 한번에 관리
+- [ ] `currentUser.isBust` 의 책임을 `Player` 에게 위임 고민
+- [ ] `딜러` 부여에 대한 책임 레이어 고민
+- [ ] `CardRank` 의 내부 상태를 `Score`로 일관성 있게 관리

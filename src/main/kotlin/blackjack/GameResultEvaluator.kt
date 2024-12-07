@@ -1,10 +1,10 @@
 package blackjack
 
-import blackjack.domain.Card
 import blackjack.domain.Dealer
 import blackjack.domain.MatchType
 import blackjack.domain.Players
 import blackjack.ui.DealerResult
+import blackjack.ui.DisplayCard
 import blackjack.ui.FinalWinnerResults
 import blackjack.ui.RoundResult
 import blackjack.ui.UIMatchType
@@ -15,16 +15,18 @@ class GameResultEvaluator(private val players: Players, private val dealer: Deal
     fun evaluateRounds(): List<RoundResult> {
         val roundResults = mutableListOf<RoundResult>()
 
+        val dealerCards: List<DisplayCard> = dealer.totalCards.cards.map { DisplayCard.from(it.rank.name, it.suit.name) }
         roundResults.add(
-            RoundResult.from(
+            RoundResult(
                 DEALER_NAME,
-                groupCardsByRank(dealer.totalCards.cards),
+                dealerCards,
                 dealer.score().value,
             ),
         )
 
         players.forEach {
-            val roundResult = RoundResult.from(it.name, groupCardsByRank(it.totalCards.cards), it.score().value)
+            val playerCards: List<DisplayCard> = it.totalCards.cards.map { card -> DisplayCard.from(card.rank.name, card.suit.name) }
+            val roundResult = RoundResult(it.name, playerCards, it.score().value)
             roundResults.add(roundResult)
         }
 
@@ -52,10 +54,4 @@ class GameResultEvaluator(private val players: Players, private val dealer: Deal
             playerResults,
         )
     }
-
-    private fun groupCardsByRank(cards: List<Card>): Map<String, List<String>> =
-        cards.groupBy { it.rank.name }
-            .map { (rank, cards) ->
-                rank to cards.map { it.suit.name }
-            }.toMap()
 }

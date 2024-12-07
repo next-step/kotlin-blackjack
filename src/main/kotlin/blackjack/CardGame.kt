@@ -6,6 +6,8 @@ import blackjack.domain.Deck
 import blackjack.domain.DeckBuilder
 import blackjack.domain.Player
 import blackjack.domain.Players
+import blackjack.ui.DisplayCard
+import blackjack.ui.DisplaySuit
 import blackjack.ui.UserCards
 import blackjack.ui.UserName
 
@@ -46,7 +48,7 @@ data class CardGame(private val deck: Deck, private val players: Players, val de
     }
 
     fun playerCards(name: String): UserCards {
-        return groupCardsByRank(players.findCardOf(name).values())
+        return players.findCardOf(name).values().map { DisplayCard(it.rank.name, DisplaySuit.valueOf(it.suit.name)) }
     }
 
     fun resultEvaluator(): GameResultEvaluator {
