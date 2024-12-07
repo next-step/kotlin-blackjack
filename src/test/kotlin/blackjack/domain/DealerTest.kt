@@ -13,7 +13,7 @@ class DealerTest {
         val dealer = Dealer()
         val deck = StubDeck.from(Rank.TWO)
 
-        dealer.initialDrawFrom(deck)
+        dealer.drawFrom(deck)
 
         dealer.value shouldBe 2
     }
@@ -23,8 +23,8 @@ class DealerTest {
         val deck = StubDeck.from(Rank.THREE, Rank.FOUR)
         val dealer =
             Dealer().apply {
-                initialDrawFrom(deck)
-                initialDrawFrom(deck)
+                drawFrom(deck)
+                drawFrom(deck)
             }
 
         dealer.flipHoleCardUp()
@@ -41,8 +41,8 @@ class DealerTest {
     ) {
         val dealer =
             Dealer().apply {
-                initialDrawFrom(deck)
-                initialDrawFrom(deck)
+                drawFrom(deck)
+                drawFrom(deck)
             }
 
         dealer.mustDrawCard() shouldBe expected
@@ -57,8 +57,8 @@ class DealerTest {
     ) {
         val dealer =
             Dealer().apply {
-                initialDrawFrom(deck)
-                initialDrawFrom(deck)
+                drawFrom(deck)
+                drawFrom(deck)
             }
         dealer.isBlackjack shouldBe expected
     }

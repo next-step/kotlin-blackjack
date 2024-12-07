@@ -13,7 +13,7 @@ class Game(
     fun initialDeal() {
         repeat(INITIAL_ROUNDS) {
             players.dealRoundOfCardsFrom(deck)
-            dealer.initialDrawFrom(deck)
+            dealer.drawFrom(deck)
         }
         if (dealer.isBlackjack) {
             players.dealerDealtBlackjack()
@@ -29,8 +29,18 @@ class Game(
     }
 
     fun dealerTurn() {
-        check(arePlayersDone) { "플레이어들의 턴이 종료되어야 합니다." }
+        checkPlayersAreDone()
+
         dealer.flipHoleCardUp()
+
+        // skip if all player outcome known
+        while (dealer.mustDrawCard()) {
+            dealer.drawFrom(deck)
+        }
+    }
+
+    private fun checkPlayersAreDone() {
+        check(arePlayersDone) { "플레이어들의 턴이 종료되어야 합니다." }
     }
 
     companion object {

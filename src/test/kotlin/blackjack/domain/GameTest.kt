@@ -1,6 +1,7 @@
 package blackjack.domain
 
 import blackjack.domain.StubDeck.Companion.DUMMY_SUIT
+import io.kotest.matchers.ints.shouldBeLessThan
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Disabled
@@ -166,7 +167,6 @@ class GameTest {
         game.dealer.hand[1].isFaceUp shouldBe true
     }
 
-    @Disabled
     @Test
     fun `딜러는 16점 이하이면 한 장의 카드를 뽑는다`() {
         val deck =
@@ -184,9 +184,12 @@ class GameTest {
         val game =
             Game(players, deck).apply {
                 initialDeal()
+                // 플레이어들의 턴을 종료한다.
                 playerStands()
                 playerStands()
             }
+        // black:  A, 4
+        // jack:   2, 5
         // dealer: 3, 6
 
         game.dealerTurn()
@@ -194,21 +197,93 @@ class GameTest {
         game.dealer.hand[2] shouldBe Card(DUMMY_SUIT, Rank.SEVEN)
     }
 
-    @Disabled
     @Test
-    fun `딜러는 16점 이하인 이상 계속 카드를 뽑는다`() {
-        TODO("Not yet implemented")
+    fun `딜러는 16점 이하면 계속 카드를 뽑는다`() {
+        val deck =
+            StubDeck.from(
+                Rank.ACE,
+                Rank.TWO,
+                Rank.THREE,
+                Rank.FOUR,
+                Rank.FIVE,
+                Rank.SIX,
+                Rank.SEVEN,
+                Rank.EIGHT,
+            )
+        val players = Players.from("black", "jack")
+        val game =
+            Game(players, deck).apply {
+                initialDeal()
+                // 플레이어들의 턴을 종료한다.
+                playerStands()
+                playerStands()
+            }
+        // black:  A, 4
+        // jack:   2, 5
+        // dealer: 3, 6
+
+        game.dealerTurn()
+        // dealer: 3, 6, 7, 8
+
+        game.dealer.hand[2] shouldBe Card(DUMMY_SUIT, Rank.SEVEN)
+        game.dealer.hand[3] shouldBe Card(DUMMY_SUIT, Rank.EIGHT)
+        game.dealer.isBusted shouldBe true
     }
 
-    @Disabled
     @Test
     fun `딜러는 17이상이면 더 이상 카드를 뽑지 않는다`() {
-        TODO("Not yet implemented")
+        val deck =
+            StubDeck.from(
+                Rank.ACE,
+                Rank.TWO,
+                Rank.SEVEN,
+                Rank.FOUR,
+                Rank.FIVE,
+                Rank.TEN,
+            )
+        val players = Players.from("black", "jack")
+        val game =
+            Game(players, deck).apply {
+                initialDeal()
+                // 플레이어들의 턴을 종료한다.
+                playerStands()
+                playerStands()
+            }
+        // black:  A, 4
+        // jack:   2, 5
+        // dealer: 7, 10
+
+        game.dealerTurn()
+
+        game.dealer.value shouldBe 17
     }
 
     @Disabled
     @Test
-    fun `딜러의 턴은 아직 결과가 정해지지 않은 플레이어가 있는 경우에만 진행한다`() {
-        TODO("Not yet implemented")
+    fun `플레이어들이 블랙잭이거나 버스트해서 딜러의 행동이 뭐의미 할 경우에만 딜러는 카드를 뽑지 않는다`() {
+        val deck =
+            StubDeck.from(
+                Rank.ACE,
+                Rank.KING,
+                Rank.TEN,
+                Rank.QUEEN,
+                Rank.JACK,
+                Rank.NINE,
+                Rank.TWO,
+            )
+        val players = Players.from("black", "jack")
+        val game =
+            Game(players, deck).apply {
+                initialDeal()
+                playerHits()
+            }
+        // black: A, Q
+        // jack: K, J, 2
+        // dealer: 10, 9
+
+        game.dealerTurn()
+
+        game.dealer.value shouldBeLessThan 17
+        game.dealer.value shouldBe 5
     }
 }
