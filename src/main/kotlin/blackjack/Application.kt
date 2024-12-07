@@ -1,14 +1,5 @@
 package blackjack
 
-fun String.split(delimiter: String = ","): List<String> {
-    if (this.isBlank()) return emptyList()
-
-    val regex = Regex.escape(delimiter).toRegex()
-    return this.split(regex)
-        .map { it.trim() }
-        .filter { it.isNotEmpty() }
-}
-
 class Players private constructor(private val players: List<Player>) {
 
     init {
