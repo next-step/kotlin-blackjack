@@ -6,6 +6,7 @@ import blackjack.view.ResultView
 class Blackjack {
     val inputView = InputView()
     val resultView = ResultView()
+    val blackjackController = BlackjackController()
 
     fun start() {
         val players = initPlayers()
@@ -25,21 +26,15 @@ class Blackjack {
         for (player in players.getPlayers()) {
             while (true) {
                 val answerInput = inputView.getPlayerRequestInput(player.name)
-                if (checkPlayerRequest(answerInput, player)) break
+                if (blackjackController.checkPlayerRequest(answerInput, player)) break
                 resultView.renderPlayerCardsOutput(player.name, player.cards.toString())
             }
         }
     }
 
-    private fun checkPlayerRequest(answerInput: String, player: Player): Boolean {
-        if (answerInput == "n") return true
-        player.takeNewCard()
-        return false
-    }
-
     private fun initPlayers(): Players {
         val playerNamesInput = inputView.getPlayerNamesInput()
-        val players = createPlayers(playerNamesInput)
+        val players = blackjackController.createPlayers(playerNamesInput)
         showPlayersInfo(players)
         return players
     }
@@ -49,11 +44,5 @@ class Blackjack {
         for (player in players.getPlayers()) {
             resultView.renderPlayerCardsOutput(player.name, player.cards.toString())
         }
-    }
-
-    private fun createPlayers(playerNamesInput: String): Players {
-        val playersNames = playerNamesInput.split()
-        val players = Players.from(playersNames.map(::Player))
-        return players
     }
 }
