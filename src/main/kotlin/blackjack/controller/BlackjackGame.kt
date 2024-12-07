@@ -27,8 +27,9 @@ class BlackjackGame(
 
     private fun setUpInitCard(gameTable: GameTable): List<User> {
         val initCardReceivedUsers = gameTable.dealInitCard()
+        resultView.linebreak()
         resultView.printInitCardReceive(initCardReceivedUsers)
-        initCardReceivedUsers.forEach { resultView.printUserCards(user = it, printScore = false) }
+        resultView.printUsersCard(users = initCardReceivedUsers, printScore = false)
         return initCardReceivedUsers
     }
 
@@ -45,7 +46,7 @@ class BlackjackGame(
                     val moreCard = inputView.inputReceiveMoreCard()
                     if (moreCard) {
                         currentUser = currentUser.receiveCard(Deck.create().draw())
-                        resultView.printUserCards(user = currentUser, printScore = false)
+                        resultView.printUserCard(user = currentUser, printScore = false)
                     } else {
                         break
                     }
@@ -56,9 +57,7 @@ class BlackjackGame(
     }
 
     private fun printGameResult(allCardReceivedUsers: List<User>) {
-        println()
-        allCardReceivedUsers.forEach { user ->
-            resultView.printUserCards(user = user, printScore = true)
-        }
+        resultView.linebreak()
+        resultView.printUsersCard(users = allCardReceivedUsers, printScore = true)
     }
 }

@@ -5,11 +5,17 @@ import blackjack.domain.User
 
 object ResultView {
     fun printInitCardReceive(users: List<User>) {
-        println()
         println("${users.joinToString(", ") { it.name }}에게 ${INIT_CARD_DRAW_COUNT}장의 카드를 나누었습니다.")
     }
 
-    fun printUserCards(
+    fun printUsersCard(
+        users: List<User>,
+        printScore: Boolean,
+    ) {
+        users.forEach { printUserCard(user = it, printScore = printScore) }
+    }
+
+    fun printUserCard(
         user: User,
         printScore: Boolean,
     ) {
@@ -24,5 +30,9 @@ object ResultView {
 
     fun printCanNotReceivedCard() {
         println("더 이상 카드를 받을 수 없습니다")
+    }
+
+    fun linebreak() {
+        println()
     }
 }
