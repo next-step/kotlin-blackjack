@@ -100,7 +100,7 @@ class Card private constructor(private val suit: Suit, private val rank: Rank) {
         }
 
     companion object {
-        private val allCards: MutableSet<Card> =
+        private var allCards: MutableSet<Card> =
             Suit.entries.flatMap { suit ->
                 Rank.entries.map { rank ->
                     Card(suit, rank)
@@ -113,6 +113,14 @@ class Card private constructor(private val suit: Suit, private val rank: Rank) {
             val card = allCards.random()
             allCards.remove(card)
             return card
+        }
+
+        fun resetAllCards() {
+            allCards = Suit.entries.flatMap { suit ->
+                Rank.entries.map { rank ->
+                    Card(suit, rank)
+                }
+            }.toMutableSet()
         }
     }
 }
@@ -129,26 +137,6 @@ enum class Rank(val value: Int) {
 }
 
 fun main() {
-    val inputView = InputView()
-    val resultView = ResultView()
-    val playerNamesInput = inputView.getPlayerNamesInput()
-    val playersNames = playerNamesInput.split()
-    val players = playersNames.map { Player(name = it) }
-    resultView.renderPlayerInitOutput(playersNames)
-    for (player in players) {
-        resultView.renderPlayerCardsOutput(player.name, player.cards.toString())
-    }
-
-    for (player in players) {
-        while (true) {
-            val answerInput = inputView.getPlayerRequestInput(player.name)
-            if (answerInput == "n") break
-            player.takeNewCard()
-            resultView.renderPlayerCardsOutput(player.name, player.cards.toString())
-        }
-    }
-
-    for (player in players) {
-        resultView.renderPlayerCardsResultOutput(player.name, player.cards.toString(), player.calculateResult())
-    }
+    val blackjack = Blackjack()
+    blackjack.start()
 }

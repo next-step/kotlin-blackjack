@@ -2,12 +2,18 @@ package blackjack
 
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
+import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 
 class BlackjackTest {
+
+    @BeforeEach
+    fun setUp() {
+        Card.resetAllCards()
+    }
 
     @DisplayName("게임에 참여할 사람의 이름을 입력받는다.")
     @ParameterizedTest
