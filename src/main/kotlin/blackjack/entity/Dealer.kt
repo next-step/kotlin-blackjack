@@ -18,8 +18,8 @@ class Dealer : Participant("딜러") {
         return PlayerAction.STAND
     }
 
-    fun calculateResult(playerResults: List<GameResult>): GameResult {
-        val playerEarned = playerResults.sumOf { it.earning }
+    fun calculateResult(players: Players): GameResult {
+        val playerEarned = players.calculatePlayerEarned(this)
 
         return GameResult(this, -playerEarned)
     }

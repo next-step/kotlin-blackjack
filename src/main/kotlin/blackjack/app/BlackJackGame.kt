@@ -103,9 +103,8 @@ class BlackJackGame {
     }
 
     private fun calculateResult(players: Players): List<GameResult> {
-        val dealerScore = dealer.calculateScore()
         val playerResults = players.calculateResult(dealer)
-        val dealerResult = dealer.calculateResult(playerResults)
+        val dealerResult = dealer.calculateResult(players)
         return listOf(dealerResult) + playerResults
     }
 }

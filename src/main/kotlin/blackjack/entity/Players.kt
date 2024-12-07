@@ -11,5 +11,7 @@ class Players(
 
     fun calculateResult(dealer: Dealer): List<GameResult> = players.map { it.calculateResult(dealer) }
 
+    fun calculatePlayerEarned(dealer: Dealer): Int = players.sumOf { it.calculateResult(dealer).earning }
+
     override fun iterator(): Iterator<Player> = players.iterator()
 }
