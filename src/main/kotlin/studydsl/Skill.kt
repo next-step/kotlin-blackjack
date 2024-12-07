@@ -1,3 +1,9 @@
 package studydsl
 
-open class Skill(open val name: String)
+sealed class Skill {
+    abstract val name: String
+
+    data class HardSkill(override val name: String) : Skill()
+
+    data class SoftSkill(override val name: String) : Skill()
+}
