@@ -34,28 +34,13 @@ class PlayerCardTest : FunSpec({
                         Card(CardNumber.KING, CardType.HEART),
                     )
                 val playerCard = PlayerCard.of(playerName, initialCards)
-                val cardPicker = DefaultCardPicker()
+                val newCard = Card(CardNumber.QUEEN, CardType.DIAMOND)
 
                 // When
-                playerCard.pickCard(cardPicker)
+                playerCard.pickCard(newCard)
 
                 // Then
-                playerCard.allCards shouldContainExactly initialCards + DefaultCardPicker.defaultCard
-            }
-            test("PlayerCard에 카드를 뽑을때 갖고 있는 카드를 중복해서 뽑지 않는다.") {
-                // Given
-                val playerName = "dongyeon"
-                val playerCard = PlayerCard.of(playerName)
-                val cardPicker = RandomCardPicker()
-
-                // When
-                // 52번 카드를 뽑는다.
-                (1..52).forEach { _ ->
-                    playerCard.pickCard(cardPicker)
-                }
-
-                // Then
-                playerCard.allCards.distinct().size shouldBe playerCard.allCards.size
+                playerCard.allCards shouldContainExactly initialCards + newCard
             }
         }
         context("calculateScore() 테스트") {

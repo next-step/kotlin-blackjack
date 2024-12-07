@@ -7,15 +7,8 @@ class PlayerCard private constructor(
     val allCards: List<Card>
         get() = cards.all
 
-    fun pickCard(cardPicker: CardPicker): PlayerCard {
-        while (true) {
-            val card = cardPicker.pick()
-            if (!allCards.contains(card)) {
-                cards.add(card)
-                break
-            }
-        }
-        return this
+    fun pickCard(card: Card): PlayerCard {
+        return PlayerCard(playerName, cards.add(card))
     }
 
     fun calculateScore(): Int {

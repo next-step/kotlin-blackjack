@@ -17,7 +17,13 @@ class GameManager(
             println("${playerCard.playerName}의 점수가 $BLACKJACK_SCORE 이상입니다. 카드를 더 받을 수 없습니다.")
             return playerCard
         }
-        return playerCard.pickCard(cardPicker)
+
+        while (true) {
+            val card = cardPicker.pick()
+            if (!playerCard.allCards.contains(card)) {
+                return playerCard.pickCard(card)
+            }
+        }
     }
 
     companion object {
