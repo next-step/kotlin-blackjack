@@ -1,6 +1,6 @@
 package blackjack.domain
 
-enum class CardRank(initScore: Int? = null, private val score: Score = Score(initScore ?: 0)) {
+enum class CardRank(private val score: Score = Score.ZERO) {
     ACE {
         override fun calculateScore(currentScore: Score): Score {
             return if ((currentScore + ACE_SOFT_SCORE) > BUST_SCORE) (currentScore + ACE_HARD_SCORE) else (currentScore + ACE_SOFT_SCORE)

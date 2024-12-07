@@ -1,17 +1,35 @@
 package blackjack.ui
 
+import blackjack.domain.CardRank
+
+const val DEALER_NAME = "딜러"
 typealias UserName = String
 typealias UserNames = List<UserName>
 typealias UserMore = Boolean
 typealias Score = Int
-typealias CardRank = String
-typealias CardSuit = String
-typealias UserCards = Map<CardRank, List<CardSuit>>
+typealias DisplayCardRank = String
+typealias UserCards = List<DisplayCard>
 typealias CardScore = Int
 
-fun UserCards.toPrettyString(): String {
-    return this.entries.joinToString(separator = ", ") { (rank, suits) ->
-        suits.joinToString(separator = ", ") { "${CardType.toDisplayNameOf(rank)}${UiSuit.toDisplayNameOf(it)}" }
+fun UserCards.displayCards(): String {
+    return joinToString { it.toString() }
+}
+
+data class DisplayCard(
+    val rank: DisplayCardRank,
+    val suit: DisplaySuit,
+) {
+    companion object {
+        fun from(
+            rankName: String,
+            suitName: String,
+        ): DisplayCard {
+            return DisplayCard(rankName, DisplaySuit.valueOf(suitName))
+        }
+    }
+
+    override fun toString(): String {
+        return "${DisplayCardType2.toDisplayNameOf(rank)}$suit"
     }
 }
 
@@ -26,50 +44,45 @@ data class DealerResult(
     val draws: Int = 0,
 )
 
-data class RoundResult(val userName: UserName, val cards: Map<CardRank, List<CardSuit>>, val score: CardScore) {
-    companion object {
-        fun from(
-            userName: UserName,
-            cards: Map<CardRank, List<CardSuit>>,
-            score: CardScore,
-        ): RoundResult {
-            return RoundResult(userName, cards, score)
-        }
-    }
-}
+data class RoundResult(val userName: UserName, val cards: List<DisplayCard>, val score: CardScore)
 
-enum class UiSuit(val displayName: String) {
+enum class DisplaySuit(val displayName: String) {
     HEART(displayName = "하트"),
     DIAMOND(displayName = "다이아몬드"),
     CLUB(displayName = "클로버"),
     SPADE(displayName = "스페이드"), ;
 
-    companion object {
-        fun toDisplayNameOf(other: CardSuit): String {
-            return entries.find { it.name == other }?.displayName ?: throw IllegalArgumentException("잘못된 카드 모양입니다")
-        }
+    override fun toString(): String {
+        return displayName
     }
 }
 
-enum class CardType(val displayName: String) {
-    ACE(displayName = "A"),
-    JACK(displayName = "J"),
-    QUEEN(displayName = "Q"),
-    KING(displayName = "K"),
-    TWO(displayName = "2"),
-    THREE(displayName = "3"),
-    FOUR(displayName = "4"),
-    FIVE(displayName = "5"),
-    SIX(displayName = "6"),
-    SEVEN(displayName = "7"),
-    EIGHT(displayName = "8"),
-    NINE(displayName = "9"),
+enum class DisplayCardType2(
+    val cardType: CardRank,
+    val displayName: String,
+) {
+    ACE(cardType = CardRank.ACE, displayName = "A"),
+    JACK(cardType = CardRank.JACK, displayName = "J"),
+    QUEEN(cardType = CardRank.QUEEN, displayName = "Q"),
+    KING(cardType = CardRank.KING, displayName = "K"),
+    TWO(cardType = CardRank.TWO, displayName = "2"),
+    THREE(cardType = CardRank.THREE, displayName = "3"),
+    FOUR(cardType = CardRank.FOUR, displayName = "4"),
+    FIVE(cardType = CardRank.FIVE, displayName = "5"),
+    SIX(cardType = CardRank.SIX, displayName = "6"),
+    SEVEN(cardType = CardRank.SEVEN, displayName = "7"),
+    EIGHT(cardType = CardRank.EIGHT, displayName = "8"),
+    NINE(cardType = CardRank.NINE, displayName = "9"),
     ;
 
     companion object {
-        fun toDisplayNameOf(rank: CardRank): String {
-            return entries.find { it.name == rank }?.displayName ?: throw IllegalArgumentException("잘못된 카드 숫자입니다")
+        fun toDisplayNameOf(rank: DisplayCardRank): String {
+            return entries.find { it.cardType.name == rank }?.displayName ?: throw IllegalArgumentException("잘못된 카드 숫자입니다")
         }
+    }
+
+    override fun toString(): String {
+        return displayName
     }
 }
 

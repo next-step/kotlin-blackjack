@@ -25,4 +25,8 @@ value class Score(val value: Int) : Comparable<Score> {
     override fun compareTo(other: Score): Int {
         return value - other.value
     }
+
+    companion object {
+        val ZERO: Score = Score(0)
+    }
 }
