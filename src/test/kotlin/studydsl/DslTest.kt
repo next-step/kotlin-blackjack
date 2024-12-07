@@ -2,8 +2,9 @@ import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
+import studydsl.HardSkill
 import studydsl.Language
-import studydsl.Skill
+import studydsl.SoftSkill
 import studydsl.introduce
 
 class DslTest {
@@ -39,7 +40,7 @@ class DslTest {
                 }
             }
         person.skills.skills.size shouldBe 1
-        person.skills.skills[0] shouldBe Skill.SoftSkill(name = "A passion for problem solving")
+        person.skills.skills[0] shouldBe SoftSkill(name = "A passion for problem solving")
     }
 
     @Test
@@ -53,7 +54,7 @@ class DslTest {
                 }
             }
         person.skills.skills.size shouldBe 1
-        person.skills.skills[0] shouldBe Skill.HardSkill(name = "Node.js")
+        person.skills.skills[0] shouldBe HardSkill(name = "Node.js")
     }
 
     @Test
@@ -69,9 +70,9 @@ class DslTest {
                 }
             }
         person.skills.skills.size shouldBe 3
-        person.skills.skills[0] shouldBe Skill.SoftSkill(name = "A passion for problem solving")
-        person.skills.skills[1] shouldBe Skill.HardSkill(name = "Node.js")
-        person.skills.skills[2] shouldBe Skill.HardSkill(name = "Kotlin")
+        person.skills.skills[0] shouldBe SoftSkill(name = "A passion for problem solving")
+        person.skills.skills[1] shouldBe HardSkill(name = "Node.js")
+        person.skills.skills[2] shouldBe HardSkill(name = "Kotlin")
     }
 
     @Test
@@ -95,3 +96,19 @@ class DslTest {
         person.languages.languages[1] shouldBe Language(name = "English", level = 2)
     }
 }
+
+/*
+introduce {
+  name("박재성")
+  company("우아한형제들")
+  skills {
+    soft("A passion for problem solving")
+    soft("Good communication skills")
+    hard("Kotlin")
+  }
+  languages {
+    "Korean" level 5
+    "English" level 3
+  }
+}
+*/
