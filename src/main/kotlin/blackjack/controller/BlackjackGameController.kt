@@ -2,10 +2,12 @@ package blackjack.controller
 
 import blackjack.adapter.BlackjackInputAdapter
 import blackjack.domain.BlackjackGame
+import blackjack.domain.Dealer
 import blackjack.domain.HitStayChoice
 import blackjack.domain.Player
 import blackjack.domain.PlayerName
-import blackjack.dto.PlayersResponse
+import blackjack.dto.GameResultResponse
+import blackjack.dto.ParticipantsResponse
 import blackjack.dto.SinglePlayerResponse
 import blackjack.view.OutputView
 
@@ -18,31 +20,38 @@ class BlackjackGameController(
     }
 
     fun announceInitialPlayersCards(blackJackGame: BlackjackGame) {
-        val playersResponse = PlayersResponse(blackJackGame.players)
-        outputView.printInitialPlayersCards(playersResponse)
+        val participantsResponse = ParticipantsResponse(blackJackGame.participants)
+        outputView.printInitialCards(participantsResponse)
     }
 
     fun playGame(blackJackGame: BlackjackGame) {
-        blackJackGame.players.forEach { player ->
+        blackJackGame.getPlayers().forEach { player ->
             playTurnForPlayer(player, blackJackGame)
         }
+        processDealerTurn(blackJackGame.getDealer(), blackJackGame)
     }
 
     private fun playTurnForPlayer(
         player: Player,
         blackJackGame: BlackjackGame,
     ) {
-        while (player.isDrawable()) {
-            if (!processPlayerChoice(player, blackJackGame)) {
-                break
-            }
+        while (shouldContinueDrawing(player, blackJackGame)) {
+            outputView.printSinglePlayerCards(SinglePlayerResponse(player))
         }
-        if (!player.isDrawable()) {
-            outputView.printPlayerCannotDrawCard(SinglePlayerResponse(player))
-        }
+        notifyPlayerCannotDraw(player)
     }
 
-    private fun processPlayerChoice(
+    private fun shouldContinueDrawing(
+        player: Player,
+        blackJackGame: BlackjackGame,
+    ): Boolean {
+        if (!player.isDrawable()) {
+            return false
+        }
+        return isPlayerWantMore(player, blackJackGame)
+    }
+
+    private fun isPlayerWantMore(
         player: Player,
         blackJackGame: BlackjackGame,
     ): Boolean {
@@ -50,19 +59,35 @@ class BlackjackGameController(
         return when (moreCardChoice) {
             HitStayChoice.HIT -> {
                 blackJackGame.drawCard(player)
-                outputView.printSinglePlayerCards(SinglePlayerResponse(player))
                 true
             }
-
             HitStayChoice.STAY -> {
-                outputView.printSinglePlayerCards(SinglePlayerResponse(player))
                 false
             }
         }
     }
 
+    private fun notifyPlayerCannotDraw(player: Player) {
+        if (!player.isDrawable()) {
+            outputView.printPlayerCannotDrawCard(SinglePlayerResponse(player))
+        }
+    }
+
+    private fun processDealerTurn(
+        dealer: Dealer,
+        blackJackGame: BlackjackGame,
+    ) {
+        while (dealer.isDrawable()) {
+            blackJackGame.drawCard(dealer)
+            outputView.printDealerDrawAnnounceMessage()
+        }
+    }
+
     fun announceResult(blackJackGame: BlackjackGame) {
-        val playersResponse = PlayersResponse(blackJackGame.players)
-        outputView.printPlayResult(playersResponse)
+        val participantsResponse = ParticipantsResponse(blackJackGame.participants)
+        outputView.printPlayResult(participantsResponse)
+
+        val gameResult = blackJackGame.makeGameResult()
+        outputView.printGameResult(GameResultResponse(gameResult))
     }
 }

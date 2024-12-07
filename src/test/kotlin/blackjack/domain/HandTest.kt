@@ -14,9 +14,9 @@ class HandTest : StringSpec({
 
     "카드를 추가할 수 있다." {
         val hand = Hand()
-        val beforeSize = hand.getCards().size
+        val beforeSize = hand.getAllCards().size
         hand.addCard(Card(Rank.ACE, Suit.HEARTS))
-        val afterSize = hand.getCards().size
+        val afterSize = hand.getAllCards().size
 
         afterSize shouldBe beforeSize + 1
     }

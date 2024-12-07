@@ -16,7 +16,6 @@ fun main() {
 
     val playersNames = gameController.getPlayersNames()
     val deck = Deck()
-    deck.shuffle()
     val blackJackGame = BlackjackGame.createGame(playersNames, deck)
 
     gameController.announceInitialPlayersCards(blackJackGame)

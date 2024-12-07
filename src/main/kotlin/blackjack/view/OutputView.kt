@@ -1,12 +1,13 @@
 package blackjack.view
 
-import blackjack.dto.PlayersResponse
+import blackjack.dto.GameResultResponse
+import blackjack.dto.ParticipantsResponse
 import blackjack.dto.SinglePlayerResponse
 
 class OutputView {
-    fun printInitialPlayersCards(playersResponse: PlayersResponse) {
-        println("\n" + playersResponse.toFormattedStringPlayerNames() + "에게 2장씩 나누었습니다.")
-        println(playersResponse.toFormattedStringPlayerCards())
+    fun printInitialCards(participantsResponse: ParticipantsResponse) {
+        println("\n" + participantsResponse.toFormattedStringPlayerNames() + "에게 2장씩 나누었습니다.")
+        println(participantsResponse.toFormattedStringInitialParticipantsCard())
     }
 
     fun printPlayerCannotDrawCard(singlePlayerResponse: SinglePlayerResponse) {
@@ -19,7 +20,15 @@ class OutputView {
         println(singlePlayerResponse.toFormattedStringPlayerCards())
     }
 
-    fun printPlayResult(playersResponse: PlayersResponse) {
-        println("\n" + playersResponse.toFormattedStringPlayerResults())
+    fun printPlayResult(participantsResponse: ParticipantsResponse) {
+        println("\n" + participantsResponse.toFormattedStringPlayerResults())
+    }
+
+    fun printDealerDrawAnnounceMessage() {
+        println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.")
+    }
+
+    fun printGameResult(gameResultResponse: GameResultResponse) {
+        println("\n" + gameResultResponse.toFormattedStringGameResult())
     }
 }

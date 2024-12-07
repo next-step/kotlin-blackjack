@@ -1,24 +1,23 @@
 package blackjack.domain
 
-class Player(private val name: PlayerName, private val hand: Hand) {
-    fun addCard(card: Card) {
-        hand.addCard(card)
+class Player(
+    private val name: PlayerName,
+    private val hand: Hand,
+) : Participant(name, hand) {
+    override fun isDrawable(): Boolean {
+        return !state.isFinished() && !hand.isBust()
     }
 
-    fun displayHand(): String {
-        return hand.getCards().joinToString(", ") { it.display() }
+    override fun getInitialCard(): List<Card> {
+        return hand.getSpecificRangeCards(0, 2)
     }
 
-    fun isDrawable(): Boolean {
-        return hand.calculateBestTotal() != 0
-    }
-
-    fun calculateTotal(): Int {
-        return hand.calculateBestTotal()
-    }
-
-    fun getName(): String {
-        return name.value
+    fun compareWithDealer(dealer: Dealer): GameMatchResult {
+        return when {
+            calculateTotal() > dealer.calculateTotal() -> GameMatchResult.WIN
+            calculateTotal() < dealer.calculateTotal() -> GameMatchResult.LOSE
+            else -> GameMatchResult.DRAW
+        }
     }
 
     companion object {
