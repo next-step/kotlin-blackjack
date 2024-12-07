@@ -19,7 +19,7 @@ class ResultView(val outputProvider: (String) -> Unit = { println(it) }) {
         userNames: UserNames,
         count: Int,
     ) {
-        outputProvider("${"딜러"}와 ${userNames.joinToString(", ")}에게 ${count}장의 나누었습니다.")
+        outputProvider("${DEALER_NAME}와 ${userNames.joinToString(", ")}에게 ${count}장의 나누었습니다.")
     }
 
     fun printUserCards(roundResults: List<RoundResult>) {

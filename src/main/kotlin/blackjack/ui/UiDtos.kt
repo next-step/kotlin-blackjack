@@ -2,6 +2,7 @@ package blackjack.ui
 
 import blackjack.domain.CardRank
 
+const val DEALER_NAME = "딜러"
 typealias UserName = String
 typealias UserNames = List<UserName>
 typealias UserMore = Boolean
