@@ -1,8 +1,8 @@
 package study
 
 class SkillsBuilder {
-    private var softSkills = mutableListOf<SoftSkill>()
-    private var hardSkills = mutableListOf<HardSkill>()
+    private val softSkills = mutableListOf<SoftSkill>()
+    private val hardSkills = mutableListOf<HardSkill>()
 
     fun soft(value: String) {
         softSkills += SoftSkill(value)
