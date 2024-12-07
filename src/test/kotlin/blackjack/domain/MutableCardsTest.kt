@@ -28,7 +28,12 @@ class MutableCardsTest {
 
     @MethodSource("카드와 카드 합산 제공")
     @ParameterizedTest
-    fun `가지고 있는 카드를 합산할 수 있다`(card1: Card, card2: Card, card3: Card, sum: Int) {
+    fun `가지고 있는 카드를 합산할 수 있다`(
+        card1: Card,
+        card2: Card,
+        card3: Card,
+        sum: Int,
+    ) {
         val mutableCards = MutableCards(mutableListOf())
         mutableCards.add(card1)
         mutableCards.add(card2)

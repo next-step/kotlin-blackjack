@@ -2,8 +2,8 @@ package blackjack.view
 
 import blackjack.domain.BlackJack
 import blackjack.domain.CardDeck
-import blackjack.domain.Player
 import blackjack.domain.MutableCards
+import blackjack.domain.Player
 import blackjack.domain.PlayerName
 import blackjack.domain.Players
 

@@ -31,7 +31,12 @@ class PlayerTest {
 
     @MethodSource("카드와 카드 합산 제공")
     @ParameterizedTest
-    fun `플레이어가 가진 카드의 합계를 계산할 수 있다`(card1: Card, card2: Card, card3: Card, sum: Int) {
+    fun `플레이어가 가진 카드의 합계를 계산할 수 있다`(
+        card1: Card,
+        card2: Card,
+        card3: Card,
+        sum: Int,
+    ) {
         val player = Player(PlayerName("pablo"), MutableCards(mutableListOf()))
         player.addCard(card1)
         player.addCard(card2)
