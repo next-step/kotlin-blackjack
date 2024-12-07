@@ -8,6 +8,6 @@ data class Card(
         get() = rank.value
 
     override fun toString(): String {
-        return "${rank.value}${suit.description}"
+        return "${rank.tier}${suit.description}"
     }
 }
