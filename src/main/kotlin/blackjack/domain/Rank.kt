@@ -17,4 +17,29 @@ enum class Rank(val value: Int) {
     ;
 
     fun isAce(): Boolean = this == ACE
+
+    companion object {
+        fun calculateTotalValue(ranks: List<Rank>): Int {
+            val nonAceValue = ranks.filterNot(Rank::isAce).sumOf(Rank::value)
+            val aceCount = ranks.count(Rank::isAce)
+
+            return if (checkAceValue(aceCount, nonAceValue)) {
+                nonAceValue + ACE_ALTERNATIVE_VALUE + (aceCount - 1)
+            } else {
+                nonAceValue + aceCount
+            }
+        }
+
+        private fun checkAceValue(
+            aceCount: Int,
+            nonAceValue: Int,
+        ): Boolean = checkAceCount(aceCount) && checkBurst(nonAceValue, aceCount)
+
+        private fun checkAceCount(aceCount: Int): Boolean = aceCount > 0
+
+        private fun checkBurst(
+            nonAceValue: Int,
+            aceCount: Int,
+        ): Boolean = nonAceValue + ACE_ALTERNATIVE_VALUE + (aceCount - 1) <= BLACKJACK_VALUE
+    }
 }
