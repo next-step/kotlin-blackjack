@@ -1,21 +1,22 @@
 package blackjack.domain
 import kotlin.random.Random
 
-class Deck {
+class Deck(private val random: Random = Random.Default) {
     private val cards = mutableListOf<Card>()
 
     init {
         Suit.entries.forEach { suit ->
-            (2..10).forEach { rank -> cards.add(Card(rank.toString(), suit)) }
-            listOf("Ace", "King", "Queen", "Jack").forEach { rank -> cards.add(Card(rank, suit)) }
+            Rank.entries.forEach { rank ->
+                cards.add(Card(rank, suit))
+            }
         }
     }
 
     fun draw(): Card {
         if (cards.isEmpty()) {
-            throw NoSuchElementException("No cards left in the deck")
+            throw IllegalStateException("No cards left in the deck")
         }
-        return cards.removeAt(Random.nextInt(cards.size))
+        return cards.removeAt(random.nextInt(cards.size))
     }
 
     fun getCards(): List<Card> {

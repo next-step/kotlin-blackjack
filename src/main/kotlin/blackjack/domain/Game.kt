@@ -1,6 +1,9 @@
 package blackjack.domain
 
-class Game(private val deck: Deck, private val players: Players) {
+class Game(
+    private val deck: Deck,
+    private val players: Players,
+) {
     fun start() {
         players.distributeInitialCards(deck)
     }

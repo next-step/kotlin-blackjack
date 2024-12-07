@@ -12,7 +12,7 @@ class PlayerTest : StringSpec({
 
     "Player should add cards to their collection" {
         val player = Player("pobi")
-        val card = Card("Ace", Suit.HEART)
+        val card = Card(Rank.ACE, Suit.HEART)
         player.addCard(card)
 
         player.getCards().size shouldBe 1
@@ -21,17 +21,17 @@ class PlayerTest : StringSpec({
 
     "Player should calculate the total value of their cards correctly" {
         val player = Player("pobi")
-        player.addCard(Card("Ace", Suit.HEART))
-        player.addCard(Card("King", Suit.CLUB))
+        player.addCard(Card(Rank.ACE, Suit.HEART))
+        player.addCard(Card(Rank.KING, Suit.CLUB))
 
         player.getTotalValue() shouldBe 21
     }
 
     "Player should consider Ace as 1 if 11 causes the total to exceed 21" {
         val player = Player("pobi")
-        player.addCard(Card("Ace", Suit.HEART))
-        player.addCard(Card("King", Suit.CLUB))
-        player.addCard(Card("2", Suit.DIAMOND))
+        player.addCard(Card(Rank.ACE, Suit.HEART))
+        player.addCard(Card(Rank.KING, Suit.CLUB))
+        player.addCard(Card(Rank.TWO, Suit.DIAMOND))
 
         player.getTotalValue() shouldBe 13
     }

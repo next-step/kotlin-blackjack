@@ -3,10 +3,11 @@ package blackjack.domain
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
+import kotlin.random.Random
 
 class DeckTest : StringSpec({
     "Deck should initialize with 52 unique cards" {
-        val deck = Deck()
+        val deck = Deck(Random(21))
         val cards = deck.getCards()
 
         cards.size shouldBe 52
@@ -14,19 +15,23 @@ class DeckTest : StringSpec({
     }
 
     "Deck should return a random card and remove it from the deck" {
-        val deck = Deck()
-        val initialzSize = deck.getCards().size
+        val fixedRandom = Random(21)
+        val deck = Deck(fixedRandom)
+        val initialSize = deck.getCards().size
 
         val drawnCard = deck.draw()
-        deck.getCards().size shouldBe initialzSize - 1
+        deck.getCards().size shouldBe initialSize - 1
         deck.getCards().contains(drawnCard) shouldBe false
     }
 
     "Deck should throw an exception when drawing from an empty deck" {
-        val deck = Deck()
+        val deck = Deck(Random(21))
         repeat(52) { deck.draw() }
-        shouldThrow<NoSuchElementException> {
-            deck.draw()
-        }
+
+        val exception =
+            shouldThrow<IllegalStateException> {
+                deck.draw()
+            }
+        exception.message shouldBe "No cards left in the deck"
     }
 })
