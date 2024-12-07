@@ -7,4 +7,12 @@ class Player(
     fun toStay() {
         status = PlayerStatus.STAY
     }
+
+    override fun handleStatus() {
+        status = when {
+            score > BLACKJACK_VALUE -> PlayerStatus.BURST
+            score == BLACKJACK_VALUE -> PlayerStatus.STAY
+            else -> PlayerStatus.PLAYING
+        }
+    }
 }
