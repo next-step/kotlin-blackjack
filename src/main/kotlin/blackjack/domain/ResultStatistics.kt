@@ -1,9 +1,5 @@
 package blackjack.domain
 
-val WIN_STATISTICS = ResultStatistics(winCount = 1)
-val LOSE_STATISTICS = ResultStatistics(loseCount = 1)
-val DRAW_STATISTICS = ResultStatistics(drawCount = 1)
-
 data class ResultStatistics(
     val winCount: Int = 0,
     val loseCount: Int = 0,
@@ -23,5 +19,11 @@ data class ResultStatistics(
             loseCount = loseCount + matchToStatistics.loseCount,
             drawCount = drawCount + matchToStatistics.drawCount,
         )
+    }
+
+    companion object Constant {
+        val WIN_STATISTICS = ResultStatistics(winCount = 1)
+        val LOSE_STATISTICS = ResultStatistics(loseCount = 1)
+        val DRAW_STATISTICS = ResultStatistics(drawCount = 1)
     }
 }

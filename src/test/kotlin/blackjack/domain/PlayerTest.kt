@@ -1,5 +1,7 @@
 package blackjack.domain
 
+import blackjack.domain.ResultStatistics.Constant.LOSE_STATISTICS
+import blackjack.domain.ResultStatistics.Constant.WIN_STATISTICS
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.assertAll

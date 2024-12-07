@@ -1,5 +1,9 @@
 package blackjack.domain
 
+import blackjack.domain.ResultStatistics.Constant.DRAW_STATISTICS
+import blackjack.domain.ResultStatistics.Constant.LOSE_STATISTICS
+import blackjack.domain.ResultStatistics.Constant.WIN_STATISTICS
+
 sealed class Participant(private val hand: Hand) {
     val isBust: Boolean
         get() = hand.isBust
