@@ -24,10 +24,6 @@ object ResultView {
         println("${user.name}카드: $cards ${if (printScore) scoreText else ""}")
     }
 
-    fun printCanNotReceivedCard() {
-        println("더 이상 카드를 받을 수 없습니다")
-    }
-
     fun linebreak() {
         println()
     }

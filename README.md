@@ -29,7 +29,7 @@
 - [x] BlackJackGame::start 메서드 분리
 - [x] BlackJackGame::유저목록을 받아 card 출력하도록 수정
 - [x] BlackJackGame::카드 히트 여부확인시 출력과 입력을 통합
-- [ ] BlackJackGame::while 문 내부 if 절을 while 조건식으로 통합
+- [x] BlackJackGame::while 문 내부 if 절을 while 조건식으로 통합
 - [ ] BlackJackGame::게임진행책임 분리
 - [ ] BlackJackGame::receive 를 hit 로 메서드명 수정
 - [ ] Rank::enum 클래스로 수정

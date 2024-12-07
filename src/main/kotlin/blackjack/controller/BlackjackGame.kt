@@ -12,8 +12,8 @@ class BlackjackGame(
 ) {
     fun start() {
         val gameTable = GameTable(getUsers(), Deck.create())
-        val allCardReceivedUsers = playGame(gameTable)
-        printGameResult(allCardReceivedUsers)
+        val users = playGame(gameTable)
+        printGameResult(users)
     }
 
     private fun getUsers(): List<User> {
@@ -37,18 +37,9 @@ class BlackjackGame(
         val allCardReceivedUsers =
             users.map { user ->
                 var currentUser = user
-                while (true) {
-                    if (!currentUser.canReceiveCard()) {
-                        resultView.printCanNotReceivedCard()
-                        break
-                    }
-                    val moreCard = inputView.inputReceiveMoreCard(currentUser)
-                    if (moreCard) {
-                        currentUser = currentUser.receiveCard(Deck.create().draw())
-                        resultView.printUserCard(user = currentUser, printScore = false)
-                    } else {
-                        break
-                    }
+                while (currentUser.canReceiveCard() && inputView.inputReceiveMoreCard(currentUser)) {
+                    currentUser = currentUser.receiveCard(Deck.create().draw())
+                    resultView.printUserCard(user = currentUser, printScore = false)
                 }
                 currentUser
             }
