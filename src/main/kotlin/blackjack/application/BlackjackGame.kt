@@ -1,7 +1,9 @@
 package blackjack.application
 
+import blackjack.domain.Dealer
 import blackjack.domain.Deck
-import blackjack.domain.INITIAL_DRAW_COUNT
+import blackjack.domain.GameResult
+import blackjack.domain.Participant
 import blackjack.domain.Player
 import blackjack.presentation.InputView
 import blackjack.presentation.OutputView
@@ -13,25 +15,25 @@ class BlackjackGame(
 ) {
     fun start() {
         val names = inputView.inputNames()
+        val dealer = Dealer()
         val players = names.map(::Player)
 
-        initialDraw(players)
+        initialDraw(players + dealer)
         players.forEach(::progress)
-        outputView.printResult(players)
+
+        endGame(players, dealer)
     }
 
-    private fun initialDraw(players: List<Player>) {
+    private fun initialDraw(players: List<Participant>) {
         players.forEach { player ->
-            repeat(INITIAL_DRAW_COUNT) {
-                hit(player)
-            }
+            player.initialDraw(deck)
         }
         outputView.printInitialCards(players)
     }
 
     private fun progress(player: Player) {
         if (player.isPlayable && inputView.inputHitOrStay(player.name)) {
-            hit(player)
+            player.hit(deck)
             outputView.printPlayerCards(player)
             progress(player)
         } else {
@@ -39,7 +41,8 @@ class BlackjackGame(
         }
     }
 
-    private fun hit(player: Player) {
-        player.hit(deck)
+    private fun endGame(players: List<Player>, dealer: Dealer) {
+        val result = GameResult(players, dealer)
+        outputView.printResult(result)
     }
 }
