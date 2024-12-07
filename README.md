@@ -21,3 +21,15 @@
 - [x] 유저는 카드 목록을 보유한다.
 - [x] 카드목록에서 점수를 계산한다.
 - [x] 카드를 덱에서 하나 뽑는다.
+
+## Step3 - 블랙잭(딜러)
+
+### Step2 - 리뷰반영사항
+- [ ] BlackJackGame::game table 이 users 와 deck 을 상태로서 관리하도록 수정
+- [ ] BlackJackGame::start 메서드 분리
+- [ ] BlackJackGame::allCardUsersCard 한번에 card 출력하도록 수정
+- [ ] BlackJackGame::카드 히트 여부확인시 출력과 입력을 통합
+- [ ] BlackJackGame::while 문 내부 if 절을 while 조건식으로 통합
+- [ ] BlackJackGame::게임진행책임 분리
+- [ ] BlackJackGame::receive 를 hit 로 메서드명 수정
+- [ ] Rank::enum 클래스로 수정

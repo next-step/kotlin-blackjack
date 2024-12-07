@@ -6,7 +6,7 @@ import blackjack.domain.User
 import blackjack.view.InputView
 import blackjack.view.ResultView
 
-class BlackJackGame(
+class BlackjackGame(
     private val gameTable: GameTable,
     private val inputView: InputView,
     private val resultView: ResultView,
