@@ -3,13 +3,12 @@ package blackjack
 import blackjack.domain.Dealer
 import blackjack.domain.MatchType
 import blackjack.domain.Players
+import blackjack.ui.DEALER_NAME
 import blackjack.ui.DealerResult
 import blackjack.ui.DisplayCard
 import blackjack.ui.FinalWinnerResults
 import blackjack.ui.RoundResult
 import blackjack.ui.UIMatchType
-
-const val DEALER_NAME = "딜러"
 
 class GameResultEvaluator(private val players: Players, private val dealer: Dealer) {
     fun evaluateRounds(): List<RoundResult> {
