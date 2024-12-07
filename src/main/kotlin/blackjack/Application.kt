@@ -17,7 +17,7 @@ fun main() {
 
     game.startGame()
 
-    resultView.printUserCardCount(game.dealerName, game.allPlayersNames(), INITIAL_CARD_COUNT)
+    resultView.printUserCardCount(game.allPlayersNames(), INITIAL_CARD_COUNT)
     resultView.printUserCards(resultEvaluator.evaluateRounds())
 
     game.handleUserTurn(::playerTurn)
