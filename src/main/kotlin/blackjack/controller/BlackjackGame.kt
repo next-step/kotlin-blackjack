@@ -34,16 +34,17 @@ class BlackjackGame(
     }
 
     private fun processTurn(users: List<User>): List<User> {
-        val allCardReceivedUsers =
-            users.map { user ->
-                var currentUser = user
-                while (currentUser.canReceiveCard() && inputView.inputReceiveMoreCard(currentUser)) {
-                    currentUser = currentUser.receiveCard(Deck.create().draw())
-                    resultView.printUserCard(user = currentUser, printScore = false)
-                }
-                currentUser
-            }
-        return allCardReceivedUsers
+        return users.map { turn(it) }
+    }
+
+    private fun turn(user: User): User {
+        return if (user.canReceiveCard() && inputView.inputReceiveMoreCard(user)) {
+            val updatedUser = user.receiveCard(Deck.create().draw())
+            resultView.printUserCard(user = updatedUser, printScore = false)
+            turn(updatedUser)
+        } else {
+            user
+        }
     }
 
     private fun printGameResult(users: List<User>) {
