@@ -1,7 +1,9 @@
 package blackjack.domain
 
 import blackjack.fixture.cardFixture
+import blackjack.fixture.dealerFixture
 import blackjack.fixture.handsFixture
+import blackjack.fixture.playerFixture
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.data.forAll
 import io.kotest.data.row
@@ -99,23 +101,3 @@ class DealerTest : StringSpec({
         }
     }
 })
-
-fun dealerFixture(
-    hands: Hands = Hands(),
-    status: PlayerStatus = PlayerStatus.PLAYING,
-): Dealer =
-    Dealer(
-        name = "dealer",
-        hands = hands,
-        status = status,
-    )
-
-fun playerFixture(
-    hands: Hands = Hands(),
-    status: PlayerStatus = PlayerStatus.PLAYING,
-): Player =
-    Player(
-        name = "player",
-        hands = hands,
-        status = status,
-    )
