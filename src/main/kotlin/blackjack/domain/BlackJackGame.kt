@@ -32,4 +32,8 @@ class BlackJackGame(
     fun getNormalPlayers(): List<BlackJackNormalPlayer> {
         return blackJackGamePlayers.players
     }
+
+    fun getDealer(): BlackJackDealer {
+        return blackJackGamePlayers.dealer
+    }
 }

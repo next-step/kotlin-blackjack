@@ -11,7 +11,7 @@ import blackjack.view.BlackJackResultView
 fun main() {
     val blackJackDeck = BlackJackDeckGenerator.getDefaultDeck()
     val blackJackGame = getGame(blackJackDeck)
-    BlackJackInputView.drawBlackJackPlayersCards(blackJackGame.getNormalPlayers(), blackJackGame.blackJackGamePlayers.dealer)
+    BlackJackInputView.drawBlackJackPlayersCards(blackJackGame.getNormalPlayers(), blackJackGame.getDealer())
     doDrawPhase(blackJackGame)
     blackJackGame.calculateResult()
     drawResult(blackJackGame)
@@ -19,9 +19,9 @@ fun main() {
 
 private fun drawResult(blackJackGame: BlackJackGame) {
     BlackJackResultView.drawBlackJackPlayersCardsWithResult(blackJackGame.getNormalPlayers())
-    BlackJackResultView.drawBlackJackDealerWithResult(blackJackGame.blackJackGamePlayers.dealer)
+    BlackJackResultView.drawBlackJackDealerWithResult(blackJackGame.getDealer())
     BlackJackResultView.drawGameResult(blackJackGame.getGameResult())
-    BlackJackResultView.drawGameProfit(blackJackGame.blackJackGamePlayers.dealer, blackJackGame.getNormalPlayers())
+    BlackJackResultView.drawGameProfit(blackJackGame.getDealer(), blackJackGame.getNormalPlayers())
 }
 
 private fun doDrawPhase(blackJackGame: BlackJackGame) {
