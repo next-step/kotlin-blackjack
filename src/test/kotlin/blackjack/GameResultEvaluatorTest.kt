@@ -7,6 +7,7 @@ import blackjack.domain.Deck
 import blackjack.domain.Players
 import blackjack.domain.Suit
 import blackjack.ui.DealerResult
+import blackjack.ui.DisplayCard
 import blackjack.ui.FinalWinnerResults
 import blackjack.ui.RoundResult
 import blackjack.ui.UIMatchType
@@ -39,13 +40,38 @@ class GameResultEvaluatorTest {
         val actual = gameResultEvaluator.evaluateRounds()
 
         assertAll(
-            { assertThat(actual).contains(RoundResult("userA", mapOf("TWO" to listOf("HEART", "SPADE")), 4)) },
-            { assertThat(actual).contains(RoundResult("userB", mapOf("ACE" to listOf("HEART", "SPADE")), 12)) },
             {
-                assertThat(actual).contains(
+                assertThat(
+                    actual,
+                ).contains(
                     RoundResult(
-                        DEALER_NAME,
-                        mapOf("TWO" to listOf("HEART"), "THREE" to listOf("SPADE")),
+                        "userA",
+                        listOf(DisplayCard.from(CardRank.TWO.name, Suit.HEART.name), DisplayCard.from(CardRank.TWO.name, Suit.SPADE.name)),
+                        4,
+                    ),
+                )
+            },
+            {
+                assertThat(
+                    actual,
+                ).contains(
+                    RoundResult(
+                        "userB",
+                        listOf(DisplayCard.from(CardRank.ACE.name, Suit.HEART.name), DisplayCard.from(CardRank.ACE.name, Suit.SPADE.name)),
+                        12,
+                    ),
+                )
+            },
+            {
+                assertThat(
+                    actual,
+                ).contains(
+                    RoundResult(
+                        "딜러",
+                        listOf(
+                            DisplayCard.from(CardRank.TWO.name, Suit.HEART.name),
+                            DisplayCard.from(CardRank.THREE.name, Suit.SPADE.name),
+                        ),
                         5,
                     ),
                 )

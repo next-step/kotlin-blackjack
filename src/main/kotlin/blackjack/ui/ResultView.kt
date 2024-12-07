@@ -12,7 +12,7 @@ class ResultView(val outputProvider: (String) -> Unit = { println(it) }) {
         cards: UserCards,
         score: Score,
     ) {
-        outputProvider("${name}카드: ${cards.toPrettyString()} - 결과: $score")
+        outputProvider("${name}카드: ${cards.displayCards()} - 결과: $score")
     }
 
     fun printUserCardCount(
@@ -25,7 +25,7 @@ class ResultView(val outputProvider: (String) -> Unit = { println(it) }) {
 
     fun printUserCards(roundResults: List<RoundResult>) {
         roundResults.forEach { (name, cards) ->
-            outputProvider("${name}카드: ${cards.toPrettyString()}")
+            outputProvider("${name}카드: ${cards.displayCards()}")
         }
     }
 
@@ -43,7 +43,7 @@ class ResultView(val outputProvider: (String) -> Unit = { println(it) }) {
         name: UserName,
         cards: UserCards,
     ) {
-        outputProvider("${name}카드: ${cards.toPrettyString()}")
+        outputProvider("${name}카드: ${cards.displayCards()}")
     }
 
     fun printDealerTurnStart(dealerHitScore: Int) {

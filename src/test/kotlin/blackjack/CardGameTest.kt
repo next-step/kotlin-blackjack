@@ -5,6 +5,7 @@ import blackjack.domain.CardRank
 import blackjack.domain.Deck
 import blackjack.domain.Suit
 import blackjack.domain.createDeck
+import blackjack.ui.DisplayCard
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.collections.shouldContainAll
 import io.kotest.matchers.shouldBe
@@ -32,8 +33,13 @@ class CardGameTest : BehaviorSpec({
             cardGame.startGame()
             val actual = cardGame.playerCards(userA)
 
+            val expected =
+                listOf(
+                    DisplayCard.from("NINE", "SPADE"),
+                    DisplayCard.from("EIGHT", "SPADE"),
+                )
             Then("사용자는 두 장의 카드를 가진다") {
-                actual["A"]?.shouldContainAll(listOf("CLUB", "SPADE"))
+                actual.shouldContainAll(expected)
             }
         }
     }
