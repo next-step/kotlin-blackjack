@@ -3,7 +3,12 @@ package blackjack.domain
 class Player(
     override val name: String,
     override val hands: Hands = Hands(),
-) : Participant(name, hands) {
+    override var status: PlayerStatus = PlayerStatus.PLAYING,
+) : Participant(
+    name = name,
+    hands = hands,
+    status = status,
+) {
     fun toStay() {
         status = PlayerStatus.STAY
     }

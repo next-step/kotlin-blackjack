@@ -2,7 +2,8 @@ package blackjack.domain
 
 sealed class Participant(
     open val name: String,
-    open val hands: Hands,
+    open var status: PlayerStatus = PlayerStatus.PLAYING,
+    protected open val hands: Hands,
 ) {
     val score: Int
         get() = hands.calculateTotalValue()
@@ -10,11 +11,11 @@ sealed class Participant(
     val handSize: Int
         get() = hands.size
 
+    val cards: String
+        get() = hands.toString()
+
     val isPlayable: Boolean
         get() = status.isPlayable()
-
-    var status: PlayerStatus = PlayerStatus.PLAYING
-        protected set
 
     open fun initialDraw(deck: Deck) {
         hands.add(deck.draw())

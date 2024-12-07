@@ -3,8 +3,23 @@ package blackjack.domain
 class Dealer(
     override val name: String = "딜러",
     override val hands: Hands = Hands(),
-) : Participant(name, hands) {
+    override var status: PlayerStatus = PlayerStatus.PLAYING,
+) : Participant(
+    name = name,
+    hands = hands,
+    status = status,
+) {
     private val shouldDraw: Boolean = score < DEALER_DRAW_THRESHOLD
+
+    infix fun vs(player: Player): Result {
+        return when {
+            status == PlayerStatus.BURST -> Result.LOSE
+            player.status == PlayerStatus.BURST -> Result.WIN
+            score > player.score -> Result.WIN
+            score < player.score -> Result.LOSE
+            else -> Result.DRAW
+        }
+    }
 
     override fun initialDraw(deck: Deck) {
         super.initialDraw(deck)
@@ -13,9 +28,7 @@ class Dealer(
             hit(deck)
         }
 
-        if (score >= 21) {
-            status = PlayerStatus.STAY
-        }
+        handleStatus()
     }
 
     override fun handleStatus() {
