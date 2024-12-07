@@ -56,7 +56,7 @@ class ResultViewTest {
         val customOutputProvider: (String) -> Unit = { message -> expected = message }
         val resultView = ResultView(customOutputProvider)
 
-        resultView.printUserCardCount("딜러", listOf("userA", "userB"), 2)
+        resultView.printUserCardCount(listOf("userA", "userB"), 2)
 
         assertThat(expected).isEqualTo("딜러와 userA, userB에게 2장의 나누었습니다.")
     }

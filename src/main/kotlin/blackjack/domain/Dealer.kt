@@ -1,8 +1,6 @@
 package blackjack.domain
 
-val DEALER_NAME = EntrantName("딜러")
-
-class Dealer : Player(DEALER_NAME, Hand()) {
+class Dealer(hand: Hand = Hand()) : Participant(hand) {
     val shouldAddCard: Boolean
         get() = super.score() < DEALER_HIT_SCORE
 

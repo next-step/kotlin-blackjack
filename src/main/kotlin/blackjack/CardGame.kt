@@ -11,8 +11,6 @@ import blackjack.ui.UserCards
 import blackjack.ui.UserName
 
 data class CardGame(private val deck: Deck, private val players: Players, val dealer: Dealer) {
-    val dealerName: UserName
-        get() = dealer.name
     private val dealerShouldAddCard: Boolean
         get() = dealer.shouldAddCard
 
