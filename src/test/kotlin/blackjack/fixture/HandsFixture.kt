@@ -4,10 +4,7 @@ import blackjack.domain.Card
 import blackjack.domain.Hands
 
 internal fun handsFixture(
-    values: List<Card> =
-        listOf(
-            cardFixture(),
-        ),
+    vararg values: Card,
 ): Hands {
     val hands = Hands()
     values.forEach(hands::add)
