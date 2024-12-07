@@ -1,4 +1,10 @@
 package blackjack.util
 
-class CreatePlayers {
+import blackjack.domain.Player
+import blackjack.domain.MutableCards
+import blackjack.domain.PlayerName
+import blackjack.domain.Players
+
+fun createPlayers(vararg names: String): Players {
+    return Players(names.map { Player(PlayerName(it), MutableCards(mutableListOf())) })
 }
