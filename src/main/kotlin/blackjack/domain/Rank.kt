@@ -14,4 +14,12 @@ enum class Rank(private val number: Int) {
     JACK(10),
     QUEEN(10),
     KING(10);
+
+    fun getNumber(): List<Int> {
+        return if (this == ACE) {
+            listOf(ACE.number, 11)
+        } else {
+            listOf(number)
+        }
+    }
 }
