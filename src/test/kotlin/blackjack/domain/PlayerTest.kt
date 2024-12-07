@@ -31,13 +31,11 @@ class PlayerTest : StringSpec({
         val deck = Deck()
         val hands =
             handsFixture(
-                listOf(
-                    Card(Suit.SPADE, Rank.TEN),
-                    Card(Suit.SPADE, Rank.TEN),
-                    Card(Suit.SPADE, Rank.TWO),
-                ),
+                Card(Suit.SPADE, Rank.TEN),
+                Card(Suit.SPADE, Rank.TEN),
+                Card(Suit.SPADE, Rank.TWO),
             )
-        val actual = Player("pobi", hands)
+        val actual = Player(name = "pobi", hands = hands)
 
         actual.hit(deck)
 
@@ -49,9 +47,9 @@ class PlayerTest : StringSpec({
         val aceCard = Card(Suit.SPADE, Rank.ACE)
         val tenCard = Card(Suit.SPADE, Rank.TEN)
         val deck = Deck(listOf(aceCard))
-        val hands = handsFixture(listOf(tenCard))
+        val hands = handsFixture(tenCard)
 
-        val actual = Player("pobi", hands)
+        val actual = Player(name = "pobi", hands = hands)
 
         actual.hit(deck)
 
@@ -68,15 +66,13 @@ class PlayerTest : StringSpec({
     }
 
     "플레이어는 점수를 가진다" {
-        val cards =
+        val hands =
             handsFixture(
-                listOf(
-                    Card(Suit.SPADE, Rank.TWO),
-                    Card(Suit.SPADE, Rank.THREE),
-                    Card(Suit.SPADE, Rank.TEN),
-                ),
+                Card(Suit.SPADE, Rank.TWO),
+                Card(Suit.SPADE, Rank.THREE),
+                Card(Suit.SPADE, Rank.TEN),
             )
-        val actual = Player("pobi", cards)
+        val actual = Player(name = "pobi", hands = hands)
 
         actual.score shouldBe 15
     }

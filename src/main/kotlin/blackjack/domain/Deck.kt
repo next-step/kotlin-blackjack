@@ -1,8 +1,8 @@
 package blackjack.domain
 
-class Deck private constructor() {
-    private val cards: MutableList<Card> = mutableListOf()
-
+class Deck private constructor(
+    private val cards: MutableList<Card> = mutableListOf(),
+) {
     val quantity: Int
         get() = cards.size
 
