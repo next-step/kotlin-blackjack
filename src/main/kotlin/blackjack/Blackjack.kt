@@ -8,28 +8,50 @@ class Blackjack {
     val resultView = ResultView()
 
     fun start() {
-        val playerNamesInput = inputView.getPlayerNamesInput()
-        val players = initPlayers(playerNamesInput)
-        resultView.renderPlayerInitOutput(players.getPlayerNames())
-        for (player in players.getPlayers()) {
-            resultView.renderPlayerCardsOutput(player.name, player.cards.toString())
-        }
+        val players = initPlayers()
 
-        for (player in players.getPlayers()) {
-            while (true) {
-                val answerInput = inputView.getPlayerRequestInput(player.name)
-                if (answerInput == "n") break
-                player.takeNewCard()
-                resultView.renderPlayerCardsOutput(player.name, player.cards.toString())
-            }
-        }
+        processPlayerTurns(players)
 
+        renderPlayerResults(players)
+    }
+
+    private fun renderPlayerResults(players: Players) {
         for (player in players.getPlayers()) {
             resultView.renderPlayerCardsResultOutput(player.name, player.cards.toString(), player.calculateResult())
         }
     }
 
-    private fun initPlayers(playerNamesInput: String): Players {
+    private fun processPlayerTurns(players: Players) {
+        for (player in players.getPlayers()) {
+            while (true) {
+                val answerInput = inputView.getPlayerRequestInput(player.name)
+                if (checkPlayerRequest(answerInput, player)) break
+                resultView.renderPlayerCardsOutput(player.name, player.cards.toString())
+            }
+        }
+    }
+
+    private fun checkPlayerRequest(answerInput: String, player: Player): Boolean {
+        if (answerInput == "n") return true
+        player.takeNewCard()
+        return false
+    }
+
+    private fun initPlayers(): Players {
+        val playerNamesInput = inputView.getPlayerNamesInput()
+        val players = createPlayers(playerNamesInput)
+        showPlayersInfo(players)
+        return players
+    }
+
+    private fun showPlayersInfo(players: Players) {
+        resultView.renderPlayerInitOutput(players.getPlayerNames())
+        for (player in players.getPlayers()) {
+            resultView.renderPlayerCardsOutput(player.name, player.cards.toString())
+        }
+    }
+
+    private fun createPlayers(playerNamesInput: String): Players {
         val playersNames = playerNamesInput.split()
         val players = Players.from(playersNames.map(::Player))
         return players
