@@ -25,7 +25,7 @@
 ## Step3 - 블랙잭(딜러)
 
 ### Step2 - 리뷰반영사항
-- [ ] BlackJackGame::game table 이 users 와 deck 을 상태로서 관리하도록 수정
+- [x] BlackJackGame::game table 이 users 와 deck 을 상태로서 관리하도록 수정
 - [ ] BlackJackGame::start 메서드 분리
 - [ ] BlackJackGame::allCardUsersCard 한번에 card 출력하도록 수정
 - [ ] BlackJackGame::카드 히트 여부확인시 출력과 입력을 통합

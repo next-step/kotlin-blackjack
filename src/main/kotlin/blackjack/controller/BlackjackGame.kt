@@ -7,16 +7,12 @@ import blackjack.view.InputView
 import blackjack.view.ResultView
 
 class BlackjackGame(
-    private val gameTable: GameTable,
     private val inputView: InputView,
     private val resultView: ResultView,
 ) {
     fun start() {
-        val names = inputView.inputNames()
-        val deck = Deck.create()
-        val users = names.map { User.create(name = it) }
-
-        val initCardReceivedUsers = gameTable.dealInitCard(users, deck)
+        val gameTable = GameTable(getUsers(), Deck.create())
+        val initCardReceivedUsers = gameTable.dealInitCard()
 
         println()
         resultView.printInitCardReceive(initCardReceivedUsers)
@@ -33,7 +29,7 @@ class BlackjackGame(
                     resultView.printAskReceiveMoreCard(currentUser)
                     val moreCard = inputView.inputReceiveMoreCard()
                     if (moreCard) {
-                        currentUser = currentUser.receiveCard(deck.draw())
+                        currentUser = currentUser.receiveCard(Deck.create().draw())
                         resultView.printUserCards(user = currentUser, printScore = false)
                     } else {
                         break
@@ -46,5 +42,9 @@ class BlackjackGame(
         allCardReceivedUsers.forEach { user ->
             resultView.printUserCards(user = user, printScore = true)
         }
+    }
+
+    private fun getUsers(): List<User> {
+        return inputView.inputNames().map { User.create(name = it) }
     }
 }

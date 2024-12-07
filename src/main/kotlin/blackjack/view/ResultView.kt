@@ -1,6 +1,6 @@
 package blackjack.view
 
-import blackjack.domain.GameTable.INIT_CARD_DRAW_COUNT
+import blackjack.domain.GameTable.Companion.INIT_CARD_DRAW_COUNT
 import blackjack.domain.User
 
 object ResultView {
