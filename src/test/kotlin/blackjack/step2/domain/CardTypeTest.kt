@@ -1,6 +1,7 @@
 package blackjack.step2.domain
 
 import io.kotest.core.spec.style.FunSpec
+import io.kotest.matchers.collections.shouldContain
 import io.kotest.matchers.shouldBe
 
 class CardTypeTest : FunSpec({
@@ -29,6 +30,14 @@ class CardTypeTest : FunSpec({
             CardType.DIAMOND.toString() shouldBe "DIAMOND"
             CardType.HEART.toString() shouldBe "HEART"
             CardType.CLOVER.toString() shouldBe "CLOVER"
+        }
+
+        test("CardType.random()을 호출하면 랜덤한 CardType을 반환한다") {
+            // when
+            val randomCardType = CardType.random()
+
+            // then
+            CardType.entries shouldContain randomCardType
         }
     }
 })

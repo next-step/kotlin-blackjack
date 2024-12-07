@@ -5,4 +5,11 @@ enum class CardType(val value: String) {
     DIAMOND("다이아몬드"),
     HEART("하트"),
     CLOVER("클로버"),
+    ;
+
+    companion object {
+        fun random(): CardType {
+            return entries.random()
+        }
+    }
 }

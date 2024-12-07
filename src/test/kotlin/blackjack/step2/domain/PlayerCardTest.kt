@@ -6,111 +6,119 @@ import io.kotest.matchers.shouldBe
 
 class PlayerCardTest : FunSpec({
     context("PlayerCard 클래스 테스트") {
-        test("PlayerCard를 생성할 수 있다.") {
-            // Given
-            val playerName = "dongyeon"
-            val initialCards =
-                listOf(
-                    Card(CardNumber.ACE, CardType.SPADE),
-                    Card(CardNumber.KING, CardType.HEART),
-                )
+        context("allCards 테스트") {
+            test("PlayerCard의 모든 카드를 확인할 수 있다.") {
+                // Given
+                val playerName = "dongyeon"
+                val initialCards =
+                    listOf(
+                        Card(CardNumber.ACE, CardType.SPADE),
+                        Card(CardNumber.KING, CardType.HEART),
+                    )
+                val playerCard = PlayerCard.of(playerName, initialCards)
 
-            // When
-            val playerCard = PlayerCard.of(playerName, initialCards)
+                // When
+                val allCards = playerCard.allCards
 
-            // Then
-            playerCard.playerName shouldBe playerName
-            playerCard.allCards shouldContainExactly initialCards
+                // Then
+                allCards shouldContainExactly initialCards
+            }
         }
+        context("pickCard() 테스트") {
+            test("PlayerCard에 카드를 추가로 뽑을 수 있다.") {
+                // Given
+                val playerName = "dongyeon"
+                val initialCards =
+                    listOf(
+                        Card(CardNumber.ACE, CardType.SPADE),
+                        Card(CardNumber.KING, CardType.HEART),
+                    )
+                val playerCard = PlayerCard.of(playerName, initialCards)
+                val cardPicker = DefaultCardPicker()
 
-        test("PlayerCard를 생성할 때 초기 카드가 없는 경우 빈 리스트로 생성된다.") {
-            // Given
-            val playerName = "dongyeon"
+                // When
+                playerCard.pickCard(cardPicker)
 
-            // When
-            val playerCard = PlayerCard.of(playerName)
+                // Then
+                playerCard.allCards shouldContainExactly initialCards + DefaultCardPicker.defaultCard
+            }
+            test("PlayerCard에 카드를 뽑을때 갖고 있는 카드를 중복해서 뽑지 않는다.") {
+                // Given
+                val playerName = "dongyeon"
+                val playerCard = PlayerCard.of(playerName)
+                val cardPicker = RandomCardPicker()
 
-            // Then
-            playerCard.playerName shouldBe playerName
-            playerCard.allCards shouldBe emptyList()
+                // When
+                // 52번 카드를 뽑는다.
+                (1..52).forEach { _ ->
+                    playerCard.pickCard(cardPicker)
+                }
+
+                // Then
+                playerCard.allCards.distinct().size shouldBe playerCard.allCards.size
+            }
         }
+        context("calculateScore() 테스트") {
+            context("ACE 카드를 갖고 있는 경우 경우") {
+                test("ACE 카드를 1장 갖고 있는 경우, 21을 넘지 않으면서 21에 가까운 점수를 반환한다.") {
+                    // Given
+                    val playerName = "dongyeon"
+                    val cards =
+                        listOf(
+                            // 1 또는 11
+                            Card(CardNumber.ACE, CardType.SPADE),
+                            // 10
+                            Card(CardNumber.KING, CardType.HEART),
+                        )
+                    val playerCard = PlayerCard.of(playerName, cards)
 
-        test("PlayerCard에 새로운 카드를 추가할 수 있다.") {
-            // Given
-            val playerName = "dongyeon"
-            val initialCards =
-                listOf(
-                    Card(CardNumber.QUEEN, CardType.DIAMOND),
-                )
-            val newCard = Card(CardNumber.TEN, CardType.CLOVER)
-            val playerCard = PlayerCard.of(playerName, initialCards)
+                    // When
+                    val score = playerCard.calculateScore()
 
-            // When
-            val updatedPlayerCard = playerCard.addCard(newCard)
+                    // Then
+                    score shouldBe 21 // ACE(11) + KING(10)
+                }
+                test("ACE 카드를 2장 갖고 있는 경우, 21을 넘지 않으면서 21에 가까운 점수를 반환한다.") {
+                    // Given
+                    val playerName = "dongyeon"
+                    val cards =
+                        listOf(
+                            // 1 또는 11
+                            Card(CardNumber.ACE, CardType.SPADE),
+                            // 1 또는 11
+                            Card(CardNumber.ACE, CardType.HEART),
+                            // 9
+                            Card(CardNumber.NINE, CardType.CLOVER),
+                        )
+                    val playerCard = PlayerCard.of(playerName, cards)
 
-            // Then
-            updatedPlayerCard.allCards shouldContainExactly initialCards + newCard
-        }
+                    // When
+                    val score = playerCard.calculateScore()
 
-        test("PlayerCard의 점수를 계산할 수 있다.") {
-            // Given
-            val playerName = "dongyeon"
-            val cards =
-                listOf(
-                    // 1 또는 11
-                    Card(CardNumber.ACE, CardType.SPADE),
-                    // 10
-                    Card(CardNumber.KING, CardType.HEART),
-                )
-            val playerCard = PlayerCard.of(playerName, cards)
+                    // Then
+                    score shouldBe 21 // ACE(11) + ACE(1) + NINE(9)
+                }
+                test("ACE 카드를 3장 갖고 있는 경우, 21을 넘지 않으면서 21에 가까운 점수를 반환한다.") {
+                    // Given
+                    val playerName = "dongyeon"
+                    val cards =
+                        listOf(
+                            // 1 또는 11
+                            Card(CardNumber.ACE, CardType.SPADE),
+                            // 1 또는 11
+                            Card(CardNumber.ACE, CardType.HEART),
+                            // 1 또는 11
+                            Card(CardNumber.ACE, CardType.DIAMOND),
+                        )
+                    val playerCard = PlayerCard.of(playerName, cards)
 
-            // When
-            val score = playerCard.calculateScore()
+                    // When
+                    val score = playerCard.calculateScore()
 
-            // Then
-            score shouldBe 21 // ACE(11) + KING(10)
-        }
-
-        test("PlayerCard의 점수가 21을 초과하지 않는 최대 값을 반환한다.") {
-            // Given
-            val playerName = "dongyeon"
-            val cards =
-                listOf(
-                    // 1 또는 11
-                    Card(CardNumber.ACE, CardType.SPADE),
-                    // 1 또는 11
-                    Card(CardNumber.ACE, CardType.HEART),
-                    // 9
-                    Card(CardNumber.NINE, CardType.CLOVER),
-                )
-            val playerCard = PlayerCard.of(playerName, cards)
-
-            // When
-            val score = playerCard.calculateScore()
-
-            // Then
-            score shouldBe 21 // ACE(11) + ACE(1) + NINE(9)
-        }
-
-        test("PlayerCard의 모든 점수가 21을 초과하면 최소 값을 반환한다.") {
-            // Given
-            val playerName = "dongyeon"
-            val cards =
-                listOf(
-                    // 10
-                    Card(CardNumber.KING, CardType.SPADE),
-                    // 10
-                    Card(CardNumber.KING, CardType.HEART),
-                    // 10
-                    Card(CardNumber.QUEEN, CardType.DIAMOND),
-                )
-            val playerCard = PlayerCard.of(playerName, cards)
-
-            // When
-            val score = playerCard.calculateScore()
-
-            // Then
-            score shouldBe 30 // 10 + 10 + 10
+                    // Then
+                    score shouldBe 13 // 11 + 1 + 1
+                }
+            }
         }
     }
 })

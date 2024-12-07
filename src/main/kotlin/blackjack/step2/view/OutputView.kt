@@ -2,19 +2,19 @@ package blackjack.step2.view
 
 import blackjack.step2.domain.Card
 import blackjack.step2.domain.CardNumber
-import blackjack.step2.domain.PlayerCards
+import blackjack.step2.domain.PlayerCard
 
 object OutputView {
-    fun printFirstDealtCard(playerCards: PlayerCards) {
-        playerCards.cards.forEach { playerCard ->
-            println("${playerCard.playerName}카드: ${this.formatCards(playerCard.allCards)}")
+    fun printFirstDealtCard(playerCards: List<PlayerCard>) {
+        playerCards.forEach { playerCard ->
+            println("${playerCard.playerName} 카드: ${formatCards(playerCard.allCards)}")
         }
     }
 
-    fun printCardResult(playerCards: PlayerCards) {
-        playerCards.cards.forEach { playerCard ->
+    fun printCardResult(playerCards: List<PlayerCard>) {
+        playerCards.forEach { playerCard ->
             println(
-                "${playerCard.playerName}카드: ${formatCards(playerCard.allCards)} (결과: ${playerCard.calculateScore()})",
+                "${playerCard.playerName} 카드: ${formatCards(playerCard.allCards)} (점수: ${playerCard.calculateScore()})",
             )
         }
     }

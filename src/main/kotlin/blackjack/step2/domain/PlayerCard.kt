@@ -7,21 +7,27 @@ class PlayerCard private constructor(
     val allCards: List<Card>
         get() = cards.all
 
-    fun addCard(card: Card): PlayerCard {
-        cards.add(card)
+    fun pickCard(cardPicker: CardPicker): PlayerCard {
+        while (true) {
+            val card = cardPicker.pick()
+            if (!allCards.contains(card)) {
+                cards.add(card)
+                break
+            }
+        }
         return this
     }
 
     fun calculateScore(): Int {
-        return cards.calculateScore()
+        return ScoreCalculator.calculate(cards)
     }
 
     companion object {
         fun of(
             playerName: String,
-            cards: List<Card>? = null,
+            cards: List<Card> = emptyList(),
         ): PlayerCard {
-            return PlayerCard(playerName, Cards.of(cards ?: emptyList()))
+            return PlayerCard(playerName, Cards.of(cards))
         }
     }
 }
