@@ -5,7 +5,7 @@ class Game(
     val deck: Deck,
     val dealer: Dealer = Dealer(),
 ) {
-    val isDone: Boolean
+    val arePlayersDone: Boolean
         get() = players.isDone
     val currentPlayer: Player
         get() = players.currentPlayer
@@ -29,6 +29,7 @@ class Game(
     }
 
     fun dealerTurn() {
+        check(arePlayersDone) { "플레이어들의 턴이 종료되어야 합니다." }
         dealer.flipHoleCardUp()
     }
 

@@ -3,7 +3,9 @@ package blackjack.domain
 import blackjack.domain.StubDeck.Companion.DUMMY_SUIT
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 
 @Suppress("NonAsciiCharacters")
 class GameTest {
@@ -91,7 +93,7 @@ class GameTest {
 
         val game = Game(players, StubDeck.from())
 
-        game.isDone shouldBe true
+        game.arePlayersDone shouldBe true
     }
 
     @Test
@@ -135,22 +137,78 @@ class GameTest {
     }
 
     @Test
-    fun `딜러의 턴은 아직 결과가 정해지지 않은 플레이어가 있는 경우에만 진행한다`() {
-        TODO("Not yet implemented")
+    fun `딜러의 턴 진행은 모든 플레이어 진행 후에만 가능하다`() {
+        val players = Players.from("black", "jack")
+        val game =
+            Game(players, deck).apply {
+                initialDeal()
+                playerStands()
+                playerHits()
+            }
+        // black: A, 4
+        // jack: 2, 5, 7, ...
+        // dealer: 3, 6
+        assertThrows<IllegalStateException> { game.dealerTurn() }
     }
 
     @Test
     fun `딜러의 턴이 시작하면 두번졔 카드를 뒤집는다`() {
         val players = Players.from("black", "jack")
-        val game = Game(players, deck).apply { initialDeal() }
+        val game =
+            Game(players, deck).apply {
+                initialDeal()
+                playerStands()
+                playerStands()
+            }
 
         game.dealerTurn()
 
         game.dealer.hand[1].isFaceUp shouldBe true
     }
 
+    @Disabled
     @Test
-    fun `딜러는 16점이하이면 한 장의 카드를 뽑는다`() {
+    fun `딜러는 16점 이하이면 한 장의 카드를 뽑는다`() {
+        val deck =
+            StubDeck.from(
+                Rank.ACE,
+                Rank.TWO,
+                Rank.THREE,
+                Rank.FOUR,
+                Rank.FIVE,
+                Rank.SIX,
+                Rank.SEVEN,
+                Rank.EIGHT,
+            )
+        val players = Players.from("black", "jack")
+        val game =
+            Game(players, deck).apply {
+                initialDeal()
+                playerStands()
+                playerStands()
+            }
+        // dealer: 3, 6
+
+        game.dealerTurn()
+
+        game.dealer.hand[2] shouldBe Card(DUMMY_SUIT, Rank.SEVEN)
+    }
+
+    @Disabled
+    @Test
+    fun `딜러는 16점 이하인 이상 계속 카드를 뽑는다`() {
+        TODO("Not yet implemented")
+    }
+
+    @Disabled
+    @Test
+    fun `딜러는 17이상이면 더 이상 카드를 뽑지 않는다`() {
+        TODO("Not yet implemented")
+    }
+
+    @Disabled
+    @Test
+    fun `딜러의 턴은 아직 결과가 정해지지 않은 플레이어가 있는 경우에만 진행한다`() {
         TODO("Not yet implemented")
     }
 }

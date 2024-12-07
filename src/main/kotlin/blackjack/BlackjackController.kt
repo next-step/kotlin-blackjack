@@ -27,7 +27,7 @@ class BlackjackController(
     }
 
     private fun runGameLoop(game: Game) {
-        while (!game.isDone) {
+        while (!game.arePlayersDone) {
             val player = game.currentPlayer
             val command = InputView.getCommand(player)
             handle(command, game)
