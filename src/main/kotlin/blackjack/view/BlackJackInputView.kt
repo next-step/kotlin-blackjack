@@ -1,8 +1,10 @@
 package blackjack.view
 
 import blackjack.domain.BlackJackDealer
+import blackjack.domain.BlackJackDeck
 import blackjack.domain.BlackJackNormalPlayer
 import blackjack.domain.BlackJackPlayer
+import blackjack.domain.BlackJackPlayerCards
 
 object BlackJackInputView {
     fun getPlayerName(): List<String> {
@@ -31,16 +33,13 @@ object BlackJackInputView {
         println(blackJackPlayer.blackJackPlayerCards.cards.map { "${it.number.name} ${it.shape.name}" }.joinToString(","))
     }
 
-    fun getPlayerBets(playerNames: List<String>): Map<String, Int> {
-        val bets = mutableListOf<Int>()
-        playerNames.forEach {
+    fun getPlayer(
+        playerNames: List<String>,
+        blackJackDeck: BlackJackDeck,
+    ): List<BlackJackNormalPlayer> {
+        return playerNames.map {
             println("${it}의 배팅 금액은?")
-            bets.add(readln().toInt())
+            BlackJackNormalPlayer(it, BlackJackPlayerCards.byDeck(blackJackDeck), readln().toInt())
         }
-        val result = mutableMapOf<String, Int>()
-        for (i in 0..bets.size - 1) {
-            result.put(playerNames[i], bets[i])
-        }
-        return result.toMap()
     }
 }

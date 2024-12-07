@@ -22,7 +22,7 @@ class BlackJackDealer(
     }
 
     fun win(bet: Int) {
-        profit += bet
+        _profit += bet
     }
 
     fun lose(
@@ -30,13 +30,11 @@ class BlackJackDealer(
         isBlackJackPlayer: Boolean,
     ) {
         if (isBlackJackPlayer) {
-            profit -= (bet * BLACKJACK_PROFIT_RATE).toInt()
+            _profit -= (bet * BLACKJACK_PROFIT_RATE).toInt()
             return
         }
-        profit -= bet
+        _profit -= bet
     }
-
-    fun draw() {}
 
     companion object {
         private const val DEALER_DRAW_THRESHOLD = 16

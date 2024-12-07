@@ -129,7 +129,7 @@ class BlackJackNormalPlayerTest {
                         BlackJackCard.get(BlackJackCardShape.HEART, BlackJackCardNumber.ACE),
                     ),
                 ),
-                bet = 10000,
+                bettingMoney = 10000,
             )
         blackJackNormalPlayer.win()
         assertThat(blackJackNormalPlayer.profit).isEqualTo(10000)
@@ -146,27 +146,10 @@ class BlackJackNormalPlayerTest {
                         BlackJackCard.get(BlackJackCardShape.HEART, BlackJackCardNumber.ACE),
                     ),
                 ),
-                bet = 10000,
+                bettingMoney = 10000,
             )
         blackJackNormalPlayer.lose()
         assertThat(blackJackNormalPlayer.profit).isEqualTo(-10000)
-    }
-
-    @Test
-    fun `플레이어는 비기면 이익의 변화가 없다`() {
-        val blackJackNormalPlayer =
-            BlackJackNormalPlayer(
-                "사람",
-                BlackJackPlayerCards(
-                    mutableListOf(
-                        BlackJackCard.get(BlackJackCardShape.HEART, BlackJackCardNumber.SEVEN),
-                        BlackJackCard.get(BlackJackCardShape.HEART, BlackJackCardNumber.ACE),
-                    ),
-                ),
-                bet = 10000,
-            )
-        blackJackNormalPlayer.draw()
-        assertThat(blackJackNormalPlayer.profit).isEqualTo(0)
     }
 
     @Test
@@ -180,7 +163,7 @@ class BlackJackNormalPlayerTest {
                         BlackJackCard.get(BlackJackCardShape.HEART, BlackJackCardNumber.ACE),
                     ),
                 ),
-                bet = 10000,
+                bettingMoney = 10000,
             )
         blackJackNormalPlayer.win()
         assertThat(blackJackNormalPlayer.profit).isEqualTo(15000)

@@ -4,7 +4,7 @@ open class BlackJackNormalPlayer(
     name: String,
     blackJackPlayerCards: BlackJackPlayerCards,
     profit: Int = 0,
-    val bet: Int = 0,
+    val bettingMoney: Int = 0,
 ) : BlackJackPlayer(name, blackJackPlayerCards, profit) {
     init {
         require(blackJackPlayerCards.cards.size == BlackJackPlayer.DEFAULT_CARD_NUMBER) { "플레이어는 처음에 2장만 가지고 시작해야해요" }
@@ -26,17 +26,15 @@ open class BlackJackNormalPlayer(
 
     fun win() {
         if (blackJackPlayerCards.isBlackJack()) {
-            profit += (bet * BLACKJACK_PROFIT_RATE).toInt()
+            _profit += (bettingMoney * BLACKJACK_PROFIT_RATE).toInt()
             return
         }
-        profit += bet
+        _profit += bettingMoney
     }
 
     fun lose() {
-        profit -= bet
+        _profit -= bettingMoney
     }
-
-    fun draw() {}
 
     fun isBlackJackPlayer(): Boolean {
         return blackJackPlayerCards.isBlackJack()

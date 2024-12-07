@@ -11,12 +11,12 @@ enum class BlackJackPlayResult(val resultString: String) {
 
         fun getResult(
             normalPlayerScore: Int,
-            DealerScore: Int,
+            dealerScore: Int,
         ): BlackJackPlayResult {
             return when {
-                DealerScore == BLACKJACK_NUMBER -> WIN
-                normalPlayerScore > DealerScore -> WIN
-                normalPlayerScore < DealerScore -> LOSE
+                dealerScore == BLACKJACK_NUMBER -> WIN
+                normalPlayerScore > dealerScore -> WIN
+                normalPlayerScore < dealerScore -> LOSE
                 else -> DRAW
             }
         }

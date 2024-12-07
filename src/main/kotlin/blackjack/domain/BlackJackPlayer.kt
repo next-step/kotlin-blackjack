@@ -3,8 +3,11 @@ package blackjack.domain
 abstract class BlackJackPlayer(
     val name: String,
     val blackJackPlayerCards: BlackJackPlayerCards,
-    var profit: Int,
+    protected var _profit: Int,
 ) {
+    val profit: Int
+        get() = _profit
+
     abstract fun drawCard(blackJackDeck: BlackJackDeck)
 
     abstract fun getBestSum(): Int

@@ -1,44 +1,35 @@
 package blackjack.domain
 
 class BlackJackGame(
-    val players: List<BlackJackNormalPlayer>,
-    val dealer: BlackJackDealer,
+    val blackJackGamePlayers: BlackJackGamePlayers,
+    val blackJackDeck: BlackJackDeck,
 ) {
+    constructor(
+        players: List<BlackJackNormalPlayer>,
+        dealer: BlackJackDealer,
+        blackJackDeck: BlackJackDeck,
+    ) : this(BlackJackGamePlayers(players, dealer), blackJackDeck)
+
+    fun calculateResult() {
+        blackJackGamePlayers.calculateProfit(getPlayerResults())
+    }
+
     fun getGameResult(): BlackJackGameResult {
-        val playerResults =
-            players.map {
-                BlackJackPlayerResult(
-                    it.name,
-                    BlackJackPlayResult.getResult(it.getBestSum(), dealer.getBestSum()),
-                )
-            }
-        val winCount = playerResults.filter { it.result == BlackJackPlayResult.LOSE }.count()
-        val loseCount = playerResults.filter { it.result == BlackJackPlayResult.WIN }.count()
+        val playerResults = getPlayerResults()
+        val winCount = playerResults.count { it.result == BlackJackPlayResult.LOSE }
+        val loseCount = playerResults.count { it.result == BlackJackPlayResult.WIN }
         return BlackJackGameResult(playerResults, BlackJackDealerResult(winCount, loseCount))
     }
 
-    fun dealerDraw(blackJackDeck: BlackJackDeck): Boolean {
-        if (dealer.drawPossible()) {
-            dealer.drawCard(blackJackDeck)
-            return true
-        }
-        return false
+    private fun getPlayerResults(): List<BlackJackPlayerResult> {
+        return blackJackGamePlayers.getPlayerResults()
     }
 
-    fun calculateProfit(playerResults: List<BlackJackPlayerResult>) {
-        playerResults.forEach { result ->
-            val normalPlayer = players.find { it.name.equals(result.name) } ?: throw IllegalArgumentException("이상해요")
-            when (result.result) {
-                BlackJackPlayResult.WIN -> {
-                    normalPlayer.win()
-                    dealer.lose(normalPlayer.bet, normalPlayer.isBlackJackPlayer())
-                }
-                BlackJackPlayResult.LOSE -> {
-                    normalPlayer.lose()
-                    dealer.win(normalPlayer.bet)
-                }
-                BlackJackPlayResult.DRAW -> {}
-            }
-        }
+    fun dealerDraw(): Boolean {
+        return blackJackGamePlayers.dealerDraw(blackJackDeck)
+    }
+
+    fun getNormalPlayers(): List<BlackJackNormalPlayer> {
+        return blackJackGamePlayers.players
     }
 }
