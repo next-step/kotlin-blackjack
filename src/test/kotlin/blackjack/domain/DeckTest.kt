@@ -7,8 +7,8 @@ class DeckTest : BehaviorSpec({
     Given("`Card`를 가진다") {
         val cards =
             listOf(
-                Card.of("A", Suit.SPADE),
-                Card.of("2", Suit.SPADE),
+                Card(CardRank.ACE, Suit.SPADE),
+                Card(CardRank.TWO, Suit.SPADE),
             )
 
         When("Deck을 생성하면") {
@@ -23,8 +23,8 @@ class DeckTest : BehaviorSpec({
     Given("`Card`를 하나씩 꺼낼 수 있다") {
         val cards =
             listOf(
-                Card.of("A", Suit.SPADE),
-                Card.of("2", Suit.SPADE),
+                Card(CardRank.ACE, Suit.SPADE),
+                Card(CardRank.TWO, Suit.SPADE),
             )
         val deck = Deck(cards = cards, shuffleIndex = ArrayDeque(listOf(0, 1)))
 
@@ -32,7 +32,7 @@ class DeckTest : BehaviorSpec({
             val card = deck.pop()
 
             Then("카드를 반환한다") {
-                card shouldBe Card.of("A", Suit.SPADE)
+                card shouldBe Card(CardRank.ACE, Suit.SPADE)
             }
 
             Then("카드를 제거한다") {
@@ -55,8 +55,8 @@ class DeckTest : BehaviorSpec({
         val deck =
             Deck(
                 listOf(
-                    Card.of("A", Suit.SPADE),
-                    Card.of("2", Suit.SPADE),
+                    Card(CardRank.ACE, Suit.SPADE),
+                    Card(CardRank.TWO, Suit.SPADE),
                 ),
             )
 

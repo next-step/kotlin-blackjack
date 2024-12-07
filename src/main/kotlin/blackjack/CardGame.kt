@@ -1,73 +1,73 @@
 package blackjack
 
-import blackjack.domain.Card
+import blackjack.domain.Dealer
 import blackjack.domain.Deck
 import blackjack.domain.DeckBuilder
+import blackjack.domain.Player
 import blackjack.domain.Players
-import blackjack.ui.RoundResult
+import blackjack.ui.DisplayCard
+import blackjack.ui.DisplaySuit
 import blackjack.ui.UserCards
-import blackjack.ui.ViewResult
+import blackjack.ui.UserName
 
-data class CardGame(private val deck: Deck, private val players: Players) {
-    val playersSize: Int = players.size
+data class CardGame(private val deck: Deck, private val players: Players, val dealer: Dealer) {
+    private val dealerShouldAddCard: Boolean
+        get() = dealer.shouldAddCard
 
-    fun initGame(name: String) {
-        val roundCards = deck.popCards(INITIAL_CARD_COUNT)
-        players.deal(players.find(name), roundCards)
+    fun startGame() {
+        dealer.receive(deck.popCards(INITIAL_CARD_COUNT))
+        players.dealInitialCards(deck, INITIAL_CARD_COUNT)
     }
 
-    fun playerAllDeal() {
-        players.forEach { player ->
-            initGame(player.name)
+    fun handleUserTurn(
+        action: (
+            Player,
+            UserCards,
+        ) -> Boolean,
+    ) {
+        players.forEach { currentPlayer ->
+            while (action(currentPlayer, playerCards(currentPlayer.name))) {
+                players.deal(currentPlayer, deck.pop())
+                if (currentPlayer.isBust) break
+            }
         }
     }
 
-    fun deal(name: String) {
-        players.deal(players.find(name), deck.pop())
-    }
-
-    fun cardsOf(name: String): UserCards {
-        return groupCardsByRank(players.findCardOf(name).values())
-    }
-
-    fun result(): ViewResult {
-        return players.associate { player ->
-            player.name to mapOf(groupCardsByRank(player.totalCards.values()) to player.score())
+    fun handleDealerTurn(action: () -> Unit) {
+        if (dealerShouldAddCard) {
+            action()
+            dealCardToDealer()
         }
     }
 
-    fun scoreOf(name: String): Int {
-        return players.scoreOf(name)
+    fun playerCards(name: String): UserCards {
+        return players.findCardOf(name).values().map { DisplayCard(it.rank.name, DisplaySuit.valueOf(it.suit.name)) }
     }
 
-    fun isBust(name: String): Boolean {
-        return players.isBust(name)
+    fun resultEvaluator(): GameResultEvaluator {
+        return GameResultEvaluator(players, dealer)
     }
 
-    fun roundResult(): RoundResult {
-        return players.associate { player ->
-            player.name to groupCardsByRank(player.totalCards.values())
-        }
+    fun allPlayersNames(): List<UserName> {
+        return players.names()
     }
 
-    private fun groupCardsByRank(cards: List<Card>) =
-        cards.groupBy { it.rank.symbol }
-            .map { (rank, cards) ->
-                rank to cards.map { it.suit.name }
-            }.toMap()
+    private fun dealCardToDealer() {
+        dealer.receive(Deck(listOf(deck.pop())))
+    }
 
     companion object {
         const val INITIAL_CARD_COUNT = 2
+
+        fun create(users: List<String>): CardGame {
+            return CardGame(DeckBuilder.cachedDeck, Players.from(users), Dealer())
+        }
 
         fun from(
             deck: Deck,
             users: List<String>,
         ): CardGame {
-            return CardGame(deck, Players.from(users))
-        }
-
-        fun fromNames(names: List<String>): CardGame {
-            return from(DeckBuilder.cachedDeck, names)
+            return CardGame(deck, Players.from(users), Dealer())
         }
     }
 }

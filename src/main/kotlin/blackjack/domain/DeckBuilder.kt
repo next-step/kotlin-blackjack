@@ -7,8 +7,8 @@ fun createDeck(function: DeckBuilder.() -> Unit): Deck {
 class DeckBuilder {
     private val cards: MutableList<Card> = mutableListOf()
 
-    infix fun String.to(suit: Suit) {
-        cards.add(Card.of(this, suit))
+    infix fun CardRank.to(suit: Suit) {
+        cards.add(Card(this, suit))
     }
 
     fun build(): Deck {
@@ -24,9 +24,9 @@ class DeckBuilder {
 
         private fun generateFullDeck(): Deck {
             val suits = Suit.entries.toTypedArray()
-            return CardRank.symbols().flatMap { rank ->
+            return CardRank.entries.flatMap { rank ->
                 suits.map { suit ->
-                    Card.of(rank, suit)
+                    Card.of(rank.name, suit)
                 }
             }.let {
                 Deck(it.shuffled())
