@@ -22,6 +22,7 @@ class Players(
 
     fun dealRoundOfCardsFrom(deck: Deck) {
         roster.forEach { it.initialDrawFrom(deck) }
+        skipToNextPlayerIfDone()
     }
 
     fun hit(deck: Deck) {

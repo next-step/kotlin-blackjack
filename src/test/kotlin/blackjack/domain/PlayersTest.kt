@@ -41,6 +41,17 @@ class PlayersTest {
     }
 
     @Test
+    fun `카드를 지급해서 플레이어의 턴이 종료되면 다음 플레이어로 넘어간다`() {
+        val players = Players.from("black", "jack")
+        val deck = StubDeck.from(Rank.ACE, Rank.TWO, Rank.KING, Rank.THREE)
+
+        players.dealRoundOfCardsFrom(deck)
+        players.dealRoundOfCardsFrom(deck)
+
+        players.currentPlayer shouldBe players[1]
+    }
+
+    @Test
     fun `모든 플레이어들이 턴 종료하면 종료 상태이다`() {
         val players = Players(createStandingPlayer("black"), createBustedPlayer("jack"))
         players.isDone shouldBe true
