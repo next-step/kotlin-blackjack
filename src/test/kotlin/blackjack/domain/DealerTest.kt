@@ -10,13 +10,14 @@ import io.kotest.matchers.shouldBe
 
 class DealerTest : StringSpec({
     "딜러는 첫 2장의 카드가 16점 이하라면 한 장 더 히트한다." {
-        val deck = Deck(
-            listOf(
-                Card(Suit.SPADE, Rank.TEN),
-                Card(Suit.SPADE, Rank.SIX),
-                Card(Suit.SPADE, Rank.TWO),
+        val deck =
+            Deck(
+                listOf(
+                    Card(Suit.SPADE, Rank.TEN),
+                    Card(Suit.SPADE, Rank.SIX),
+                    Card(Suit.SPADE, Rank.TWO),
+                ),
             )
-        )
         val actual = Dealer("dealer")
 
         actual.initialDraw(deck)
@@ -26,13 +27,14 @@ class DealerTest : StringSpec({
     }
 
     "딜러는 첫 2장의 카드가 17점 이상이라면 히트하지 않는다." {
-        val deck = Deck(
-            listOf(
-                Card(Suit.SPADE, Rank.TEN),
-                Card(Suit.SPADE, Rank.SEVEN),
-                Card(Suit.SPADE, Rank.TWO),
+        val deck =
+            Deck(
+                listOf(
+                    Card(Suit.SPADE, Rank.TEN),
+                    Card(Suit.SPADE, Rank.SEVEN),
+                    Card(Suit.SPADE, Rank.TWO),
+                ),
             )
-        )
         val actual = Dealer("dealer")
 
         actual.initialDraw(deck)
@@ -87,7 +89,7 @@ class DealerTest : StringSpec({
                 ),
                 PlayerStatus.STAY,
                 Result.LOSE,
-            )
+            ),
         ) { playerHands, playerStatus, expected ->
             val player = playerFixture(hands = playerHands, status = playerStatus)
 
@@ -101,17 +103,19 @@ class DealerTest : StringSpec({
 fun dealerFixture(
     hands: Hands = Hands(),
     status: PlayerStatus = PlayerStatus.PLAYING,
-): Dealer = Dealer(
-    name = "dealer",
-    hands = hands,
-    status = status,
-)
+): Dealer =
+    Dealer(
+        name = "dealer",
+        hands = hands,
+        status = status,
+    )
 
 fun playerFixture(
     hands: Hands = Hands(),
     status: PlayerStatus = PlayerStatus.PLAYING,
-): Player = Player(
-    name = "player",
-    hands = hands,
-    status = status,
-)
+): Player =
+    Player(
+        name = "player",
+        hands = hands,
+        status = status,
+    )

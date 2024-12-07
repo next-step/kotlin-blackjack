@@ -43,7 +43,6 @@ class HandsTest : StringSpec({
     "ACE 2개인 경우 12점으로 계산한다." {
         val cards =
             handsFixture(
-
                 cardFixture(rank = Rank.ACE),
                 cardFixture(rank = Rank.ACE),
             )

@@ -41,7 +41,10 @@ class BlackjackGame(
         }
     }
 
-    private fun endGame(players: List<Player>, dealer: Dealer) {
+    private fun endGame(
+        players: List<Player>,
+        dealer: Dealer,
+    ) {
         val result = GameResult(players, dealer)
         outputView.printResult(result)
     }

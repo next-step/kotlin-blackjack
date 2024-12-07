@@ -4,9 +4,10 @@ data class GameResult(
     val players: List<Player>,
     val dealer: Dealer,
 ) {
-    private val results: Map<Player, Result> = players.associateWith { player ->
-        dealer vs player
-    }
+    private val results: Map<Player, Result> =
+        players.associateWith { player ->
+            dealer vs player
+        }
 
     val dealerWins: Int
         get() = results.values.count { it == Result.LOSE }
