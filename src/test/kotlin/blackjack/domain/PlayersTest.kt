@@ -166,6 +166,13 @@ class PlayersTest {
         players[1].reasonDone shouldBe PlayerReasonDone.DEALER_DEALT_BLACKJACK
     }
 
+    @Test
+    fun `플레이어의 결과가 미정인지 리턴한다`() {
+        val deck = StubDeck.from(Rank.ACE, Rank.TWO, Rank.KING, Rank.FOUR)
+        val players = createPlayersFrom(listOf("black", "jack"), deck).apply { stand() }
+        players.isOutcomeUnknown shouldBe true
+    }
+
     private fun createPlayersFrom(
         names: List<String>,
         deck: Deck,

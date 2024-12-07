@@ -1,10 +1,8 @@
 package blackjack.domain
 
 import blackjack.domain.StubDeck.Companion.DUMMY_SUIT
-import io.kotest.matchers.ints.shouldBeLessThan
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.BeforeEach
-import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
@@ -258,9 +256,8 @@ class GameTest {
         game.dealer.value shouldBe 17
     }
 
-    @Disabled
     @Test
-    fun `플레이어들이 블랙잭이거나 버스트해서 딜러의 행동이 뭐의미 할 경우에만 딜러는 카드를 뽑지 않는다`() {
+    fun `플레이어들이 블랙잭이거나 버스트해서 딜러의 행동이 무의미 하면 딜러는 카드를 뽑지 않는다`() {
         val deck =
             StubDeck.from(
                 Rank.ACE,
@@ -268,8 +265,9 @@ class GameTest {
                 Rank.TEN,
                 Rank.QUEEN,
                 Rank.JACK,
-                Rank.NINE,
+                Rank.SIX,
                 Rank.TWO,
+                Rank.THREE,
             )
         val players = Players.from("black", "jack")
         val game =
@@ -277,13 +275,12 @@ class GameTest {
                 initialDeal()
                 playerHits()
             }
-        // black: A, Q
-        // jack: K, J, 2
-        // dealer: 10, 9
+        // black:  A,  Q    (blackjack)
+        // jack:   K,  J, 2 (busted)
+        // dealer: 10, 6
 
         game.dealerTurn()
 
-        game.dealer.value shouldBeLessThan 17
-        game.dealer.value shouldBe 5
+        game.dealer.value shouldBe 16
     }
 }

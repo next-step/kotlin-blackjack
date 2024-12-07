@@ -8,6 +8,8 @@ class Players(
         private set
     val isDone: Boolean
         get() = roster.all { it.isDone }
+    val isOutcomeUnknown: Boolean
+        get() = roster.any { it.reasonDone == PlayerReasonDone.PLAYER_STANDS }
 
     init {
         requireNamesIsNotEmpty()

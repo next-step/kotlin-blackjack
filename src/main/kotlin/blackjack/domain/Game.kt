@@ -33,11 +33,19 @@ class Game(
 
         dealer.flipHoleCardUp()
 
-        // skip if all player outcome known
+        if (!isDealerActionNecessary()) {
+            return
+        }
+        dealerAction()
+    }
+
+    private fun dealerAction() {
         while (dealer.mustDrawCard()) {
             dealer.drawFrom(deck)
         }
     }
+
+    private fun isDealerActionNecessary() = players.isOutcomeUnknown
 
     private fun checkPlayersAreDone() {
         check(arePlayersDone) { "플레이어들의 턴이 종료되어야 합니다." }
