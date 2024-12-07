@@ -1,8 +1,5 @@
 package blackjack
 
-import blackjack.view.InputView
-import blackjack.view.ResultView
-
 fun String.split(delimiter: String = ","): List<String> {
     if (this.isBlank()) return emptyList()
 
@@ -10,6 +7,27 @@ fun String.split(delimiter: String = ","): List<String> {
     return this.split(regex)
         .map { it.trim() }
         .filter { it.isNotEmpty() }
+}
+
+class Players private constructor(private val players: List<Player>) {
+
+    init {
+        val duplicateNames = players.groupBy { it.name }
+            .filter { it.value.size > 1 }
+            .keys
+
+        if (duplicateNames.isNotEmpty()) {
+            throw IllegalArgumentException("중복된 플레이어 이름이 있습니다: ${duplicateNames.joinToString(", ")}")
+        }
+    }
+
+    fun getPlayers(): List<Player> = players.toList()
+
+    fun getPlayerNames(): String = players.joinToString(",") { it.name }
+
+    companion object {
+        fun from(players: List<Player>): Players = Players(players)
+    }
 }
 
 data class Player(

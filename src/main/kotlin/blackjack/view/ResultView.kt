@@ -1,8 +1,8 @@
 package blackjack.view
 
 class ResultView {
-    fun renderPlayerInitOutput(names: List<String>) =
-        render(names.toString() + INIT_CARDS)
+    fun renderPlayerInitOutput(names: String) =
+        render(names + INIT_CARDS)
 
     fun renderPlayerCardsOutput(name: String, cards: String) =
         render("${name}카드 : ${cards}")
