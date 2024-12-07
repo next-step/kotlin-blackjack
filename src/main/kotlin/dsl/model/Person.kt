@@ -1,4 +1,4 @@
-package model
+package dsl.model
 
 data class Person(
     val name: String,

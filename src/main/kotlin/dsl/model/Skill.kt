@@ -1,4 +1,4 @@
-package model
+package dsl.model
 
 data class Skill(
     val type: Type,

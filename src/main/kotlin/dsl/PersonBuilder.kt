@@ -1,6 +1,8 @@
-import model.Languages
-import model.Person
-import model.Skills
+package dsl
+
+import dsl.model.Languages
+import dsl.model.Person
+import dsl.model.Skills
 
 @DslMarker
 annotation class PersonDsl

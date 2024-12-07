@@ -1,5 +1,7 @@
-import model.Language
-import model.Languages
+package dsl
+
+import dsl.model.Language
+import dsl.model.Languages
 
 @PersonDsl
 class LanguagesBuilder {

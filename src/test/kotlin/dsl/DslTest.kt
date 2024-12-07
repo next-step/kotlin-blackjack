@@ -1,6 +1,8 @@
+package dsl
+
 import io.kotest.matchers.shouldBe
-import model.Language
-import model.Skill
+import dsl.model.Language
+import dsl.model.Skill
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource

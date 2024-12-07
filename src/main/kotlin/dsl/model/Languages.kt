@@ -1,4 +1,4 @@
-package model
+package dsl.model
 
 class Languages(languages: List<Language>) {
     val languages = languages.toList()

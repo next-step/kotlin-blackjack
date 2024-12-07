@@ -1,5 +1,7 @@
-import model.Skill
-import model.Skills
+package dsl
+
+import dsl.model.Skill
+import dsl.model.Skills
 
 @PersonDsl
 class SkillsBuilder {
