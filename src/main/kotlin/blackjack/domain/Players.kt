@@ -36,6 +36,10 @@ class Players private constructor(private val values: List<Player>) : List<Playe
         }
     }
 
+    fun names(): List<String> {
+        return values.map { it.name }
+    }
+
     companion object {
         fun from(names: List<String>): Players {
             return Players(names.map { Player(EntrantName(it)) })

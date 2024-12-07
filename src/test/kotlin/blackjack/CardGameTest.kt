@@ -46,20 +46,22 @@ class CardGameTest : BehaviorSpec({
 
     Given("지정 유저의 카드를 추가한다") {
         val userA = "userA"
-        val userB = "userB"
         val cardGame =
             CardGame.from(
                 createDeck {
                     CardRank.JACK to Suit.SPADE
+                    CardRank.JACK to Suit.SPADE
+                    CardRank.JACK to Suit.SPADE
+                    CardRank.JACK to Suit.SPADE
                 },
-                listOf(userA, userB),
+                listOf(userA),
             )
         When("pick 호출하면") {
-            cardGame.dealCardToPlayer(userA)
+            cardGame.handleUserTurn { _, _ -> true }
             val actual = cardGame.playerCards(userA)
 
-            Then("1장의 카드를 가진다") {
-                actual.size shouldBe 1
+            Then("초기 부여 카드와 추가 카드를 가진다") {
+                actual.size shouldBe 3
             }
         }
     }

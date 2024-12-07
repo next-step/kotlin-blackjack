@@ -1,6 +1,5 @@
 package blackjack
 
-import blackjack.domain.Card
 import blackjack.domain.Dealer
 import blackjack.domain.Deck
 import blackjack.domain.DeckBuilder
@@ -28,10 +27,10 @@ data class CardGame(private val deck: Deck, private val players: Players, val de
             UserCards,
         ) -> Boolean,
     ) {
-        players.forEach { currentUser ->
-            while (action(currentUser, playerCards(currentUser.name))) {
-                dealCardToPlayer(currentUser.name)
-                if (isPlayerBust(currentUser.name)) break
+        players.forEach { currentPlayer ->
+            while (action(currentPlayer, playerCards(currentPlayer.name))) {
+                players.deal(currentPlayer, deck.pop())
+                if (currentPlayer.isBust) break
             }
         }
     }
@@ -43,10 +42,6 @@ data class CardGame(private val deck: Deck, private val players: Players, val de
         }
     }
 
-    fun dealCardToPlayer(name: String) {
-        players.deal(players.find(name), deck.pop())
-    }
-
     fun playerCards(name: String): UserCards {
         return players.findCardOf(name).values().map { DisplayCard(it.rank.name, DisplaySuit.valueOf(it.suit.name)) }
     }
@@ -56,22 +51,12 @@ data class CardGame(private val deck: Deck, private val players: Players, val de
     }
 
     fun allPlayersNames(): List<UserName> {
-        return players.map { it.name }
+        return players.names()
     }
 
     private fun dealCardToDealer() {
         dealer.receive(Deck(listOf(deck.pop())))
     }
-
-    private fun isPlayerBust(name: String): Boolean {
-        return players.isBust(name)
-    }
-
-    private fun groupCardsByRank(cards: List<Card>): Map<String, List<String>> =
-        cards.groupBy { it.rank.name }
-            .map { (rank, cards) ->
-                rank to cards.map { it.suit.name }
-            }.toMap()
 
     companion object {
         const val INITIAL_CARD_COUNT = 2
