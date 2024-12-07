@@ -8,7 +8,7 @@ class Players private constructor(private val players: List<Player>) {
                 .keys
 
         if (duplicateNames.isNotEmpty()) {
-            throw IllegalArgumentException("중복된 플레이어 이름이 있습니다: ${duplicateNames.joinToString(", ")}")
+            throw IllegalArgumentException("중복된 플레이어 이름이 있습니다")
         }
     }
 

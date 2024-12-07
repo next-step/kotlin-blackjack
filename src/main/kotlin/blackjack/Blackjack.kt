@@ -1,5 +1,6 @@
 package blackjack
 
+import blackjack.model.Players
 import blackjack.view.InputView
 import blackjack.view.ResultView
 
@@ -13,10 +14,10 @@ class Blackjack {
 
         processPlayerTurns(players)
 
-        renderPlayerResults(players)
+        renderResults(players)
     }
 
-    private fun renderPlayerResults(players: Players) {
+    private fun renderResults(players: Players) {
         for (player in players.getPlayers()) {
             resultView.renderPlayerCardsResultOutput(player.name, player.cards.toString(), player.calculateResult())
         }

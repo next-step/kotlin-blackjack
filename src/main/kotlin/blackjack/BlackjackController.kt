@@ -1,5 +1,8 @@
 package blackjack
 
+import blackjack.model.Player
+import blackjack.model.Players
+
 class BlackjackController {
     fun createPlayers(playerNamesInput: String): Players {
         val playersNames = playerNamesInput.split()
@@ -18,7 +21,7 @@ class BlackjackController {
                 false
             }
 
-            else -> throw IllegalArgumentException("Invalid input: '$answerInput'. Please enter 'y' or 'n'.")
+            else -> throw IllegalArgumentException("'y'혹은 'n'로만 입력해주세요.")
         }
 
     private fun String.split(delimiter: String = ","): List<String> {
