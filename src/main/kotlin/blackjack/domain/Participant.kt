@@ -16,6 +16,12 @@ sealed class Participant(
     var status: PlayerStatus = PlayerStatus.PLAYING
         protected set
 
+    open fun initialDraw(deck: Deck) {
+        hands.add(deck.draw())
+        hands.add(deck.draw())
+        handleStatus()
+    }
+
     fun hit(deck: Deck) {
         if (!isPlayable) {
             return
@@ -26,7 +32,5 @@ sealed class Participant(
         handleStatus()
     }
 
-    protected open fun handleStatus() {
-        status = status.handleStatus(score)
-    }
+    abstract fun handleStatus()
 }
