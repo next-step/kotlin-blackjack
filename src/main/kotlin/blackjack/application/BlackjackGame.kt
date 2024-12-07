@@ -30,7 +30,7 @@ class BlackjackGame(
     }
 
     private fun progress(player: Player) {
-        if (player.isPlayable() && inputView.inputHitOrStay(player.name)) {
+        if (player.isPlayable && inputView.inputHitOrStay(player.name)) {
             hit(player)
             outputView.printPlayerCards(player)
             progress(player)
