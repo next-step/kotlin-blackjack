@@ -24,10 +24,6 @@ object ResultView {
         println("${user.name}카드: $cards ${if (printScore) scoreText else ""}")
     }
 
-    fun printAskReceiveMoreCard(user: User) {
-        println("${user.name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
-    }
-
     fun printCanNotReceivedCard() {
         println("더 이상 카드를 받을 수 없습니다")
     }
