@@ -38,10 +38,12 @@ data class Player(
 }
 
 class Cards(cards: Set<Card> = setOf()) {
-    private val cards = cards.toMutableSet()
+    private val _cards = cards.toMutableSet()
+    val cards: Set<Card>
+        get() = _cards.toSet()
 
     fun addNewCard() {
-        cards.add(Card.takeRandomCard())
+        _cards.add(Card.takeRandomCard())
     }
 
     fun calculateCardValues(): Int {
@@ -49,7 +51,7 @@ class Cards(cards: Set<Card> = setOf()) {
         var aceCount = 0
 
         // 모든 카드의 값을 합산하고, 에이스의 개수를 셈
-        for (card in cards) {
+        for (card in _cards) {
             total += card.getValue()
             if (card.isAce) {
                 aceCount++
@@ -66,7 +68,7 @@ class Cards(cards: Set<Card> = setOf()) {
     }
 
     override fun toString(): String {
-        return cards.toString()
+        return _cards.toString()
     }
 }
 

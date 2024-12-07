@@ -48,19 +48,44 @@ class BlackjackTest {
     @DisplayName("플레이어는 처음 2장의 카드를 받는다")
     @Test
     fun `person test`() {
-
+        val players = Player("aaa")
+        players.cards.cards.size shouldBe 2
     }
 
     @DisplayName("카드는 중복하지 않는다.")
     @Test
     fun `card test1`() {
+        val player = Player("aaa")
+        val initialCards = player.cards.cards
 
+        initialCards.size shouldBe 2
+
+        initialCards.size shouldBe initialCards.toSet().size
+
+        player.takeNewCard()
+        val newCards = player.cards.cards
+
+        newCards.size shouldBe 3
+
+        newCards.size shouldBe newCards.toSet().size
     }
 
-    @DisplayName("카드는 램덤하게 정해진다.")
+    @DisplayName("카드는 총 52개 존재한다.")
     @Test
     fun `card test2`() {
+        repeat(52) {
+            Card.takeRandomCard()
+        }
+    }
 
+    @DisplayName("카드는 총 52개 존재한다.")
+    @Test
+    fun `card test3`() {
+        shouldThrow<IllegalStateException> {
+            repeat(53) {
+                Card.takeRandomCard()
+            }
+        }.message shouldBe "남는 카드가 없습니다."
     }
 
     @DisplayName("플레이어는 카드를 더 받을지 덜 받을지 선택할 수 있다.")
@@ -72,18 +97,6 @@ class BlackjackTest {
     @DisplayName("플레이어가 카드를 받지 않을 때까지 계속 받을 수 있다.")
     @Test
     fun `game test2`() {
-
-    }
-
-    @DisplayName("카드가 의미하는 수의 합이 21이 넘은 플레이어는 패배한다.")
-    @Test
-    fun `game test3`() {
-
-    }
-
-    @DisplayName("카드가 의미하는 수의 합이 21에 제일 가까운 플레이어가 승리한다.")
-    @Test
-    fun `game test4`() {
 
     }
 }
