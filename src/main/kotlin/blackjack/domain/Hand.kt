@@ -25,6 +25,10 @@ open class Hand(
 
     fun isBusted(): Boolean = value() > BLACKJACK_VALUE
 
+    fun pushes(dealerHand: DealerHand) = value() == dealerHand.value()
+
+    fun beats(dealerHand: DealerHand) = value() > dealerHand.value()
+
     private fun hasAce(): Boolean = cards.any { it.rank == Rank.ACE }
 
     private fun isAceEleven(handValue: Int) = hasAce() && handValue <= ACE_ELEVEN_THRESHOLD

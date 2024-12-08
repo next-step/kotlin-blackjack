@@ -53,7 +53,7 @@ class Player(
         if (isBlackjack && !dealer.isBlackjack) {
             return PlayerOutcome.WIN
         }
-        if (isBlackjack && dealer.isBlackjack) {
+        if (pushes(dealer)) {
             return PlayerOutcome.DRAW
         }
         if (beats(dealer)) {
@@ -62,7 +62,9 @@ class Player(
         return PlayerOutcome.LOSE
     }
 
-    private fun beats(dealer: Dealer) = value > dealer.value
+    private fun pushes(dealer: Dealer) = hand.pushes(dealer.hand)
+
+    private fun beats(dealer: Dealer) = hand.beats(dealer.hand)
 
     private fun checkIsNotDone() {
         check(!isDone) { "이미 턴이 끝난 상태입니다." }

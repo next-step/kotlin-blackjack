@@ -192,6 +192,16 @@ class PlayerTest {
         outcome shouldBe PlayerOutcome.WIN
     }
 
+    @Test
+    fun `플레이어 점수와 딜러의 점수가 같은 경우 무승부다`() {
+        val player = createPlayer(StubDeck.from(Rank.FIVE, Rank.TEN))
+        val dealer = createDealer(StubDeck.from(Rank.SEVEN, Rank.EIGHT))
+
+        val outcome = player.outcome(dealer)
+
+        outcome shouldBe PlayerOutcome.DRAW
+    }
+
     companion object {
         @JvmStatic
         fun donePlayers() =
