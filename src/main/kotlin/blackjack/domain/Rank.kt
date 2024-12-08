@@ -38,13 +38,13 @@ enum class Rank(
         private fun checkAceValue(
             aceCount: Int,
             nonAceValue: Int,
-        ): Boolean = checkAceCount(aceCount) && checkBurst(nonAceValue, aceCount)
+        ): Boolean = checkAceCount(aceCount) && checkNotBurst(nonAceValue, aceCount)
 
         private fun checkAceCount(aceCount: Int): Boolean = aceCount > 0
 
-        private fun checkBurst(
+        private fun checkNotBurst(
             nonAceValue: Int,
             aceCount: Int,
-        ): Boolean = !Rule.checkBurst(nonAceValue + ACE_ALTERNATIVE_VALUE + (aceCount - 1))
+        ): Boolean = !GameStatus.isBurst(nonAceValue + ACE_ALTERNATIVE_VALUE + (aceCount - 1))
     }
 }
