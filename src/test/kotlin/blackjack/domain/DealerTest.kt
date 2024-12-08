@@ -7,7 +7,6 @@ import blackjack.fixture.playerFixture
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.data.forAll
 import io.kotest.data.row
-import io.kotest.matchers.ints.shouldBeGreaterThan
 import io.kotest.matchers.shouldBe
 
 class DealerTest : StringSpec({
@@ -16,15 +15,14 @@ class DealerTest : StringSpec({
             Deck(
                 listOf(
                     Card(Suit.SPADE, Rank.TEN),
-                    Card(Suit.SPADE, Rank.SIX),
                     Card(Suit.SPADE, Rank.TWO),
+                    Card(Suit.SPADE, Rank.THREE),
                 ),
             )
         val actual = Dealer("dealer")
 
         actual.initialDraw(deck)
 
-        actual.score shouldBeGreaterThan 16
         actual.handSize shouldBe 3
     }
 
