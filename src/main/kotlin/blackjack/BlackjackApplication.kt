@@ -3,7 +3,6 @@ package blackjack
 import blackjack.application.BlackjackService
 import blackjack.domain.Deck
 import blackjack.domain.ShuffledDeck
-import blackjack.ui.BlackjackController
 
 object ApplicationContext {
     fun deck(): Deck = ShuffledDeck()

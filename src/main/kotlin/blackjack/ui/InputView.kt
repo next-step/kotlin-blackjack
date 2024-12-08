@@ -11,8 +11,8 @@ object InputView {
         return readln().split(COMMA_DELIMITER).map { it.trim() }
     }
 
-    fun getCommand(player: Player): String {
+    fun getCommand(player: Player): PlayerCommand {
         println("${player.name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
-        return readln()
+        return PlayerCommand.of(readln(), player)
     }
 }

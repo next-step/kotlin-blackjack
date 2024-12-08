@@ -1,13 +1,11 @@
 package blackjack.domain
 
-class Hand(
+open class Hand(
     cards: List<Card> = emptyList(),
 ) {
-    val cards = mutableListOf<Card>()
+    val cards = cards.toMutableList()
 
-    init {
-        this.cards.addAll(cards)
-    }
+    constructor(vararg cards: Card) : this(cards.toList())
 
     operator fun get(index: Int): Card = cards[index]
 
@@ -19,7 +17,7 @@ class Hand(
         return handValue
     }
 
-    fun drawFrom(deck: Deck) {
+    open fun drawFrom(deck: Deck) {
         cards.add(deck.draw())
     }
 
@@ -27,17 +25,17 @@ class Hand(
 
     fun isBusted(): Boolean = value() > BLACKJACK_VALUE
 
+    fun pushes(dealerHand: DealerHand) = value() == dealerHand.value()
+
+    fun beats(dealerHand: DealerHand) = value() > dealerHand.value()
+
     private fun hasAce(): Boolean = cards.any { it.rank == Rank.ACE }
 
     private fun isAceEleven(handValue: Int) = hasAce() && handValue <= ACE_ELEVEN_THRESHOLD
-
-    override fun toString(): String = "Hand(cards=$cards)"
 
     companion object {
         private const val ACE_ELEVEN_THRESHOLD = 11
         private const val ACE_EXTRA_VALUE = 10
         private const val BLACKJACK_VALUE = 21
-
-        fun from(vararg cards: Card): Hand = Hand(cards.toList())
     }
 }

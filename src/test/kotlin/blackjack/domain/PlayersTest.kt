@@ -1,5 +1,6 @@
 package blackjack.domain
 
+import blackjack.domain.StubDeck.Companion.DUMMY_SUIT
 import blackjack.support.Fixtures.createBustedPlayer
 import blackjack.support.Fixtures.createStandingPlayer
 import io.kotest.matchers.collections.shouldContainExactly
@@ -11,11 +12,10 @@ import org.junit.jupiter.api.assertThrows
 class PlayersTest {
     @Test
     fun `이름들로 플레이어들을 생성할 수 있다`() {
-        val names = listOf("black", "jack", "game")
+        val players = Players.from("black", "jack", "game")
 
-        val players = Players.from(names)
-
-        players.roster.map { it.name } shouldContainExactly names
+        val names = players.roster.map { it.name }
+        names shouldContainExactly listOf("black", "jack", "game")
     }
 
     @Test
@@ -36,13 +36,24 @@ class PlayersTest {
 
         players.dealRoundOfCardsFrom(deck)
 
-        players[0].hand[0] shouldBe Card.of(StubDeck.DUMMY_SUIT, Rank.ACE)
-        players[1].hand[0] shouldBe Card.of(StubDeck.DUMMY_SUIT, Rank.TWO)
+        players[0].hand[0] shouldBe Card(DUMMY_SUIT, Rank.ACE)
+        players[1].hand[0] shouldBe Card(DUMMY_SUIT, Rank.TWO)
+    }
+
+    @Test
+    fun `카드를 지급해서 플레이어의 턴이 종료되면 다음 플레이어로 넘어간다`() {
+        val players = Players.from("black", "jack")
+        val deck = StubDeck.from(Rank.ACE, Rank.TWO, Rank.KING, Rank.THREE)
+
+        players.dealRoundOfCardsFrom(deck)
+        players.dealRoundOfCardsFrom(deck)
+
+        players.currentPlayer shouldBe players[1]
     }
 
     @Test
     fun `모든 플레이어들이 턴 종료하면 종료 상태이다`() {
-        val players = Players.from(createStandingPlayer("black"), createBustedPlayer("jack"))
+        val players = Players(createStandingPlayer("black"), createBustedPlayer("jack"))
         players.isDone shouldBe true
     }
 
@@ -50,7 +61,7 @@ class PlayersTest {
     fun `모든 플레이어들이 종료하기 전까지는 종료 상태가 아니다`() {
         val deck = StubDeck.from(Rank.TWO, Rank.THREE)
         val players =
-            Players.from(
+            Players(
                 createBustedPlayer("black"),
                 Player("jack").apply {
                     initialDrawFrom(deck)
@@ -70,9 +81,9 @@ class PlayersTest {
 
         players[0].hand.cards shouldContainExactly
             listOf(
-                Card.of(StubDeck.DUMMY_SUIT, Rank.ACE),
-                Card.of(StubDeck.DUMMY_SUIT, Rank.THREE),
-                Card.of(StubDeck.DUMMY_SUIT, Rank.FIVE),
+                Card(DUMMY_SUIT, Rank.ACE),
+                Card(DUMMY_SUIT, Rank.THREE),
+                Card(DUMMY_SUIT, Rank.FIVE),
             )
     }
 
@@ -86,10 +97,10 @@ class PlayersTest {
 
         players[0].hand.cards shouldContainExactly
             listOf(
-                Card.of(StubDeck.DUMMY_SUIT, Rank.ACE),
-                Card.of(StubDeck.DUMMY_SUIT, Rank.THREE),
-                Card.of(StubDeck.DUMMY_SUIT, Rank.FIVE),
-                Card.of(StubDeck.DUMMY_SUIT, Rank.SIX),
+                Card(DUMMY_SUIT, Rank.ACE),
+                Card(DUMMY_SUIT, Rank.THREE),
+                Card(DUMMY_SUIT, Rank.FIVE),
+                Card(DUMMY_SUIT, Rank.SIX),
             )
     }
 
@@ -120,7 +131,7 @@ class PlayersTest {
 
         players.stand()
 
-        players[0].reasonDone shouldBe PlayerReasonDone.STANDS
+        players[0].reasonDone shouldBe PlayerReasonDone.PLAYER_STANDS
     }
 
     @Test
@@ -142,6 +153,74 @@ class PlayersTest {
         players.stand()
 
         assertThrows<IllegalStateException> { players.stand() }
+    }
+
+    @Test
+    fun `딜러가 블랙잭인 경우 각 플레이어들의 턴을 종료한다`() {
+        val players = Players.from("black", "jack")
+
+        players.dealerDealtBlackjack()
+
+        players.isDone shouldBe true
+        players[0].reasonDone shouldBe PlayerReasonDone.DEALER_DEALT_BLACKJACK
+        players[1].reasonDone shouldBe PlayerReasonDone.DEALER_DEALT_BLACKJACK
+    }
+
+    @Test
+    fun `플레이어의 결과가 미정인지 리턴한다`() {
+        val deck = StubDeck.from(Rank.ACE, Rank.TWO, Rank.KING, Rank.FOUR)
+        val players = createPlayersFrom(listOf("black", "jack"), deck).apply { stand() }
+        players.isOutcomeUnknown shouldBe true
+    }
+
+    @Test
+    fun `종료 전에 결과를 요청하면 예외를 던진다`() {
+        val players =
+            Players.from("black", "jack")
+        val dealer = Dealer()
+        assertThrows<IllegalStateException> { players.result(dealer) }
+    }
+
+    @Test
+    fun `플레이어들의 결과를 리턴한다`() {
+        val deck =
+            StubDeck.from(
+                Rank.ACE,
+                Rank.QUEEN,
+                Rank.JACK,
+                Rank.KING,
+                Rank.FOUR,
+                Rank.EIGHT,
+                Rank.TEN,
+                Rank.SIX,
+                Rank.TWO,
+            )
+        val players =
+            createPlayersFrom(listOf("black", "jack", "game"), deck).apply {
+                stand()
+                stand()
+            }
+        // black: A, K = 21
+        // jack:  Q, 4 = 14
+        // game:  J, 8 = 18
+        val dealer =
+            Dealer().apply {
+                drawFrom(deck)
+                drawFrom(deck)
+                drawFrom(deck)
+            }
+        // dealer: 10, 6, 2 = 18
+
+        val expected =
+            listOf(
+                PlayerResult("black", PlayerOutcome.WIN),
+                PlayerResult("jack", PlayerOutcome.LOSE),
+                PlayerResult("game", PlayerOutcome.DRAW),
+            )
+
+        val results = players.result(dealer)
+
+        results shouldBe expected
     }
 
     private fun createPlayersFrom(

@@ -26,7 +26,7 @@ class CardTest {
         rank: Rank,
         expected: Int,
     ) {
-        val card = Card.of(DUMMY_SUIT, rank)
+        val card = Card(DUMMY_SUIT, rank)
         card.rankValue shouldBe expected
     }
 
@@ -35,15 +35,34 @@ class CardTest {
         value = Rank::class,
         names = ["JACK", "QUEEN", "KING"],
     )
-    fun `페이스 카드등의 값은 10이다`(rank: Rank) {
-        val card = Card.of(DUMMY_SUIT, rank)
+    fun `페이스 카드의 값은 10이다`(rank: Rank) {
+        val card = Card(DUMMY_SUIT, rank)
         card.rankValue shouldBe 10
     }
 
     @Test
     fun `에이스의 값은 1이다`() {
-        val card = Card.of(DUMMY_SUIT, Rank.ACE)
+        val card = Card(DUMMY_SUIT, Rank.ACE)
         card.rankValue shouldBe 1
+    }
+
+    @Test
+    fun `카드는 디폴트로 앞면이 보인다`() {
+        val card = Card(DUMMY_SUIT, Rank.ACE)
+        card.face shouldBe Face.UP
+    }
+
+    @Test
+    fun `카드를 뒤집을 수 있다`() {
+        val card = Card(DUMMY_SUIT, Rank.ACE)
+
+        card.flip()
+
+        card.face shouldBe Face.DOWN
+
+        card.flip()
+
+        card.face shouldBe Face.UP
     }
 
     companion object {

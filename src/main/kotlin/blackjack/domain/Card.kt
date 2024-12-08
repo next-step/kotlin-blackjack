@@ -1,13 +1,24 @@
 package blackjack.domain
 
-class Card private constructor(
+data class Card(
     val suit: Suit,
     val rank: Rank,
+    private var _face: Face = Face.UP,
 ) {
+    val face: Face
+        get() = _face
     val rankValue: Int
         get() = rank.value
+    val isFaceUp: Boolean
+        get() = _face == Face.UP
 
-    override fun toString(): String = "Card(suit=$suit, rank=$rank)"
+    fun flip() {
+        if (_face == Face.UP) {
+            _face = Face.DOWN
+            return
+        }
+        _face = Face.UP
+    }
 
     companion object {
         val ALL_CARDS =
@@ -16,12 +27,5 @@ class Card private constructor(
                     Card(suit, rank)
                 }
             }
-
-        fun of(
-            suit: Suit,
-            rank: Rank,
-        ): Card =
-            ALL_CARDS.find { it.suit == suit && it.rank == rank }
-                ?: throw IllegalArgumentException("$rank$suit 카드는 존재하지 않습니다.")
     }
 }
