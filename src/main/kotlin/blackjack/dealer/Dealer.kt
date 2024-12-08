@@ -3,7 +3,6 @@ package blackjack.dealer
 import blackjack.card.Card
 import blackjack.participant.Participant
 import blackjack.player.Hand
-import blackjack.player.Player
 import blackjack.view.ResultView
 
 class Dealer(
@@ -21,15 +20,6 @@ class Dealer(
                 .also { ResultView.printDealerDrawCard() }
         } else {
             this
-        }
-
-    fun isWin(
-        player: Player,
-    ): Boolean =
-        when {
-            isBust() -> false
-            player.isBust() -> true
-            else -> hand.sum() > player.hand.sum()
         }
 
     companion object {

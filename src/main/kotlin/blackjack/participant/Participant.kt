@@ -12,6 +12,14 @@ interface Participant<out T : Participant<T>> {
     fun isBust(): Boolean = hand.sum() > BlackJackMachine.BLACKJACK
 
     fun hitCard(card: Card): T
+
+    fun isWin(opponent: Participant<*>): Boolean =
+        when {
+            isBust() -> false
+            opponent.isBust() -> true
+            else -> hand.sum() > opponent.hand.sum()
+        }
+
 }
 
 fun <T : Participant<T>> createParticipants(dealer: T, players: Players): List<Participant<*>> {

@@ -54,12 +54,12 @@ object ResultView {
 
         println(
             "${dealer.name}: " +
-                "${players.players.count { dealer.isWin(player = it) }}승" +
-                "${players.players.count { player -> player.isWin(dealer = dealer) }}패",
+                "${players.players.count { player -> dealer.isWin(opponent = player) }}승" +
+                "${players.players.count { player -> player.isWin(opponent = dealer) }}패",
         )
         players.players.forEach {
             println(
-                "${it.name}: ${it.isWin(dealer = dealer).toWinOrLoseString()}"
+                "${it.name}: ${it.isWin(opponent = dealer).toWinOrLoseString()}"
             )
         }
     }
