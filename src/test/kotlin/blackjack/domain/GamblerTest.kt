@@ -4,22 +4,7 @@ import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
 
-class Gambler(val name: String) {
-    private val _cards: MutableList<Card> = mutableListOf()
-
-    val cards: List<Card>
-        get() = _cards.toList()
-
-    fun receive(vararg cards: Card) {
-        _cards.addAll(cards)
-    }
-
-    fun receive(card: Card) {
-        _cards.add(card)
-    }
-}
-
-class GamblerTest: FreeSpec({
+class GamblerTest : FreeSpec({
     "카드를 한장 받을 수 있다" {
         val gambler = Gambler("타짜")
         val card = Card(Suit.CLUBS, Rank.SIX)

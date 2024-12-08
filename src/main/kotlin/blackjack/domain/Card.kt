@@ -1,6 +1,9 @@
 package blackjack.domain
 
 data class Card(val suit: Suit, private val rank: Rank) {
-    val score: Int
-        get() = rank.score
+    val scores: List<Int>
+        get() = rank.scores
+
+    val isAce: Boolean
+        get() = rank.isAce
 }
