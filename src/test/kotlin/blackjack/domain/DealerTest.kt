@@ -43,13 +43,13 @@ class DealerTest : StringSpec({
 
         actual.score shouldBe 17
         actual.handSize shouldBe 2
-        actual.status shouldBe PlayerStatus.STAY
+        actual.status shouldBe ParticipantStatus.STAY
     }
 
     "딜러가 버스트한 경우 플레이어의 손패 상관없이 패배한다." {
-        val dealer = dealerFixture(status = PlayerStatus.BURST)
-        val burstPlayer = playerFixture(status = PlayerStatus.BURST)
-        val stayPlayer = playerFixture(status = PlayerStatus.STAY)
+        val dealer = dealerFixture(status = ParticipantStatus.BURST)
+        val burstPlayer = playerFixture(status = ParticipantStatus.BURST)
+        val stayPlayer = playerFixture(status = ParticipantStatus.STAY)
 
         val actual1 = dealer vs burstPlayer
         val actual2 = dealer vs stayPlayer
@@ -72,7 +72,7 @@ class DealerTest : StringSpec({
                     cardFixture(rank = Rank.TEN),
                     cardFixture(rank = Rank.TEN),
                 ),
-                PlayerStatus.STAY,
+                ParticipantStatus.STAY,
                 Result.DRAW,
             ),
             row(
@@ -81,7 +81,7 @@ class DealerTest : StringSpec({
                     cardFixture(rank = Rank.TEN),
                     cardFixture(rank = Rank.TEN),
                 ),
-                PlayerStatus.BURST,
+                ParticipantStatus.BURST,
                 Result.WIN,
             ),
             row(
@@ -89,7 +89,7 @@ class DealerTest : StringSpec({
                     cardFixture(rank = Rank.TEN),
                     cardFixture(rank = Rank.ACE),
                 ),
-                PlayerStatus.STAY,
+                ParticipantStatus.STAY,
                 Result.LOSE,
             ),
         ) { playerHands, playerStatus, expected ->

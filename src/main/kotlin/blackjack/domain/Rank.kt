@@ -23,7 +23,6 @@ enum class Rank(
 
     companion object {
         private const val ACE_ALTERNATIVE_VALUE = 11
-        private const val BLACKJACK_VALUE = 21
 
         fun calculateTotalValue(ranks: List<Rank>): Int {
             val nonAceValue = ranks.filterNot(Rank::isAce).sumOf(Rank::value)
@@ -46,6 +45,6 @@ enum class Rank(
         private fun checkBurst(
             nonAceValue: Int,
             aceCount: Int,
-        ): Boolean = nonAceValue + ACE_ALTERNATIVE_VALUE + (aceCount - 1) <= BLACKJACK_VALUE
+        ): Boolean = !Rule.checkBurst(nonAceValue + ACE_ALTERNATIVE_VALUE + (aceCount - 1))
     }
 }

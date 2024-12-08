@@ -2,15 +2,14 @@ package blackjack.domain
 
 class Dealer(
     override val name: String = "딜러",
-    override var status: PlayerStatus = PlayerStatus.PLAYING,
     override val hands: Hands = Hands(),
-) : Participant(name, status, hands) {
-    private val shouldDraw: Boolean = score <= DEALER_DRAW_THRESHOLD
+    override var status: ParticipantStatus = ParticipantStatus.PLAYING,
+) : Participant(name, hands, status) {
 
     infix fun vs(player: Player): Result {
         return when {
-            status == PlayerStatus.BURST -> Result.LOSE
-            player.status == PlayerStatus.BURST -> Result.WIN
+            status == ParticipantStatus.BURST -> Result.LOSE
+            player.status == ParticipantStatus.BURST -> Result.WIN
             score > player.score -> Result.WIN
             score < player.score -> Result.LOSE
             else -> Result.DRAW
@@ -20,7 +19,7 @@ class Dealer(
     override fun initialDraw(deck: Deck) {
         super.initialDraw(deck)
 
-        if (shouldDraw) {
+        if (!Rule.checkDealerScoreThreshold(score)) {
             hit(deck)
         }
 
@@ -30,13 +29,9 @@ class Dealer(
     override fun handleStatus() {
         status =
             when {
-                score > BLACKJACK_VALUE -> PlayerStatus.BURST
-                score > DEALER_DRAW_THRESHOLD -> PlayerStatus.STAY
-                else -> PlayerStatus.PLAYING
+                Rule.checkBurst(score) -> ParticipantStatus.BURST
+                Rule.checkDealerScoreThreshold(score) -> ParticipantStatus.STAY
+                else -> ParticipantStatus.PLAYING
             }
-    }
-
-    companion object {
-        private const val DEALER_DRAW_THRESHOLD = 16
     }
 }

@@ -2,19 +2,19 @@ package blackjack.domain
 
 class Player(
     override val name: String,
-    override var status: PlayerStatus = PlayerStatus.PLAYING,
     override val hands: Hands = Hands(),
-) : Participant(name, status, hands) {
+    override var status: ParticipantStatus = ParticipantStatus.PLAYING,
+) : Participant(name, hands, status) {
     fun toStay() {
-        status = PlayerStatus.STAY
+        status = ParticipantStatus.STAY
     }
 
     override fun handleStatus() {
         status =
             when {
-                score > BLACKJACK_VALUE -> PlayerStatus.BURST
-                score == BLACKJACK_VALUE -> PlayerStatus.STAY
-                else -> PlayerStatus.PLAYING
+                Rule.checkBurst(score) -> ParticipantStatus.BURST
+                Rule.checkBlackjack(score) -> ParticipantStatus.STAY
+                else -> ParticipantStatus.PLAYING
             }
     }
 }
