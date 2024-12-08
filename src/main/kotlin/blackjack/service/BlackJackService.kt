@@ -6,9 +6,9 @@ import blackjack.repository.GameRepository
 
 class BlackJackService(private val gameRepository: GameRepository) {
     fun initPlayers(players: List<String>) {
-        players.forEach {
-            gameRepository.savePlayer(Game(it))
-        }
+        gameRepository.savePlayers(
+            players.map { Game(it) }.toList()
+        )
     }
 
     fun startGame(): List<Game> {

@@ -3,17 +3,18 @@ package blackjack.repository
 import blackjack.entity.Game
 
 class GameRepository {
-    private val players: MutableList<Game> = mutableListOf()
+    private var players: List<Game> = emptyList()
 
-    fun savePlayer(game: Game) {
-        players.add(game)
-    }
-
-    fun findAll(): MutableList<Game> {
-        return players.toMutableList()
+    fun findAll(): List<Game> {
+        return players.toList()
     }
 
     fun findByName(player: String): Game? {
         return players.find { it.player == player }
+    }
+
+    fun savePlayers(players: List<Game>) {
+        this.players = players
+
     }
 }
