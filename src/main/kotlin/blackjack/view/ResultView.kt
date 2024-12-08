@@ -2,7 +2,6 @@ package blackjack.view
 
 import blackjack.dealer.Dealer
 import blackjack.participant.Participant
-import blackjack.player.Player
 import blackjack.player.Players
 
 object ResultView {
@@ -55,29 +54,15 @@ object ResultView {
 
         println(
             "${dealer.name}: " +
-                "${players.players.count { isDealerWin(player = it, dealer = dealer) }}승" +
-                "${players.players.count { isPlayerWin(player = it, dealer = dealer) }}패",
+                "${players.players.count { dealer.isWin(player = it) }}승" +
+                "${players.players.count { player -> player.isWin(dealer = dealer) }}패",
         )
         players.players.forEach {
             println(
-                "${it.name}: ${isPlayerWin(player = it, dealer = dealer).toWinOrLoseString()}"
+                "${it.name}: ${it.isWin(dealer = dealer).toWinOrLoseString()}"
             )
         }
     }
-
-    private fun isDealerWin(player: Player, dealer: Dealer): Boolean =
-        when {
-            dealer.isBust() -> false
-            player.isBust() -> true
-            else -> dealer.hand.sum() > player.hand.sum()
-        }
-
-    private fun isPlayerWin(player: Player, dealer: Dealer): Boolean =
-        when {
-            player.isBust() -> false
-            dealer.isBust() -> true
-            else -> player.hand.sum() > dealer.hand.sum()
-        }
 
     private fun Boolean.toWinOrLoseString(): String =
         if(this) {
