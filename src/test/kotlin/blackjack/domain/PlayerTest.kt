@@ -3,6 +3,7 @@ package blackjack.domain
 import blackjack.domain.StubDeck.Companion.DUMMY_SUIT
 import blackjack.support.Fixtures.createBlackjackPlayer
 import blackjack.support.Fixtures.createBustedPlayer
+import blackjack.support.Fixtures.createDealer
 import blackjack.support.Fixtures.createStandingPlayer
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
@@ -126,6 +127,17 @@ class PlayerTest {
         player.dealerDealtBlackjack()
 
         player.reasonDone shouldBe PlayerReasonDone.DEALER_DEALT_BLACKJACK
+    }
+
+    @Test
+    fun `플레이어가 버스트한 경우 패배한다`() {
+        val bustedPlayer = createBustedPlayer("jack")
+        val deck = StubDeck.from(Rank.SIX, Rank.SEVEN)
+        val dealer = createDealer(deck)
+
+        val outcome = bustedPlayer.outcome(dealer)
+
+        outcome shouldBe PlayerOutcome.LOSE
     }
 
     companion object {

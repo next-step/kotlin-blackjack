@@ -41,6 +41,8 @@ class Player(
         done(PlayerReasonDone.DEALER_DEALT_BLACKJACK)
     }
 
+    fun outcome(dealer: Dealer): PlayerOutcome = PlayerOutcome.LOSE
+
     private fun checkIsNotDone() {
         check(!isDone) { "이미 턴이 끝난 상태입니다." }
     }
