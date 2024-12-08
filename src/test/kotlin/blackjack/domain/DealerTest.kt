@@ -63,6 +63,20 @@ class DealerTest {
         dealer.isBlackjack shouldBe expected
     }
 
+    @Test
+    fun `딜러의 턴 행동을 한다`() {
+        val deck = StubDeck.from(Rank.THREE, Rank.FOUR, Rank.FIVE, Rank.SIX, Rank.SEVEN)
+        val dealer =
+            Dealer().apply {
+                drawFrom(deck)
+                drawFrom(deck)
+            }
+
+        dealer.takeAction(deck)
+
+        dealer.value shouldBe 18
+    }
+
     companion object {
         @JvmStatic
         fun `합계가 16인 경우 반드시 카드를 뽑아야 한다`(): List<Arguments> =

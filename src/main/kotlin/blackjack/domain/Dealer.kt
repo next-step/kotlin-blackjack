@@ -20,6 +20,12 @@ class Dealer(
 
     fun mustDrawCard(): Boolean = value <= MAX_MUST_DRAW_VALUE
 
+    fun takeAction(deck: Deck) {
+        while (mustDrawCard()) {
+            drawFrom(deck)
+        }
+    }
+
     companion object {
         private const val MAX_MUST_DRAW_VALUE = 16
     }

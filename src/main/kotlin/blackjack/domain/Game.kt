@@ -36,13 +36,7 @@ class Game(
         if (!isDealerActionNecessary()) {
             return
         }
-        dealerAction()
-    }
-
-    private fun dealerAction() {
-        while (dealer.mustDrawCard()) {
-            dealer.drawFrom(deck)
-        }
+        dealer.takeAction(deck)
     }
 
     private fun isDealerActionNecessary() = players.isOutcomeUnknown
