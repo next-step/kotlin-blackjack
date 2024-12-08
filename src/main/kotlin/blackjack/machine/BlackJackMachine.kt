@@ -1,8 +1,11 @@
 package blackjack.machine
 
+import blackjack.dealer.Dealer
 import blackjack.deck.Deck
+import blackjack.participant.createParticipants
 import blackjack.player.Player
 import blackjack.player.Players
+import blackjack.rule.Rule
 import blackjack.view.InputView
 import blackjack.view.ResultView
 
@@ -20,14 +23,18 @@ class BlackJackMachine(
                     }
                 }
         var players = Players(players = playerList)
+        var dealer = Dealer.ready(initialCards = listOf(deck.draw(), deck.draw()))
 
-        ResultView.printPlayersName(players = players)
-        ResultView.printPlayersCardStatus(players = players)
+        ResultView.printPlayerNamesAndDealer(players = players, dealer = dealer)
+        ResultView.printPlayersCardStatus(participants = createParticipants(dealer = dealer, players = players))
 
-        while (isGameActive(players = players)) {
+        while (Rule.isGameActive(players = players, dealer = dealer)) {
             players = Players(players = players.players.map { playTurn(it) })
-            ResultView.printPlayersCardStatusAndSum(players = players)
+            dealer = dealer.drawIfAllowed { deck.draw() }
+            ResultView.printPlayersCardStatusAndSum(participant = createParticipants(dealer = dealer, players = players))
         }
+
+        ResultView.printWinner(players = players, dealer = dealer)
     }
 
     private fun playTurn(player: Player): Player =
@@ -36,13 +43,12 @@ class BlackJackMachine(
             !InputView.isHitCard(player) ->
                 player
                     .also { ResultView.printPlayerCard(it) }
+
             else ->
                 player
                     .hitCard(deck.draw())
                     .also { ResultView.printPlayerCard(it) }
         }
-
-    private fun isGameActive(players: Players) = players.players.any { !it.isBust() }
 
     companion object {
         private const val DEFAULT_HAND_SIZE = 2
