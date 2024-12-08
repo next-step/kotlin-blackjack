@@ -173,6 +173,56 @@ class PlayersTest {
         players.isOutcomeUnknown shouldBe true
     }
 
+    @Test
+    fun `종료 전에 결과를 요청하면 예외를 던진다`() {
+        val players =
+            Players.from("black", "jack")
+        val dealer = Dealer()
+        assertThrows<IllegalStateException> { players.result(dealer) }
+    }
+
+    @Test
+    fun `플레이어들의 결과를 리턴한다`() {
+        val deck =
+            StubDeck.from(
+                Rank.ACE,
+                Rank.QUEEN,
+                Rank.JACK,
+                Rank.KING,
+                Rank.FOUR,
+                Rank.EIGHT,
+                Rank.TEN,
+                Rank.SIX,
+                Rank.TWO,
+            )
+        val players =
+            createPlayersFrom(listOf("black", "jack", "game"), deck).apply {
+                stand()
+                stand()
+            }
+        // black: A, K = 21
+        // jack:  Q, 4 = 14
+        // game:  J, 8 = 18
+        val dealer =
+            Dealer().apply {
+                drawFrom(deck)
+                drawFrom(deck)
+                drawFrom(deck)
+            }
+        // dealer: 10, 6, 2 = 18
+
+        val expected =
+            listOf(
+                PlayerResult("black", PlayerOutcome.WIN),
+                PlayerResult("jack", PlayerOutcome.LOSE),
+                PlayerResult("game", PlayerOutcome.DRAW),
+            )
+
+        val results = players.result(dealer)
+
+        results shouldBe expected
+    }
+
     private fun createPlayersFrom(
         names: List<String>,
         deck: Deck,

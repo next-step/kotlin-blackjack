@@ -43,6 +43,15 @@ class Players(
         roster.forEach(Player::dealerDealtBlackjack)
     }
 
+    fun result(dealer: Dealer): List<PlayerResult> {
+        checkIsDone()
+        return roster.map { PlayerResult(it.name, it.outcome(dealer)) }
+    }
+
+    private fun checkIsDone() {
+        check(isDone) { "게임이 종료되지 않았습니다." }
+    }
+
     private fun checkIsNotDone() {
         check(!isDone) { "모든 플레이어가 종료했습니다." }
     }
