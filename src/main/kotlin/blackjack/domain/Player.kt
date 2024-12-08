@@ -17,7 +17,7 @@ class Player(
 
         if (isBust()) {
             stopDraw()
-        }
+        } // 딜러와 플레이어가 달라지는 부분
 
         return card.toDrawCard()
     }
@@ -36,10 +36,10 @@ class Player(
             0
         }
 
-    fun canDraw(): Boolean = draw
+    fun canDraw(): Boolean = draw // 딜러와 플레이어가 달라지는 부분
 
     fun stopDraw() {
-        draw = false
+        draw = false // 딜러와 플레이어가 달라지는 부분
     }
 }
 
