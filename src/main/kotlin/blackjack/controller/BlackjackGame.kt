@@ -13,16 +13,9 @@ class BlackjackGame(
     private val resultView: ResultView,
 ) {
     fun start() {
-        val gameTable = GameTable(getParticipants(), Deck.create())
+        val gameTable = GameTable(Deck.create())
         val participants = playGame(gameTable)
         printGameResult(participants)
-    }
-
-    private fun getParticipants(): List<Participant> {
-        return buildList {
-            add(Dealer.create())
-            addAll(inputView.inputNames().map { Player.create(name = it) })
-        }
     }
 
     private fun playGame(gameTable: GameTable): List<Participant> {
@@ -35,7 +28,7 @@ class BlackjackGame(
     }
 
     private fun setUpInitCard(gameTable: GameTable): List<Participant> {
-        val participants = gameTable.dealInitCard()
+        val participants = gameTable.dealInitCard(getParticipants())
         resultView.linebreak()
         resultView.printInitCardReceive(participants)
         resultView.printParticipantsCard(participants = participants, printScore = false)
@@ -78,5 +71,12 @@ class BlackjackGame(
     private fun printGameResult(participants: List<Participant>) {
         resultView.linebreak()
         resultView.printParticipantsCard(participants = participants, printScore = true)
+    }
+
+    private fun getParticipants(): List<Participant> {
+        return buildList {
+            add(Dealer.create())
+            addAll(inputView.inputNames().map { Player.create(name = it) })
+        }
     }
 }

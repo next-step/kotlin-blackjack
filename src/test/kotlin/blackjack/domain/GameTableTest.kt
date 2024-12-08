@@ -6,7 +6,7 @@ import io.kotest.matchers.shouldBe
 
 class GameTableTest : StringSpec({
     "최초 딜 시 카드를 2장 나누어준다" {
-        val initCardReceivedUsers = GameTable(createUsers(), Deck.create()).dealInitCard()
+        val initCardReceivedUsers = GameTable(Deck.create()).dealInitCard(createUsers())
 
         initCardReceivedUsers.forEach {
             it.cards.values.size shouldBe 2
