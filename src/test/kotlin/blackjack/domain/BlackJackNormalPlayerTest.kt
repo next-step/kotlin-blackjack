@@ -117,4 +117,55 @@ class BlackJackNormalPlayerTest {
 
         assertThat(blackJackNormalPlayer.getBestSum()).isEqualTo(21)
     }
+
+    @Test
+    fun `플레이어는 이기면 배팅 금액 만큼 이익을 얻는다`() {
+        val blackJackNormalPlayer =
+            BlackJackNormalPlayer(
+                "사람",
+                BlackJackPlayerCards(
+                    mutableListOf(
+                        BlackJackCard.get(BlackJackCardShape.HEART, BlackJackCardNumber.SEVEN),
+                        BlackJackCard.get(BlackJackCardShape.HEART, BlackJackCardNumber.ACE),
+                    ),
+                ),
+                bettingMoney = 10000,
+            )
+        blackJackNormalPlayer.win()
+        assertThat(blackJackNormalPlayer.profit).isEqualTo(10000)
+    }
+
+    @Test
+    fun `플레이어는 지면 배팅금액 만큼 손해를 본다`() {
+        val blackJackNormalPlayer =
+            BlackJackNormalPlayer(
+                "사람",
+                BlackJackPlayerCards(
+                    mutableListOf(
+                        BlackJackCard.get(BlackJackCardShape.HEART, BlackJackCardNumber.SEVEN),
+                        BlackJackCard.get(BlackJackCardShape.HEART, BlackJackCardNumber.ACE),
+                    ),
+                ),
+                bettingMoney = 10000,
+            )
+        blackJackNormalPlayer.lose()
+        assertThat(blackJackNormalPlayer.profit).isEqualTo(-10000)
+    }
+
+    @Test
+    fun `카드의 합이 블랙잭21으로 이기면 150퍼센트를 얻는다`() {
+        val blackJackNormalPlayer =
+            BlackJackNormalPlayer(
+                "사람",
+                BlackJackPlayerCards(
+                    mutableListOf(
+                        BlackJackCard.get(BlackJackCardShape.HEART, BlackJackCardNumber.TEN),
+                        BlackJackCard.get(BlackJackCardShape.HEART, BlackJackCardNumber.ACE),
+                    ),
+                ),
+                bettingMoney = 10000,
+            )
+        blackJackNormalPlayer.win()
+        assertThat(blackJackNormalPlayer.profit).isEqualTo(15000)
+    }
 }

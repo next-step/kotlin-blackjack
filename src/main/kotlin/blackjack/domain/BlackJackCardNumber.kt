@@ -14,4 +14,11 @@ enum class BlackJackCardNumber(val values: List<Int>) {
     JACK(listOf(10)),
     QUEEN(listOf(10)),
     KING(listOf(10)),
+    ;
+
+    fun addValueLessThanEqualBlackJackNumber(point: Int): List<Int> {
+        return values.map { it + point }.filter {
+            it <= BlackJackPlayerCards.BLACKJACK_NUMBER
+        }
+    }
 }
