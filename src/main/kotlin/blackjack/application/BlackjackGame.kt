@@ -32,7 +32,7 @@ class BlackjackGame(
     }
 
     private fun progress(player: Player) {
-        if (player.isPlayable && inputView.inputHitOrStay(player.name)) {
+        if (isHitOrStay(player)) {
             player.hit(deck)
             outputView.printPlayerCards(player)
             progress(player)
@@ -40,6 +40,8 @@ class BlackjackGame(
             player.toStay()
         }
     }
+
+    private fun isHitOrStay(player: Player): Boolean = player.isPlayable && inputView.inputHitOrStay(player.name)
 
     private fun endGame(
         players: List<Player>,
