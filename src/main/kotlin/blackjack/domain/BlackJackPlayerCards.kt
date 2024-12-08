@@ -17,19 +17,11 @@ class BlackJackPlayerCards(private val _cards: MutableList<BlackJackCard> = muta
     }
 
     fun getCardsBestSum(): Int {
-        val cardValues = _cards.map { it.number.values }
-
-        val sums =
-            cardValues.reduce { acc, list ->
-                acc.flatMap { accSum ->
-                    list.map { listSum -> accSum + listSum }
-                }
+        return cards.fold(listOf(0)) { scores, card ->
+            scores.flatMap { score ->
+                card.number.addValueLessThanEqualBlackJackNumber(score)
             }
-        if (sums.any { it <= BLACKJACK_NUMBER }) {
-            return sums.filter { it <= BLACKJACK_NUMBER }.max()
-        }
-
-        return -1
+        }.filter { it in 1..BLACKJACK_NUMBER }.maxOrNull() ?: -1
     }
 
     fun isBlackJack(): Boolean {
@@ -37,7 +29,7 @@ class BlackJackPlayerCards(private val _cards: MutableList<BlackJackCard> = muta
     }
 
     companion object {
-        private const val BLACKJACK_NUMBER = 21
+        const val BLACKJACK_NUMBER = 21
 
         fun byDeck(blackJackDeck: BlackJackDeck): BlackJackPlayerCards {
             return BlackJackPlayerCards(mutableListOf(blackJackDeck.draw(), blackJackDeck.draw()))
