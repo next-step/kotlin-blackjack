@@ -1,16 +1,21 @@
 package blackjack.domain
 
-object GameTable {
-    const val INIT_CARD_DRAW_COUNT = 2
-
-    fun dealInitCard(
-        users: List<User>,
-        deck: Deck,
-    ): List<User> {
-        return users.map { user ->
-            (1..INIT_CARD_DRAW_COUNT).fold(user) { acc, _ ->
-                acc.receiveCard(deck.draw())
+data class GameTable(
+    private val deck: Deck,
+) {
+    fun dealInitCard(participants: List<Participant>): List<Participant> {
+        return participants.map { participant ->
+            (1..INIT_CARD_DRAW_COUNT).fold(participant) { acc, _ ->
+                acc.hit(deck.draw())
             }
         }
+    }
+
+    fun hit(participant: Participant): Participant {
+        return participant.hit(deck.draw())
+    }
+
+    companion object {
+        const val INIT_CARD_DRAW_COUNT = 2
     }
 }

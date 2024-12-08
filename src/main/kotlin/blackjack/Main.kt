@@ -1,10 +1,9 @@
 package blackjack
 
-import blackjack.controller.BlackJackGame
-import blackjack.domain.GameTable
+import blackjack.controller.BlackjackGame
 import blackjack.view.InputView
 import blackjack.view.ResultView
 
 fun main() {
-    BlackJackGame(GameTable, InputView, ResultView).start()
+    BlackjackGame(InputView, ResultView).start()
 }

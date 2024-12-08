@@ -9,5 +9,5 @@ fun createCard(
     rank: String,
     suit: Suit = SPADE,
 ): Card {
-    return Card(Rank(rank), suit)
+    return Card(Rank.from(rank), suit)
 }

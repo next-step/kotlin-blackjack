@@ -1,31 +1,25 @@
 package blackjack.domain
 
-@JvmInline
-value class Rank(val value: String) {
-    init {
-        require(value in RANK_VALUES) { "랭크는 $RANK_VALUES 에 포함되어야 합니다" }
-    }
-
-    val score: Int
-        get() =
-            when (value) {
-                in NUMBER_VALUES -> value.toInt()
-                in FACE_VALUES -> FACE_SCORE
-                ACE_VALUE -> DEFAULT_ACE_SCORE
-                else -> throw IllegalArgumentException("유효하지 않은 랭크 값입니다")
-            }
+enum class Rank(val value: String, val score: Int) {
+    ACE("A", 11),
+    TWO("2", 2),
+    THREE("3", 3),
+    FOUR("4", 4),
+    FIVE("5", 5),
+    SIX("6", 6),
+    SEVEN("7", 7),
+    EIGHT("8", 8),
+    NINE("9", 9),
+    TEN("10", 10),
+    JACK("J", 10),
+    QUEEN("Q", 10),
+    KING("K", 10),
+    ;
 
     companion object {
-        private const val FACE_SCORE = 10
-        private const val DEFAULT_ACE_SCORE = 11
-
-        private const val ACE_VALUE = "A"
-        private val NUMBER_VALUES = listOf("2", "3", "4", "5", "6", "7", "8", "9", "10")
-        private val FACE_VALUES = listOf("J", "Q", "K")
-
-        private val RANK_VALUES = NUMBER_VALUES + FACE_VALUES + ACE_VALUE
-
-        val ACE = Rank(ACE_VALUE)
-        val ALL = RANK_VALUES.map { Rank(it) }
+        fun from(value: String): Rank {
+            return entries.firstOrNull { it.value == value }
+                ?: throw IllegalArgumentException("유효하지 않은 랭크 값입니다: $value")
+        }
     }
 }
