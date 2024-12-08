@@ -1,5 +1,6 @@
 package blackjack.core
 
+import blackjack.core.player.Name
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
