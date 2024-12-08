@@ -1,7 +1,7 @@
 package blackjack.presentation
 
-import blackjack.core.Name
-import blackjack.core.Player
+import blackjack.core.player.Name
+import blackjack.core.player.Player
 
 object InputView {
     fun getNames(): Set<Name> {
@@ -14,7 +14,6 @@ object InputView {
 
     fun getCard(player: Player): Boolean {
         println(STRING_INPUT_CARD.format(player.name))
-
         val command = readlnOrNull() ?: throw IllegalArgumentException(ERROR_INVALID_STR)
         return when (command.trim()) {
             STRING_YES -> true
