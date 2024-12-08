@@ -30,7 +30,7 @@ class BlackJackMachine(
 
         while (Rule.isGameActive(players = players, dealer = dealer)) {
             players = Players(players = players.players.map { playTurn(it) })
-            dealer = playDealerTurn(dealer)
+            dealer = dealer.drawIfAllowed { deck.draw() }
             ResultView.printPlayersCardStatusAndSum(participant = createParticipants(dealer = dealer, players = players))
         }
 
@@ -48,15 +48,6 @@ class BlackJackMachine(
                 player
                     .hitCard(deck.draw())
                     .also { ResultView.printPlayerCard(it) }
-        }
-
-    private fun playDealerTurn(dealer: Dealer): Dealer =
-        if (dealer.isDraw()) {
-            dealer
-                .hitCard(deck.draw())
-                .also { ResultView.printDealerDrawCard() }
-        } else {
-            dealer
         }
 
     companion object {
