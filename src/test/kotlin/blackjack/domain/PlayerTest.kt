@@ -182,6 +182,16 @@ class PlayerTest {
         outcome shouldBe PlayerOutcome.DRAW
     }
 
+    @Test
+    fun `플레이어의 점수가 딜러의 점수보다 높으면 승리한다`() {
+        val player = createPlayer(StubDeck.from(Rank.JACK, Rank.TEN))
+        val dealer = createDealer(StubDeck.from(Rank.TWO, Rank.THREE))
+
+        val outcome = player.outcome(dealer)
+
+        outcome shouldBe PlayerOutcome.WIN
+    }
+
     companion object {
         @JvmStatic
         fun donePlayers() =

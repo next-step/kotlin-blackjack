@@ -56,8 +56,13 @@ class Player(
         if (isBlackjack && dealer.isBlackjack) {
             return PlayerOutcome.DRAW
         }
+        if (beats(dealer)) {
+            return PlayerOutcome.WIN
+        }
         return PlayerOutcome.LOSE
     }
+
+    private fun beats(dealer: Dealer) = value > dealer.value
 
     private fun checkIsNotDone() {
         check(!isDone) { "이미 턴이 끝난 상태입니다." }
