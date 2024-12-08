@@ -1,6 +1,12 @@
 package blackjack
 
-import blackjack.InitialCardsTestFixtures.blackjackCards
+import blackjack.CardTextFixtures.spadeAceCard
+import blackjack.CardTextFixtures.spadeEightCard
+import blackjack.CardTextFixtures.spadeFiveCard
+import blackjack.CardTextFixtures.spadeFourCard
+import blackjack.CardTextFixtures.spadeKingCard
+import blackjack.CardTextFixtures.spadeNineCard
+import blackjack.CardTextFixtures.spadeTwoCard
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.data.forAll
 import io.kotest.data.row
@@ -10,10 +16,10 @@ class HandTest : StringSpec({
     "손패는 카드를 추가할 수 있다" {
         val sut = Hand()
 
-        sut.add(Card(CardNumber.King, Suit.SPADES))
+        sut.add(spadeKingCard)
 
         sut.cards.size shouldBe 1
-        sut.cards[0] shouldBe Card(CardNumber.King, Suit.SPADES)
+        sut.cards[0] shouldBe spadeKingCard
     }
 
     "손패는 가진 카드의 숫자 합을 구할 수 있다(Ace 0개)" {
@@ -60,17 +66,17 @@ class HandTest : StringSpec({
         forAll(
             row(
                 listOf(
-                    Card(Number(9), Suit.SPADES),
-                    Card(Number(8), Suit.HEARTS),
-                    Card(Number(4), Suit.SPADES),
+                    spadeNineCard,
+                    spadeEightCard,
+                    spadeFourCard,
                 ),
                 false,
             ),
             row(
                 listOf(
-                    Card(Number(9), Suit.SPADES),
-                    Card(Number(8), Suit.HEARTS),
-                    Card(Number(5), Suit.SPADES),
+                    spadeNineCard,
+                    spadeEightCard,
+                    spadeFiveCard,
                 ),
                 true,
             ),
@@ -83,12 +89,18 @@ class HandTest : StringSpec({
 
     "손패는 블랙잭인지 체크할 수 있다" {
         forAll(
-            row(blackjackCards, true),
             row(
                 listOf(
-                    Card(CardNumber.Jack, Suit.SPADES),
-                    Card(Number(9), Suit.SPADES),
-                    Card(Number(2), Suit.SPADES),
+                    spadeAceCard,
+                    spadeKingCard,
+                ),
+                true,
+            ),
+            row(
+                listOf(
+                    spadeKingCard,
+                    spadeNineCard,
+                    spadeTwoCard,
                 ),
                 false,
             ),

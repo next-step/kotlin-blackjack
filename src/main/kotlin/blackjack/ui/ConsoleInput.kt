@@ -11,6 +11,7 @@ class ConsoleInput {
         }
 
         fun inputBetAmountPerPlayer(playerName: String): Double {
+            println()
             println("${playerName}의 베팅 금액은?")
             return readln().toDouble()
         }

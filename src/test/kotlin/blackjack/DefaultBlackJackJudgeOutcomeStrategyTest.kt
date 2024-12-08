@@ -1,11 +1,14 @@
 package blackjack
 
+import blackjack.CardTextFixtures.spadeAceCard
+import blackjack.CardTextFixtures.spadeFiveCard
+import blackjack.CardTextFixtures.spadeFourCard
+import blackjack.CardTextFixtures.spadeSixCard
 import blackjack.InitialCardsTestFixtures.blackjackCards
 import blackjack.InitialCardsTestFixtures.blackjackCards2
 import blackjack.InitialCardsTestFixtures.initial16Cards
 import blackjack.InitialCardsTestFixtures.initial18Cards
 import blackjack.InitialCardsTestFixtures.initial19Cards
-import blackjack.Suit.SPADES
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 
@@ -38,7 +41,7 @@ class DefaultBlackJackJudgeOutcomeStrategyTest : StringSpec({
         val dealer = Dealer(initial19Cards)
 
         val player = Player("y2gcoder", initial18Cards)
-        player.receive(Card(CardNumber.Ace, SPADES))
+        player.receive(spadeAceCard)
 
         val sut = DefaultBlackJackJudgeOutcomeStrategy()
 
@@ -51,7 +54,7 @@ class DefaultBlackJackJudgeOutcomeStrategyTest : StringSpec({
         val dealer = Dealer(initial19Cards)
 
         val player = Player("y2gcoder", initial18Cards)
-        player.receive(Card(Number(4), SPADES))
+        player.receive(spadeFourCard)
 
         val sut = DefaultBlackJackJudgeOutcomeStrategy()
 
@@ -62,10 +65,10 @@ class DefaultBlackJackJudgeOutcomeStrategyTest : StringSpec({
 
     "결과 판단 전략은 딜러와 플레이어 모두 파산하면 딜러의 승리로 본다" {
         val dealer = Dealer(initial16Cards)
-        dealer.receive(Card(Number(6), SPADES))
+        dealer.receive(spadeSixCard)
 
         val player = Player("y2gcoder", initial18Cards)
-        player.receive(Card(Number(4), SPADES))
+        player.receive(spadeFourCard)
 
         val sut = DefaultBlackJackJudgeOutcomeStrategy()
 
@@ -76,7 +79,7 @@ class DefaultBlackJackJudgeOutcomeStrategyTest : StringSpec({
 
     "결과 판단 전략은 딜러가 파산했을 때 플레이어가 파산하지 않았다면 플레이어의 승리로 본다" {
         val dealer = Dealer(initial16Cards)
-        dealer.receive(Card(Number(6), SPADES))
+        dealer.receive(spadeSixCard)
 
         val player = Player("y2gcoder", initial18Cards)
 
@@ -91,7 +94,7 @@ class DefaultBlackJackJudgeOutcomeStrategyTest : StringSpec({
         val dealer = Dealer(blackjackCards)
 
         val player = Player("y2gcoder", initial16Cards)
-        player.receive(Card(Number(5), SPADES))
+        player.receive(spadeFiveCard)
 
         val sut = DefaultBlackJackJudgeOutcomeStrategy()
 
@@ -102,7 +105,7 @@ class DefaultBlackJackJudgeOutcomeStrategyTest : StringSpec({
 
     "결과 판단 전략은 플레이어만 블랙잭일 때 플레이어의 블랙잭 승리 선언을 할 수 있다" {
         val dealer = Dealer(initial16Cards)
-        dealer.receive(Card(Number(5), SPADES))
+        dealer.receive(spadeFiveCard)
 
         val player = Player("y2gcoder", blackjackCards)
 

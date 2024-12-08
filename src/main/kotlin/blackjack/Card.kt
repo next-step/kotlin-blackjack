@@ -1,7 +1,7 @@
 package blackjack
 
-data class Card(val number: CardNumber, val suit: Suit) {
+data class Card(val suit: Suit, val denomination: Denomination) {
     fun number(): Int {
-        return number.baseValue
+        return denomination.score
     }
 }

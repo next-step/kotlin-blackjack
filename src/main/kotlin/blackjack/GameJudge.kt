@@ -4,11 +4,11 @@ class GameJudge(private val judgeOutcomeStrategy: BlackJackJudgeOutcomeStrategy 
     fun judge(
         dealer: Dealer,
         players: List<Player>,
-    ): List<GameResult> {
+    ): List<GameResult2> {
         val result =
             players.map { player ->
                 val outcome = judgeOutcome(player, dealer)
-                GameResult(player, outcome)
+                GameResult2(player, outcome)
             }
         return result
     }

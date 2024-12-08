@@ -1,7 +1,7 @@
 package blackjack
 
-class Bank(accounts: List<ParticipantAccount> = emptyList()) {
-    private val accounts: MutableList<ParticipantAccount> = accounts.toMutableList()
+class Bank(accounts: List<ParticipantAccount2> = emptyList()) {
+    private val accounts: MutableList<ParticipantAccount2> = accounts.toMutableList()
 
     fun bet(
         participant: Participant,
@@ -13,7 +13,7 @@ class Bank(accounts: List<ParticipantAccount> = emptyList()) {
             }
         }
         accounts.add(
-            ParticipantAccount(
+            ParticipantAccount2(
                 participant = participant,
                 initialBalance = Money(betAmount),
             ),
@@ -24,9 +24,9 @@ class Bank(accounts: List<ParticipantAccount> = emptyList()) {
         return accounts.find { it.participant == participant }?.currentBalance?.toDouble() ?: 0.0
     }
 
-    fun settleBets(gameResults: List<GameResult>) = gameResults.forEach(::settleBet)
+    fun settleBets(gameResults: List<GameResult2>) = gameResults.forEach(::settleBet)
 
-    fun settleBet(gameResult: GameResult) {
+    fun settleBet(gameResult: GameResult2) {
         val dealerAccount = findDealerAccount()
         val playerAccount =
             findAccount(gameResult.player)
@@ -46,8 +46,8 @@ class Bank(accounts: List<ParticipantAccount> = emptyList()) {
 
     private fun settleOutCome(
         outcome: Outcome,
-        dealerAccount: ParticipantAccount,
-        playerAccount: ParticipantAccount,
+        dealerAccount: ParticipantAccount2,
+        playerAccount: ParticipantAccount2,
     ) {
         when (outcome) {
             Outcome.WIN -> settleWin(dealerAccount, playerAccount)
@@ -58,41 +58,41 @@ class Bank(accounts: List<ParticipantAccount> = emptyList()) {
     }
 
     private fun settleWin(
-        dealerAccount: ParticipantAccount,
-        playerAccount: ParticipantAccount,
+        dealerAccount: ParticipantAccount2,
+        playerAccount: ParticipantAccount2,
     ) {
         val betAmount = playerAccount.currentBalance
         updateBalances(dealerAccount, -betAmount, playerAccount, betAmount)
     }
 
     private fun settleLoss(
-        dealerAccount: ParticipantAccount,
-        playerAccount: ParticipantAccount,
+        dealerAccount: ParticipantAccount2,
+        playerAccount: ParticipantAccount2,
     ) {
         val betAmount = playerAccount.currentBalance
         updateBalances(dealerAccount, betAmount, playerAccount, -betAmount)
     }
 
     private fun settleBlackJack(
-        dealerAccount: ParticipantAccount,
-        playerAccount: ParticipantAccount,
+        dealerAccount: ParticipantAccount2,
+        playerAccount: ParticipantAccount2,
     ) {
         val betAmount = playerAccount.currentBalance * BLACKJACK_BET_MULTIPLIER
         updateBalances(dealerAccount, -betAmount, playerAccount, betAmount)
     }
 
     private fun updateBalances(
-        dealerAccount: ParticipantAccount,
+        dealerAccount: ParticipantAccount2,
         dealerAdjustment: Money,
-        playerAccount: ParticipantAccount,
+        playerAccount: ParticipantAccount2,
         playerAdjustment: Money,
     ) {
         accounts.updateAccount(dealerAccount, dealerAdjustment)
         accounts.updateAccount(playerAccount, playerAdjustment)
     }
 
-    private fun MutableList<ParticipantAccount>.updateAccount(
-        account: ParticipantAccount,
+    private fun MutableList<ParticipantAccount2>.updateAccount(
+        account: ParticipantAccount2,
         newBalance: Money,
     ) {
         val index = indexOf(account)
@@ -101,12 +101,12 @@ class Bank(accounts: List<ParticipantAccount> = emptyList()) {
         }
     }
 
-    private fun findDealerAccount(): ParticipantAccount {
+    private fun findDealerAccount(): ParticipantAccount2 {
         return accounts.find { it.participant is Dealer }
             ?: throw IllegalStateException("딜러 계좌가 존재하지 않습니다")
     }
 
-    private fun findAccount(participant: Participant): ParticipantAccount? {
+    private fun findAccount(participant: Participant): ParticipantAccount2? {
         return accounts.find { it.participant == participant }
     }
 

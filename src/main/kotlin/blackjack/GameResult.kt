@@ -1,6 +1,6 @@
 package blackjack
 
-data class GameResult(
+data class GameResult2(
     val player: Player,
     val outcome: Outcome,
 )

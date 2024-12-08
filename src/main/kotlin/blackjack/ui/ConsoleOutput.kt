@@ -42,7 +42,7 @@ class ConsoleOutput {
 
         private fun printPlayerNameAndPlayerHand(participant: Participant) {
             print("${participant.name} 카드: ")
-            print(participant.hand.joinToString { "${it.number.face}${it.suit.koreanName}" })
+            print(participant.hand.joinToString { "${it.denomination.face}${it.suit.koreanName}" })
         }
 
         fun printPlayerSumOfHand(player: Player) {
