@@ -18,7 +18,10 @@ class Cards(
 
     fun isBust(): Boolean = sum() > BLACKJACK_NUMBER
 
+    fun isBlackjack(): Boolean = size() == BLACKJACK_CARD_SIZE && sum() == BLACKJACK_NUMBER
+
     companion object {
         private const val BLACKJACK_NUMBER = 21
+        private const val BLACKJACK_CARD_SIZE = 2
     }
 }

@@ -4,6 +4,7 @@ import blackjack.CardTextFixtures.spadeAceCard
 import blackjack.CardTextFixtures.spadeEightCard
 import blackjack.CardTextFixtures.spadeFiveCard
 import blackjack.CardTextFixtures.spadeFourCard
+import blackjack.CardTextFixtures.spadeKingCard
 import blackjack.CardTextFixtures.spadeNineCard
 import blackjack.CardTextFixtures.spadeThreeCard
 import blackjack.CardTextFixtures.spadeTwoCard
@@ -71,6 +72,30 @@ class CardsTest : StringSpec({
             val sut = Cards(initialCards)
             val result = sut.isBust()
             result shouldBe expected
+        }
+    }
+
+    "Cards는 블랙잭인지 반환할 수 있다" {
+        forAll(
+            row(
+                listOf(
+                    spadeAceCard,
+                    spadeKingCard,
+                ),
+                true,
+            ),
+            row(
+                listOf(
+                    spadeKingCard,
+                    spadeNineCard,
+                    spadeTwoCard,
+                ),
+                false,
+            ),
+        ) { initialCards, expected ->
+            val sut = Cards(initialCards)
+
+            sut.isBlackjack() shouldBe expected
         }
     }
 })
