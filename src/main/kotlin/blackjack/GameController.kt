@@ -26,7 +26,7 @@ class GameController {
         return blackJackGame.canDrawForAllPlayers()
     }
 
-    fun findDrawPlayer(): PlayerName {
+    fun findDrawPlayer(): PlayerName? {
         validateInitialized()
         return blackJackGame.findDrawPlayer()
     }

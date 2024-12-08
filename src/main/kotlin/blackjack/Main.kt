@@ -20,7 +20,7 @@ private fun initializeGame() {
 
 private fun additionalDraw() {
     while (gameController.canDrawForAllPlayers()) {
-        val drawPlayer = gameController.findDrawPlayer()
+        val drawPlayer = gameController.findDrawPlayer() ?: break
         val inputNeedDraw = inputView.inputNeedAdditionalDraw(drawPlayer)
         val drawResult = gameController.draw(drawPlayer.value, inputNeedDraw)
         resultView.printDrawResult(listOf(drawResult))

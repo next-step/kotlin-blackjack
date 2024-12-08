@@ -22,10 +22,15 @@ class BlackJackGame(
 
     fun canDrawForAllPlayers(): Boolean = players.any { it.canDraw() }
 
-    fun findDrawPlayer(): PlayerName {
+    fun findDrawPlayer(): PlayerName? {
         val startOrder = drawOrder
         val targetOrder = (startOrder..< players.size)
-            .first { players[it].canDraw() }
+            .firstOrNull { players[it].canDraw() }
+
+        if (targetOrder == null) {
+            return null
+        }
+
         drawOrder = (targetOrder + 1) % players.size
         return players[targetOrder].name
     }
