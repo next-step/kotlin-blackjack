@@ -14,7 +14,7 @@ class GameController {
 
         val players = inputPlayers
             ?.split(",")
-            ?.map { Player(PlayerName(it)) }
+            ?.map { Player(playerName = PlayerName(it)) }
             ?: throw IllegalArgumentException("게임에 참여할 사람의 이름은 필수 입니다.")
 
         blackJackGame = BlackJackGame(players)
