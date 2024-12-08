@@ -53,6 +53,9 @@ class Player(
         if (isBlackjack && !dealer.isBlackjack) {
             return PlayerOutcome.WIN
         }
+        if (isBlackjack && dealer.isBlackjack) {
+            return PlayerOutcome.DRAW
+        }
         return PlayerOutcome.LOSE
     }
 

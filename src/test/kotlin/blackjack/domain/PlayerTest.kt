@@ -1,6 +1,7 @@
 package blackjack.domain
 
 import blackjack.domain.StubDeck.Companion.DUMMY_SUIT
+import blackjack.support.Fixtures.createBlackjackDealer
 import blackjack.support.Fixtures.createBlackjackPlayer
 import blackjack.support.Fixtures.createBustedDealer
 import blackjack.support.Fixtures.createBustedPlayer
@@ -169,6 +170,16 @@ class PlayerTest {
         val outcome = blackjackPlayer.outcome(dealer)
 
         outcome shouldBe PlayerOutcome.WIN
+    }
+
+    @Test
+    fun `플레이러와 딜러 모두 블랙잭이면 무승부다`() {
+        val blackjackPlayer = createBlackjackPlayer()
+        val blackjackDealer = createBlackjackDealer()
+
+        val outcome = blackjackPlayer.outcome(blackjackDealer)
+
+        outcome shouldBe PlayerOutcome.DRAW
     }
 
     companion object {
