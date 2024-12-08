@@ -43,29 +43,27 @@ class BlackjackGame(
         return participants.map { playerTurn(it, gameTable) }
     }
 
-    private fun playerTurn(
+    private tailrec fun playerTurn(
         player: Participant,
         gameTable: GameTable,
     ): Participant {
-        return if (player.canHit() && inputView.inputHit(player)) {
-            val hitPlayer = gameTable.hit(player)
-            resultView.printParticipantCard(participant = player, printScore = false)
-            playerTurn(hitPlayer, gameTable)
-        } else {
-            player
+        if (!player.canHit() || !inputView.inputHit(player)) {
+            return player
         }
+        val hitPlayer = gameTable.hit(player)
+        resultView.printParticipantCard(participant = player, printScore = false)
+        return playerTurn(hitPlayer, gameTable)
     }
 
-    private fun dealerTurn(
+    private tailrec fun dealerTurn(
         dealer: Participant,
         gameTable: GameTable,
     ): Participant {
-        return if (dealer.canHit()) {
-            resultView.printDealerHit()
-            dealerTurn(gameTable.hit(dealer), gameTable)
-        } else {
-            dealer
+        if (!dealer.canHit()) {
+            return dealer
         }
+        resultView.printDealerHit()
+        return dealerTurn(gameTable.hit(dealer), gameTable)
     }
 
     private fun printGameResult(participants: List<Participant>) {
