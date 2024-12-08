@@ -1,5 +1,7 @@
 package blackjack.domain
 
+import blackjack.domain.MatchResult.WIN
+
 sealed class Participant(val name: String, val cards: Cards) {
     abstract fun canHit(): Boolean
 
@@ -21,6 +23,13 @@ class Player(name: String, cards: Cards) : Participant(name, cards) {
         return Player(this.name, cards.add(card))
     }
 
+    fun compareScore(dealer: Dealer): MatchResult {
+        if (dealer.isBust) {
+            return WIN
+        }
+        return cards.compareScore(dealer.cards)
+    }
+
     companion object {
         private const val PLAYER_SCORE_LIMIT = 21
 
@@ -31,6 +40,9 @@ class Player(name: String, cards: Cards) : Participant(name, cards) {
 }
 
 class Dealer(cards: Cards) : Participant("딜러", cards) {
+    val isBust: Boolean
+        get() = cards.isBust
+
     override fun canHit(): Boolean {
         return cards.scoreLowerThan(DEALER_SCORE_LIMIT)
     }

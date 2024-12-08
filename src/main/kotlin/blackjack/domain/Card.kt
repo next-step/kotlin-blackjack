@@ -6,11 +6,11 @@ data class Card(
     val rank: Rank,
     val suit: Suit,
 ) {
-    val score = rank.score
+    val score: Int
+        get() = rank.score
 
-    fun isAce(): Boolean {
-        return rank == ACE
-    }
+    val isAce: Boolean
+        get() = rank == ACE
 
     companion object {
         val ALL: List<Card> =
