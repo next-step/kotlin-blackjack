@@ -1,4 +1,4 @@
-package blackjack.core
+package blackjack.core.player
 
 class Name(private val name: String) {
     init {

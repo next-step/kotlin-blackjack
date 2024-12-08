@@ -1,27 +1,25 @@
-package blackjack.core
+package blackjack.core.card
 
 class Cards(private val cards: MutableSet<Card> = mutableSetOf()) : MutableSet<Card> by cards {
+    fun checkBust(): Boolean {
+        return point() > MAX_POINT
+    }
+
     fun getCardNames(): String = this.joinToString(",", "", "")
 
     fun point(): Int {
         val sum = cards.sumOf { it.denomination.score }
         val aces = cards.filter { it.denomination == Denomination.ACE }
-
         if (aces.isEmpty()) {
             return sum
         }
-
-        if (!checkBust(sum, ACE_WEIGHT)) {
+        if (!checkAceBust(sum)) {
             return sum + ACE_WEIGHT
         }
-
         return sum
     }
 
-    private fun checkBust(
-        sum: Int,
-        weight: Int,
-    ): Boolean = (sum + weight) > MAX_POINT
+    private fun checkAceBust(sum: Int): Boolean = (sum + ACE_WEIGHT) > MAX_POINT
 
     companion object {
         const val MAX_POINT = 21
