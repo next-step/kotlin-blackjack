@@ -6,4 +6,7 @@ data class Card(val suit: Suit, private val rank: Rank) {
 
     val isAce: Boolean
         get() = rank.isAce
+
+    val signature: String
+        get() = "${rank.signature}${suit.signature}"
 }
