@@ -1,18 +1,10 @@
 package study
 
-data class Person(val name: String, val company: String?, val skills: List<Skill>, val languages: List<Language>)
-
 fun introduce(block: PersonBuilder.() -> Unit): Person {
     return PersonBuilder().apply(block).build()
 }
 
-interface Skill {
-    val description: String
-}
-data class SoftSkill(override val description: String): Skill
-data class HardSkill(override val description: String): Skill
-
-data class Language(val language: String, val level: Int)
+data class Person(val name: String, val company: String?, val skills: List<Skill>, val languages: List<Language>)
 
 class PersonBuilder {
     private lateinit var name: String
