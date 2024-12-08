@@ -15,7 +15,7 @@ class BlackJack {
         var total = values.sum()
         val aceCount = values.count { it == Card.A.getValue() }
         repeat(aceCount) {
-            if (total > BURST_LIMIT_VALUE) {
+            if (total > BUST_LIMIT_VALUE) {
                 total -= MINUS_ACE_VALUE
             }
         }
@@ -23,7 +23,7 @@ class BlackJack {
     }
 
     companion object {
-        private const val BURST_LIMIT_VALUE = 21
+        private const val BUST_LIMIT_VALUE = 21
         private const val MINUS_ACE_VALUE = 10
     }
 }
