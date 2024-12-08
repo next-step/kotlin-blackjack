@@ -1,35 +1,20 @@
 package blackjack.domain
 
 class Player(
-    val name: String,
-    val hands: Hands = Hands(),
-) {
-    val score: Int
-        get() = hands.calculateTotalValue()
-
-    val handSize: Int
-        get() = hands.size
-
-    var status: PlayerStatus = PlayerStatus.PLAYING
-        private set
-
-    fun isPlayable(): Boolean = status.isPlayable()
-
+    override val name: String,
+    override val hands: Hands = Hands(),
+    override var status: GameStatus = GameStatus.PLAYING,
+) : Participant(name, hands, status) {
     fun toStay() {
-        this.status = PlayerStatus.STAY
+        status = GameStatus.STAY
     }
 
-    fun hit(deck: Deck) {
-        if (!isPlayable()) {
-            return
-        }
-
-        val card = deck.draw()
-        hands.add(card)
-        handleStatus()
-    }
-
-    private fun handleStatus() {
-        status = status.handleStatus(score)
+    override fun handleStatus() {
+        status =
+            when {
+                GameStatus.isBurst(score) -> GameStatus.BURST
+                GameStatus.isBlackjack(score) -> GameStatus.STAY
+                else -> GameStatus.PLAYING
+            }
     }
 }

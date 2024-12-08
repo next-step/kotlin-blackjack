@@ -31,32 +31,30 @@ class PlayerTest : StringSpec({
         val deck = Deck()
         val hands =
             handsFixture(
-                listOf(
-                    Card(Suit.SPADE, Rank.TEN),
-                    Card(Suit.SPADE, Rank.TEN),
-                    Card(Suit.SPADE, Rank.TWO),
-                ),
+                Card(Suit.SPADE, Rank.TEN),
+                Card(Suit.SPADE, Rank.TEN),
+                Card(Suit.SPADE, Rank.TWO),
             )
-        val actual = Player("pobi", hands)
+        val actual = Player(name = "pobi", hands = hands)
 
         actual.hit(deck)
 
         actual.score shouldBeGreaterThan 21
-        actual.status shouldBe PlayerStatus.BURST
+        actual.status shouldBe GameStatus.BURST
     }
 
     "플레이어는 히트 시 21점이라면 스테이 상태가 된다." {
         val aceCard = Card(Suit.SPADE, Rank.ACE)
         val tenCard = Card(Suit.SPADE, Rank.TEN)
         val deck = Deck(listOf(aceCard))
-        val hands = handsFixture(listOf(tenCard))
+        val hands = handsFixture(tenCard)
 
-        val actual = Player("pobi", hands)
+        val actual = Player(name = "pobi", hands = hands)
 
         actual.hit(deck)
 
         actual.score shouldBe 21
-        actual.status shouldBe PlayerStatus.STAY
+        actual.status shouldBe GameStatus.STAY
     }
 
     "플레이어는 스테이 상태가 될 수 있다." {
@@ -64,19 +62,17 @@ class PlayerTest : StringSpec({
 
         actual.toStay()
 
-        actual.status shouldBe PlayerStatus.STAY
+        actual.status shouldBe GameStatus.STAY
     }
 
     "플레이어는 점수를 가진다" {
-        val cards =
+        val hands =
             handsFixture(
-                listOf(
-                    Card(Suit.SPADE, Rank.TWO),
-                    Card(Suit.SPADE, Rank.THREE),
-                    Card(Suit.SPADE, Rank.TEN),
-                ),
+                Card(Suit.SPADE, Rank.TWO),
+                Card(Suit.SPADE, Rank.THREE),
+                Card(Suit.SPADE, Rank.TEN),
             )
-        val actual = Player("pobi", cards)
+        val actual = Player(name = "pobi", hands = hands)
 
         actual.score shouldBe 15
     }
