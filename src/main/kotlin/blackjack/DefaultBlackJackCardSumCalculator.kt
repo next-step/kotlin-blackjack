@@ -2,34 +2,27 @@ package blackjack
 
 class DefaultBlackJackCardSumCalculator : BlackJackCardSumCalculator {
     override fun sum(cards: List<Card>): Int {
-        val sumNonAce = sumNonAceValue(cards)
-        val aceCount = cards.count { it.denomination == Denomination.ACE }
+        val (aces, nonAces) = cards.partition { it.denomination == Denomination.ACE }
+        val nonAceSum = nonAces.sumOf { it.number() }
+        val aceCount = aces.size
 
-        if (aceCount == 0) {
-            return sumNonAce
+        return when {
+            aceCount == 0 -> nonAceSum
+            else -> calculateBestSumWithAces(nonAceSum, aceCount)
         }
-
-        val baseSum = getSumWithoutLastAce(sumNonAce, aceCount)
-        return baseSum + getBestAceValue(baseSum)
     }
 
-    private fun sumNonAceValue(cards: List<Card>): Int =
-        cards
-            .asSequence()
-            .filterNot { it.denomination == Denomination.ACE }
-            .sumOf { it.number() }
-
-    private fun getSumWithoutLastAce(
+    private fun calculateBestSumWithAces(
         sumNonAce: Int,
         aceCount: Int,
-    ) = sumNonAce + (aceCount - 1) * Denomination.ACE.score
+    ): Int {
+        val possibleSums =
+            (0..aceCount).map { aceAsElevenCount ->
+                sumNonAce + (aceAsElevenCount * ACE_BIGGER_NUMBER) + (aceCount - aceAsElevenCount) * Denomination.ACE.score
+            }
 
-    private fun getBestAceValue(baseSum: Int) =
-        if (baseSum + ACE_BIGGER_NUMBER <= BLACKJACK_NUMBER) {
-            ACE_BIGGER_NUMBER
-        } else {
-            Denomination.ACE.score
-        }
+        return possibleSums.filter { it <= BLACKJACK_NUMBER }.maxOrNull() ?: possibleSums.minOf { it }
+    }
 
     companion object {
         private const val BLACKJACK_NUMBER = 21
