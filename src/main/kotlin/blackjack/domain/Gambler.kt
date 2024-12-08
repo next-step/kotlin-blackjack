@@ -17,4 +17,9 @@ class Gambler(val name: String) {
     fun calculateTotalScore(): Int {
         return ScoreCalculator.calculate(cards)
     }
+
+    fun canReceiveCards(): Boolean {
+        val totalScore = ScoreCalculator.calculate(cards)
+        return totalScore < 21
+    }
 }

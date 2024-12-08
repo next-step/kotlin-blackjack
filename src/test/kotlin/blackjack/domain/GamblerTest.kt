@@ -29,4 +29,26 @@ class GamblerTest : FreeSpec({
         gambler.cards shouldHaveSize 4
         gambler.cards shouldBe cards
     }
+
+    "총합이 21 미만이어야 카드를 받을 수 있다" - {
+        "카드를 받을 수 있는 경우" {
+            val gambler = Gambler("타짜")
+            gambler.receive(
+                Card(Suit.HEARTS, Rank.NINE),
+                Card(Suit.SPADES, Rank.ACE),
+            )
+
+            gambler.canReceiveCards() shouldBe true
+        }
+
+        "카드를 받을 수 없는 경우" {
+            val gambler = Gambler("타짜")
+            gambler.receive(
+                Card(Suit.HEARTS, Rank.TEN),
+                Card(Suit.SPADES, Rank.ACE),
+            )
+
+            gambler.canReceiveCards() shouldBe false
+        }
+    }
 })
