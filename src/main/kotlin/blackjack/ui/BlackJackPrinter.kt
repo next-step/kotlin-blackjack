@@ -25,7 +25,7 @@ object BlackJackPrinter {
     }
 
     fun askIfWantMoreCard(gambler: Gambler) {
-        println("${gambler.name}은(는) 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n. 대소문자 구분 X)")
+        println("${gambler.name}은(는) 한장의 카드를 더 받겠습니까?(예는 ${BlackJackReader.YES_SIGN}, 아니오는 ${BlackJackReader.NO_SIGN}. 대소문자 구분 X)")
     }
 
     fun printResult(gamblers: Gamblers) {

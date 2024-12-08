@@ -2,8 +2,12 @@ package blackjack.ui
 
 import blackjack.domain.Gambler
 
+
 object BlackJackReader {
-    private val Y_OR_N_REGEX = Regex("[ynYN]")
+    const val YES_SIGN = "y"
+    const val NO_SIGN = "n"
+
+    private val Y_OR_N_REGEX = Regex("[${YES_SIGN}${NO_SIGN}${YES_SIGN.uppercase()}${NO_SIGN.uppercase()}]")
 
     fun readGamblerNames(): List<String> {
         BlackJackPrinter.askForPlayerName()
@@ -16,7 +20,7 @@ object BlackJackReader {
         BlackJackPrinter.askIfWantMoreCard(gambler)
 
         val readLine = ConsoleReader.readLine().lowercase()
-        require(Y_OR_N_REGEX.matches(readLine)) { "y 또는 n만 입력해 주세요. (대소문자 구분 X)" }
-        return readLine == "y"
+        require(Y_OR_N_REGEX.matches(readLine)) { "$YES_SIGN 또는 ${NO_SIGN}만 입력해 주세요. (대소문자 구분 X) 현재 입력 = $readLine" }
+        return readLine == YES_SIGN
     }
 }
