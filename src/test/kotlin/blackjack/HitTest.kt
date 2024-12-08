@@ -3,6 +3,7 @@ package blackjack
 import blackjack.CardTextFixtures.spadeFiveCard
 import blackjack.CardTextFixtures.spadeSixCard
 import blackjack.InitialCardsTestFixtures.initial16Cards
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.booleans.shouldBeFalse
 import io.kotest.matchers.types.shouldBeInstanceOf
@@ -18,6 +19,7 @@ class HitTest : BehaviorSpec({
                 result.shouldBeInstanceOf<Stay>()
             }
         }
+
         `when`("5카드를 뽑으면") {
             val card = spadeFiveCard
             val result: State = sut.draw(card)
@@ -25,6 +27,7 @@ class HitTest : BehaviorSpec({
                 result.shouldBeInstanceOf<Running>()
             }
         }
+
         `when`("6카드를 뽑으면") {
             val card = spadeSixCard
             val result: State = sut.draw(card)
@@ -32,10 +35,20 @@ class HitTest : BehaviorSpec({
                 result.shouldBeInstanceOf<Bust>()
             }
         }
+
         `when`("isFinished()를 호출하면") {
             val result = sut.isFinished()
             then("false 를 반환한다") {
                 result.shouldBeFalse()
+            }
+        }
+
+        `when`("profit(betAmount)을 호출하면") {
+            val betAmount = Money(1000)
+            then("IllegalStateException을 던진다") {
+                shouldThrow<IllegalStateException> {
+                    sut.profit(betAmount)
+                }
             }
         }
     }

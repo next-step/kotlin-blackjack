@@ -6,4 +6,10 @@ sealed class Finished(cards: Cards) : Started(cards) {
     override fun stay(): State = this
 
     override fun isFinished(): Boolean = true
+
+    override fun profit(betAmount: Money): Money {
+        return betAmount * earningRate()
+    }
+
+    abstract fun earningRate(): Double
 }

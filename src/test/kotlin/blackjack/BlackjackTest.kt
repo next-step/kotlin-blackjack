@@ -33,5 +33,19 @@ class BlackjackTest : BehaviorSpec({
                 result shouldBe true
             }
         }
+
+        `when`("earningRate()를 호출하면") {
+            val result = sut.earningRate()
+            then("1.5을 반환한다") {
+                result shouldBe 1.5
+            }
+        }
+
+        `when`("베팅 금액 1000에 대한 profit을 구하면") {
+            val result = sut.profit(Money(1000))
+            then("1500을 반환한다") {
+                result shouldBe Money(1500)
+            }
+        }
     }
 })

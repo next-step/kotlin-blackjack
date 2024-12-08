@@ -8,4 +8,6 @@ interface State {
     fun isFinished(): Boolean
 
     fun cards(): Cards
+
+    fun profit(betAmount: Money): Money
 }
