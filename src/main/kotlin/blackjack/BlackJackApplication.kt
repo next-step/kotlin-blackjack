@@ -10,26 +10,34 @@ private val blackJackController = BlackJackController(BlackJackService(GameRepos
 
 fun main() {
     val players = InputView.getPlayers()
-    blackJackController.initPlayers(players)
-    InputView.gameStart(players)
-    val playerInfos = blackJackController.startGame()
-    InputView.playerInfo(playerInfos)
+    initGameSet(players)
 
-    players.forEach { player ->
-        while (true) {
-            val isProgress = InputView.gameContinue(player).lowercase()
-            if ("y".equals(isProgress)) {
-                gameProgress(player)
-            } else {
-                break
-            }
-        }
-    }
-    val results = blackJackController.getGameResult()
-    OutputView.results(results)
+    gameContinue()
+
+    gameEnd()
 }
 
 private fun gameProgress(player: String) {
     val game = blackJackController.gameContinue(player)
     InputView.playerInfo(listOf(game))
+}
+
+fun initGameSet(players: List<String>) {
+    blackJackController.initPlayers(players)
+    InputView.gameStart(players)
+}
+
+fun gameContinue() {
+    val playerInfos = blackJackController.startGame()
+    InputView.playerInfo(playerInfos)
+    playerInfos.forEach {
+        while (InputView.isGameContinue(it.player)) {
+            gameProgress(it.player)
+        }
+    }
+}
+
+fun gameEnd() {
+    val results = blackJackController.getGameResult()
+    OutputView.results(results)
 }

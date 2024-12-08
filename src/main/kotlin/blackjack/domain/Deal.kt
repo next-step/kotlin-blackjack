@@ -6,18 +6,28 @@ import blackjack.domain.enums.CardSymbol
 object Deal {
     private val cards = Card.entries.toMutableList()
     private val symbols = CardSymbol.entries.toMutableList()
+
     private val gaveCards = mutableSetOf<Pair<CardSymbol, Card>>()
 
-    fun giveCard(): Map<CardSymbol, Card> {
-        val shuffledSymbols = symbols.shuffled()
-        val shuffledCards = cards.shuffled()
-        val cardPair = shuffledSymbols.first() to shuffledCards.first()
-        return if (cardPair !in gaveCards) {
+    fun giveCards(count: Int): MutableList<MutableMap<CardSymbol, Card>> {
+        val remainingCards = symbols.size * cards.size - gaveCards.size
+        require(count < remainingCards) { "Requested cards exceed the available deck size. Remaining: $remainingCards" }
+
+        val cardsToGive = mutableListOf<MutableMap<CardSymbol, Card>>()
+
+        repeat(count) {
+            val cardPair =
+                generateSequence {
+                    val shuffledSymbols = symbols.shuffled()
+                    val shuffledCards = cards.shuffled()
+                    shuffledSymbols.first() to shuffledCards.first()
+                }.first { it !in gaveCards }
+
             gaveCards.add(cardPair)
-            mapOf(cardPair.first to cardPair.second)
-        } else {
-            giveCard()
+            cardsToGive.add(mutableMapOf(cardPair.first to cardPair.second))
         }
+
+        return cardsToGive
     }
 
     fun resetDeck() {

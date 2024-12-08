@@ -4,19 +4,21 @@ import blackjack.domain.enums.Card
 import blackjack.domain.enums.CardSymbol
 
 class BlackJack {
-    val card = mutableMapOf<CardSymbol, Card>()
+    val card = mutableListOf(mutableMapOf<CardSymbol, Card>())
 
-    fun addCardCount(cardMap: Map<CardSymbol, Card>) {
-        cardMap.forEach { (symbol, card) -> this.card[symbol] = card }
+    fun addCardCount(cards: MutableList<MutableMap<CardSymbol, Card>>) {
+        card.addAll(cards)
     }
 
     fun getTotalCardValue(): Int {
-        val values = this.card.values.map { it.getValue() }
+        val values = card.flatMap { it.values.map { card -> card.getValue() } }
         var total = values.sum()
         val aceCount = values.count { it == Card.A.getValue() }
+        var acesUsed = 0
         repeat(aceCount) {
-            if (total > BUST_LIMIT_VALUE) {
+            if (total > BUST_LIMIT_VALUE && acesUsed < aceCount) {
                 total -= MINUS_ACE_VALUE
+                acesUsed++
             }
         }
         return total

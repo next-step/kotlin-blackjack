@@ -14,20 +14,24 @@ object InputView {
     }
 
     fun playerInfo(playerInfos: List<Game>) {
-        playerInfos.forEach {
-                playerInfo ->
+        playerInfos.forEach { playerInfo ->
             val cardInfo = createCardInfos(playerInfo)
             println("${playerInfo.player}카드는 $cardInfo")
         }
     }
 
-    fun gameContinue(player: String): String {
+    fun isGameContinue(player: String): Boolean {
         println("${player}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
-        return readln()
+        val continueYN = readln()
+        return "Y" == continueYN.uppercase()
     }
 
     private fun createCardInfos(game: Game): String {
-        val blackJack = game.getPlayerBlackJack()
-        return blackJack.card.map { (CardSymbol, Card) -> String.format("%s%s", Card.getValue(), CardSymbol.getTye()) }.joinToString(", ")
+        val cards = game.getPlayerBlackJack().card
+        return cards.flatMap { cardMap ->
+            cardMap.map { (symbol, card) ->
+                String.format("%s%s", card.getValue(), symbol.getType())
+            }
+        }.joinToString(", ")
     }
 }

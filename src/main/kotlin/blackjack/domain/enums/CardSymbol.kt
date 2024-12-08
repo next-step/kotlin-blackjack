@@ -1,13 +1,13 @@
-package blackjack.enums
+package blackjack.domain.enums
 
 enum class CardSymbol(private val type: String) {
-    ACE("에이스"),
+    DIAMOND("다이아몬드"),
     HEART("하트"),
     CLOVER("클로버"),
     SPADE("스페이드"),
     ;
 
-    fun getTye() = type
+    fun getType(): String = type
 
     companion object {
         fun fromType(type: String): CardSymbol? {

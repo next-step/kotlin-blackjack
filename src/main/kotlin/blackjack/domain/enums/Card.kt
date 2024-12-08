@@ -1,7 +1,7 @@
-package blackjack.enums
+package blackjack.domain.enums
 
 enum class Card(private val type: String, private val value: Int) {
-    A("A", 1),
+    A("A", 11),
     ONE("1", 1),
     TWO("2", 2),
     THREE("3", 3),
@@ -13,8 +13,8 @@ enum class Card(private val type: String, private val value: Int) {
     NINE("9", 9),
     TEN("10", 10),
     JACK("J", 10),
-    QUEEN("Q", 12),
-    KING("K", 13),
+    QUEEN("Q", 10),
+    KING("K", 10),
     ;
 
     fun getType(): String = type

@@ -11,7 +11,11 @@ object OutputView {
     }
 
     private fun createCardInfos(game: Game): String {
-        val blackJack = game.getPlayerBlackJack()
-        return blackJack.card.map { (CardSymbol, Card) -> String.format("%s%s", Card.getValue(), CardSymbol.getTye()) }.joinToString(", ")
+        val cards = game.getPlayerBlackJack().card
+        return cards.flatMap { cardMap ->
+            cardMap.map { (symbol, card) ->
+                String.format("%s%s", card.getValue(), symbol.getType())
+            }
+        }.joinToString(", ")
     }
 }
