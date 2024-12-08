@@ -3,7 +3,7 @@ package blackjack.domain
 sealed class Participant(
     open val name: String,
     protected open val hands: Hands,
-    status: ParticipantStatus = ParticipantStatus.PLAYING,
+    status: GameStatus = GameStatus.PLAYING,
 ) {
     val score: Int
         get() = hands.calculateTotalValue()

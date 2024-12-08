@@ -1,13 +1,13 @@
 package blackjack.fixture
 
 import blackjack.domain.Dealer
+import blackjack.domain.GameStatus
 import blackjack.domain.Hands
-import blackjack.domain.ParticipantStatus
 import blackjack.domain.Player
 
 internal fun dealerFixture(
     hands: Hands = Hands(),
-    status: ParticipantStatus = ParticipantStatus.PLAYING,
+    status: GameStatus = GameStatus.PLAYING,
 ): Dealer =
     Dealer(
         name = "dealer",
@@ -17,7 +17,7 @@ internal fun dealerFixture(
 
 internal fun playerFixture(
     hands: Hands = Hands(),
-    status: ParticipantStatus = ParticipantStatus.PLAYING,
+    status: GameStatus = GameStatus.PLAYING,
 ): Player =
     Player(
         name = "player",
