@@ -101,7 +101,7 @@ private fun handleDealerTurn(
     dealer: Dealer,
     deck: Deck,
 ) {
-    if (dealer.shouldDrawCard()) {
+    if (dealer.isUnderOver()) {
         val newCard = deck.draw()
         dealer.receive(newCard)
         announceDealerDrawOneMoreCard()

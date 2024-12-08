@@ -94,7 +94,7 @@ class DealerTest : StringSpec({
             )
         val sut = Dealer(initialCards = initialCards)
 
-        val result: Boolean = sut.shouldDrawCard()
+        val result: Boolean = sut.isUnderOver()
 
         result shouldBe true
     }
@@ -107,7 +107,7 @@ class DealerTest : StringSpec({
             )
         val sut = Dealer(initialCards = initialCards)
 
-        sut.shouldDrawCard() shouldBe false
+        sut.isUnderOver() shouldBe false
 
         val newCard = spadeAceCard
 
