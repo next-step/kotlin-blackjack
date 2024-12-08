@@ -11,15 +11,24 @@ class Cards private constructor(private val cards: Queue<Card>) : Collection<Car
         return cards.poll()
     }
 
-    companion object {
-        fun create(): Cards {
-            val cards = Suit.entries.flatMap { suit ->
-                Rank.entries.map { rank ->
-                    Card(suit, rank)
-                }
-            }.toCollection(LinkedList())
+    override fun toString(): String {
+        return cards.toString()
+    }
 
-            return Cards(cards)
+    companion object {
+        private val ALL_CARDS = Suit.entries.flatMap { suit ->
+            Rank.entries.map { rank ->
+                Card(suit, rank)
+            }
+        }.toList()
+
+        fun create(): Cards {
+            return create(ShufflingStrategy.NoShuffling)
+        }
+
+        fun create(shufflingStrategy: ShufflingStrategy): Cards {
+            val shuffledCards = shufflingStrategy.shuffle(ALL_CARDS)
+            return Cards(shuffledCards)
         }
     }
 }
