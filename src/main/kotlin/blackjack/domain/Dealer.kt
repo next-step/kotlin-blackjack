@@ -5,7 +5,7 @@ class Dealer(
     override var status: PlayerStatus = PlayerStatus.PLAYING,
     override val hands: Hands = Hands(),
 ) : Participant(name, status, hands) {
-    private val shouldDraw: Boolean = score < DEALER_DRAW_THRESHOLD
+    private val shouldDraw: Boolean = score <= DEALER_DRAW_THRESHOLD
 
     infix fun vs(player: Player): Result {
         return when {
@@ -31,12 +31,12 @@ class Dealer(
         status =
             when {
                 score > BLACKJACK_VALUE -> PlayerStatus.BURST
-                score >= DEALER_DRAW_THRESHOLD -> PlayerStatus.STAY
+                score > DEALER_DRAW_THRESHOLD -> PlayerStatus.STAY
                 else -> PlayerStatus.PLAYING
             }
     }
 
     companion object {
-        private const val DEALER_DRAW_THRESHOLD = 17
+        private const val DEALER_DRAW_THRESHOLD = 16
     }
 }
