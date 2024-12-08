@@ -2,6 +2,7 @@ package blackjack.machine
 
 import blackjack.dealer.Dealer
 import blackjack.deck.Deck
+import blackjack.participant.createParticipants
 import blackjack.player.Player
 import blackjack.player.Players
 import blackjack.rule.Rule
@@ -25,12 +26,12 @@ class BlackJackMachine(
         var dealer = Dealer.ready(initialCards = listOf(deck.draw(), deck.draw()))
 
         ResultView.printPlayerNamesAndDealer(players = players, dealer = dealer)
-        ResultView.printPlayersCardStatus(players = dealer.convertToPlayers().add(players))
+        ResultView.printPlayersCardStatus(participants = createParticipants(dealer = dealer, players = players))
 
         while (Rule.isGameActive(players = players, dealer = dealer)) {
             players = Players(players = players.players.map { playTurn(it) })
             dealer = playDealerTurn(dealer)
-            ResultView.printPlayersCardStatusAndSum(players = dealer.convertToPlayers().add(players))
+            ResultView.printPlayersCardStatusAndSum(participant = createParticipants(dealer = dealer, players = players))
         }
 
         ResultView.printWinner(players = players, dealer = dealer)

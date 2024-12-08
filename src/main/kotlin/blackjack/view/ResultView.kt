@@ -1,9 +1,9 @@
 package blackjack.view
 
 import blackjack.dealer.Dealer
+import blackjack.participant.Participant
 import blackjack.player.Player
 import blackjack.player.Players
-import blackjack.view.ResultView.convertToResultString
 
 object ResultView {
     fun printPlayerNamesAndDealer(
@@ -16,31 +16,31 @@ object ResultView {
     private fun printPlayersName(players: Players): String =
         "${players.players.joinToString { it.name }}에게 ${players.players.size}장을 나누었습니다."
 
-    fun printPlayersCardStatus(players: Players) {
-        players.players.forEach { player ->
-            printPlayerCard(player)
+    fun <T : Participant<T>> printPlayersCardStatus(participants: List<T>) {
+        participants.forEach { participant ->
+            printPlayerCard(participant)
         }
         println()
     }
 
-    fun printPlayersCardStatusAndSum(players: Players) {
+    fun <T : Participant<T>> printPlayersCardStatusAndSum(participant: List<T>) {
         println()
-        players.players.forEach { player ->
+        participant.forEach { player ->
             printPlayerCard(player, sum = player.hand.sum())
         }
     }
 
-    fun printPlayerCard(
-        player: Player,
+    fun <T : Participant<T>> printPlayerCard(
+        participant: T,
         sum: Int? = null,
     ) {
-        println(generateCardListString(player, sum))
+        println(generateCardListString(participant, sum))
     }
 
-    private fun generateCardListString(
-        player: Player,
+    private fun <T : Participant<T>> generateCardListString(
+        participant: T,
         sum: Int? = null,
-    ) = "${player.name}카드: ${player.hand.cards.joinToString(
+    ) = "${participant.name}카드: ${participant.hand.cards.joinToString(
         ", ",
     ) { "${it.rank.value}${it.suit.description}" }} ${sum?.convertToResultString() ?: ""}"
 

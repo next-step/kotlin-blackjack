@@ -1,17 +1,13 @@
 package blackjack.player
 
 import blackjack.card.Card
-import blackjack.machine.BlackJackMachine
+import blackjack.participant.Participant
 
-open class Player(
-    val name: String,
-    val hand: Hand = Hand(cards = emptyList()),
-) {
-    fun isBust(): Boolean = hand.sum() > BlackJackMachine.BLACKJACK
-
-    open fun hitCard(card: Card): Player = Player(name = name, hand = hand.add(card))
-
-    fun convertToPlayers() = Players(players = listOf(this))
+class Player(
+    override val name: String,
+    override val hand: Hand = Hand(cards = emptyList()),
+) : Participant<Player> {
+    override fun hitCard(card: Card): Player = Player(name = name, hand = hand.add(card))
 
     companion object {
         fun ready(name: String): Player = Player(name = name)
