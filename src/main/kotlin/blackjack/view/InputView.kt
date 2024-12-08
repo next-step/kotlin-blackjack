@@ -1,6 +1,6 @@
 package blackjack.view
 
-import blackjack.domain.PlayerName
+import blackjack.domain.ParticipantName
 
 class InputView {
     fun inputPlayerNames(): String? {
@@ -9,7 +9,7 @@ class InputView {
     }
 
 
-    fun inputNeedAdditionalDraw(playerName: PlayerName): String? {
+    fun inputNeedAdditionalDraw(playerName: ParticipantName): String? {
         println("${playerName.value}는 한장의 카드를 더 받겠습니까? (예는 y, 아니오는 n)")
         return readlnOrNull()
     }

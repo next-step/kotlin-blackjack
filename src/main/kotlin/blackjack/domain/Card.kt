@@ -6,6 +6,8 @@ class Card(
 ) {
     fun value(calculatedValue: Int): Int = number.value(calculatedValue)
 
+    fun isAce(): Boolean = number == CardNumber.ACE
+
     fun toDrawCard(): DrawCard = DrawCard(suit, number)
 }
 
