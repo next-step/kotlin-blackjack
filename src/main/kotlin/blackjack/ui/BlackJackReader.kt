@@ -4,6 +4,8 @@ import blackjack.domain.Gambler
 
 
 object BlackJackReader {
+    private const val NAME_SEPARATOR = ","
+
     const val YES_SIGN = "y"
     const val NO_SIGN = "n"
 
@@ -12,7 +14,7 @@ object BlackJackReader {
     fun readGamblerNames(): List<String> {
         BlackJackPrinter.askForPlayerName()
         return ConsoleReader.readLine()
-            .split(",")
+            .split(NAME_SEPARATOR)
             .map { name -> name.trim() }
     }
 

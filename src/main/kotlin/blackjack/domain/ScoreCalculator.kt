@@ -12,12 +12,12 @@ object ScoreCalculator {
     }
 
     private fun determineAceScore(accumulatedScore: Int, card: Card): Int {
-        if (accumulatedScore >= 21) {
+        if (accumulatedScore >= BlackJackRule.WIN_SCORE) {
             return card.scores.min()
         }
 
         return card.scores
-            .filter { score -> score + accumulatedScore <= 21 }
+            .filter { score -> score + accumulatedScore <= BlackJackRule.WIN_SCORE }
             .max()
     }
 }

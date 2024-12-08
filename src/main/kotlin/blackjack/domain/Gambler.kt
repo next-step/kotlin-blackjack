@@ -20,6 +20,6 @@ class Gambler(val name: String) {
 
     fun canNotReceiveCard(): Boolean {
         val totalScore = ScoreCalculator.calculate(cards)
-        return totalScore >= 21
+        return totalScore >= BlackJackRule.WIN_SCORE
     }
 }

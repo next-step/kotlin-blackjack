@@ -1,15 +1,18 @@
 package blackjack.ui
 
+import blackjack.domain.BlackJackRule
 import blackjack.domain.Gambler
 import blackjack.domain.Gamblers
 
 object BlackJackPrinter {
+    private const val PRINT_SEPARATOR = ", "
+
     fun askForPlayerName() {
         println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)")
     }
 
     fun announceCardDistribution(gamblers: Gamblers) {
-        val names = gamblers.joinToString(separator = ", ") { gambler -> gambler.name }
+        val names = gamblers.joinToString(separator = PRINT_SEPARATOR) { gambler -> gambler.name }
         println("${names}에게 2장의 카드를 나누었습니다.")
     }
 
@@ -38,7 +41,7 @@ object BlackJackPrinter {
 
     private fun createCardMessage(gambler: Gambler): String {
         return gambler.cards
-            .joinToString(separator = ", ") { card -> card.signature }
+            .joinToString(separator = PRINT_SEPARATOR) { card -> card.signature }
     }
 
     fun printLineFeed() {
@@ -48,7 +51,7 @@ object BlackJackPrinter {
     fun announceCanNotReceiveCard(gambler: Gambler) {
         println(
             """
-            |카드의 총합이 21을 초과하여 더이상 카드를 받을 수 없습니다.
+            |카드의 총합이 ${BlackJackRule.WIN_SCORE}을 초과하여 더이상 카드를 받을 수 없습니다.
             |${gambler.name}의 턴을 종료합니다.
         """.trimMargin()
         )
