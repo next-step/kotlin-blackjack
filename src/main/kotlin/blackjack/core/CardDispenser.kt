@@ -1,5 +1,11 @@
 package blackjack.core
 
+import blackjack.core.card.Card
+import blackjack.core.card.Denomination
+import blackjack.core.card.Suit
+import blackjack.core.player.Player
+import blackjack.core.player.Players
+
 class CardDispenser {
     private val cards: Iterator<Card> =
         Denomination.entries
@@ -12,24 +18,26 @@ class CardDispenser {
             .shuffled()
             .iterator()
 
+    fun dealDefault(players: Players): Boolean {
+        return players.all { dealDefault(it) }
+    }
+
+    fun dealDefault(player: Player): Boolean {
+        return (0..<DEFAULT_CARD_NUM).all { deal(player) }
+    }
+
     fun deal(
         players: Players,
-        cardCount: Int = DEFAULT_CARD_NUM,
+        cardCount: Int,
     ): Boolean {
-        players.forEach {
-            if (!deal(it, cardCount)) {
-                return false
-            }
-        }
-
-        return true
+        return players.all { deal(it, cardCount) }
     }
 
     fun deal(
         player: Player,
         cardCount: Int,
     ): Boolean {
-        return (0..< cardCount).all { deal(player) }
+        return (0..<cardCount).all { deal(player) }
     }
 
     fun deal(player: Player): Boolean {
