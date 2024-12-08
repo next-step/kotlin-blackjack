@@ -5,6 +5,8 @@ import blackjack.domain.Dealer
 import blackjack.domain.Game
 import blackjack.domain.Hand
 import blackjack.domain.Player
+import blackjack.domain.PlayerGameResult
+import blackjack.domain.PlayerOutcome
 import blackjack.domain.Rank
 import blackjack.domain.Suit
 
@@ -35,19 +37,43 @@ object ResultView {
     }
 
     fun displayDealerActions(dealer: Dealer) {
-        val numberOfDrawnCards = dealer.hand.cards.size - INITIAL_HAND_SIZE
-        if (numberOfDrawnCards == 0) {
+        val numberOfCardsDrawn = dealer.hand.cards.size - INITIAL_HAND_SIZE
+        if (numberOfCardsDrawn == 0) {
             return
         }
         val message =
             buildString {
                 appendLine()
-                repeat(numberOfDrawnCards) {
+                repeat(numberOfCardsDrawn) {
                     appendLine("딜러는 16이하라 한장의 카드를 더 받았습니다.")
                 }
             }
         print(message)
     }
+
+    fun displayResults(playerResults: List<PlayerGameResult>) {
+        // 순수한 view 로직으로 보기에는 도메인 로직이 섞여 있어 리팩토링이 필요하다.
+        val frequencies = playerResults.groupingBy { it.outcome }.eachCount()
+        val dealerWin = frequencies[PlayerOutcome.LOSE] ?: 0
+        val dealerLose = frequencies[PlayerOutcome.WIN] ?: 0
+        val dealerDraw = frequencies[PlayerOutcome.DRAW] ?: 0
+        val message =
+            buildString {
+                appendLine("## 최종 승패")
+                appendLine("딜러: ${dealerWin}승, ${dealerDraw}무, ${dealerLose}패")
+                playerResults.forEach {
+                    appendLine("${it.name}: ${formatOutcome(it.outcome)}")
+                }
+            }
+        println(message)
+    }
+
+    private fun formatOutcome(outcome: PlayerOutcome): String =
+        when (outcome) {
+            PlayerOutcome.WIN -> "승"
+            PlayerOutcome.LOSE -> "패"
+            PlayerOutcome.DRAW -> "무"
+        }
 
     private fun formatPlayer(
         player: Player,

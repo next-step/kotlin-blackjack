@@ -283,4 +283,22 @@ class GameTest {
 
         game.dealer.value shouldBe 16
     }
+
+    @Test
+    fun `플레이어들의 결과를 리턴한다`() {
+        val players = Players.from("black", "jack")
+        val game = Game(players, deck).apply { initialDeal() }
+        // black:  A, 4 = 14 승
+        // jack:   2, 5 = 7  패
+        // dealer: 3, 6 = 9
+        val expected =
+            listOf(
+                PlayerGameResult("black", PlayerOutcome.WIN),
+                PlayerGameResult("jack", PlayerOutcome.LOSE),
+            )
+
+        val actual = game.playerResults()
+
+        actual shouldBe expected
+    }
 }

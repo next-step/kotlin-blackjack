@@ -39,6 +39,8 @@ class Game(
         dealer.takeAction(deck)
     }
 
+    fun playerResults(): List<PlayerGameResult> = players.roster.map { PlayerGameResult(it.name, it.outcome(dealer)) }
+
     private fun isDealerActionNecessary() = players.isOutcomeUnknown
 
     private fun checkPlayersAreDone() {
