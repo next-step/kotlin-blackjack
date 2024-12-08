@@ -15,4 +15,10 @@ class Cards(
     fun toList(): List<Card> = cards.toList()
 
     fun sum(): Int = blackJackCardSumCalculator.sum(cards)
+
+    fun isBust(): Boolean = sum() > BLACKJACK_NUMBER
+
+    companion object {
+        private const val BLACKJACK_NUMBER = 21
+    }
 }
