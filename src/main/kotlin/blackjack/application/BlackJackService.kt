@@ -1,25 +1,27 @@
 package blackjack.application
 
 import blackjack.core.CardDispenser
-import blackjack.core.Name
-import blackjack.core.Players
-import blackjack.core.Turn
-import blackjack.presentation.InputView
+import blackjack.core.player.Dealer
+import blackjack.core.player.Players
+import blackjack.core.turn.DealerTurnCondition
+import blackjack.core.turn.PlayerTurnCondition
+import blackjack.core.turn.Turn
 import blackjack.presentation.ResultView
 
 object BlackJackService {
-    fun start(names: Set<Name>): Players {
+    fun start(
+        dealer: Dealer,
+        players: Players,
+    ) {
         val cardDispenser = CardDispenser()
 
-        val players = Players(names)
-        cardDispenser.deal(players)
-        ResultView.printStandby(players)
+        cardDispenser.dealDefault(players)
+        cardDispenser.dealDefault(dealer)
 
-        players.forEach {
-            Turn(it, cardDispenser) { InputView.getCard(it) && cardDispenser.checkRemainCard() }
-                .process()
-        }
+        ResultView.printStandby(dealer, players)
 
-        return players
+        players.forEach { Turn(it, cardDispenser).process(PlayerTurnCondition) }
+
+        Turn(dealer, cardDispenser).process(DealerTurnCondition)
     }
 }
