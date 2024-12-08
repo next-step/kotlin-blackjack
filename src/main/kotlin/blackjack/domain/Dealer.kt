@@ -1,0 +1,39 @@
+package blackjack.domain
+
+class Dealer(hand: Hand = Hand()) : Participant(hand) {
+    val shouldAddCard: Boolean
+        get() = super.score() < DEALER_HIT_SCORE
+
+    fun additionalCard(deck: Card) {
+        if (shouldAddCard) {
+            receive(Deck(listOf(deck)))
+        }
+    }
+
+    fun playerResult(players: List<Player>): Map<String, MatchType> {
+        return players.associate { player ->
+            player.name to matchOf(player)
+        }
+    }
+
+    fun dealerResult(players: Players): ResultStatistics {
+        var resultStatistics = ResultStatistics()
+        players.forEach { player ->
+            resultStatistics = resultStatistics.merge(matchToStatistics(player))
+        }
+
+        return resultStatistics
+    }
+
+    private fun matchOf(other: Player): MatchType {
+        return when {
+            isBust -> MatchType.WIN
+            other.isBust -> MatchType.LOSE
+            else -> MatchType.evaluate(other.bustGap, bustGap)
+        }
+    }
+
+    companion object {
+        val DEALER_HIT_SCORE = Score(17)
+    }
+}

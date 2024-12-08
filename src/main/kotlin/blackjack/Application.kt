@@ -1,39 +1,41 @@
 package blackjack
 
 import blackjack.CardGame.Companion.INITIAL_CARD_COUNT
+import blackjack.domain.Dealer.Companion.DEALER_HIT_SCORE
+import blackjack.domain.Player
 import blackjack.ui.InputView
 import blackjack.ui.ResultView
+import blackjack.ui.UserCards
+import blackjack.ui.UserMore
+
+private val inputView = InputView()
+private val resultView = ResultView()
 
 fun main() {
-    val inputView = InputView()
-    val resultView = ResultView()
+    val game = CardGame.create(inputView.inputUserNames())
+    val resultEvaluator = game.resultEvaluator()
 
-    val names = inputView.inputUserNames()
-    val game = CardGame.fromNames(names)
+    game.startGame()
 
-    game.playerAllDeal()
-    resultView.printUserCardCount(names, INITIAL_CARD_COUNT)
-    resultView.printUserCards(game.roundResult())
+    resultView.printUserCardCount(game.allPlayersNames(), INITIAL_CARD_COUNT)
+    resultView.printUserCards(resultEvaluator.evaluateRounds())
 
-    names.forEach { userName -> handleUserTurn(game, resultView, inputView, userName) }
+    game.handleUserTurn(::playerTurn)
+    game.handleDealerTurn(::dealerTurn)
 
-    val resultDto = game.result()
-    resultView.printResult(resultDto)
+    resultView.printScoreResult(resultEvaluator.evaluateRounds())
+    resultView.printFinalWinner(resultEvaluator.finalMatchEvaluate())
 }
 
-private fun handleUserTurn(
-    game: CardGame,
-    resultView: ResultView,
-    inputView: InputView,
-    userName: String,
-) {
-    while (inputView.inputMore(userName)) {
-        game.deal(userName)
-        val userHandCards = game.cardsOf(userName)
-        resultView.printRound(userName, userHandCards)
+private fun playerTurn(
+    player: Player,
+    userHandCards: UserCards,
+): UserMore {
+    val playerName = player.name
+    resultView.printRound(playerName, userHandCards)
+    return inputView.inputMore(playerName)
+}
 
-        if (game.isBust(userName)) {
-            break
-        }
-    }
+private fun dealerTurn() {
+    resultView.printDealerTurnStart(DEALER_HIT_SCORE.value)
 }
