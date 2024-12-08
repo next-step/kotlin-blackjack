@@ -1,14 +1,13 @@
 package blackjack.domain
 
 class BlackJackGame(
-    private val players: List<Player>,
+    private val players: List<Participant>,
 ) {
-    private val deck: Deck = Deck.randomCardDeck()
-    private var drawOrder: Int = 0
+    private val drawSupporter = DrawSupporter()
 
     fun initialDraw(): List<DrawResult> {
         repeat(2) { _ ->
-            players.forEach { it.addCard(deck.draw()) }
+            players.forEach { it.addCard(drawSupporter.drawCard()) }
         }
 
         return players
@@ -23,7 +22,7 @@ class BlackJackGame(
     fun canDrawForAllPlayers(): Boolean = players.any { it.canDraw() }
 
     fun findDrawPlayer(): PlayerName? {
-        val startOrder = drawOrder
+        val startOrder = drawSupporter.currentDrawOrder
         val targetOrder = (startOrder..< players.size)
             .firstOrNull { players[it].canDraw() }
 
@@ -31,15 +30,15 @@ class BlackJackGame(
             return null
         }
 
-        drawOrder = (targetOrder + 1) % players.size
+        drawSupporter.incrementDrawOrder(targetOrder, players.size)
         return players[targetOrder].name
     }
 
     fun drawCard(playerName: PlayerName): DrawResult {
         val player = players.find { it.name == playerName }
-        player?.addCard(deck.draw())
             ?: throw IllegalArgumentException("존재하지 않는 플레이어입니다.")
 
+        player.addCard(drawSupporter.drawCard())
         return DrawResult(
             playerName = playerName.value,
             cards = player.currentCards,
@@ -65,7 +64,7 @@ class BlackJackGame(
             BlackJackGameResult(
                 playerName = it.name.value,
                 cards = it.currentCards,
-                totalValue = it.totalValue(),
+                totalValue = it.totalCardScore(),
             )
         }
     }
