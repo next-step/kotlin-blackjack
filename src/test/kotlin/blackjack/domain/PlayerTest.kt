@@ -9,6 +9,35 @@ class PlayerTest : FreeSpec({
     "핸드에 존재하는 카드 값의 총합을 계산한다." - {
         listOf(
             row(
+                "A, 2, 3, 4, K인 경우 합계 20이다.",
+                Player(
+                    name = PlayerName("테스트"),
+                    cards = listOf(
+                        Card(
+                            CardSuit.HEARTS,
+                            CardNumber.ACE,
+                        ),
+                        Card(
+                            CardSuit.HEARTS,
+                            CardNumber.TWO,
+                        ),
+                        Card(
+                            CardSuit.SPADES,
+                            CardNumber.THREE,
+                        ),
+                        Card(
+                            CardSuit.DIAMONDS,
+                            CardNumber.FOUR,
+                        ),
+                        Card(
+                            CardSuit.CLUBS,
+                            CardNumber.KING,
+                        ),
+                    ),
+                ),
+                20,
+            ),
+            row(
                 "2, 3, 4, A인 경우 합계 20이다.",
                 Player(
                     name = PlayerName("테스트"),

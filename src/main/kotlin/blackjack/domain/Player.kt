@@ -25,7 +25,16 @@ class Player(
     private fun isBust(): Boolean = totalValue() > 21
 
     fun totalValue(): Int =
-        cards.fold(0) { acc, card -> acc + card.value(acc) }
+        cards
+            .sortedBy { sortForAceAfter(it) }
+            .fold(0) { acc, card -> acc + card.value(acc) }
+
+    private fun sortForAceAfter(card: Card): Int =
+        if (card.isAce()) {
+            1
+        } else {
+            0
+        }
 
     fun canDraw(): Boolean = draw
 
