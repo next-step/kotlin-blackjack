@@ -26,34 +26,40 @@ class DslTest {
     @ParameterizedTest
     @ValueSource(strings = ["문장호", "장"])
     fun name(name: String) {
-        val person = introduce {
-            name(name)
-        }
+        val person =
+            introduce {
+                name(name)
+            }
         person.name shouldBe name
     }
 
     @Test
     fun company() {
-        val person = introduce {
-            name("문장호")
-            company("howser")
-        }
+        val person =
+            introduce {
+                name("문장호")
+                company("howser")
+            }
         person.company shouldBe "howser"
     }
 
-
     @ParameterizedTest
     @CsvSource("java, jvc, kotlin")
-    fun skills(softOne: String, softTwo: String, hard: String) {
-        val person = introduce {
-            name("문장호")
-            company("howser")
-            skills {
-                soft(softOne)
-                soft(softTwo)
-                hard(hard)
+    fun skills(
+        softOne: String,
+        softTwo: String,
+        hard: String,
+    ) {
+        val person =
+            introduce {
+                name("문장호")
+                company("howser")
+                skills {
+                    soft(softOne)
+                    soft(softTwo)
+                    hard(hard)
+                }
             }
-        }
         person.skills[0].desc shouldBe softOne
         person.skills[1].desc shouldBe softTwo
         person.skills[2].desc shouldBe hard
@@ -61,24 +67,29 @@ class DslTest {
 
     @ParameterizedTest
     @CsvSource("Korean, 10", "English, 5")
-    fun language(language: String, level: Int) {
-        val person = introduce {
-            name("문장호")
-            company("howser")
-            skills {
-                soft("s1")
-                soft("s2")
-                hard("hard")
+    fun language(
+        language: String,
+        level: Int,
+    ) {
+        val person =
+            introduce {
+                name("문장호")
+                company("howser")
+                skills {
+                    soft("s1")
+                    soft("s2")
+                    hard("hard")
+                }
+                languages {
+                    language level level
+                }
             }
-            languages {
-                language level level
-            }
-        }
         person.languages.first().level shouldBe level
     }
 }
 
 data class Language(val language: String, val level: Int)
+
 class LanguageBuilder {
     private var languages = mutableListOf<Language>()
 
@@ -89,8 +100,8 @@ class LanguageBuilder {
     fun build(): List<Language> = languages
 }
 
-
 data class Skill(val type: String, val desc: String)
+
 class SkillsBuilder {
     private var skills = mutableListOf<Skill>()
 
