@@ -12,7 +12,7 @@ object BlackJackService {
         val cardDispenser = CardDispenser()
 
         val players = Players(names)
-        cardDispenser.deal(players, DEFAULT_CARD_NUM)
+        cardDispenser.deal(players)
         ResultView.printStandby(players)
 
         players.forEach {
@@ -22,6 +22,4 @@ object BlackJackService {
 
         return players
     }
-
-    private const val DEFAULT_CARD_NUM = 2
 }

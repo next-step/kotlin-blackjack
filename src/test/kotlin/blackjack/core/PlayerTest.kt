@@ -18,11 +18,11 @@ class PlayerTest {
 
         player.draw(Card(Denomination.QUEEN, Suit.SPADES))
         player.point() shouldBe 20
-        player.status shouldBe Status.HIT
+        player.cards.status shouldBe Status.HIT
 
         player.draw(Card(Denomination.KING, Suit.SPADES))
         player.point() shouldBe 30
-        player.checkBust()
-        player.status shouldBe Status.BUSTED
+        player.cards.checkBust()
+        player.cards.status shouldBe Status.BUSTED
     }
 }

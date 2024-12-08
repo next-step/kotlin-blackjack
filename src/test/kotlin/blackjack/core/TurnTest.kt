@@ -9,7 +9,7 @@ class TurnTest {
         val player = Player(Name("test"))
         val turn = Turn(player, CardDispenser(), { false })
         turn.process()
-        player.status shouldBe Status.STAND
+        player.cards.status shouldBe Status.STAND
     }
 
     @Test
@@ -21,6 +21,6 @@ class TurnTest {
                 if (index++ < Card.CARD_COUNT) true else false
             }
         turn.process()
-        player.status shouldBe Status.BUSTED
+        player.cards.status shouldBe Status.BUSTED
     }
 }

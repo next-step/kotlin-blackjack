@@ -1,6 +1,14 @@
 package blackjack.core
 
 class Cards(private val cards: MutableSet<Card> = mutableSetOf()) : MutableSet<Card> by cards {
+    var status: Status = Status.HIT
+
+    fun checkBust() {
+        if (point() > MAX_POINT) {
+            status = Status.BUSTED
+        }
+    }
+
     fun getCardNames(): String = this.joinToString(",", "", "")
 
     fun point(): Int {
