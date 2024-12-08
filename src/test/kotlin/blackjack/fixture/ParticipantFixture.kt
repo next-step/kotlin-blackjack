@@ -2,8 +2,8 @@ package blackjack.fixture
 
 import blackjack.domain.Dealer
 import blackjack.domain.Hands
-import blackjack.domain.Player
 import blackjack.domain.ParticipantStatus
+import blackjack.domain.Player
 
 internal fun dealerFixture(
     hands: Hands = Hands(),

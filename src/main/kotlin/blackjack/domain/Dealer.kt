@@ -5,7 +5,6 @@ class Dealer(
     override val hands: Hands = Hands(),
     override var status: ParticipantStatus = ParticipantStatus.PLAYING,
 ) : Participant(name, hands, status) {
-
     infix fun vs(player: Player): Result {
         return when {
             status == ParticipantStatus.BURST -> Result.LOSE
