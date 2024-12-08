@@ -7,6 +7,15 @@ import blackjack.domain.Rank
 import blackjack.domain.StubDeck
 
 object Fixtures {
+    fun createPlayer(
+        deck: Deck,
+        name: String = "jack",
+    ): Player =
+        Player(name).apply {
+            initialDrawFrom(deck)
+            initialDrawFrom(deck)
+        }
+
     fun createBlackjackPlayer(name: String = "jack"): Player {
         val deck = StubDeck.from(Rank.ACE, Rank.KING)
         return Player(name).apply {
