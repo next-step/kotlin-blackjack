@@ -19,9 +19,10 @@ class CardsTest : FunSpec({
             val newCard = Card(CardNumber.TWO, CardType.DIAMOND)
 
             val cards = Cards.of(listOf(card1, card2))
-            cards.add(newCard)
+            val updatedCards = cards.add(newCard)
 
-            cards.all shouldContainExactly listOf(card1, card2, newCard)
+//            cards.all shouldContainExactly listOf(card1, card2, newCard)
+            updatedCards.all shouldContainExactly listOf(card1, card2, newCard)
         }
     }
 })

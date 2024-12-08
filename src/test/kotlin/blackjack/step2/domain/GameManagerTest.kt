@@ -64,14 +64,14 @@ class GameManagerTest : FunSpec({
                 Card(CardNumber.TWO, CardType.HEART),
                 Card(CardNumber.THREE, CardType.HEART),
             )
-        val playerCard = PlayerCard.of("dongyeon", initialPlayerCards)
+        val player = Player.of("dongyeon", initialPlayerCards)
 
         // when
-        val updatedPlayerCard = gameManager.pickCardIfValid(playerCard)
+        val updatedPlayerCard = gameManager.pickCardIfValid(player)
 
         // then
         updatedPlayerCard.allCards.shouldHaveSize(3)
-        updatedPlayerCard.calculateScore().shouldBeGreaterThanOrEqual(playerCard.calculateScore())
+        updatedPlayerCard.calculateScore().shouldBeGreaterThanOrEqual(player.calculateScore())
     }
 
     test("플레이어의 점수가 BLACKJACK_SCORE 이상이면 카드를 추가로 받지 않는다") {
@@ -82,14 +82,14 @@ class GameManagerTest : FunSpec({
                 Card(CardNumber.KING, CardType.HEART),
                 Card(CardNumber.ACE, CardType.HEART),
             )
-        val playerCard = PlayerCard.of("dongyeon", initialPlayerCards)
+        val player = Player.of("dongyeon", initialPlayerCards)
 
         // when
-        val updatedPlayerCard = gameManager.pickCardIfValid(playerCard)
+        val updatedPlayerCard = gameManager.pickCardIfValid(player)
 
         // then
         updatedPlayerCard.allCards.shouldHaveSize(3)
-        updatedPlayerCard.allCards.shouldBe(playerCard.allCards)
+        updatedPlayerCard.allCards.shouldBe(player.allCards)
     }
 
     test("카드를 받을 때 중복된 카드가 추가되지 않는다") {
@@ -98,10 +98,10 @@ class GameManagerTest : FunSpec({
             listOf(
                 Card(CardNumber.TWO, CardType.HEART),
             )
-        val playerCard = PlayerCard.of("dongyeon", initialPlayerCards)
+        val player = Player.of("dongyeon", initialPlayerCards)
 
         // when
-        val updatedPlayerCard = gameManager.pickCardIfValid(playerCard)
+        val updatedPlayerCard = gameManager.pickCardIfValid(player)
 
         // then
         updatedPlayerCard.allCards.distinct().shouldHaveSize(2)

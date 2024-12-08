@@ -1,7 +1,7 @@
 package blackjack.step2.view
 
 import blackjack.step2.domain.GameManager
-import blackjack.step2.domain.PlayerCard
+import blackjack.step2.domain.Player
 import blackjack.step2.domain.ScoreCalculator
 
 object InputView {
@@ -11,19 +11,19 @@ object InputView {
     }
 
     fun inputMoreCard(
-        playerCards: List<PlayerCard>,
+        players: List<Player>,
         gameManager: GameManager,
-    ): List<PlayerCard> {
-        return playerCards.map { playerCard ->
+    ): List<Player> {
+        return players.map { playerCard ->
             handleCardDecision(playerCard, gameManager)
         }
     }
 
     private fun handleCardDecision(
-        playerCard: PlayerCard,
+        player: Player,
         gameManager: GameManager,
-    ): PlayerCard {
-        var currentCard = playerCard
+    ): Player {
+        var currentCard = player
         while (currentCard.calculateScore() < ScoreCalculator.BLACKJACK_SCORE) {
             println("${currentCard.playerName}는 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
             val input = readln().trim().lowercase()

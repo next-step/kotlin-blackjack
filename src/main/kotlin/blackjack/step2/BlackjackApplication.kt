@@ -10,6 +10,6 @@ fun main() {
     val gameManager = GameManager(cardPicker = RandomCardPicker())
     val firstPlayerCards = gameManager.pickFirstCards(playerNames)
     OutputView.printFirstDealtCard(firstPlayerCards)
-    val updatedPlayerCards = InputView.inputMoreCard(playerCards = firstPlayerCards, gameManager = gameManager)
+    val updatedPlayerCards = InputView.inputMoreCard(players = firstPlayerCards, gameManager = gameManager)
     OutputView.printCardResult(updatedPlayerCards)
 }
