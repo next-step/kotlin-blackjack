@@ -64,7 +64,7 @@ class DealerTest {
     }
 
     @Test
-    fun `딜러의 턴 행동을 한다`() {
+    fun `딜러의 턴을 진행한다`() {
         val deck = StubDeck.from(Rank.THREE, Rank.FOUR, Rank.FIVE, Rank.SIX, Rank.SEVEN)
         val dealer =
             Dealer().apply {

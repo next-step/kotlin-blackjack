@@ -38,7 +38,7 @@ object Fixtures {
             stand()
         }
 
-    fun createDealer(deck: Deck) =
+    fun createDealer(deck: Deck = StubDeck.from(Rank.TWO, Rank.THREE)) =
         Dealer().apply {
             drawFrom(deck)
             drawFrom(deck)

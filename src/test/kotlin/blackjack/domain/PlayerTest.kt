@@ -161,6 +161,16 @@ class PlayerTest {
         outcome shouldBe PlayerOutcome.LOSE
     }
 
+    @Test
+    fun `플레이어가 블랙잭이고 딜러가 블랙잭이 아닌 경우 승리한다`() {
+        val blackjackPlayer = createBlackjackPlayer()
+        val dealer = createDealer()
+
+        val outcome = blackjackPlayer.outcome(dealer)
+
+        outcome shouldBe PlayerOutcome.WIN
+    }
+
     companion object {
         @JvmStatic
         fun donePlayers() =

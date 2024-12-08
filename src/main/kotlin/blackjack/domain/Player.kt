@@ -6,6 +6,8 @@ class Player(
 ) {
     val value: Int
         get() = hand.value()
+    val isBlackjack: Boolean
+        get() = hand.isBlackjack()
     val isBusted: Boolean
         get() = hand.isBusted()
     var reasonDone: PlayerReasonDone? = null
@@ -46,6 +48,9 @@ class Player(
             return PlayerOutcome.LOSE
         }
         if (dealer.isBusted) {
+            return PlayerOutcome.WIN
+        }
+        if (isBlackjack && !dealer.isBlackjack) {
             return PlayerOutcome.WIN
         }
         return PlayerOutcome.LOSE
