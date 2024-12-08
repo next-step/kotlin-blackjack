@@ -2,9 +2,11 @@ package blackjack.domain
 
 class Player(
     private var draw: Boolean = true,
-    playerName: PlayerName,
+    participantName: ParticipantName,
     cards: List<Card> = listOf(),
-): Participant(playerName, cards) {
+): Participant(participantName, cards) {
+    override fun isDealer(): Boolean = false
+
     override fun addCard(card: Card): DrawCard {
         cards.add(card)
 
@@ -15,7 +17,7 @@ class Player(
         return card.toDrawCard()
     }
 
-    private fun isBust(): Boolean = totalCardScore() > 21
+    private fun isBust(): Boolean = totalCardScore() > BUST_SCORE
 
     override fun canDraw(): Boolean = draw
 
@@ -23,8 +25,3 @@ class Player(
         draw = false
     }
 }
-
-@JvmInline
-value class PlayerName(
-    val value: String,
-)

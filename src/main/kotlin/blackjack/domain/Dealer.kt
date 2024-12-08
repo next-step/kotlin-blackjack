@@ -1,9 +1,9 @@
 package blackjack.domain
 
 class Dealer(
-    playerName: PlayerName,
     cards: List<Card> = listOf(),
-): Participant(playerName, cards) {
+): Participant(ParticipantName("딜러"), cards) {
+    override fun isDealer(): Boolean = true
 
     override fun addCard(card: Card): DrawCard {
         check(canDraw()) { "딜러의 카드가 17점 이상이라 카드를 더이상 뽑을 수 없습니다." }

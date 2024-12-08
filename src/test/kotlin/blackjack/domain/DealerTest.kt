@@ -7,7 +7,6 @@ import io.kotest.matchers.shouldBe
 class DealerTest : StringSpec({
     "딜러의 카드 점수가 17점 이상이라면 카드 추가가 불가능하다." {
         val sut = Dealer(
-            playerName = PlayerName("딜러"),
             cards = listOf(
                 Card(
                     suit = CardSuit.SPADES,
@@ -27,7 +26,6 @@ class DealerTest : StringSpec({
 
     "카드 점수가 16점 이하라면 카드를 추가로 뽑을 수 있다." {
         val sut = Dealer(
-            playerName = PlayerName("딜러"),
             cards = listOf(
                 Card(
                     suit = CardSuit.SPADES,
@@ -45,7 +43,6 @@ class DealerTest : StringSpec({
 
     "카드 점수가 17점 이상이면 카드를 추가로 뽑을 수 없다." {
         val sut = Dealer(
-            playerName = PlayerName("딜러"),
             cards = listOf(
                 Card(
                     suit = CardSuit.SPADES,

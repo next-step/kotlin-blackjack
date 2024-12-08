@@ -8,39 +8,39 @@ import io.kotest.matchers.shouldBe
 class BlackJackGameTest : StringSpec({
     "카드를 뽑을 플레이어를 반환한다." {
         val sut = BlackJackGame(
-            listOf(Player(playerName = PlayerName("테스트1")), Player(playerName = PlayerName("테스트2")))
+            listOf(Player(participantName = ParticipantName("테스트1")), Player(participantName = ParticipantName("테스트2")))
         )
         val playerName1 = sut.findDrawPlayer()
-        playerName1 shouldBe PlayerName("테스트1")
+        playerName1 shouldBe ParticipantName("테스트1")
 
         val playerName2 = sut.findDrawPlayer()
-        playerName2 shouldBe PlayerName("테스트2")
+        playerName2 shouldBe ParticipantName("테스트2")
     }
 
     "더이상 카드를 뽑지 않는 플레이어 존재하면 해당 플레이어는 건너뛰고 반환한다." {
         val sut = BlackJackGame(
             listOf(
                 Player(
-                    playerName = PlayerName("테스트1"),
+                    participantName = ParticipantName("테스트1"),
                     draw = false,
                 ),
                 Player(
-                    playerName = PlayerName("테스트2"),
+                    participantName = ParticipantName("테스트2"),
                 ),
             )
         )
         val actual = sut.findDrawPlayer()
-        actual shouldBe PlayerName("테스트2")
+        actual shouldBe ParticipantName("테스트2")
     }
 
     "하나의 플레이어가 카드를 계속 뽑는다면 true를 반환한다." {
         val sut = BlackJackGame(
             listOf(
                 Player(
-                    playerName = PlayerName("테스트1"),
+                    participantName = ParticipantName("테스트1"),
                 ),
                 Player(
-                    playerName = PlayerName("테스트2"),
+                    participantName = ParticipantName("테스트2"),
                     draw = false,
                 ),
             )
@@ -53,11 +53,11 @@ class BlackJackGameTest : StringSpec({
         val sut = BlackJackGame(
             listOf(
                 Player(
-                    playerName = PlayerName("테스트1"),
+                    participantName = ParticipantName("테스트1"),
                     draw = false,
                 ),
                 Player(
-                    playerName = PlayerName("테스트2"),
+                    participantName = ParticipantName("테스트2"),
                     draw = false,
                 ),
             )
@@ -70,16 +70,16 @@ class BlackJackGameTest : StringSpec({
         val sut = BlackJackGame(
             listOf(
                 Player(
-                    playerName = PlayerName("테스트1"),
+                    participantName = ParticipantName("테스트1"),
                 ),
                 Player(
-                    playerName = PlayerName("테스트2"),
+                    participantName = ParticipantName("테스트2"),
                 ),
             )
         )
 
         shouldThrow<IllegalArgumentException> {
-            sut.drawCard(PlayerName("테스트3"))
+            sut.drawCard(ParticipantName("테스트3"))
         }
     }
 
@@ -87,16 +87,16 @@ class BlackJackGameTest : StringSpec({
         val sut = BlackJackGame(
             listOf(
                 Player(
-                    playerName = PlayerName("테스트1"),
+                    participantName = ParticipantName("테스트1"),
                 ),
                 Player(
-                    playerName = PlayerName("테스트2"),
+                    participantName = ParticipantName("테스트2"),
                 ),
             )
         )
 
         shouldThrow<IllegalArgumentException> {
-            sut.stopDraw(PlayerName("테스트3"))
+            sut.stopDraw(ParticipantName("테스트3"))
         }
     }
 
@@ -104,7 +104,7 @@ class BlackJackGameTest : StringSpec({
         val sut = BlackJackGame(
             listOf(
                 Player(
-                    playerName = PlayerName("테스트1"),
+                    participantName = ParticipantName("테스트1"),
                     cards = mutableListOf(
                         Card(
                             CardSuit.HEARTS,
@@ -126,7 +126,7 @@ class BlackJackGameTest : StringSpec({
                     draw = false,
                 ),
                 Player(
-                    playerName = PlayerName("테스트2"),
+                    participantName = ParticipantName("테스트2"),
                     cards = mutableListOf(
                         Card(
                             CardSuit.HEARTS,
@@ -152,7 +152,7 @@ class BlackJackGameTest : StringSpec({
 
         val actual = sut.result()
 
-        actual[0] shouldBe BlackJackGameResult(
+        actual.value[0] shouldBe BlackJackGameResult(
             playerName = "테스트1",
             cards = listOf(
                 DrawCard(
@@ -172,9 +172,10 @@ class BlackJackGameTest : StringSpec({
                     CardNumber.ACE,
                 ),
             ),
-            totalValue = 20
+            totalValue = 20,
+            dealer = false
         )
-        actual[1] shouldBe BlackJackGameResult(
+        actual.value[1] shouldBe BlackJackGameResult(
             playerName = "테스트2",
             cards = listOf(
                 DrawCard(
@@ -194,7 +195,8 @@ class BlackJackGameTest : StringSpec({
                     CardNumber.JACK,
                 ),
             ),
-            totalValue = 19
+            totalValue = 19,
+            dealer = false,
         )
     }
 
@@ -202,11 +204,11 @@ class BlackJackGameTest : StringSpec({
         val sut = BlackJackGame(
             listOf(
                 Player(
-                    playerName = PlayerName("테스트1"),
+                    participantName = ParticipantName("테스트1"),
                     draw = true,
                 ),
                 Player(
-                    playerName = PlayerName("테스트2"),
+                    participantName = ParticipantName("테스트2"),
                     draw = false,
                 ),
             )
