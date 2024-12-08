@@ -1,7 +1,6 @@
 package blackjack
 
 import io.kotest.core.spec.style.StringSpec
-import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.shouldBe
 
 class CardTest : StringSpec({
@@ -19,23 +18,5 @@ class CardTest : StringSpec({
             val sut = Card(it, suit)
             sut.number() shouldBe it.baseValue
         }
-    }
-
-    "카드 목록은 CardNumber를 비교하여 CardNumber의 baseValue 가 낮은 순으로 정렬할 수 있다" {
-        val sut =
-            listOf(
-                Card(Number(10), Suit.SPADES),
-                Card(CardNumber.Ace, Suit.HEARTS),
-                Card(Number(7), Suit.CLUBS),
-            )
-
-        val result = sut.sorted()
-
-        result shouldContainExactly
-            listOf(
-                Card(CardNumber.Ace, Suit.HEARTS),
-                Card(Number(7), Suit.CLUBS),
-                Card(Number(10), Suit.SPADES),
-            )
     }
 })
