@@ -10,4 +10,10 @@ interface ShufflingStrategy {
             return LinkedList(cards)
         }
     }
+
+    object RandomShuffling : ShufflingStrategy {
+        override fun shuffle(cards: Collection<Card>): Queue<Card> {
+            return LinkedList(cards.shuffled())
+        }
+    }
 }
