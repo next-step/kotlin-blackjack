@@ -29,7 +29,7 @@ class BlackjackController(
         ResultView.displayState(game, false)
 
         // 최종 승패 출력
-        ResultView.displayResults(game.playerResults())
+        ResultView.displayResults(game.gameResult())
     }
 
     private fun runGameLoop(game: Game) {

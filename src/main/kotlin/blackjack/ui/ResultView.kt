@@ -3,9 +3,9 @@ package blackjack.ui
 import blackjack.domain.Card
 import blackjack.domain.Dealer
 import blackjack.domain.Game
+import blackjack.domain.GameResult
 import blackjack.domain.Hand
 import blackjack.domain.Player
-import blackjack.domain.PlayerGameResult
 import blackjack.domain.PlayerOutcome
 import blackjack.domain.Rank
 import blackjack.domain.Suit
@@ -51,17 +51,12 @@ object ResultView {
         print(message)
     }
 
-    fun displayResults(playerResults: List<PlayerGameResult>) {
-        // 순수한 view 로직으로 보기에는 도메인 로직이 섞여 있어 리팩토링이 필요하다.
-        val frequencies = playerResults.groupingBy { it.outcome }.eachCount()
-        val dealerWin = frequencies[PlayerOutcome.LOSE] ?: 0
-        val dealerLose = frequencies[PlayerOutcome.WIN] ?: 0
-        val dealerDraw = frequencies[PlayerOutcome.DRAW] ?: 0
+    fun displayResults(result: GameResult) {
         val message =
             buildString {
                 appendLine("## 최종 승패")
-                appendLine("딜러: ${dealerWin}승, ${dealerDraw}무, ${dealerLose}패")
-                playerResults.forEach {
+                appendLine("딜러: ${result.dealerWins}승, ${result.dealerDraws}무, ${result.dealerLosses}패")
+                result.playerResults.forEach {
                     appendLine("${it.name}: ${formatOutcome(it.outcome)}")
                 }
             }
