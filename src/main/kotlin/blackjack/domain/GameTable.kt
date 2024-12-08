@@ -1,6 +1,6 @@
 package blackjack.domain
 
-class GameTable(
+data class GameTable(
     private val deck: Deck,
 ) {
     fun dealInitCard(participants: List<Participant>): List<Participant> {

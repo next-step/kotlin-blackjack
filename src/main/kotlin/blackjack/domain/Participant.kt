@@ -1,8 +1,12 @@
 package blackjack.domain
 
+import blackjack.domain.MatchResult.LOSS
 import blackjack.domain.MatchResult.WIN
 
 sealed class Participant(val name: String, val cards: Cards) {
+    val isBust: Boolean
+        get() = cards.isBust
+
     abstract fun canHit(): Boolean
 
     abstract fun hit(card: Card): Participant
@@ -24,10 +28,11 @@ class Player(name: String, cards: Cards) : Participant(name, cards) {
     }
 
     fun compareScore(dealer: Dealer): MatchResult {
-        if (dealer.isBust) {
-            return WIN
+        return when {
+            dealer.isBust -> WIN
+            this.isBust -> LOSS
+            else -> cards.compareScore(dealer.cards)
         }
-        return cards.compareScore(dealer.cards)
     }
 
     companion object {
@@ -40,9 +45,6 @@ class Player(name: String, cards: Cards) : Participant(name, cards) {
 }
 
 class Dealer(cards: Cards) : Participant("딜러", cards) {
-    val isBust: Boolean
-        get() = cards.isBust
-
     override fun canHit(): Boolean {
         return cards.scoreLowerThan(DEALER_SCORE_LIMIT)
     }

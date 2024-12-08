@@ -2,19 +2,21 @@ package blackjack.controller
 
 import blackjack.domain.Dealer
 import blackjack.domain.Deck
+import blackjack.domain.GameResult
 import blackjack.domain.GameTable
 import blackjack.domain.Participant
 import blackjack.domain.Player
 import blackjack.view.InputView
 import blackjack.view.ResultView
 
-class BlackjackGame(
+data class BlackjackGame(
     private val inputView: InputView,
     private val resultView: ResultView,
 ) {
     fun start() {
         val gameTable = GameTable(Deck.create())
         val participants = playGame(gameTable)
+        printCard(participants)
         printGameResult(participants)
     }
 
@@ -36,6 +38,13 @@ class BlackjackGame(
         return participants
     }
 
+    private fun getParticipants(): List<Participant> {
+        return buildList {
+            add(Dealer.create())
+            addAll(inputView.inputNames().map { Player.create(name = it) })
+        }
+    }
+
     private fun playersTurn(
         participants: List<Participant>,
         gameTable: GameTable,
@@ -51,7 +60,7 @@ class BlackjackGame(
             return player
         }
         val hitPlayer = gameTable.hit(player)
-        resultView.printParticipantCard(participant = player, printScore = false)
+        resultView.printParticipantCard(participant = hitPlayer, printScore = false)
         return playerTurn(hitPlayer, gameTable)
     }
 
@@ -66,15 +75,13 @@ class BlackjackGame(
         return dealerTurn(gameTable.hit(dealer), gameTable)
     }
 
-    private fun printGameResult(participants: List<Participant>) {
+    private fun printCard(participants: List<Participant>) {
         resultView.linebreak()
         resultView.printParticipantsCard(participants = participants, printScore = true)
     }
 
-    private fun getParticipants(): List<Participant> {
-        return buildList {
-            add(Dealer.create())
-            addAll(inputView.inputNames().map { Player.create(name = it) })
-        }
+    private fun printGameResult(participants: List<Participant>) {
+        resultView.linebreak()
+        resultView.printGameResult(GameResult.from(participants))
     }
 }
