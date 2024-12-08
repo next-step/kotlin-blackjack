@@ -32,4 +32,9 @@
 - [x] BlackJackGame::while 문 내부 if 절을 while 조건식으로 통합
 - [x] BlackJackGame::게임진행책임 분리
 - [x] BlackJackGame::receive 를 hit 로 메서드명 수정
-- [ ] Rank::enum 클래스로 수정
+- [x] Rank::enum 클래스로 수정
+
+### 기능 구현사항
+- [x] 딜러는 처음받는 2장의 합계가 16이하면 반드시 1장의 카드를 추가로 받는다
+- [ ] 딜러가 21을 초과하면 남은 플레이어들은 패에 상관없이 승리한다
+- [ ] 게임 완료 후 각 플레이어별로 승패를 출력한다

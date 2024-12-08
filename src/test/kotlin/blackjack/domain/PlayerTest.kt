@@ -8,8 +8,7 @@ import io.kotest.data.row
 import io.kotest.data.table
 import io.kotest.matchers.shouldBe
 
-class UserTest : StringSpec({
-
+class PlayerTest : StringSpec({
     "유저는 카드목록의 점수합이 21점 미만일 경우 카드를 더 받을 수 있다" {
         table(
             headers("ranks"),
@@ -20,7 +19,7 @@ class UserTest : StringSpec({
         ).forAll { ranks ->
             val cards = Cards(ranks.map { createCard(it) })
 
-            User("홍길동", cards).canHit() shouldBe true
+            Player("홍길동", cards).canHit() shouldBe true
         }
     }
 
@@ -36,27 +35,27 @@ class UserTest : StringSpec({
             val cards = Cards(ranks.map { createCard(it) })
 
             cards.score shouldBe score
-            User("홍길동", cards).canHit() shouldBe false
+            Player("홍길동", cards).canHit() shouldBe false
         }
     }
 
     "유저는 카드 2장을 받은 후 점수 합이 21점인 경우 카드를 더 받지 못한다" {
         val cards = Cards(emptyList())
-        val user =
-            User("홍길동", cards)
+        val player =
+            Player("홍길동", cards)
                 .hit(createCard("A"))
                 .hit(createCard("K"))
 
-        user.canHit() shouldBe false
+        player.canHit() shouldBe false
     }
 
     "유저는 카드 2장을 받은 후 점수 합이 21점 미만인 경우 카드를 더 받을 수 있다" {
         val cards = Cards(emptyList())
-        val user =
-            User("홍길동", cards)
+        val player =
+            Player("홍길동", cards)
                 .hit(createCard("10"))
                 .hit(createCard("5"))
 
-        user.canHit() shouldBe true
+        player.canHit() shouldBe true
     }
 })

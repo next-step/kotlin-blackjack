@@ -4,8 +4,8 @@ data class Cards(val values: List<Card>) {
     val score: Int
         get() = calculateScore()
 
-    fun isScoreLowerThanLimit(): Boolean {
-        return score < BLACKJACK_SCORE_LIMIT
+    fun scoreLowerThan(limit: Int): Boolean {
+        return score < limit
     }
 
     fun add(card: Card): Cards {
