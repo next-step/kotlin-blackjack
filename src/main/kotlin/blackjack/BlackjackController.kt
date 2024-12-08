@@ -22,17 +22,24 @@ class BlackjackController(
         // 게임 진행
         runGameLoop(game)
 
+        // 딜러 행동 출력
+        ResultView.displayDealerActions(game.dealer)
+
         // 게임 결과 출력
         ResultView.displayState(game, false)
     }
 
     private fun runGameLoop(game: Game) {
+        // 플레이어들의 턴
         while (!game.arePlayersDone) {
             val player = game.currentPlayer
             val command = InputView.getCommand(player)
             handle(command, game)
             ifHitDisplayPlayer(command, player)
         }
+
+        // 딜러의 턴
+        game.dealerTurn()
     }
 
     private fun handle(

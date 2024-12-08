@@ -10,6 +10,7 @@ import blackjack.domain.Suit
 
 object ResultView {
     private const val BUSTED = "🪦"
+    private const val INITIAL_HAND_SIZE = 2
 
     fun displayState(
         game: Game,
@@ -31,6 +32,21 @@ object ResultView {
 
     fun displayPlayer(player: Player) {
         println(formatPlayer(player))
+    }
+
+    fun displayDealerActions(dealer: Dealer) {
+        val numberOfDrawnCards = dealer.hand.cards.size - INITIAL_HAND_SIZE
+        if (numberOfDrawnCards == 0) {
+            return
+        }
+        val message =
+            buildString {
+                appendLine()
+                repeat(numberOfDrawnCards) {
+                    appendLine("딜러는 16이하라 한장의 카드를 더 받았습니다.")
+                }
+            }
+        print(message)
     }
 
     private fun formatPlayer(
