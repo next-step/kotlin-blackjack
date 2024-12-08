@@ -209,9 +209,9 @@ class BankTest : StringSpec({
         val sut =
             Bank(
                 listOf(
-                    ParticipantAccount(dealer, Balance(0.0, 10000.0)),
-                    ParticipantAccount(player1, Balance(10000.0, 20000.0)),
-                    ParticipantAccount(player2, Balance(20000.0, 0.0)),
+                    ParticipantAccount(dealer, Balance(Money(0.0), Money(10000.0))),
+                    ParticipantAccount(player1, Balance(Money(10000.0), Money(20000.0))),
+                    ParticipantAccount(player2, Balance(Money(20000.0), Money(0.0))),
                 ),
             )
 

@@ -8,20 +8,20 @@ class Bank(accounts: List<ParticipantAccount> = emptyList()) {
         betAmount: Double = 0.0,
     ) {
         if (participant is Player) {
-            require(betAmount > 0) {
+            require(Money(betAmount) > Money.ZERO) {
                 "플레이어는 1원 이상 베팅해야 합니다 betAmount: $betAmount"
             }
         }
         accounts.add(
             ParticipantAccount(
                 participant = participant,
-                initialBalance = betAmount,
+                initialBalance = Money(betAmount),
             ),
         )
     }
 
     fun balance(participant: Participant): Double {
-        return accounts.find { it.participant == participant }?.currentBalance ?: 0.0
+        return accounts.find { it.participant == participant }?.currentBalance?.toDouble() ?: 0.0
     }
 
     fun settleBets(gameResults: List<GameResult>) = gameResults.forEach(::settleBet)
@@ -39,7 +39,7 @@ class Bank(accounts: List<ParticipantAccount> = emptyList()) {
         return accounts.map {
             ParticipantProfit(
                 it.participant,
-                it.profit,
+                it.profit.toDouble(),
             )
         }
     }
@@ -83,9 +83,9 @@ class Bank(accounts: List<ParticipantAccount> = emptyList()) {
 
     private fun updateBalances(
         dealerAccount: ParticipantAccount,
-        dealerAdjustment: Double,
+        dealerAdjustment: Money,
         playerAccount: ParticipantAccount,
-        playerAdjustment: Double,
+        playerAdjustment: Money,
     ) {
         accounts.updateAccount(dealerAccount, dealerAdjustment)
         accounts.updateAccount(playerAccount, playerAdjustment)
@@ -93,7 +93,7 @@ class Bank(accounts: List<ParticipantAccount> = emptyList()) {
 
     private fun MutableList<ParticipantAccount>.updateAccount(
         account: ParticipantAccount,
-        newBalance: Double,
+        newBalance: Money,
     ) {
         val index = indexOf(account)
         if (index != -1) {

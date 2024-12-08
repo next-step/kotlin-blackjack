@@ -7,7 +7,7 @@ data class ParticipantAccount(
     val currentBalance get() = balance.current
     val profit get() = balance.profit()
 
-    constructor(participant: Participant, initialBalance: Double) : this(
+    constructor(participant: Participant, initialBalance: Money) : this(
         participant,
         Balance(
             initial = initialBalance,
@@ -15,18 +15,18 @@ data class ParticipantAccount(
         ),
     )
 
-    fun updateBalance(amount: Double): ParticipantAccount {
+    fun updateBalance(amount: Money): ParticipantAccount {
         return this.copy(balance = balance.update(amount))
     }
 }
 
 data class Balance(
-    private val initial: Double = 0.0,
-    val current: Double = 0.0,
+    private val initial: Money = Money.ZERO,
+    val current: Money = Money.ZERO,
 ) {
-    fun profit(): Double = current - initial
+    fun profit(): Money = current - initial
 
-    fun update(amount: Double): Balance {
+    fun update(amount: Money): Balance {
         return this.copy(current = current + amount)
     }
 }

@@ -62,7 +62,7 @@ class ConsoleOutput {
             println("## 최종 수익")
             profits.forEach {
                 print("${it.participant.name}: ")
-                println(it.profit)
+                println(it.profit.toInt())
             }
         }
     }
