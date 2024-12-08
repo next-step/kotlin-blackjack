@@ -1,4 +1,4 @@
-package blackjack.core
+package blackjack.core.card
 
 data class Card(val denomination: Denomination, val suit: Suit) {
     override fun toString(): String {
