@@ -1,7 +1,8 @@
 package blackjack
 
 sealed class Participant2(val name: String, initialCards: List<Card>) {
-    private var state: State
+    var state: State
+        private set
 
     val cards: Cards
         get() = state.cards()
@@ -25,7 +26,7 @@ sealed class Participant2(val name: String, initialCards: List<Card>) {
 
     fun isFinished(): Boolean = state.isFinished()
 
-    fun hit(card: Card) {
+    open fun hit(card: Card) {
         state = state.draw(card)
     }
 

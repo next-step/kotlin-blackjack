@@ -8,6 +8,8 @@ import blackjack.CardTextFixtures.spadeNineCard
 import blackjack.CardTextFixtures.spadeQueenCard
 import blackjack.CardTextFixtures.spadeSixCard
 import blackjack.CardTextFixtures.spadeTenCard
+import blackjack.CardTextFixtures.spadeThreeCard
+import blackjack.CardTextFixtures.spadeTwoCard
 
 object InitialCardsTestFixtures {
     val initial18Cards = listOf(spadeTenCard, spadeEightCard)
@@ -23,4 +25,8 @@ object InitialCardsTestFixtures {
     val blackjackCards = listOf(spadeAceCard, spadeKingCard)
 
     val blackjackCards2 = listOf(spadeAceCard, spadeQueenCard)
+
+    val initial21Cards = listOf(spadeKingCard, spadeNineCard, spadeTwoCard)
+
+    val bustCards = listOf(spadeKingCard, spadeNineCard, spadeThreeCard)
 }
