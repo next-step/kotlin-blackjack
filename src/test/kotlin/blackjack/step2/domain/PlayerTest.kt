@@ -18,7 +18,7 @@ class PlayerTest : FunSpec({
                 val player = Player.of(playerName, initialCards)
 
                 // When
-                val allCards = player.allCards
+                val allCards = player.cards.all
 
                 // Then
                 allCards shouldContainExactly initialCards
@@ -40,7 +40,7 @@ class PlayerTest : FunSpec({
                 val updatedPlayerCard = player.pickCard(newCard)
 
                 // Then
-                updatedPlayerCard.allCards shouldContainExactly initialCards.plus(newCard)
+                updatedPlayerCard.cards.all shouldContainExactly initialCards.plus(newCard)
             }
         }
         context("calculateScore() 테스트") {

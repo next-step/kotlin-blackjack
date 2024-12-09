@@ -48,12 +48,12 @@ class GameManagerTest : FunSpec({
         val playerNames = listOf("dongyeon", "pobi")
 
         // when
-        val playerCards = gameManager.pickFirstCards(playerNames)
+        val playerCards = gameManager.pickFirstPlayersCards(playerNames)
 
         // then
         playerCards.shouldHaveSize(playerNames.size)
         playerCards.forEach { playerCard ->
-            playerCard.allCards.shouldHaveSize(2)
+            playerCard.cards.all.shouldHaveSize(2)
         }
     }
 
@@ -67,10 +67,10 @@ class GameManagerTest : FunSpec({
         val player = Player.of("dongyeon", initialPlayerCards)
 
         // when
-        val updatedPlayerCard = gameManager.pickCardIfValid(player)
+        val updatedPlayerCard = gameManager.pickPlayerCardIfValid(player)
 
         // then
-        updatedPlayerCard.allCards.shouldHaveSize(3)
+        updatedPlayerCard.cards.all.shouldHaveSize(3)
         updatedPlayerCard.calculateScore().shouldBeGreaterThanOrEqual(player.calculateScore())
     }
 
@@ -85,11 +85,11 @@ class GameManagerTest : FunSpec({
         val player = Player.of("dongyeon", initialPlayerCards)
 
         // when
-        val updatedPlayerCard = gameManager.pickCardIfValid(player)
+        val updatedPlayerCard = gameManager.pickPlayerCardIfValid(player)
 
         // then
-        updatedPlayerCard.allCards.shouldHaveSize(3)
-        updatedPlayerCard.allCards.shouldBe(player.allCards)
+        updatedPlayerCard.cards.all.shouldHaveSize(3)
+        updatedPlayerCard.cards.all.shouldBe(player.cards.all)
     }
 
     test("카드를 받을 때 중복된 카드가 추가되지 않는다") {
@@ -101,9 +101,9 @@ class GameManagerTest : FunSpec({
         val player = Player.of("dongyeon", initialPlayerCards)
 
         // when
-        val updatedPlayerCard = gameManager.pickCardIfValid(player)
+        val updatedPlayerCard = gameManager.pickPlayerCardIfValid(player)
 
         // then
-        updatedPlayerCard.allCards.distinct().shouldHaveSize(2)
+        updatedPlayerCard.cards.all.distinct().shouldHaveSize(2)
     }
 })

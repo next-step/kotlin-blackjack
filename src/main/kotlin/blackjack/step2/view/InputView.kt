@@ -1,7 +1,7 @@
 package blackjack.step2.view
 
 import blackjack.step2.domain.GameManager
-import blackjack.step2.domain.Player
+import blackjack.step2.domain.Participant
 import blackjack.step2.domain.ScoreCalculator
 
 object InputView {
@@ -11,39 +11,41 @@ object InputView {
     }
 
     fun inputMoreCard(
-        players: List<Player>,
+        participants: List<Participant>,
         gameManager: GameManager,
-    ): List<Player> {
-        return players.map { playerCard ->
-            handleCardDecision(playerCard, gameManager)
+    ): List<Participant> {
+        return participants.map { participant ->
+            handleCardDecision(participant, gameManager)
         }
     }
 
     private fun handleCardDecision(
-        player: Player,
+        participant: Participant,
         gameManager: GameManager,
-    ): Player {
-        var currentCard = player
-        while (currentCard.calculateScore() < ScoreCalculator.BLACKJACK_SCORE) {
-            println("${currentCard.playerName}는 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
-            val input = readln().trim().lowercase()
+    ): Participant {
+        if (participant.calculateScore() >= ScoreCalculator.BLACKJACK_SCORE) {
+            return participant
+        }
 
-            when (input) {
-                "y" -> {
-                    println("${currentCard.playerName}는 한 장의 카드를 더 받습니다.")
-                    currentCard = gameManager.pickCardIfValid(currentCard)
-                }
+        println("${participant.name}는 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
+        val input = readln().trim().lowercase()
 
-                "n" -> {
-                    println("${currentCard.playerName}는 카드를 더 받지 않습니다.")
-                    break
-                }
+        return when (input) {
+            "y" -> {
+                println("${participant.name}는 한 장의 카드를 더 받습니다.")
+                val updatedParticipant = gameManager.pickPlayerCardIfValid(participant)
+                handleCardDecision(updatedParticipant, gameManager)
+            }
 
-                else -> {
-                    println("잘못된 입력입니다. 다시 입력해주세요.")
-                }
+            "n" -> {
+                println("${participant.name}는 카드를 더 받지 않습니다.")
+                participant
+            }
+
+            else -> {
+                println("잘못된 입력입니다. 다시 입력해주세요.")
+                handleCardDecision(participant, gameManager)
             }
         }
-        return currentCard
     }
 }

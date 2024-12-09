@@ -1,18 +1,11 @@
 package blackjack.step2.domain
 
 class Player private constructor(
-    val playerName: String,
-    private val cards: Cards,
-) {
-    val allCards: List<Card>
-        get() = cards.all
-
-    fun pickCard(card: Card): Player {
-        return Player(playerName, cards.add(card))
-    }
-
-    fun calculateScore(): Int {
-        return ScoreCalculator.calculate(cards)
+    override val name: String,
+    override val cards: Cards,
+) : Participant {
+    override fun pickCard(card: Card): Player {
+        return Player(name, cards.add(card))
     }
 
     companion object {
