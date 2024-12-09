@@ -9,7 +9,8 @@ object BlackjackController {
         val playerNames = InputView.inputPlayerNames().split(",").map { it.trim() }
         val game = Game(playerNames)
 
-        ResultView.printSplitCardResult(game.players.map { it.name })
+        ResultView.printSplitCardResult(game.dealer, game.players)
+        ResultView.printDealerInitialCard(game.dealer)
 
         game.players.forEach { ResultView.printPlayerCards(listOf(it.name to it.cards)) }
 
@@ -20,6 +21,18 @@ object BlackjackController {
             ResultView.printPlayerCards(listOf(player.name to player.cards))
         }
 
-        ResultView.printFinalScores(game.players.map { it.name to it.score }, game.players)
+        val dealerDraws = game.handleDealerTurn()
+        if (dealerDraws) {
+            ResultView.printDealerDrawMessage(true)
+        } else {
+            ResultView.printDealerDrawMessage(false)
+        }
+
+        ResultView.printFinalScores(game.players, game.dealer)
+
+        val results = game.determineResults()
+        val dealerResult = game.calculateDealerResult(results)
+        ResultView.printGameResult(results, dealerResult)
     }
 }
+

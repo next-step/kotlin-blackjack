@@ -1,6 +1,6 @@
 package blackjack.domain
 
-class Player(val name: String) {
+open class Player(val name: String) {
     private val _cards = mutableListOf<Card>()
     val cards: List<Card> get() = _cards.toList()
     val score: Int get() = calculateScore()
