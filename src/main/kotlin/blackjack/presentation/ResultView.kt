@@ -107,7 +107,7 @@ object ResultView {
         val stringBuilder = StringBuilder()
         stringBuilder.append(getPlayerCards(player))
         stringBuilder.append(STRING_RESULT)
-        stringBuilder.append(player.point())
+        stringBuilder.append(player.point)
         println(stringBuilder.toString())
     }
 

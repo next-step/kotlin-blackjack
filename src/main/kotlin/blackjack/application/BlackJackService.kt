@@ -20,7 +20,7 @@ object BlackJackService {
 
         ResultView.printStandby(dealer, players)
 
-        players.forEach { Turn(it, cardDispenser).process(PlayerTurnCondition) }
+        players.play { Turn(it, cardDispenser).process(PlayerTurnCondition) }
 
         Turn(dealer, cardDispenser).process(DealerTurnCondition)
     }

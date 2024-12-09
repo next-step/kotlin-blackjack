@@ -13,19 +13,19 @@ class PlayerTest {
     fun `카드 Draw를 테스트한다`() {
         val player = Player(Name("test"))
 
-        player.point() shouldBe 0
+        player.point shouldBe 0
 
         player.draw(Card(Denomination.JACK, Suit.SPADES))
-        player.point() shouldBe 10
+        player.point shouldBe 10
 
         player.draw(Card(Denomination.JACK, Suit.SPADES))
-        player.point() shouldBe 10
+        player.point shouldBe 10
 
         player.draw(Card(Denomination.QUEEN, Suit.SPADES))
-        player.point() shouldBe 20
+        player.point shouldBe 20
 
         player.draw(Card(Denomination.KING, Suit.SPADES))
-        player.point() shouldBe 30
+        player.point shouldBe 30
         player.cards.checkBust() shouldBe true
     }
 }

@@ -5,8 +5,8 @@ class Dealer : Player(Name(DEALER_NAME)) {
         return when {
             this.checkBust() -> MatchResult.LOSE
             player.checkBust() -> MatchResult.WIN
-            this.point() > player.point() -> MatchResult.WIN
-            this.point() < player.point() -> MatchResult.LOSE
+            this.point > player.point -> MatchResult.WIN
+            this.point < player.point -> MatchResult.LOSE
             else -> MatchResult.DRAW
         }
     }
