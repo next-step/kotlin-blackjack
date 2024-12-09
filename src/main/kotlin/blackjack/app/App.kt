@@ -4,7 +4,6 @@ fun main() {
     val blackJackGame = BlackJackGame()
     val players = blackJackGame.getPlayers()
     blackJackGame.gameStart(players)
-    blackJackGame.playTurns(players)
-    blackJackGame.playDealerTurn(players)
+    blackJackGame.playTurn(players)
     blackJackGame.finishGame(players)
 }

@@ -56,53 +56,75 @@ class DealerTest : BehaviorSpec({
     }
 
     Given("딜러가 플레이어 결과를 기반으로 자신의 결과를 계산할 때") {
-        val dealer = Dealer()
+        val dealer =
+            Dealer().apply {
+                receiveCard(Card(Suit.HEARTS, Rank.TEN))
+                receiveCard(Card(Suit.CLUBS, Rank.SEVEN))
+            }
 
         When("플레이어가 모두 딜러에게 승리한 경우") {
-            val playerResults =
-                listOf(
-                    GameResult(Player("pobi"), wins = 1, loses = 0, draws = 0),
-                    GameResult(Player("jason"), wins = 1, loses = 0, draws = 0),
+            val players =
+                Players(
+                    listOf(
+                        Player("pobi", BettingAmount(1000)).apply {
+                            receiveCard(Card(Suit.SPADES, Rank.KING))
+                            receiveCard(Card(Suit.HEARTS, Rank.QUEEN))
+                        },
+                        Player("jason", BettingAmount(2000)).apply {
+                            receiveCard(Card(Suit.CLUBS, Rank.TEN))
+                            receiveCard(Card(Suit.DIAMONDS, Rank.NINE))
+                        },
+                    ),
                 )
 
-            Then("딜러는 모든 플레이어에게 패배한다") {
-                val dealerResult = dealer.calculateResult(playerResults)
+            Then("딜러는 손실한다") {
+                val dealerResult = dealer.calculateResult(players)
 
-                dealerResult.wins shouldBe 0
-                dealerResult.loses shouldBe 2
-                dealerResult.draws shouldBe 0
+                dealerResult.earning shouldBe -3000
             }
         }
 
         When("딜러가 모든 플레이어를 이긴 경우") {
-            val playerResults =
-                listOf(
-                    GameResult(Player("pobi"), wins = 0, loses = 1, draws = 0),
-                    GameResult(Player("jason"), wins = 0, loses = 1, draws = 0),
+            val players =
+                Players(
+                    listOf(
+                        Player("pobi", BettingAmount(1000)).apply {
+                            receiveCard(Card(Suit.HEARTS, Rank.TWO))
+                            receiveCard(Card(Suit.SPADES, Rank.THREE))
+                        },
+                        Player("jason", BettingAmount(2000)).apply {
+                            receiveCard(Card(Suit.CLUBS, Rank.FOUR))
+                            receiveCard(Card(Suit.DIAMONDS, Rank.FIVE))
+                        },
+                    ),
                 )
 
-            Then("딜러는 모든 플레이어에게 승리한다") {
-                val dealerResult = dealer.calculateResult(playerResults)
+            Then("딜러는 모든 플레이어에게 베팅금을 얻는다") {
+                val dealerResult = dealer.calculateResult(players)
 
-                dealerResult.wins shouldBe 2
-                dealerResult.loses shouldBe 0
-                dealerResult.draws shouldBe 0
+                dealerResult.earning shouldBe 3000
             }
         }
 
         When("딜러와 플레이어가 모두 무승부일 경우") {
-            val playerResults =
-                listOf(
-                    GameResult(Player("pobi"), wins = 0, loses = 0, draws = 1),
-                    GameResult(Player("jason"), wins = 0, loses = 0, draws = 1),
+            val players =
+                Players(
+                    listOf(
+                        Player("pobi", BettingAmount(1000)).apply {
+                            receiveCard(Card(Suit.HEARTS, Rank.TEN))
+                            receiveCard(Card(Suit.SPADES, Rank.SEVEN))
+                        },
+                        Player("jason", BettingAmount(2000)).apply {
+                            receiveCard(Card(Suit.DIAMONDS, Rank.TEN))
+                            receiveCard(Card(Suit.CLUBS, Rank.SEVEN))
+                        },
+                    ),
                 )
 
             Then("딜러는 모든 플레이어와 무승부로 처리된다") {
-                val dealerResult = dealer.calculateResult(playerResults)
+                val dealerResult = dealer.calculateResult(players)
 
-                dealerResult.wins shouldBe 0
-                dealerResult.loses shouldBe 0
-                dealerResult.draws shouldBe 2
+                dealerResult.earning shouldBe 0
             }
         }
     }

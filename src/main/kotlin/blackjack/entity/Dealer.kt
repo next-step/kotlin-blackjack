@@ -1,6 +1,10 @@
 package blackjack.entity
 
 class Dealer : Participant("딜러") {
+    fun initializeHand(deck: Deck) {
+        repeat(2) { receiveCard(deck.deal()) }
+    }
+
     fun shouldDrawCard(): Boolean {
         val score = calculateScore()
         return score <= 16
@@ -14,12 +18,10 @@ class Dealer : Participant("딜러") {
         return PlayerAction.STAND
     }
 
-    fun calculateResult(playerResults: List<GameResult>): GameResult {
-        val wins = playerResults.sumOf { it.loses }
-        val loses = playerResults.sumOf { it.wins }
-        val draws = playerResults.sumOf { it.draws }
+    fun calculateResult(players: Players): GameResult {
+        val playerEarned = players.calculatePlayerEarned(this)
 
-        return GameResult(this, wins, loses, draws)
+        return GameResult(this, -playerEarned)
     }
 
     companion object {

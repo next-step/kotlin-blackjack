@@ -1,6 +1,9 @@
 package blackjack.entity
 
-class Player(name: String) : Participant(name) {
+class Player(
+    name: String,
+    val bettingAmount: BettingAmount,
+) : Participant(name) {
     fun playTurn(
         deck: Deck,
         wantsToHit: Boolean,
@@ -8,48 +11,45 @@ class Player(name: String) : Participant(name) {
         when {
             !wantsToHit -> PlayerAction.STAND
             isBusted() -> PlayerAction.BURST
+            isBlackjack() -> PlayerAction.BLACKJACK
             else -> {
                 receiveCard(deck.deal())
-                PlayerAction.HIT
+                if (isBusted()) PlayerAction.BURST else PlayerAction.HIT
             }
         }
 
-    fun calculateResult(dealerScore: Int): GameResult {
+    fun calculateResult(dealer: Dealer): GameResult {
         val playerScore = calculateScore()
 
-        return calculateGameResult(playerScore, dealerScore)
+        return calculateGameResult(playerScore, dealer)
     }
 
     private fun calculateGameResult(
         playerScore: Int,
-        dealerScore: Int,
+        dealer: Dealer,
     ): GameResult {
         return when {
-            isBusted() -> handlePlayerBust(dealerScore)
-            dealerScore > BLACKJACK -> GameResult(this, wins = 1)
-            else -> compareScores(playerScore, dealerScore)
+            bothAreBlackjack(dealer) -> GameResult.draw(this)
+            isBlackjack() -> GameResult.blackjackWin(this, bettingAmount)
+            playerBeatsDealer(playerScore, dealer) -> GameResult.win(this, bettingAmount)
+            dealerBeatsPlayer(playerScore, dealer) -> GameResult.lose(this, bettingAmount)
+            else -> GameResult.draw(this)
         }
     }
 
-    private fun handlePlayerBust(dealerScore: Int): GameResult {
-        return if (dealerScore > BLACKJACK) {
-            GameResult(this, draws = 1)
-        } else {
-            GameResult(this, loses = 1)
-        }
-    }
+    private fun bothAreBlackjack(dealer: Dealer) = isBlackjack() && dealer.isBlackjack()
 
-    private fun compareScores(
+    private fun playerBeatsDealer(
         playerScore: Int,
-        dealerScore: Int,
-    ): GameResult {
-        val playerDistance = closeToBlackjack(playerScore)
-        val dealerDistance = closeToBlackjack(dealerScore)
+        dealer: Dealer,
+    ): Boolean {
+        return !isBusted() && (dealer.isBusted() || playerScore > dealer.calculateScore())
+    }
 
-        return when {
-            playerDistance < dealerDistance -> GameResult(this, wins = 1)
-            playerDistance > dealerDistance -> GameResult(this, loses = 1)
-            else -> GameResult(this, draws = 1)
-        }
+    private fun dealerBeatsPlayer(
+        playerScore: Int,
+        dealer: Dealer,
+    ): Boolean {
+        return isBusted() || playerScore < dealer.calculateScore()
     }
 }

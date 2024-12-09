@@ -5,4 +5,5 @@ enum class PlayerAction {
     STAND,
     BURST,
     DRAW,
+    BLACKJACK,
 }

@@ -15,11 +15,7 @@ abstract class Participant(val name: String) {
         return hand.calculateScore()
     }
 
-    fun isBusted(): Boolean {
-        return hand.isBusted()
-    }
+    fun isBusted(): Boolean = hand.isBusted()
 
-    fun closeToBlackjack(score: Int): Int {
-        return BLACKJACK - score
-    }
+    fun isBlackjack(): Boolean = hand.isBlackjack()
 }
