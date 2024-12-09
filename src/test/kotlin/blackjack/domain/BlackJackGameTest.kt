@@ -11,13 +11,13 @@ class BlackJackGameTest : StringSpec({
             listOf(Player(participantName = ParticipantName("테스트1")), Player(participantName = ParticipantName("테스트2")))
         )
         val playerName1 = sut.findDrawPlayer()
-        playerName1 shouldBe ParticipantName("테스트1")
+        playerName1?.name shouldBe ParticipantName("테스트1")
 
         val playerName2 = sut.findDrawPlayer()
-        playerName2 shouldBe ParticipantName("테스트2")
+        playerName2?.name shouldBe ParticipantName("테스트2")
     }
 
-    "더이상 카드를 뽑지 않는 플레이어 존재하면 해당 플레이어는 건너뛰고 반환한다." {
+    "더이상 카드를 뽑지 않는 플레이어 존재하면 다음 플레이어를 반환한다." {
         val sut = BlackJackGame(
             listOf(
                 Player(
@@ -30,7 +30,7 @@ class BlackJackGameTest : StringSpec({
             )
         )
         val actual = sut.findDrawPlayer()
-        actual shouldBe ParticipantName("테스트2")
+        actual?.name shouldBe ParticipantName("테스트2")
     }
 
     "하나의 플레이어가 카드를 계속 뽑는다면 true를 반환한다." {
@@ -103,6 +103,26 @@ class BlackJackGameTest : StringSpec({
     "블랙잭 게임의 최종 결과를 반환한다." {
         val sut = BlackJackGame(
             listOf(
+                Dealer(
+                    cards = mutableListOf(
+                        Card(
+                            CardSuit.HEARTS,
+                            CardNumber.TWO,
+                        ),
+                        Card(
+                            CardSuit.SPADES,
+                            CardNumber.THREE,
+                        ),
+                        Card(
+                            CardSuit.DIAMONDS,
+                            CardNumber.FOUR,
+                        ),
+                        Card(
+                            CardSuit.CLUBS,
+                            CardNumber.KING,
+                        ),
+                    ),
+                ),
                 Player(
                     participantName = ParticipantName("테스트1"),
                     cards = mutableListOf(
@@ -153,6 +173,29 @@ class BlackJackGameTest : StringSpec({
         val actual = sut.result()
 
         actual.value[0] shouldBe BlackJackGameResult(
+            playerName = "딜러",
+            cards = listOf(
+                DrawCard(
+                    CardSuit.HEARTS,
+                    CardNumber.TWO,
+                ),
+                DrawCard(
+                    CardSuit.SPADES,
+                    CardNumber.THREE,
+                ),
+                DrawCard(
+                    CardSuit.DIAMONDS,
+                    CardNumber.FOUR,
+                ),
+                DrawCard(
+                    CardSuit.CLUBS,
+                    CardNumber.KING,
+                ),
+            ),
+            totalValue = 19,
+            dealer = true,
+        )
+        actual.value[1] shouldBe BlackJackGameResult(
             playerName = "테스트1",
             cards = listOf(
                 DrawCard(
@@ -173,9 +216,9 @@ class BlackJackGameTest : StringSpec({
                 ),
             ),
             totalValue = 20,
-            dealer = false
+            dealer = false,
         )
-        actual.value[1] shouldBe BlackJackGameResult(
+        actual.value[2] shouldBe BlackJackGameResult(
             playerName = "테스트2",
             cards = listOf(
                 DrawCard(
