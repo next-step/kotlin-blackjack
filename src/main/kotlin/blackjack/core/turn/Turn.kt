@@ -20,6 +20,6 @@ class Turn(private val player: Player, private val cardDispenser: CardDispenser)
         player: Player,
         turnCondition: TurnCondition,
     ): Boolean {
-        return cardDispenser.checkRemainCard() && player.checkBust().not() && turnCondition.carGo(player)
+        return cardDispenser.checkRemainCard() && player.checkBust().not() && turnCondition.canGo(player)
     }
 }
