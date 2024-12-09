@@ -4,14 +4,16 @@ class Player(
     val name: String,
     val hand: Hand = Hand(),
 ) {
-    var reasonDone: PlayerReasonDone? = null
-        private set
     val value: Int
         get() = hand.value()
-    val isDone: Boolean
-        get() = reasonDone != null
+    val isBlackjack: Boolean
+        get() = hand.isBlackjack()
     val isBusted: Boolean
         get() = hand.isBusted()
+    var reasonDone: PlayerReasonDone? = null
+        private set
+    val isDone: Boolean
+        get() = reasonDone != null
 
     init {
         require(name.isNotBlank()) { "이름이 빈 문자열입니다." }
@@ -20,7 +22,7 @@ class Player(
     fun initialDrawFrom(deck: Deck) {
         drawFrom(deck)
         if (hand.isBlackjack()) {
-            done(PlayerReasonDone.BLACKJACK)
+            done(PlayerReasonDone.PLAYER_HAS_BLACKJACK)
         }
     }
 
@@ -28,14 +30,32 @@ class Player(
         checkIsNotDone()
         hand.drawFrom(deck)
         if (isBusted) {
-            done(PlayerReasonDone.BUSTED)
+            done(PlayerReasonDone.PLAYER_BUSTED)
         }
     }
 
     fun stand() {
         checkIsNotDone()
-        done(PlayerReasonDone.STANDS)
+        done(PlayerReasonDone.PLAYER_STANDS)
     }
+
+    fun dealerDealtBlackjack() {
+        done(PlayerReasonDone.DEALER_DEALT_BLACKJACK)
+    }
+
+    fun outcome(dealer: Dealer): PlayerOutcome =
+        when {
+            isBusted -> PlayerOutcome.LOSE
+            dealer.isBusted -> PlayerOutcome.WIN
+            isBlackjack && !dealer.isBlackjack -> PlayerOutcome.WIN
+            pushes(dealer) -> PlayerOutcome.DRAW
+            beats(dealer) -> PlayerOutcome.WIN
+            else -> PlayerOutcome.LOSE
+        }
+
+    private fun pushes(dealer: Dealer) = hand.pushes(dealer.hand)
+
+    private fun beats(dealer: Dealer) = hand.beats(dealer.hand)
 
     private fun checkIsNotDone() {
         check(!isDone) { "이미 턴이 끝난 상태입니다." }
@@ -48,6 +68,4 @@ class Player(
     private fun done(reasonDone: PlayerReasonDone) {
         this.reasonDone = reasonDone
     }
-
-    override fun toString(): String = "Player(name='$name', hand=$hand, reasonDone=$reasonDone)"
 }

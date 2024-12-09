@@ -8,6 +8,8 @@ class Players(
         private set
     val isDone: Boolean
         get() = roster.all { it.isDone }
+    val isOutcomeUnknown: Boolean
+        get() = roster.any { it.reasonDone == PlayerReasonDone.PLAYER_STANDS }
 
     init {
         requireNamesIsNotEmpty()
@@ -16,10 +18,13 @@ class Players(
         currentPlayer = iterator.next()
     }
 
+    constructor(vararg player: Player) : this(player.toList())
+
     operator fun get(index: Int): Player = roster[index]
 
     fun dealRoundOfCardsFrom(deck: Deck) {
         roster.forEach { it.initialDrawFrom(deck) }
+        skipToNextPlayerIfDone()
     }
 
     fun hit(deck: Deck) {
@@ -32,6 +37,19 @@ class Players(
         checkIsNotDone()
         currentPlayer.stand()
         skipToNextPlayerIfDone()
+    }
+
+    fun dealerDealtBlackjack() {
+        roster.forEach(Player::dealerDealtBlackjack)
+    }
+
+    fun result(dealer: Dealer): List<PlayerResult> {
+        checkIsDone()
+        return roster.map { PlayerResult(it.name, it.outcome(dealer)) }
+    }
+
+    private fun checkIsDone() {
+        check(isDone) { "게임이 종료되지 않았습니다." }
     }
 
     private fun checkIsNotDone() {
@@ -59,7 +77,5 @@ class Players(
         fun from(names: List<String>): Players = Players(names.map { Player(it) })
 
         fun from(vararg names: String): Players = from(names.toList())
-
-        fun from(vararg players: Player): Players = Players(players.toList())
     }
 }

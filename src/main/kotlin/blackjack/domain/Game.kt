@@ -3,8 +3,9 @@ package blackjack.domain
 class Game(
     val players: Players,
     val deck: Deck,
+    val dealer: Dealer = Dealer(),
 ) {
-    val isDone: Boolean
+    val arePlayersDone: Boolean
         get() = players.isDone
     val currentPlayer: Player
         get() = players.currentPlayer
@@ -12,6 +13,10 @@ class Game(
     fun initialDeal() {
         repeat(INITIAL_ROUNDS) {
             players.dealRoundOfCardsFrom(deck)
+            dealer.drawFrom(deck)
+        }
+        if (dealer.isBlackjack) {
+            players.dealerDealtBlackjack()
         }
     }
 
@@ -21,6 +26,25 @@ class Game(
 
     fun playerStands() {
         players.stand()
+    }
+
+    fun dealerTurn() {
+        checkPlayersAreDone()
+
+        dealer.flipHoleCardUp()
+
+        if (!isDealerActionNecessary()) {
+            return
+        }
+        dealer.takeAction(deck)
+    }
+
+    fun gameResult(): GameResult = GameResult(players.result(dealer))
+
+    private fun isDealerActionNecessary() = players.isOutcomeUnknown
+
+    private fun checkPlayersAreDone() {
+        check(arePlayersDone) { "플레이어들의 턴이 종료되어야 합니다." }
     }
 
     companion object {

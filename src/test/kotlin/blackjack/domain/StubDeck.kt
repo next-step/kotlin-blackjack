@@ -13,6 +13,6 @@ class StubDeck(
     companion object {
         val DUMMY_SUIT = Suit.SPADES
 
-        fun from(vararg ranks: Rank): StubDeck = StubDeck(ranks.map { Card.of(DUMMY_SUIT, it) })
+        fun from(vararg ranks: Rank): StubDeck = StubDeck(ranks.map { Card(DUMMY_SUIT, it) })
     }
 }

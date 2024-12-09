@@ -1,12 +1,18 @@
 package blackjack.domain
 
+import blackjack.domain.StubDeck.Companion.DUMMY_SUIT
+import blackjack.support.Fixtures.createBlackjackDealer
 import blackjack.support.Fixtures.createBlackjackPlayer
+import blackjack.support.Fixtures.createBustedDealer
 import blackjack.support.Fixtures.createBustedPlayer
+import blackjack.support.Fixtures.createDealer
+import blackjack.support.Fixtures.createPlayer
 import blackjack.support.Fixtures.createStandingPlayer
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 
 @Suppress("NonAsciiCharacters")
@@ -41,7 +47,7 @@ class PlayerTest {
 
         player.initialDrawFrom(deck)
 
-        player.hand[0] shouldBe Card.of(StubDeck.DUMMY_SUIT, Rank.ACE)
+        player.hand[0] shouldBe Card(DUMMY_SUIT, Rank.ACE)
     }
 
     @Test
@@ -53,7 +59,7 @@ class PlayerTest {
         player.initialDrawFrom(deck)
 
         player.isDone shouldBe true
-        player.reasonDone shouldBe PlayerReasonDone.BLACKJACK
+        player.reasonDone shouldBe PlayerReasonDone.PLAYER_HAS_BLACKJACK
     }
 
     @Test
@@ -63,12 +69,15 @@ class PlayerTest {
 
         player.hit(deck)
 
-        player.hand[0] shouldBe Card.of(StubDeck.DUMMY_SUIT, Rank.TWO)
+        player.hand[0] shouldBe Card(DUMMY_SUIT, Rank.TWO)
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "{index} 플레이어 상태 = {1}")
     @MethodSource("donePlayers")
-    fun `턴이 종료된 경우, 힛을 할 수 없다`(player: Player) {
+    fun `턴이 종료된 경우, 힛을 할 수 없다`(
+        player: Player,
+        description: String,
+    ) {
         val deck = StubDeck.from(Rank.TWO, Rank.THREE)
         assertThrows<IllegalStateException> { player.hit(deck) }
     }
@@ -76,9 +85,9 @@ class PlayerTest {
     @Test
     fun `힛을 하여 21점을 넘으면 버스트된다`() {
         val hand =
-            Hand.from(
-                Card.of(Suit.CLUBS, Rank.KING),
-                Card.of(Suit.CLUBS, Rank.QUEEN),
+            Hand(
+                Card(Suit.CLUBS, Rank.KING),
+                Card(Suit.CLUBS, Rank.QUEEN),
             )
         val player = Player("jack", hand)
         val deck = StubDeck.from(Rank.JACK)
@@ -86,7 +95,7 @@ class PlayerTest {
         player.hit(deck)
 
         player.isDone shouldBe true
-        player.reasonDone shouldBe PlayerReasonDone.BUSTED
+        player.reasonDone shouldBe PlayerReasonDone.PLAYER_BUSTED
     }
 
     @Test
@@ -96,12 +105,15 @@ class PlayerTest {
         player.stand()
 
         player.isDone shouldBe true
-        player.reasonDone shouldBe PlayerReasonDone.STANDS
+        player.reasonDone shouldBe PlayerReasonDone.PLAYER_STANDS
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "{index} 플레이어 상태 = {1}")
     @MethodSource("donePlayers")
-    fun `이미 턴이 끝난 상태에서는 스탠드 할 수 없다`(player: Player) {
+    fun `이미 턴이 끝난 상태에서는 스탠드 할 수 없다`(
+        player: Player,
+        description: String,
+    ) {
         assertThrows<IllegalStateException> { player.stand() }
     }
 
@@ -111,13 +123,102 @@ class PlayerTest {
         Player("jack").isBusted shouldBe false
     }
 
+    @Test
+    fun `딜러가 블랙잭이라 플레이어 턴이 종료된다`() {
+        val player = Player("jack")
+
+        player.dealerDealtBlackjack()
+
+        player.reasonDone shouldBe PlayerReasonDone.DEALER_DEALT_BLACKJACK
+    }
+
+    @Test
+    fun `플레이어가 버스트한 경우 패배한다`() {
+        val bustedPlayer = createBustedPlayer("jack")
+        val dealer = createDealer(StubDeck.from(Rank.SIX, Rank.SEVEN))
+
+        val outcome = bustedPlayer.outcome(dealer)
+
+        outcome shouldBe PlayerOutcome.LOSE
+    }
+
+    @Test
+    fun `딜러가 버스트한 경우 버스트하지 않은 플레이어는 승리한다`() {
+        val player = createPlayer(StubDeck.from(Rank.JACK, Rank.TEN))
+        val bustedDealer = createBustedDealer()
+
+        val outcome = player.outcome(bustedDealer)
+
+        outcome shouldBe PlayerOutcome.WIN
+    }
+
+    @Test
+    fun `딜러와 플레이어가 모두 버스트한 경우 플레이어는 패배한다`() {
+        val bustedPlayer = createBustedPlayer()
+        val bustedDealer = createBustedDealer()
+
+        val outcome = bustedPlayer.outcome(bustedDealer)
+
+        outcome shouldBe PlayerOutcome.LOSE
+    }
+
+    @Test
+    fun `플레이어가 블랙잭이고 딜러가 블랙잭이 아닌 경우 승리한다`() {
+        val blackjackPlayer = createBlackjackPlayer()
+        val dealer = createDealer()
+
+        val outcome = blackjackPlayer.outcome(dealer)
+
+        outcome shouldBe PlayerOutcome.WIN
+    }
+
+    @Test
+    fun `플레이러와 딜러 모두 블랙잭이면 무승부다`() {
+        val blackjackPlayer = createBlackjackPlayer()
+        val blackjackDealer = createBlackjackDealer()
+
+        val outcome = blackjackPlayer.outcome(blackjackDealer)
+
+        outcome shouldBe PlayerOutcome.DRAW
+    }
+
+    @Test
+    fun `플레이어의 점수가 딜러의 점수보다 높으면 승리한다`() {
+        val player = createPlayer(StubDeck.from(Rank.JACK, Rank.TEN))
+        val dealer = createDealer(StubDeck.from(Rank.TWO, Rank.THREE))
+
+        val outcome = player.outcome(dealer)
+
+        outcome shouldBe PlayerOutcome.WIN
+    }
+
+    @Test
+    fun `플레이어 점수와 딜러의 점수가 같은 경우 무승부다`() {
+        val player = createPlayer(StubDeck.from(Rank.FIVE, Rank.TEN))
+        val dealer = createDealer(StubDeck.from(Rank.SEVEN, Rank.EIGHT))
+
+        val outcome = player.outcome(dealer)
+
+        outcome shouldBe PlayerOutcome.DRAW
+    }
+
+    @Test
+    fun `플레이어의 점수가 딜러의 점수보다 낮으면 패배한다`() {
+        val player = createPlayer(StubDeck.from(Rank.TWO, Rank.THREE))
+        val dealer = createDealer(StubDeck.from(Rank.FOUR, Rank.FIVE))
+
+        val outcome = player.outcome(dealer)
+
+        outcome shouldBe PlayerOutcome.LOSE
+    }
+
     companion object {
         @JvmStatic
         fun donePlayers() =
             listOf(
-                createBlackjackPlayer(),
-                createBustedPlayer(),
-                createStandingPlayer(),
+                Arguments.of(createBlackjackPlayer(), "블랙잭"),
+                Arguments.of(createBustedPlayer(), "버스트"),
+                Arguments.of(createStandingPlayer(), "스탠드"),
             )
     }
 }
