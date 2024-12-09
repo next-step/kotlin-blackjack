@@ -3,7 +3,7 @@ package blackjack.player
 import blackjack.card.Card
 import blackjack.participant.Participant
 
-class Player(
+data class Player(
     override val name: String,
     override val hand: Hand = Hand(cards = emptyList()),
 ) : Participant<Player> {

@@ -1,5 +1,6 @@
 package blackjack.machine
 
+import betting.board.BettingBoard
 import blackjack.dealer.Dealer
 import blackjack.deck.Deck
 import blackjack.participant.createParticipants
@@ -11,6 +12,7 @@ import blackjack.view.ResultView
 
 class BlackJackMachine(
     private val deck: Deck,
+    private val bettingBoard: BettingBoard = BettingBoard(),
 ) {
     fun play() {
         val playerList =
@@ -24,6 +26,11 @@ class BlackJackMachine(
                 }
         var players = Players(players = playerList)
         var dealer = Dealer.ready(initialCards = listOf(deck.draw(), deck.draw()))
+
+        bettingBoard.setup(
+            playerBets = players.players.associateWith { InputView.inputBettingAmount(it) },
+            dealer = dealer,
+        )
 
         ResultView.printPlayerNamesAndDealer(players = players, dealer = dealer)
         ResultView.printPlayersCardStatus(participants = createParticipants(dealer = dealer, players = players))

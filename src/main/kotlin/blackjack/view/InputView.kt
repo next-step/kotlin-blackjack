@@ -1,6 +1,8 @@
 package blackjack.view
 
 import betting.Bet
+import betting.BetResult
+import blackjack.participant.Participant
 import blackjack.player.Player
 
 object InputView {
@@ -14,8 +16,8 @@ object InputView {
         return "y" == readlnOrNull()
     }
 
-    fun inputBettingAmount(player: Player): Bet {
+    fun inputBettingAmount(player: Participant<*>): BetResult {
         println("${player.name}의 베팅 금액은?")
-        return Bet(readlnOrNull()?.toLongOrNull() ?: 0L)
+        return BetResult(bet = Bet(readlnOrNull()?.toLongOrNull() ?: 0L))
     }
 }

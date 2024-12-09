@@ -5,7 +5,7 @@ import blackjack.participant.Participant
 import blackjack.player.Hand
 import blackjack.view.ResultView
 
-class Dealer(
+data class Dealer(
     override val name: String = "딜러",
     override val hand: Hand = Hand(cards = emptyList()),
 ) : Participant<Dealer> {
