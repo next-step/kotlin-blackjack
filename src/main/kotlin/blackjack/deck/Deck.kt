@@ -5,13 +5,14 @@ import blackjack.card.Rank
 import blackjack.card.Suit
 
 class Deck(
-    private var cards: Cards = Cards(cards = createFullDeck()),
+    var cards: Cards = Cards(cards = createFullDeck()),
 ) {
-    fun draw(): Card =
-        cards.draw().let { (drawnCard, remainCards) ->
-            cards = Cards(cards = remainCards)
-            drawnCard
-        }
+    fun draw(): Card {
+        require(cards.isNotEmpty()) { "카드 목록이 비어있습니다." }
+        return cards
+            .draw()
+            .also { cards.discard(it) }
+    }
 }
 
 private fun createFullDeck(): List<Card> =
