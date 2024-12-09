@@ -1,4 +1,4 @@
 package blackjack.domain
 
 @JvmInline
-value class BettingMoney(private val amount: Int)
+value class BettingMoney(val amount: Int)

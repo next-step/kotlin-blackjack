@@ -2,7 +2,7 @@ package blackjack.domain
 
 class Player(
     private val name: PlayerName,
-    private val bettingMoney: BettingMoney,
+    val bettingMoney: BettingMoney,
     private val hand: Hand,
 ) : Participant(name, hand) {
     override fun isDrawable(): Boolean {
@@ -15,6 +15,7 @@ class Player(
 
     fun compareWithDealer(dealer: Dealer): GameMatchResult {
         return when {
+            dealer.isBust() -> GameMatchResult.WIN
             calculateTotal() > dealer.calculateTotal() -> GameMatchResult.WIN
             calculateTotal() < dealer.calculateTotal() -> GameMatchResult.LOSE
             else -> GameMatchResult.DRAW

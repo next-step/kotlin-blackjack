@@ -32,7 +32,7 @@ class BlackjackGameResultTest : StringSpec({
         Player.createNew(
             PlayerName("playerD"),
             BettingMoney(10000),
-            listOf(Card(Rank.TEN, Suit.SPADES), Card(Rank.NINE, Suit.HEARTS)),
+            listOf(Card(Rank.TEN, Suit.SPADES), Card(Rank.ACE, Suit.HEARTS)),
         )
 
     "플레이어의 결과를 반환할 수 있다." {
@@ -51,5 +51,37 @@ class BlackjackGameResultTest : StringSpec({
             val blackjackGameResult = BlackjackGameResult(dealer, players)
             blackjackGameResult.extractPlayerGameResult() shouldBe expected
         }
+    }
+
+    "딜러의 이익을 계산할 수 있다." {
+        forAll(
+            row(
+                Dealer.createNew(listOf(Card(Rank.TEN, Suit.SPADES), Card(Rank.SEVEN, Suit.HEARTS))),
+                -15000,
+            ),
+            row(
+                Dealer.createNew(listOf(Card(Rank.TEN, Suit.SPADES), Card(Rank.ACE, Suit.HEARTS))),
+                30000,
+            ),
+        ) { dealer, expected ->
+            val players = listOf(playerA, playerB, playerC, playerD)
+            val blackjackGameResult = BlackjackGameResult(dealer, players)
+            blackjackGameResult.calculateDealerProfit() shouldBe expected
+        }
+    }
+
+    "플레이어 각각의 이익을 계산할 수 있다." {
+        val dealer = Dealer.createNew(listOf(Card(Rank.TEN, Suit.SPADES), Card(Rank.SEVEN, Suit.HEARTS)))
+        val players = listOf(playerA, playerB, playerC, playerD)
+
+        val blackjackGameResult = BlackjackGameResult(dealer, players)
+        val expectedProfits =
+            mapOf(
+                playerA to -10000,
+                playerB to 10000,
+                playerC to 0,
+                playerD to 15000,
+            )
+        blackjackGameResult.calculatePlayerProfits() shouldBe expectedProfits
     }
 })
