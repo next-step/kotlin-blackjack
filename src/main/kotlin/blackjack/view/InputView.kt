@@ -6,6 +6,11 @@ class InputView {
         return readln()
     }
 
+    fun inputBettingMoney(playerName: String): String {
+        println("\n${playerName}의 배팅 금액은?")
+        return readln()
+    }
+
     fun inputMoreCard(playerName: String): String {
         println("\n${playerName}은 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
         return readln()

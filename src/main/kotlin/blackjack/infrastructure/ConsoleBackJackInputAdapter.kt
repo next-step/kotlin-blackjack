@@ -12,6 +12,11 @@ class ConsoleBackJackInputAdapter(private val inputView: InputView) : BlackjackI
             .map { PlayerName(it.trim()) }
     }
 
+    override fun fetchBettingMoney(playerName: String): Int {
+        val bettingMoneyInput = inputView.inputBettingMoney(playerName)
+        return bettingMoneyInput.toInt()
+    }
+
     override fun fetchMoreCard(playerName: String): HitStayChoice {
         val moreCardInput = inputView.inputMoreCard(playerName)
         return HitStayChoice.from(moreCardInput)

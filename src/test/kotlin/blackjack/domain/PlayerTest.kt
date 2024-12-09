@@ -7,7 +7,7 @@ import io.kotest.matchers.shouldBe
 
 class PlayerTest : StringSpec({
     "플레이어의 이름을 반환할 수 있다." {
-        val player = Player(PlayerName("dino"), Hand())
+        val player = Player(PlayerName("dino"), BettingMoney(10000), Hand())
         player.getName() shouldBe "dino"
     }
 
@@ -25,7 +25,7 @@ class PlayerTest : StringSpec({
                 true,
             ),
         ) { cards, expected ->
-            val player = Player.createNew(PlayerName("dino"), cards)
+            val player = Player.createNew(PlayerName("dino"), BettingMoney(10000), cards)
             player.isDrawable() shouldBe expected
         }
     }
@@ -40,7 +40,7 @@ class PlayerTest : StringSpec({
             row(listOf(Card(Rank.ACE, Suit.DIAMONDS), Card(Rank.TEN, Suit.HEARTS)), 21),
             row(listOf(Card(Rank.ACE, Suit.DIAMONDS), Card(Rank.ACE, Suit.CLOVERS), Card(Rank.ACE, Suit.HEARTS)), 13),
         ) { cards, expected ->
-            val player = Player.createNew(PlayerName("dino"), cards)
+            val player = Player.createNew(PlayerName("dino"), BettingMoney(10000), cards)
             player.calculateTotal() shouldBe expected
         }
     }
@@ -73,7 +73,7 @@ class PlayerTest : StringSpec({
                 GameMatchResult.WIN,
             ),
         ) { playerCards, dealerCards, expected ->
-            val player = Player.createNew(PlayerName("dino"), playerCards)
+            val player = Player.createNew(PlayerName("dino"), BettingMoney(10000), playerCards)
             val dealer = Dealer(PlayerName("dealer"), Hand.createInitial(dealerCards))
             player.compareWithDealer(dealer) shouldBe expected
         }

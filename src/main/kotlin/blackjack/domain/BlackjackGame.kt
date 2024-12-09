@@ -19,14 +19,18 @@ class BlackjackGame(
     companion object {
         fun createGame(
             playerNames: List<PlayerName>,
+            bettingMoneys: List<BettingMoney>,
             deck: Deck,
         ): BlackjackGame {
             deck.shuffle()
             val dealer = Dealer.createNew(listOf(deck.drawCard(), deck.drawCard()))
             val players =
                 playerNames.map { name ->
-                    val handCards = listOf(deck.drawCard(), deck.drawCard())
-                    Player.createNew(name, handCards)
+                    Player.createNew(
+                        name,
+                        bettingMoneys[playerNames.indexOf(name)],
+                        listOf(deck.drawCard(), deck.drawCard()),
+                    )
                 }
             return BlackjackGame(Participants(dealer, players), deck)
         }

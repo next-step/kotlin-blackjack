@@ -10,24 +10,28 @@ class BlackjackGameResultTest : StringSpec({
     val playerA =
         Player.createNew(
             PlayerName("playerA"),
+            BettingMoney(10000),
             listOf(Card(Rank.TEN, Suit.HEARTS), Card(Rank.TWO, Suit.HEARTS)),
         )
 
     val playerB =
         Player.createNew(
             PlayerName("playerB"),
+            BettingMoney(10000),
             listOf(Card(Rank.TEN, Suit.CLOVERS), Card(Rank.EIGHT, Suit.HEARTS)),
         )
 
     val playerC =
         Player.createNew(
             PlayerName("playerC"),
+            BettingMoney(10000),
             listOf(Card(Rank.TEN, Suit.CLOVERS), Card(Rank.SEVEN, Suit.HEARTS)),
         )
 
     val playerD =
         Player.createNew(
             PlayerName("playerD"),
+            BettingMoney(10000),
             listOf(Card(Rank.TEN, Suit.SPADES), Card(Rank.NINE, Suit.HEARTS)),
         )
 

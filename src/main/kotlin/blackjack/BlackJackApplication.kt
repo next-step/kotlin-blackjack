@@ -15,8 +15,10 @@ fun main() {
     val gameController = BlackjackGameController(consoleBackJackInputAdapter, outputView)
 
     val playersNames = gameController.getPlayersNames()
+    val playerBettingMoneys = gameController.getPlayerBettingMoneys(playersNames)
+
     val deck = Deck()
-    val blackJackGame = BlackjackGame.createGame(playersNames, deck)
+    val blackJackGame = BlackjackGame.createGame(playersNames, playerBettingMoneys, deck)
 
     gameController.announceInitialPlayersCards(blackJackGame)
 
