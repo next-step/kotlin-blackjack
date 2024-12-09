@@ -20,15 +20,6 @@ class CardsTest {
         Cards(cards).point() shouldBe point
     }
 
-    @ParameterizedTest
-    @MethodSource("provideParameters2")
-    fun `카드네임을 얻는다`(
-        cards: MutableSet<Card>,
-        cardNames: String,
-    ) {
-        Cards(cards).getCardNames() shouldBe cardNames
-    }
-
     companion object {
         @JvmStatic
         fun provideParameters(): Stream<Arguments> {

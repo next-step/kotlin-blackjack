@@ -17,7 +17,7 @@ class CardDispenserTest {
         val player2 = Player(Name("test"))
         CardDispenser().apply { deal(player2, Card.CARD_COUNT) }
 
-        player.getCardNames() shouldNotBe player2.getCardNames()
+        player.cards shouldNotBe player2.cards
     }
 
     @Test
@@ -25,30 +25,17 @@ class CardDispenserTest {
         val cardDispenser = CardDispenser()
         val player = Player(Name("Test"))
 
-        cardDispenser.deal(player) shouldBe true
-        player.cards.size shouldBe 1
+        cardDispenser.dealDefault(player)
+        player.cards.size shouldBe 2
 
-        cardDispenser.deal(player, 10) shouldBe true
-        player.cards.size shouldBe 11
+        val players = Players(List(30) { Player(Name("test")) })
 
-        cardDispenser.deal(player, 100) shouldBe false
-        player.cards.size shouldBe Card.CARD_COUNT
+        cardDispenser.checkRemainCard() shouldBe true
+        cardDispenser.deal(players, 2)
 
-        val players = Players(setOf(Name("test1"), Name("test2")))
-        CardDispenser().deal(players, 10)
+        players[0].cards.size shouldBe 2
+        players[1].cards.size shouldBe 2
 
-        players[0].cards.size shouldBe 10
-        players[1].cards.size shouldBe 10
-
-        val players2 = Players(setOf(Name("test1"), Name("test2")))
-        val cardDispenser2 = CardDispenser()
-
-        cardDispenser2.checkRemainCard() shouldBe true
-
-        cardDispenser2.deal(players2, 100) shouldBe false
-        players2[0].cards.size shouldBe Card.CARD_COUNT
-        players2[1].cards.size shouldBe 0
-
-        cardDispenser2.checkRemainCard() shouldBe false
+        cardDispenser.checkRemainCard() shouldBe false
     }
 }
