@@ -52,8 +52,8 @@ class ResultView {
 
     private fun printWinningOrLoseResults(blackJackGameResults: BlackJackGameResults) {
         println("## 최종 승패")
-        println("딜러: ${blackJackGameResults.dealerScore.winningScore}승 ${blackJackGameResults.dealerScore.loseScore}패")
-        blackJackGameResults.playerWinningOrLose.forEach { (playerName, win) ->
+        println("딜러: ${blackJackGameResults.winningOrLoseResult.dealerScore.winningScore}승 ${blackJackGameResults.winningOrLoseResult.dealerScore.loseScore}패")
+        blackJackGameResults.winningOrLoseResult.playerWinningOrLose.forEach { (playerName, win) ->
             val result = if (win) "승" else "패"
             println("$playerName: $result")
         }

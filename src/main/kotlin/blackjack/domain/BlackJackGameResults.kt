@@ -3,38 +3,43 @@ package blackjack.domain
 class BlackJackGameResults(
     val value: List<BlackJackGameResult>,
 ) {
-    private val dealerResult = value.first { it.dealer }
-    private val playerResults = value.filter { !it.dealer }
-
-    val dealerScore = dealerScore()
-    val playerWinningOrLose = playerWinningOrLose()
+    val winningOrLoseResult: WinningOrLoseResult =
+        WinningOrLoseResult(dealerScore(), playerWinningOrLose())
 
     private fun dealerScore(): DealerScore {
+        val dealerResult = value.first { it.dealer }
+        val playerResults = value.filter { !it.dealer }
         if (isBust(dealerResult.totalValue)) {
             return DealerScore(0, playerResults.size)
         }
 
-        val winningScore = playerResults.count { isDealerWinning(it) }
-        val loseScore = playerResults.count { isPlayerWinning(it) }
+        val winningScore = playerResults.count { isDealerWinning(it, dealerResult.totalValue) }
+        val loseScore = playerResults.count { isPlayerWinning(it, dealerResult.totalValue) }
 
         return DealerScore(winningScore, loseScore)
     }
 
     private fun playerWinningOrLose(): Map<String, Boolean> {
+        val dealerResult = value.first { it.dealer }
+        val playerResults = value.filter { !it.dealer }
         if (isBust(dealerResult.totalValue)) {
             return playerResults.associate { it.playerName to true }
         }
 
         return playerResults.associate {
-            it.playerName to isPlayerWinning(it)
+            it.playerName to isPlayerWinning(it, dealerResult.totalValue)
         }
     }
 
-    private fun isDealerWinning(playerResult: BlackJackGameResult) =
-        isBust(playerResult.totalValue) || playerResult.totalValue < dealerResult.totalValue
+    private fun isDealerWinning(
+        playerResult: BlackJackGameResult,
+        dealerTotalValue: Int,
+    ) = isBust(playerResult.totalValue) || playerResult.totalValue < dealerTotalValue
 
-    private fun isPlayerWinning(playerResult: BlackJackGameResult) =
-        !isBust(playerResult.totalValue) && playerResult.totalValue > dealerResult.totalValue
+    private fun isPlayerWinning(
+        playerResult: BlackJackGameResult,
+        dealerTotalValue: Int,
+    ) = !isBust(playerResult.totalValue) && playerResult.totalValue > dealerTotalValue
 
     private fun isBust(score: Int) = score > BUST_SCORE
 }
@@ -44,6 +49,11 @@ data class BlackJackGameResult(
     val playerName: String,
     val cards: List<DrawCard>,
     val totalValue: Int,
+)
+
+data class WinningOrLoseResult(
+    val dealerScore: DealerScore,
+    val playerWinningOrLose: Map<String, Boolean>,
 )
 
 data class DealerScore(

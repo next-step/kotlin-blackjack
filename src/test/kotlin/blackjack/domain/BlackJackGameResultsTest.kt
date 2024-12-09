@@ -34,7 +34,7 @@ class BlackJackGameResultsTest : StringSpec({
             )
         )
 
-        sut.dealerScore shouldBe DealerScore(2, 1)
+        sut.winningOrLoseResult.dealerScore shouldBe DealerScore(2, 1)
     }
 
     "플레이어의 승패 결과를 계산한다." {
@@ -67,7 +67,7 @@ class BlackJackGameResultsTest : StringSpec({
             )
         )
 
-        sut.playerWinningOrLose shouldBe mapOf(
+        sut.winningOrLoseResult.playerWinningOrLose shouldBe mapOf(
             "player2" to false,
             "player3" to false,
             "player4" to true,
