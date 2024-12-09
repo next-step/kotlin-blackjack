@@ -1,7 +1,7 @@
 package blackjack
 
-class Bank(accounts: List<ParticipantAccount2> = emptyList()) {
-    private val accounts: MutableList<ParticipantAccount2> = accounts.toMutableList()
+class Bank(accounts: List<ParticipantAccount> = emptyList()) {
+    private val accounts: MutableList<ParticipantAccount> = accounts.toMutableList()
 
     fun bet(
         participant: Participant,
@@ -13,7 +13,7 @@ class Bank(accounts: List<ParticipantAccount2> = emptyList()) {
             }
         }
         accounts.add(
-            ParticipantAccount2(
+            ParticipantAccount(
                 participant = participant,
                 initialBalance = Money(betAmount),
             ),
@@ -46,8 +46,8 @@ class Bank(accounts: List<ParticipantAccount2> = emptyList()) {
 
     private fun settleOutCome(
         outcome: Outcome,
-        dealerAccount: ParticipantAccount2,
-        playerAccount: ParticipantAccount2,
+        dealerAccount: ParticipantAccount,
+        playerAccount: ParticipantAccount,
     ) {
         when (outcome) {
             Outcome.WIN -> settleWin(dealerAccount, playerAccount)
@@ -58,41 +58,41 @@ class Bank(accounts: List<ParticipantAccount2> = emptyList()) {
     }
 
     private fun settleWin(
-        dealerAccount: ParticipantAccount2,
-        playerAccount: ParticipantAccount2,
+        dealerAccount: ParticipantAccount,
+        playerAccount: ParticipantAccount,
     ) {
         val betAmount = playerAccount.currentBalance
         updateBalances(dealerAccount, -betAmount, playerAccount, betAmount)
     }
 
     private fun settleLoss(
-        dealerAccount: ParticipantAccount2,
-        playerAccount: ParticipantAccount2,
+        dealerAccount: ParticipantAccount,
+        playerAccount: ParticipantAccount,
     ) {
         val betAmount = playerAccount.currentBalance
         updateBalances(dealerAccount, betAmount, playerAccount, -betAmount)
     }
 
     private fun settleBlackJack(
-        dealerAccount: ParticipantAccount2,
-        playerAccount: ParticipantAccount2,
+        dealerAccount: ParticipantAccount,
+        playerAccount: ParticipantAccount,
     ) {
         val betAmount = playerAccount.currentBalance * BLACKJACK_BET_MULTIPLIER
         updateBalances(dealerAccount, -betAmount, playerAccount, betAmount)
     }
 
     private fun updateBalances(
-        dealerAccount: ParticipantAccount2,
+        dealerAccount: ParticipantAccount,
         dealerAdjustment: Money,
-        playerAccount: ParticipantAccount2,
+        playerAccount: ParticipantAccount,
         playerAdjustment: Money,
     ) {
         accounts.updateAccount(dealerAccount, dealerAdjustment)
         accounts.updateAccount(playerAccount, playerAdjustment)
     }
 
-    private fun MutableList<ParticipantAccount2>.updateAccount(
-        account: ParticipantAccount2,
+    private fun MutableList<ParticipantAccount>.updateAccount(
+        account: ParticipantAccount,
         newBalance: Money,
     ) {
         val index = indexOf(account)
@@ -101,12 +101,12 @@ class Bank(accounts: List<ParticipantAccount2> = emptyList()) {
         }
     }
 
-    private fun findDealerAccount(): ParticipantAccount2 {
+    private fun findDealerAccount(): ParticipantAccount {
         return accounts.find { it.participant is Dealer }
             ?: throw IllegalStateException("딜러 계좌가 존재하지 않습니다")
     }
 
-    private fun findAccount(participant: Participant): ParticipantAccount2? {
+    private fun findAccount(participant: Participant): ParticipantAccount? {
         return accounts.find { it.participant == participant }
     }
 

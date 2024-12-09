@@ -1,6 +1,6 @@
 package blackjack
 
-data class ParticipantAccount2(
+data class ParticipantAccount(
     val participant: Participant,
     private val balance: Balance = Balance(),
 ) {
@@ -15,7 +15,7 @@ data class ParticipantAccount2(
         ),
     )
 
-    fun updateBalance(amount: Money): ParticipantAccount2 {
+    fun updateBalance(amount: Money): ParticipantAccount {
         return this.copy(balance = balance.update(amount))
     }
 }
