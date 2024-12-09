@@ -5,11 +5,12 @@ import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
 
 class GameTest : StringSpec({
-    "초기화 시 플레이어마다 2장의 카드가 분배된다." {
+    "게임 초기화 시 딜러와 플레이어에게 2장의 카드가 분배된다." {
         val playerNames = listOf("kim", "da")
         val game = Game(playerNames)
 
         game.players.shouldHaveSize(2)
+        game.dealer.cards.size shouldBe 2
         game.players.forEach { player ->
             player.cards.size shouldBe 2
         }
@@ -31,25 +32,25 @@ class GameTest : StringSpec({
         game.canContinue(player) shouldBe false
     }
 
-    "플레이어가 카드를 추가로 받을 수 있다." {
+    "딜러의 점수가 16 이하이면 카드를 추가로 받는다." {
         val playerNames = listOf("kim")
         val game = Game(playerNames)
-        val player = game.players.first()
-        val initialCardCount = player.cards.size
 
-        game.drawCardForPlayer(player)
-        player.cards.size shouldBe initialCardCount + 1
+        val result = game.handleDealerTurn()
+        result shouldBe (game.dealer.score <= 16)
     }
 
-    "덱에서 카드를 올바르게 소모한다." {
-        val playerNames = listOf("kim")
+    "게임 결과 - 딜러 승패 계산" {
+        val playerNames = listOf("kim", "lee", "park")
         val game = Game(playerNames)
-        val initialDeckSize = Deck().cards.size
 
-        val cardsDrawn = game.players.sumOf { it.cards.size }
-        cardsDrawn shouldBe 2
+        val results = mapOf(
+            "kim" to "승",
+            "lee" to "패",
+            "park" to "패"
+        )
 
-        val remainingDeckSize = initialDeckSize - cardsDrawn
-        remainingDeckSize shouldBe 50
+        val dealerResult = game.calculateDealerResult(results)
+        dealerResult shouldBe "2승 1패"
     }
 })
