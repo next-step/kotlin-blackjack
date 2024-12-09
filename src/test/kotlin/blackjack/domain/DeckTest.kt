@@ -10,7 +10,6 @@ class DeckTest : StringSpec({
         val deck = Deck()
         deck.cards.size shouldBe 52
     }
-
     "카드는 중복되지 않는다." {
         val deck = Deck()
         val uniqueCards = deck.cards.distinct()
