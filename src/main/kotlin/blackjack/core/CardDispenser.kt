@@ -18,12 +18,12 @@ class CardDispenser {
             .shuffled()
             .iterator()
 
-    fun dealDefault(players: Players): Boolean {
-        return players.all { dealDefault(it) }
+    fun dealDefault(players: Players) {
+        players.forEach { dealDefault(it) }
     }
 
-    fun dealDefault(player: Player): Boolean {
-        return (0..<DEFAULT_CARD_NUM).all { deal(player) }
+    fun dealDefault(player: Player) {
+        (0..<DEFAULT_CARD_NUM).all { deal(player) }
     }
 
     fun deal(
