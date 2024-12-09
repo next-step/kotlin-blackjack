@@ -67,6 +67,6 @@ class DealerTest {
                 ),
         )
 
-        dealer.isDraw() shouldBe true
+        dealer.shouldDraw() shouldBe true
     }
 }

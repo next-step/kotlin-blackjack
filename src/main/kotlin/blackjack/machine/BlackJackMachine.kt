@@ -30,7 +30,7 @@ class BlackJackMachine(
 
         while (Rule.isGameActive(players = players, dealer = dealer)) {
             players = Players(players = players.players.map { playTurn(it) })
-            dealer = dealer.drawIfAllowed { deck.draw() }
+            dealer = dealer.drawIfBelowDealerStandingRule { deck.draw() }
             ResultView.printPlayersCardStatusAndSum(participant = createParticipants(dealer = dealer, players = players))
         }
 

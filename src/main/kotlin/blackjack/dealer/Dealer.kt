@@ -18,10 +18,10 @@ class Dealer(
             else -> hand.sum() > opponent.hand.sum()
         }
 
-    fun isDraw(): Boolean = hand.sum() <= DEALER_STANDING_RULE
+    fun shouldDraw(): Boolean = hand.sum() <= DEALER_STANDING_RULE
 
-    fun drawIfAllowed(draw: () -> Card): Dealer =
-        if (isDraw()) {
+    fun drawIfBelowDealerStandingRule(draw: () -> Card): Dealer =
+        if (shouldDraw()) {
             this
                 .hitCard(draw())
                 .also { ResultView.printDealerDrawCard() }
