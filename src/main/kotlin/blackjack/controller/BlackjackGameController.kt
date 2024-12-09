@@ -58,7 +58,7 @@ class BlackjackGameController(
         val moreCardChoice = inputAdapter.fetchMoreCard(player.getName())
         return when (moreCardChoice) {
             HitStayChoice.HIT -> {
-                blackJackGame.drawCard(player)
+                player.drawCard(blackJackGame.deck)
                 true
             }
             HitStayChoice.STAY -> {
@@ -78,7 +78,7 @@ class BlackjackGameController(
         blackJackGame: BlackjackGame,
     ) {
         while (dealer.isDrawable()) {
-            blackJackGame.drawCard(dealer)
+            dealer.drawCard(blackJackGame.deck)
             outputView.printDealerDrawAnnounceMessage()
         }
     }

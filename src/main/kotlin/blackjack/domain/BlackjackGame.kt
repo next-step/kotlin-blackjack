@@ -2,13 +2,8 @@ package blackjack.domain
 
 class BlackjackGame(
     val participants: Participants,
-    private val deck: Deck,
+    val deck: Deck,
 ) {
-    fun drawCard(participant: Participant) {
-        val newCard = deck.drawCard()
-        participant.addCard(newCard)
-    }
-
     fun makeGameResult(): BlackjackGameResult {
         return BlackjackGameResult(participants.dealer, participants.players)
     }
