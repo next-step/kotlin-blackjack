@@ -7,13 +7,16 @@ enum class BlackJackPlayResult(val resultString: String) {
     ;
 
     companion object {
+        private const val BLACKJACK_NUMBER = 21
+
         fun getResult(
-            myScore: Int,
-            opponentScore: Int,
+            normalPlayerScore: Int,
+            dealerScore: Int,
         ): BlackJackPlayResult {
             return when {
-                myScore > opponentScore -> WIN
-                myScore < opponentScore -> LOSE
+                dealerScore == BLACKJACK_NUMBER -> WIN
+                normalPlayerScore > dealerScore -> WIN
+                normalPlayerScore < dealerScore -> LOSE
                 else -> DRAW
             }
         }
