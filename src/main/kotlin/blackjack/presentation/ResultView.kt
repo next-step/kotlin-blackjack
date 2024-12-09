@@ -1,8 +1,7 @@
 package blackjack.presentation
 
-import blackjack.core.match.MatchResult
-import blackjack.core.match.WinnerChecker
 import blackjack.core.player.Dealer
+import blackjack.core.player.MatchResult
 import blackjack.core.player.Player
 import blackjack.core.player.Players
 
@@ -74,7 +73,7 @@ object ResultView {
         stringBuilder: StringBuilder,
     ) {
         val matchResult =
-            players.map { WinnerChecker.check(dealer, it) }
+            players.map { dealer.checkMatch(it) }
                 .groupingBy { it }
                 .eachCount()
 
@@ -100,7 +99,7 @@ object ResultView {
     ) {
         stringBuilder.append(player.name)
         stringBuilder.append(STRING_COLON)
-        stringBuilder.append(WinnerChecker.check(dealer, player).result)
+        stringBuilder.append(dealer.checkMatch(player).reverse().result)
         stringBuilder.append(STRING_NEWLINE)
     }
 
@@ -116,8 +115,12 @@ object ResultView {
         val stringBuilder = StringBuilder()
         stringBuilder.append(player.name)
         stringBuilder.append(STRING_CARD)
-        stringBuilder.append(player.getCardNames())
+        stringBuilder.append(getCardNames(player))
         return stringBuilder.toString()
+    }
+
+    fun getCardNames(player: Player): String {
+        return player.cards.joinToString(",", "", "")
     }
 
     fun printDealerDraw() {
