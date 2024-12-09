@@ -14,6 +14,14 @@ abstract class Participant(private val name: PlayerName, private val hand: Hand)
         return hand.calculateBestTotal()
     }
 
+    fun isBlackjack(): Boolean {
+        return hand.isBlackjack()
+    }
+
+    fun isBust(): Boolean {
+        return hand.isBust()
+    }
+
     fun getName(): String {
         return name.value
     }
