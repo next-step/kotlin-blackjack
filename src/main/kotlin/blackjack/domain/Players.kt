@@ -26,7 +26,6 @@ class Players(private val players: List<Player>) {
             PlayerResultDTO(
                 name = player.name,
                 cards = player.getCards().joinToString { "${it.rank}${it.suit}" },
-                totalValue = player.getTotalValue(),
             )
         }
     }
