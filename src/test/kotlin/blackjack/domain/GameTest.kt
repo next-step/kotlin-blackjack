@@ -44,11 +44,12 @@ class GameTest : StringSpec({
         val playerNames = listOf("kim", "lee", "park")
         val game = Game(playerNames)
 
-        val results = mapOf(
-            "kim" to "승",
-            "lee" to "패",
-            "park" to "패"
-        )
+        val results =
+            mapOf(
+                "kim" to "승",
+                "lee" to "패",
+                "park" to "패",
+            )
 
         val dealerResult = game.calculateDealerResult(results)
         dealerResult shouldBe "2승 1패"

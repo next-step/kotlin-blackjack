@@ -40,11 +40,12 @@ class Game(playerNames: List<String>) {
         }
 
         players.forEach { player ->
-            results[player.name] = when {
-                player.score > 21 || dealer.score > player.score -> "패"
-                player.score == dealer.score -> "무승부"
-                else -> "승"
-            }
+            results[player.name] =
+                when {
+                    player.score > 21 || dealer.score > player.score -> "패"
+                    player.score == dealer.score -> "무승부"
+                    else -> "승"
+                }
         }
         return results
     }
