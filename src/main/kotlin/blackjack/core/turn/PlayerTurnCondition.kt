@@ -4,7 +4,7 @@ import blackjack.core.player.Player
 import blackjack.presentation.InputView
 
 object PlayerTurnCondition : TurnCondition {
-    override fun carGo(player: Player): Boolean {
+    override fun canGo(player: Player): Boolean {
         return InputView.getCard(player)
     }
 }

@@ -6,7 +6,7 @@ import blackjack.presentation.ResultView
 object DealerTurnCondition : TurnCondition {
     private const val DEALER_SCORE = 16
 
-    override fun carGo(player: Player): Boolean {
+    override fun canGo(player: Player): Boolean {
         return if (player.cards.point() <= DEALER_SCORE) {
             ResultView.printDealerDraw()
             true
