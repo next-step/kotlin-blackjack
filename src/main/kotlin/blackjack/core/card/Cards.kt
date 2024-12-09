@@ -5,8 +5,6 @@ class Cards(private val cards: MutableSet<Card> = mutableSetOf()) : MutableSet<C
         return point() > MAX_POINT
     }
 
-    fun getCardNames(): String = this.joinToString(",", "", "")
-
     fun point(): Int {
         val sum = cards.sumOf { it.denomination.score }
         val aces = cards.filter { it.denomination == Denomination.ACE }
