@@ -1,5 +1,15 @@
 package blackjack
 
+import blackjack.CardTextFixtures.spadeAceCard
+import blackjack.CardTextFixtures.spadeEightCard
+import blackjack.CardTextFixtures.spadeFiveCard
+import blackjack.CardTextFixtures.spadeFourCard
+import blackjack.CardTextFixtures.spadeJackCard
+import blackjack.CardTextFixtures.spadeKingCard
+import blackjack.CardTextFixtures.spadeNineCard
+import blackjack.CardTextFixtures.spadeQueenCard
+import blackjack.CardTextFixtures.spadeThreeCard
+import blackjack.CardTextFixtures.spadeTwoCard
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.data.forAll
@@ -12,8 +22,8 @@ class PlayerTest : StringSpec({
         val name = " "
         val initialCards =
             listOf(
-                Card(CardNumber.Queen, Suit.SPADES),
-                Card(CardNumber.King, Suit.SPADES),
+                spadeKingCard,
+                spadeQueenCard,
             )
 
         shouldThrow<IllegalArgumentException> {
@@ -26,12 +36,12 @@ class PlayerTest : StringSpec({
 
         listOf(
             listOf(
-                Card(CardNumber.King, Suit.SPADES),
+                spadeKingCard,
             ),
             listOf(
-                Card(CardNumber.Jack, Suit.SPADES),
-                Card(CardNumber.Queen, Suit.SPADES),
-                Card(CardNumber.King, Suit.SPADES),
+                spadeJackCard,
+                spadeQueenCard,
+                spadeKingCard,
             ),
         ).forEach { initialCards ->
             shouldThrow<IllegalArgumentException> {
@@ -44,19 +54,19 @@ class PlayerTest : StringSpec({
         val name = "jason"
         val initialCards =
             listOf(
-                Card(CardNumber.Ace, Suit.SPADES),
-                Card(Number(2), Suit.SPADES),
+                spadeAceCard,
+                spadeTwoCard,
             )
         val sut = Player(name = name, initialCards = initialCards)
-        val newCard = Card(Number(3), Suit.SPADES)
+        val newCard = spadeThreeCard
 
         sut.receive(newCard)
 
         sut.hand shouldContainExactlyInAnyOrder
             listOf(
-                Card(CardNumber.Ace, Suit.SPADES),
-                Card(Number(2), Suit.SPADES),
-                Card(Number(3), Suit.SPADES),
+                spadeAceCard,
+                spadeTwoCard,
+                spadeThreeCard,
             )
     }
 
@@ -64,8 +74,8 @@ class PlayerTest : StringSpec({
         val name = "jason"
         val initialCards =
             listOf(
-                Card(Number(9), Suit.SPADES),
-                Card(Number(8), Suit.HEARTS),
+                spadeNineCard,
+                spadeEightCard,
             )
 
         val sut = Player(name = name, initialCards = initialCards)
@@ -78,13 +88,13 @@ class PlayerTest : StringSpec({
         val name = "jason"
         val initialCards =
             listOf(
-                Card(Number(9), Suit.SPADES),
-                Card(Number(8), Suit.HEARTS),
+                spadeNineCard,
+                spadeEightCard,
             )
 
         forAll(
-            row(Card(Number(5), Suit.SPADES), true),
-            row(Card(Number(4), Suit.SPADES), false),
+            row(spadeFiveCard, true),
+            row(spadeFourCard, false),
         ) { card, expected ->
             val sut = Player(name = name, initialCards = initialCards)
             sut.receive(card)
@@ -98,15 +108,15 @@ class PlayerTest : StringSpec({
         val name = "jason"
         val initialCards =
             listOf(
-                Card(Number(9), Suit.SPADES),
-                Card(Number(8), Suit.HEARTS),
+                spadeNineCard,
+                spadeEightCard,
             )
 
         val sut = Player(name = name, initialCards = initialCards)
 
         sut.isInitialState() shouldBe true
 
-        sut.receive(Card(CardNumber.Queen, Suit.SPADES))
+        sut.receive(spadeQueenCard)
 
         sut.isInitialState() shouldBe false
     }

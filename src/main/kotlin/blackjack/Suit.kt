@@ -6,12 +6,12 @@ enum class Suit(val koreanName: String) {
     DIAMONDS("다이아몬드"),
     HEARTS("하트"), ;
 
-    fun generateAllCards(): List<Card> {
-        return CardNumberFactory.all().map { Card(it, this) }
+    fun generateAllCards2(): List<Card> {
+        return Denomination.map { Card(this, it) }
     }
 
     companion object {
-        fun flatMap(transform: (Suit) -> Iterable<Card>): List<Card> {
+        fun flatMap2(transform: (Suit) -> Iterable<Card>): List<Card> {
             return Suit.entries.flatMap(transform)
         }
     }

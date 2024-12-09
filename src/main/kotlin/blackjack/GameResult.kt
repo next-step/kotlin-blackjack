@@ -1,6 +1,6 @@
 package blackjack
 
-data class GameResult(
+data class GameResult2(
     val player: Player,
     val outcome: Outcome,
 )
@@ -8,5 +8,6 @@ data class GameResult(
 enum class Outcome {
     WIN,
     LOSS,
-    DRAW,
+    PUSH,
+    BLACKJACK,
 }

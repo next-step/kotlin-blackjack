@@ -1,5 +1,18 @@
 package blackjack
 
+import blackjack.Denomination.ACE
+import blackjack.Denomination.EIGHT
+import blackjack.Denomination.FIVE
+import blackjack.Denomination.FOUR
+import blackjack.Denomination.KING
+import blackjack.Denomination.NINE
+import blackjack.Denomination.SEVEN
+import blackjack.Denomination.TEN
+import blackjack.Denomination.TWO
+import blackjack.Suit.CLUBS
+import blackjack.Suit.DIAMONDS
+import blackjack.Suit.HEARTS
+import blackjack.Suit.SPADES
 import io.kotest.data.row
 
 object BlackJackCardTestFixtures {
@@ -7,38 +20,38 @@ object BlackJackCardTestFixtures {
         listOf(
             row(
                 listOf(
-                    Card(Number(10), Suit.SPADES),
-                    Card(CardNumber.King, Suit.SPADES),
+                    Card(SPADES, TEN),
+                    Card(SPADES, KING),
                 ),
                 20,
             ),
             row(
                 listOf(
-                    Card(Number(10), Suit.SPADES),
-                    Card(Number(7), Suit.SPADES),
+                    Card(SPADES, TEN),
+                    Card(SPADES, SEVEN),
                 ),
                 17,
             ),
             row(
                 listOf(
-                    Card(Number(10), Suit.SPADES),
-                    Card(Number(7), Suit.SPADES),
-                    Card(Number(5), Suit.SPADES),
+                    Card(SPADES, TEN),
+                    Card(SPADES, SEVEN),
+                    Card(SPADES, FIVE),
                 ),
                 22,
             ),
             row(
                 listOf(
-                    Card(Number(10), Suit.SPADES),
-                    Card(Number(7), Suit.SPADES),
-                    Card(Number(4), Suit.SPADES),
+                    Card(SPADES, TEN),
+                    Card(SPADES, SEVEN),
+                    Card(SPADES, FOUR),
                 ),
                 21,
             ),
             row(
                 listOf(
-                    Card(Number(7), Suit.SPADES),
-                    Card(Number(4), Suit.SPADES),
+                    Card(SPADES, SEVEN),
+                    Card(SPADES, FOUR),
                 ),
                 11,
             ),
@@ -48,46 +61,46 @@ object BlackJackCardTestFixtures {
         listOf(
             row(
                 listOf(
-                    Card(CardNumber.Ace, Suit.SPADES),
-                    Card(CardNumber.King, Suit.SPADES),
+                    Card(SPADES, ACE),
+                    Card(SPADES, KING),
                 ),
                 21,
             ),
             row(
                 listOf(
-                    Card(CardNumber.Ace, Suit.SPADES),
-                    Card(Number(9), Suit.SPADES),
+                    Card(SPADES, ACE),
+                    Card(SPADES, NINE),
                 ),
                 20,
             ),
             row(
                 listOf(
-                    Card(CardNumber.Ace, Suit.SPADES),
-                    Card(Number(9), Suit.SPADES),
-                    Card(CardNumber.King, Suit.SPADES),
+                    Card(SPADES, ACE),
+                    Card(SPADES, NINE),
+                    Card(SPADES, KING),
                 ),
                 20,
             ),
             row(
                 listOf(
-                    Card(CardNumber.Ace, Suit.SPADES),
-                    Card(Number(10), Suit.SPADES),
-                    Card(CardNumber.King, Suit.SPADES),
+                    Card(SPADES, ACE),
+                    Card(SPADES, TEN),
+                    Card(SPADES, KING),
                 ),
                 21,
             ),
             row(
                 listOf(
-                    Card(CardNumber.Ace, Suit.SPADES),
-                    Card(Number(2), Suit.SPADES),
+                    Card(SPADES, ACE),
+                    Card(SPADES, TWO),
                 ),
                 13,
             ),
             row(
                 listOf(
-                    Card(CardNumber.Ace, Suit.SPADES),
-                    Card(Number(2), Suit.SPADES),
-                    Card(Number(9), Suit.SPADES),
+                    Card(SPADES, ACE),
+                    Card(SPADES, TWO),
+                    Card(SPADES, NINE),
                 ),
                 12,
             ),
@@ -97,33 +110,33 @@ object BlackJackCardTestFixtures {
         listOf(
             row(
                 listOf(
-                    Card(CardNumber.Ace, Suit.SPADES),
-                    Card(CardNumber.Ace, Suit.HEARTS),
+                    Card(SPADES, ACE),
+                    Card(HEARTS, ACE),
                 ),
                 12,
             ),
             row(
                 listOf(
-                    Card(CardNumber.Ace, Suit.SPADES),
-                    Card(CardNumber.Ace, Suit.HEARTS),
-                    Card(Number(9), Suit.HEARTS),
+                    Card(SPADES, ACE),
+                    Card(HEARTS, ACE),
+                    Card(HEARTS, NINE),
                 ),
                 21,
             ),
             row(
                 listOf(
-                    Card(CardNumber.Ace, Suit.SPADES),
-                    Card(CardNumber.Ace, Suit.HEARTS),
-                    Card(Number(10), Suit.HEARTS),
+                    Card(SPADES, ACE),
+                    Card(HEARTS, ACE),
+                    Card(HEARTS, TEN),
                 ),
                 12,
             ),
             row(
                 listOf(
-                    Card(CardNumber.Ace, Suit.SPADES),
-                    Card(CardNumber.Ace, Suit.HEARTS),
-                    Card(Number(10), Suit.HEARTS),
-                    Card(CardNumber.King, Suit.HEARTS),
+                    Card(SPADES, ACE),
+                    Card(HEARTS, ACE),
+                    Card(HEARTS, TEN),
+                    Card(HEARTS, KING),
                 ),
                 22,
             ),
@@ -133,47 +146,47 @@ object BlackJackCardTestFixtures {
         listOf(
             row(
                 listOf(
-                    Card(CardNumber.Ace, Suit.SPADES),
-                    Card(CardNumber.Ace, Suit.HEARTS),
-                    Card(CardNumber.Ace, Suit.CLUBS),
+                    Card(SPADES, ACE),
+                    Card(HEARTS, ACE),
+                    Card(CLUBS, ACE),
                 ),
                 13,
             ),
             row(
                 listOf(
-                    Card(CardNumber.Ace, Suit.SPADES),
-                    Card(CardNumber.Ace, Suit.HEARTS),
-                    Card(CardNumber.Ace, Suit.CLUBS),
-                    Card(Number(8), Suit.CLUBS),
+                    Card(SPADES, ACE),
+                    Card(HEARTS, ACE),
+                    Card(CLUBS, ACE),
+                    Card(CLUBS, EIGHT),
                 ),
                 21,
             ),
             row(
                 listOf(
-                    Card(CardNumber.Ace, Suit.SPADES),
-                    Card(CardNumber.Ace, Suit.HEARTS),
-                    Card(CardNumber.Ace, Suit.CLUBS),
-                    Card(Number(9), Suit.CLUBS),
+                    Card(SPADES, ACE),
+                    Card(HEARTS, ACE),
+                    Card(CLUBS, ACE),
+                    Card(CLUBS, NINE),
                 ),
                 12,
             ),
             row(
                 listOf(
-                    Card(CardNumber.Ace, Suit.SPADES),
-                    Card(CardNumber.Ace, Suit.HEARTS),
-                    Card(CardNumber.Ace, Suit.CLUBS),
-                    Card(Number(9), Suit.CLUBS),
-                    Card(Number(9), Suit.CLUBS),
+                    Card(SPADES, ACE),
+                    Card(HEARTS, ACE),
+                    Card(CLUBS, ACE),
+                    Card(CLUBS, NINE),
+                    Card(DIAMONDS, NINE),
                 ),
                 21,
             ),
             row(
                 listOf(
-                    Card(CardNumber.Ace, Suit.SPADES),
-                    Card(CardNumber.Ace, Suit.HEARTS),
-                    Card(CardNumber.Ace, Suit.CLUBS),
-                    Card(Number(9), Suit.CLUBS),
-                    Card(Number(10), Suit.CLUBS),
+                    Card(SPADES, ACE),
+                    Card(HEARTS, ACE),
+                    Card(CLUBS, ACE),
+                    Card(CLUBS, NINE),
+                    Card(CLUBS, TEN),
                 ),
                 22,
             ),
@@ -183,52 +196,52 @@ object BlackJackCardTestFixtures {
         listOf(
             row(
                 listOf(
-                    Card(CardNumber.Ace, Suit.SPADES),
-                    Card(CardNumber.Ace, Suit.HEARTS),
-                    Card(CardNumber.Ace, Suit.CLUBS),
-                    Card(CardNumber.Ace, Suit.DIAMONDS),
+                    Card(SPADES, ACE),
+                    Card(HEARTS, ACE),
+                    Card(CLUBS, ACE),
+                    Card(DIAMONDS, ACE),
                 ),
                 14,
             ),
             row(
                 listOf(
-                    Card(CardNumber.Ace, Suit.SPADES),
-                    Card(CardNumber.Ace, Suit.HEARTS),
-                    Card(CardNumber.Ace, Suit.CLUBS),
-                    Card(CardNumber.Ace, Suit.DIAMONDS),
-                    Card(Number(7), Suit.CLUBS),
+                    Card(SPADES, ACE),
+                    Card(HEARTS, ACE),
+                    Card(CLUBS, ACE),
+                    Card(DIAMONDS, ACE),
+                    Card(DIAMONDS, SEVEN),
                 ),
                 21,
             ),
             row(
                 listOf(
-                    Card(CardNumber.Ace, Suit.SPADES),
-                    Card(CardNumber.Ace, Suit.HEARTS),
-                    Card(CardNumber.Ace, Suit.CLUBS),
-                    Card(CardNumber.Ace, Suit.DIAMONDS),
-                    Card(Number(8), Suit.CLUBS),
+                    Card(SPADES, ACE),
+                    Card(HEARTS, ACE),
+                    Card(CLUBS, ACE),
+                    Card(DIAMONDS, ACE),
+                    Card(DIAMONDS, EIGHT),
                 ),
                 12,
             ),
             row(
                 listOf(
-                    Card(CardNumber.Ace, Suit.SPADES),
-                    Card(CardNumber.Ace, Suit.HEARTS),
-                    Card(CardNumber.Ace, Suit.CLUBS),
-                    Card(CardNumber.Ace, Suit.DIAMONDS),
-                    Card(Number(8), Suit.CLUBS),
-                    Card(Number(9), Suit.CLUBS),
+                    Card(SPADES, ACE),
+                    Card(HEARTS, ACE),
+                    Card(CLUBS, ACE),
+                    Card(DIAMONDS, ACE),
+                    Card(DIAMONDS, EIGHT),
+                    Card(DIAMONDS, NINE),
                 ),
                 21,
             ),
             row(
                 listOf(
-                    Card(CardNumber.Ace, Suit.SPADES),
-                    Card(CardNumber.Ace, Suit.HEARTS),
-                    Card(CardNumber.Ace, Suit.CLUBS),
-                    Card(CardNumber.Ace, Suit.DIAMONDS),
-                    Card(Number(8), Suit.CLUBS),
-                    Card(Number(10), Suit.CLUBS),
+                    Card(SPADES, ACE),
+                    Card(HEARTS, ACE),
+                    Card(CLUBS, ACE),
+                    Card(DIAMONDS, ACE),
+                    Card(DIAMONDS, EIGHT),
+                    Card(DIAMONDS, TEN),
                 ),
                 22,
             ),

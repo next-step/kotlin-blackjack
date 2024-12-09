@@ -17,6 +17,8 @@ class Hand(
 
     fun isBust(): Boolean = sumOfHand() > BLACKJACK_NUMBER
 
+    fun isBlackJack(): Boolean = _cards.size == 2 && sumOfHand() == BLACKJACK_NUMBER
+
     companion object {
         private const val BLACKJACK_NUMBER = 21
     }

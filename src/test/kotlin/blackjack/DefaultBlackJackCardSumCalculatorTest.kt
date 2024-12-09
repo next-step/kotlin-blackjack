@@ -5,7 +5,7 @@ import io.kotest.data.forAll
 import io.kotest.matchers.shouldBe
 
 class DefaultBlackJackCardSumCalculatorTest : StringSpec({
-    "블랮잭 카드의 숫자 합을 구할 수 있다(Ace 0개)" {
+    "블랙잭 카드의 숫자 합을 구할 수 있다(Ace 0개)" {
         forAll(*BlackJackCardTestFixtures.ace0Rows.toTypedArray()) { initialCards, expected ->
             val sut = DefaultBlackJackCardSumCalculator()
             val result = sut.sum(initialCards)
