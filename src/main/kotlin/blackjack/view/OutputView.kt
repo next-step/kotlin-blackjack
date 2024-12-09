@@ -30,5 +30,6 @@ class OutputView {
 
     fun printGameResult(gameResultResponse: GameResultResponse) {
         println("\n" + gameResultResponse.toFormattedStringGameResult())
+        println("\n## 최종 수익\n" + gameResultResponse.toFormattedStringPlayerProfit())
     }
 }
