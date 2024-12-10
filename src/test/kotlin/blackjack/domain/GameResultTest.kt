@@ -14,11 +14,12 @@ class GameResultTest {
                     PlayerResult("black", Bet(10_000L), PlayerOutcome.WIN),
                     PlayerResult("jack", Bet(20_000L), PlayerOutcome.LOSE),
                     PlayerResult("game", Bet(30_000L), PlayerOutcome.DRAW),
+                    PlayerResult("result", Bet(40_000L), PlayerOutcome.BLACKJACK),
                 ),
             )
 
         val profit = result.dealerProfit()
 
-        profit shouldBe BigDecimal(10_000L)
+        profit shouldBe BigDecimal(-50_000L)
     }
 }

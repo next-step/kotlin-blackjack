@@ -153,16 +153,6 @@ class PlayerTest {
     }
 
     @Test
-    fun `딜러와의 승부 결과를 리턴한다`() {
-        val player = createPlayer(StubDeck.from(Rank.FOUR, Rank.FIVE))
-        val dealer = createDealer(StubDeck.from(Rank.TWO, Rank.THREE))
-
-        val outcome = player.outcome(dealer)
-
-        outcome shouldBe PlayerOutcome.WIN
-    }
-
-    @Test
     fun `베팅을 걸 수 있다`() {
         val player = Player("jack")
 
@@ -172,38 +162,39 @@ class PlayerTest {
     }
 
     @Test
-    fun `딜러와의 승부 결과를 리턴한다2`() {
+    fun `베팅이 있기 전에 승부 결과를 요청하면 예외를 던진다`() {
+        val player =
+            createPlayer(StubDeck.from(Rank.FOUR, Rank.FIVE)).apply {
+                stand()
+            }
+        val dealer = createDealer(StubDeck.from(Rank.TWO, Rank.THREE))
+        assertThrows<IllegalStateException> { player.result(dealer) }
+    }
+
+    @Test
+    fun `턴이 끝나기 전에 결과를 요청하면 예외를 던진다`() {
+        val player =
+            createPlayer(StubDeck.from(Rank.FOUR, Rank.FIVE)).apply {
+                placeBet(Bet(10_000L))
+            }
+        val dealer = createDealer(StubDeck.from(Rank.TWO, Rank.THREE))
+        assertThrows<IllegalStateException> { player.result(dealer) }
+    }
+
+    @Test
+    fun `딜러와의 승부 결과를 리턴한다`() {
         val player =
             createPlayer(StubDeck.from(Rank.FOUR, Rank.FIVE)).apply {
                 placeBet(Bet(10_000L))
                 stand()
             }
         val dealer = createDealer(StubDeck.from(Rank.TWO, Rank.THREE))
+
         val expected = PlayerResult("jack", Bet(10_000L), PlayerOutcome.WIN)
 
         val result = player.result(dealer)
 
         result shouldBe expected
-    }
-
-    @Test
-    fun `승부 결과는 베팅이 있어야만 한다`() {
-        val player =
-            createPlayer(StubDeck.from(Rank.FOUR, Rank.FIVE)).apply {
-                stand()
-            }
-        val dealer = createDealer(StubDeck.from(Rank.TWO, Rank.THREE))
-        assertThrows<IllegalStateException> { player.result(dealer) }
-    }
-
-    @Test
-    fun `결과는 턴이 끝나야 존재한다`() {
-        val player =
-            createPlayer(StubDeck.from(Rank.FOUR, Rank.FIVE)).apply {
-                placeBet(Bet(10_000L))
-            }
-        val dealer = createDealer(StubDeck.from(Rank.TWO, Rank.THREE))
-        assertThrows<IllegalStateException> { player.result(dealer) }
     }
 
     companion object {

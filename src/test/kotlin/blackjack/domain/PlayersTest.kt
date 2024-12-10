@@ -220,7 +220,10 @@ class PlayersTest {
             )
         val players =
             createPlayersFrom(listOf("black", "jack", "game"), deck).apply {
+                // black 블랙잭
+                // jack 스탠드
                 stand()
+                // game 스탠드
                 stand()
             }
         // black: A, K = 21
@@ -242,7 +245,7 @@ class PlayersTest {
         // dealer: 10, 6, 2 = 18
         val expected =
             listOf(
-                PlayerResult("black", Bet(1_000L), PlayerOutcome.WIN),
+                PlayerResult("black", Bet(1_000L), PlayerOutcome.BLACKJACK),
                 PlayerResult("jack", Bet(2_000L), PlayerOutcome.LOSE),
                 PlayerResult("game", Bet(3_000L), PlayerOutcome.DRAW),
             )

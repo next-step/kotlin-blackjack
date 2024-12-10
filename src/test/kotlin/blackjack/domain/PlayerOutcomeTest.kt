@@ -49,7 +49,7 @@ class PlayerOutcomeTest {
 
         val outcome = PlayerOutcome.of(blackjackPlayer, dealer)
 
-        outcome shouldBe PlayerOutcome.WIN
+        outcome shouldBe PlayerOutcome.BLACKJACK
     }
 
     @Test
@@ -120,5 +120,15 @@ class PlayerOutcomeTest {
         val profit = outcome.profit(bet)
 
         profit shouldBe BigDecimal.ZERO
+    }
+
+    @Test
+    fun `블랙잭인 경우 1_5 배의 수익을 본다`() {
+        val bet = Bet(10_000L)
+        val outcome = PlayerOutcome.BLACKJACK
+
+        val profit = outcome.profit(bet)
+
+        profit shouldBe BigDecimal(15_000L)
     }
 }

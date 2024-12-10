@@ -22,16 +22,20 @@ class PlayerResultTest {
         fun `수익을 계산한다`() =
             listOf(
                 Arguments.of(
-                    PlayerResult("black", Bet(10_000L), PlayerOutcome.WIN),
+                    PlayerResult("jack", Bet(10_000L), PlayerOutcome.WIN),
                     BigDecimal(10_000L),
                 ),
                 Arguments.of(
-                    PlayerResult("black", Bet(10_000L), PlayerOutcome.LOSE),
+                    PlayerResult("jack", Bet(10_000L), PlayerOutcome.LOSE),
                     BigDecimal(-10_000L),
                 ),
                 Arguments.of(
-                    PlayerResult("black", Bet(10_000L), PlayerOutcome.DRAW),
+                    PlayerResult("jack", Bet(10_000L), PlayerOutcome.DRAW),
                     BigDecimal.ZERO,
+                ),
+                Arguments.of(
+                    PlayerResult("jack", Bet(10_000L), PlayerOutcome.BLACKJACK),
+                    BigDecimal(15_000L),
                 ),
             )
     }
