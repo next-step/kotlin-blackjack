@@ -3,7 +3,7 @@ package study.blackjack.model
 /**
  * @author 이상준
  */
-class BlackjackPlayer(
+class BlackjackUser(
     name: String,
     private var cards: Cards = Cards(listOf()),
 ) {
@@ -27,7 +27,7 @@ class BlackjackPlayer(
         return this.match
     }
 
-    fun match(dealer: BlackjackPlayer) {
+    fun match(dealer: BlackjackUser) {
         this.match = Match.of(this.cards.calculateScore(), dealer.cards.calculateScore())
     }
 }

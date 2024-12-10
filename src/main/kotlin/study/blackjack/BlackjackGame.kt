@@ -1,6 +1,6 @@
 package study.blackjack
 
-import study.blackjack.model.BlackjackPlayer
+import study.blackjack.model.BlackjackUser
 import study.blackjack.model.Match
 import study.blackjack.view.InputView
 import study.blackjack.view.ResultView
@@ -9,9 +9,9 @@ import study.blackjack.view.ResultView
  * @author 이상준
  */
 class BlackjackGame(
-    private var players: List<BlackjackPlayer> = listOf(),
+    private var players: List<BlackjackUser> = listOf(),
     private val blackjackOperator: BlackjackOperator = BlackjackOperator(),
-    private var dealer: BlackjackPlayer = BlackjackPlayer(DEALER),
+    private var dealer: BlackjackUser = BlackjackUser(DEALER),
 ) {
     private val inputView = InputView()
     private val resultView = ResultView()
@@ -50,7 +50,7 @@ class BlackjackGame(
         }
     }
 
-    private fun playGame(player: BlackjackPlayer) {
+    private fun playGame(player: BlackjackUser) {
         if (Match.bustCheck(player.cards().calculateScore())) {
             return
         }

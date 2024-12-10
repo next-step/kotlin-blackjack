@@ -2,7 +2,7 @@ package study.blackjack
 
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
-import study.blackjack.model.BlackjackPlayer
+import study.blackjack.model.BlackjackUser
 import study.blackjack.model.Card
 import study.blackjack.model.CardRank
 import study.blackjack.model.Cards
@@ -29,8 +29,8 @@ class BlackjackGameTest : StringSpec({
                 ),
             )
 
-        val player = BlackjackPlayer("player", playerCards)
-        val dealer = BlackjackPlayer("dealer", dealerCards)
+        val player = BlackjackUser("player", playerCards)
+        val dealer = BlackjackUser("dealer", dealerCards)
         player.match(dealer)
 
         player.result() shouldBe Match.WIN
@@ -51,8 +51,8 @@ class BlackjackGameTest : StringSpec({
                 ),
             )
 
-        val player = BlackjackPlayer("player", playerCards)
-        val dealer = BlackjackPlayer("dealer", dealerCards)
+        val player = BlackjackUser("player", playerCards)
+        val dealer = BlackjackUser("dealer", dealerCards)
         player.match(dealer)
 
         player.result() shouldBe Match.LOSE

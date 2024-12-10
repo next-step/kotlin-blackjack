@@ -1,6 +1,6 @@
 package study.blackjack.view
 
-import study.blackjack.model.BlackjackPlayer
+import study.blackjack.model.BlackjackUser
 import study.blackjack.model.Match
 
 /**
@@ -8,7 +8,7 @@ import study.blackjack.model.Match
  */
 class ResultView {
     fun printInitGiveCardsMessage(
-        players: List<BlackjackPlayer>,
+        players: List<BlackjackUser>,
         cardCount: Int,
     ) {
         println(players.joinToString(", ") { it.name })
@@ -16,11 +16,11 @@ class ResultView {
         println("딜러와 ${players.joinToString(", ") { it.name }} 에게 ${cardCount}장의 카드를 나누었습니다.")
     }
 
-    fun printInitCardOfPlayer(player: BlackjackPlayer) {
+    fun printInitCardOfPlayer(player: BlackjackUser) {
         println("${player.name} 카드: ${player.cards().toList().joinToString(", ") { it.cardRank.name }}")
     }
 
-    fun printResultCardOfPlayer(player: BlackjackPlayer) {
+    fun printResultCardOfPlayer(player: BlackjackUser) {
         val cards = player.cards().toList().joinToString(", ") { it.cardRank.name }
         val score = player.cards().calculateScore()
         println("${player.name} 카드: $cards - 결과: $score")
@@ -31,7 +31,7 @@ class ResultView {
         println()
     }
 
-    fun printFinalStats(players: List<BlackjackPlayer>) {
+    fun printFinalStats(players: List<BlackjackUser>) {
         println()
         println("## 최종 승패")
         val win = players.count { it.result() == Match.LOSE }

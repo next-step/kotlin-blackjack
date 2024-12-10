@@ -1,18 +1,18 @@
 package study.blackjack.view
 
-import study.blackjack.model.BlackjackPlayer
+import study.blackjack.model.BlackjackUser
 
 /**
  * @author 이상준
  */
 class InputView {
-    fun inputPlayerNames(): List<BlackjackPlayer> {
+    fun inputPlayerNames(): List<BlackjackUser> {
         println(INPUT_PLAYER_NAME_MESSAGE)
         val names = readlnOrNull() ?: throw IllegalArgumentException()
-        return names.split(",").map { BlackjackPlayer(name = it) }
+        return names.split(",").map { BlackjackUser(name = it) }
     }
 
-    fun inputGiveCardMessage(player: BlackjackPlayer): Boolean {
+    fun inputGiveCardMessage(player: BlackjackUser): Boolean {
         println("${player.name()}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
         val use = readlnOrNull() ?: throw IllegalArgumentException()
         return use == "y"
