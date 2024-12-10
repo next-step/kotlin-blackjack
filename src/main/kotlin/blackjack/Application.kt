@@ -16,6 +16,7 @@ fun main() {
     val resultEvaluator = game.resultEvaluator()
 
     game.startGame()
+    game.handlePlayerAmount(::amountOfPlayers)
 
     resultView.printUserCardCount(game.allPlayersNames(), INITIAL_CARD_COUNT)
     resultView.printUserCards(resultEvaluator.evaluateRounds())
@@ -25,6 +26,9 @@ fun main() {
 
     resultView.printScoreResult(resultEvaluator.evaluateRounds())
     resultView.printFinalWinner(resultEvaluator.finalMatchEvaluate())
+
+private fun amountOfPlayers(userName: UserName): Int {
+    return inputView.inputPlayerAmount(userName)
 }
 
 private fun playerTurn(
