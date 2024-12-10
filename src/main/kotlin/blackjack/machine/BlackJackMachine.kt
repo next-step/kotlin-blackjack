@@ -54,7 +54,10 @@ class BlackJackMachine(
             else ->
                 player
                     .hitCard(deck.draw())
-                    .also { ResultView.printPlayerCard(it) }
+                    .also {
+                        if(it.isBust()) bettingBoard.bust(it)
+                        ResultView.printPlayerCard(it)
+                    }
         }
 
     companion object {

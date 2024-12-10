@@ -26,6 +26,24 @@ class BettingBoardTest {
         bettingBoard.participantBets shouldBe expectedResult
     }
 
+    @ParameterizedTest
+    @MethodSource("bettingBoardTest")
+    fun `플레이어가 패배한 경우 베팅한 금액을 잃고 딜러가 베팅금을 얻는다`(
+        playerBets: Map<Participant<*>, BetResult>,
+        dealer: Dealer,
+    ) {
+        val bettingBoard = BettingBoard()
+        bettingBoard.setup(playerBets = playerBets, dealer = dealer)
+
+        bettingBoard.bust(player = POBI)
+
+        val pobiBet = bettingBoard.participantBets[POBI] ?: return
+        pobiBet.winning.amount shouldBe BET_AMOUNTS[POBI]?.bet?.negative()
+
+        val dealerBet = bettingBoard.participantBets[dealer] ?: return
+        dealerBet.winning.amount shouldBe BET_AMOUNTS[POBI]?.bet?.amount
+    }
+
     companion object {
         private val POBI = Player(name = "pobi")
         private val JASON = Player(name = "jason")

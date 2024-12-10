@@ -7,4 +7,6 @@ value class Bet(
     init {
         require(amount >= 0) { "베팅 금액은 음수일 수 없습니다." }
     }
+
+    fun negative(): Long = amount * -1L
 }
