@@ -40,7 +40,7 @@ class ResultView(val outputProvider: (String) -> Unit = { println(it) }) {
         }
     }
 
-    fun printFinalWinner2(amountStatistics: AmountStatistics) {
+    fun printFinalProfit(amountStatistics: AmountStatistics) {
         outputProvider("\n## 최종 수익")
         outputProvider(
             "딜러: ${amountStatistics.dealerProfit.value}",

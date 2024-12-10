@@ -25,7 +25,7 @@ fun main() {
     game.handleDealerTurn(::dealerTurn)
 
     resultView.printScoreResult(resultEvaluator.evaluateRounds())
-    resultView.printFinalWinner2(resultEvaluator.finalMatchEvaluate())
+    resultView.printFinalProfit(resultEvaluator.finalMatchEvaluate())
 }
 
 private fun amountOfPlayers(userName: UserName): Int {
