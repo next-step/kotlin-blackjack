@@ -24,11 +24,13 @@ value class Money(private val amount: Double) : Comparable<Money> {
         return Money(-amount)
     }
 
-    fun toDouble(): Double {
-        return amount
-    }
+    fun toLong(): Long = amount.toLong()
 
     companion object {
         val ZERO = Money(0)
     }
+}
+
+fun List<Money>.sum(): Money {
+    return this.fold(Money.ZERO) { acc, money -> acc + money }
 }

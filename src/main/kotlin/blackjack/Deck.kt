@@ -23,7 +23,7 @@ class Deck(
     companion object {
         private const val MAXIMUM_CARD_COUNT = 52
         private val CARDS: List<Card> =
-            Suit.flatMap2 { suit ->
+            Suit.flatMap { suit ->
                 Denomination.map { denomination ->
                     Card(suit, denomination)
                 }

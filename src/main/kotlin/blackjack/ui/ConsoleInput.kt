@@ -10,13 +10,7 @@ class ConsoleInput {
             return playerNames
         }
 
-        fun inputBetAmountPerPlayer(playerName: String): Double {
-            println()
-            println("${playerName}의 베팅 금액은?")
-            return readln().toDouble()
-        }
-
-        fun inputDrawAnswer(player: Player): DrawAnswer {
+        fun inputDrawAnswer2(player: Player): DrawAnswer {
             println("${player.name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
             val answer = readln()
             return DrawAnswer.valueOf(answer.uppercase())

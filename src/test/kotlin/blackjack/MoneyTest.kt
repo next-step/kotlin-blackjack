@@ -49,4 +49,9 @@ class MoneyTest : StringSpec({
 
         -money1000 shouldBe Money(-1000)
     }
+
+    "Money 리스트는 sum()으로 합계를 구할 수 있다" {
+        val list = listOf(Money(1000), Money(2000), Money(-3000))
+        list.sum() shouldBe Money.ZERO
+    }
 })
