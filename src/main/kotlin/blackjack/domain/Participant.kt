@@ -4,7 +4,9 @@ import blackjack.domain.ResultStatistics.Constant.DRAW_STATISTICS
 import blackjack.domain.ResultStatistics.Constant.LOSE_STATISTICS
 import blackjack.domain.ResultStatistics.Constant.WIN_STATISTICS
 
-sealed class Participant(private val hand: Hand) {
+sealed class Participant(private val hand: Hand, private var _bettingMoney: Money = Money(0)) {
+    val bettingMoney: Money
+        get() = _bettingMoney
     val isBust: Boolean
         get() = hand.isBust
     val totalCards: Deck
@@ -26,6 +28,10 @@ sealed class Participant(private val hand: Hand) {
             MatchType.LOSE -> LOSE_STATISTICS
             else -> DRAW_STATISTICS
         }
+    }
+
+    fun betting(other: Money) {
+        this._bettingMoney = this._bettingMoney.plus(other)
     }
 
     private fun matchOf(other: Participant): MatchType {
