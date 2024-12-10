@@ -171,6 +171,41 @@ class PlayerTest {
         player.bet shouldBe Bet(1_000L)
     }
 
+    @Test
+    fun `딜러와의 승부 결과를 리턴한다2`() {
+        val player =
+            createPlayer(StubDeck.from(Rank.FOUR, Rank.FIVE)).apply {
+                placeBet(Bet(10_000L))
+                stand()
+            }
+        val dealer = createDealer(StubDeck.from(Rank.TWO, Rank.THREE))
+        val expected = PlayerResult("jack", Bet(10_000L), PlayerOutcome.WIN)
+
+        val result = player.result(dealer)
+
+        result shouldBe expected
+    }
+
+    @Test
+    fun `승부 결과는 베팅이 있어야만 한다`() {
+        val player =
+            createPlayer(StubDeck.from(Rank.FOUR, Rank.FIVE)).apply {
+                stand()
+            }
+        val dealer = createDealer(StubDeck.from(Rank.TWO, Rank.THREE))
+        assertThrows<IllegalStateException> { player.result(dealer) }
+    }
+
+    @Test
+    fun `결과는 턴이 끝나야 존재한다`() {
+        val player =
+            createPlayer(StubDeck.from(Rank.FOUR, Rank.FIVE)).apply {
+                placeBet(Bet(10_000L))
+            }
+        val dealer = createDealer(StubDeck.from(Rank.TWO, Rank.THREE))
+        assertThrows<IllegalStateException> { player.result(dealer) }
+    }
+
     companion object {
         @JvmStatic
         fun donePlayers() =

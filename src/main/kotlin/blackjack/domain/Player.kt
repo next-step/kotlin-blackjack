@@ -55,6 +55,20 @@ class Player(
         this.bet = bet
     }
 
+    fun result(dealer: Dealer): PlayerResult {
+        checkIsDone()
+        checkBetIsNotNull()
+        return PlayerResult(name, requireNotNull(bet), outcome(dealer))
+    }
+
+    private fun checkIsDone() {
+        check(isDone) { "턴이 끝나지 않았습니다." }
+    }
+
+    private fun checkBetIsNotNull() {
+        check(bet != null) { "베팅이 없습니다." }
+    }
+
     private fun checkIsNotDone() {
         check(!isDone) { "이미 턴이 끝난 상태입니다." }
     }

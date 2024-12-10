@@ -286,7 +286,15 @@ class GameTest {
 
     @Test
     fun `게임의 결과를 리턴한다`() {
-        val players = Players.from("black", "jack")
+        val players =
+            Players.from("black", "jack").apply {
+                placeBets(
+                    listOf(
+                        Bet(10_000L),
+                        Bet(20_000L),
+                    ),
+                )
+            }
         val game =
             Game(players, deck).apply {
                 initialDeal()
@@ -299,8 +307,8 @@ class GameTest {
         val expected =
             GameResult(
                 listOf(
-                    PlayerResult("black", PlayerOutcome.WIN),
-                    PlayerResult("jack", PlayerOutcome.LOSE),
+                    PlayerResult("black", Bet(10_000L), PlayerOutcome.WIN),
+                    PlayerResult("jack", Bet(20_000L), PlayerOutcome.LOSE),
                 ),
             )
 

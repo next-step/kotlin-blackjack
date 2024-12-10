@@ -1,10 +1,17 @@
 package blackjack.domain
 
-enum class PlayerOutcome {
-    WIN,
-    LOSE,
-    DRAW,
+import java.math.BigDecimal
+import java.math.RoundingMode
+
+enum class PlayerOutcome(
+    private val ratio: BigDecimal,
+) {
+    WIN(BigDecimal(1.0)),
+    LOSE(BigDecimal(-1.0)),
+    DRAW(BigDecimal.ZERO),
     ;
+
+    fun profit(bet: Bet): BigDecimal = bet.value.times(ratio).round()
 
     companion object {
         fun of(
@@ -21,3 +28,5 @@ enum class PlayerOutcome {
             }
     }
 }
+
+private fun BigDecimal.round(): BigDecimal = setScale(0, RoundingMode.HALF_UP)

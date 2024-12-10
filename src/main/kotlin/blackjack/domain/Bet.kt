@@ -11,12 +11,4 @@ value class Bet(
     }
 
     constructor(value: Long) : this(value.toBigDecimal())
-
-    constructor(value: Double) : this(value.toBigDecimal())
-
-    operator fun plus(other: Bet): Bet = Bet(value + other.value)
-
-    operator fun minus(other: Bet): Bet = Bet(value - other.value)
-
-    operator fun times(multiplier: Double): Bet = Bet(value * multiplier.toBigDecimal())
 }

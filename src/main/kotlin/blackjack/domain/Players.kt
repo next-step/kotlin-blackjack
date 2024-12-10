@@ -43,14 +43,14 @@ class Players(
         roster.forEach(Player::dealerDealtBlackjack)
     }
 
-    fun result(dealer: Dealer): List<PlayerResult> {
-        checkIsDone()
-        return roster.map { PlayerResult(it.name, it.outcome(dealer)) }
-    }
-
     fun placeBets(bets: List<Bet>) {
         requireBetsSizeEqualsRosterSize(bets)
         roster.zip(bets).forEach { (player, bet) -> player.placeBet(bet) }
+    }
+
+    fun results(dealer: Dealer): List<PlayerResult> {
+        checkIsDone()
+        return roster.map { it.result(dealer) }
     }
 
     private fun requireBetsSizeEqualsRosterSize(bets: List<Bet>) {

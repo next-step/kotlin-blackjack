@@ -174,15 +174,38 @@ class PlayersTest {
     }
 
     @Test
-    fun `종료 전에 결과를 요청하면 예외를 던진다`() {
-        val players =
-            Players.from("black", "jack")
-        val dealer = Dealer()
-        assertThrows<IllegalStateException> { players.result(dealer) }
+    fun `베팅을 걸 수 있다`() {
+        val players = Players.from("black", "jack", "game")
+        val bets = listOf(Bet(1_000L), Bet(2_000L), Bet(3_000L))
+
+        players.placeBets(bets)
+
+        players.roster.map { it.bet } shouldBe bets
     }
 
     @Test
-    fun `플레이어들의 결과를 리턴한다`() {
+    fun `베팅 숫자가 플레이어들의 숫자와 같아야 한다`() {
+        val players = Players.from("black", "jack")
+        val bets = listOf(Bet(1_000L))
+        assertThrows<IllegalArgumentException> { players.placeBets(bets) }
+    }
+
+    @Test
+    fun `종료 전에 결과를 요청할 수 없다`() {
+        val players =
+            Players.from("black", "jack")
+        players.placeBets(
+            listOf(
+                Bet(1_000L),
+                Bet(2_000L),
+            ),
+        )
+        val dealer = Dealer()
+        assertThrows<IllegalStateException> { players.results(dealer) }
+    }
+
+    @Test
+    fun `결과를 리턴한다`() {
         val deck =
             StubDeck.from(
                 Rank.ACE,
@@ -203,6 +226,13 @@ class PlayersTest {
         // black: A, K = 21
         // jack:  Q, 4 = 14
         // game:  J, 8 = 18
+        players.placeBets(
+            listOf(
+                Bet(1_000L),
+                Bet(2_000L),
+                Bet(3_000L),
+            ),
+        )
         val dealer =
             Dealer().apply {
                 drawFrom(deck)
@@ -210,34 +240,16 @@ class PlayersTest {
                 drawFrom(deck)
             }
         // dealer: 10, 6, 2 = 18
-
         val expected =
             listOf(
-                PlayerResult("black", PlayerOutcome.WIN),
-                PlayerResult("jack", PlayerOutcome.LOSE),
-                PlayerResult("game", PlayerOutcome.DRAW),
+                PlayerResult("black", Bet(1_000L), PlayerOutcome.WIN),
+                PlayerResult("jack", Bet(2_000L), PlayerOutcome.LOSE),
+                PlayerResult("game", Bet(3_000L), PlayerOutcome.DRAW),
             )
 
-        val results = players.result(dealer)
+        val results = players.results(dealer)
 
         results shouldBe expected
-    }
-
-    @Test
-    fun `베팅을 걸 수 있다`() {
-        val players = Players.from("black", "jack", "game")
-        val bets = listOf(Bet(1_000L), Bet(2_000L), Bet(3_000L))
-
-        players.placeBets(bets)
-
-        players.roster.map { it.bet } shouldBe bets
-    }
-
-    @Test
-    fun `베팅 숫자가 플레이어들의 숫자와 같아야 한다`() {
-        val players = Players.from("black", "jack")
-        val bets = listOf(Bet(1_000L))
-        assertThrows<IllegalArgumentException> { players.placeBets(bets) }
     }
 
     private fun createPlayersFrom(
