@@ -6,18 +6,22 @@ class Hand(private val cards: List<Card> = listOf()) {
     }
 
     fun calculateScore(): Int {
-        val nonAceSum = cards
+        val regularCardSum = cards
             .filter { it.number != CardNumber.ACE }
             .sumOf { it.number.getPoints() }
         val aceCount = cards.count { it.number == CardNumber.ACE }
 
-        return if (aceCount > 0) {
-            val aceMaxValue = nonAceSum + 11 + (aceCount - 1)
-            if (aceMaxValue > 21) nonAceSum + aceCount else aceMaxValue
-        } else {
-            nonAceSum
+        return when (aceCount) {
+            0 -> regularCardSum
+            1 -> {
+                val oneAceScore = regularCardSum + 11
+                if (oneAceScore > 21) regularCardSum + 1 else oneAceScore
+            }
+            else -> {
+                val allAcesAs11 = regularCardSum + 11 + (aceCount - 1)
+                if (allAcesAs11 > 21) regularCardSum + aceCount else allAcesAs11
+            }
         }
     }
-
     fun getCards(): List<Card> = cards.toList()
 }
