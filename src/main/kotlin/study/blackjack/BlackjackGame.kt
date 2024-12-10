@@ -18,6 +18,9 @@ class BlackjackGame(
 
     fun run() {
         players = inputView.inputPlayerNames()
+        players.forEach {
+            inputView.inputPlayerMoney(it)
+        }
         resultView.printInitGiveCardsMessage(players, INIT_CARD_COUNT)
 
         startGame()

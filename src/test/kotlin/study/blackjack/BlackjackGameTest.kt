@@ -29,8 +29,8 @@ class BlackjackGameTest : StringSpec({
                 ),
             )
 
-        val player = BlackjackUser("player", playerCards)
-        val dealer = BlackjackUser("dealer", dealerCards)
+        val player = BlackjackUser("player", cards = playerCards)
+        val dealer = BlackjackUser("dealer", cards = dealerCards)
         player.match(dealer)
 
         player.result() shouldBe Match.WIN
@@ -51,8 +51,8 @@ class BlackjackGameTest : StringSpec({
                 ),
             )
 
-        val player = BlackjackUser("player", playerCards)
-        val dealer = BlackjackUser("dealer", dealerCards)
+        val player = BlackjackUser("player", cards = playerCards)
+        val dealer = BlackjackUser("dealer", cards = dealerCards)
         player.match(dealer)
 
         player.result() shouldBe Match.LOSE

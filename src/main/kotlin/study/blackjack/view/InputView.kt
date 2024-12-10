@@ -1,6 +1,7 @@
 package study.blackjack.view
 
 import study.blackjack.model.BlackjackUser
+import study.blackjack.model.Money
 
 /**
  * @author 이상준
@@ -10,6 +11,13 @@ class InputView {
         println(INPUT_PLAYER_NAME_MESSAGE)
         val names = readlnOrNull() ?: throw IllegalArgumentException()
         return names.split(",").map { BlackjackUser(name = it) }
+    }
+
+    fun inputPlayerMoney(player: BlackjackUser) {
+        println("${player.name}의 배팅 금액은?")
+        val amount = readlnOrNull()?.toInt() ?: throw IllegalArgumentException()
+        player.money(amount)
+        println()
     }
 
     fun inputGiveCardMessage(player: BlackjackUser): Boolean {

@@ -5,28 +5,29 @@ package study.blackjack.model
  */
 class BlackjackUser(
     name: String,
+    private var money: Money = Money(0),
     private var cards: Cards = Cards(listOf()),
 ) {
     var name = name
         private set
     private var match: Match = Match.WAIT
 
-    fun addCard(card: Card) {
-        cards = cards.add(card)
+    fun money(amount: Int) {
+        this.money = Money(amount)
     }
 
-    fun mergeCards(cards: Cards) {
-        this.cards = cards.merge(cards)
+    fun addCard(card: Card) {
+        cards = cards.add(card)
     }
 
     fun cards(): Cards {
         return cards
     }
 
-    fun result(): Match {
-        return this.match
+    fun profit(): Double {
+        return this.match.operation(money.amount)
     }
-
+    
     fun match(dealer: BlackjackUser) {
         this.match = Match.of(this.cards.calculateScore(), dealer.cards.calculateScore())
     }

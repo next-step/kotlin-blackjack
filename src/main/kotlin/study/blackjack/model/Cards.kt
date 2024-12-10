@@ -1,6 +1,6 @@
 package study.blackjack.model
 
-import study.blackjack.model.Match.Companion.BLACKJACK
+import study.blackjack.model.Match.Companion.BLACKJACK_NUMBER
 
 /**
  * @author 이상준
@@ -14,19 +14,26 @@ data class Cards(
         return Cards(cards + card)
     }
 
-    fun merge(other: Cards): Cards {
-        return Cards(cards + other.cards)  // 두 개의 Items 객체의 아이템 합치기
-    }
-
     fun toList(): List<Card> = cards.toList()
 
     fun calculateScore(): Int {
-        val totalScore = cards.sumOf { it.score() }
+        val totalScore = cards
+            .map { card ->
+                if (CardRank.ACE == card.cardRank) {
+                    ACE_SOFT_SCORE
+                } else {
+                    card.score()
+                }
+            }.sumOf { it }
 
-        return if (totalScore > BLACKJACK) {
-            cards.sumOf { it.score(false) }
+        return if (totalScore > BLACKJACK_NUMBER) {
+            cards.sumOf { it.score() }
         } else {
             totalScore
         }
+    }
+
+    companion object {
+        private const val ACE_SOFT_SCORE = 11
     }
 }

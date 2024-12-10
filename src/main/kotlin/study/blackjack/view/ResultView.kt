@@ -2,7 +2,6 @@ package study.blackjack.view
 
 import study.blackjack.model.BlackjackUser
 import study.blackjack.model.CardRank
-import study.blackjack.model.Match
 import study.blackjack.model.Suit
 
 /**
@@ -36,11 +35,10 @@ class ResultView {
     fun printFinalStats(players: List<BlackjackUser>) {
         println()
         println("## 최종 승패")
-        val win = players.count { it.result() == Match.LOSE }
-        val lose = players.count { it.result() == Match.WIN }
-        println("딜러: ${win}승 ${lose}패")
+        val dealerProfit = -players.sumOf { it.profit() }
+        println("딜러: $dealerProfit")
         players.forEach {
-            println("${it.name}: ${it.result()}")
+            println("${it.name}: ${it.profit()}")
         }
     }
 
@@ -64,7 +62,6 @@ class ResultView {
             Suit.DIAMOND -> "다이아몬드"
             Suit.SPADE -> "스페이드"
             Suit.CLUB -> "클로버"
-            else -> throw IllegalArgumentException()
         }
     }
 }
