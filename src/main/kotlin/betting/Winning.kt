@@ -2,5 +2,5 @@ package betting
 
 @JvmInline
 value class Winning(
-    val amount: Long = 0L
+    val amount: Double = 0.0
 )
