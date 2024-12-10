@@ -3,6 +3,7 @@ package blackjack
 import blackjack.domain.Dealer
 import blackjack.domain.Deck
 import blackjack.domain.DeckBuilder
+import blackjack.domain.Money
 import blackjack.domain.Player
 import blackjack.domain.Players
 import blackjack.ui.DisplayCard
@@ -20,14 +21,13 @@ data class CardGame(private val deck: Deck, private val players: Players, val de
     }
 
     fun handleUserTurn(
-        action: (
-            Player,
-            UserCards,
-        ) -> Boolean,
+        action: (Player) -> Boolean,
+        printAction: (UserName, UserCards) -> Unit,
     ) {
         players.forEach { currentPlayer ->
-            while (action(currentPlayer, playerCards(currentPlayer.name))) {
+            while (action(currentPlayer)) {
                 players.deal(currentPlayer, deck.pop())
+                printAction(currentPlayer.name, playerCards(currentPlayer.name))
                 if (currentPlayer.isBust) break
             }
         }
@@ -50,6 +50,16 @@ data class CardGame(private val deck: Deck, private val players: Players, val de
 
     fun allPlayersNames(): List<UserName> {
         return players.names()
+    }
+
+    fun handlePlayerAmount(
+        action: (
+            userName: UserName,
+        ) -> Int,
+    ) {
+        players.forEach { player ->
+            player.betting(Money(action(player.name)))
+        }
     }
 
     private fun dealCardToDealer() {

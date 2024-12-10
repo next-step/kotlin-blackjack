@@ -1,5 +1,7 @@
 package blackjack.ui
 
+import blackjack.domain.Money
+import blackjack.infra.AmountStatistics
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
@@ -133,7 +135,7 @@ class ResultViewTest {
     }
 
     @Test
-    fun `최종 결과를 출력한다`() {
+    fun `최종 승패 출력한다`() {
         var actualMessage = ""
         val customOutputProvider: (String) -> Unit = { message -> actualMessage = actualMessage + message + "\n" }
         val resultView = ResultView(customOutputProvider)
@@ -153,8 +155,24 @@ class ResultViewTest {
         assertThat(actualMessage).contains("userB: 패")
     }
 
-    private fun createTestResultView(messages: MutableList<String>): ResultView {
-        val customOutputProvider: (String) -> Unit = { message -> messages.add(message) }
-        return ResultView(customOutputProvider)
+    @Test
+    fun `최종 수익금 출력`() {
+        var actualMessage = ""
+        val customOutputProvider: (String) -> Unit = { message -> actualMessage = actualMessage + message + "\n" }
+        val resultView = ResultView(customOutputProvider)
+
+        resultView.printFinalProfit(
+            AmountStatistics(
+                dealerProfit = Money(100),
+                playerProfits = mapOf(
+                    "userA" to Money(100),
+                    "userB" to Money(-100),
+                ),
+            ),
+        )
+
+        assertThat(actualMessage).contains("딜러: 100")
+        assertThat(actualMessage).contains("userA: 100")
+        assertThat(actualMessage).contains("userB: -100")
     }
 }

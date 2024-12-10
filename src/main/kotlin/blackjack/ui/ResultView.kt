@@ -1,5 +1,7 @@
 package blackjack.ui
 
+import blackjack.infra.AmountStatistics
+
 class ResultView(val outputProvider: (String) -> Unit = { println(it) }) {
     fun printScoreResult(roundResults: List<RoundResult>) {
         roundResults.forEach { (playerName, cards, score) ->
@@ -35,6 +37,17 @@ class ResultView(val outputProvider: (String) -> Unit = { println(it) }) {
         )
         finalWinnerResults.playerResults.forEach { (name, result) ->
             outputProvider("$name: ${result.displayName}")
+        }
+    }
+
+    fun printFinalProfit(amountStatistics: AmountStatistics) {
+        outputProvider("\n## 최종 수익")
+        outputProvider(
+            "딜러: ${amountStatistics.dealerProfit.value}",
+        )
+
+        amountStatistics.playerProfits.forEach { (name, profit) ->
+            outputProvider("$name: ${profit.value}")
         }
     }
 
