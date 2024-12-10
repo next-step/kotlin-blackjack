@@ -2,7 +2,7 @@ package blackjack.domain
 
 class Hand(private val cards: MutableList<Card> = mutableListOf()) {
     val score: Score
-        get() = cards.fold(Score(0)) { acc, card -> card.score(acc) }
+        get() = cards.fold(Score.ZERO) { acc, card -> card.score(acc) }
     val totalCards: List<Card>
         get() = cards.toList()
     val isBust: Boolean

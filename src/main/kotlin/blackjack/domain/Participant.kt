@@ -1,6 +1,6 @@
 package blackjack.domain
 
-sealed class Participant(private val hand: Hand, private var money: Money = Money(0)) {
+sealed class Participant(private val hand: Hand, private var money: Money = Money.ZERO) {
     val bettingMoney: Money
         get() = money
     val isBust: Boolean

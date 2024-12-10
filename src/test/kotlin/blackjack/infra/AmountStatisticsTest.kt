@@ -51,7 +51,7 @@ class AmountStatisticsTest {
 
         assertAll(
             { assertThat(actual.playerProfits["player"]).isEqualTo(Money(1000)) },
-            { assertThat(actual.dealerProfit).isEqualTo(Money(0)) },
+            { assertThat(actual.dealerProfit).isEqualTo(Money.ZERO) },
         )
     }
 
@@ -64,7 +64,7 @@ class AmountStatisticsTest {
 
         assertAll(
             { assertThat(actual.playerProfits["player"]).isEqualTo(Money(1000)) },
-            { assertThat(actual.dealerProfit).isEqualTo(Money(0)) },
+            { assertThat(actual.dealerProfit).isEqualTo(Money.ZERO) },
         )
     }
 
