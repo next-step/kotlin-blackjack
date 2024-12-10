@@ -25,13 +25,14 @@ class BlackjackGame(
             deck.shuffle()
             val dealer = Dealer.createNew(listOf(deck.drawCard(), deck.drawCard()))
             val players =
-                playerNames.map { name ->
-                    Player.createNew(
-                        name,
-                        bettingMoneys[playerNames.indexOf(name)],
-                        listOf(deck.drawCard(), deck.drawCard()),
-                    )
-                }
+                playerNames.zip(bettingMoneys)
+                    .map { (name, money) ->
+                        Player.createNew(
+                            name,
+                            money,
+                            listOf(deck.drawCard(), deck.drawCard()),
+                        )
+                    }
             return BlackjackGame(Participants(dealer, players), deck)
         }
     }
