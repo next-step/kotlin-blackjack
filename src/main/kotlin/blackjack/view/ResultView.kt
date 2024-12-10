@@ -1,26 +1,33 @@
 package blackjack.view
 
-import blackjack.domain.GameResult
 import blackjack.domain.card.CardRank
 import blackjack.domain.card.CardSuit
 import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Participant
 import blackjack.domain.participant.Player
+import blackjack.domain.result.GameResult
 
 object ResultView {
 
     fun printStartCards(participants: List<Participant>) {
         val dealer = participants.filterIsInstance<Dealer>().firstOrNull() ?: return
+
+        val playerNames = participants.filterIsInstance<Player>().joinToString { it.name }
+        val startCardsInfo = participants.joinToString("\n") { participant ->
+            when (participant) {
+                is Dealer -> getDealerStartCard(participant)
+                else -> getPlayerInformation(participant)
+            }
+        }
+
         println(buildString {
-            append("${dealer.name}와 ")
-            append(participants.filterIsInstance<Player>().joinToString { it.name })
-            append("에게 2장의 나누었습니다.\n")
-            participants.forEach { append("${getPlayerInformation(it)}\n") }
+            append("${dealer.name}와 ${playerNames}에게 2장의 카드를 나누었습니다.\n")
+            append(startCardsInfo)
         })
     }
 
-    fun printPlayerCard(player: Player) {
-        println(getPlayerInformation(player))
+    fun printPlayerInformation(participant: Participant) {
+        println(getPlayerInformation(participant))
     }
 
     fun printParticipantsResult(participants: List<Participant>) {
@@ -36,12 +43,14 @@ object ResultView {
     }
 
     fun printGameResult(gameResult: GameResult) {
+        val playersResult = gameResult.playersResult.joinToString(separator = "\n") {
+            "${it.player.name}: ${it.profit}"
+        }
+
         println(buildString {
-            append("## 최종 승패\n")
-            append("${gameResult.dealerResult.dealer.name}: ${gameResult.dealerResult.winCount}승 ${gameResult.dealerResult.loseCount}패\n")
-            gameResult.playersResult.forEach {
-                append("${it.player.name}: ${if (it.isWin) "승" else "패"}\n")
-            }
+            append("## 최종 수익\n")
+            append("${gameResult.dealerName}: ${gameResult.dealerProfit}\n")
+            append(playersResult)
         })
     }
 
@@ -50,6 +59,15 @@ object ResultView {
             append(participant.name)
             append("카드: ")
             append(participant.cards.cards.joinToString { "${it.rank.name()}${it.suit.name()}" })
+        }
+    }
+
+    private fun getDealerStartCard(dealer: Dealer): String {
+        val firstCard = dealer.cards.cards.first()
+        return buildString {
+            append(dealer.name)
+            append("카드: ")
+            append("${firstCard.rank.name()}${firstCard.suit.name()}")
         }
     }
 

@@ -2,9 +2,9 @@ package blackjack
 
 import blackjack.domain.BlackjackGame
 import blackjack.domain.Deck
-import blackjack.domain.parser.PlayerParser
 import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Player
+import blackjack.domain.participant.PlayerAction
 import blackjack.view.InputView
 import blackjack.view.ResultView
 
@@ -14,7 +14,7 @@ class BlackjackRunner {
         val blackjackGame = BlackjackGame(
             deck = Deck(),
             dealer = Dealer(),
-            players = PlayerParser.parse(InputView.showAndGetPlayers()),
+            players = InputView.showAndGetPlayers(),
         )
 
         blackjackGame.start()
@@ -29,9 +29,9 @@ class BlackjackRunner {
 
     private fun drawPlayers(blackjackGame: BlackjackGame) {
         blackjackGame.participants.filterIsInstance<Player>().forEach { player ->
-            while (player.canReceiveCard() && InputView.showAndGetHitOrNot(player.name)) {
+            while (player.canReceiveCard() && InputView.showAndGetPlayerAction(player.name) == PlayerAction.HIT) {
                 blackjackGame.draw(player)
-                ResultView.printPlayerCard(player)
+                ResultView.printPlayerInformation(player)
             }
         }
     }

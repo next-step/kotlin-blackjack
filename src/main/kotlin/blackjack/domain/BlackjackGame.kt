@@ -3,6 +3,9 @@ package blackjack.domain
 import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Participant
 import blackjack.domain.participant.Player
+import blackjack.domain.result.GameResult
+import blackjack.domain.result.GameResultType
+import blackjack.domain.result.PlayerGameResult
 
 class BlackjackGame(
     private val deck: Deck,
@@ -24,40 +27,41 @@ class BlackjackGame(
     fun getGameResult(): GameResult {
         val dealer = participants.filterIsInstance<Dealer>().first()
         val players = participants.filterIsInstance<Player>()
-        val dealerResultBuilder = DealerGameResultBuilder(dealer)
 
         val playersResult: List<PlayerGameResult> = players.map { player ->
-            val playerWin = player.compareWonOrNot(dealer)
-            dealerResultBuilder.record(!playerWin)
             PlayerGameResult(
                 player = player,
-                isWin = playerWin,
+                resultType = player.resultType(dealer),
             )
         }
 
         return GameResult(
-            dealerResult = dealerResultBuilder.build(),
+            dealerName = dealer.name,
             playersResult = playersResult,
         )
     }
 
-    private fun Player.compareWonOrNot(dealer: Dealer): Boolean {
+    private fun Player.resultType(dealer: Dealer): GameResultType {
+        if (this.cards.isBlackjack()) {
+            return if (dealer.cards.isBlackjack()) {
+                GameResultType.PUSH
+            } else {
+                GameResultType.BLACKJACK_WIN
+            }
+        }
+
         if (dealer.cards.isBusted()) {
-            return true
+            return GameResultType.WIN
         }
 
         if (this.cards.isBusted()) {
-            return false
+            return GameResultType.LOSE
         }
 
-        return this.cards.sum() > dealer.cards.sum()
-    }
-
-    private fun DealerGameResultBuilder.record(isWin: Boolean) {
-        if (isWin) {
-            this.win()
-        } else {
-            this.lose()
+        return when {
+            this.cards.sum() == dealer.cards.sum() -> GameResultType.PUSH
+            this.cards.sum() > dealer.cards.sum() -> GameResultType.WIN
+            else -> GameResultType.LOSE
         }
     }
 
