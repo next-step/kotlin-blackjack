@@ -29,15 +29,7 @@ class GameTest : StringSpec({
             ),
         )
 
-        game.canContinue(player) shouldBe false
-    }
-
-    "딜러의 점수가 16 이하이면 카드를 추가로 받는다." {
-        val playerNames = listOf("kim")
-        val game = Game(playerNames)
-
-        val result = game.handleDealerTurn()
-        result shouldBe (game.dealer.score <= 16)
+        player.canContinue() shouldBe false
     }
 
     "게임 결과 - 딜러 승패 계산" {

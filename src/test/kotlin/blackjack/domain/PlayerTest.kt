@@ -23,4 +23,17 @@ class PlayerTest : StringSpec({
         player.cards.size shouldBe 2
         player.cards shouldBe newCards
     }
+
+    "점수가 21 초과 시 더 이상 진행할 수 없다." {
+        val player = Player("dabomi")
+        player.addCards(
+            listOf(
+                Card.of(CardNumber.TEN, CardShape.HEART),
+                Card.of(CardNumber.TEN, CardShape.CLUB),
+                Card.of(CardNumber.TWO, CardShape.SPADE),
+            )
+        )
+
+        player.canContinue() shouldBe false
+    }
 })

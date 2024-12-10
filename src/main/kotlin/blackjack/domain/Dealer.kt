@@ -12,4 +12,8 @@ class Dealer(private val deck: Deck) : Player("딜러") {
     fun drawCard() {
         addCards(deck.drawCards(1))
     }
+
+    override fun canContinue(): Boolean {
+        return score <= 21
+    }
 }
