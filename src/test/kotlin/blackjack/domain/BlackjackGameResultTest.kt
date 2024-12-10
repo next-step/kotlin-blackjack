@@ -7,28 +7,28 @@ import io.kotest.matchers.shouldBe
 
 class BlackjackGameResultTest : StringSpec({
 
-    val playerA =
+    val playerScore12 =
         Player.createNew(
             PlayerName("playerA"),
             BettingMoney(10000),
             listOf(Card(Rank.TEN, Suit.HEARTS), Card(Rank.TWO, Suit.HEARTS)),
         )
 
-    val playerB =
+    val playerScore18 =
         Player.createNew(
             PlayerName("playerB"),
             BettingMoney(10000),
             listOf(Card(Rank.TEN, Suit.CLOVERS), Card(Rank.EIGHT, Suit.HEARTS)),
         )
 
-    val playerC =
+    val playerScore17 =
         Player.createNew(
             PlayerName("playerC"),
             BettingMoney(10000),
             listOf(Card(Rank.TEN, Suit.CLOVERS), Card(Rank.SEVEN, Suit.HEARTS)),
         )
 
-    val playerD =
+    val playerScoreBlackjack =
         Player.createNew(
             PlayerName("playerD"),
             BettingMoney(10000),
@@ -39,12 +39,12 @@ class BlackjackGameResultTest : StringSpec({
         forAll(
             row(
                 Dealer.createNew(listOf(Card(Rank.TEN, Suit.SPADES), Card(Rank.SEVEN, Suit.HEARTS))),
-                listOf(playerA, playerB, playerC, playerD),
+                listOf(playerScore12, playerScore18, playerScore17, playerScoreBlackjack),
                 linkedMapOf(
-                    playerA to GameMatchResult.LOSE,
-                    playerB to GameMatchResult.WIN,
-                    playerC to GameMatchResult.DRAW,
-                    playerD to GameMatchResult.WIN,
+                    playerScore12 to GameMatchResult.LOSE,
+                    playerScore18 to GameMatchResult.WIN,
+                    playerScore17 to GameMatchResult.DRAW,
+                    playerScoreBlackjack to GameMatchResult.WIN,
                 ),
             ),
         ) { dealer, players, expected ->
@@ -64,7 +64,7 @@ class BlackjackGameResultTest : StringSpec({
                 30000,
             ),
         ) { dealer, expected ->
-            val players = listOf(playerA, playerB, playerC, playerD)
+            val players = listOf(playerScore12, playerScore18, playerScore17, playerScoreBlackjack)
             val blackjackGameResult = BlackjackGameResult(dealer, players)
             blackjackGameResult.calculateDealerProfit() shouldBe expected
         }
@@ -72,15 +72,15 @@ class BlackjackGameResultTest : StringSpec({
 
     "플레이어 각각의 이익을 계산할 수 있다." {
         val dealer = Dealer.createNew(listOf(Card(Rank.TEN, Suit.SPADES), Card(Rank.SEVEN, Suit.HEARTS)))
-        val players = listOf(playerA, playerB, playerC, playerD)
+        val players = listOf(playerScore12, playerScore18, playerScore17, playerScoreBlackjack)
 
         val blackjackGameResult = BlackjackGameResult(dealer, players)
         val expectedProfits =
             mapOf(
-                playerA to -10000,
-                playerB to 10000,
-                playerC to 0,
-                playerD to 15000,
+                playerScore12 to -10000,
+                playerScore18 to 10000,
+                playerScore17 to 0,
+                playerScoreBlackjack to 15000,
             )
         blackjackGameResult.calculatePlayerProfits() shouldBe expectedProfits
     }
