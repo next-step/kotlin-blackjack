@@ -1,8 +1,6 @@
 package blackjack.step2.view
 
-import blackjack.step2.domain.GameManager
-import blackjack.step2.domain.PlayerCard
-import blackjack.step2.domain.ScoreCalculator
+import blackjack.step2.domain.Participant
 
 object InputView {
     fun inputPlayerNames(): List<String> {
@@ -10,40 +8,27 @@ object InputView {
         return readln().split(",").map { it.trim() }.filter { it.isNotBlank() }
     }
 
-    fun inputMoreCard(
-        playerCards: List<PlayerCard>,
-        gameManager: GameManager,
-    ): List<PlayerCard> {
-        return playerCards.map { playerCard ->
-            handleCardDecision(playerCard, gameManager)
+    fun askForMoreCard(participant: Participant): Boolean {
+        println("${participant.name}는 한장의 카드를 더 받겠습니까? (예는 y, 아니오는 n)")
+        return when (readln().lowercase()) {
+            "y" -> true
+            "n" -> false
+            else -> {
+                println("잘못된 입력입니다. 다시 입력해주세요.")
+                askForMoreCard(participant)
+            }
         }
     }
 
-    private fun handleCardDecision(
-        playerCard: PlayerCard,
-        gameManager: GameManager,
-    ): PlayerCard {
-        var currentCard = playerCard
-        while (currentCard.calculateScore() < ScoreCalculator.BLACKJACK_SCORE) {
-            println("${currentCard.playerName}는 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
-            val input = readln().trim().lowercase()
+    fun notifyDealerDraw() {
+        println("딜러는 카드를 더 받습니다.")
+    }
 
-            when (input) {
-                "y" -> {
-                    println("${currentCard.playerName}는 한 장의 카드를 더 받습니다.")
-                    currentCard = gameManager.pickCardIfValid(currentCard)
-                }
-
-                "n" -> {
-                    println("${currentCard.playerName}는 카드를 더 받지 않습니다.")
-                    break
-                }
-
-                else -> {
-                    println("잘못된 입력입니다. 다시 입력해주세요.")
-                }
+    fun printPlayerCards(participant: Participant) {
+        val formattedCards =
+            participant.cards.all.joinToString(", ") {
+                "${it.number.denomination}${it.type.value}"
             }
-        }
-        return currentCard
+        println("${participant.name} 카드: $formattedCards")
     }
 }
