@@ -1,3 +1,5 @@
 package blackjack.domain
 
-data class Players(val playerList: List<Player>)
+data class Players(private val players: List<Player>) {
+    fun allPlayers(): List<Player> = players
+}

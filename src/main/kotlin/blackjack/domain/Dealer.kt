@@ -3,9 +3,13 @@ package blackjack.domain
 class Dealer(private val deck: Deck) {
     fun deal(players: Players) {
         repeat(NUMBER_OF_INITIAL_DEAL_CARD) {
-            for (player in players.playerList) {
-                player.receiveCard(deck.draw())
-            }
+            dealOneCardToEachPlayer(players)
+        }
+    }
+
+    private fun dealOneCardToEachPlayer(players: Players) {
+        players.allPlayers().forEach {
+            it.receiveCard(deck.draw())
         }
     }
 
