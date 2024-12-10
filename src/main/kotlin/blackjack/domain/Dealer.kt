@@ -2,7 +2,7 @@ package blackjack.domain
 
 class Dealer(private val deck: Deck) {
     fun deal(players: Players) {
-        repeat(NUMBER_OF_INITIAL_DEAL_CARD) {
+        repeat(NUMBER_OF_DEAL_CARD) {
             dealOneCardToEachPlayer(players)
         }
     }
@@ -18,6 +18,6 @@ class Dealer(private val deck: Deck) {
     }
 
     companion object {
-        private const val NUMBER_OF_INITIAL_DEAL_CARD = 2
+        private const val NUMBER_OF_DEAL_CARD = 2
     }
 }
