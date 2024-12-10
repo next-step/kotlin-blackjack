@@ -3,8 +3,7 @@ package blackjack.view
 import blackjack.domain.Card
 import blackjack.domain.CardNumber
 import blackjack.domain.CardShape
-import blackjack.domain.Dealer
-import blackjack.domain.Player
+import blackjack.domain.GameResult
 
 object ResultView {
     private const val SPLIT_CARD_RESULT_MESSAGE = "딜러와 %s에게 2장을 나누었습니다."
@@ -15,43 +14,34 @@ object ResultView {
     private const val DEALER_DRAW_MESSAGE = "\n딜러는 16이하라 한장의 카드를 더 받았습니다."
     private const val DEALER_NO_DRAW_MESSAGE = "\n딜러는 17 이상이라 추가로 카드를 받지 않았습니다."
 
-    fun printSplitCardResult(players: List<Player>) {
-        println(SPLIT_CARD_RESULT_MESSAGE.format(players.joinToString(", ") { it.name }))
-    }
-
-    fun printDealerInitialCard(dealer: Dealer) {
-        println("딜러: ${dealer.cards[0].formatDisplay()}")
-    }
-
-    fun printGameResult(
-        results: Map<String, String>,
-        dealerResult: String,
-    ) {
-        println("\n## 최종 승패")
-        println(GAME_RESULT_MESSAGE.format("딜러", dealerResult))
-        results.forEach { (name, result) ->
-            println(GAME_RESULT_MESSAGE.format(name, result))
-        }
-    }
-
-    fun printPlayerCards(players: List<Pair<String, List<Card>>>) {
-        players.forEach { (name, cards) ->
+    fun printInitialCards(dealerCard: Card, playerCards: List<Pair<String, List<Card>>>) {
+        println(SPLIT_CARD_RESULT_MESSAGE.format(playerCards.joinToString(", ") { it.first }))
+        println("딜러: ${dealerCard.formatDisplay()}")
+        playerCards.forEach { (name, cards) ->
             println(PLAYER_CARD_MESSAGE.format(name, cards.joinToString(", ") { it.formatDisplay() }))
         }
     }
 
-    fun printFinalScores(
-        players: List<Player>,
-        dealer: Dealer,
-    ) {
-        println(DEALER_CARD_MESSAGE.format(dealer.cards.joinToString(", ") { it.formatDisplay() }, dealer.score))
-        players.forEach { player ->
-            println(PLAYER_RESULT_MESSAGE.format(player.name, player.cards.joinToString(", ") { it.formatDisplay() }, player.score))
+    fun printFinalScores(dealerState: Pair<List<Card>, Int>, playerScores: List<Pair<String, Int>>) {
+        val (dealerCards, dealerScore) = dealerState
+        println(DEALER_CARD_MESSAGE.format(dealerCards.joinToString(", ") { it.formatDisplay() }, dealerScore))
+        playerScores.forEach { (name, score) ->
+            println(PLAYER_RESULT_MESSAGE.format(name, name, score))
         }
     }
 
-    fun printDealerDrawMessage(isDraw: Boolean) {
-        println(if (isDraw) DEALER_DRAW_MESSAGE else DEALER_NO_DRAW_MESSAGE)
+    fun printDealerDrawMessage(drewCard: Boolean) {
+        println(if (drewCard) DEALER_DRAW_MESSAGE else DEALER_NO_DRAW_MESSAGE)
+    }
+
+    fun printGameResult(results: Map<String, String>) {
+        val dealerWins = results.values.count { it == GameResult.LOSE.getResult() }
+        val dealerLosses = results.size - dealerWins
+        println("\n## 최종 승패")
+        println(GAME_RESULT_MESSAGE.format("딜러", "${dealerWins}${GameResult.WIN.getResult()} ${dealerLosses}${GameResult.LOSE.getResult()}"))
+        results.forEach { (name, result) ->
+            println(GAME_RESULT_MESSAGE.format(name, result))
+        }
     }
 
     private val CardNumber.display: String
