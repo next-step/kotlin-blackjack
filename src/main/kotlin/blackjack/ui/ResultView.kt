@@ -5,6 +5,7 @@ import blackjack.domain.Dealer
 import blackjack.domain.Game
 import blackjack.domain.GameResult
 import blackjack.domain.Hand
+import blackjack.domain.Hand.Companion.INITIAL_HAND_SIZE
 import blackjack.domain.Player
 import blackjack.domain.PlayerOutcome
 import blackjack.domain.Rank
@@ -12,7 +13,6 @@ import blackjack.domain.Suit
 
 object ResultView {
     private const val BUSTED = "🪦"
-    private const val INITIAL_HAND_SIZE = 2
 
     fun displayState(
         game: Game,

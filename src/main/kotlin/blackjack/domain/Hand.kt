@@ -21,7 +21,7 @@ open class Hand(
         cards.add(deck.draw())
     }
 
-    fun isBlackjack(): Boolean = cards.size == 2 && value() == BLACKJACK_VALUE
+    fun isBlackjack(): Boolean = cards.size == INITIAL_HAND_SIZE && value() == BLACKJACK_VALUE
 
     fun isBusted(): Boolean = value() > BLACKJACK_VALUE
 
@@ -37,5 +37,6 @@ open class Hand(
         private const val ACE_ELEVEN_THRESHOLD = 11
         private const val ACE_EXTRA_VALUE = 10
         private const val BLACKJACK_VALUE = 21
+        const val INITIAL_HAND_SIZE = 2
     }
 }

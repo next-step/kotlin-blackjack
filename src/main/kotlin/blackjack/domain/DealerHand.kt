@@ -15,7 +15,7 @@ class DealerHand : Hand() {
     }
 
     private fun checkHasHoleCard() {
-        check(cards.size >= HOLE_CARD_EXIST_SIZE) { "두번째 카드가 없습니다." }
+        check(cards.size >= INITIAL_HAND_SIZE) { "두번째 카드가 없습니다." }
     }
 
     private fun checkHoleCardFaceIsUp() {
@@ -24,10 +24,9 @@ class DealerHand : Hand() {
 
     private fun holeCard() = cards[HOLE_CARD_INDEX]
 
-    private fun isDrawnCardTheHoleCard() = cards.size == HOLE_CARD_EXIST_SIZE
+    private fun isDrawnCardTheHoleCard() = cards.size == INITIAL_HAND_SIZE
 
     companion object {
         private const val HOLE_CARD_INDEX = 1
-        private const val HOLE_CARD_EXIST_SIZE = 2
     }
 }
