@@ -28,7 +28,8 @@ class BlackJackService(private val gameRepository: GameRepository) {
         val playerBlackJack = game.getPlayerBlackJack()
         playerBlackJack.addCardCount(Deal.giveCards(DEFAULT_FACE_UP))
         val total = playerBlackJack.getTotalCardValue()
-        if (total > BUST_LIMIT_VALUE) {
+
+        if (total > BUST_LIMIT_VALUE && DEALER_NAME != player) {
             throw RuntimeException("Player $player has busted with a total of $total")
         }
         return game
@@ -42,5 +43,6 @@ class BlackJackService(private val gameRepository: GameRepository) {
         private const val BUST_LIMIT_VALUE = 21
         private const val INIT_FACE_UP = 2
         private const val DEFAULT_FACE_UP = 1
+        private const val DEALER_NAME = "딜러"
     }
 }
