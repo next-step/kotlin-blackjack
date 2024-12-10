@@ -29,19 +29,9 @@ class BlackjackGameResult(
         betAmount: BettingMoney,
     ): Int {
         return when (result[player]) {
-            GameMatchResult.WIN -> calculateWinProfit(player, betAmount)
+            GameMatchResult.WIN -> betAmount.profitForWin(player)
             GameMatchResult.LOSE -> betAmount.profitForLose()
             else -> 0
         }
-    }
-
-    private fun calculateWinProfit(
-        player: Player,
-        betAmount: BettingMoney,
-    ): Int {
-        if (player.isBlackjack()) {
-            return betAmount.profitForBlackjackWin()
-        }
-        return betAmount.profitForWin()
     }
 }
