@@ -14,7 +14,7 @@ class Hand(private val cards: MutableList<Card> = mutableListOf()) {
 
     fun bustGap(): Int = (BUST_SCORE - score).abs()
 
-    fun isBackJack(): Boolean {
+    fun isBlackJack(): Boolean {
         if (cards.size != BLACKJACK_HAND_SIZE) {
             return false
         }

@@ -12,20 +12,12 @@ data class Money(val value: Int) {
         return Money(-value)
     }
 
-    operator fun times(multiplier: Double): Money {
-        return Money((value * multiplier).toInt())
-    }
-
     operator fun minus(other: Money): Money {
         return Money(value - other.value)
     }
 
     operator fun plus(other: Money): Money {
         return Money(value + other.value)
-    }
-
-    operator fun unaryMinus(): Money {
-        return Money(-value)
     }
 
     companion object {

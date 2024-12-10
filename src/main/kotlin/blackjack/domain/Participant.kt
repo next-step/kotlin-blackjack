@@ -27,7 +27,7 @@ sealed class Participant(private val hand: Hand, private var money: Money = Mone
     }
 
     fun isBlackJack(): Boolean {
-        return hand.isBackJack()
+        return hand.isBlackJack()
     }
 
     fun profit(other: Money): Money {
