@@ -1,24 +1,33 @@
 package blackjack.presentation
 
+import blackjack.core.player.BettingAmount
 import blackjack.core.player.Name
-import blackjack.core.player.Player
+import blackjack.core.player.Participant
 
 object InputView {
-    fun getNames(): Set<Name> {
+    fun getNames(): List<Name> {
         println(STRING_INPUT_NAME)
         val names = readlnOrNull() ?: throw IllegalArgumentException(ERROR_INVALID_STR)
         return names.split(",")
             .map { Name(it) }
-            .toSet()
+            .toList()
     }
 
-    fun getCard(player: Player): Boolean {
-        println(STRING_INPUT_CARD.format(player.name))
+    fun getCard(participant: Participant): Boolean {
+        println(STRING_INPUT_CARD.format(participant.name))
         val command = readlnOrNull() ?: throw IllegalArgumentException(ERROR_INVALID_STR)
         return when (command.trim()) {
             STRING_YES -> true
             STRING_NO -> false
             else -> throw IllegalArgumentException(ERROR_INVALID_STR)
+        }
+    }
+
+    fun getBettingAmounts(names: List<Name>): List<BettingAmount> {
+        return names.map {
+            println(INPUT_BETTING_AMOUNT.format(it))
+            val amount = readlnOrNull() ?: throw IllegalArgumentException(ERROR_INVALID_STR)
+            BettingAmount(amount.toIntOrNull() ?: throw IllegalArgumentException(ERROR_INVALID_STR))
         }
     }
 
@@ -28,4 +37,5 @@ object InputView {
     private const val STRING_NO = "n"
 
     private const val ERROR_INVALID_STR = "잘못된 값이 입력되었습니다."
+    private const val INPUT_BETTING_AMOUNT = "%s의 배팅 금액은?"
 }
