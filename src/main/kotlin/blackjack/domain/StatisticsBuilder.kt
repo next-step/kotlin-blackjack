@@ -3,23 +3,11 @@ package blackjack.domain
 interface Statistics
 
 abstract class StatisticsBuilder<T : Statistics> {
-    open fun onWin() {}
+    open fun onWin(player: Player) {}
 
-    open fun onLose() {}
+    open fun onLose(player: Player) {}
 
-    open fun onDraw() {}
-
-    open fun onWin(player: Player) {
-        onWin()
-    }
-
-    open fun onLose(player: Player) {
-        onLose()
-    }
-
-    open fun onDraw(player: Player) {
-        onDraw()
-    }
+    open fun onDraw(player: Player) {}
 
     abstract fun build(): T
 }
