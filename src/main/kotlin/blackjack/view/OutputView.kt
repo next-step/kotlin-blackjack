@@ -1,14 +1,10 @@
 package blackjack.view
 
+import blackjack.dto.GameResult
 import blackjack.entity.Game
 
 object OutputView {
-    fun results(games: List<Game>) {
-        games.forEach { game ->
-            game.player
-            println("${game.player}카드: ${createCardInfos(game)} - 결과: ${game.getPlayerBlackJack().getTotalCardValue()}")
-        }
-    }
+
 
     private fun createCardInfos(game: Game): String {
         val cards = game.getPlayerBlackJack().card
@@ -17,5 +13,10 @@ object OutputView {
                 String.format("%s%s", card.getValue(), symbol.getType())
             }
         }.joinToString(", ")
+    }
+
+    fun results(results: GameResult) {
+        println("## 최종 승패")
+        results.playerResults.forEach { playerResult -> println(playerResult.run { getResult() }) }
     }
 }

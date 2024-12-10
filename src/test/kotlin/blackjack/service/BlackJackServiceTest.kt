@@ -52,4 +52,80 @@ class BlackJackServiceTest {
         exception shouldNotBe null
         exception!!.message shouldInclude "Player 문장호 has busted with a total of"
     }
+
+    @Test
+    fun `딜러 버스트 시 모든 플레이어가 승리`() {
+        val players = listOf("딜러", "문장호")
+        blackJackService.initPlayers(players)
+
+        val dealer = gameRepository.findByName("딜러")!!
+        val dealerBlackJack = dealer.getPlayerBlackJack()
+        dealerBlackJack.addCardCount(
+            mutableListOf(
+                mutableMapOf(CardSymbol.HEART to Card.KING),
+                mutableMapOf(CardSymbol.DIAMOND to Card.QUEEN),
+                mutableMapOf(CardSymbol.SPADE to Card.A),
+            ),
+        )
+
+        val result = blackJackService.getGameResult()
+        val dealerResult = result.playerResults.first { it.playerName == "딜러" }
+        dealerResult.winCount shouldBe 0
+        dealerResult.loseCount shouldBe 1
+        dealerResult.drawCount shouldBe 0
+
+        val playerResult = result.playerResults.first { it.playerName == "문장호" }
+        playerResult.winCount shouldBe 1
+        playerResult.loseCount shouldBe 0
+        playerResult.drawCount shouldBe 0
+
+    }
+
+    @Test
+    fun `딜러와 플레이어 점수 비교`() {
+        val players = listOf("딜러", "문장호", "장호")
+        blackJackService.initPlayers(players)
+
+        val dealer = gameRepository.findByName("딜러")!!
+        val dealerBlackJack = dealer.getPlayerBlackJack()
+        dealerBlackJack.addCardCount(
+            mutableListOf(
+                mutableMapOf(CardSymbol.HEART to Card.KING),
+            ),
+        )
+
+        val player = gameRepository.findByName("문장호")!!
+        val playerBlackJack = player.getPlayerBlackJack()
+        playerBlackJack.addCardCount(
+            mutableListOf(
+                mutableMapOf(CardSymbol.HEART to Card.KING),
+                mutableMapOf(CardSymbol.DIAMOND to Card.QUEEN),
+            ),
+        )
+        val playerTwo = gameRepository.findByName("장호")!!
+        val playerBlackJackTwo = playerTwo.getPlayerBlackJack()
+        playerBlackJackTwo.addCardCount(
+            mutableListOf(
+                mutableMapOf(CardSymbol.HEART to Card.KING),
+                mutableMapOf(CardSymbol.DIAMOND to Card.TWO),
+            ),
+        )
+
+        val result = blackJackService.getGameResult()
+        val dealerResult = result.playerResults.first { it.playerName == "딜러" }
+        dealerResult.winCount shouldBe 0
+        dealerResult.loseCount shouldBe 2
+        dealerResult.drawCount shouldBe 0
+
+        val playerResult = result.playerResults.first { it.playerName == "문장호" }
+        playerResult.winCount shouldBe 1
+        playerResult.loseCount shouldBe 0
+        playerResult.drawCount shouldBe 0
+
+        val playerResultTwo = result.playerResults.first { it.playerName == "장호" }
+        playerResultTwo.winCount shouldBe 1
+        playerResultTwo.loseCount shouldBe 0
+        playerResultTwo.drawCount shouldBe 0
+
+    }
 }

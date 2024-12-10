@@ -1,6 +1,8 @@
 package blackjack.service
 
 import blackjack.domain.Deal
+import blackjack.dto.GameResult
+import blackjack.dto.PlayerResult
 import blackjack.entity.Game
 import blackjack.repository.GameRepository
 
@@ -35,8 +37,89 @@ class BlackJackService(private val gameRepository: GameRepository) {
         return game
     }
 
-    fun getGameResult(): List<Game> {
-        return gameRepository.findAll()
+    fun getGameResult(): GameResult {
+        val games = gameRepository.findAll()
+        val dealerScore =
+            games.first { DEALER_NAME == it.player }.getPlayerBlackJack().getTotalCardValue()
+
+        return when {
+            dealerScore > BUST_LIMIT_VALUE -> dealerLoseResult(games)
+            else -> compareGameResults(games, dealerScore)
+        }
+    }
+
+    private fun dealerLoseResult(games: List<Game>): GameResult {
+        val playerResults = games.filter { it.player != DEALER_NAME }.map { player ->
+            PlayerResult(
+                isPlayer = true,
+                playerName = player.player,
+                winCount = 1,
+                loseCount = 0,
+                drawCount = 0
+            )
+        }
+
+        val dealerResult = PlayerResult(
+            isPlayer = false,
+            playerName = DEALER_NAME,
+            winCount = 0,
+            loseCount = playerResults.size,
+            drawCount = 0
+        )
+        return GameResult(listOf(dealerResult) + playerResults)
+    }
+
+    private fun compareGameResults(games: List<Game>, dealerScore: Int): GameResult {
+        val playerResults = games.filter { it.player != DEALER_NAME }.map { player ->
+            playerResult(player, dealerScore)
+        }
+
+        val dealerWinCount = playerResults.count { it.loseCount == DEFAULT_COMPARE_RESULT_COUNT }
+        val dealerLoseCount = playerResults.count { it.winCount == DEFAULT_COMPARE_RESULT_COUNT }
+        val dealerDrawCount = playerResults.count { it.drawCount == DEFAULT_COMPARE_RESULT_COUNT }
+
+        val dealerResult = PlayerResult(
+            isPlayer = false,
+            playerName = DEALER_NAME,
+            winCount = dealerWinCount,
+            loseCount = dealerLoseCount,
+            drawCount = dealerDrawCount
+        )
+
+        return GameResult(listOf(dealerResult) + playerResults)
+    }
+
+
+    private fun playerResult(
+        player: Game,
+        dealerScore: Int
+    ): PlayerResult {
+        val playerScore = player.getPlayerBlackJack().getTotalCardValue()
+        return when {
+            playerScore > dealerScore -> PlayerResult(
+                isPlayer = true,
+                playerName = player.player,
+                winCount = 1,
+                loseCount = 0,
+                drawCount = 0
+            )
+
+            playerScore == dealerScore -> PlayerResult(
+                isPlayer = true,
+                playerName = player.player,
+                winCount = 0,
+                loseCount = 0,
+                drawCount = 1
+            )
+
+            else -> PlayerResult(
+                isPlayer = true,
+                playerName = player.player,
+                winCount = 0,
+                loseCount = 1,
+                drawCount = 0
+            )
+        }
     }
 
     companion object {
@@ -44,5 +127,6 @@ class BlackJackService(private val gameRepository: GameRepository) {
         private const val INIT_FACE_UP = 2
         private const val DEFAULT_FACE_UP = 1
         private const val DEALER_NAME = "딜러"
+        private const val DEFAULT_COMPARE_RESULT_COUNT = 1
     }
 }

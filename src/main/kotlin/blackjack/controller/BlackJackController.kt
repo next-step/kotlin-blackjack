@@ -1,5 +1,6 @@
 package blackjack.controller
 
+import blackjack.dto.GameResult
 import blackjack.entity.Game
 import blackjack.service.BlackJackService
 
@@ -16,7 +17,7 @@ class BlackJackController(private val blackJackService: BlackJackService) {
         return blackJackService.gameContinue(player)
     }
 
-    fun getGameResult(): List<Game> {
+    fun getGameResult(): GameResult {
         return blackJackService.getGameResult()
     }
 }
