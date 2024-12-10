@@ -5,7 +5,7 @@ import blackjack.domain.card.Cards
 class Player(
     name: String,
     cards: Cards = Cards(),
-    private val bettingAmount: Int,
+    val bettingAmount: Int,
 ) : Participant(name, cards) {
 
     init {

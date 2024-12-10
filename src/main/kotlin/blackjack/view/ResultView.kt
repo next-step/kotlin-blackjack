@@ -1,11 +1,11 @@
 package blackjack.view
 
-import blackjack.domain.GameResult
 import blackjack.domain.card.CardRank
 import blackjack.domain.card.CardSuit
 import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Participant
 import blackjack.domain.participant.Player
+import blackjack.domain.result.GameResult
 
 object ResultView {
 
@@ -44,12 +44,12 @@ object ResultView {
 
     fun printGameResult(gameResult: GameResult) {
         val playersResult = gameResult.playersResult.joinToString(separator = "\n") {
-            "${it.player.name}: ${if (it.isWin) "승" else "패"}"
+            "${it.player.name}: ${it.profit}"
         }
 
         println(buildString {
-            append("## 최종 승패\n")
-            append("${gameResult.dealerName}: ${gameResult.dealerWinCount}승 ${gameResult.dealerLoseCount}패\n")
+            append("## 최종 수익\n")
+            append("${gameResult.dealerName}: ${gameResult.dealerProfit}\n")
             append(playersResult)
         })
     }

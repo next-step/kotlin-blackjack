@@ -3,6 +3,9 @@ package blackjack.domain
 import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Participant
 import blackjack.domain.participant.Player
+import blackjack.domain.result.GameResult
+import blackjack.domain.result.GameResultType
+import blackjack.domain.result.PlayerGameResult
 
 class BlackjackGame(
     private val deck: Deck,
@@ -28,7 +31,7 @@ class BlackjackGame(
         val playersResult: List<PlayerGameResult> = players.map { player ->
             PlayerGameResult(
                 player = player,
-                isWin = player.compareWonOrNot(dealer),
+                resultType = player.resultType(dealer),
             )
         }
 
@@ -38,16 +41,28 @@ class BlackjackGame(
         )
     }
 
-    private fun Player.compareWonOrNot(dealer: Dealer): Boolean {
+    private fun Player.resultType(dealer: Dealer): GameResultType {
+        if (this.cards.isBlackjack()) {
+            return if (dealer.cards.isBlackjack()) {
+                GameResultType.PUSH
+            } else {
+                GameResultType.BLACKJACK_WIN
+            }
+        }
+
         if (dealer.cards.isBusted()) {
-            return true
+            return GameResultType.WIN
         }
 
         if (this.cards.isBusted()) {
-            return false
+            return GameResultType.LOSE
         }
 
-        return this.cards.sum() > dealer.cards.sum()
+        return when {
+            this.cards.sum() == dealer.cards.sum() -> GameResultType.PUSH
+            this.cards.sum() > dealer.cards.sum() -> GameResultType.WIN
+            else -> GameResultType.LOSE
+        }
     }
 
     companion object {
