@@ -1,80 +1,73 @@
 package blackjack.domain
 
 class BlackJackGame(
-    private val players: List<Player>,
+    participants: List<Participant>,
 ) {
-    private val deck: Deck = Deck.randomCardDeck()
-    private var drawOrder: Int = 0
+    private val participants = Participants(participants)
+    private val deck = Deck.randomCardDeck()
 
     fun initialDraw(): List<DrawResult> {
         repeat(2) { _ ->
-            players.forEach { it.addCard(deck.draw()) }
+            participants.readAll().forEach { it.addCard(deck.draw()) }
         }
 
-        return players
+        return participants.readAll()
             .map {
                 DrawResult(
+                    dealer = it.isDealer(),
                     playerName = it.name.value,
                     cards = it.currentCards,
                 )
             }
     }
 
-    fun canDrawForAllPlayers(): Boolean = players.any { it.canDraw() }
+    fun canDrawForAllPlayers(): Boolean = participants.canDrawForAllPlayers()
 
-    fun findDrawPlayer(): PlayerName {
-        val startOrder = drawOrder
-        val targetOrder = (startOrder..< players.size)
-            .first { players[it].canDraw() }
-        drawOrder = (targetOrder + 1) % players.size
-        return players[targetOrder].name
-    }
+    fun findDrawPlayer(): Participant? = participants.findDrawPlayer()
 
-    fun drawCard(playerName: PlayerName): DrawResult {
-        val player = players.find { it.name == playerName }
-        player?.addCard(deck.draw())
+    fun drawCard(participantName: ParticipantName): DrawResult {
+        val participant = participants.findByName(participantName)
             ?: throw IllegalArgumentException("존재하지 않는 플레이어입니다.")
 
+        participant.addCard(deck.draw())
         return DrawResult(
-            playerName = playerName.value,
-            cards = player.currentCards,
+            dealer = participant.isDealer(),
+            playerName = participantName.value,
+            cards = participant.currentCards,
         )
     }
 
-    fun stopDraw(playerName: PlayerName): DrawResult {
-        val player = players.find { it.name == playerName }
-        player
+    fun stopDraw(participantName: ParticipantName): DrawResult {
+        val participant = participants.findByName(participantName)
+        participant
             ?.stopDraw()
             ?: throw IllegalArgumentException("존재하지 않는 플레이어입니다.")
 
         return DrawResult(
-            playerName = playerName.value,
-            cards = player.currentCards,
+            dealer = participant.isDealer(),
+            playerName = participantName.value,
+            cards = participant.currentCards,
         )
     }
 
-    fun result(): List<BlackJackGameResult> {
-        check(isAllPlayerStopDraw()) { "모든 플레이어의 턴이 종료되지 않았습니다."}
+    fun result(): BlackJackGameResults {
+        check(participants.isAllPlayerStopDraw()) { "모든 플레이어의 턴이 종료되지 않았습니다."}
 
-        return players.map {
-            BlackJackGameResult(
-                playerName = it.name.value,
-                cards = it.currentCards,
-                totalValue = it.totalValue(),
-            )
-        }
+        val blackJackGameResults = participants.readAll()
+            .map {
+                BlackJackGameResult(
+                    dealer = it.isDealer(),
+                    playerName = it.name.value,
+                    cards = it.currentCards,
+                    totalValue = it.totalCardScore(),
+                )
+            }
+        return BlackJackGameResults(blackJackGameResults)
     }
-
-    private fun isAllPlayerStopDraw(): Boolean = players.all { !it.canDraw() }
 }
 
 data class DrawResult(
+    val dealer: Boolean,
     val playerName: String,
     val cards: List<DrawCard>,
-)
-
-data class BlackJackGameResult(
-    val playerName: String,
-    val cards: List<DrawCard>,
-    val totalValue: Int,
 )

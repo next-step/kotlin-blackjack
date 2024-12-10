@@ -2,22 +2,26 @@ package blackjack
 
 import blackjack.domain.BlackJackGame
 import blackjack.domain.BlackJackGameResult
+import blackjack.domain.BlackJackGameResults
+import blackjack.domain.Dealer
+import blackjack.domain.DrawParticipant
 import blackjack.domain.DrawResult
 import blackjack.domain.Player
-import blackjack.domain.PlayerName
+import blackjack.domain.ParticipantName
 
 class GameController {
     private lateinit var blackJackGame: BlackJackGame
 
-    fun initial(inputPlayers: String?): List<DrawResult> {
+    fun initial(inputPlayerNames: String?): List<DrawResult> {
         require(!this::blackJackGame.isInitialized) { "이미 게임이 시작되었습니다." }
 
-        val players = inputPlayers
+        val players = inputPlayerNames
             ?.split(",")
-            ?.map { Player(PlayerName(it)) }
+            ?.map { Player(participantName = ParticipantName(it)) }
             ?: throw IllegalArgumentException("게임에 참여할 사람의 이름은 필수 입니다.")
 
-        blackJackGame = BlackJackGame(players)
+        val participants = listOf(Dealer()) + players
+        blackJackGame = BlackJackGame(participants)
         return blackJackGame.initialDraw()
     }
 
@@ -26,9 +30,15 @@ class GameController {
         return blackJackGame.canDrawForAllPlayers()
     }
 
-    fun findDrawPlayer(): PlayerName {
+    fun findDrawParticipant(): DrawParticipant? {
         validateInitialized()
-        return blackJackGame.findDrawPlayer()
+        val drawParticipant = blackJackGame.findDrawPlayer()
+        return drawParticipant?.let {
+            DrawParticipant(
+                name = it.name,
+                dealer = drawParticipant.isDealer(),
+            )
+        }
     }
 
     fun draw(
@@ -37,7 +47,7 @@ class GameController {
     ): DrawResult {
         validateInitialized()
 
-        val playerName = PlayerName(inputplayerName)
+        val playerName = ParticipantName(inputplayerName)
         val needDraw = !(inputNeedDraw.isNullOrBlank() || inputNeedDraw == "n")
 
         return if (needDraw) {
@@ -47,7 +57,7 @@ class GameController {
         }
     }
 
-    fun result(): List<BlackJackGameResult> {
+    fun result(): BlackJackGameResults {
         validateInitialized()
         return blackJackGame.result()
     }
