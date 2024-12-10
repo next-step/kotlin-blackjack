@@ -7,7 +7,6 @@ import blackjack.domain.GameResult
 import blackjack.domain.Hand
 import blackjack.domain.Hand.Companion.INITIAL_HAND_SIZE
 import blackjack.domain.Player
-import blackjack.domain.PlayerOutcome
 import blackjack.domain.Rank
 import blackjack.domain.Suit
 
@@ -51,24 +50,24 @@ object ResultView {
         print(message)
     }
 
-    fun displayResults(result: GameResult) {
+    fun displayFinalResults(game: Game) {
+        // 게임 최종 상태 출력
+        displayState(game, false)
+        // 수익 출력
+        displayResults(game.gameResult())
+    }
+
+    private fun displayResults(result: GameResult) {
         val message =
             buildString {
-                appendLine("## 최종 승패")
-                appendLine("딜러: ${result.dealerWins}승, ${result.dealerDraws}무, ${result.dealerLosses}패")
+                appendLine("## 최종 수익")
+                appendLine("딜러: ${result.dealerProfit()}")
                 result.playerResults.forEach {
-                    appendLine("${it.name}: ${formatOutcome(it.outcome)}")
+                    appendLine("${it.name}: ${it.profit()}")
                 }
             }
         println(message)
     }
-
-    private fun formatOutcome(outcome: PlayerOutcome): String =
-        when (outcome) {
-            PlayerOutcome.WIN -> "승"
-            PlayerOutcome.LOSE -> "패"
-            PlayerOutcome.DRAW -> "무"
-        }
 
     private fun formatPlayer(
         player: Player,

@@ -13,27 +13,20 @@ class BlackjackController(
     private val blackjackService: BlackjackService,
 ) {
     fun start(deck: Deck) {
-        // 플레이어 이름과 베팅 금액 입력
+        // 이름과 베팅 금액
         val names = InputView.getPlayerNames()
         val bets = InputView.getBets(names)
 
-        // 블랙젝 게임 생성
+        // 게임 생성
         val game = blackjackService.createGame(CreateGameCommand(names, bets, deck))
-
-        // 초기 상태 출력
         ResultView.displayState(game)
 
         // 게임 진행
         runGameLoop(game)
-
-        // 딜러 행동 출력
         ResultView.displayDealerActions(game.dealer)
 
-        // 게임 결과 출력
-        ResultView.displayState(game, false)
-
-        // 최종 승패 출력
-        ResultView.displayResults(game.gameResult())
+        // 결과 출력
+        ResultView.displayFinalResults(game)
     }
 
     private fun runGameLoop(game: Game) {
