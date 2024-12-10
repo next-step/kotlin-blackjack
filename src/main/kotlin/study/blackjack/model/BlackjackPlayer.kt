@@ -4,14 +4,12 @@ package study.blackjack.model
  * @author 이상준
  */
 class BlackjackPlayer(
-    private val name: String,
+    name: String,
     private var cards: Cards = Cards(listOf()),
 ) {
+    var name = name
+        private set
     private var match: Match = Match.WAIT
-
-    fun name(): String {
-        return name
-    }
 
     fun addCard(card: Card) {
         cards = cards.add(card)
@@ -25,8 +23,8 @@ class BlackjackPlayer(
         return cards
     }
 
-    fun result(): String {
-        return this.match.text
+    fun result(): Match {
+        return this.match
     }
 
     fun match(dealer: BlackjackPlayer) {

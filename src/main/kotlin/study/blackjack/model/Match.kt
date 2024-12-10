@@ -4,11 +4,11 @@ package study.blackjack.model
  * @author 이상준
  */
 
-enum class Match(val text: String) {
-    WIN("승"),
-    LOSE("패"),
-    PUSH("무승부"),
-    WAIT("대기"),
+enum class Match {
+    WIN,
+    LOSE,
+    PUSH,
+    WAIT,
     ;
 
     companion object {
