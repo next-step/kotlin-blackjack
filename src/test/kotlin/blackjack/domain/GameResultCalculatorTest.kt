@@ -1,6 +1,7 @@
 package blackjack.domain
 
 import io.kotest.core.spec.style.StringSpec
+import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.shouldBe
 
 class GameResultCalculatorTest : StringSpec({
@@ -28,8 +29,10 @@ class GameResultCalculatorTest : StringSpec({
         val result = GameResultCalculator.calculate(dealer, players)
 
         result.dealerScore shouldBe dealer.getTotalValue()
-        result.results["pobi"] shouldBe GameResult.Result.WIN
-        result.results["jason"] shouldBe GameResult.Result.WIN
+        result.playerResults.shouldContainExactly(
+            GameResult.PlayerGameResult("pobi", GameResult.Result.WIN),
+            GameResult.PlayerGameResult("jason", GameResult.Result.WIN),
+        )
     }
 
     "Dealer does not bust, compare scores" {
@@ -55,7 +58,9 @@ class GameResultCalculatorTest : StringSpec({
         val result = GameResultCalculator.calculate(dealer, players)
 
         result.dealerScore shouldBe dealer.getTotalValue()
-        result.results["pobi"] shouldBe GameResult.Result.LOSE
-        result.results["jason"] shouldBe GameResult.Result.LOSE
+        result.playerResults.shouldContainExactly(
+            GameResult.PlayerGameResult("pobi", GameResult.Result.LOSE),
+            GameResult.PlayerGameResult("jason", GameResult.Result.LOSE),
+        )
     }
 })

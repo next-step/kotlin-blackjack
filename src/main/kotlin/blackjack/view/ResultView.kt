@@ -31,7 +31,7 @@ object ResultView {
         val (wins, losses) = gameResult.getDealerWinLoss()
         println("딜러: ${wins}승 ${losses}패")
 
-        gameResult.results.forEach { (playerName, result) ->
+        gameResult.playerResults.forEach { (playerName, result) ->
             val outcome = if (result == GameResult.Result.WIN) "승" else "패"
             println("$playerName: $outcome")
         }

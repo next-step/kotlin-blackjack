@@ -16,8 +16,10 @@ object GameResultCalculator {
         dealer: Dealer,
         players: Players,
     ): GameResult {
-        val results = players.getPlayers().associate { it.name to GameResult.Result.WIN }
-        return GameResult(dealer.getTotalValue(), results)
+        val playerResults =
+            players.getPlayers()
+                .map { GameResult.PlayerGameResult(it.name, GameResult.Result.WIN) }
+        return GameResult(dealer.getTotalValue(), playerResults)
     }
 
     private fun compareScores(
@@ -26,14 +28,17 @@ object GameResultCalculator {
     ): GameResult {
         val dealerScore = dealer.getTotalValue()
         val results =
-            players.getPlayers().associate { player ->
-                player.name to
-                    if (player.getTotalValue() > dealerScore) {
-                        GameResult.Result.WIN
-                    } else {
-                        GameResult.Result.LOSE
-                    }
-            }
+            players.getPlayers()
+                .map { player ->
+                    GameResult.PlayerGameResult(
+                        player.name,
+                        if (player.getTotalValue() > dealerScore) {
+                            GameResult.Result.WIN
+                        } else {
+                            GameResult.Result.LOSE
+                        },
+                    )
+                }
         return GameResult(dealerScore, results)
     }
 }
