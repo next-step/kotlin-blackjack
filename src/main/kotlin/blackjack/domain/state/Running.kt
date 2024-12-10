@@ -3,13 +3,19 @@ package blackjack.domain.state
 import blackjack.domain.Card
 import blackjack.domain.Hand
 
-sealed class Running(private val hand: Hand) : State {
-    override fun isFinished(): Boolean = false
+sealed class Running(val hand: Hand) : State {
+    override fun isFinished() = false
 
-    override fun hand(): Hand = hand
+    override fun calculateTotal() = hand.calculateBestTotal()
+
+    override fun isBlackjack() = hand.isBlackjack()
+
+    override fun isBust() = hand.isBust()
+
+    override fun getAllCards() = hand.getAllCards()
 }
 
-class Hit(private val hand: Hand) : Running(hand) {
+class Hit(hand: Hand) : Running(hand) {
     override fun draw(card: Card): State {
         hand.addCard(card)
         return when {
@@ -19,7 +25,5 @@ class Hit(private val hand: Hand) : Running(hand) {
         }
     }
 
-    override fun stay(): State {
-        return Stay(hand)
-    }
+    override fun stay(): State = Stay(hand)
 }
