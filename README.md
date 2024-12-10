@@ -122,11 +122,9 @@
   - [X] evenMoney(1.5배)를 반환한다
   - [X] 음수로 변환 가능하다
 - Participant
-  - [ ] `Money`를 가진다
-  - [ ] 블랙잭을 판정한다
-  - [ ] 수익금을 계산한다
-- Player
-  - [ ] `Money`를 베팅한다
+  - [X] 플레이어는 베팅금액 할당 가능하다
+  - [X] 블랙잭을 판정한다
+  - [X] 수익금을 계산한다
 - StatisticsBuilder
   - 이벤트를 기반으로 통계 객체(Statistics)를 구성(Build)하는 역할을 하는 추상 클래스
 - AmountStatisticsBuilder

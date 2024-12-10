@@ -34,6 +34,19 @@ sealed class Participant(private val hand: Hand, private var _bettingMoney: Mone
         this._bettingMoney = this._bettingMoney.plus(other)
     }
 
+
+    fun evenMoney(): Money {
+        return _bettingMoney.evenMoney()
+    }
+
+    fun isBlackJack() : Boolean {
+        return hand.isBackJack()
+    }
+
+    fun profit(other: Money): Money {
+        return other - _bettingMoney
+    }
+
     private fun matchOf(other: Participant): MatchType {
         return when {
             isBust -> MatchType.LOSE
