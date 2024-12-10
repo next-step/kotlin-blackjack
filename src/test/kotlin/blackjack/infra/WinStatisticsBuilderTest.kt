@@ -4,7 +4,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
 
-class WinStatisticsBuilderTest{
+class WinStatisticsBuilderTest {
     @Test
     fun `win lose draw 를 설정 할 수 있다`() {
         val winStatisticsBuilder = WinStatisticsBuilder()
@@ -18,8 +18,7 @@ class WinStatisticsBuilderTest{
         assertAll(
             { assertThat(actual.wins).isEqualTo(2) },
             { assertThat(actual.losses).isEqualTo(1) },
-            { assertThat(actual.draws).isEqualTo(1) }
+            { assertThat(actual.draws).isEqualTo(1) },
         )
     }
-
 }

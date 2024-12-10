@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
 
 class AmountStatisticsTest {
-
     private lateinit var amountStatisticsBuilder: AmountStatisticsBuilder
     private lateinit var dealer: Dealer
 
@@ -26,7 +25,7 @@ class AmountStatisticsTest {
 
         assertAll(
             { assertThat(actual.playerProfits["player"]).isEqualTo(Money(1_500)) },
-            { assertThat(actual.dealerProfit).isEqualTo(Money(-500)) }
+            { assertThat(actual.dealerProfit).isEqualTo(Money(-500)) },
         )
     }
 
@@ -39,7 +38,7 @@ class AmountStatisticsTest {
 
         assertAll(
             { assertThat(actual.playerProfits["player"]).isEqualTo(Money(-1000)) },
-            { assertThat(actual.dealerProfit).isEqualTo(Money(1000)) }
+            { assertThat(actual.dealerProfit).isEqualTo(Money(1000)) },
         )
     }
 
@@ -52,7 +51,7 @@ class AmountStatisticsTest {
 
         assertAll(
             { assertThat(actual.playerProfits["player"]).isEqualTo(Money(1000)) },
-            { assertThat(actual.dealerProfit).isEqualTo(Money(0)) }
+            { assertThat(actual.dealerProfit).isEqualTo(Money(0)) },
         )
     }
 
@@ -65,7 +64,7 @@ class AmountStatisticsTest {
 
         assertAll(
             { assertThat(actual.playerProfits["player"]).isEqualTo(Money(1000)) },
-            { assertThat(actual.dealerProfit).isEqualTo(Money(0)) }
+            { assertThat(actual.dealerProfit).isEqualTo(Money(0)) },
         )
     }
 
@@ -78,39 +77,48 @@ class AmountStatisticsTest {
 
         assertAll(
             { assertThat(actual.playerProfits["player"]).isEqualTo(Money(-1000)) },
-            { assertThat(actual.dealerProfit).isEqualTo(Money(1000)) }
+            { assertThat(actual.dealerProfit).isEqualTo(Money(1000)) },
         )
     }
 
-    private fun createPlayerWithBlackjack(name: String, betAmount: Int): Player {
+    private fun createPlayerWithBlackjack(
+        name: String,
+        betAmount: Int,
+    ): Player {
         val player = Player.from(name)
         player.betting(Money(betAmount))
         player.receive(
             Deck(
                 listOf(
                     Card(CardRank.ACE, Suit.SPADE),
-                    Card(CardRank.KING, Suit.SPADE)
-                )
-            )
+                    Card(CardRank.KING, Suit.SPADE),
+                ),
+            ),
         )
         return player
     }
 
-    private fun createPlayerWithNonBlackjack(name: String, betAmount: Int): Player {
+    private fun createPlayerWithNonBlackjack(
+        name: String,
+        betAmount: Int,
+    ): Player {
         val player = Player.from(name)
         player.betting(Money(betAmount))
         player.receive(
             Deck(
                 listOf(
                     Card(CardRank.ACE, Suit.SPADE),
-                    Card(CardRank.TWO, Suit.SPADE)
-                )
-            )
+                    Card(CardRank.TWO, Suit.SPADE),
+                ),
+            ),
         )
         return player
     }
 
-    private fun createPlayerWithBust(name: String, betAmount: Int): Player {
+    private fun createPlayerWithBust(
+        name: String,
+        betAmount: Int,
+    ): Player {
         val player = Player.from(name)
         player.betting(Money(betAmount))
         player.receive(
@@ -119,8 +127,8 @@ class AmountStatisticsTest {
                     Card(CardRank.ACE, Suit.SPADE),
                     Card(CardRank.QUEEN, Suit.SPADE),
                     Card(CardRank.QUEEN, Suit.DIAMOND),
-                )
-            )
+                ),
+            ),
         )
         return player
     }

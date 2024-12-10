@@ -1,6 +1,6 @@
 package blackjack.domain
 
-class Players private constructor(private val values: List<Player>) : List<Player> by values {
+class Players(val values: List<Player>) : List<Player> by values {
     fun deal(
         player: Player,
         deck: Deck,

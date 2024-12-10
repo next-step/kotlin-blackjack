@@ -5,10 +5,9 @@ import blackjack.domain.Player
 import blackjack.domain.Statistics
 import blackjack.domain.StatisticsBuilder
 
-
 data class AmountStatistics(
     val dealerProfit: Money,
-    val playerProfits: Map<String, Money>
+    val playerProfits: Map<String, Money>,
 ) : Statistics
 
 class AmountStatisticsBuilder : StatisticsBuilder<AmountStatistics>() {
@@ -16,7 +15,7 @@ class AmountStatisticsBuilder : StatisticsBuilder<AmountStatistics>() {
     private val playerProfits = mutableMapOf<String, Money>()
 
     override fun onWin(player: Player) {
-        when (player.isBlackJack()){
+        when (player.isBlackJack()) {
             true -> {
                 val betAmount = player.evenMoney()
                 dealerProfit -= player.profit(betAmount)
@@ -38,7 +37,10 @@ class AmountStatisticsBuilder : StatisticsBuilder<AmountStatistics>() {
         playerProfits[player.name] = playerProfits.getOrDefault(player.name, player.bettingMoney)
     }
 
-    private fun addPlayerProfit(playerName: String, amount: Money) {
+    private fun addPlayerProfit(
+        playerName: String,
+        amount: Money,
+    ) {
         playerProfits[playerName] = playerProfits.getOrDefault(playerName, Money.ZERO) + amount
     }
 

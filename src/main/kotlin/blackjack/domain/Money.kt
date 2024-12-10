@@ -1,6 +1,6 @@
 package blackjack.domain
 
-data class Money(val value: Int)  {
+data class Money(val value: Int) {
     fun evenMoney(): Money {
         return Money((value * EVEN_PRODUCT).toInt())
     }

@@ -27,7 +27,11 @@ class ParticipantTest {
 
     @ParameterizedTest
     @CsvSource(value = ["1_000, 2_000, 1_000", "1_000, 0, -1_000"])
-    fun `수익금을 계산한다`(bettingMoney: Int, target: Int, expected: Int) {
+    fun `수익금을 계산한다`(
+        bettingMoney: Int,
+        target: Int,
+        expected: Int,
+    ) {
         val player = Player.from("playerA")
         player.betting(Money(bettingMoney))
 
@@ -45,5 +49,4 @@ class ParticipantTest {
 
         assertThat(actual).isEqualTo(Money(1_500))
     }
-
 }

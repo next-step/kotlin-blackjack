@@ -3,13 +3,11 @@ package blackjack.infra
 import blackjack.domain.Statistics
 import blackjack.domain.StatisticsBuilder
 
-
 data class WinStatistics(
     val wins: Int = 0,
     val losses: Int = 0,
-    val draws: Int = 0
+    val draws: Int = 0,
 ) : Statistics
-
 
 class WinStatisticsBuilder : StatisticsBuilder<WinStatistics>() {
     private var wins = 0
