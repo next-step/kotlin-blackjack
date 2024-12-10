@@ -128,12 +128,11 @@
 - StatisticsBuilder
   - 이벤트를 기반으로 통계 객체(Statistics)를 구성(Build)하는 역할을 하는 추상 클래스
 - AmountStatisticsBuilder
-  - [ ] AmountStatistics 를 만든다
-  - [ ] AmountStatistics 에서 플레이어별 수익금을 계산한다
-  - [ ] AmountStatistics 에서 딜러의 수익금을 계산한다
-- [ ] 플레이어의 첫 두 장 카드 합이 21이면 블랙잭 판정
-- [ ] 플레이어는 베팅 금액을 설정할 수 있다
-- [ ] 블랙잭이면 베팅 금액의 1.5배를 획득한다
-- [ ] 딜러와 동시에 블랙잭이면 베팅 금액을 반환받는다
-- [ ] 플레이어 카드 합이 21을 초과하면 베팅 금액 전액을 잃는다
-- [ ] 딜러가 21을 초과하면 남은 플레이어들은 베팅 금액을 그대로 받는다
+  - [X] AmountStatistics 를 만든다
+  - [X] AmountStatistics 에서 플레이어별 수익금을 계산한다
+  - [X] AmountStatistics 에서 딜러의 수익금을 계산한다
+- [X] 플레이어의 첫 두 장 카드 합이 blackjack이면 베팅금액 evenMoney 판정
+- [X] 플레이어는 베팅 금액을 설정할 수 있다
+- [X] 딜러와 동시에 블랙잭이면 베팅 금액을 반환받는다
+- [X] 딜러가 버스트면 플레이어가 버스트라도 플레이어가 이긴다
+- [X] 플레이어가 `bust` 상태면 베팅 금액 전액을 잃는다
