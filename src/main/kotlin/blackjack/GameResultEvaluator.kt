@@ -1,14 +1,13 @@
 package blackjack
 
 import blackjack.domain.Dealer
-import blackjack.domain.MatchType
 import blackjack.domain.Players
+import blackjack.domain.calculateStatistics
+import blackjack.infra.AmountStatistics
+import blackjack.infra.AmountStatisticsBuilder
 import blackjack.ui.DEALER_NAME
-import blackjack.ui.DealerResult
 import blackjack.ui.DisplayCard
-import blackjack.ui.FinalWinnerResults
 import blackjack.ui.RoundResult
-import blackjack.ui.UIMatchType
 
 class GameResultEvaluator(private val players: Players, private val dealer: Dealer) {
     fun evaluateRounds(): List<RoundResult> {
@@ -32,25 +31,7 @@ class GameResultEvaluator(private val players: Players, private val dealer: Deal
         return roundResults
     }
 
-    fun finalMatchEvaluate(): FinalWinnerResults {
-        val resultStatistics = dealer.dealerResult(players)
-
-        val playerResults =
-            dealer.playerResult(players).mapValues { (_, matchType) ->
-                when (matchType) {
-                    MatchType.WIN -> UIMatchType.WIN
-                    MatchType.LOSE -> UIMatchType.LOSS
-                    MatchType.DRAW -> UIMatchType.DRAW
-                }
-            }
-
-        return FinalWinnerResults(
-            DealerResult(
-                wins = resultStatistics.winCount,
-                losses = resultStatistics.loseCount,
-                draws = resultStatistics.drawCount,
-            ),
-            playerResults,
-        )
+    fun finalMatchEvaluate(): AmountStatistics {
+        return dealer.calculateStatistics(players.values, AmountStatisticsBuilder())
     }
 }

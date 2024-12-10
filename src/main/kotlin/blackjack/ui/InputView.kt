@@ -14,4 +14,10 @@ class InputView(val inputProvider: () -> String? = { readln() }) {
             it == "y"
         } ?: throw IllegalArgumentException("입력이 없습니다.")
     }
+
+    fun inputPlayerAmount(name: UserName): Int {
+        println("$name 의 배팅 금액은?")
+
+        return inputProvider()?.toIntOrNull() ?: throw IllegalArgumentException("입력이 없습니다.")
+    }
 }

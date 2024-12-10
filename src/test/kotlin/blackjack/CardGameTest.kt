@@ -57,7 +57,10 @@ class CardGameTest : BehaviorSpec({
                 listOf(userA),
             )
         When("pick 호출하면") {
-            cardGame.handleUserTurn { _, _ -> true }
+            cardGame.handleUserTurn(
+                { true },
+                { _, _ -> },
+            )
             val actual = cardGame.playerCards(userA)
 
             Then("초기 부여 카드와 추가 카드를 가진다") {
