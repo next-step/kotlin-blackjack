@@ -16,4 +16,7 @@ class GameRepository {
     fun savePlayers(players: List<Game>) {
         this.players = players
     }
+//    fun saveDealer() {
+//        this.players["Dealer"]
+//    }
 }

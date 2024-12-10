@@ -30,10 +30,15 @@ fun initGameSet(players: List<String>) {
 fun gameContinue() {
     val playerInfos = blackJackController.startGame()
     InputView.playerInfo(playerInfos)
-    playerInfos.forEach {
+
+    playerInfos.filter { (it.player == InputView.getDealerName()).not() }.forEach {
         while (InputView.isGameContinue(it.player)) {
             gameProgress(it.player)
         }
+    }
+    val dealerInfo = playerInfos.first { (it.player == InputView.getDealerName()) }
+    if (InputView.isLessThanSixTeen(dealerInfo.getPlayerBlackJack().getTotalCardValue())) {
+        gameProgress(dealerInfo.player)
     }
 }
 

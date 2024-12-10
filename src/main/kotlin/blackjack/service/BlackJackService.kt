@@ -6,12 +6,14 @@ import blackjack.repository.GameRepository
 
 class BlackJackService(private val gameRepository: GameRepository) {
     fun initPlayers(players: List<String>) {
+        //딜러 추가
+
         gameRepository.savePlayers(
             players.map { Game(it) }.toList(),
         )
     }
 
-    fun startGame(): List<Game> {
+    fun startGame(): List<Game> {//플레이어 따로 딜러 따로 플레이어만
         val players = gameRepository.findAll()
         players.forEach { initAddCard(it) }
         return players
