@@ -6,13 +6,13 @@ import io.kotest.matchers.collections.shouldContain
 class RandomCardPickerTest : FunSpec({
     context("RandomCardPicker 클래스 테스트") {
         test("단일 카드를 랜덤하게 선택한다.") {
-            // Given
+            // given
             val cardPicker = RandomCardPicker()
 
-            // When
+            // when
             val card = cardPicker.pick()
 
-            // Then
+            // then
             CardNumber.entries shouldContain card.number
             CardType.entries shouldContain card.type
         }

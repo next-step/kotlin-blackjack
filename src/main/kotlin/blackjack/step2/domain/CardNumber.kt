@@ -1,6 +1,6 @@
 package blackjack.step2.domain
 
-import blackjack.step2.domain.ScoreCalculator.BLACKJACK_SCORE
+import blackjack.step2.domain.Participant.Companion.BLACKJACK_SCORE
 
 enum class CardNumber(val score: Int, val denomination: String) {
     ACE(1, "A"),

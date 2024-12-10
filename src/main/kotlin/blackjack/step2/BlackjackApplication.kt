@@ -1,27 +1,27 @@
 package blackjack.step2
 
+import blackjack.step2.domain.GameInitializer
 import blackjack.step2.domain.GameManager
-import blackjack.step2.domain.Player
 import blackjack.step2.domain.RandomCardPicker
 import blackjack.step2.domain.ResultManager
 import blackjack.step2.view.InputView
 import blackjack.step2.view.OutputView
 
 fun main() {
+    val cardPicker = RandomCardPicker()
+    val gameInitializer = GameInitializer(cardPicker)
     val playerNames = InputView.inputPlayerNames()
-    val gameManager = GameManager(cardPicker = RandomCardPicker())
-    val dealer = gameManager.pickFirstDealerCards()
-    val players = gameManager.pickFirstPlayersCards(playerNames)
 
-    val participants = listOf(dealer).plus(players)
-    OutputView.printCardDealingIntro(playerNames)
-    OutputView.printFirstDealtCard(participants)
-    val updatedPlayers = InputView.inputMoreCard(participants = players, gameManager = gameManager)
-    val updatedDealer = gameManager.pickDealerCardIfValid(dealer)
+    val dealer = gameInitializer.initializeDealer()
+    val players = gameInitializer.initializePlayers(playerNames)
+    OutputView.printInitialCards(dealer, players)
 
-    OutputView.printCardResult(listOf(updatedDealer).plus(updatedPlayers))
+    val gameManager = GameManager(cardPicker = cardPicker)
+    val finalPlayers = players.map { gameManager.playTurn(it) }
+    val finalDealer = gameManager.playTurn(dealer)
 
-    val gameResults = ResultManager.calculateResults(updatedDealer, updatedPlayers.map { it as Player })
-
-    OutputView.printFinalResults(gameResults)
+    OutputView.printCards(finalDealer)
+    finalPlayers.forEach { OutputView.printCards(it) }
+    val results = ResultManager.calculate(finalPlayers.plus(finalDealer))
+    OutputView.printResults(results)
 }

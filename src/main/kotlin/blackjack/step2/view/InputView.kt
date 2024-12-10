@@ -1,8 +1,6 @@
 package blackjack.step2.view
 
-import blackjack.step2.domain.GameManager
 import blackjack.step2.domain.Participant
-import blackjack.step2.domain.ScoreCalculator
 
 object InputView {
     fun inputPlayerNames(): List<String> {
@@ -10,42 +8,27 @@ object InputView {
         return readln().split(",").map { it.trim() }.filter { it.isNotBlank() }
     }
 
-    fun inputMoreCard(
-        participants: List<Participant>,
-        gameManager: GameManager,
-    ): List<Participant> {
-        return participants.map { participant ->
-            handleCardDecision(participant, gameManager)
+    fun askForMoreCard(participant: Participant): Boolean {
+        println("${participant.name}는 한장의 카드를 더 받겠습니까? (예는 y, 아니오는 n)")
+        return when (readln().lowercase()) {
+            "y" -> true
+            "n" -> false
+            else -> {
+                println("잘못된 입력입니다. 다시 입력해주세요.")
+                askForMoreCard(participant)
+            }
         }
     }
 
-    private fun handleCardDecision(
-        participant: Participant,
-        gameManager: GameManager,
-    ): Participant {
-        if (participant.calculateScore() >= ScoreCalculator.BLACKJACK_SCORE) {
-            return participant
-        }
+    fun notifyDealerDraw() {
+        println("딜러는 카드를 더 받습니다.")
+    }
 
-        println("${participant.name}는 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
-        val input = readln().trim().lowercase()
-
-        return when (input) {
-            "y" -> {
-                println("${participant.name}는 한 장의 카드를 더 받습니다.")
-                val updatedParticipant = gameManager.pickPlayerCardIfValid(participant)
-                handleCardDecision(updatedParticipant, gameManager)
+    fun printPlayerCards(participant: Participant) {
+        val formattedCards =
+            participant.cards.all.joinToString(", ") {
+                "${it.number.denomination}${it.type.value}"
             }
-
-            "n" -> {
-                println("${participant.name}는 카드를 더 받지 않습니다.")
-                participant
-            }
-
-            else -> {
-                println("잘못된 입력입니다. 다시 입력해주세요.")
-                handleCardDecision(participant, gameManager)
-            }
-        }
+        println("${participant.name} 카드: $formattedCards")
     }
 }

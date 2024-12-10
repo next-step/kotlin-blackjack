@@ -1,51 +1,35 @@
 package blackjack.step2.domain
 
-import blackjack.step2.domain.ScoreCalculator.BLACKJACK_SCORE
+import blackjack.step2.view.InputView
 
-class GameManager(
-    private val cardPicker: CardPicker,
-) {
-    fun pickFirstDealerCards(): Dealer {
-        val cards = List(INITIAL_DEAL_COUNT) { cardPicker.pick() }
-        return Dealer.of(cards)
+class GameManager(private val cardPicker: CardPicker) {
+    fun playTurn(participant: Participant): Participant {
+        return generateSequence(participant) { current ->
+            when (current) {
+                is Player -> processPlayerTurn(current)
+                is Dealer -> processDealerTurn(current)
+            }
+        }.last()
     }
 
-    fun pickFirstPlayersCards(playerNames: List<String>): List<Player> {
-        return playerNames.map { playerName ->
-            val cards = List(INITIAL_DEAL_COUNT) { cardPicker.pick() }
-            Player.of(playerName, cards)
-        }
-    }
-
-    fun pickPlayerCardIfValid(participant: Participant): Participant {
-        if (participant.calculateScore() >= BLACKJACK_SCORE) {
-            println("${participant.name}의 점수가 $BLACKJACK_SCORE 이상입니다. 카드를 더 받을 수 없습니다.")
-            return participant
-        }
-
-        while (true) {
-            val card = cardPicker.pick()
-            if (!participant.cards.all.contains(card)) {
-                return participant.pickCard(card)
+    private fun processPlayerTurn(player: Player): Player? {
+        return if (player.isBust()) {
+            null
+        } else {
+            InputView.askForMoreCard(player).takeIf { it }?.let {
+                val card = cardPicker.pick()
+                player.pickCard(card).also { InputView.printPlayerCards(it) }
             }
         }
     }
 
-    fun pickDealerCardIfValid(dealer: Dealer): Dealer {
-        if (dealer.calculateScore() > 17) {
-            return dealer
-        }
-
-        println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
-        while (true) {
+    private fun processDealerTurn(dealer: Dealer): Dealer? {
+        return if (!dealer.canDraw()) {
+            null
+        } else {
+            InputView.notifyDealerDraw()
             val card = cardPicker.pick()
-            if (!dealer.cards.all.contains(card)) {
-                return dealer.pickCard(card)
-            }
+            dealer.pickCard(card)
         }
-    }
-
-    companion object {
-        private const val INITIAL_DEAL_COUNT = 2
     }
 }
