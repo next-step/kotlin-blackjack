@@ -1,6 +1,6 @@
 package blackjack.ui
 
-import blackjack.Player
+import blackjack.Participant
 
 class ConsoleInput {
     companion object {
@@ -11,14 +11,14 @@ class ConsoleInput {
             return playerNames
         }
 
-        fun inputBetAmount(player: Player): Long {
+        fun inputBetAmount(player: Participant): Long {
             println("${player.name}의 베팅 금액은?")
             val betAmount = readln().toLong()
             println()
             return betAmount
         }
 
-        fun inputDrawAnswer(player: Player): DrawAnswer {
+        fun inputDrawAnswer(player: Participant): DrawAnswer {
             println("${player.name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
             val answer = readln()
             return DrawAnswer.valueOf(answer.uppercase())

@@ -1,10 +1,9 @@
 package blackjack.ui
 
-import blackjack.Dealer
+import blackjack.BlackjackService
 import blackjack.Deck
 import blackjack.Money
 import blackjack.Participant
-import blackjack.Player
 import blackjack.ui.ConsoleInput.Companion.inputBetAmount
 import blackjack.ui.ConsoleInput.Companion.inputDrawAnswer
 import blackjack.ui.ConsoleInput.Companion.inputPlayerNames
@@ -18,22 +17,14 @@ import blackjack.ui.ConsoleOutput.Companion.revealAllParticipantsHeldCardsAndSco
 import blackjack.ui.ConsoleOutput.Companion.revealParticipantHeldCards
 
 fun main() {
+    val deck = Deck().apply { shuffle() }
+    val service = BlackjackService(deck)
+
     val playerNames = inputPlayerNames()
 
-    val deck = Deck()
-    deck.shuffle()
+    val (dealer, players) = service.initializeParticipants(playerNames)
 
-    val dealer = Dealer(List(2) { deck.draw() })
-    val players =
-        playerNames.map { playerName ->
-            val initialCards = List(2) { deck.draw() }
-            Player(name = playerName, initialCards = initialCards)
-        }
-
-    players.forEach { player ->
-        val betAmount = inputBetAmount(player)
-        player.bet(betAmount)
-    }
+    service.betAllPlayers(players) { player -> inputBetAmount(player) }
 
     announceAllParticipantsInitialized(dealer, players)
 
@@ -41,42 +32,24 @@ fun main() {
 
     revealAllParticipantsHeldCards(participants)
 
-    players.forEach { participant ->
-        while (!participant.isFinished()) {
-            val answer = inputDrawAnswer(participant)
-            when (answer) {
-                DrawAnswer.Y -> {
-                    val newCard = deck.draw()
-                    participant.hit(newCard)
-                    revealParticipantHeldCards(participant)
-                }
-                DrawAnswer.N -> {
-                    participant.stay()
-                }
-            }
-        }
-        if (participant.isBust()) {
-            announceBustParticipant(participant)
-        }
-        if (participant.isBlackjack()) {
-            announceBlackjackParticipant(participant)
-        }
-    }
+    service.handleAllPlayersTurn(
+        players = players,
+        drawAnswer = { inputDrawAnswer(it) },
+        revealParticipantHeldCards = { revealParticipantHeldCards(it) },
+        onBust = { announceBustParticipant(it) },
+        onBlackjack = { announceBlackjackParticipant(it) },
+    )
 
-    if (dealer.shouldHit()) {
-        announceDealerDrawOneMoreCard(dealer)
-        val newCard = deck.draw()
-        dealer.hit(newCard)
-    }
+    service.handleDealerTurn(
+        dealer = dealer,
+        onUnderOverOutput = { announceDealerDrawOneMoreCard(it) },
+        onBust = { announceBustParticipant(it) },
+        onBlackjack = { announceBlackjackParticipant(it) },
+    )
 
     revealAllParticipantsHeldCardsAndScores(participants)
 
-    val dealerProfit = dealer to dealer.calculateSelfProfit(players)
-    val playerProfits =
-        players.map {
-            it to dealer.calculatePlayerProfit(it)
-        }
-    val profits: List<Pair<Participant, Money>> = listOf(dealerProfit) + playerProfits
+    val profits: List<Pair<Participant, Money>> = service.calculateAllPlayerProfits(dealer, players)
 
     announceAllParticipantsProfits(profits)
 }
