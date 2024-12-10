@@ -37,4 +37,13 @@ class GameResultResponse(private val gameResult: BlackjackGameResult) {
             "${player.getName()}: ${gameMatchResult.result}"
         }
     }
+
+    fun toFormattedStringPlayerProfit(): String {
+        val dealerProfit = gameResult.calculateDealerProfit()
+        val playerProfits =
+            gameResult.calculatePlayerProfits().map { (player, profit) ->
+                "${player.getName()}: $profit"
+            }
+        return "딜러: $dealerProfit\n" + playerProfits.joinToString("\n")
+    }
 }
