@@ -37,8 +37,8 @@ class Game(playerNames: List<String>) {
         return results
     }
     fun calculateDealerResult(results: Map<String, String>): String {
-        val wins = results.values.count { it == "패" }
+        val wins = results.values.count { it == GameResult.LOSE.getResult() }
         val losses = results.size - wins
-        return "${wins}승 ${losses}패"
+        return "${wins}${GameResult.WIN.getResult()} ${losses}${GameResult.LOSE.getResult()}"
     }
 }
