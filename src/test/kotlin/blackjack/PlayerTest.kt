@@ -5,9 +5,15 @@ import blackjack.domain.CardNumber
 import blackjack.domain.CardSuit
 import blackjack.domain.Player
 import io.kotest.matchers.shouldBe
+import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.Test
 
 class PlayerTest {
+    @Test
+    fun `플레이어 이름이 빈 문자열이면 IllegalArgumentException 예외 처리를 한다`() {
+        assertThatThrownBy { Player("") }.isInstanceOf(IllegalArgumentException::class.java)
+    }
+
     @Test
     fun `플레이어가 가진 카드의 숫자의 총합이 21보다 낮으면 카드를 더 뽑을 수 있는 상태이다`() {
         val player = Player("test")

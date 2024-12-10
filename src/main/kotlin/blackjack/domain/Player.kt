@@ -5,6 +5,10 @@ data class Player(
 ) {
     val deck = PlayerCardDeck()
 
+    init {
+        require(name.isNotBlank())
+    }
+
     fun addCard(card: Card) {
         deck.addCard(card)
     }
