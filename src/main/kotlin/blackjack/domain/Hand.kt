@@ -6,9 +6,10 @@ class Hand(private val cards: List<Card> = listOf()) {
     }
 
     fun calculateScore(): Int {
-        val regularCardSum = cards
-            .filter { it.number != CardNumber.ACE }
-            .sumOf { it.number.getPoints() }
+        val regularCardSum =
+            cards
+                .filter { it.number != CardNumber.ACE }
+                .sumOf { it.number.getPoints() }
         val aceCount = cards.count { it.number == CardNumber.ACE }
 
         return when (aceCount) {
@@ -23,5 +24,6 @@ class Hand(private val cards: List<Card> = listOf()) {
             }
         }
     }
+
     fun getCards(): List<Card> = cards.toList()
 }

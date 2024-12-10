@@ -1,6 +1,10 @@
 package blackjack.view
 
-import blackjack.domain.*
+import blackjack.domain.Card
+import blackjack.domain.CardNumber
+import blackjack.domain.CardShape
+import blackjack.domain.Dealer
+import blackjack.domain.Player
 
 object ResultView {
     private const val SPLIT_CARD_RESULT_MESSAGE = "딜러와 %s에게 2장을 나누었습니다."
@@ -51,29 +55,31 @@ object ResultView {
     }
 
     private val CardNumber.display: String
-        get() = when (this) {
-            CardNumber.ACE -> "A"
-            CardNumber.TWO -> "2"
-            CardNumber.THREE -> "3"
-            CardNumber.FOUR -> "4"
-            CardNumber.FIVE -> "5"
-            CardNumber.SIX -> "6"
-            CardNumber.SEVEN -> "7"
-            CardNumber.EIGHT -> "8"
-            CardNumber.NINE -> "9"
-            CardNumber.TEN -> "10"
-            CardNumber.JACK -> "J"
-            CardNumber.QUEEN -> "Q"
-            CardNumber.KING -> "K"
-        }
+        get() =
+            when (this) {
+                CardNumber.ACE -> "A"
+                CardNumber.TWO -> "2"
+                CardNumber.THREE -> "3"
+                CardNumber.FOUR -> "4"
+                CardNumber.FIVE -> "5"
+                CardNumber.SIX -> "6"
+                CardNumber.SEVEN -> "7"
+                CardNumber.EIGHT -> "8"
+                CardNumber.NINE -> "9"
+                CardNumber.TEN -> "10"
+                CardNumber.JACK -> "J"
+                CardNumber.QUEEN -> "Q"
+                CardNumber.KING -> "K"
+            }
 
     private val CardShape.display: String
-        get() = when (this) {
-            CardShape.HEART -> "하트"
-            CardShape.CLUB -> "클로버"
-            CardShape.SPADE -> "스페이드"
-            CardShape.DIAMOND -> "다이아"
-        }
+        get() =
+            when (this) {
+                CardShape.HEART -> "하트"
+                CardShape.CLUB -> "클로버"
+                CardShape.SPADE -> "스페이드"
+                CardShape.DIAMOND -> "다이아"
+            }
 
     private fun Card.formatDisplay(): String = "${number.display}${shape.display}"
 }

@@ -31,7 +31,7 @@ class PlayerTest : StringSpec({
                 TestCards.HEART_10,
                 TestCards.CLUB_10,
                 TestCards.SPADE_2,
-            )
+            ),
         )
 
         player.canContinue() shouldBe false

@@ -2,7 +2,7 @@ package blackjack.domain
 
 class Deck(
     private val numberOfDecks: Int = 1,
-    private val shuffleStrategy: (MutableList<Card>) -> Unit = { it.shuffle() }
+    private val shuffleStrategy: (MutableList<Card>) -> Unit = { it.shuffle() },
 ) {
     private val cards = mutableListOf<Card>()
 

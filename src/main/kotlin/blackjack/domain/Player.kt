@@ -16,9 +16,9 @@ open class Player(val name: String) {
 
     fun compareWithDealer(dealer: Dealer): String {
         return when {
-            score > 21 || dealer.score > score -> "패"
-            score == dealer.score -> "무승부"
-            else -> "승"
+            score > 21 || dealer.score > score -> GameResult.LOSE.getResult()
+            score == dealer.score -> GameResult.DRAW.getResult()
+            else -> GameResult.WIN.getResult()
         }
     }
 }
