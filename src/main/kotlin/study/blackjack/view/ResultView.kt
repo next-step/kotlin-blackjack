@@ -17,11 +17,11 @@ class ResultView {
     }
 
     fun printInitCardOfPlayer(player: BlackjackPlayer) {
-        println("${player.name()} 카드: ${player.cards().getCards().joinToString(", ") { it.name() }}")
+        println("${player.name()} 카드: ${player.cards().toList().joinToString(", ") { it.cardRank.name }}")
     }
 
     fun printResultCardOfPlayer(player: BlackjackPlayer) {
-        val cards = player.cards().getCards().joinToString(", ") { it.name() }
+        val cards = player.cards().toList().joinToString(", ") { it.cardRank.name }
         val score = player.cards().calculateScore()
         println("${player.name()} 카드: $cards - 결과: $score")
     }

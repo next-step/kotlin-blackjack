@@ -6,25 +6,19 @@ import study.blackjack.model.Match.Companion.BLACKJACK
  * @author 이상준
  */
 data class Cards(
-    private var cards: MutableList<Card> = mutableListOf(),
+    private val cards: List<Card>,
 ) {
-    fun addCard(card: Card) {
-        cards.add(card)
+    fun size(): Int = cards.size
+
+    fun add(card: Card): Cards {
+        return Cards(cards + card)
     }
 
-    fun addAllCards(cards: Cards) {
-        cards.cards.forEach {
-            addCard(it)
-        }
+    fun merge(other: Cards): Cards {
+        return Cards(cards + other.cards)  // 두 개의 Items 객체의 아이템 합치기
     }
 
-    fun getCards(): List<Card> {
-        return cards.toList()
-    }
-
-    fun cardCount(): Int {
-        return cards.size
-    }
+    fun toList(): List<Card> = cards.toList()
 
     fun calculateScore(): Int {
         val totalScore = cards.sumOf { it.score() }

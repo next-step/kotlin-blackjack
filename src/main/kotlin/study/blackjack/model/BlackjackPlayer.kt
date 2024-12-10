@@ -5,7 +5,7 @@ package study.blackjack.model
  */
 class BlackjackPlayer(
     private val name: String,
-    private val cards: Cards = Cards(),
+    private var cards: Cards = Cards(listOf()),
 ) {
     private var match: Match = Match.WAIT
 
@@ -14,11 +14,11 @@ class BlackjackPlayer(
     }
 
     fun addCard(card: Card) {
-        this.cards.addCard(card)
+        cards = cards.add(card)
     }
 
-    fun addAllCards(cards: Cards) {
-        this.cards.addAllCards(cards)
+    fun mergeCards(cards: Cards) {
+        this.cards = cards.merge(cards)
     }
 
     fun cards(): Cards {
@@ -30,6 +30,6 @@ class BlackjackPlayer(
     }
 
     fun match(dealer: BlackjackPlayer) {
-        this.match = Match.of(this.cards().calculateScore(), dealer.cards().calculateScore())
+        this.match = Match.of(this.cards.calculateScore(), dealer.cards.calculateScore())
     }
 }

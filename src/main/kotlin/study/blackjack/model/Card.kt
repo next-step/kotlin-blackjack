@@ -5,19 +5,19 @@ package study.blackjack.model
  */
 data class Card(
     val suit: Suit,
-    val number: Int,
+    val cardRank: CardRank,
 ) {
-    init {
-        require(number in MIN_CARD_NUMBER..MAX_CARD_NUMBER) { ERROR_CARD_NUMBER_MESSAGE }
-    }
+//    init {
+//        require(number in MIN_CARD_NUMBER..MAX_CARD_NUMBER) { ERROR_CARD_NUMBER_MESSAGE }
+//    }
 
-    fun name(): String {
-        val playingCard = PlayingCards.findPlayingCard(this.number)
-        return "${playingCard.cardName}${suit.suitName}"
-    }
+//    fun name(): String {
+//        val playingCard = CardRank.findPlayingCard(this.number)
+//        return "${playingCard.cardName}${suit.suitName}"
+//    }
 
     fun score(isAce: Boolean = true): Int {
-        return PlayingCards.findPlayingCard(this.number).score(isAce)
+        return cardRank.score(isAce)
     }
 
     companion object {

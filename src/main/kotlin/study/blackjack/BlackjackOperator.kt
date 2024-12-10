@@ -2,6 +2,7 @@ package study.blackjack
 
 import study.blackjack.model.BlackjackPlayer
 import study.blackjack.model.Card
+import study.blackjack.model.CardRank
 import study.blackjack.model.Suit
 import kotlin.random.Random
 
@@ -11,7 +12,8 @@ import kotlin.random.Random
 class BlackjackOperator {
     fun addCard(player: BlackjackPlayer) {
         val suit = Suit.findSuit(randomSuit()) ?: throw IllegalArgumentException("잘못된 카드 모양입니다.")
-        player.addCard(Card(suit, randomNumber()))
+        val cardRank = CardRank.findCardRank(randomNumber())
+        player.addCard(Card(suit, cardRank))
     }
 
     private fun randomNumber(): Int {

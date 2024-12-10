@@ -14,13 +14,13 @@ class BlackjackOperatorTest : StringSpec({
         val player = BlackjackPlayer("test")
         blackjackOperator.addCard(player)
 
-        player.cards().cardCount() shouldBe 1
+        player.cards().size() shouldBe 1
     }
     "카드 생성 2개 테스트" {
         val player = BlackjackPlayer("test")
         blackjackOperator.addCard(player)
         blackjackOperator.addCard(player)
 
-        player.cards().cardCount() shouldBe 2
+        player.cards().size() shouldBe 2
     }
 })
