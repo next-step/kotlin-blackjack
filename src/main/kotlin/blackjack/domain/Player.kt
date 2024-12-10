@@ -1,7 +1,5 @@
 package blackjack.domain
 
-import blackjack.BlackJackGame.Companion.BLACK_JACK_NUMBER
-
 data class Player(
     val name: String,
 ) {
@@ -15,5 +13,5 @@ data class Player(
         deck.calculateScore()
     }
 
-    fun findEnabledMoreCard(): Boolean = deck.score <= BLACK_JACK_NUMBER
+    fun findEnabledMoreCard(isDealer: Boolean = false): Boolean = deck.score.isEnabledMoreCard(isDealer)
 }

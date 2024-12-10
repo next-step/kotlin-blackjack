@@ -32,5 +32,6 @@ class BlackJackGame {
     companion object {
         private const val REPEAT_TIMES_TO_DISTRIBUTE = 2
         const val BLACK_JACK_NUMBER = 21
+        const val BLACK_JACK_DEALER_MORE_CARD_NUMBER = 17
     }
 }

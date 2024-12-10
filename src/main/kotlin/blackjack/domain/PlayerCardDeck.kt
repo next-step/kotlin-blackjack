@@ -7,7 +7,7 @@ class PlayerCardDeck(
 ) {
     constructor(vararg card: Card) : this(card.toList())
 
-    var score: Int = 0
+    var score: CardScore = CardScore()
         private set
 
     var cards: List<Card> = cards
@@ -25,11 +25,11 @@ class PlayerCardDeck(
             if (cardsSum > BLACK_JACK_NUMBER) {
                 cardsSum -= ACE_ELEVEN - ACE_ONE
             } else {
-                score = cardsSum
+                score = CardScore(cardsSum)
                 return
             }
         }
-        score = cardsSum
+        score = CardScore(cardsSum)
     }
 
     companion object {

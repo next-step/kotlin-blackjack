@@ -20,7 +20,7 @@ class PlayerCardDeckTest {
             )
 
         playerCardDeck.calculateScore()
-        playerCardDeck.score shouldBe 20
+        playerCardDeck.score.value shouldBe 20
     }
 
     @Test

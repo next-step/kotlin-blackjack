@@ -36,8 +36,7 @@ class PlayerTest {
 
         player.addCard(Card(CardNumber.JACK, CardSuit.HEART))
         player.addCard(Card(CardNumber.QUEEN, CardSuit.HEART))
-        player.addCard(Card(CardNumber.ACE, CardSuit.HEART))
-        player.addCard(Card(CardNumber.ACE, CardSuit.HEART))
+        player.addCard(Card(CardNumber.TWO, CardSuit.HEART))
 
         player.calculateCardScore()
         player.findEnabledMoreCard() shouldBe false
@@ -51,6 +50,6 @@ class PlayerTest {
         player.addCard(Card(CardNumber.ACE, CardSuit.HEART))
 
         player.calculateCardScore()
-        player.deck.score shouldBe 21
+        player.deck.score.value shouldBe 21
     }
 }
