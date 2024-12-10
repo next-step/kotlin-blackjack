@@ -15,8 +15,8 @@ class PlayerTest : StringSpec({
         val player = Player("dabomi")
         val newCards =
             listOf(
-                Card.of(CardNumber.TEN, CardShape.HEART),
-                Card.of(CardNumber.FIVE, CardShape.CLUB),
+                TestCards.HEART_10,
+                TestCards.CLUB_5,
             )
 
         player.addCards(newCards)
@@ -28,9 +28,9 @@ class PlayerTest : StringSpec({
         val player = Player("dabomi")
         player.addCards(
             listOf(
-                Card.of(CardNumber.TEN, CardShape.HEART),
-                Card.of(CardNumber.TEN, CardShape.CLUB),
-                Card.of(CardNumber.TWO, CardShape.SPADE),
+                TestCards.HEART_10,
+                TestCards.CLUB_10,
+                TestCards.SPADE_2,
             )
         )
 

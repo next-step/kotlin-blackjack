@@ -23,9 +23,9 @@ class GameTest : StringSpec({
 
         player.addCards(
             listOf(
-                Card.of(CardNumber.TEN, CardShape.HEART),
-                Card.of(CardNumber.TEN, CardShape.CLUB),
-                Card.of(CardNumber.TWO, CardShape.SPADE),
+                TestCards.HEART_10,
+                TestCards.CLUB_10,
+                TestCards.SPADE_2,
             ),
         )
 
