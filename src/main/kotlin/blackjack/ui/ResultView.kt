@@ -33,7 +33,7 @@ class ResultView(val outputProvider: (String) -> Unit = { println(it) }) {
     fun printFinalWinner(finalWinnerResults: FinalWinnerResults) {
         outputProvider("\n## 최종 승패")
         outputProvider(
-            "딜러: ${finalWinnerResults.dealerResult.wins}${UIMatchType.WIN.displayName} ${finalWinnerResults.dealerResult.losses}${UIMatchType.LOSS.displayName} ${finalWinnerResults.dealerResult.draws}${UIMatchType.DRAW.displayName}",
+            "$DEALER_NAME: ${finalWinnerResults.dealerResult.wins}${UIMatchType.WIN.displayName} ${finalWinnerResults.dealerResult.losses}${UIMatchType.LOSS.displayName} ${finalWinnerResults.dealerResult.draws}${UIMatchType.DRAW.displayName}",
         )
         finalWinnerResults.playerResults.forEach { (name, result) ->
             outputProvider("$name: ${result.displayName}")
@@ -43,7 +43,7 @@ class ResultView(val outputProvider: (String) -> Unit = { println(it) }) {
     fun printFinalProfit(amountStatistics: AmountStatistics) {
         outputProvider("\n## 최종 수익")
         outputProvider(
-            "딜러: ${amountStatistics.dealerProfit.value}",
+            "$DEALER_NAME: ${amountStatistics.dealerProfit.value}",
         )
 
         amountStatistics.playerProfits.forEach { (name, profit) ->
