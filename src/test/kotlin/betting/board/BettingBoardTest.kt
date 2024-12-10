@@ -5,6 +5,7 @@ import betting.BetResult
 import blackjack.dealer.Dealer
 import blackjack.participant.Participant
 import blackjack.player.Player
+import io.kotest.inspectors.forAll
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
@@ -42,6 +43,27 @@ class BettingBoardTest {
 
         val dealerBet = bettingBoard.participantBets[dealer] ?: return
         dealerBet.winning.amount shouldBe BET_AMOUNTS[POBI]?.bet?.amount
+    }
+
+    @ParameterizedTest
+    @MethodSource("bettingBoardTest")
+    fun `딜러가 패배하는 경우 모든 플레이어는 베팅 금액을 받는다`(
+        playerBets: Map<Participant<*>, BetResult>,
+        dealer: Dealer,
+    ) {
+        val bettingBoard = BettingBoard()
+        bettingBoard.setup(playerBets = playerBets, dealer = dealer)
+
+        bettingBoard.winAllPlayer()
+
+        bettingBoard.participantBets[dealer]?.winning?.amount shouldBe
+                bettingBoard.participantBets
+                    .filter { it.key != dealer }
+                    .values
+                    .sumOf { it.bet.negative() }
+        bettingBoard.participantBets
+            .filter { it.key != dealer }
+            .forAll { (_, betResult) -> betResult.bet.amount shouldBe betResult.winning.amount }
     }
 
     companion object {

@@ -7,4 +7,6 @@ data class BetResult (
     fun win(amount: Long?): BetResult = BetResult(bet, Winning(amount = amount ?: 0L))
 
     fun lose(): BetResult = BetResult(bet, Winning(amount = bet.negative()))
+
+    fun lose(amount: Long?): BetResult = BetResult(bet, Winning(amount = this.winning.amount + (amount ?: 0L)))
 }
