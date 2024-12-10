@@ -47,7 +47,7 @@ sealed class Participant(private val hand: Hand, private var _bettingMoney: Mone
         return other - _bettingMoney
     }
 
-    private fun matchOf(other: Participant): MatchType {
+    fun matchOf(other: Participant): MatchType {
         return when {
             isBust -> MatchType.LOSE
             other.isBust -> MatchType.WIN
