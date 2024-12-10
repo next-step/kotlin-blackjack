@@ -3,19 +3,19 @@ package blackjack.domain.parser
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
-class PlayerParserTest {
+class StringParserTest {
 
     @Test
-    fun `플레이어 문자열을 입력하면 파싱할 수 있다`() {
+    fun `플레이어 이름들을 입력하면 파싱할 수 있다`() {
         // given
         val str = "jay, jihoi, pobi"
 
         // when
-        val result = PlayerParser.parse(str)
+        val result = StringParser.parse(str)
 
         // then
         assertThat(result.size).isEqualTo(3)
-        assertThat(result[0].name).isEqualTo("jay")
+        assertThat(result[0]).isEqualTo("jay")
     }
 
 }

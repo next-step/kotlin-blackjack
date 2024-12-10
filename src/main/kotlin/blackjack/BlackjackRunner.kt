@@ -2,7 +2,6 @@ package blackjack
 
 import blackjack.domain.BlackjackGame
 import blackjack.domain.Deck
-import blackjack.domain.parser.PlayerParser
 import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Player
 import blackjack.domain.participant.PlayerAction
@@ -15,7 +14,7 @@ class BlackjackRunner {
         val blackjackGame = BlackjackGame(
             deck = Deck(),
             dealer = Dealer(),
-            players = PlayerParser.parse(InputView.showAndGetPlayers()),
+            players = InputView.showAndGetPlayers(),
         )
 
         blackjackGame.start()

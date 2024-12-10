@@ -10,7 +10,7 @@ class BlackjackGameTest {
     @Test
     fun `카드를 뽑으면 플레이어는 카드를 얻어야 한다`() {
         // given
-        val player = Player("jay")
+        val player = Player(name = "jay", bettingAmount = 1)
         val blackjackGame = BlackjackGame(Deck(), Dealer(), listOf(player))
 
         // when
@@ -23,7 +23,7 @@ class BlackjackGameTest {
     @Test
     fun `게임이 시작을 하면 플레이어는 카드를 2장 얻어야 한다`() {
         // given
-        val blackjackGame = BlackjackGame(Deck(), Dealer(), listOf(Player("jay")))
+        val blackjackGame = BlackjackGame(Deck(), Dealer(), listOf(Player(name = "jay", bettingAmount = 1)))
 
         // when
         blackjackGame.start()
