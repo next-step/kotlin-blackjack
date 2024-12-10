@@ -49,7 +49,7 @@ class CardTest {
     @Test
     fun `카드는 디폴트로 앞면이 보인다`() {
         val card = Card(DUMMY_SUIT, Rank.ACE)
-        card.face shouldBe Face.UP
+        card.isFaceUp shouldBe true
     }
 
     @Test
@@ -58,11 +58,11 @@ class CardTest {
 
         card.flip()
 
-        card.face shouldBe Face.DOWN
+        card.isFaceUp shouldBe false
 
         card.flip()
 
-        card.face shouldBe Face.UP
+        card.isFaceUp shouldBe true
     }
 
     companion object {

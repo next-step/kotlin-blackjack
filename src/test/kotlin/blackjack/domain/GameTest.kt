@@ -48,7 +48,7 @@ class GameTest {
         game.initialDeal()
 
         game.dealer.hand[0] shouldBe Card(DUMMY_SUIT, Rank.THREE)
-        game.dealer.hand[1] shouldBe Card(DUMMY_SUIT, Rank.SIX, Face.DOWN)
+        game.dealer.hand[1] shouldBe Card(DUMMY_SUIT, Rank.SIX, false)
     }
 
     @Test
