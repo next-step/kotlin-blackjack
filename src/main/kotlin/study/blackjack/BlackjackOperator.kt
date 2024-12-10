@@ -17,7 +17,7 @@ class BlackjackOperator {
     }
 
     private fun randomNumber(): Int {
-        return Random.nextInt(MIN_RANDOM_CARD_NUMBER, MAX_RANDOM_CARD_NUMBER)
+        return Random.nextInt(MAX_RANDOM_CARD_NUMBER)
     }
 
     private fun randomSuit(): Int {
@@ -25,8 +25,7 @@ class BlackjackOperator {
     }
 
     companion object {
-        private const val MIN_RANDOM_CARD_NUMBER = 1
-        private const val MAX_RANDOM_CARD_NUMBER = 13
+        private const val MAX_RANDOM_CARD_NUMBER = 12
         private const val MAX_RANDOM_CARD_SUIT = 3
     }
 }
