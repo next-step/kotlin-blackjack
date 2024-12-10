@@ -48,6 +48,15 @@ class Players(
         return roster.map { PlayerResult(it.name, it.outcome(dealer)) }
     }
 
+    fun placeBets(bets: List<Bet>) {
+        requireBetsSizeEqualsRosterSize(bets)
+        roster.zip(bets).forEach { (player, bet) -> player.placeBet(bet) }
+    }
+
+    private fun requireBetsSizeEqualsRosterSize(bets: List<Bet>) {
+        require(roster.size == bets.size) { "플레이어 수와 베팅 수가 일치하지 않습니다." }
+    }
+
     private fun checkIsDone() {
         check(isDone) { "게임이 종료되지 않았습니다." }
     }

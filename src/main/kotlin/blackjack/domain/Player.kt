@@ -14,6 +14,8 @@ class Player(
         private set
     val isDone: Boolean
         get() = reasonDone != null
+    var bet: Bet? = null
+        private set
 
     init {
         require(name.isNotBlank()) { "이름이 빈 문자열입니다." }
@@ -48,6 +50,10 @@ class Player(
     fun pushes(dealer: Dealer) = hand.pushes(dealer.hand)
 
     fun beats(dealer: Dealer) = hand.beats(dealer.hand)
+
+    fun placeBet(bet: Bet) {
+        this.bet = bet
+    }
 
     private fun checkIsNotDone() {
         check(!isDone) { "이미 턴이 끝난 상태입니다." }

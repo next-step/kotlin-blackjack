@@ -223,6 +223,23 @@ class PlayersTest {
         results shouldBe expected
     }
 
+    @Test
+    fun `베팅을 걸 수 있다`() {
+        val players = Players.from("black", "jack", "game")
+        val bets = listOf(Bet(1_000L), Bet(2_000L), Bet(3_000L))
+
+        players.placeBets(bets)
+
+        players.roster.map { it.bet } shouldBe bets
+    }
+
+    @Test
+    fun `베팅 숫자가 플레이어들의 숫자와 같아야 한다`() {
+        val players = Players.from("black", "jack")
+        val bets = listOf(Bet(1_000L))
+        assertThrows<IllegalArgumentException> { players.placeBets(bets) }
+    }
+
     private fun createPlayersFrom(
         names: List<String>,
         deck: Deck,

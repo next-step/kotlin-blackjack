@@ -1,6 +1,7 @@
 package blackjack
 
 import blackjack.application.BlackjackService
+import blackjack.application.CreateGameCommand
 import blackjack.domain.Deck
 import blackjack.domain.Game
 import blackjack.domain.Player
@@ -12,9 +13,12 @@ class BlackjackController(
     private val blackjackService: BlackjackService,
 ) {
     fun start(deck: Deck) {
-        // 블랙젝 게임 초기화
+        // 플레이어 이름과 베팅 금액 입력
         val names = InputView.getPlayerNames()
-        val game = blackjackService.initializeGame(names, deck)
+        val bets = InputView.getBets(names)
+
+        // 블랙젝 게임 생성
+        val game = blackjackService.createGame(CreateGameCommand(names, bets, deck))
 
         // 초기 상태 출력
         ResultView.displayState(game)

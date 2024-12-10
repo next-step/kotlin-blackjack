@@ -162,6 +162,15 @@ class PlayerTest {
         outcome shouldBe PlayerOutcome.WIN
     }
 
+    @Test
+    fun `베팅을 걸 수 있다`() {
+        val player = Player("jack")
+
+        player.placeBet(Bet(1_000L))
+
+        player.bet shouldBe Bet(1_000L)
+    }
+
     companion object {
         @JvmStatic
         fun donePlayers() =
