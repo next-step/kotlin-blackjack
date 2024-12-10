@@ -15,17 +15,19 @@ class PlayerTest {
         player.addCard(Card(CardNumber.JACK, CardSuit.HEART))
         player.addCard(Card(CardNumber.QUEEN, CardSuit.HEART))
 
+        player.calculateCardScore()
         player.findEnabledMoreCard() shouldBe true
     }
 
     @Test
-    fun `플레이어가 가진 카드의 숫자의 총합이 21이면 카드를 더 뽑을 수 없는 상태이다`() {
+    fun `플레이어가 가진 카드의 숫자의 총합이 21이면 카드를 더 뽑을 수 있는 상태이다`() {
         val player = Player("test")
 
         player.addCard(Card(CardNumber.JACK, CardSuit.HEART))
         player.addCard(Card(CardNumber.ACE, CardSuit.HEART))
 
-        player.findEnabledMoreCard() shouldBe false
+        player.calculateCardScore()
+        player.findEnabledMoreCard() shouldBe true
     }
 
     @Test
@@ -35,7 +37,9 @@ class PlayerTest {
         player.addCard(Card(CardNumber.JACK, CardSuit.HEART))
         player.addCard(Card(CardNumber.QUEEN, CardSuit.HEART))
         player.addCard(Card(CardNumber.ACE, CardSuit.HEART))
+        player.addCard(Card(CardNumber.ACE, CardSuit.HEART))
 
+        player.calculateCardScore()
         player.findEnabledMoreCard() shouldBe false
     }
 
@@ -46,6 +50,7 @@ class PlayerTest {
         player.addCard(Card(CardNumber.JACK, CardSuit.HEART))
         player.addCard(Card(CardNumber.ACE, CardSuit.HEART))
 
-        player.findClosestToBlackJackNumber() shouldBe 21
+        player.calculateCardScore()
+        player.deck.score shouldBe 21
     }
 }

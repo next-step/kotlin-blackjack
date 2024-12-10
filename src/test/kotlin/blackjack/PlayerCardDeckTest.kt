@@ -13,23 +13,28 @@ class PlayerCardDeckTest {
     fun `플레이어 카드 더미에서 나올 수 있는 합의 경우를 알 수 있다`() {
         val playerCardDeck =
             PlayerCardDeck(
-                aceCards = mutableListOf(Card(CardNumber.ACE, CardSuit.CLOVER), Card(CardNumber.ACE, CardSuit.DIAMOND)),
-                cards = mutableListOf(Card(CardNumber.JACK, CardSuit.CLOVER), Card(CardNumber.EIGHT, CardSuit.CLOVER)),
+                Card(CardNumber.ACE, CardSuit.CLOVER),
+                Card(CardNumber.ACE, CardSuit.DIAMOND),
+                Card(CardNumber.JACK, CardSuit.CLOVER),
+                Card(CardNumber.EIGHT, CardSuit.CLOVER),
             )
 
-        playerCardDeck.findPossibleCardScores() shouldBe listOf(20, 30, 40)
+        playerCardDeck.calculateScore()
+        playerCardDeck.score shouldBe 20
     }
 
     @Test
     fun `플레이어 카드 더미에 카드를 추가할 수 있다`() {
         val playerCardDeck =
             PlayerCardDeck(
-                aceCards = mutableListOf(Card(CardNumber.ACE, CardSuit.CLOVER), Card(CardNumber.ACE, CardSuit.DIAMOND)),
-                cards = mutableListOf(Card(CardNumber.JACK, CardSuit.CLOVER), Card(CardNumber.EIGHT, CardSuit.CLOVER)),
+                Card(CardNumber.ACE, CardSuit.CLOVER),
+                Card(CardNumber.ACE, CardSuit.DIAMOND),
+                Card(CardNumber.JACK, CardSuit.CLOVER),
+                Card(CardNumber.EIGHT, CardSuit.CLOVER),
             )
 
         playerCardDeck.addCard(Card(CardNumber.KING, CardSuit.CLOVER))
 
-        playerCardDeck.allCards shouldContain Card(CardNumber.KING, CardSuit.CLOVER)
+        playerCardDeck.cards shouldContain Card(CardNumber.KING, CardSuit.CLOVER)
     }
 }

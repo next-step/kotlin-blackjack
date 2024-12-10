@@ -29,6 +29,7 @@ class BlackJackApplication {
         blackJackGame: BlackJackGame,
         gamePlayers: GamePlayers,
     ) {
+        gamePlayers.calculateScore()
         gamePlayers.forEach { player ->
             hit(blackJackGame, player)
         }
@@ -41,6 +42,7 @@ class BlackJackApplication {
         while (player.findEnabledMoreCard()) {
             if (!InputView.inputToProceed(player.name)) return
             blackJackGame.hit(player)
+            player.calculateCardScore()
         }
     }
 }

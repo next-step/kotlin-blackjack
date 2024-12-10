@@ -1,6 +1,6 @@
 package blackjack.domain
 
-import kotlin.math.absoluteValue
+import blackjack.BlackJackGame.Companion.BLACK_JACK_NUMBER
 
 data class Player(
     val name: String,
@@ -11,14 +11,9 @@ data class Player(
         deck.addCard(card)
     }
 
-    fun findEnabledMoreCard(): Boolean {
-        val possibleScores = deck.findPossibleCardScores()
-        return !possibleScores.contains(BLACK_JACK_NUMBER) && possibleScores.any { it < BLACK_JACK_NUMBER }
+    fun calculateCardScore() {
+        deck.calculateScore()
     }
 
-    fun findClosestToBlackJackNumber() = deck.findPossibleCardScores().minBy { (BLACK_JACK_NUMBER - it).absoluteValue }
-
-    companion object {
-        private const val BLACK_JACK_NUMBER = 21
-    }
+    fun findEnabledMoreCard(): Boolean = deck.score <= BLACK_JACK_NUMBER
 }

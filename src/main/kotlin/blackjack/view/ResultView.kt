@@ -37,9 +37,9 @@ object ResultView {
         player: Player,
         isShownScore: Boolean = false,
     ) {
-        val playerCardResult = "${player.name}${NAME_CARD}$COLON ${player.deck.allCards.joinToString(COMMA){ findCardName(it) }}"
+        val playerCardResult = "${player.name}${NAME_CARD}$COLON ${player.deck.cards.joinToString(COMMA){ findCardName(it) }}"
         if (isShownScore) {
-            println("${playerCardResult}${TEXT_SCORE_RESULT}${player.findClosestToBlackJackNumber()}")
+            println("${playerCardResult}${TEXT_SCORE_RESULT}${player.deck.score}")
         } else {
             println(playerCardResult)
         }
@@ -62,7 +62,6 @@ object ResultView {
             CardNumber.QUEEN,
             CardNumber.KING,
             -> "${cardNumber.name.first()}"
-
             else -> {
                 "${cardNumber.value}"
             }

@@ -1,31 +1,35 @@
 package blackjack.domain
 
-data class PlayerCardDeck(
-    private val cards: MutableList<Card> = mutableListOf(),
-    private val aceCards: MutableList<Card> = mutableListOf(),
+import blackjack.BlackJackGame.Companion.BLACK_JACK_NUMBER
+
+class PlayerCardDeck(
+    cards: List<Card>,
 ) {
-    val allCards: List<Card>
-        get() = aceCards + cards
+    constructor(vararg card: Card) : this(card.toList())
+
+    var score: Int = 0
+        private set
+
+    var cards: List<Card> = cards
+        private set
 
     fun addCard(card: Card) {
-        when (card.number) {
-            CardNumber.ACE -> aceCards.add(card)
-            else -> cards.add(card)
-        }
+        cards += card
     }
 
-    fun findPossibleCardScores(): List<Int> {
-        val cardsSum = cards.sumOf { it.number.value }
-        if (aceCards.isEmpty()) return listOf(cardsSum)
-        val acesSums =
-            aceCards
-                .map { listOf(ACE_ONE, ACE_ELEVEN) }
-                .reduce { acc, list ->
-                    acc.flatMap { sum -> list.map { sum + it } }
-                }.distinct()
-                .sorted()
-
-        return acesSums.map { it + cardsSum }
+    fun calculateScore() {
+        val aceCards = cards.filter { it.number == CardNumber.ACE }
+        var cardsSum = cards.filter { it.number != CardNumber.ACE }.sumOf { it.number.value }
+        cardsSum += aceCards.sumOf { ACE_ELEVEN }
+        aceCards.forEach { _ ->
+            if (cardsSum > BLACK_JACK_NUMBER) {
+                cardsSum -= ACE_ELEVEN - ACE_ONE
+            } else {
+                score = cardsSum
+                return
+            }
+        }
+        score = cardsSum
     }
 
     companion object {
