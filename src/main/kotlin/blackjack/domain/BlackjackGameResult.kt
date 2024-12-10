@@ -1,8 +1,5 @@
 package blackjack.domain
 
-import blackjack.domain.GameMatchResult.LOSE
-import blackjack.domain.GameMatchResult.WIN
-
 class BlackjackGameResult(
     private val dealer: Dealer,
     private val players: List<Player>,
@@ -17,27 +14,34 @@ class BlackjackGameResult(
     }
 
     fun calculateDealerProfit(): Int {
-        return players.sumOf { player ->
-            val betAmount = player.bettingMoney.amount
-            -calculateProfit(player, betAmount)
-        }
+        return calculatePlayerProfits().values.sumOf { -it }
     }
 
     fun calculatePlayerProfits(): Map<Player, Int> {
         return players.associateWith { player ->
-            val betAmount = player.bettingMoney.amount
+            val betAmount = player.bettingMoney
             calculateProfit(player, betAmount)
         }
     }
 
     private fun calculateProfit(
         player: Player,
-        betAmount: Int,
+        betAmount: BettingMoney,
     ): Int {
         return when (result[player]) {
-            WIN -> betAmount
-            LOSE -> -betAmount
+            GameMatchResult.WIN -> calculateWinProfit(player, betAmount)
+            GameMatchResult.LOSE -> betAmount.profitForLose()
             else -> 0
-        }.let { if (player.isBlackjack() && result[player] == WIN) it + (0.5 * betAmount).toInt() else it }
+        }
+    }
+
+    private fun calculateWinProfit(
+        player: Player,
+        betAmount: BettingMoney,
+    ): Int {
+        if (player.isBlackjack()) {
+            return betAmount.profitForBlackjackWin()
+        }
+        return betAmount.profitForWin()
     }
 }
