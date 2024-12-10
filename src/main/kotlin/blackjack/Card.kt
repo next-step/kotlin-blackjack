@@ -1,9 +1,7 @@
 package blackjack
 
-data class Card(val number: CardNumber, val suit: Suit) : Comparable<Card> {
+data class Card(val suit: Suit, val denomination: Denomination) {
     fun number(): Int {
-        return number.baseValue
+        return denomination.score
     }
-
-    override fun compareTo(other: Card): Int = number compareTo other.number
 }
