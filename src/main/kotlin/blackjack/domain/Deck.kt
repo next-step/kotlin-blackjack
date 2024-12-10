@@ -1,17 +1,19 @@
 package blackjack.domain
 
-class Deck {
+class Deck(private val numberOfDecks: Int = 1) {
     val cards = mutableListOf<Card>()
 
     init {
-        createDeck()
+        refillDeck()
         shuffleDeck()
     }
 
-    private fun createDeck() {
-        for (shape in CardShape.entries) {
-            for (number in CardNumber.entries) {
-                cards.add(Card(number, shape))
+    private fun refillDeck() {
+        repeat(numberOfDecks) {
+            CardShape.entries.forEach { shape ->
+                CardNumber.entries.forEach { number ->
+                    cards.add(Card.of(number, shape))
+                }
             }
         }
     }
@@ -21,16 +23,15 @@ class Deck {
     }
 
     fun drawCards(count: Int): List<Card> {
-        if (count <= 0) throw IllegalArgumentException(DRAW_CARD_EXCEPTION_MESSAGE)
-        if (count > cards.size) throw IllegalArgumentException(NOT_ENOUGH_CARD_LEFT_EXCEPTION_MESSAGE)
-
+        require(count > 0) { MINIMUM_CARD_COUNT_EXCEPTION_MESSAGE }
+        if (cards.size < count) {
+            refillDeck()
+            shuffleDeck()
+        }
         return List(count) { cards.removeAt(0) }
     }
 
-    fun remainingCards(): Int = cards.size
-
     companion object {
-        private const val DRAW_CARD_EXCEPTION_MESSAGE = "1장 이상의 카드를 뽑아야 합니다."
-        private const val NOT_ENOUGH_CARD_LEFT_EXCEPTION_MESSAGE = "남은 카드가 부족합니다."
+        private const val MINIMUM_CARD_COUNT_EXCEPTION_MESSAGE = "1장 이상의 카드를 뽑아야 합니다."
     }
 }

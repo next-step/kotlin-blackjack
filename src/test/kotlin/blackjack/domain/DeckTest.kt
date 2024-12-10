@@ -3,39 +3,36 @@ package blackjack.domain
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.shouldNotBe
 
 class DeckTest : StringSpec({
-    "카드를 생성한다." {
+    "초기화 시 52장의 카드가 생성된다." {
         val deck = Deck()
         deck.cards.size shouldBe 52
     }
-
-    "카드를 한 장 뽑는다." {
+    "카드는 중복되지 않는다." {
         val deck = Deck()
-        val drawnCards = deck.drawCards(1)
-        drawnCards.size shouldBe 1
+        val uniqueCards = deck.cards.distinct()
+        uniqueCards.size shouldBe 52
     }
 
-    "카드를 여러 장 뽑는다." {
+    "초기화 시 카드가 랜덤으로 섞인다." {
+        val deck1 = Deck()
+        val deck2 = Deck()
+        deck1.cards shouldNotBe deck2.cards
+    }
+
+    "카드를 정상적으로 뽑을 수 있다." {
         val deck = Deck()
         val drawnCards = deck.drawCards(5)
         drawnCards.size shouldBe 5
+        deck.cards.size shouldBe 47
     }
 
-    "카드를 뽑을 때 남은 카드 수보다 많은 수를 요청하면 예외를 던진다." {
-        val deck = Deck()
-        shouldThrow<IllegalArgumentException> {
-            deck.drawCards(53)
-        }
-    }
-
-    "카드를 뽑을 때 0 이하의 수를 요청하면 예외를 던진다." {
+    "0장 이하의 카드를 뽑으려고 하면 예외가 발생한다." {
         val deck = Deck()
         shouldThrow<IllegalArgumentException> {
             deck.drawCards(0)
-        }
-        shouldThrow<IllegalArgumentException> {
-            deck.drawCards(-1)
-        }
+        }.message shouldBe "1장 이상의 카드를 뽑아야 합니다."
     }
 })

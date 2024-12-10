@@ -1,45 +1,24 @@
 package blackjack.domain
 
-data class Card(val number: CardNumber, val shape: CardShape) {
-    override fun toString(): String {
-        return "${number.number}${shape.displayName}"
-    }
-
+data class Card private constructor(val number: CardNumber, val shape: CardShape) {
     companion object {
-        private const val INVALID_CARD_FORMAT = "잘못된 카드 형식입니다."
-        private val faceCardValues = mapOf("J" to 10, "Q" to 10, "K" to 10, "A" to (1 or 11))
+        private const val INVALID_CARD_NUMBER_EXCEPTION_MESSAGE = "유효하지 않은 카드 숫자입니다."
+        private val cardCache: Map<Pair<CardNumber, CardShape>, Card> = buildCache()
 
-        fun calculateCardValue(cards: List<Card>): Int {
-            val nonAceSum =
-                cards
-                    .filter { extractCardNumber(it) != "A" }
-                    .sumOf { calculateSingleCardValue(it) }
-
-            val aceCount = cards.count { extractCardNumber(it) == "A" }
-
-            val aceValue =
-                if (aceCount > 0) {
-                    val potentialSum = nonAceSum + 11 + (aceCount - 1) * 1
-                    if (potentialSum > 21) {
-                        aceCount
-                    } else {
-                        11 + (aceCount - 1)
-                    }
-                } else {
-                    0
+        private fun buildCache(): Map<Pair<CardNumber, CardShape>, Card> {
+            return CardNumber.entries.flatMap { number ->
+                CardShape.entries.map { shape ->
+                    (number to shape) to Card(number, shape)
                 }
-
-            return nonAceSum + aceValue
+            }.toMap()
         }
 
-        private fun calculateSingleCardValue(card: Card): Int {
-            val number = extractCardNumber(card)
-            return faceCardValues[number] ?: number.toInt()
-        }
-
-        private fun extractCardNumber(card: Card): String {
-            val matchResult = Regex("^([0-9]+|[A-Z])").find(card.toString())
-            return matchResult?.value ?: throw IllegalArgumentException(INVALID_CARD_FORMAT)
+        fun of(
+            number: CardNumber,
+            shape: CardShape,
+        ): Card {
+            return cardCache[number to shape]
+                ?: throw IllegalArgumentException(INVALID_CARD_NUMBER_EXCEPTION_MESSAGE)
         }
     }
 }

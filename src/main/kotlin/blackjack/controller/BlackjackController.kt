@@ -1,61 +1,67 @@
 package blackjack.controller
 
+import blackjack.domain.Game
 import blackjack.domain.Player
-import blackjack.service.BlackJackService
 import blackjack.view.InputView
 import blackjack.view.ResultView
 
 object BlackjackController {
-    private val blackJackService = BlackJackService()
-
     fun start() {
-        val playerNames = readPlayerNames()
-        val players = blackJackService.createPlayers(playerNames)
-        splitCards(playerNames, players)
-        showPlayCards(players)
+        val game = initializeGame()
+        playPlayerTurns(game)
+        playDealerTurn(game)
+        displayGameResults(game)
+    }
 
-        players.forEach { player ->
-            askPickCard(player)
+    private fun initializeGame(): Game {
+        val playerNames = InputView.inputPlayerNames().split(",").map { it.trim() }
+        val game = Game(playerNames)
+
+        ResultView.printSplitCardResult(game.players)
+        ResultView.printDealerInitialCard(game.dealer)
+
+        displayInitialPlayerCards(game)
+
+        return game
+    }
+
+    private fun displayInitialPlayerCards(game: Game) {
+        game.players.forEach {
+            ResultView.printPlayerCards(listOf(it.name to it.cards))
         }
-
-        showResult(players)
     }
 
-    private fun readPlayerNames(): List<String> {
-        val playersInput = InputView.inputPlayerNames()
-        return blackJackService.splitPlayerNames(playersInput)
+    private fun playPlayerTurns(game: Game) {
+        game.players.forEach { player ->
+            playPlayerTurn(game, player)
+        }
     }
 
-    private fun splitCards(
-        playerNames: List<String>,
-        players: List<Player>,
+    private fun playPlayerTurn(
+        game: Game,
+        player: Player,
     ) {
-        blackJackService.distributeInitialCards(players)
-        ResultView.printSplitCardResult(playerNames)
-    }
-
-    private fun showPlayCards(players: List<Player>) {
-        val playerCardsInfo = players.map { it.name to it.getCardList() }
-        ResultView.printPlayerCards(playerCardsInfo)
-    }
-
-    private fun askPickCard(player: Player) {
-        while (true) {
-            val currentScore = blackJackService.calculateScores(listOf(player))[0].second
-
-            if (currentScore > 21) {
-                break
-            }
-
-            if (InputView.inputPickCard(player.name) != "y") break
-
-            player.addCards(blackJackService.deck.drawCards(1))
-            ResultView.printPlayerCards(listOf(player.name to player.getCardList()))
+        game.handlePlayerTurn(player) { playerName ->
+            InputView.inputPickCard(playerName)
         }
+        ResultView.printPlayerCards(listOf(player.name to player.cards))
     }
 
-    private fun showResult(players: List<Player>) {
-        val scores = blackJackService.calculateScores(players)
-        ResultView.printFinalScores(scores, players)
+    private fun playDealerTurn(game: Game) {
+        val dealerDraws = game.handleDealerTurn()
+
+        if (dealerDraws) {
+            ResultView.printDealerDrawMessage(true)
+        } else {
+            ResultView.printDealerDrawMessage(false)
+        }
+
+        ResultView.printFinalScores(game.players, game.dealer)
+    }
+
+    private fun displayGameResults(game: Game) {
+        val results = game.determineResults()
+        val dealerResult = game.calculateDealerResult(results)
+        ResultView.printGameResult(results, dealerResult)
     }
 }
