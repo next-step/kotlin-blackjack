@@ -10,7 +10,6 @@ class PersonBuilder {
     private lateinit var name: String
     private var company: String? = null
 
-    private val skills = mutableListOf<Skill>()
     private val languagesBuilder = LanguagesBuilder()
     private val skillsBuilder = SkillsBuilder()
 
