@@ -43,9 +43,18 @@ class Players(
         roster.forEach(Player::dealerDealtBlackjack)
     }
 
-    fun result(dealer: Dealer): List<PlayerResult> {
+    fun placeBets(bets: List<Bet>) {
+        requireBetsSizeEqualsRosterSize(bets)
+        roster.zip(bets).forEach { (player, bet) -> player.placeBet(bet) }
+    }
+
+    fun results(dealer: Dealer): List<PlayerResult> {
         checkIsDone()
-        return roster.map { PlayerResult(it.name, it.outcome(dealer)) }
+        return roster.map { it.result(dealer) }
+    }
+
+    private fun requireBetsSizeEqualsRosterSize(bets: List<Bet>) {
+        require(roster.size == bets.size) { "플레이어 수와 베팅 수가 일치하지 않습니다." }
     }
 
     private fun checkIsDone() {

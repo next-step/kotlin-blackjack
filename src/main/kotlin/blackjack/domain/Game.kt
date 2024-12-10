@@ -39,7 +39,7 @@ class Game(
         dealer.takeAction(deck)
     }
 
-    fun gameResult(): GameResult = GameResult(players.result(dealer))
+    fun gameResult(): GameResult = GameResult(players.results(dealer))
 
     private fun isDealerActionNecessary() = players.isOutcomeUnknown
 
