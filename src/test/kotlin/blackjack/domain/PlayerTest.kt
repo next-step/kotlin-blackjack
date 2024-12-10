@@ -1,9 +1,7 @@
 package blackjack.domain
 
 import blackjack.domain.StubDeck.Companion.DUMMY_SUIT
-import blackjack.support.Fixtures.createBlackjackDealer
 import blackjack.support.Fixtures.createBlackjackPlayer
-import blackjack.support.Fixtures.createBustedDealer
 import blackjack.support.Fixtures.createBustedPlayer
 import blackjack.support.Fixtures.createDealer
 import blackjack.support.Fixtures.createPlayer
@@ -132,84 +130,36 @@ class PlayerTest {
         player.reasonDone shouldBe PlayerReasonDone.DEALER_DEALT_BLACKJACK
     }
 
-    @Test
-    fun `플레이어가 버스트한 경우 패배한다`() {
-        val bustedPlayer = createBustedPlayer("jack")
-        val dealer = createDealer(StubDeck.from(Rank.SIX, Rank.SEVEN))
+    @ParameterizedTest(name = "{index} {3}")
+    @MethodSource
+    fun `딜러와 비기는지 (푸시) 리턴한다`(
+        player: Player,
+        dealer: Dealer,
+        expected: Boolean,
+        description: String,
+    ) {
+        player.pushes(dealer) shouldBe expected
+    }
 
-        val outcome = bustedPlayer.outcome(dealer)
-
-        outcome shouldBe PlayerOutcome.LOSE
+    @ParameterizedTest(name = "{index} {3}")
+    @MethodSource
+    fun `딜러를 이기는지 리턴한다`(
+        player: Player,
+        dealer: Dealer,
+        expected: Boolean,
+        description: String,
+    ) {
+        player.beats(dealer) shouldBe expected
     }
 
     @Test
-    fun `딜러가 버스트한 경우 버스트하지 않은 플레이어는 승리한다`() {
-        val player = createPlayer(StubDeck.from(Rank.JACK, Rank.TEN))
-        val bustedDealer = createBustedDealer()
-
-        val outcome = player.outcome(bustedDealer)
-
-        outcome shouldBe PlayerOutcome.WIN
-    }
-
-    @Test
-    fun `딜러와 플레이어가 모두 버스트한 경우 플레이어는 패배한다`() {
-        val bustedPlayer = createBustedPlayer()
-        val bustedDealer = createBustedDealer()
-
-        val outcome = bustedPlayer.outcome(bustedDealer)
-
-        outcome shouldBe PlayerOutcome.LOSE
-    }
-
-    @Test
-    fun `플레이어가 블랙잭이고 딜러가 블랙잭이 아닌 경우 승리한다`() {
-        val blackjackPlayer = createBlackjackPlayer()
-        val dealer = createDealer()
-
-        val outcome = blackjackPlayer.outcome(dealer)
-
-        outcome shouldBe PlayerOutcome.WIN
-    }
-
-    @Test
-    fun `플레이러와 딜러 모두 블랙잭이면 무승부다`() {
-        val blackjackPlayer = createBlackjackPlayer()
-        val blackjackDealer = createBlackjackDealer()
-
-        val outcome = blackjackPlayer.outcome(blackjackDealer)
-
-        outcome shouldBe PlayerOutcome.DRAW
-    }
-
-    @Test
-    fun `플레이어의 점수가 딜러의 점수보다 높으면 승리한다`() {
-        val player = createPlayer(StubDeck.from(Rank.JACK, Rank.TEN))
+    fun `딜러와의 승부 결과를 리턴한다`() {
+        val player = createPlayer(StubDeck.from(Rank.FOUR, Rank.FIVE))
         val dealer = createDealer(StubDeck.from(Rank.TWO, Rank.THREE))
 
         val outcome = player.outcome(dealer)
 
         outcome shouldBe PlayerOutcome.WIN
-    }
-
-    @Test
-    fun `플레이어 점수와 딜러의 점수가 같은 경우 무승부다`() {
-        val player = createPlayer(StubDeck.from(Rank.FIVE, Rank.TEN))
-        val dealer = createDealer(StubDeck.from(Rank.SEVEN, Rank.EIGHT))
-
-        val outcome = player.outcome(dealer)
-
-        outcome shouldBe PlayerOutcome.DRAW
-    }
-
-    @Test
-    fun `플레이어의 점수가 딜러의 점수보다 낮으면 패배한다`() {
-        val player = createPlayer(StubDeck.from(Rank.TWO, Rank.THREE))
-        val dealer = createDealer(StubDeck.from(Rank.FOUR, Rank.FIVE))
-
-        val outcome = player.outcome(dealer)
-
-        outcome shouldBe PlayerOutcome.LOSE
     }
 
     companion object {
@@ -219,6 +169,52 @@ class PlayerTest {
                 Arguments.of(createBlackjackPlayer(), "블랙잭"),
                 Arguments.of(createBustedPlayer(), "버스트"),
                 Arguments.of(createStandingPlayer(), "스탠드"),
+            )
+
+        @JvmStatic
+        fun `딜러와 비기는지 (푸시) 리턴한다`() =
+            listOf(
+                Arguments.of(
+                    createPlayer(StubDeck.from(Rank.FIVE, Rank.TEN)),
+                    createDealer(StubDeck.from(Rank.SEVEN, Rank.EIGHT)),
+                    true,
+                    "플레이어와 딜러의 점수가 같은 경우",
+                ),
+                Arguments.of(
+                    createPlayer(StubDeck.from(Rank.TWO, Rank.THREE)),
+                    createDealer(StubDeck.from(Rank.FOUR, Rank.FIVE)),
+                    false,
+                    "플레이어 점수가 딜러의 점수보다 낮은 경우",
+                ),
+                Arguments.of(
+                    createPlayer(StubDeck.from(Rank.FOUR, Rank.FIVE)),
+                    createDealer(StubDeck.from(Rank.TWO, Rank.THREE)),
+                    false,
+                    "플레이어 점수가 딜러의 점수보다 높은 경우",
+                ),
+            )
+
+        @JvmStatic
+        fun `딜러를 이기는지 리턴한다`() =
+            listOf(
+                Arguments.of(
+                    createPlayer(StubDeck.from(Rank.FOUR, Rank.FIVE)),
+                    createDealer(StubDeck.from(Rank.TWO, Rank.THREE)),
+                    true,
+                    "플레이어의 점수가 딜러의 점수보다 높은 경우",
+                ),
+                Arguments.of(
+                    createPlayer(StubDeck.from(Rank.TWO, Rank.THREE)),
+                    createDealer(StubDeck.from(Rank.FOUR, Rank.FIVE)),
+                    false,
+                    "플레이어의 점수가 딜러의 점수보다 낮은 경우",
+                ),
+                Arguments.of(
+                    createPlayer(StubDeck.from(Rank.FIVE, Rank.TEN)),
+                    createDealer(StubDeck.from(Rank.SEVEN, Rank.EIGHT)),
+                    false,
+                    "플레이어의 점수가 딜러의 점수와 같은 경우",
+                ),
             )
     }
 }

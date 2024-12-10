@@ -43,19 +43,11 @@ class Player(
         done(PlayerReasonDone.DEALER_DEALT_BLACKJACK)
     }
 
-    fun outcome(dealer: Dealer): PlayerOutcome =
-        when {
-            isBusted -> PlayerOutcome.LOSE
-            dealer.isBusted -> PlayerOutcome.WIN
-            isBlackjack && !dealer.isBlackjack -> PlayerOutcome.WIN
-            pushes(dealer) -> PlayerOutcome.DRAW
-            beats(dealer) -> PlayerOutcome.WIN
-            else -> PlayerOutcome.LOSE
-        }
+    fun outcome(dealer: Dealer): PlayerOutcome = PlayerOutcome.of(this, dealer)
 
-    private fun pushes(dealer: Dealer) = hand.pushes(dealer.hand)
+    fun pushes(dealer: Dealer) = hand.pushes(dealer.hand)
 
-    private fun beats(dealer: Dealer) = hand.beats(dealer.hand)
+    fun beats(dealer: Dealer) = hand.beats(dealer.hand)
 
     private fun checkIsNotDone() {
         check(!isDone) { "이미 턴이 끝난 상태입니다." }
