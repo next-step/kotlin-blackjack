@@ -3,6 +3,7 @@ package blackjack.view
 import blackjack.domain.Card
 import blackjack.domain.CardNumber
 import blackjack.domain.CardSuit
+import blackjack.domain.GamePlayers
 import blackjack.domain.Player
 
 object ResultView {
@@ -22,13 +23,14 @@ object ResultView {
     }
 
     fun printPlayersCards(
-        players: List<Player>,
+        gamePlayers: GamePlayers,
         isShownScore: Boolean = false,
     ) {
         if (isShownScore) println()
-        players.forEach { player: Player ->
+        gamePlayers.players.forEach { player: Player ->
             printPlayerCards(player, isShownScore)
         }
+        println()
     }
 
     fun printPlayerCards(
@@ -60,6 +62,7 @@ object ResultView {
             CardNumber.QUEEN,
             CardNumber.KING,
             -> "${cardNumber.name.first()}"
+
             else -> {
                 "${cardNumber.value}"
             }

@@ -11,7 +11,7 @@ object InputView {
         return requireNotNull(readln().split(",").map { it.trim() })
     }
 
-    fun inputMoreCard(playerName: String): Boolean {
+    fun inputToProceed(playerName: String): Boolean {
         println(MESSAGE_MORE_CARD.format(playerName))
         val input = readln()
         require(input in setOf(YES, NO))

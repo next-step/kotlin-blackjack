@@ -1,11 +1,9 @@
 package blackjack
 
-import blackjack.domain.CardDeck
-import blackjack.domain.CardsDeckGenerator
+import blackjack.domain.GamePlayers
 import blackjack.domain.Player
 import blackjack.view.InputView
 import blackjack.view.ResultView.printDistributedCardsText
-import blackjack.view.ResultView.printPlayerCards
 import blackjack.view.ResultView.printPlayersCards
 
 fun main() {
@@ -15,58 +13,34 @@ fun main() {
 
 class BlackJackApplication {
     fun run() {
-        val players = InputView.inputPlayerNames().map { Player(it) }
-        val cardDeck = CardDeck.from(CardsDeckGenerator().generate())
+        val playerNames = InputView.inputPlayerNames()
+        val gamePlayers = GamePlayers.from(playerNames)
+        val blackJackGame = BlackJackGame()
 
-        printDistributedCardsText(players.map { it.name })
-        distributeTwoCards(players, cardDeck)
-        printPlayersCards(players)
+        printDistributedCardsText(playerNames)
+        blackJackGame.distributeTwoCards(gamePlayers)
+        printPlayersCards(gamePlayers)
 
-        hitByPlayers(players, cardDeck)
-        printPlayersCards(players, isShownScore = true)
+        play(blackJackGame, gamePlayers)
+        printPlayersCards(gamePlayers, isShownScore = true)
     }
 
-    private fun hitByPlayers(
-        players: List<Player>,
-        cardDeck: CardDeck,
+    private fun play(
+        blackJackGame: BlackJackGame,
+        gamePlayers: GamePlayers,
     ) {
-        println()
-        players.forEach { player ->
-            hit(player, cardDeck)
+        gamePlayers.forEach { player ->
+            hit(blackJackGame, player)
         }
     }
 
     private fun hit(
+        blackJackGame: BlackJackGame,
         player: Player,
-        cardDeck: CardDeck,
     ) {
         while (player.findEnabledMoreCard()) {
-            val answerMoreCard = InputView.inputMoreCard(player.name)
-            if (!answerMoreCard) break
-            player.addCard(cardDeck.pickCard())
-            printPlayerCards(player)
+            if (!InputView.inputToProceed(player.name)) return
+            blackJackGame.hit(player)
         }
-    }
-
-    private fun distributeTwoCards(
-        players: List<Player>,
-        cardDeck: CardDeck,
-    ) {
-        repeat(REPEAT_TIMES_TO_DISTRIBUTE) {
-            distributeToPlayersCards(players, cardDeck)
-        }
-    }
-
-    private fun distributeToPlayersCards(
-        players: List<Player>,
-        cardDeck: CardDeck,
-    ) {
-        players.forEach { player ->
-            player.addCard(cardDeck.pickCard())
-        }
-    }
-
-    companion object {
-        private const val REPEAT_TIMES_TO_DISTRIBUTE = 2
     }
 }
