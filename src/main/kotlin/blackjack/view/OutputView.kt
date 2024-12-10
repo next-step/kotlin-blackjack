@@ -11,15 +11,20 @@ object OutputView {
 
     fun printDefaultPlayerCards(players: List<Player>) {
         println("${players.joinToString { it.name }}에게 2장의 카드를 나누었습니다.")
-        players.forEach { printPlayerCards(it) }
+        players.forEach(::printPlayerCards)
     }
 
     fun printPlayerCards(player: Player) {
-        println(
-            "${player.name}카드: ${
-                player.getCards().joinToString { it.number.symbol + convertMarkToString(it.mark) }
-            } - 결과: ${player.getCardsMaxSum()}",
-        )
+        val outputMessage =
+            buildString {
+                append(player.name)
+                append("카드: ")
+                append(player.getCards().joinToString { it.number.symbol + convertMarkToString(it.mark) })
+                append(" - 결과: ")
+                append(player.getCardsMaxSum())
+            }
+
+        println(outputMessage)
     }
 
     fun printResult(players: List<Player>) {
