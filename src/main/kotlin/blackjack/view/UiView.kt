@@ -1,6 +1,5 @@
 package blackjack.view
 
-import blackjack.domain.BlackJackCard
 import blackjack.domain.GameUser
 
 class InputView {
@@ -32,21 +31,4 @@ class ResultView {
             println("${user.name}카드: ${user.cards} - 결과: ${user.points}")
         }
     }
-}
-
-fun main() {
-    val inputView = InputView()
-
-    val view = ResultView()
-    val user = GameUser("A")
-    val card = BlackJackCard(5)
-
-    println(inputView.inputUsers())
-
-    println(inputView.inputNextDecision(user.name))
-
-    user.addCard(card)
-    view.printUserCards(user)
-
-    view.printResultCards(listOf(user))
 }

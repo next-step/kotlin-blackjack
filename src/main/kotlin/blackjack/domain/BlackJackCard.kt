@@ -28,12 +28,6 @@ class BlackJackCard {
             }
     }
 
-//    constructor(value: Int, type: CardType, spacial: SpacialCard) {
-//        this.value =  value
-//        this.cardType = type
-// //        this.spacial = spacial
-//    }
-
     enum class CardType(val koreanText: String) {
         CLOVER("클로버"),
         HEART("하트"),
@@ -61,5 +55,3 @@ class BlackJackCard {
         return "$valueString${cardType.koreanText}"
     }
 }
-
-fun List<BlackJackCard>.toString() = this.joinToString(separator = "\n")
