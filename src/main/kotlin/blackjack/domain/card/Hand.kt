@@ -1,20 +1,19 @@
-package blackjack.domain
+package blackjack.domain.card
 
-data class Cards(val values: List<Card>) {
+class Hand(private val _cards: MutableList<Card> = mutableListOf()) {
+    val cards: List<Card>
+        get() = _cards.toList()
+
     val score: Int
         get() = calculateScore()
 
-    fun isScoreLowerThanLimit(): Boolean {
-        return score < BLACKJACK_SCORE_LIMIT
-    }
-
-    fun add(card: Card): Cards {
-        return Cards(values + card)
+    fun add(card: Card) {
+        _cards.add(card)
     }
 
     private fun calculateScore(): Int {
-        val totalScore = values.sumOf { it.score }
-        var aceCount = values.count { it.isAce() }
+        val totalScore = cards.sumOf { it.score }
+        var aceCount = cards.count { it.isAce }
 
         var adjustedScore = totalScore
         while (adjustedScore > BLACKJACK_SCORE_LIMIT && aceCount > 0) {

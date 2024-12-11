@@ -21,3 +21,24 @@
 - [x] 유저는 카드 목록을 보유한다.
 - [x] 카드목록에서 점수를 계산한다.
 - [x] 카드를 덱에서 하나 뽑는다.
+
+## Step3 - 블랙잭(딜러)
+
+### Step2 - 리뷰반영사항
+- [x] BlackJackGame::game table 이 users 와 deck 을 상태로서 관리하도록 수정
+- [x] BlackJackGame::start 메서드 분리
+- [x] BlackJackGame::유저목록을 받아 card 출력하도록 수정
+- [x] BlackJackGame::카드 히트 여부확인시 출력과 입력을 통합
+- [x] BlackJackGame::while 문 내부 if 절을 while 조건식으로 통합
+- [x] BlackJackGame::게임진행책임 분리
+- [x] BlackJackGame::receive 를 hit 로 메서드명 수정
+- [x] Rank::enum 클래스로 수정
+
+### 기능 구현사항
+- [x] 딜러는 처음받는 2장의 합계가 16이하면 반드시 1장의 카드를 추가로 받는다
+- [x] 딜러가 21을 초과하면 남은 플레이어들은 패에 상관없이 승리한다
+- [x] 게임 완료 후 각 플레이어별로 승패를 출력한다
+- [x] data class , 일반 클래스 설정 일관성 유지
+- [x] 도메인 패키지 분리
+- [x] 객체 상태를 객체가 관리
+- [x] 게임 관련 로직 분리

@@ -1,15 +1,15 @@
-package blackjack.domain
+package blackjack.domain.card
 
 import blackjack.fixtures.createCard
-import io.kotest.core.spec.style.StringSpec
+import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.data.forAll
 import io.kotest.data.headers
 import io.kotest.data.row
 import io.kotest.data.table
 import io.kotest.matchers.shouldBe
 
-class CardsTest : StringSpec({
-    "카드목록의 점수합이 21을 초과할 경우 에이스는 1점으로 보정된다" {
+class HandTest : BehaviorSpec({
+    Given("카드목록의 점수 합이 21점을 초과하는 경우") {
         table(
             headers("ranks", "expected"),
             row(listOf("A", "2", "10"), 13),
@@ -18,9 +18,13 @@ class CardsTest : StringSpec({
             row(listOf("A", "A", "A"), 13),
             row(listOf("A", "3", "9"), 13),
         ).forAll { ranks, expected ->
-            val cards = Cards(ranks.map { createCard(it) })
+            val hand = Hand(ranks.map { createCard(it) }.toMutableList())
 
-            cards.score shouldBe expected
+            When("점수 계산하면") {
+                Then("에이스는 1점으로 보정된다") {
+                    hand.score shouldBe expected
+                }
+            }
         }
     }
 })
