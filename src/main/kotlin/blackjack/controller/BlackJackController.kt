@@ -2,9 +2,7 @@ package blackjack.controller
 
 import blackjack.domain.CardDeck
 import blackjack.domain.Player
-import blackjack.util.onEndPlay
-import blackjack.util.onPreparePlay
-import blackjack.util.onStartPlay
+import blackjack.domain.Players
 import blackjack.view.InputView
 import blackjack.view.ResultView
 
@@ -15,9 +13,12 @@ object BlackJackController {
             drawMoreCardYesOrNo
         }
 
-        initPlayers(
-            fetchNames = { InputView.readPlayerNames() },
-            onPlayerInit = { names -> ResultView.printPlayerInitMessage(names) },
+        Players(
+            playerList =
+                initPlayers(
+                    fetchNames = { InputView.readPlayerNames() },
+                    onPlayerInit = { names -> ResultView.printPlayerInitMessage(names) },
+                ),
         )
             .onPreparePlay { player -> ResultView.printPlayerNameWithCards(player) }
             .onStartPlay { player ->
