@@ -139,4 +139,4 @@
 
 ### 4단계 피드백
 - [X] `hand.isBlackjack` 의 `BUST_SCORE` 네이밍에 대한고민
-- [ ] `Money` value object로 변경
+- [X] `Money` value object로 변경
