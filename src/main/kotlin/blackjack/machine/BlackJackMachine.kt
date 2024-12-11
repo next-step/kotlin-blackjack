@@ -42,7 +42,7 @@ class BlackJackMachine(
             ResultView.printPlayersCardStatusAndSum(participant = createParticipants(dealer = dealer, players = players))
         }
 
-        ResultView.printWinner(players = players, dealer = dealer)
+        ResultView.printBetResult(participantBets = bettingBoard.participantBets)
     }
 
     private fun playTurn(player: Player): Player =

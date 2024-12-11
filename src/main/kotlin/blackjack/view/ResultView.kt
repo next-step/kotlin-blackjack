@@ -1,5 +1,6 @@
 package blackjack.view
 
+import betting.BetResult
 import blackjack.dealer.Dealer
 import blackjack.participant.Participant
 import blackjack.player.Players
@@ -70,4 +71,11 @@ object ResultView {
         } else {
             "패"
         }
+
+    fun printBetResult(participantBets: MutableMap<Participant<*>, BetResult>) {
+        println("## 최종 수익")
+        participantBets.forEach { (participant, bet) ->
+            println("${participant.name}: ${bet.winning.amount.toInt()}")
+        }
+    }
 }
