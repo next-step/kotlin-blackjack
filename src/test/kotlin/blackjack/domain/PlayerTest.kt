@@ -28,7 +28,7 @@ class PlayerTest {
             onDrawCard = {},
             onExitPlay = {},
         )
-        assertThat(player.cards.value.size).isEqualTo(2) // 카드는 기본적으로 2개가 주어진다
+        assertThat(player.cards.value.size).isEqualTo(2)
         assertThat(player.cardsSum).isEqualTo(4)
     }
 }
