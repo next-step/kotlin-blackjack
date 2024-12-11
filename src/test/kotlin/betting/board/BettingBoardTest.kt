@@ -2,17 +2,29 @@ package betting.board
 
 import betting.Bet
 import betting.BetResult
+import blackjack.card.Card
+import blackjack.card.CardFixture
 import blackjack.dealer.Dealer
 import blackjack.participant.Participant
+import blackjack.player.Hand
 import blackjack.player.Player
 import io.kotest.inspectors.forAll
 import io.kotest.matchers.shouldBe
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 import java.util.stream.Stream
 
 class BettingBoardTest {
+    private lateinit var bettingBoard: BettingBoard
+
+    @BeforeEach
+    fun setUp() {
+        bettingBoard = BettingBoard()
+    }
+    
     @ParameterizedTest
     @MethodSource("bettingBoardTest")
     fun `BettingBoard의 participantBets 초기화를 테스트한다`(
@@ -20,7 +32,6 @@ class BettingBoardTest {
         dealer: Dealer,
         expectedResult: MutableMap<Participant<*>, BetResult>,
     ) {
-        val bettingBoard = BettingBoard()
         bettingBoard.setup(playerBets = playerBets, dealer = dealer)
 
         bettingBoard.participantBets.size shouldBe expectedResult.size
@@ -33,7 +44,6 @@ class BettingBoardTest {
         playerBets: Map<Participant<*>, BetResult>,
         dealer: Dealer,
     ) {
-        val bettingBoard = BettingBoard()
         bettingBoard.setup(playerBets = playerBets, dealer = dealer)
 
         bettingBoard.bust(player = POBI)
@@ -51,7 +61,6 @@ class BettingBoardTest {
         playerBets: Map<Participant<*>, BetResult>,
         dealer: Dealer,
     ) {
-        val bettingBoard = BettingBoard()
         bettingBoard.setup(playerBets = playerBets, dealer = dealer)
 
         bettingBoard.winAllPlayer()
@@ -65,6 +74,52 @@ class BettingBoardTest {
             .filter { it.key != dealer }
             .forAll { (_, betResult) -> betResult.bet.amount shouldBe betResult.winning.amount }
     }
+
+    @ParameterizedTest
+    @MethodSource("bettingBoardTest")
+    @DisplayName("플레이어의 처음 2장의 합이 21이고, 딜러는 아닌 경우 플레이어는 베팅 금액의 1.5배를 받는다")
+    fun playerIsBlackjackButDealerIsNotBlackjack(
+        playerBetParameters: Map<Participant<*>, BetResult>,
+        dealer: Dealer,
+    ) {
+        val playerBets = playerBetParameters.mapKeys { (player, _ ) -> player.hitCards(CardFixture.generateBlackJack()) }
+        
+        bettingBoard.setup(playerBets = playerBets, dealer = dealer)
+
+        playerBets.forAll { (player, _ ) -> player.isBlackjack() shouldBe true }
+        dealer.isBlackjack() shouldBe false
+        bettingBoard.participantBets[dealer]?.winning?.amount shouldBe
+            bettingBoard.participantBets
+                .filter { it.key != dealer }
+                .values
+                .sumOf { it.bet.negative() }
+                .times(BettingBoard.BONUS_RATIO)
+    }
+
+    @ParameterizedTest
+    @MethodSource("bettingBoardTest")
+    @DisplayName("플레이어의 처음 2장의 합이 21이고, 딜러도 21인 경우 플레이어는 베팅 금액을 돌려 받는다")
+    fun playerAndDealerIsBlackjack(
+        playerBetParameters: Map<Participant<*>, BetResult>,
+        dealerParameter: Dealer,
+    ) {
+        val playerBets = playerBetParameters.mapKeys { (player, _ ) -> player.hitCards(CardFixture.generateBlackJack()) }
+        val dealer = Dealer(name = dealerParameter.name, hand = Hand(cards = CardFixture.generateBlackJack()))
+
+        bettingBoard.setup(playerBets = playerBets, dealer = dealer)
+
+        playerBets.forAll { (player, _ ) -> player.isBlackjack() shouldBe true }
+        dealer.isBlackjack() shouldBe true
+        bettingBoard.participantBets[dealer]?.winning?.amount shouldBe
+                bettingBoard.participantBets
+                    .filter { it.key != dealer }
+                    .values
+                    .sumOf { it.bet.negative() }
+    }
+
+    private fun Participant<*>.hitCards(cards: List<Card>): Participant<*> =
+        Player(name = this.name, hand = Hand(cards = this.hand.cards.plus(cards)))
+
 
     companion object {
         private val POBI = Player(name = "pobi")
