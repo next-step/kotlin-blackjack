@@ -1,8 +1,5 @@
-package blackjack.core
+package blackjack.core.card
 
-import blackjack.core.card.Card
-import blackjack.core.card.Denomination
-import blackjack.core.card.Suit
 import blackjack.core.player.Player
 import blackjack.core.player.Players
 

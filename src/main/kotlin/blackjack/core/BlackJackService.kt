@@ -1,6 +1,6 @@
-package blackjack.application
+package blackjack.core
 
-import blackjack.core.CardDispenser
+import blackjack.core.card.CardDispenser
 import blackjack.core.player.Dealer
 import blackjack.core.player.Players
 import blackjack.core.turn.DealerTurnCondition
@@ -23,5 +23,7 @@ object BlackJackService {
         players.play { Turn(it, cardDispenser).process(PlayerTurnCondition) }
 
         Turn(dealer, cardDispenser).process(DealerTurnCondition)
+
+        dealer.calculateProfit(players)
     }
 }
