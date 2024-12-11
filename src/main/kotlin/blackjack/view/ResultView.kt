@@ -7,7 +7,7 @@ object ResultView {
         println(
             buildString {
                 playerNameWithCards(player)
-                append(" - 결과: ${player.getCardSum()}")
+                append(" - 결과: ${player.cardsSum}")
             },
         )
     }
@@ -22,6 +22,6 @@ object ResultView {
     }
 
     private fun playerNameWithCards(player: Player): String {
-        return "${player.name} 카드: ${player.cards.map { "${it.rank.rankName}${it.suit.koreanName}" }}"
+        return "${player.name} 카드: ${player.cards.value.map { "${it.rank.rankName}${it.suit.koreanName}" }}"
     }
 }

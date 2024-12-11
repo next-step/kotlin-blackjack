@@ -14,7 +14,7 @@ object BlackJackController {
         }
 
         Players(
-            playerList =
+            value =
                 initPlayers(
                     fetchNames = { InputView.readPlayerNames() },
                     onPlayerInit = { names -> ResultView.printPlayerInitMessage(names) },

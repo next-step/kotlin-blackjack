@@ -2,7 +2,9 @@ package blackjack.domain
 
 @Suppress("UNREACHABLE_CODE")
 class Player(val name: String, private val deck: Deck) {
-    val cards = mutableListOf<Card>()
+    private val _cards = mutableListOf<Card>()
+    val cards: Cards = Cards(_cards)
+    val cardsSum: Int get() = cards.sumValues()
 
     init {
         repeat(DEFAULT_CARD_COUNT) { addCard(deck.draw()) }
@@ -31,17 +33,12 @@ class Player(val name: String, private val deck: Deck) {
         }
     }
 
-    fun getCardSum(): Int {
-        return cards.sumValues()
-    }
-
     private fun canAdd(card: Card): Boolean {
-        val cardSum = getCardSum()
-        return card.isOverMaxSum(cardSum).not()
+        return card.isOverMaxSum(cardsSum).not()
     }
 
     private fun addCard(card: Card) {
-        cards.add(card)
+        _cards.add(card)
     }
 
     companion object {
