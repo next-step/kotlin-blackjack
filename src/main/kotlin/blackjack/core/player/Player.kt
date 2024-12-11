@@ -1,17 +1,8 @@
 package blackjack.core.player
 
-import blackjack.core.card.Card
-import blackjack.core.card.Cards
+import blackjack.core.amount.BettingAmount
+import blackjack.core.amount.ProfitAmount
 
-open class Player(val name: Name, val cards: Cards = Cards()) {
-    fun draw(card: Card) {
-        if (checkBust().not()) {
-            cards += card
-        }
-    }
-
-    val point: Int
-        get() = cards.point()
-
-    fun checkBust(): Boolean = cards.checkBust()
+open class Player(name: Name, val bettingAmount: BettingAmount = BettingAmount(0)) : Participant(name) {
+    var profitAmount = ProfitAmount()
 }
