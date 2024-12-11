@@ -1,8 +1,8 @@
 package blackjack.presentation
 
-import blackjack.core.player.BettingAmount
+import blackjack.core.amount.BettingAmount
 import blackjack.core.player.Name
-import blackjack.core.player.Participant
+import blackjack.core.player.Player
 
 object InputView {
     fun getNames(): List<Name> {
@@ -13,8 +13,8 @@ object InputView {
             .toList()
     }
 
-    fun getCard(participant: Participant): Boolean {
-        println(STRING_INPUT_CARD.format(participant.name))
+    fun getCard(player: Player): Boolean {
+        println(STRING_INPUT_CARD.format(player.name))
         val command = readlnOrNull() ?: throw IllegalArgumentException(ERROR_INVALID_STR)
         return when (command.trim()) {
             STRING_YES -> true
