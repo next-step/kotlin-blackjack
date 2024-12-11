@@ -16,10 +16,11 @@ enum class CardRank(val score: Int) {
     TEN(10),
     JACK(10),
     QUEEN(10),
-    KING(10)
+    KING(10),
     ;
 
     fun score(): Int = this.score
+
     companion object {
         fun findCardRank(number: Int): CardRank {
             return entries.find { it.ordinal == number } ?: throw IllegalArgumentException("잘못된 카드 숫자입니다.")

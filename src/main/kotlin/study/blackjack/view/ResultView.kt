@@ -42,7 +42,10 @@ class ResultView {
         }
     }
 
-    private fun cardName(cardRank: CardRank, suit: Suit): String {
+    private fun cardName(
+        cardRank: CardRank,
+        suit: Suit,
+    ): String {
         return "%s%s".format(cardRankName(cardRank), suitName(suit))
     }
 

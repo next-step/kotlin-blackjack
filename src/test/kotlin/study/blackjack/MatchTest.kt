@@ -15,7 +15,7 @@ class MatchTest : StringSpec({
         Match.of(playerScore = 17, dealerScore = 19) shouldBe Match.LOSE
     }
     "블랙잭 테스트" {
-        Match.of(playerScore = 21, dealerScore = 19) shouldBe Match.WIN
+        Match.of(playerScore = 21, dealerScore = 19) shouldBe Match.BLACKJACK
     }
     "무승부 테스트" {
         Match.of(playerScore = 21, dealerScore = 21) shouldBe Match.PUSH

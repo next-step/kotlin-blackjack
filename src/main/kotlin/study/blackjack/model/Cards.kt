@@ -17,14 +17,15 @@ data class Cards(
     fun toList(): List<Card> = cards.toList()
 
     fun calculateScore(): Int {
-        val totalScore = cards
-            .map { card ->
-                if (CardRank.ACE == card.cardRank) {
-                    ACE_SOFT_SCORE
-                } else {
-                    card.score()
-                }
-            }.sumOf { it }
+        val totalScore =
+            cards
+                .map { card ->
+                    if (CardRank.ACE == card.cardRank) {
+                        ACE_SOFT_SCORE
+                    } else {
+                        card.score()
+                    }
+                }.sumOf { it }
 
         return if (totalScore > BLACKJACK_NUMBER) {
             cards.sumOf { it.score() }

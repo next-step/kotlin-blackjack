@@ -1,7 +1,6 @@
 package study.blackjack.view
 
 import study.blackjack.model.BlackjackUser
-import study.blackjack.model.Money
 
 /**
  * @author 이상준

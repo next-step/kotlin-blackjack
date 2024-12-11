@@ -17,19 +17,19 @@ class BlackjackGame(
     private val resultView = ResultView()
 
     fun run() {
+        initGameSettings()
+        startGame()
+        drawPlayer()
+        drawDealer()
+        finishGame()
+    }
+
+    private fun initGameSettings() {
         players = inputView.inputPlayerNames()
         players.forEach {
             inputView.inputPlayerMoney(it)
         }
         resultView.printInitGiveCardsMessage(players, INIT_CARD_COUNT)
-
-        startGame()
-        players.forEach { player ->
-            playGame(player)
-        }
-
-        addCardDealer()
-        finishGame()
     }
 
     private fun startGame() {
@@ -46,19 +46,21 @@ class BlackjackGame(
         }
     }
 
-    private fun addCardDealer() {
-        if (dealer.cards().calculateScore() <= DEALER_SCORE) {
+    private fun drawPlayer() {
+        players.forEach { player ->
+            drawPlayer(player)
+        }
+    }
+
+    private fun drawDealer() {
+        if (dealer.isReceiveCard()) {
             resultView.printAddCardOfDealerMessage()
             blackjackOperator.addCard(dealer)
         }
     }
 
-    private fun playGame(player: BlackjackUser) {
-        if (Match.bustCheck(player.cards().calculateScore())) {
-            return
-        }
-
-        while (inputView.inputGiveCardMessage(player)) {
+    private fun drawPlayer(player: BlackjackUser) {
+        while (Match.bustCheck(player.cards().calculateScore()).not() && inputView.inputGiveCardMessage(player)) {
             blackjackOperator.addCard(player)
             resultView.printInitCardOfPlayer(player)
         }
@@ -77,7 +79,6 @@ class BlackjackGame(
     companion object {
         private const val INIT_CARD_COUNT = 2
         private const val DEALER = "딜러"
-        private const val DEALER_SCORE = 16
     }
 }
 

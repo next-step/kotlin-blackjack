@@ -25,10 +25,19 @@ class BlackjackUser(
     }
 
     fun profit(): Double {
-        return this.match.operation(money.amount)
+        return match.operation(money.amount)
     }
-    
-    fun match(dealer: BlackjackUser) {
-        this.match = Match.of(this.cards.calculateScore(), dealer.cards.calculateScore())
+
+    fun match(dealer: BlackjackUser): Match {
+        match = Match.of(this.cards.calculateScore(), dealer.cards.calculateScore())
+        return match
+    }
+
+    fun isReceiveCard(): Boolean {
+        return cards.calculateScore() <= DEALER_SCORE
+    }
+
+    companion object {
+        private const val DEALER_SCORE = 16
     }
 }
