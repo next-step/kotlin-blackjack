@@ -1,6 +1,6 @@
 package blackjack.controller
 
-import blackjack.domain.Deck
+import blackjack.domain.CardDeck
 import blackjack.domain.Player
 import blackjack.util.onEndPlay
 import blackjack.util.onPreparePlay
@@ -34,7 +34,7 @@ object BlackJackController {
         onPlayerInit: (List<String>) -> Unit,
     ): List<Player> {
         val names = fetchNames()
-        val deck = Deck()
+        val deck = CardDeck()
         val players = names.map { Player(it, deck) }
         onPlayerInit(names)
         return players

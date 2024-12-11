@@ -1,11 +1,11 @@
 package blackjack.domain
 
-class Deck(
+class CardDeck(
     suits: List<Suit> = Suit.entries,
     private val ranks: List<Rank> = Rank.entries,
 ) {
     // Card 상태 변경
-    private val cards: MutableList<Card> =
+    val cards: MutableList<Card> =
         suits.flatMap { suit -> // Suit -> Rank 쌍 만들기
             ranks.map { rank -> Card(rank, suit) }
         }.toMutableList()
