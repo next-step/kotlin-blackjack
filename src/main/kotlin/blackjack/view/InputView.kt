@@ -1,7 +1,6 @@
 package blackjack.view
 
-import blackjack.domain.Dealer
-import blackjack.domain.Participant
+import blackjack.domain.player.Player
 
 object InputView {
     fun inputNames(): List<String> {
@@ -13,12 +12,8 @@ object InputView {
         return names
     }
 
-    fun inputHit(participant: Participant): Boolean {
-        if (participant is Dealer) {
-            return true
-        }
-
-        println("${participant.name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
+    fun inputHit(player: Player): Boolean {
+        println("${player.name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
         return when (readlnOrNull()) {
             "y" -> true
             "n" -> false

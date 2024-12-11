@@ -1,9 +1,9 @@
 package blackjack.fixtures
 
-import blackjack.domain.Card
-import blackjack.domain.Rank
-import blackjack.domain.Suit
-import blackjack.domain.Suit.SPADE
+import blackjack.domain.card.Card
+import blackjack.domain.card.Rank
+import blackjack.domain.card.Suit
+import blackjack.domain.card.Suit.SPADE
 
 fun createCard(
     rank: String,

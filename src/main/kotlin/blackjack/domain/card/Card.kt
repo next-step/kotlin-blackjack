@@ -1,6 +1,6 @@
-package blackjack.domain
+package blackjack.domain.card
 
-import blackjack.domain.Rank.ACE
+import blackjack.domain.card.Rank.ACE
 
 data class Card(
     val rank: Rank,

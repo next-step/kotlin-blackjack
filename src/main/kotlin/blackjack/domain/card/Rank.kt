@@ -1,4 +1,4 @@
-package blackjack.domain
+package blackjack.domain.card
 
 enum class Rank(val value: String, val score: Int) {
     ACE("A", 11),
@@ -17,9 +17,8 @@ enum class Rank(val value: String, val score: Int) {
     ;
 
     companion object {
-        fun from(value: String): Rank {
-            return entries.firstOrNull { it.value == value }
+        fun from(value: String): Rank =
+            entries.firstOrNull { it.value == value }
                 ?: throw IllegalArgumentException("유효하지 않은 랭크 값입니다: $value")
-        }
     }
 }
