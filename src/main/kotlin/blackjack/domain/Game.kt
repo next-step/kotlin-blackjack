@@ -52,9 +52,10 @@ class Game(
 
     private fun determineResults(): Map<String, GameResult> {
         return players.associate { player ->
-            player.name to player.compareWithDealer(dealer).also { result ->
-                player.setResult(result)
-            }
+            player.name to
+                player.compareWithDealer(dealer).also { result ->
+                    player.setResult(result)
+                }
         }
     }
 
@@ -70,11 +71,12 @@ class Game(
 
         val playerProfits =
             players.associate { player ->
-                player.name to when (player.result) {
-                    GameResult.WIN -> player.bet
-                    GameResult.LOSE -> -player.bet
-                    else -> 0
-                }
+                player.name to
+                    when (player.result) {
+                        GameResult.WIN -> player.bet
+                        GameResult.LOSE -> -player.bet
+                        else -> 0
+                    }
             }
 
         return playerProfits + ("딜러" to dealerProfit)
