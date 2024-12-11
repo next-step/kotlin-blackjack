@@ -7,13 +7,16 @@ data class Cards(val value: List<Card>) {
     fun sumValues(): Int {
         var sum = 0
         value.forEach { card ->
-            sum +=
-                if (card.rank == Rank.ACE) {
-                    if (sum + Rank.ACE.value > MAX_SUM) ACE_VALUE_ONE else Rank.ACE.value
-                } else {
-                    card.rank.value
-                }
+            sum += getCardValue(card, sum)
         }
         return sum
+    }
+
+    private fun getCardValue(card: Card, currentSum: Int): Int {
+        return if (card.rank == Rank.ACE) {
+            if (currentSum + Rank.ACE.value > MAX_SUM) ACE_VALUE_ONE else Rank.ACE.value
+        } else {
+            card.rank.value
+        }
     }
 }
