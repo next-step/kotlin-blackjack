@@ -10,21 +10,16 @@ import blackjack.view.OutputView
 
 class BlackjackController(private val inputView: InputView, private val outputView: OutputView) {
     fun start() {
-        val playerNames = inputView.getPlayerNames()
-
-        val deck = createDeck()
-        val dealer = createDealer(deck)
-        val players = createPlayers(playerNames)
-        val game = Game(dealer, players)
-
-        game.start()
-
-        outputView.dealResult(players)
+        val blackjackGame = initializeGame()
     }
 
-    private fun createDeck() = Deck()
+    private fun initializeGame(): Game {
+        val playerNames = inputView.getPlayerNames()
+        val players = createPlayers(playerNames)
+        return Game(dealer = createDealer(), players = players)
+    }
 
-    private fun createDealer(deck: Deck) = Dealer(deck)
+    private fun createDealer() = Dealer(Deck())
 
     private fun createPlayers(playerNames: List<String>) = Players(playerNames.map { Player(it) })
 }
