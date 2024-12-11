@@ -12,7 +12,10 @@ data class Cards(val value: List<Card>) {
         return sum
     }
 
-    private fun getCardValue(card: Card, currentSum: Int): Int {
+    private fun getCardValue(
+        card: Card,
+        currentSum: Int,
+    ): Int {
         return if (card.rank == Rank.ACE) {
             if (currentSum + Rank.ACE.value > MAX_SUM) ACE_VALUE_ONE else Rank.ACE.value
         } else {

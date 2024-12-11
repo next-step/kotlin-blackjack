@@ -22,7 +22,10 @@ class Player(val name: String, private val deck: Deck) {
         onExitPlay()
     }
 
-    private fun addCard(card: Card, onDrawCard: () -> Unit): Boolean {
+    private fun addCard(
+        card: Card,
+        onDrawCard: () -> Unit,
+    ): Boolean {
         return if (canAdd(card)) {
             addCard(card)
             onDrawCard()

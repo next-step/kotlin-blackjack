@@ -4,13 +4,15 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
-import java.util.stream.Stream
 
 class CardTest {
-
     @ParameterizedTest
     @MethodSource("provideDataForIsOverMaxSumTest")
-    fun `카드의 합이 21을 넘는지 여부를 확인`(card: Card, currentSum: Int, expectedResult: Boolean) {
+    fun `카드의 합이 21을 넘는지 여부를 확인`(
+        card: Card,
+        currentSum: Int,
+        expectedResult: Boolean,
+    ) {
         // When
         val result = card.isOverMaxSum(currentSum)
 
@@ -20,7 +22,10 @@ class CardTest {
 
     @ParameterizedTest
     @MethodSource("provideDataForSumValuesTest")
-    fun `임의의 카드 리스트가 주어졌을 때 카드의 합이 룰과 일치하는지 확인`(cards: Cards, expectedSum: Int) {
+    fun `임의의 카드 리스트가 주어졌을 때 카드의 합이 룰과 일치하는지 확인`(
+        cards: Cards,
+        expectedSum: Int,
+    ) {
         // When
         val sum = cards.sumValues()
 
@@ -32,8 +37,8 @@ class CardTest {
         @JvmStatic
         fun provideDataForIsOverMaxSumTest(): List<Arguments> {
             return listOf(
-                Arguments.of(Card(Rank.ACE, Suit.HEARTS), 20, false), // ACE treated as 11; total is 31 -> false
-                Arguments.of(Card(Rank.ACE, Suit.HEARTS), 21, true)  // ACE treated as 11; total is 32 -> true
+                Arguments.of(Card(Rank.ACE, Suit.HEARTS), 20, false),
+                Arguments.of(Card(Rank.ACE, Suit.HEARTS), 21, true),
             )
         }
 
@@ -45,28 +50,31 @@ class CardTest {
                         listOf(
                             Card(Rank.TWO, Suit.HEARTS),
                             Card(Rank.THREE, Suit.HEARTS),
-                            Card(Rank.FOUR, Suit.HEARTS)
-                        )
+                            Card(Rank.FOUR, Suit.HEARTS),
+                        ),
                     ),
-                    9 // 2 + 3 + 4
+                    // 2 + 3 + 4
+                    9,
                 ),
                 Arguments.of(
                     Cards(
                         listOf(
                             Card(Rank.ACE, Suit.HEARTS),
-                            Card(Rank.TEN, Suit.HEARTS)
-                        )
+                            Card(Rank.TEN, Suit.HEARTS),
+                        ),
                     ),
-                    21 // 11 + 10
+                    // 11 + 10
+                    21,
                 ),
                 Arguments.of(
                     Cards(
                         listOf(
                             Card(Rank.ACE, Suit.HEARTS),
-                            Card(Rank.ACE, Suit.HEARTS)
-                        )
+                            Card(Rank.ACE, Suit.HEARTS),
+                        ),
                     ),
-                    12 // 11 + 1
+                    // 11 + 1
+                    12,
                 ),
                 Arguments.of(
                     Cards(
@@ -74,10 +82,10 @@ class CardTest {
                             Card(Rank.ACE, Suit.HEARTS),
                             Card(Rank.TEN, Suit.HEARTS),
                             Card(Rank.TEN, Suit.HEARTS),
-                        )
+                        ),
                     ),
-                    21 // FIXME - 31 이 나온다
-                )
+                    21,
+                ),
             )
         }
     }
