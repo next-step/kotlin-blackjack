@@ -31,7 +31,10 @@ class Game(
         return results to dealerDrewCard
     }
 
-    private fun handlePlayerTurn(player: Player, decisionMaker: PlayerDecision) {
+    private fun handlePlayerTurn(
+        player: Player,
+        decisionMaker: PlayerDecision,
+    ) {
         while (player.canContinue()) {
             if (!decisionMaker.shouldDrawCard(player.name)) break
             player.addCards(deck.drawCards(1))
@@ -56,21 +59,23 @@ class Game(
     }
 
     fun calculateProfits(): Map<String, Int> {
-        val dealerProfit = players.sumOf { player ->
-            when (player.result) {
-                GameResult.WIN -> -player.bet
-                GameResult.LOSE -> player.bet
-                else -> 0
+        val dealerProfit =
+            players.sumOf { player ->
+                when (player.result) {
+                    GameResult.WIN -> -player.bet
+                    GameResult.LOSE -> player.bet
+                    else -> 0
+                }
             }
-        }
 
-        val playerProfits = players.associate { player ->
-            player.name to when (player.result) {
-                GameResult.WIN -> player.bet
-                GameResult.LOSE -> -player.bet
-                else -> 0
+        val playerProfits =
+            players.associate { player ->
+                player.name to when (player.result) {
+                    GameResult.WIN -> player.bet
+                    GameResult.LOSE -> -player.bet
+                    else -> 0
+                }
             }
-        }
 
         return playerProfits + ("딜러" to dealerProfit)
     }

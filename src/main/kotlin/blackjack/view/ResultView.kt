@@ -35,16 +35,6 @@ object ResultView {
         println(if (drewCard) DEALER_DRAW_MESSAGE else DEALER_NO_DRAW_MESSAGE)
     }
 
-    fun printGameResult(results: Map<String, String>) {
-        val dealerWins = results.values.count { it == GameResult.LOSE.getResult() }
-        val dealerLosses = results.size - dealerWins
-        println("\n## 최종 승패")
-        println(GAME_RESULT_MESSAGE.format("딜러", "${dealerWins}${GameResult.WIN.getResult()} ${dealerLosses}${GameResult.LOSE.getResult()}"))
-        results.forEach { (name, result) ->
-            println(GAME_RESULT_MESSAGE.format(name, result))
-        }
-    }
-
     fun printProfits(profits: Map<String, Int>) {
         println("\n## 최종 수익")
         profits.forEach { (name, profit) ->
