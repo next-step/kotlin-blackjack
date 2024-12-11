@@ -1,38 +1,40 @@
 package study.blackjack.model
 
-import study.blackjack.model.Match.Companion.BLACKJACK
+import study.blackjack.model.Match.Companion.BLACKJACK_NUMBER
 
 /**
  * @author 이상준
  */
 data class Cards(
-    private var cards: MutableList<Card> = mutableListOf(),
+    private val cards: List<Card>,
 ) {
-    fun addCard(card: Card) {
-        cards.add(card)
+    fun size(): Int = cards.size
+
+    fun add(card: Card): Cards {
+        return Cards(cards + card)
     }
 
-    fun addAllCards(cards: Cards) {
-        cards.cards.forEach {
-            addCard(it)
-        }
-    }
-
-    fun getCards(): List<Card> {
-        return cards.toList()
-    }
-
-    fun cardCount(): Int {
-        return cards.size
-    }
+    fun toList(): List<Card> = cards.toList()
 
     fun calculateScore(): Int {
-        val totalScore = cards.sumOf { it.score() }
+        val totalScore =
+            cards
+                .map { card ->
+                    if (CardRank.ACE == card.cardRank) {
+                        ACE_SOFT_SCORE
+                    } else {
+                        card.score()
+                    }
+                }.sumOf { it }
 
-        return if (totalScore > BLACKJACK) {
-            cards.sumOf { it.score(false) }
+        return if (totalScore > BLACKJACK_NUMBER) {
+            cards.sumOf { it.score() }
         } else {
             totalScore
         }
+    }
+
+    companion object {
+        private const val ACE_SOFT_SCORE = 11
     }
 }
