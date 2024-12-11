@@ -9,9 +9,9 @@ data class Car(val name: String, val position: Int) {
         }
     }
 
-    fun move2(isMovable: () -> Boolean) : Car {
+    fun move2(isMovable: () -> Boolean): Car {
         return if (isMovable()) {
-            copy(position = position + 1 )
+            copy(position = position + 1)
         } else {
             this
         }

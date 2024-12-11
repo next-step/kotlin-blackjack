@@ -6,13 +6,11 @@ object StringUtils {
     }
 }
 
-
 fun String.lastChar(): Char {
     return this.get(this.length - 1)
 }
 
 fun Any.to(other: Any) = Pair(this, other)
-
 
 infix fun Any.to2(other: Any) = Pair(this, other)
 
