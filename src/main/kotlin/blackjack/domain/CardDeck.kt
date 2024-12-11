@@ -15,7 +15,7 @@ class CardDeck(
         }.toMutableList()
 
     override fun draw(): Card {
-        if (cards.isEmpty()) throw IllegalStateException("No more cards")
+        check(cards.isEmpty()) { "No more cards" }
         cards.shuffle()
         return cards.removeAt(0)
     }
