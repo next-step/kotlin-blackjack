@@ -1,6 +1,6 @@
 package blackjack.domain
 
-interface Deck {
+fun interface Deck {
     fun draw(): Card
 }
 

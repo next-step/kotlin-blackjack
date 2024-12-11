@@ -1,6 +1,5 @@
 package blackjack.domain
 
-@Suppress("UNREACHABLE_CODE")
 class Player(val name: String, private val deck: Deck) {
     private val _cards = mutableListOf<Card>()
     val cards: Cards = Cards(_cards)
