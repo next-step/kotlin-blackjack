@@ -1,43 +1,84 @@
 package blackjack.domain
 
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Test
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.Arguments
+import org.junit.jupiter.params.provider.MethodSource
+import java.util.stream.Stream
 
 class CardTest {
-    @Test
-    fun isOverMaxSumTest() {
-        val ace = Card(Rank.ACE, Suit.HEARTS)
-        val currentSum = 20
-        val isOverMaxSumResultFalse = ace.isOverMaxSum(currentSum)
-        assertThat(isOverMaxSumResultFalse).isFalse()
 
-        val currentSum2 = 21
-        val isOverMaxSumResultTrue = ace.isOverMaxSum(currentSum2)
-        assertThat(isOverMaxSumResultTrue).isTrue()
+    @ParameterizedTest
+    @MethodSource("provideDataForIsOverMaxSumTest")
+    fun `카드의 합이 21을 넘는지 여부를 확인`(card: Card, currentSum: Int, expectedResult: Boolean) {
+        // When
+        val result = card.isOverMaxSum(currentSum)
+
+        // Then
+        assertThat(result).isEqualTo(expectedResult)
     }
 
-    @Test
-    fun sumValuesTest() {
-        val listOfCards =
-            listOf(
-                Card(Rank.TWO, Suit.HEARTS),
-                Card(Rank.THREE, Suit.HEARTS),
-                Card(Rank.FOUR, Suit.HEARTS),
-            )
-        assertThat(listOfCards.sumValues()).isEqualTo(2 + 3 + 4)
+    @ParameterizedTest
+    @MethodSource("provideDataForSumValuesTest")
+    fun `임의의 카드 리스트가 주어졌을 때 카드의 합이 룰과 일치하는지 확인`(cards: Cards, expectedSum: Int) {
+        // When
+        val sum = cards.sumValues()
 
-        val listOfCardsWithAce =
-            listOf(
-                Card(Rank.ACE, Suit.HEARTS),
-                Card(Rank.TEN, Suit.HEARTS),
-            )
-        assertThat(listOfCardsWithAce.sumValues()).isEqualTo(11 + 10)
+        // Then
+        assertThat(sum).isEqualTo(expectedSum)
+    }
 
-        val listOfCardsWithAceTreatedAsOne =
-            listOf(
-                Card(Rank.ACE, Suit.HEARTS),
-                Card(Rank.ACE, Suit.HEARTS),
+    companion object {
+        @JvmStatic
+        fun provideDataForIsOverMaxSumTest(): List<Arguments> {
+            return listOf(
+                Arguments.of(Card(Rank.ACE, Suit.HEARTS), 20, false), // ACE treated as 11; total is 31 -> false
+                Arguments.of(Card(Rank.ACE, Suit.HEARTS), 21, true)  // ACE treated as 11; total is 32 -> true
             )
-        assertThat(listOfCardsWithAceTreatedAsOne.sumValues()).isEqualTo(11 + 1) // 11 + 11 = 22 이므로 두번째 ACE 는 1로 간주
+        }
+
+        @JvmStatic
+        fun provideDataForSumValuesTest(): List<Arguments> {
+            return listOf(
+                Arguments.of(
+                    Cards(
+                        listOf(
+                            Card(Rank.TWO, Suit.HEARTS),
+                            Card(Rank.THREE, Suit.HEARTS),
+                            Card(Rank.FOUR, Suit.HEARTS)
+                        )
+                    ),
+                    9 // 2 + 3 + 4
+                ),
+                Arguments.of(
+                    Cards(
+                        listOf(
+                            Card(Rank.ACE, Suit.HEARTS),
+                            Card(Rank.TEN, Suit.HEARTS)
+                        )
+                    ),
+                    21 // 11 + 10
+                ),
+                Arguments.of(
+                    Cards(
+                        listOf(
+                            Card(Rank.ACE, Suit.HEARTS),
+                            Card(Rank.ACE, Suit.HEARTS)
+                        )
+                    ),
+                    12 // 11 + 1
+                ),
+                Arguments.of(
+                    Cards(
+                        listOf(
+                            Card(Rank.ACE, Suit.HEARTS),
+                            Card(Rank.TEN, Suit.HEARTS),
+                            Card(Rank.TEN, Suit.HEARTS),
+                        )
+                    ),
+                    21 // FIXME - 31 이 나온다
+                )
+            )
+        }
     }
 }
