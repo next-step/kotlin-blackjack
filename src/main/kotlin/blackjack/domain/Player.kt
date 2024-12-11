@@ -1,6 +1,6 @@
 package blackjack.domain
 
-class Player(val name: String, private val deck: CardDeck) {
+class Player(val name: String, private val deck: Deck) {
     val cards = mutableListOf<Card>()
 
     init {
