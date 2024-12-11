@@ -1,16 +1,36 @@
-package blackjack.core
+package blackjack.core.card
 
-import blackjack.core.card.Card
-import blackjack.core.card.Cards
-import blackjack.core.card.Denomination
-import blackjack.core.card.Suit
 import io.kotest.matchers.shouldBe
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 import java.util.stream.Stream
 
 class CardsTest {
+    @Test
+    fun `버스트를 테스트한다`() {
+        val cards = Cards( mutableSetOf(
+            Card(Denomination.ACE, Suit.HEARTS),
+            Card(Denomination.KING, Suit.HEARTS),
+        ))
+
+        cards.checkBust() shouldBe false
+        cards += Card(Denomination.SEVEN, Suit.HEARTS)
+        cards.checkBust() shouldBe true
+    }
+
+    @Test
+    fun `블랙잭을 테스트한다`() {
+        val cards = Cards( mutableSetOf(
+            Card(Denomination.ACE, Suit.HEARTS),
+        ))
+
+        cards.checkBlackjack() shouldBe false
+        cards += Card(Denomination.KING, Suit.HEARTS)
+        cards.checkBust() shouldBe true
+    }
+
     @ParameterizedTest
     @MethodSource("provideParameters")
     fun `포인트를 계산한다`(

@@ -29,6 +29,6 @@ class TurnTest {
             },
         )
 
-        player.cards.point() shouldNotBeLessThan Cards.MAX_POINT
+        player.cards.point() shouldNotBeLessThan Cards.BLACKJACK_POINT
     }
 }
