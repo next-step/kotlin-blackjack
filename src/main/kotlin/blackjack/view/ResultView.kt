@@ -1,7 +1,6 @@
 package blackjack.view
 
 import blackjack.domain.Card
-import blackjack.domain.GameResult
 import blackjack.domain.PlayerResultDTO
 
 object ResultView {
@@ -12,28 +11,22 @@ object ResultView {
         }
     }
 
-    fun showDealerInitialCard(firstCard: Card) {
-        println("딜러: ${firstCard.rank}${firstCard.suit}")
+    fun showDealerInitialCard(card: Card) {
+        println("딜러: ${card.rank}${card.suit}")
     }
 
     fun showPlayerCards(playerResult: PlayerResultDTO) {
         println("${playerResult.name}카드: ${playerResult.cards}")
     }
 
-    fun showDealerCards(dealerCards: List<Card>) {
-        val cardDetails = dealerCards.joinToString { "${it.rank}${it.suit}" }
-        println("딜러 카드: $cardDetails")
+    fun showDealerCards(cards: List<Card>) {
+        println("딜러 카드: ${cards.joinToString { "${it.rank}${it.suit}" }}")
     }
 
-    fun showFinalResults(gameResult: GameResult) {
-        println("\n## 최종 승패")
-
-        val (wins, losses) = gameResult.getDealerWinLoss()
-        println("딜러: ${wins}승 ${losses}패")
-
-        gameResult.playerResults.forEach { (playerName, result) ->
-            val outcome = if (result == GameResult.Result.WIN) "승" else "패"
-            println("$playerName: $outcome")
+    fun showFinalProfits(profits: Map<String, Int>) {
+        println("\n## 최종 수익")
+        profits.forEach { (name, profit) ->
+            println("$name: $profit")
         }
     }
 }

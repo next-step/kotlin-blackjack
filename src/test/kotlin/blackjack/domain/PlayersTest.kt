@@ -6,7 +6,7 @@ import io.kotest.matchers.shouldBe
 
 class PlayersTest : StringSpec({
     "Players should distribute two cards to each player" {
-        val players = Players(listOf(Player("pobi"), Player("jason")))
+        val players = Players(listOf(Player("pobi", 1000), Player("jason", 1000)))
         val deck = Deck()
 
         players.distributeInitialCards(deck)
@@ -17,7 +17,7 @@ class PlayersTest : StringSpec({
     }
 
     "Players should allow a specific player to draw a card" {
-        val players = Players(listOf(Player("pobi"), Player("jason")))
+        val players = Players(listOf(Player("pobi", 1000), Player("jason", 1000)))
         val deck = Deck()
 
         players.distributeInitialCards(deck)
@@ -28,7 +28,7 @@ class PlayersTest : StringSpec({
     }
 
     "Players should throw exception if a non-existent player tries to hit" {
-        val players = Players(listOf(Player("pobi"), Player("jason")))
+        val players = Players(listOf(Player("pobi", 1000), Player("jason", 1000)))
         val deck = Deck()
 
         shouldThrow<NoSuchElementException> {

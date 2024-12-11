@@ -11,7 +11,13 @@ import blackjack.view.ResultView
 
 fun main() {
     val playerNames = InputView.getPlayerNames()
-    val players = Players(playerNames.map { Player(it) })
+    val players =
+        Players(
+            playerNames.map { name ->
+                val bettingAmount = InputView.getBettingAmount(name)
+                Player(name, bettingAmount)
+            },
+        )
     val dealer = Dealer()
     val participants = GameParticipants(dealer, players)
     val deck = Deck()
@@ -31,6 +37,6 @@ fun main() {
     game.dealerPlayTurn()
     ResultView.showDealerCards(dealer.getCards())
 
-    val gameResult = game.calculateResults()
-    ResultView.showFinalResults(gameResult)
+    val profits = game.calculateFinalResults()
+    ResultView.showFinalProfits(profits)
 }

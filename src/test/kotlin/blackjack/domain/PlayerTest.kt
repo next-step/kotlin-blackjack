@@ -5,13 +5,13 @@ import io.kotest.matchers.shouldBe
 
 class PlayerTest : StringSpec({
     "Player should have a name and manage cards through Cards" {
-        val player = Player("pobi")
+        val player = Player("pobi", 1000)
         player.name shouldBe "pobi"
         player.getCards().isEmpty() shouldBe true
     }
 
     "Player should add cards to their collection" {
-        val player = Player("pobi")
+        val player = Player("pobi", 1000)
         val card = Card(Rank.ACE, Suit.HEART)
         player.addCard(card)
 
@@ -20,7 +20,7 @@ class PlayerTest : StringSpec({
     }
 
     "Player should calculate the total value of their cards correctly" {
-        val player = Player("pobi")
+        val player = Player("pobi", 1000)
         player.addCard(Card(Rank.ACE, Suit.HEART))
         player.addCard(Card(Rank.KING, Suit.CLUB))
 
@@ -28,7 +28,7 @@ class PlayerTest : StringSpec({
     }
 
     "Player should consider Ace as 1 if 11 causes the total to exceed 21" {
-        val player = Player("pobi")
+        val player = Player("pobi", 1000)
         player.addCard(Card(Rank.ACE, Suit.HEART))
         player.addCard(Card(Rank.KING, Suit.CLUB))
         player.addCard(Card(Rank.TWO, Suit.DIAMOND))

@@ -1,13 +1,13 @@
 package blackjack.domain
 
 import io.kotest.core.spec.style.StringSpec
-import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.shouldBe
 
 class GameTest : StringSpec({
+
     "Game should distribute initial cards to dealer and players" {
         val dealer = Dealer()
-        val players = Players(listOf(Player("pobi"), Player("jason")))
+        val players = Players(listOf(Player("pobi", 10000), Player("jason", 20000)))
         val participants = GameParticipants(dealer, players)
         val deck = Deck()
         val game = Game(deck, participants)
@@ -30,7 +30,7 @@ class GameTest : StringSpec({
         val players =
             Players(
                 listOf(
-                    Player("pobi").apply {
+                    Player("pobi", 10000).apply {
                         addCard(Card(Rank.FIVE, Suit.SPADE))
                         addCard(Card(Rank.THREE, Suit.HEART))
                     },
@@ -40,12 +40,10 @@ class GameTest : StringSpec({
         val deck = Deck()
         val game = Game(deck, participants)
 
-        val result = game.calculateResults()
+        val results = game.calculateFinalResults()
 
-        result.dealerScore shouldBe dealer.getTotalValue()
-        result.playerResults.shouldContainExactly(
-            GameResult.PlayerGameResult("pobi", GameResult.Result.WIN),
-        )
+        results["pobi"] shouldBe 10000
+        results["Dealer"] shouldBe -10000
     }
 
     "Game should handle player wins and losses" {
@@ -57,11 +55,11 @@ class GameTest : StringSpec({
         val players =
             Players(
                 listOf(
-                    Player("pobi").apply {
+                    Player("pobi", 15000).apply {
                         addCard(Card(Rank.TEN, Suit.SPADE))
                         addCard(Card(Rank.SEVEN, Suit.HEART))
                     },
-                    Player("jason").apply {
+                    Player("jason", 20000).apply {
                         addCard(Card(Rank.EIGHT, Suit.DIAMOND))
                         addCard(Card(Rank.FOUR, Suit.HEART))
                     },
@@ -71,12 +69,10 @@ class GameTest : StringSpec({
         val deck = Deck()
         val game = Game(deck, participants)
 
-        val result = game.calculateResults()
+        val results = game.calculateFinalResults()
 
-        result.dealerScore shouldBe dealer.getTotalValue()
-        result.playerResults.shouldContainExactly(
-            GameResult.PlayerGameResult("pobi", GameResult.Result.WIN),
-            GameResult.PlayerGameResult("jason", GameResult.Result.LOSE),
-        )
+        results["pobi"] shouldBe 15000
+        results["jason"] shouldBe -20000
+        results["Dealer"] shouldBe 5000
     }
 })

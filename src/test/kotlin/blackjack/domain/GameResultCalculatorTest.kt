@@ -15,11 +15,11 @@ class GameResultCalculatorTest : StringSpec({
         val players =
             Players(
                 listOf(
-                    Player("pobi").apply {
+                    Player("pobi", 1000).apply {
                         addCard(Card(Rank.FIVE, Suit.CLUB))
                         addCard(Card(Rank.SIX, Suit.SPADE))
                     },
-                    Player("jason").apply {
+                    Player("jason", 1000).apply {
                         addCard(Card(Rank.SEVEN, Suit.DIAMOND))
                         addCard(Card(Rank.FOUR, Suit.CLUB))
                     },
@@ -44,11 +44,11 @@ class GameResultCalculatorTest : StringSpec({
         val players =
             Players(
                 listOf(
-                    Player("pobi").apply {
+                    Player("pobi", 1000).apply {
                         addCard(Card(Rank.NINE, Suit.CLUB))
                         addCard(Card(Rank.SEVEN, Suit.SPADE))
                     },
-                    Player("jason").apply {
+                    Player("jason", 1000).apply {
                         addCard(Card(Rank.EIGHT, Suit.DIAMOND))
                         addCard(Card(Rank.SIX, Suit.CLUB))
                     },
