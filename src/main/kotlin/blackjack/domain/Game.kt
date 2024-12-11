@@ -1,9 +1,12 @@
 package blackjack.domain
 
-class Game(private val playerNames: List<String>) {
+class Game(
+    private val playerNames: List<String>,
+    private val playerBets: Map<String, Int>,
+) {
     private val deck = Deck()
-    val dealer = Dealer(deck)
-    val players: List<Player> = playerNames.map { Player(it) }
+    val dealer = Dealer(deck, playerBets["딜러"] ?: 0)
+    val players: List<Player> = playerNames.map { Player(it, playerBets[it] ?: 0) }
 
     init {
         dealer.initialDraw()
@@ -14,9 +17,16 @@ class Game(private val playerNames: List<String>) {
         return dealer.cards[0] to players.map { it.name to it.cards }
     }
 
-    fun start(decisionMaker: PlayerDecision): Pair<Map<String, String>, Boolean> {
+    fun start(decisionMaker: PlayerDecision): Pair<Map<String, GameResult>, Boolean> {
         players.forEach { handlePlayerTurn(it, decisionMaker) }
         val dealerDrewCard: Boolean = handleDealerTurn()
+
+        // Check if dealer busts
+        if (dealer.score > 21) {
+            players.filter { it.score <= 21 }.forEach { it.setResult(GameResult.WIN) }
+            return emptyMap<String, GameResult>() to dealerDrewCard
+        }
+
         val results = determineResults()
         return results to dealerDrewCard
     }
@@ -37,16 +47,32 @@ class Game(private val playerNames: List<String>) {
         return drewCard
     }
 
-    fun determineResults(): Map<String, String> {
+    private fun determineResults(): Map<String, GameResult> {
         return players.associate { player ->
-            player.name to player.compareWithDealer(dealer)
+            player.name to player.compareWithDealer(dealer).also { result ->
+                player.setResult(result)
+            }
         }
     }
 
-    fun calculateDealerResult(results: Map<String, String>): String {
-        val wins = results.values.count { it == GameResult.LOSE.getResult() }
-        val losses = results.size - wins
-        return "${wins}${GameResult.WIN.getResult()} ${losses}${GameResult.LOSE.getResult()}"
+    fun calculateProfits(): Map<String, Int> {
+        val dealerProfit = players.sumOf { player ->
+            when (player.result) {
+                GameResult.WIN -> -player.bet
+                GameResult.LOSE -> player.bet
+                else -> 0
+            }
+        }
+
+        val playerProfits = players.associate { player ->
+            player.name to when (player.result) {
+                GameResult.WIN -> player.bet
+                GameResult.LOSE -> -player.bet
+                else -> 0
+            }
+        }
+
+        return playerProfits + ("딜러" to dealerProfit)
     }
 
     fun getFinalScores(): Pair<List<Pair<String, Int>>, Pair<List<Card>, Int>> {

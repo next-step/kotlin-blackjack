@@ -1,6 +1,6 @@
 package blackjack.domain
 
-class Dealer(private val deck: Deck) : Player("딜러") {
+class Dealer(private val deck: Deck, bet: Int) : Player("딜러", bet) {
     fun initialDraw() {
         addCards(deck.drawCards(2))
     }

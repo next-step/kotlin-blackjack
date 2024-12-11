@@ -7,7 +7,10 @@ import blackjack.view.ResultView
 
 fun main() {
     val playerNames = InputView.inputPlayerNames().split(",").map { it.trim() }
-    val game = Game(playerNames)
+    val playerBets = playerNames.associateWith {
+        InputView.inputPlayerBet(it)
+    }
+    val game = Game(playerNames, playerBets)
     val decisionMaker = ConsolePlayerDecision()
 
     val (dealerCard, playerCards) = game.getInitialState()
@@ -20,6 +23,6 @@ fun main() {
     val (playerScores, dealerState) = game.getFinalScores()
     ResultView.printFinalScores(dealerState, playerScores)
 
-    ResultView.printGameResult(results)
+    val profits = game.calculateProfits()
+    ResultView.printProfits(profits)
 }
-

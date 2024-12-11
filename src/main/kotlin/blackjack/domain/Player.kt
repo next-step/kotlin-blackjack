@@ -1,7 +1,9 @@
 package blackjack.domain
 
-open class Player(val name: String) {
+open class Player(val name: String, val bet: Int) {
     private var hand: Hand = Hand()
+    var result: GameResult = GameResult.DRAW
+        private set
 
     fun addCards(newCards: List<Card>) {
         hand = hand.addCards(newCards)
@@ -14,11 +16,16 @@ open class Player(val name: String) {
         return score <= 21
     }
 
-    fun compareWithDealer(dealer: Dealer): String {
+    fun compareWithDealer(dealer: Dealer): GameResult {
         return when {
-            score > 21 || dealer.score > score -> GameResult.LOSE.getResult()
-            score == dealer.score -> GameResult.DRAW.getResult()
-            else -> GameResult.WIN.getResult()
+            score > 21 -> GameResult.LOSE
+            dealer.score > 21 || score > dealer.score -> GameResult.WIN
+            score == dealer.score -> GameResult.DRAW
+            else -> GameResult.LOSE
         }
+    }
+
+    fun setResult(result: GameResult) {
+        this.result = result
     }
 }

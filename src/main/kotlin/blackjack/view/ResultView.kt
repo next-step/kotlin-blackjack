@@ -13,6 +13,7 @@ object ResultView {
     private const val GAME_RESULT_MESSAGE = "%s: %s"
     private const val DEALER_DRAW_MESSAGE = "\n딜러는 16이하라 한장의 카드를 더 받았습니다."
     private const val DEALER_NO_DRAW_MESSAGE = "\n딜러는 17 이상이라 추가로 카드를 받지 않았습니다."
+    private const val PROFIT_RESULT_MESSAGE = "%s: %d"
 
     fun printInitialCards(dealerCard: Card, playerCards: List<Pair<String, List<Card>>>) {
         println(SPLIT_CARD_RESULT_MESSAGE.format(playerCards.joinToString(", ") { it.first }))
@@ -41,6 +42,13 @@ object ResultView {
         println(GAME_RESULT_MESSAGE.format("딜러", "${dealerWins}${GameResult.WIN.getResult()} ${dealerLosses}${GameResult.LOSE.getResult()}"))
         results.forEach { (name, result) ->
             println(GAME_RESULT_MESSAGE.format(name, result))
+        }
+    }
+
+    fun printProfits(profits: Map<String, Int>) {
+        println("\n## 최종 수익")
+        profits.forEach { (name, profit) ->
+            println(PROFIT_RESULT_MESSAGE.format(name, profit))
         }
     }
 
