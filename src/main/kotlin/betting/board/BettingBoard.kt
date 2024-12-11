@@ -38,7 +38,7 @@ class BettingBoard(
 
         if (blackJackPlayers.isEmpty()) return
 
-        winPlayerAndLoseDealer(
+        distributeBetAmountByWinLoss(
             players = blackJackPlayers,
             bonusRatio = BONUS_RATIO.takeIf { getDealer().isNotBlackjack() } ?: DEFAULT_RATIO,
         )
@@ -55,10 +55,10 @@ class BettingBoard(
     }
 
     fun winAllPlayer() {
-        winPlayerAndLoseDealer(players = getPlayers())
+        distributeBetAmountByWinLoss(players = getPlayers())
     }
 
-    private fun winPlayerAndLoseDealer(
+    private fun distributeBetAmountByWinLoss(
         players: List<Pair<Participant<*>, BetResult>>,
         bonusRatio: Double = DEFAULT_RATIO,
     ) {
