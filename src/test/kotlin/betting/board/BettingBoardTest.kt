@@ -65,11 +65,7 @@ class BettingBoardTest {
 
         bettingBoard.winAllPlayer()
 
-        bettingBoard.participantBets[dealer]?.winning?.amount shouldBe
-                bettingBoard.participantBets
-                    .filter { it.key != dealer }
-                    .values
-                    .sumOf { it.bet.negative() }
+        dealer.betAmount() shouldBe sumOfPlayerBetsWithNegative()
         bettingBoard.participantBets
             .filter { it.key != dealer }
             .forAll { (_, betResult) -> betResult.bet.amount shouldBe betResult.winning.amount }
@@ -88,12 +84,7 @@ class BettingBoardTest {
 
         playerBets.forAll { (player, _ ) -> player.isBlackjack() shouldBe true }
         dealer.isBlackjack() shouldBe false
-        bettingBoard.participantBets[dealer]?.winning?.amount shouldBe
-            bettingBoard.participantBets
-                .filter { it.key != dealer }
-                .values
-                .sumOf { it.bet.negative() }
-                .times(BettingBoard.BONUS_RATIO)
+        dealer.betAmount() shouldBe sumOfPlayerBetsWithNegative().times(BettingBoard.BONUS_RATIO)
     }
 
     @ParameterizedTest
@@ -110,12 +101,15 @@ class BettingBoardTest {
 
         playerBets.forAll { (player, _ ) -> player.isBlackjack() shouldBe true }
         dealer.isBlackjack() shouldBe true
-        bettingBoard.participantBets[dealer]?.winning?.amount shouldBe
-                bettingBoard.participantBets
-                    .filter { it.key != dealer }
-                    .values
-                    .sumOf { it.bet.negative() }
+        dealer.betAmount() shouldBe sumOfPlayerBetsWithNegative()
     }
+
+    private fun sumOfPlayerBetsWithNegative() = bettingBoard.participantBets
+        .filter { it.key !is Dealer }
+        .values
+        .sumOf { it.bet.negative() }
+
+    private fun Dealer.betAmount() = bettingBoard.participantBets[this]?.winning?.amount
 
     private fun Participant<*>.hitCards(cards: List<Card>): Participant<*> =
         Player(name = this.name, hand = Hand(cards = this.hand.cards.plus(cards)))
