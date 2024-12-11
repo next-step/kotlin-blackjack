@@ -138,5 +138,5 @@
 - [X] 플레이어가 `bust` 상태면 베팅 금액 전액을 잃는다
 
 ### 4단계 피드백
-- [ ] `hand.isBlackjack` 의 `BUST_SCORE` 네이밍에 대한고민
+- [X] `hand.isBlackjack` 의 `BUST_SCORE` 네이밍에 대한고민
 - [ ] `Money` value object로 변경
