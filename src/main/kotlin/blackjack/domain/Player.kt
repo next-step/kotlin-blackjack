@@ -1,5 +1,6 @@
 package blackjack.domain
 
+@Suppress("UNREACHABLE_CODE")
 class Player(val name: String, private val deck: Deck) {
     val cards = mutableListOf<Card>()
 
@@ -14,14 +15,20 @@ class Player(val name: String, private val deck: Deck) {
     ) {
         while (isDrawCard(name)) {
             val card = deck.draw()
-            if (canAdd(card)) {
-                addCard(card)
-                onDrawCard()
-            } else {
-                break
-            }
+            val isCardAdded = addCard(card, onDrawCard)
+            if (isCardAdded.not()) break
         }
         onExitPlay()
+    }
+
+    private fun addCard(card: Card, onDrawCard: () -> Unit): Boolean {
+        return if (canAdd(card)) {
+            addCard(card)
+            onDrawCard()
+            true
+        } else {
+            false
+        }
     }
 
     fun getCardSum(): Int {
