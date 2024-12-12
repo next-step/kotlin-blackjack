@@ -1,11 +1,14 @@
 package domain
 
+import blackjack.domain.Card
+import blackjack.domain.CardNumber
 import blackjack.domain.Dealer
 import blackjack.domain.Deck
 import blackjack.domain.Game
 import blackjack.domain.HitCommand
 import blackjack.domain.Player
 import blackjack.domain.Players
+import blackjack.domain.Suit
 import fixture.CardListFixture
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
@@ -45,8 +48,7 @@ class GameTest : DescribeSpec({
                 player.ownedCards.size shouldBe 0
             }
 
-            it("턴을 종료한다.") {
-            }
+            it("턴을 종료한다.") {}
         }
     }
 
@@ -64,6 +66,50 @@ class GameTest : DescribeSpec({
                 val pobi = players.allPlayers()[0]
                 val actual = sut.isPlayerDone(pobi)
                 actual shouldBe true
+            }
+        }
+    }
+
+    describe("isPlayerDone test") {
+        context("플레이어의 카드 합이 21이 넘는경우") {
+            it("should be true") {
+                val cards =
+                    mutableListOf(
+                        Card(Suit.SPADES, CardNumber.TEN),
+                        Card(Suit.SPADES, CardNumber.QUEEN),
+                        Card(Suit.SPADES, CardNumber.KING),
+                    )
+                val pobi = Player("pobi", cards)
+                val actual = sut.isPlayerDone(pobi)
+                actual shouldBe true
+            }
+        }
+
+        context("플레이어가 stay를 원하는 경우") {
+            it("should be true") {
+                val cards =
+                    mutableListOf(
+                        Card(Suit.SPADES, CardNumber.TEN),
+                        Card(Suit.SPADES, CardNumber.QUEEN),
+                    )
+                val pobi = Player("pobi", cards)
+                pobi.stay()
+
+                val actual = sut.isPlayerDone(pobi)
+                actual shouldBe true
+            }
+        }
+
+        context("플레이어의 카드 합이 21이하이고, stay를 하지 않은 경우") {
+            it("should be false") {
+                val cards =
+                    mutableListOf(
+                        Card(Suit.SPADES, CardNumber.TEN),
+                        Card(Suit.SPADES, CardNumber.QUEEN),
+                    )
+                val pobi = Player("pobi", cards)
+                val actual = sut.isPlayerDone(pobi)
+                actual shouldBe false
             }
         }
     }

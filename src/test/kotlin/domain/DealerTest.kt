@@ -31,10 +31,8 @@ class DealerTest : DescribeSpec({
             sut = Dealer(deck)
         }
 
-        it("플레이어에게 덱에서 뽑은 첫 번째 카드를 전달한다") {
-            sut.hit(player)
+        it("덱에서 카드를 한장 뽑는다.") {
 
-            player.ownedCards.size shouldBe 1
             player.ownedCards shouldContainExactly
                 listOf(
                     Card(Suit.CLUBS, CardNumber.ACE),
