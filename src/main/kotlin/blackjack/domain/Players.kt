@@ -45,7 +45,9 @@ class Players(
 
     fun placeBets(bets: List<Bet>) {
         requireBetsSizeEqualsRosterSize(bets)
-        roster.zip(bets).forEach { (player, bet) -> player.placeBet(bet) }
+        roster
+            .zip(bets)
+            .forEach { (player, bet) -> player.placeBet(bet) }
     }
 
     fun results(dealer: Dealer): List<PlayerResult> {
