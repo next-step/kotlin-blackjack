@@ -1,5 +1,7 @@
 package blackjack.domain
 
+import blackjack.support.Fixtures.createDealerHand
+import blackjack.support.Fixtures.createHand
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
@@ -84,23 +86,14 @@ class HandTest {
         hand.beats(dealerHand) shouldBe expected
     }
 
+    @Test
+    fun `21점인지 리턴한다`() {
+        createHand(Rank.FIVE, Rank.SIX, Rank.TEN).isTwentyOne shouldBe true
+        createHand(Rank.FIVE, Rank.SIX).isTwentyOne shouldBe false
+        createHand(Rank.FIVE, Rank.SIX, Rank.SEVEN).isTwentyOne shouldBe false
+    }
+
     companion object {
-        private val DUMMY_SUIT = Suit.SPADES
-
-        private fun createHand(vararg ranks: Rank): Hand =
-            Hand(
-                ranks.map { Card(DUMMY_SUIT, it) },
-            )
-
-        private fun createDealerHand(vararg ranks: Rank): DealerHand {
-            val deck = StubDeck.from(*ranks)
-            return DealerHand().apply {
-                repeat(ranks.size) {
-                    drawFrom(deck)
-                }
-            }
-        }
-
         @JvmStatic
         private fun `블랙잭인지 판별한다`(): List<Arguments> =
             listOf(

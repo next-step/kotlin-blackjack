@@ -116,6 +116,21 @@ class GameTest {
     }
 
     @Test
+    fun `힛해서 21점이 되면 턴이 종료한다`() {
+        val deck = StubDeck.from(Rank.FIVE, Rank.TWO, Rank.THREE, Rank.SEVEN, Rank.FOUR, Rank.SIX, Rank.NINE)
+        val players = Players.from("black", "jack")
+        val game = Game(players, deck).apply { initialDeal() }
+        // black:  5, 7
+        // jack:   2, 4
+        // dealer: 3, 6
+
+        game.playerHits()
+        // black:  5 + 7 + 9 = 12
+
+        game.currentPlayer shouldBe game.players[1]
+    }
+
+    @Test
     fun `플레이어가 스탠드하면 플레이어의 턴이 종료한다`() {
         val players = Players.from("black", "jack")
         val game = Game(players, deck).apply { initialDeal() }

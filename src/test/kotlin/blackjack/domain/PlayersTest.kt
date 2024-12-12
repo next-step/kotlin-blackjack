@@ -2,6 +2,7 @@ package blackjack.domain
 
 import blackjack.domain.StubDeck.Companion.DUMMY_SUIT
 import blackjack.support.Fixtures.createBustedPlayer
+import blackjack.support.Fixtures.createPlayers
 import blackjack.support.Fixtures.createStandingPlayer
 import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.shouldBe
@@ -75,7 +76,7 @@ class PlayersTest {
     @Test
     fun `현재 플레이어가 힛을 한다`() {
         val deck = StubDeck.from(Rank.ACE, Rank.TWO, Rank.THREE, Rank.FOUR, Rank.FIVE)
-        val players = createPlayersFrom(listOf("black", "jack"), deck)
+        val players = createPlayers(listOf("black", "jack"), deck)
 
         players.hit(deck)
 
@@ -90,7 +91,7 @@ class PlayersTest {
     @Test
     fun `연속해서 힛 할 있다`() {
         val deck = StubDeck.from(Rank.ACE, Rank.TWO, Rank.THREE, Rank.FOUR, Rank.FIVE, Rank.SIX)
-        val players = createPlayersFrom(listOf("black", "jack"), deck)
+        val players = createPlayers(listOf("black", "jack"), deck)
 
         players.hit(deck)
         players.hit(deck)
@@ -107,7 +108,7 @@ class PlayersTest {
     @Test
     fun `힛을 해서 버스트 상태가 되면 다음 플레이어로 넘어간다`() {
         val deck = StubDeck.from(Rank.KING, Rank.TWO, Rank.QUEEN, Rank.FOUR, Rank.JACK)
-        val players = createPlayersFrom(listOf("black", "jack"), deck)
+        val players = createPlayers(listOf("black", "jack"), deck)
 
         players.hit(deck)
 
@@ -117,7 +118,7 @@ class PlayersTest {
     @Test
     fun `게임이 종료되면 힛할 수 없다`() {
         val deck = StubDeck.from(Rank.KING, Rank.QUEEN, Rank.JACK, Rank.TEN, Rank.NINE, Rank.EIGHT)
-        val players = createPlayersFrom(listOf("black", "jack"), deck)
+        val players = createPlayers(listOf("black", "jack"), deck)
         players.hit(deck)
         players.hit(deck)
 
@@ -125,9 +126,22 @@ class PlayersTest {
     }
 
     @Test
+    fun `힛해서 21점이 되면 플레이어의 턴이 종료된다`() {
+        val deck = StubDeck.from(Rank.FIVE, Rank.TWO, Rank.SEVEN, Rank.THREE, Rank.NINE)
+        val players = createPlayers(listOf("black", "jack"), deck)
+        // black: 5, 7
+        // jack:  2, 3
+
+        players.hit(deck)
+        // 5 + 7 + 9 = 21
+
+        players.currentPlayer shouldBe players[1]
+    }
+
+    @Test
     fun `현재 플레이어가 스탠드할 수 있다`() {
         val deck = StubDeck.from(Rank.ACE, Rank.TWO, Rank.THREE, Rank.FOUR, Rank.FIVE)
-        val players = createPlayersFrom(listOf("black", "jack"), deck)
+        val players = createPlayers(listOf("black", "jack"), deck)
 
         players.stand()
 
@@ -137,7 +151,7 @@ class PlayersTest {
     @Test
     fun `스탣드하면 다음 플레이어로 차례가 넘어간다`() {
         val deck = StubDeck.from(Rank.ACE, Rank.TWO, Rank.THREE, Rank.FOUR, Rank.FIVE)
-        val players = createPlayersFrom(listOf("black", "jack"), deck)
+        val players = createPlayers(listOf("black", "jack"), deck)
 
         players.stand()
 
@@ -147,7 +161,7 @@ class PlayersTest {
     @Test
     fun `게임이 종료된 상태에서 스탠드할 수 없다`() {
         val deck = StubDeck.from(Rank.ACE, Rank.TWO, Rank.THREE, Rank.FOUR, Rank.FIVE)
-        val players = createPlayersFrom(listOf("black", "jack"), deck)
+        val players = createPlayers(listOf("black", "jack"), deck)
 
         players.stand()
         players.stand()
@@ -169,7 +183,7 @@ class PlayersTest {
     @Test
     fun `플레이어의 결과가 미정인지 리턴한다`() {
         val deck = StubDeck.from(Rank.ACE, Rank.TWO, Rank.KING, Rank.FOUR)
-        val players = createPlayersFrom(listOf("black", "jack"), deck).apply { stand() }
+        val players = createPlayers(listOf("black", "jack"), deck).apply { stand() }
         players.isOutcomeUnknown shouldBe true
     }
 
@@ -219,7 +233,7 @@ class PlayersTest {
                 Rank.TWO,
             )
         val players =
-            createPlayersFrom(listOf("black", "jack", "game"), deck).apply {
+            createPlayers(listOf("black", "jack", "game"), deck).apply {
                 // black 블랙잭
                 // jack 스탠드
                 stand()
@@ -254,13 +268,4 @@ class PlayersTest {
 
         results shouldBe expected
     }
-
-    private fun createPlayersFrom(
-        names: List<String>,
-        deck: Deck,
-    ): Players =
-        Players.from(names).apply {
-            dealRoundOfCardsFrom(deck)
-            dealRoundOfCardsFrom(deck)
-        }
 }

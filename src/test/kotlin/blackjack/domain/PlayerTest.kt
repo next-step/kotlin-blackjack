@@ -97,6 +97,30 @@ class PlayerTest {
     }
 
     @Test
+    fun `힛을 해서 21점이 되었으면 자동으로 스탠드한다`() {
+        val deck = StubDeck.from(Rank.FIVE, Rank.SEVEN, Rank.NINE)
+        val player = createPlayer(deck)
+        // 5, 7
+
+        player.hit(deck)
+        // 5 + 7 + 9 = 21
+
+        player.reasonDone shouldBe PlayerReasonDone.PLAYER_STANDS
+    }
+
+    @Test
+    fun `힛을 해서 21점 미만이면 턴이 종료되지 않았다`() {
+        val deck = StubDeck.from(Rank.FIVE, Rank.SEVEN, Rank.EIGHT)
+        val player = createPlayer(deck)
+        // 5, 7
+
+        player.hit(deck)
+        // 5 + 7 + 8 = 20
+
+        player.isDone shouldBe false
+    }
+
+    @Test
     fun `스탠드를 하면 턴이 종료된다`() {
         val player = Player("jack")
 

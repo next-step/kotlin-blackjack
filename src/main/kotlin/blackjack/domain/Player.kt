@@ -23,7 +23,7 @@ class Player(
 
     fun initialDrawFrom(deck: Deck) {
         drawFrom(deck)
-        if (hand.isBlackjack()) {
+        if (isBlackjack) {
             done(PlayerReasonDone.PLAYER_HAS_BLACKJACK)
         }
     }
@@ -31,8 +31,10 @@ class Player(
     fun hit(deck: Deck) {
         checkIsNotDone()
         hand.drawFrom(deck)
-        if (isBusted) {
-            done(PlayerReasonDone.PLAYER_BUSTED)
+        // 패가 동시에 버스트와 21점일 수 없음
+        when {
+            hand.isTwentyOne -> stand()
+            isBusted -> done(PlayerReasonDone.PLAYER_BUSTED)
         }
     }
 

@@ -4,6 +4,8 @@ open class Hand(
     cards: List<Card> = emptyList(),
 ) {
     val cards = cards.toMutableList()
+    val isTwentyOne: Boolean
+        get() = value() == BLACKJACK_VALUE
 
     constructor(vararg cards: Card) : this(cards.toList())
 
@@ -36,7 +38,7 @@ open class Hand(
     companion object {
         private const val ACE_ELEVEN_THRESHOLD = 11
         private const val ACE_EXTRA_VALUE = 10
-        private const val BLACKJACK_VALUE = 21
+        const val BLACKJACK_VALUE = 21
         const val INITIAL_HAND_SIZE = 2
     }
 }
