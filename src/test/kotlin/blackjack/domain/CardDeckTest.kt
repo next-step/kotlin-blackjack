@@ -24,15 +24,17 @@ class CardDeckTest {
     @Test
     fun `{given} Empty Deck {when} draw() {then} IllegalStateException 발생`() {
         // Given
-        val deck = CardDeck(
-            ranks = emptyList(),
-            suits = emptyList(),
-        )
+        val deck =
+            CardDeck(
+                ranks = emptyList(),
+                suits = emptyList(),
+            )
 
         // When & Then
-        val exception = assertThrows(IllegalStateException::class.java) {
-            deck.draw()
-        }
+        val exception =
+            assertThrows(IllegalStateException::class.java) {
+                deck.draw()
+            }
         assertEquals("No more cards", exception.message)
     }
 }

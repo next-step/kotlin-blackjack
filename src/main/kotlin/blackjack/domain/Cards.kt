@@ -18,7 +18,10 @@ data class Cards(val value: List<Card>) {
         return sum to aceCount
     }
 
-    private fun adjustForAces(currentSum: Int, aceCount: Int): Int {
+    private fun adjustForAces(
+        currentSum: Int,
+        aceCount: Int,
+    ): Int {
         var sum = currentSum
         repeat(aceCount) {
             sum += if (sum + Rank.ACE.value > MAX_SUM) ACE_VALUE_ONE else Rank.ACE.value
