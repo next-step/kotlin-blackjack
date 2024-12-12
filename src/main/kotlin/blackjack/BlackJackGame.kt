@@ -7,7 +7,9 @@ import blackjack.view.ResultView
 
 enum class YNBooleanValue(val key: String, val booleanValue: Boolean) {
     YES("y", true),
-    NO("n", false);
+    NO("n", false),
+    ;
+
     companion object {
         fun toBoolean(key: String): Boolean? {
             return when (key) {

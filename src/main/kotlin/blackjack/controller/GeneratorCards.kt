@@ -19,11 +19,6 @@ class GeneratorCards {
     }
 
     fun generateCardDeck(): LinkedList<BlackJackCard> {
-        val cards = mutableListOf<BlackJackCard>()
-        intArrayOf(8,1,11,12).map {
-            cards.add(BlackJackCard(it))
-        }
-        return LinkedList(cards.toList())
-//        return shuffle(generateCards())
+        return shuffle(generateCards())
     }
 }

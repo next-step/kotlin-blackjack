@@ -15,12 +15,14 @@ class GameUser(val name: String) {
     }
 
     private fun calculatePoints(): Int {
-        val sumPoint = cards.sumOf {
-            it.getPoint()
-        }
-        val aceCount = cards.filter {
-            it.spacial == BlackJackCard.SpacialCard.ACE
-        }.size
+        val sumPoint =
+            cards.sumOf {
+                it.getPoint()src/main/kotlin/blackjack/controller/GeneratorCards.kt
+            }
+        val aceCount =
+            cards.filter {
+                it.isAceCard()
+            }.size
         return consumeAceCard(sumPoint, aceCount)
     }
 
@@ -29,8 +31,11 @@ class GameUser(val name: String) {
         aceCount: Int,
     ): Int {
         return sumPoint +
-                if (aceCount > 0 && sumPoint <= ACE_CARD_THRESHOLD) ACE_CARD_EXTRA_POINT
-                else 0
+            if (aceCount > 0 && sumPoint <= ACE_CARD_THRESHOLD) {
+                ACE_CARD_EXTRA_POINT
+            } else {
+                0
+            }
     }
 
     companion object {

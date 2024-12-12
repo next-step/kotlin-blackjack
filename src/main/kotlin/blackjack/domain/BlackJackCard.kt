@@ -1,57 +1,46 @@
 package blackjack.domain
 
-class BlackJackCard {
-    private var value = 0
-        set(value) {
-            field = (value - (value / 13) * 13)
-        }
-    var cardType = CardType.CLOVER
-    val spacial: SpacialCard?
-        get() =
-            when (this.value) {
-                1 -> SpacialCard.ACE
-                11 -> SpacialCard.JACK
-                12 -> SpacialCard.QUEEN
-                0 -> SpacialCard.KING
-                else -> null
-            }
+class BlackJackCard(value: Int) {
+    private val cardInfo: CardInfo
+    private val cardType: CardType
 
-    constructor(value: Int) {
-        this.value = value
-        this.cardType =
-            when (value / 13) {
-                0 -> CardType.SPADE
-                1 -> CardType.CLOVER
-                2 -> CardType.DIAMOND
-                3 -> CardType.HEART
-                else -> CardType.SPADE
-            }
+    init {
+        this.cardType = CardType.entries[value.minus(1) / 13]
+        this.cardInfo = CardInfo.entries[value.minus(1) % 13]
     }
 
     enum class CardType(val koreanText: String) {
-        CLOVER("클로버"),
-        HEART("하트"),
         SPADE("스페이드"),
+        CLOVER("클로버"),
         DIAMOND("다이아"),
+        HEART("하트"),
     }
 
-    enum class SpacialCard(val spacialText: String) {
-        ACE("A"),
-        JACK("J"),
-        QUEEN("Q"),
-        KING("K"),
+    enum class CardInfo(val key: String, val point: Int) {
+        CARD_A("A", 1),
+        CARD_2("2", 2),
+        CARD_3("3", 3),
+        CARD_4("4", 4),
+        CARD_5("5", 5),
+        CARD_6("6", 6),
+        CARD_7("7", 7),
+        CARD_8("8", 8),
+        CARD_9("9", 9),
+        CARD_10("10", 10),
+        CARD_J("J", 10),
+        CARD_Q("Q", 10),
+        CARD_K("K", 10),
+    }
+
+    fun isAceCard(): Boolean {
+        return cardInfo == CardInfo.CARD_A
     }
 
     fun getPoint(): Int {
-        return when (spacial) {
-            SpacialCard.ACE -> 1
-            SpacialCard.JACK, SpacialCard.QUEEN, SpacialCard.KING -> 10
-            else -> value
-        }
+        return cardInfo.point
     }
 
     override fun toString(): String {
-        val valueString = spacial?.spacialText ?: value.toString()
-        return "$valueString${cardType.koreanText}"
+        return "${cardInfo.key}${cardType.koreanText}"
     }
 }
