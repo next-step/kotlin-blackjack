@@ -22,20 +22,17 @@ class CardDeckTest {
     }
 
     @Test
-    fun `{given} Empty deck {when&then} IllegalStateException 발생`() {
+    fun `{given} Empty Deck {when} draw() {then} IllegalStateException 발생`() {
         // Given
-        val deck = CardDeck()
-
-        // 모든 카드를 다 뽑는다
-        while (deck.cards.isNotEmpty()) {
-            deck.draw()
-        }
+        val deck = CardDeck(
+            ranks = emptyList(),
+            suits = emptyList(),
+        )
 
         // When & Then
-        val exception =
-            assertThrows(IllegalStateException::class.java) {
-                deck.draw()
-            }
+        val exception = assertThrows(IllegalStateException::class.java) {
+            deck.draw()
+        }
         assertEquals("No more cards", exception.message)
     }
 }
