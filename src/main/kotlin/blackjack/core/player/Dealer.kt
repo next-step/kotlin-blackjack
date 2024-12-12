@@ -37,6 +37,5 @@ class Dealer : Player(Name(DEALER_NAME), BettingAmount(0)) {
 
     companion object {
         private const val DEALER_NAME = "딜러"
-        private const val BLACKJACK_BONUS_WEIGHT = 1.5f
     }
 }
