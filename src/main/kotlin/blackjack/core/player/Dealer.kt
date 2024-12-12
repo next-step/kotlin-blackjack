@@ -18,12 +18,10 @@ class Dealer : Player(Name(DEALER_NAME), BettingAmount(0)) {
         players.play { player -> calculateProfit(player) }
     }
 
-    private fun calculateProfit(
-        player: Player,
-    ) {
+    private fun calculateProfit(player: Player) {
         when (checkMatch(player)) {
-            MatchResult.WIN -> moveAmount(player, this, player.bettingAmount)
-            MatchResult.LOSE -> moveAmount(this, player, getProfitAmount(player))
+            MatchResult.WIN -> moveAmount(player, this, player.getBettingAmount())
+            MatchResult.LOSE -> moveAmount(this, player, player.getBettingAmount())
             MatchResult.DRAW -> {}
         }
     }
@@ -35,14 +33,6 @@ class Dealer : Player(Name(DEALER_NAME), BettingAmount(0)) {
     ) {
         from.profitAmount -= amount
         to.profitAmount += amount
-    }
-
-    private fun getProfitAmount(player: Player): Amount {
-        return if (player.checkBlackJack()) {
-            player.bettingAmount * BLACKJACK_BONUS_WEIGHT
-        } else {
-            player.bettingAmount
-        }
     }
 
     companion object {
