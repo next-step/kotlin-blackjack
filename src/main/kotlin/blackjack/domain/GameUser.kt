@@ -1,8 +1,8 @@
 package blackjack.domain
 
-import kotlin.math.min
-
 class GameUser(val name: String) {
+    var doneGame = false
+        get() = field || points >= BLACKJACK_POINT
     val cards = mutableListOf<BlackJackCard>()
     val points: Int
         get() {
@@ -11,27 +11,31 @@ class GameUser(val name: String) {
 
     fun addCard(card: BlackJackCard) {
         cards.add(card)
+        println(points)
     }
 
     private fun calculatePoints(): Int {
-        var sumPoint = 0
-        var aceCount = 0
-        var shouldPoint = 0
-        cards.forEach {
-            val point = it.getPoint()
-            sumPoint += point
-            aceCount += if (point == 1) 1 else 0
-            shouldPoint = checkAce(sumPoint, aceCount)
+        val sumPoint = cards.sumOf {
+            it.getPoint()
         }
-        return shouldPoint
+        val aceCount = cards.filter {
+            it.spacial == BlackJackCard.SpacialCard.ACE
+        }.size
+        return consumeAceCard(sumPoint, aceCount)
     }
 
-    private fun checkAce(
+    private fun consumeAceCard(
         sumPoint: Int,
         aceCount: Int,
     ): Int {
-        if (sumPoint >= 21) return sumPoint
-        val shouldConsumeCount = (21 - sumPoint) / 10
-        return sumPoint + (min(shouldConsumeCount, aceCount) * 10)
+        return sumPoint +
+                if (aceCount > 0 && sumPoint <= ACE_CARD_THRESHOLD) ACE_CARD_EXTRA_POINT
+                else 0
+    }
+
+    companion object {
+        private const val BLACKJACK_POINT = 21
+        private const val ACE_CARD_THRESHOLD = 11
+        private const val ACE_CARD_EXTRA_POINT = 10
     }
 }

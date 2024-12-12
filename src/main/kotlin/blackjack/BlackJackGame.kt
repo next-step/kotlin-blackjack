@@ -5,26 +5,37 @@ import blackjack.domain.GameUser
 import blackjack.view.InputView
 import blackjack.view.ResultView
 
-fun String.toYNBoolean(): Boolean? {
-    if (this == "y") return true
-    if (this == "n") return false
-    return null
+enum class YNBooleanValue(val key: String, val booleanValue: Boolean) {
+    YES("y", true),
+    NO("n", false);
+    companion object {
+        fun toBoolean(key: String): Boolean? {
+            return when (key) {
+                YES.key -> YES.booleanValue
+                NO.key -> NO.booleanValue
+                else -> null
+            }
+        }
+    }
 }
 
-class BlackJackGame {
+class BlackJackGame(users: String) {
     val gameUsers = mutableListOf<GameUser>()
     lateinit var cardDeck: CardDeck
 
-    // return setting user count
-    fun settingUsers(users: String): Int {
+    init {
+        settingUsers(users)
+        initializeCardDeck()
+    }
+
+    private fun settingUsers(users: String) {
         val usersText = users.replace(" ", "")
         usersText.split(",").forEach {
             gameUsers.add(GameUser(it))
         }
-        return gameUsers.size
     }
 
-    fun initializeCardDeck() {
+    private fun initializeCardDeck() {
         cardDeck = CardDeck()
     }
 
@@ -43,30 +54,30 @@ class BlackJackGame {
         this.resultView = resultView
     }
 
-    private fun currentProcess(
+    private fun handleCurrentInput(
         user: GameUser,
         decision: Boolean?,
-    ): Boolean {
+    ) {
+        println(decision)
         // 21이 넘는 경우 종료됨.
         when (decision) {
             true -> user.addCard(cardDeck.getNextCard())
-            false -> return false
+            false -> user.doneGame = true
             else -> {}
         }
         resultView?.printUserCards(user)
-        return user.points < 21
     }
 
     fun turnGameUser(
         user: GameUser,
         inputView: InputView,
     ) {
-        var continueDecision: Boolean
-        do {
+        inputView.startUser()
+        while (user.doneGame.not()) {
             val inputData = inputView.inputNextDecision(user.name)
-            val decision = inputData.toYNBoolean()
-            continueDecision = currentProcess(user, decision)
-        } while (continueDecision)
+            val decision = YNBooleanValue.toBoolean(inputData)
+            handleCurrentInput(user, decision)
+        }
     }
 }
 
@@ -74,26 +85,18 @@ fun main() {
     val inputView = InputView()
     val resultView = ResultView()
     val users = inputView.inputUsers()
-    val game =
-        BlackJackGame().apply {
-            settingUsers(users)
-            initializeCardDeck()
-        }
+    val game = BlackJackGame(users)
 
     game.start(inputView, resultView)
     inputView.startGame(game.gameUsers, 2)
-    println()
 
     game.gameUsers.forEach {
         resultView.printUserCards(it)
     }
 
-    println()
-
     game.gameUsers.forEach {
         game.turnGameUser(it, inputView)
     }
 
-    println()
     resultView.printResultCards(game.gameUsers)
 }

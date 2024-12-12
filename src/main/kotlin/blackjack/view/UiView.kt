@@ -13,6 +13,11 @@ class InputView {
         count: Int,
     ) {
         println("${users.joinToString { it.name }}에게 ${count}장을 나누었습니다.")
+        println()
+    }
+
+    fun startUser() {
+        println()
     }
 
     fun inputNextDecision(name: String): String {
@@ -27,6 +32,7 @@ class ResultView {
     }
 
     fun printResultCards(users: List<GameUser>) {
+        println()
         users.forEach { user ->
             println("${user.name}카드: ${user.cards} - 결과: ${user.points}")
         }
