@@ -2,7 +2,7 @@ package blackjack.domain
 
 class Hand(private val cards: MutableList<Card> = mutableListOf()) {
     val score: Score
-        get() = cards.fold(Score(0)) { acc, card -> card.score(acc) }
+        get() = cards.fold(Score.ZERO) { acc, card -> card.score(acc) }
     val totalCards: List<Card>
         get() = cards.toList()
     val isBust: Boolean
@@ -13,4 +13,13 @@ class Hand(private val cards: MutableList<Card> = mutableListOf()) {
     }
 
     fun bustGap(): Int = (BUST_SCORE - score).abs()
+
+    fun isBlackJack(): Boolean {
+        return cards.size == BLACKJACK_HAND_SIZE && score == BLACKJACK_SCORE
+    }
+
+    companion object {
+        const val BLACKJACK_HAND_SIZE = 2
+        val BLACKJACK_SCORE = Score(21)
+    }
 }

@@ -29,7 +29,7 @@ data class DisplayCard(
     }
 
     override fun toString(): String {
-        return "${DisplayCardType2.toDisplayNameOf(rank)}$suit"
+        return "${DisplayCardType.toDisplayNameOf(rank)}$suit"
     }
 }
 
@@ -57,7 +57,7 @@ enum class DisplaySuit(val displayName: String) {
     }
 }
 
-enum class DisplayCardType2(
+enum class DisplayCardType(
     val cardType: CardRank,
     val displayName: String,
 ) {

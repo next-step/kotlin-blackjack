@@ -23,7 +23,7 @@ class CardTest : BehaviorSpec({
         ).forEach { (card, expectedScore) ->
             When("${card.rank}일 때") {
                 Then("${expectedScore}로 계산할 수 있다") {
-                    card.score(Score(0)) shouldBe expectedScore
+                    card.score(Score.ZERO) shouldBe expectedScore
                 }
             }
         }

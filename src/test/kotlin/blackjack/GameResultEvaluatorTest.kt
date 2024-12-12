@@ -4,13 +4,15 @@ import blackjack.domain.Card
 import blackjack.domain.CardRank
 import blackjack.domain.Dealer
 import blackjack.domain.Deck
+import blackjack.domain.Money
+import blackjack.domain.Player
 import blackjack.domain.Players
 import blackjack.domain.Suit
-import blackjack.ui.DealerResult
+import blackjack.domain.calculateStatistics
+import blackjack.infra.AmountStatistics
+import blackjack.infra.AmountStatisticsBuilder
 import blackjack.ui.DisplayCard
-import blackjack.ui.FinalWinnerResults
 import blackjack.ui.RoundResult
-import blackjack.ui.UIMatchType
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
@@ -46,7 +48,10 @@ class GameResultEvaluatorTest {
                 ).contains(
                     RoundResult(
                         "userA",
-                        listOf(DisplayCard.from(CardRank.TWO.name, Suit.HEART.name), DisplayCard.from(CardRank.TWO.name, Suit.SPADE.name)),
+                        listOf(
+                            DisplayCard.from(CardRank.TWO.name, Suit.HEART.name),
+                            DisplayCard.from(CardRank.TWO.name, Suit.SPADE.name),
+                        ),
                         4,
                     ),
                 )
@@ -57,7 +62,10 @@ class GameResultEvaluatorTest {
                 ).contains(
                     RoundResult(
                         "userB",
-                        listOf(DisplayCard.from(CardRank.ACE.name, Suit.HEART.name), DisplayCard.from(CardRank.ACE.name, Suit.SPADE.name)),
+                        listOf(
+                            DisplayCard.from(CardRank.ACE.name, Suit.HEART.name),
+                            DisplayCard.from(CardRank.ACE.name, Suit.SPADE.name),
+                        ),
                         12,
                     ),
                 )
@@ -80,100 +88,79 @@ class GameResultEvaluatorTest {
     }
 
     @ParameterizedTest
-    @MethodSource("winMatchEvaluateData")
+    @MethodSource("statisticsMoneyData")
     fun `딜러와 플레이어의 최종 결과를 알 수 있다`(
-        userACards: List<Card>,
-        userBCards: List<Card>,
+        playerCards: List<Card>,
         dealerCards: List<Card>,
-        userAResult: UIMatchType,
-        userBResult: UIMatchType,
-        dealerResult: DealerResult,
+        userExpected: Int,
+        dealerExpected: Int,
     ) {
-        val players = Players.from(listOf("userA", "userB"))
+        val player = Player.from("철수")
+        val players = Players(listOf(player))
         val dealer = Dealer()
-        players.deal(
-            players.find("userA"),
-            Deck(userACards),
-        )
-        players.deal(
-            players.find("userB"),
-            Deck(userBCards),
-        )
-        dealer.receive(
-            Deck(dealerCards),
-        )
-        val gameResultEvaluator = GameResultEvaluator(players, dealer)
+        player.betting(Money(1_000))
+        player.receive(Deck(playerCards))
+        dealer.receive(Deck(dealerCards))
 
-        val actual: FinalWinnerResults = gameResultEvaluator.finalMatchEvaluate()
+        val amountStatistics: AmountStatistics = dealer.calculateStatistics(players, AmountStatisticsBuilder())
 
-        assertAll(
-            { assertThat(actual.playerResults["userA"]).isEqualTo(userAResult) },
-            { assertThat(actual.playerResults["userB"]).isEqualTo(userBResult) },
-            { assertThat(actual.dealerResult).isEqualTo(dealerResult) },
-        )
+        assertThat(amountStatistics.playerProfits).isEqualTo(mapOf("철수" to Money(userExpected)))
+        assertThat(amountStatistics.dealerProfit).isEqualTo(Money(dealerExpected))
     }
 
     companion object {
         @JvmStatic
-        fun winMatchEvaluateData(): Stream<Arguments> {
+        fun statisticsMoneyData(): Stream<Arguments> {
             return Stream.of(
+                // 플레이어가 이기는 경우
                 Arguments.of(
-                    listOf(
-                        Card(CardRank.TWO, Suit.HEART),
-                        Card(CardRank.TWO, Suit.SPADE),
-                    ),
-                    listOf(
-                        Card(CardRank.TWO, Suit.HEART),
-                        Card(CardRank.THREE, Suit.SPADE),
-                    ),
+                    listOf(Card(CardRank.TWO, Suit.HEART), Card(CardRank.TWO, Suit.SPADE)),
+                    listOf(Card(CardRank.TWO, Suit.HEART), Card(CardRank.TWO, Suit.SPADE)),
+                    1_000,
+                    0,
+                ),
+                // 플레이어가 패배한 경우
+                Arguments.of(
+                    listOf(Card(CardRank.ACE, Suit.HEART), Card(CardRank.TWO, Suit.SPADE)),
+                    listOf(Card(CardRank.TWO, Suit.HEART), Card(CardRank.TWO, Suit.SPADE)),
+                    1_000,
+                    0,
+                ),
+                // 플레이어가 블랙잭인 경우
+                Arguments.of(
+                    listOf(Card(CardRank.TWO, Suit.HEART), Card(CardRank.TWO, Suit.SPADE)),
+                    listOf(Card(CardRank.ACE, Suit.HEART), Card(CardRank.TWO, Suit.SPADE)),
+                    -1_000,
+                    1_000,
+                ),
+                // 플레이어가 버스트인 경우
+                Arguments.of(
+                    listOf(Card(CardRank.ACE, Suit.HEART), Card(CardRank.KING, Suit.SPADE)),
+                    listOf(Card(CardRank.ACE, Suit.HEART), Card(CardRank.TWO, Suit.SPADE)),
+                    1_500,
+                    -500,
+                ),
+                // 딜러가 버스트인 경우
+                Arguments.of(
                     listOf(
                         Card(CardRank.ACE, Suit.HEART),
-                        Card(CardRank.ACE, Suit.SPADE),
+                        Card(CardRank.KING, Suit.SPADE),
+                        Card(CardRank.KING, Suit.SPADE),
                     ),
-                    UIMatchType.LOSS,
-                    UIMatchType.LOSS,
-                    DealerResult(2, 0, 0),
+                    listOf(Card(CardRank.TWO, Suit.HEART), Card(CardRank.KING, Suit.SPADE)),
+                    -1_000,
+                    1_000,
                 ),
                 Arguments.of(
+                    // 플레이어가 비기는 경우
+                    listOf(Card(CardRank.TWO, Suit.HEART), Card(CardRank.TWO, Suit.SPADE)),
                     listOf(
-                        Card(CardRank.JACK, Suit.DIAMOND),
-                        Card(CardRank.JACK, Suit.HEART),
-                        Card(CardRank.TWO, Suit.DIAMOND),
+                        Card(CardRank.KING, Suit.HEART),
+                        Card(CardRank.KING, Suit.SPADE),
+                        Card(CardRank.QUEEN, Suit.SPADE),
                     ),
-                    listOf(
-                        Card(CardRank.JACK, Suit.DIAMOND),
-                        Card(CardRank.JACK, Suit.HEART),
-                        Card(CardRank.ACE, Suit.SPADE),
-                    ),
-                    listOf(
-                        Card(CardRank.JACK, Suit.DIAMOND),
-                        Card(CardRank.JACK, Suit.HEART),
-                        Card(CardRank.ACE, Suit.SPADE),
-                    ),
-                    UIMatchType.LOSS,
-                    UIMatchType.DRAW,
-                    DealerResult(1, 0, 1),
-                ),
-                Arguments.of(
-                    listOf(
-                        Card(CardRank.JACK, Suit.DIAMOND),
-                        Card(CardRank.ACE, Suit.DIAMOND),
-                        Card(CardRank.JACK, Suit.HEART),
-                        Card(CardRank.ACE, Suit.SPADE),
-                    ),
-                    listOf(
-                        Card(CardRank.JACK, Suit.DIAMOND),
-                        Card(CardRank.JACK, Suit.HEART),
-                        Card(CardRank.ACE, Suit.SPADE),
-                    ),
-                    listOf(
-                        Card(CardRank.JACK, Suit.DIAMOND),
-                        Card(CardRank.JACK, Suit.HEART),
-                        Card(CardRank.JACK, Suit.SPADE),
-                    ),
-                    UIMatchType.WIN,
-                    UIMatchType.WIN,
-                    DealerResult(0, 2, 0),
+                    1_000,
+                    0,
                 ),
             )
         }
