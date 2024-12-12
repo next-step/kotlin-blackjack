@@ -17,7 +17,7 @@ class GameUser(val name: String) {
     private fun calculatePoints(): Int {
         val sumPoint =
             cards.sumOf {
-                it.getPoint()src/main/kotlin/blackjack/controller/GeneratorCards.kt
+                it.getPoint()
             }
         val aceCount =
             cards.filter {

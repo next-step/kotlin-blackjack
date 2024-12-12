@@ -21,12 +21,12 @@ class GameUserTest {
     @ParameterizedTest
     @MethodSource("generateCardNumbers")
     fun `점수를 계산한다`(
-        numbers: List<Int>,
+        numbers: List<BlackJackCard>,
         points: Int,
     ) {
         val user = GameUser("홍길동")
         numbers.forEach {
-            user.addCard(BlackJackCard(it))
+            user.addCard(it)
         }
         ResultView().printResultCards(listOf(user))
         user.points shouldBe points
@@ -34,10 +34,10 @@ class GameUserTest {
 
     @ParameterizedTest
     @MethodSource("generateBlackjackCard")
-    fun `블랙잭이 맞는지 확인`(numbers: List<Int>) {
+    fun `블랙잭이 맞는지 확인`(numbers: List<BlackJackCard>) {
         val user = GameUser("홍길동")
         numbers.forEach {
-            user.addCard(BlackJackCard(it))
+            user.addCard(it)
         }
         ResultView().printResultCards(listOf(user))
         user.points shouldBe 21
@@ -45,22 +45,97 @@ class GameUserTest {
 
     private fun generateCardNumbers(): Stream<Arguments> {
         return Stream.of(
-            Arguments.of(listOf(1, 2, 3), 16),
-            Arguments.of(listOf(11, 12, 13), 30),
-            Arguments.of(listOf(14, 15, 16), 16),
-            Arguments.of(listOf(27, 28, 29), 16),
-            Arguments.of(listOf(40, 41, 42), 16),
-            Arguments.of(listOf(50, 52, 51), 30),
-            Arguments.of(listOf(1, 13), 21),
+            Arguments.of(
+                listOf(
+                    BlackJackCard(CardType.SPADE, CardInfo.CARD_A),
+                    BlackJackCard(CardType.SPADE, CardInfo.CARD_2),
+                    BlackJackCard(CardType.SPADE, CardInfo.CARD_3),
+                ),
+                16,
+            ),
+            Arguments.of(
+                listOf(
+                    BlackJackCard(CardType.SPADE, CardInfo.CARD_J),
+                    BlackJackCard(CardType.SPADE, CardInfo.CARD_Q),
+                    BlackJackCard(CardType.SPADE, CardInfo.CARD_K),
+                ),
+                30,
+            ),
+            Arguments.of(
+                listOf(
+                    BlackJackCard(CardType.CLOVER, CardInfo.CARD_A),
+                    BlackJackCard(CardType.CLOVER, CardInfo.CARD_2),
+                    BlackJackCard(CardType.CLOVER, CardInfo.CARD_3),
+                ),
+                16,
+            ),
+            Arguments.of(
+                listOf(
+                    BlackJackCard(CardType.DIAMOND, CardInfo.CARD_A),
+                    BlackJackCard(CardType.DIAMOND, CardInfo.CARD_2),
+                    BlackJackCard(CardType.DIAMOND, CardInfo.CARD_3),
+                ),
+                16,
+            ),
+            Arguments.of(
+                listOf(
+                    BlackJackCard(CardType.HEART, CardInfo.CARD_A),
+                    BlackJackCard(CardType.HEART, CardInfo.CARD_2),
+                    BlackJackCard(CardType.HEART, CardInfo.CARD_3),
+                ),
+                16,
+            ),
+            Arguments.of(
+                listOf(
+                    BlackJackCard(CardType.SPADE, CardInfo.CARD_J),
+                    BlackJackCard(CardType.SPADE, CardInfo.CARD_Q),
+                    BlackJackCard(CardType.SPADE, CardInfo.CARD_10),
+                ),
+                30,
+            ),
+            Arguments.of(
+                listOf(
+                    BlackJackCard(CardType.SPADE, CardInfo.CARD_A),
+                    BlackJackCard(CardType.SPADE, CardInfo.CARD_K),
+                ),
+                21,
+            ),
         )
     }
 
     private fun generateBlackjackCard(): Stream<Arguments> {
         return Stream.of(
-            Arguments.of(listOf(1, 13)),
-            Arguments.of(listOf(5, 4, 3, 2, 1, 14, 18)),
-            Arguments.of(listOf(1, 13, 11)),
-            Arguments.of(listOf(1, 14, 9)),
+            Arguments.of(
+                listOf(
+                    BlackJackCard(CardType.SPADE, CardInfo.CARD_A),
+                    BlackJackCard(CardType.SPADE, CardInfo.CARD_K),
+                ),
+            ),
+            Arguments.of(
+                listOf(
+                    BlackJackCard(CardType.SPADE, CardInfo.CARD_5),
+                    BlackJackCard(CardType.SPADE, CardInfo.CARD_4),
+                    BlackJackCard(CardType.SPADE, CardInfo.CARD_3),
+                    BlackJackCard(CardType.SPADE, CardInfo.CARD_2),
+                    BlackJackCard(CardType.SPADE, CardInfo.CARD_A),
+                    BlackJackCard(CardType.CLOVER, CardInfo.CARD_A),
+                    BlackJackCard(CardType.CLOVER, CardInfo.CARD_5),
+                ),
+            ),
+            Arguments.of(
+                listOf(
+                    BlackJackCard(CardType.SPADE, CardInfo.CARD_A),
+                    BlackJackCard(CardType.SPADE, CardInfo.CARD_K),
+                    BlackJackCard(CardType.SPADE, CardInfo.CARD_J),
+                ),
+            ),
+            Arguments.of(
+                listOf(
+                    BlackJackCard(CardType.SPADE, CardInfo.CARD_A),
+                    BlackJackCard(CardType.CLOVER, CardInfo.CARD_A),
+                    BlackJackCard(CardType.SPADE, CardInfo.CARD_9),
+                ),
+            ),
         )
     }
 }
