@@ -7,7 +7,7 @@ enum class Suit(val koreanName: String) {
     HEARTS("하트"), ;
 
     fun generateAllCards(): List<Card> {
-        return CardNumberFactory.all().map { Card(it, this) }
+        return Denomination.map { Card(this, it) }
     }
 
     companion object {

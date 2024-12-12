@@ -1,113 +1,160 @@
 package blackjack
 
+import blackjack.CardTextFixtures.spadeFiveCard
+import blackjack.CardTextFixtures.spadeJackCard
+import blackjack.CardTextFixtures.spadeKingCard
+import blackjack.CardTextFixtures.spadeQueenCard
+import blackjack.CardTextFixtures.spadeSixCard
+import blackjack.CardTextFixtures.spadeTwoCard
+import blackjack.InitialCardsTestFixtures.blackjackCards
+import blackjack.InitialCardsTestFixtures.initial16Cards
 import io.kotest.assertions.throwables.shouldThrow
-import io.kotest.core.spec.style.StringSpec
-import io.kotest.data.forAll
-import io.kotest.data.row
-import io.kotest.matchers.collections.shouldContainExactlyInAnyOrder
+import io.kotest.core.spec.style.BehaviorSpec
+import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.shouldBe
 
-class PlayerTest : StringSpec({
-    "플레이어는 이름이 빈 문자열일 수 없다" {
-        val name = " "
-        val initialCards =
-            listOf(
-                Card(CardNumber.Queen, Suit.SPADES),
-                Card(CardNumber.King, Suit.SPADES),
-            )
-
-        shouldThrow<IllegalArgumentException> {
-            Player(name = name, initialCards = initialCards)
+class PlayerTest : BehaviorSpec({
+    given("Player 를 생성할 때") {
+        `when`("이름이 빈 문자열이면") {
+            val name = " "
+            val initialCards =
+                listOf(
+                    spadeKingCard,
+                    spadeQueenCard,
+                )
+            then("IllegalArgumentException 을 던진다") {
+                shouldThrow<IllegalArgumentException> {
+                    Player(name = name, initialCards = initialCards)
+                }
+            }
         }
-    }
 
-    "플레이어는 생성 시에 카드 2장이 필수다" {
-        val name = "jason"
+        `when`("시작 카드가 2장이 아니면") {
+            val name = "y2gcoder"
+            then("IllegalArgumentException 을 던진다") {
+                listOf(
+                    listOf(
+                        spadeKingCard,
+                    ),
+                    listOf(
+                        spadeJackCard,
+                        spadeQueenCard,
+                        spadeKingCard,
+                    ),
+                ).forEach { initialCards ->
+                    shouldThrow<IllegalArgumentException> {
+                        Player(name = name, initialCards = initialCards)
+                    }
+                }
+            }
+        }
 
-        listOf(
-            listOf(
-                Card(CardNumber.King, Suit.SPADES),
-            ),
-            listOf(
-                Card(CardNumber.Jack, Suit.SPADES),
-                Card(CardNumber.Queen, Suit.SPADES),
-                Card(CardNumber.King, Suit.SPADES),
-            ),
-        ).forEach { initialCards ->
-            shouldThrow<IllegalArgumentException> {
-                Player(name = name, initialCards = initialCards)
+        val name = "y2gcoder"
+        `when`("시작 카드 조합이 블랙잭이면") {
+            val initialCards = blackjackCards
+            val sut = Player(name = name, initialCards = initialCards)
+
+            then("Player 는 종료된 상태가 된다") {
+                sut.isFinished() shouldBe true
+            }
+
+            then("Player 는 블랙잭 상태다") {
+                sut.isBlackjack() shouldBe true
+            }
+        }
+
+        `when`("시작 카드 조합이 블랙잭이 아니면") {
+            val initialCards = initial16Cards
+            val sut = Player(name = name, initialCards = initialCards)
+
+            then("Player 는 종료된 상태가 아니다") {
+                sut.isFinished() shouldBe false
             }
         }
     }
 
-    "플레이어는 카드 1장을 건네받아 손패에 추가할 수 있다" {
-        val name = "jason"
-        val initialCards =
-            listOf(
-                Card(CardNumber.Ace, Suit.SPADES),
-                Card(Number(2), Suit.SPADES),
-            )
+    given("Player 는 종료된 상태일 때") {
+        val name = "y2gcoder"
+        val initialCards = blackjackCards
         val sut = Player(name = name, initialCards = initialCards)
-        val newCard = Card(Number(3), Suit.SPADES)
+        val card = spadeTwoCard
 
-        sut.receive(newCard)
-
-        sut.hand shouldContainExactlyInAnyOrder
-            listOf(
-                Card(CardNumber.Ace, Suit.SPADES),
-                Card(Number(2), Suit.SPADES),
-                Card(Number(3), Suit.SPADES),
-            )
-    }
-
-    "플레이어는 자신이 가진 카드의 숫자 합을 알 수 있다" {
-        val name = "jason"
-        val initialCards =
-            listOf(
-                Card(Number(9), Suit.SPADES),
-                Card(Number(8), Suit.HEARTS),
-            )
-
-        val sut = Player(name = name, initialCards = initialCards)
-
-        val result = sut.sumOfHand()
-        result shouldBe 17
-    }
-
-    "플레이어가 버스트했는지 알 수 있다" {
-        val name = "jason"
-        val initialCards =
-            listOf(
-                Card(Number(9), Suit.SPADES),
-                Card(Number(8), Suit.HEARTS),
-            )
-
-        forAll(
-            row(Card(Number(5), Suit.SPADES), true),
-            row(Card(Number(4), Suit.SPADES), false),
-        ) { card, expected ->
-            val sut = Player(name = name, initialCards = initialCards)
-            sut.receive(card)
-
-            val result = sut.isBust()
-            result shouldBe expected
+        `when`("히트하려고 하면") {
+            then("IllegalStateException 을 던진다") {
+                sut.isFinished() shouldBe true
+                shouldThrow<IllegalStateException> {
+                    sut.hit(card)
+                }
+            }
         }
     }
 
-    "플레이어가 시작 상태(손에 2장 소유)인지 알 수 있다" {
-        val name = "jason"
-        val initialCards =
-            listOf(
-                Card(Number(9), Suit.SPADES),
-                Card(Number(8), Suit.HEARTS),
-            )
+    given("Player의 시작 카드가 16일 때") {
+        val name = "y2gcoder"
+        val initialCards = initial16Cards
 
-        val sut = Player(name = name, initialCards = initialCards)
+        `when`("Hit 한 카드가 5라면") {
+            val sut = Player(name = name, initialCards = initialCards)
+            val card = spadeFiveCard
+            sut.hit(card)
 
-        sut.isInitialState() shouldBe true
+            then("Player 는 종료 상태가 아니다") {
+                sut.isFinished() shouldBe false
+            }
+        }
+        `when`("Hit 한 카드가 6이라면") {
+            val sut = Player(name = name, initialCards = initialCards)
+            val card = spadeSixCard
+            sut.hit(card)
 
-        sut.receive(Card(CardNumber.Queen, Suit.SPADES))
+            then("Player 는 종료 상태가 된다") {
+                sut.isFinished() shouldBe true
+            }
 
-        sut.isInitialState() shouldBe false
+            then("Player 는 Bust 상태가 된다") {
+                sut.isBust() shouldBe true
+            }
+        }
+
+        `when`("Stay 하면") {
+            val sut = Player(name = name, initialCards = initialCards)
+            sut.stay()
+
+            then("Player 는 종료 상태가 된다") {
+                sut.isFinished() shouldBe true
+            }
+        }
+    }
+
+    given("Player 는") {
+        val name = "y2gcoder"
+        val initialCards = initial16Cards
+
+        `when`("cards 를 통해") {
+            val sut = Player(name = name, initialCards = initialCards)
+            val result = sut.cards
+
+            then("자신이 가진 카드 목록을 반환한다") {
+                result.toList() shouldContainExactly initialCards
+            }
+        }
+
+        `when`("sumOfCards() 를 통해") {
+            val sut = Player(name = name, initialCards = initialCards)
+            val result: Int = sut.sumOfCards()
+
+            then("자신이 가진 카드의 합을 반환한다") {
+                result shouldBe 16
+            }
+        }
+
+        `when`("1 미만을 베팅하면") {
+            val sut = Player(name = name, initialCards = initialCards)
+            val betAmount: Long = 1
+
+            then("IllegalArgumentException 예외를 던진다.") {
+                sut.bet(betAmount)
+            }
+        }
     }
 })

@@ -1,108 +1,202 @@
 package blackjack
 
+import blackjack.CardTextFixtures.spadeAceCard
+import blackjack.CardTextFixtures.spadeFiveCard
+import blackjack.CardTextFixtures.spadeJackCard
+import blackjack.CardTextFixtures.spadeKingCard
+import blackjack.CardTextFixtures.spadeQueenCard
+import blackjack.CardTextFixtures.spadeSevenCard
+import blackjack.CardTextFixtures.spadeSixCard
+import blackjack.CardTextFixtures.spadeTwoCard
+import blackjack.InitialCardsTestFixtures.blackjackCards
+import blackjack.InitialCardsTestFixtures.initial16Cards
+import blackjack.InitialCardsTestFixtures.initial18Cards
+import blackjack.InitialCardsTestFixtures.initial20Cards
 import io.kotest.assertions.throwables.shouldThrow
-import io.kotest.core.spec.style.StringSpec
-import io.kotest.data.forAll
-import io.kotest.data.row
-import io.kotest.matchers.collections.shouldContainExactlyInAnyOrder
+import io.kotest.core.spec.style.BehaviorSpec
+import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.shouldBe
 
-class DealerTest : StringSpec({
-    "딜러는 생성 시에 카드 2장이 필수다" {
-        listOf(
-            listOf(
-                Card(CardNumber.King, Suit.SPADES),
-            ),
-            listOf(
-                Card(CardNumber.Jack, Suit.SPADES),
-                Card(CardNumber.Queen, Suit.SPADES),
-                Card(CardNumber.King, Suit.SPADES),
-            ),
-        ).forEach { initialCards ->
-            shouldThrow<IllegalArgumentException> {
-                Dealer(initialCards = initialCards)
+class DealerTest : BehaviorSpec({
+    given("Dealer 를 생성할 때") {
+        `when`("시작 카드가 2장이 아니면") {
+            then("IllegalArgumentException 을 던진다") {
+                listOf(
+                    listOf(
+                        spadeKingCard,
+                    ),
+                    listOf(
+                        spadeJackCard,
+                        spadeQueenCard,
+                        spadeKingCard,
+                    ),
+                ).forEach { initialCards ->
+                    shouldThrow<IllegalArgumentException> {
+                        Dealer(initialCards = initialCards)
+                    }
+                }
+            }
+        }
+
+        `when`("시작 카드 조합이 블랙잭이면") {
+            val initialCards = blackjackCards
+            val sut = Dealer(initialCards = initialCards)
+
+            then("Dealer 는 종료된 상태가 된다") {
+                sut.isFinished() shouldBe true
+            }
+
+            then("Dealer 는 블랙잭 상태다") {
+                sut.isBlackjack() shouldBe true
+            }
+        }
+
+        `when`("시작 카드 조합이 블랙잭이 아니면") {
+            val initialCards = initial16Cards
+            val sut = Dealer(initialCards = initialCards)
+
+            then("Dealer 는 종료된 상태가 아니다") {
+                sut.isFinished() shouldBe false
             }
         }
     }
 
-    "딜러는 카드 1장을 건네받아 손패에 추가할 수 있다" {
-        val initialCards =
-            listOf(
-                Card(CardNumber.Jack, Suit.SPADES),
-                Card(Number(6), Suit.SPADES),
-            )
+    given("Dealer 는 종료된 상태일 때") {
+        val initialCards = blackjackCards
         val sut = Dealer(initialCards = initialCards)
-        val newCard = Card(Number(3), Suit.SPADES)
+        val card = spadeTwoCard
 
-        sut.receive(newCard)
-
-        sut.hand shouldContainExactlyInAnyOrder
-            listOf(
-                Card(CardNumber.Jack, Suit.SPADES),
-                Card(Number(6), Suit.SPADES),
-                Card(Number(3), Suit.SPADES),
-            )
-    }
-
-    "딜러는 자신이 가진 카드의 숫자 합을 알 수 있다" {
-        val initialCards =
-            listOf(
-                Card(Number(9), Suit.SPADES),
-                Card(Number(8), Suit.HEARTS),
-            )
-
-        val sut = Dealer(initialCards = initialCards)
-
-        val result = sut.sumOfHand()
-        result shouldBe 17
-    }
-
-    "딜러가 버스트했는지 알 수 있다" {
-        val initialCards =
-            listOf(
-                Card(Number(9), Suit.SPADES),
-                Card(Number(7), Suit.HEARTS),
-            )
-
-        forAll(
-            row(Card(Number(6), Suit.SPADES), true),
-            row(Card(Number(5), Suit.SPADES), false),
-        ) { card, expected ->
-            val sut = Dealer(initialCards = initialCards)
-            sut.receive(card)
-
-            val result = sut.isBust()
-            result shouldBe expected
+        `when`("히트하려고 하면") {
+            then("IllegalStateException 을 던진다") {
+                sut.isFinished() shouldBe true
+                shouldThrow<IllegalStateException> {
+                    sut.hit(card)
+                }
+            }
         }
     }
 
-    "딜러는 손패의 합이 16점 이하면 카드를 더 받아야 하는 상태이다" {
-        val initialCards =
-            listOf(
-                Card(CardNumber.Jack, Suit.SPADES),
-                Card(Number(6), Suit.SPADES),
-            )
-        val sut = Dealer(initialCards = initialCards)
+    given("Dealer의 시작 카드가 16일 때") {
+        val initialCards = initial16Cards
 
-        val result: Boolean = sut.shouldDrawCard()
+        `when`("Hit 한 카드가 5라면") {
+            val sut = Dealer(initialCards = initialCards)
+            val card = spadeFiveCard
+            sut.hit(card)
 
-        result shouldBe true
+            then("Dealer 는 종료 상태가 아니다") {
+                sut.isFinished() shouldBe false
+            }
+        }
+        `when`("Hit 한 카드가 6이라면") {
+            val sut = Dealer(initialCards = initialCards)
+            val card = spadeSixCard
+            sut.hit(card)
+
+            then("Dealer 는 종료 상태가 된다") {
+                sut.isFinished() shouldBe true
+            }
+
+            then("Dealer 는 Bust 상태가 된다") {
+                sut.isBust() shouldBe true
+            }
+        }
+
+        `when`("Stay 하면") {
+            val sut = Dealer(initialCards = initialCards)
+            sut.stay()
+
+            then("Dealer 는 종료 상태가 된다") {
+                sut.isFinished() shouldBe true
+            }
+        }
     }
 
-    "딜러는 손패 2장의 합이 17점 이상임에도 불구하고 카드를 뽑으려고 하면(히트) 예외를 던진다" {
-        val initialCards =
-            listOf(
-                Card(CardNumber.Jack, Suit.SPADES),
-                Card(Number(7), Suit.SPADES),
-            )
-        val sut = Dealer(initialCards = initialCards)
+    given("Dealer 는") {
+        `when`("cards 를 통해") {
+            val initialCards = initial16Cards
+            val sut = Dealer(initialCards = initialCards)
+            val result = sut.cards
 
-        sut.shouldDrawCard() shouldBe false
+            then("자신이 가진 카드 목록을 반환한다") {
+                result.toList() shouldContainExactly initialCards
+            }
+        }
 
-        val newCard = Card(CardNumber.Ace, Suit.SPADES)
+        `when`("sumOfCards() 를 통해") {
+            val initialCards = initial16Cards
+            val sut = Dealer(initialCards = initialCards)
+            val result: Int = sut.sumOfCards()
 
-        shouldThrow<IllegalStateException> {
-            sut.receive(newCard)
+            then("자신이 가진 카드의 합을 반환한다") {
+                result shouldBe 16
+            }
+        }
+
+        `when`("자신의 카드 합이 언더 오버(17) 미만이면") {
+            val initialCards = initial16Cards
+            val sut = Dealer(initialCards = initialCards)
+
+            then("shouldHit() 가 true 이다") {
+                val result: Boolean = sut.shouldHit()
+                result shouldBe true
+            }
+        }
+
+        `when`("자신의 카드 합이 언더 오버(17) 이상이면") {
+            val initialCards =
+                listOf(
+                    spadeJackCard,
+                    spadeSevenCard,
+                )
+            val sut = Dealer(initialCards = initialCards)
+
+            then("shouldHit() 가 false 이다") {
+                val result: Boolean = sut.shouldHit()
+                result shouldBe false
+            }
+            then("Hit 시 IllegalStateException 을 던진다") {
+                val card = spadeAceCard
+
+                shouldThrow<IllegalStateException> {
+                    sut.hit(card)
+                }
+            }
+        }
+
+        `when`("Player 와 자신을 비교하여") {
+            val sut = Dealer(initialCards = initial16Cards)
+            val player = Player("y2gcoder", initial18Cards)
+
+            val result: PlayerResult = sut.evaluatePlayerResult(player)
+
+            then("Player 의 승패 결과를 반환할 수 있다") {
+                result shouldBe PlayerResult.WIN
+            }
+        }
+    }
+
+    given("딜러는 게임 종료 후에") {
+        val sut = Dealer(initialCards = initial18Cards)
+        sut.stay()
+        val player = Player("y2gcoder", initial20Cards)
+        player.bet(10000)
+        player.stay()
+
+        `when`("플레이어의") {
+            val playerProfit: Money = sut.calculatePlayerProfit(player)
+
+            then("수익을 계산할 수 있다") {
+                playerProfit shouldBe Money(10000)
+            }
+        }
+
+        `when`("딜러 자신의") {
+            val selfProfit: Money = sut.calculateSelfProfit(listOf(player))
+
+            then("수익을 계산할 수 있다") {
+                selfProfit shouldBe Money(-10000)
+            }
         }
     }
 })
