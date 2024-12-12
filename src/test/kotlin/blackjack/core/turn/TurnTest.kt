@@ -1,6 +1,6 @@
 package blackjack.core.turn
 
-import blackjack.core.CardDispenser
+import blackjack.core.card.CardDispenser
 import blackjack.core.card.Cards
 import blackjack.core.player.Name
 import blackjack.core.player.Player
@@ -29,6 +29,6 @@ class TurnTest {
             },
         )
 
-        player.cards.point() shouldNotBeLessThan Cards.MAX_POINT
+        player.cards.point() shouldNotBeLessThan Cards.BLACKJACK_POINT
     }
 }

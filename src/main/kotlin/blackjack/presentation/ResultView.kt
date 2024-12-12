@@ -42,7 +42,26 @@ object ResultView {
         printMatchResult(dealer, players)
     }
 
-    fun printPlayersScore(
+    fun printProfits(
+        dealer: Dealer,
+        players: Players,
+    ) {
+        println(STRING_PROFIT)
+        printProfit(dealer)
+        players.forEach {
+            printProfit(it)
+        }
+    }
+
+    private fun printProfit(player: Player) {
+        val stringBuilder = StringBuilder()
+        stringBuilder.append(player.name)
+        stringBuilder.append(STRING_COLON)
+        stringBuilder.append(player.profitAmount)
+        println(stringBuilder.toString())
+    }
+
+    private fun printPlayersScore(
         dealer: Dealer,
         players: Players,
     ) {
@@ -53,7 +72,7 @@ object ResultView {
         printPlayerScore(dealer)
     }
 
-    fun printMatchResult(
+    private fun printMatchResult(
         dealer: Dealer,
         players: Players,
     ) {
@@ -107,7 +126,7 @@ object ResultView {
         val stringBuilder = StringBuilder()
         stringBuilder.append(getPlayerCards(player))
         stringBuilder.append(STRING_RESULT)
-        stringBuilder.append(player.point())
+        stringBuilder.append(player.point)
         println(stringBuilder.toString())
     }
 
@@ -138,4 +157,5 @@ object ResultView {
 
     private const val STRING_DEALER_DRAW = "딜러는 16이하라 한장의 카드를 더 받았습니다."
     private const val STRING_MATCH_RESULT = "## 최종 승리##"
+    private const val STRING_PROFIT = "## 최종 수익"
 }

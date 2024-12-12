@@ -2,7 +2,7 @@ package blackjack.core.card
 
 class Cards(private val cards: MutableSet<Card> = mutableSetOf()) : MutableSet<Card> by cards {
     fun checkBust(): Boolean {
-        return point() > MAX_POINT
+        return point() > BLACKJACK_POINT
     }
 
     fun point(): Int {
@@ -17,10 +17,15 @@ class Cards(private val cards: MutableSet<Card> = mutableSetOf()) : MutableSet<C
         return sum
     }
 
-    private fun checkAceBust(sum: Int): Boolean = (sum + ACE_WEIGHT) > MAX_POINT
+    fun checkBlackjack(): Boolean {
+        return point() == BLACKJACK_POINT && size == BLACKJACK_CARD_NUM
+    }
+
+    private fun checkAceBust(sum: Int): Boolean = (sum + ACE_WEIGHT) > BLACKJACK_POINT
 
     companion object {
-        const val MAX_POINT = 21
+        const val BLACKJACK_POINT = 21
+        const val BLACKJACK_CARD_NUM = 2
         private const val ACE_WEIGHT = 10
     }
 }

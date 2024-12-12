@@ -1,6 +1,6 @@
 package blackjack.core.turn
 
-import blackjack.core.CardDispenser
+import blackjack.core.card.CardDispenser
 import blackjack.core.player.Player
 import blackjack.presentation.ResultView
 

@@ -1,4 +1,4 @@
-package blackjack.application
+package blackjack.presentation
 
 fun main() {
     BlackJackController.start()

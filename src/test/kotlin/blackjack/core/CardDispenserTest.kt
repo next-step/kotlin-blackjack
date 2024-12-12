@@ -1,6 +1,7 @@
 package blackjack.core
 
 import blackjack.core.card.Card
+import blackjack.core.card.CardDispenser
 import blackjack.core.player.Name
 import blackjack.core.player.Player
 import blackjack.core.player.Players
@@ -12,10 +13,10 @@ class CardDispenserTest {
     @Test
     fun `Class 생성 시 Cards 매번 Suffle됨을 확인한다`() {
         val player = Player(Name("test"))
-        CardDispenser().apply { deal(player, Card.CARD_COUNT) }
+        CardDispenser().apply { repeat(Card.CARD_COUNT) { deal(player) } }
 
         val player2 = Player(Name("test"))
-        CardDispenser().apply { deal(player2, Card.CARD_COUNT) }
+        CardDispenser().apply { repeat(Card.CARD_COUNT) { deal(player2) } }
 
         player.cards shouldNotBe player2.cards
     }
@@ -31,7 +32,7 @@ class CardDispenserTest {
         val players = Players(List(30) { Player(Name("test")) })
 
         cardDispenser.checkRemainCard() shouldBe true
-        cardDispenser.deal(players, 2)
+        cardDispenser.dealDefault(players)
 
         players[0].cards.size shouldBe 2
         players[1].cards.size shouldBe 2

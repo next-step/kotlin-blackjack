@@ -1,14 +1,38 @@
 package blackjack.core.player
 
-class Dealer : Player(Name(DEALER_NAME)) {
+import blackjack.core.amount.Amount
+import blackjack.core.amount.BettingAmount
+
+class Dealer : Player(Name(DEALER_NAME), BettingAmount(0)) {
     fun checkMatch(player: Player): MatchResult {
         return when {
             this.checkBust() -> MatchResult.LOSE
             player.checkBust() -> MatchResult.WIN
-            this.point() > player.point() -> MatchResult.WIN
-            this.point() < player.point() -> MatchResult.LOSE
+            this.point > player.point -> MatchResult.WIN
+            this.point < player.point -> MatchResult.LOSE
             else -> MatchResult.DRAW
         }
+    }
+
+    fun calculateProfit(players: Players) {
+        players.play { player -> calculateProfit(player) }
+    }
+
+    private fun calculateProfit(player: Player) {
+        when (checkMatch(player)) {
+            MatchResult.WIN -> moveAmount(player, this, player.getBettingAmount())
+            MatchResult.LOSE -> moveAmount(this, player, player.getBettingAmount())
+            MatchResult.DRAW -> {}
+        }
+    }
+
+    private fun moveAmount(
+        from: Player,
+        to: Player,
+        amount: Amount,
+    ) {
+        from.profitAmount -= amount
+        to.profitAmount += amount
     }
 
     companion object {

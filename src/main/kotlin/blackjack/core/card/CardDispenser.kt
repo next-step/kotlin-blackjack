@@ -1,8 +1,5 @@
-package blackjack.core
+package blackjack.core.card
 
-import blackjack.core.card.Card
-import blackjack.core.card.Denomination
-import blackjack.core.card.Suit
 import blackjack.core.player.Player
 import blackjack.core.player.Players
 
@@ -24,20 +21,6 @@ class CardDispenser {
 
     fun dealDefault(player: Player) {
         (0..<DEFAULT_CARD_NUM).all { deal(player) }
-    }
-
-    fun deal(
-        players: Players,
-        cardCount: Int,
-    ): Boolean {
-        return players.all { deal(it, cardCount) }
-    }
-
-    fun deal(
-        player: Player,
-        cardCount: Int,
-    ): Boolean {
-        return (0..<cardCount).all { deal(player) }
     }
 
     fun deal(player: Player): Boolean {

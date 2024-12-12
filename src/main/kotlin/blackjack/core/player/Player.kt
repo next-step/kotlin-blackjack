@@ -1,19 +1,21 @@
 package blackjack.core.player
 
-import blackjack.core.card.Card
-import blackjack.core.card.Cards
+import blackjack.core.amount.Amount
+import blackjack.core.amount.BettingAmount
+import blackjack.core.amount.ProfitAmount
 
-open class Player(val name: Name, val cards: Cards = Cards()) {
-    fun draw(card: Card): Boolean {
-        if (checkBust()) {
-            return false
+open class Player(name: Name, private val bettingAmount: BettingAmount = BettingAmount(0)) : Participant(name) {
+    var profitAmount = ProfitAmount()
+
+    fun getBettingAmount(): Amount {
+        return if (checkBlackJack()) {
+            Amount((bettingAmount.amount * BLACKJACK_BONUS_WEIGHT).toInt())
+        } else {
+            bettingAmount
         }
-        cards += card
-
-        return true
     }
 
-    fun point(): Int = cards.point()
-
-    fun checkBust(): Boolean = cards.checkBust()
+    companion object {
+        private const val BLACKJACK_BONUS_WEIGHT = 1.5f
+    }
 }
