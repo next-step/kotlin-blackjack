@@ -12,7 +12,10 @@ object BlackJackController {
         val players = Players(names, bettingAmounts)
         val dealer = Dealer()
 
-        BlackJackService.start(dealer, players)
+        val cardDispenser = BlackJackService.standBy(dealer, players)
+        ResultView.printStandby(dealer, players)
+        BlackJackService.play(dealer, players, cardDispenser)
+
         ResultView.printResult(dealer, players)
         ResultView.printProfits(dealer, players)
     }

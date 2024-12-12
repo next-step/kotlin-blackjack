@@ -9,15 +9,23 @@ import blackjack.core.turn.Turn
 import blackjack.presentation.ResultView
 
 object BlackJackService {
-    fun start(
+    fun standBy(
         dealer: Dealer,
         players: Players,
-    ) {
+    ): CardDispenser {
         val cardDispenser = CardDispenser()
 
         cardDispenser.dealDefault(players)
         cardDispenser.dealDefault(dealer)
 
+        return cardDispenser
+    }
+
+    fun play(
+        dealer: Dealer,
+        players: Players,
+        cardDispenser: CardDispenser,
+    ) {
         ResultView.printStandby(dealer, players)
 
         players.play { Turn(it, cardDispenser).process(PlayerTurnCondition) }
