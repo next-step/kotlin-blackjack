@@ -10,25 +10,33 @@ import java.util.stream.Stream
 class CardsTest {
     @Test
     fun `버스트를 테스트한다`() {
-        val cards = Cards( mutableSetOf(
-            Card(Denomination.ACE, Suit.HEARTS),
-            Card(Denomination.KING, Suit.HEARTS),
-        ))
+        val cards =
+            Cards(
+                mutableSetOf(
+                    Card(Denomination.ACE, Suit.HEARTS),
+                    Card(Denomination.KING, Suit.HEARTS),
+                ),
+            )
 
         cards.checkBust() shouldBe false
         cards += Card(Denomination.SEVEN, Suit.HEARTS)
+        cards += Card(Denomination.QUEEN, Suit.HEARTS)
+        cards += Card(Denomination.JACK, Suit.HEARTS)
         cards.checkBust() shouldBe true
     }
 
     @Test
     fun `블랙잭을 테스트한다`() {
-        val cards = Cards( mutableSetOf(
-            Card(Denomination.ACE, Suit.HEARTS),
-        ))
+        val cards =
+            Cards(
+                mutableSetOf(
+                    Card(Denomination.ACE, Suit.HEARTS),
+                ),
+            )
 
         cards.checkBlackjack() shouldBe false
         cards += Card(Denomination.KING, Suit.HEARTS)
-        cards.checkBust() shouldBe true
+        cards.checkBlackjack() shouldBe true
     }
 
     @ParameterizedTest
@@ -61,30 +69,6 @@ class CardsTest {
                         Card(Denomination.SEVEN, Suit.CLUBS),
                     ),
                     18,
-                ),
-            )
-        }
-
-        @JvmStatic
-        fun provideParameters2(): Stream<Arguments> {
-            return Stream.of(
-                Arguments.of(mutableSetOf(Card(Denomination.TWO, Suit.HEARTS)), "2하트"),
-                Arguments.of(mutableSetOf(Card(Denomination.ACE, Suit.HEARTS), Card(Denomination.KING, Suit.CLUBS)), "A하트,King클로버"),
-                Arguments.of(
-                    mutableSetOf(
-                        Card(Denomination.ACE, Suit.HEARTS),
-                        Card(Denomination.KING, Suit.CLUBS),
-                        Card(Denomination.QUEEN, Suit.SPADES),
-                    ),
-                    "A하트,King클로버,Queen스페이드",
-                ),
-                Arguments.of(
-                    mutableSetOf(
-                        Card(Denomination.ACE, Suit.HEARTS),
-                        Card(Denomination.KING, Suit.CLUBS),
-                        Card(Denomination.QUEEN, Suit.SPADES),
-                    ),
-                    "A하트,King클로버,Queen스페이드",
                 ),
             )
         }

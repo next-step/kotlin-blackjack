@@ -10,20 +10,19 @@ class ParticipantTest {
     @Test
     fun `카드 Draw를 테스트한다`() {
         val participant = Participant(Name("test"))
-
-        participant.point shouldBe 0
-
         participant.draw(Card(Denomination.JACK, Suit.SPADES))
-        participant.point shouldBe 10
+        participant.cardNum shouldBe 1
+    }
 
+    @Test
+    fun `버스트 상태에서 카드 Draw가 되지 않음을 테스트`() {
+        val participant = Participant(Name("test"))
         participant.draw(Card(Denomination.JACK, Suit.SPADES))
-        participant.point shouldBe 10
-
+        participant.draw(Card(Denomination.JACK, Suit.CLUBS))
         participant.draw(Card(Denomination.QUEEN, Suit.SPADES))
-        participant.point shouldBe 20
+        participant.cardNum shouldBe 3
 
         participant.draw(Card(Denomination.KING, Suit.SPADES))
-        participant.point shouldBe 30
-        participant.cards.checkBust() shouldBe true
+        participant.cardNum shouldBe 3
     }
 }

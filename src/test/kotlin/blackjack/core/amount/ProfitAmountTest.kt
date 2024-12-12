@@ -4,7 +4,6 @@ import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
 class ProfitAmountTest {
-
     @Suppress("NonAsciiCharacters")
     @Test
     fun `연산자를 테스트 한다`() {
