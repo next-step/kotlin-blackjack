@@ -6,7 +6,7 @@ import blackjack.domain.Players
 
 class BlackjackService {
     fun createGame(command: CreateGameCommand): Game {
-        val bets = command.bets.map { Bet(it) }
+        val bets = command.bets.map(::Bet)
         val players = Players.from(command.names)
 
         players.placeBets(bets)
