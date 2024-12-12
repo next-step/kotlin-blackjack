@@ -23,20 +23,6 @@ class CardDispenser {
         (0..<DEFAULT_CARD_NUM).all { deal(player) }
     }
 
-    fun deal(
-        players: Players,
-        cardCount: Int,
-    ): Boolean {
-        return players.all { deal(it, cardCount) }
-    }
-
-    fun deal(
-        player: Player,
-        cardCount: Int,
-    ): Boolean {
-        return (0..<cardCount).all { deal(player) }
-    }
-
     fun deal(player: Player): Boolean {
         if (cards.hasNext().not()) {
             return false
