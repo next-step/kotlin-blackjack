@@ -4,7 +4,7 @@ import blackjack.domain.Player
 import blackjack.domain.Players
 
 class OutputView {
-    fun dealResult(players: Players) {
+    fun showGameStart(players: Players) {
         val playerNames = players.allPlayers().map { it.name }
 
         println(String.format(DEAL_RESULT_MESSAGE, playerNames))

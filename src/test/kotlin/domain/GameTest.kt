@@ -3,7 +3,6 @@ package domain
 import blackjack.domain.Dealer
 import blackjack.domain.Deck
 import blackjack.domain.Game
-import blackjack.domain.HitCommand
 import blackjack.domain.Player
 import blackjack.domain.Players
 import fixture.CardListFixture
@@ -21,12 +20,10 @@ class GameTest : DescribeSpec({
         sut = Game(dealer, players)
     }
 
-    describe("hit or not test") {
-        it("플레이어의 커멘드가 y이면 카드를 받는다") {
-            val player = players.allPlayers()[0]
-            sut.processPlayerTurn(player, HitCommand.Y)
-
-            player.ownedCards.size shouldBe 1
+    describe("init test") {
+        it("게임을 시작하면 각 플레이어들에게 카드를 2장씩 나누어준다.") {
+            players.allPlayers()[0].ownedCards.size shouldBe 2
+            players.allPlayers()[1].ownedCards.size shouldBe 2
         }
     }
 })

@@ -1,10 +1,10 @@
 package blackjack.domain
 
 class Game(
-    val dealer: Dealer,
-    val players: Players,
+    private val dealer: Dealer,
+    private val players: Players,
 ) {
-    fun start() {
+    init {
         dealer.deal(players)
     }
 
@@ -21,4 +21,6 @@ class Game(
         // todo: 사용자의 턴을 종료할지 진행할지에 대한 구현
         return true
     }
+
+    fun playersStatus(): Players = players
 }
