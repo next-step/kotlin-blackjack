@@ -36,4 +36,47 @@ class CardNumberTest : FunSpec({
             CardNumber.entries shouldContain randomCardNumber
         }
     }
+
+    context("calculateScore 테스트") {
+        test("ACE를 11로 사용할 수 있는 경우") {
+            // given
+            val currentScore = 10
+
+            // when
+            val aceScore = CardNumber.ACE.calculateScore(currentScore = currentScore)
+
+            // then
+            aceScore shouldBe 11
+        }
+
+        test("ACE를 1로 사용할 수밖에 없는 경우") {
+            // given
+            val currentScore = 12
+
+            // when
+            val aceScore = CardNumber.ACE.calculateScore(currentScore = currentScore)
+
+            // then
+            aceScore shouldBe 1
+        }
+
+        test("숫자 카드의 점수는 그대로 반환된다") {
+            CardNumber.TWO.calculateScore(currentScore = 10) shouldBe 2
+            CardNumber.THREE.calculateScore(currentScore = 15) shouldBe 3
+        }
+
+        test("그림 카드의 점수는 그대로 반환된다") {
+            CardNumber.KING.calculateScore(currentScore = 15) shouldBe 10
+            CardNumber.QUEEN.calculateScore(currentScore = 0) shouldBe 10
+            CardNumber.JACK.calculateScore(currentScore = 20) shouldBe 10
+        }
+    }
+
+    context("CardNumber.random() 테스트") {
+        test("CardNumber.random()은 null이 아닌 유효한 값을 반환해야 한다") {
+            repeat(13) {
+                CardNumber.entries shouldContain CardNumber.random()
+            }
+        }
+    }
 })
