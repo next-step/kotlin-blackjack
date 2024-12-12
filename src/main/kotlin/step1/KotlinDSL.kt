@@ -46,6 +46,7 @@ fun skills(block: SkillBuilder.() -> Unit): Skill {
 class SkillBuilder {
     private val soft: MutableList<String> = mutableListOf()
     private val hard: MutableList<String> = mutableListOf()
+
     fun soft(value: String) {
         soft.add(value)
     }
@@ -74,7 +75,6 @@ class LanguageBuilder {
 
     fun build(): List<Language> = languages
 }
-
 
 data class Language(
     val name: String,

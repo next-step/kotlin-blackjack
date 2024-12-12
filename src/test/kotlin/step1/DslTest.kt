@@ -11,18 +11,20 @@ class DslTest {
     @ValueSource(strings = ["박재성", "제이슨"])
     @ParameterizedTest
     fun introduce(value: String) {
-        val person = introduce {
-            name(value)
-        }
+        val person =
+            introduce {
+                name(value)
+            }
         assertThat(person.name).isEqualTo(value)
     }
 
     @Test
     fun company() {
-        val person = introduce {
-            name("박재성")
-            company("우아한형제들")
-        }
+        val person =
+            introduce {
+                name("박재성")
+                company("우아한형제들")
+            }
         assertThat(person.name).isEqualTo("박재성")
         assertThat(person.company).isEqualTo("우아한형제들")
     }
@@ -30,10 +32,11 @@ class DslTest {
     @Test
     fun skills() {
         // Given
-        val skill = skills {
-            soft("Problem-solving")
-            hard("Kotlin")
-        }
+        val skill =
+            skills {
+                soft("Problem-solving")
+                hard("Kotlin")
+            }
 
         // Then
         assertTrue(skill.soft.contains("Problem-solving"))
@@ -43,10 +46,11 @@ class DslTest {
     @Test
     fun languages() {
         // Given
-        val languageList = languages {
-            "Korean" level 5
-            "English" level 3
-        }
+        val languageList =
+            languages {
+                "Korean" level 5
+                "English" level 3
+            }
 
         // Then
         assertEquals(2, languageList.size)
