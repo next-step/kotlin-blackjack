@@ -4,7 +4,7 @@ import blackjack.domain.Deck
 import java.math.BigDecimal
 
 data class CreateGameCommand(
-    val names: List<String>,
+    val names: Set<String>,
     val bets: List<BigDecimal>,
     val deck: Deck,
 ) {

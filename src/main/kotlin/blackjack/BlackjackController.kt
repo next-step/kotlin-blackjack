@@ -18,7 +18,13 @@ class BlackjackController(
         val bets = InputView.getBets(names)
 
         // 게임 생성
-        val game = blackjackService.createGame(CreateGameCommand(names, bets, deck))
+        val command =
+            CreateGameCommand(
+                names.toSet(),
+                bets,
+                deck,
+            )
+        val game = blackjackService.createGame(command)
         ResultView.displayState(game)
 
         // 게임 진행

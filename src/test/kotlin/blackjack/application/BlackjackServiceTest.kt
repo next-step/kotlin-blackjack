@@ -15,7 +15,7 @@ class BlackjackServiceTest {
         val deck = StubDeck.from(Rank.ACE, Rank.TWO, Rank.THREE, Rank.KING, Rank.QUEEN, Rank.JACK)
         val command =
             CreateGameCommand(
-                listOf("black", "jack"),
+                setOf("black", "jack"),
                 listOf(BigDecimal(1_000L), BigDecimal(2_000L)),
                 deck,
             )

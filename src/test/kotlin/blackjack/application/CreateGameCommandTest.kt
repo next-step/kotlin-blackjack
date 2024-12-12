@@ -11,7 +11,7 @@ class CreateGameCommandTest {
     fun `이름과 베팅의 숫자가 같아야 한다`() {
         assertThrows<IllegalArgumentException> {
             CreateGameCommand(
-                listOf("a", "b"),
+                setOf("a", "b"),
                 listOf(BigDecimal.ONE),
                 StubDeck.from(),
             )
