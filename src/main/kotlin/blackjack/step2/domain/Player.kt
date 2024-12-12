@@ -11,4 +11,20 @@ class Player(
     override fun canDraw(): Boolean {
         return !this.isBust() // 플레이어는 버스트 상태가 아니어야 추가 가능
     }
+
+    override fun playTurn(
+        cardPicker: CardPicker,
+        interactor: GameInteractor,
+    ): Player {
+        return generateSequence(this) { currentPlayer ->
+            if (currentPlayer.isBust() || !interactor.askForMoreCard(currentPlayer)) {
+                null
+            } else {
+                val card = cardPicker.pick()
+                val updatedPlayer = currentPlayer.pickCard(card)
+                interactor.printPlayerCards(updatedPlayer)
+                updatedPlayer
+            }
+        }.last()
+    }
 }

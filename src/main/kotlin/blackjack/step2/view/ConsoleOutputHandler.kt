@@ -6,7 +6,7 @@ import blackjack.step2.domain.GameResultType
 import blackjack.step2.domain.Participant
 import blackjack.step2.domain.Player
 
-object OutputView {
+object ConsoleOutputHandler {
     fun printCards(participant: Participant) {
         val cards =
             participant.cards.all.joinToString(", ") {

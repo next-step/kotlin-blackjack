@@ -1,6 +1,8 @@
 package blackjack.step2.domain
 
+import blackjack.step2.view.ConsoleGameInteractor
 import io.kotest.core.spec.style.FunSpec
+import io.kotest.matchers.ints.shouldBeGreaterThan
 import io.kotest.matchers.shouldBe
 
 class DealerTest : FunSpec({
@@ -44,6 +46,48 @@ class DealerTest : FunSpec({
 
             // then
             pickedDealer.canDraw() shouldBe false
+        }
+    }
+
+    context("playTurn() 테스트") {
+        test("딜러가 갖고 있는 카드의 합이 17이상이면 더 이상 카드를 뽑을 수 없다.") {
+            // given
+            val cards =
+                Cards.of(
+                    listOf(
+                        Card(CardNumber.TEN, CardType.SPADE),
+                        Card(CardNumber.SEVEN, CardType.HEART),
+                    ),
+                )
+            val dealer = Dealer(cards = cards)
+            val cardPicker = RandomCardPicker()
+            val interactor = ConsoleGameInteractor()
+
+            // when
+            val playedDealer = dealer.playTurn(cardPicker, interactor)
+
+            // then
+            playedDealer.cards.all.size shouldBe 2
+        }
+
+        test("딜러가 갖고 있는 카드의 합이 17미만이면 카드를 더 뽑을 수 있다.") {
+            // given
+            val cards =
+                Cards.of(
+                    listOf(
+                        Card(CardNumber.TEN, CardType.SPADE),
+                        Card(CardNumber.SIX, CardType.HEART),
+                    ),
+                )
+            val dealer = Dealer(cards = cards)
+            val cardPicker = RandomCardPicker()
+            val interactor = ConsoleGameInteractor()
+
+            // when
+            val playedDealer = dealer.playTurn(cardPicker, interactor)
+
+            // then
+            playedDealer.cards.all.size shouldBeGreaterThan 2
         }
     }
 })

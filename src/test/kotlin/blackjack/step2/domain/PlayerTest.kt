@@ -1,5 +1,6 @@
 package blackjack.step2.domain
 
+import blackjack.step2.view.ConsoleGameInteractor
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 
@@ -26,5 +27,26 @@ class PlayerTest : FunSpec({
 
         // then
         pickedPlayer.canDraw() shouldBe true
+    }
+
+    test("playTurn() 테스트 - 플레이어가 버스트 상태이면 카드를 추가로 받을 수 없다.") {
+        // given
+        val cards =
+            Cards.of(
+                listOf(
+                    Card(CardNumber.TEN, CardType.SPADE),
+                    Card(CardNumber.SEVEN, CardType.HEART),
+                    Card(CardNumber.SIX, CardType.HEART),
+                ),
+            )
+        val player = Player(name = "dongyeon", cards = cards)
+        val cardPicker = RandomCardPicker()
+        val interactor = ConsoleGameInteractor()
+
+        // when
+        val playedPlayer = player.playTurn(cardPicker, interactor)
+
+        // then
+        playedPlayer.cards.all.size shouldBe 3
     }
 })

@@ -1,11 +1,13 @@
 package blackjack.step2.domain
 
+import blackjack.step2.view.ConsoleGameInteractor
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 
 class GameManagerTest : FunSpec({
     val cardPicker = RandomCardPicker()
-    val gameManager = GameManager(cardPicker)
+    val gameInteractor = ConsoleGameInteractor()
+    val gameManager = GameManager(cardPicker, gameInteractor)
 
     test("딜러는 카드의 합이 17점 미만일 경우 카드를 추가로 받는다.") {
         // given
@@ -21,7 +23,7 @@ class GameManagerTest : FunSpec({
             )
 
         // when
-        val finalDealer = gameManager.playTurn(dealer) as Dealer
+        val finalDealer = gameManager.playTurn(dealer)
 
         // then
         finalDealer.cards.all.size shouldBe 3
@@ -41,7 +43,7 @@ class GameManagerTest : FunSpec({
             )
 
         // when
-        val finalDealer = gameManager.playTurn(dealer) as Dealer
+        val finalDealer = gameManager.playTurn(dealer)
 
         // then
         finalDealer.cards.all.size shouldBe 2
@@ -63,7 +65,7 @@ class GameManagerTest : FunSpec({
             )
 
         // when
-        val finalPlayer = gameManager.playTurn(player) as Player
+        val finalPlayer = gameManager.playTurn(player)
 
         // then
         finalPlayer.score() shouldBe 22

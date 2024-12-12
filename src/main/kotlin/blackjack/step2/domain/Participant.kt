@@ -8,6 +8,11 @@ sealed class Participant(
 
     abstract fun canDraw(): Boolean
 
+    abstract fun playTurn(
+        cardPicker: CardPicker,
+        interactor: GameInteractor,
+    ): Participant
+
     fun isBust(): Boolean = cards.totalScore() > BLACKJACK_SCORE
 
     fun score(): Int = cards.totalScore()
