@@ -7,4 +7,7 @@ data class Player(
     fun receiveCard(card: Card) {
         ownedCards.add(card)
     }
+
+    fun stay() {
+    }
 }

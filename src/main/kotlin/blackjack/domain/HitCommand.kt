@@ -1,15 +1,21 @@
 package blackjack.domain
 
 enum class HitCommand {
-    Y,
-    N, ;
+    HIT,
+    STAY, ;
 
     companion object {
+        private val inputMapping =
+            mapOf(
+                "y" to HIT,
+                "n" to STAY,
+            )
+
         fun from(input: String): HitCommand {
-            return entries.find { it.name.equals(input, ignoreCase = true) }
+            return inputMapping[input.lowercase()]
                 ?: throw IllegalArgumentException(INVALID_INPUT)
         }
 
-        private const val INVALID_INPUT = "입력값은 'y' 또는 'n'만 가능합니다."
+        private const val INVALID_INPUT = "유효하지 않은 입력입니다. 'y', 'n'를 입력해주세요."
     }
 }
