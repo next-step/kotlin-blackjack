@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.participant
 
 data class Players(val player: List<Player>) {
     companion object {

@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.card
 
 data class Cards(private val _cards: MutableList<Card> = mutableListOf()) {
     val cards: List<Card>

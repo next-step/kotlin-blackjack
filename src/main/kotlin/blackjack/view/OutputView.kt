@@ -1,4 +1,7 @@
-package blackjack
+package blackjack.view
+
+import blackjack.participant.Player
+import blackjack.participant.Players
 
 object OutputView {
     fun printPlayersStartCardPack(players: Players) {

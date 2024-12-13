@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.card
 
 enum class CardNumber(
     val description: String,

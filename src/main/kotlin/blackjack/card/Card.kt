@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.card
 
 data class Card(
     val number: CardNumber,
