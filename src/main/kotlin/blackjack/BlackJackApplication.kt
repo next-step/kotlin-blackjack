@@ -1,6 +1,7 @@
 package blackjack
 
 import blackjack.controller.BlackJackController
+import blackjack.entity.Player
 import blackjack.repository.GameRepository
 import blackjack.service.BlackJackService
 import blackjack.view.InputView
@@ -9,38 +10,64 @@ import blackjack.view.OutputView
 private val blackJackController = BlackJackController(BlackJackService(GameRepository()))
 
 fun main() {
-    val players = InputView.getPlayers()
-    initGameSet(players)
+    val playersList = InputView.getPlayers()
+    val dealerName = InputView.getDealerName()
+    initGameSet(dealerName, playersList)
+
+    gameStart()
 
     gameContinue()
+
+    gameCardResult()
 
     gameEnd()
 }
 
-private fun gameProgress(player: String) {
-    val game = blackJackController.gameContinue(player)
-    InputView.playerInfo(listOf(game))
+private fun gameCardResult() {
+    val game = blackJackController.getGameInfo()
+    OutputView.gameCardResult(game)
 }
 
-fun initGameSet(players: List<String>) {
-    blackJackController.initPlayers(players)
-    InputView.gameStart(players)
+private fun gameProgress(player: String): Boolean {
+    val player = blackJackController.gameContinue(player)
+    InputView.playerInfo(player)
+    return player.getPlayerBlackJack().isBust()
+}
+
+private fun gameStart() {
+    val game = blackJackController.startGame()
+    OutputView.gameStart(game)
+}
+
+fun initGameSet(dealerName: String, playersList: List<String>) {
+    blackJackController.initPlayers(dealerName, playersList)
 }
 
 fun gameContinue() {
-    val playerInfos = blackJackController.startGame()
-    InputView.playerInfo(playerInfos)
-
-    playerInfos.filter { (it.player == InputView.getDealerName()).not() }.forEach {
-        while (InputView.isGameContinue(it.player)) {
-            gameProgress(it.player)
-        }
+    val game = blackJackController.getGameInfo()
+    val playersList = game.players
+    val dealer = game.dealer
+    val isLessThanSixTeen = dealer.getDealerBlackJack().isLessThanSixTeen()
+    playersList.forEach { player ->
+        playerGameProgress(player)
     }
-    val dealerInfo = playerInfos.first { (it.player == InputView.getDealerName()) }
-    if (InputView.isLessThanSixTeen(dealerInfo.getPlayerBlackJack().getTotalCardValue())) {
-        gameProgress(dealerInfo.player)
+    if (isLessThanSixTeen) {
+        dealerGameProgress(dealer.name)
     }
 }
+
+private fun playerGameProgress(player: Player) {
+    while (InputView.isGameContinue(player.name)) {
+        val isBust = gameProgress(player.name)
+        if (isBust) break
+    }
+}
+
+private fun dealerGameProgress(dealerName: String) {
+    InputView.dealerAddCardComment(dealerName)
+    blackJackController.gameContinueDealer()
+}
+
 
 fun gameEnd() {
     val results = blackJackController.getGameResult()

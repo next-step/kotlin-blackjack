@@ -1,19 +1,25 @@
 package blackjack.repository
 
+import blackjack.entity.Dealer
 import blackjack.entity.Game
+import blackjack.entity.Player
 
 class GameRepository {
-    private var players: List<Game> = emptyList()
+    private lateinit var game: Game
 
-    fun findAll(): List<Game> {
-        return players.toList()
+    fun saveGame(game: Game) {
+        this.game = game
     }
 
-    fun findByName(player: String): Game? {
-        return players.find { it.player == player }
+    fun findAll(): Game {
+        return this.game
     }
 
-    fun savePlayers(players: List<Game>) {
-        this.players = players
+    fun findPlayerByName(name: String): Player {
+        return this.game.players.first { it.name == name }
+    }
+
+    fun findDealer(): Dealer {
+        return this.game.dealer
     }
 }
