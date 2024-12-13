@@ -25,8 +25,9 @@ class BlackjackGame(
             deck.shuffle()
             val dealer = Dealer.createNew(listOf(deck.drawCard(), deck.drawCard()))
             val players =
-                playerNames.zip(bettingMoneys)
-                    .map { (name, money) ->
+                (playerNames zip bettingMoneys)
+                    .map { pair ->
+                        val (name, money) = pair
                         Player.createNew(
                             name,
                             money,
