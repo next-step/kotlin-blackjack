@@ -4,8 +4,10 @@ import blackjack.domain.BlackjackGame
 import blackjack.domain.Deck
 import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.PlayerAction
+import blackjack.domain.result.GameResultJudge
 import blackjack.view.InputView
 import blackjack.view.ResultView
+
 import blackjack.view.dto.toDomain
 
 class BlackjackRunner {
@@ -16,6 +18,7 @@ class BlackjackRunner {
             dealer = Dealer(),
             players = InputView.showAndGetPlayers()
                 .map { it.toDomain() },
+            gameResultJudge = GameResultJudge(),
         )
 
         blackjackGame.start()
@@ -25,7 +28,7 @@ class BlackjackRunner {
         drawDealer(blackjackGame)
 
         ResultView.printParticipantsResult(blackjackGame.dealer, blackjackGame.players)
-        ResultView.printGameResult(blackjackGame.getGameResult())
+        ResultView.printGameResult(blackjackGame.judgeGame())
     }
 
     private fun drawPlayers(blackjackGame: BlackjackGame) {

@@ -4,13 +4,14 @@ import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Participant
 import blackjack.domain.participant.Player
 import blackjack.domain.result.GameResult
-import blackjack.domain.result.GameResultType
 import blackjack.domain.result.PlayerGameResult
+import blackjack.domain.result.GameResultJudge
 
 class BlackjackGame(
     private val deck: Deck,
     val dealer: Dealer,
     val players: List<Player>,
+    private val gameResultJudge: GameResultJudge,
 ) {
     fun start() {
         drawInitialCards(dealer)
@@ -29,11 +30,11 @@ class BlackjackGame(
         participant.receivedCard(deck.draw())
     }
 
-    fun getGameResult(): GameResult {
+    fun judgeGame(): GameResult {
         val playersResult: List<PlayerGameResult> = players.map { player ->
             PlayerGameResult(
                 player = player,
-                resultType = player.resultType(dealer),
+                resultType = gameResultJudge.judge(player.cards, dealer.cards),
             )
         }
 
@@ -41,30 +42,6 @@ class BlackjackGame(
             dealerName = dealer.name,
             playersResult = playersResult,
         )
-    }
-
-    private fun Player.resultType(dealer: Dealer): GameResultType {
-        if (this.cards.isTwoCardBlackjack()) {
-            return if (dealer.cards.isTwoCardBlackjack()) {
-                GameResultType.PUSH
-            } else {
-                GameResultType.BLACKJACK_WIN
-            }
-        }
-
-        if (dealer.cards.isBusted()) {
-            return GameResultType.WIN
-        }
-
-        if (this.cards.isBusted()) {
-            return GameResultType.LOSE
-        }
-
-        return when {
-            this.cards.sum() == dealer.cards.sum() -> GameResultType.PUSH
-            this.cards.sum() > dealer.cards.sum() -> GameResultType.WIN
-            else -> GameResultType.LOSE
-        }
     }
 
     companion object {
