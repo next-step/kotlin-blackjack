@@ -7,7 +7,7 @@ import io.kotest.matchers.shouldBe
 class DeckTest : StringSpec({
     "초기화 시 52장의 카드가 생성된다." {
         val deck = Deck(shuffleStrategy = {})
-        deck.getCurrentCardCount() shouldBe 52
+        deck.getCardsSnapshot().size shouldBe 52
     }
 
     "카드는 중복되지 않는다." {
@@ -23,7 +23,7 @@ class DeckTest : StringSpec({
 
         drawnCards.size shouldBe 5
         drawnCards.first() shouldBe firstCard
-        deck.getCurrentCardCount() shouldBe 47
+        deck.getCardsSnapshot().size shouldBe 47
     }
 
     "0장 이하의 카드를 뽑으려고 하면 예외가 발생한다." {

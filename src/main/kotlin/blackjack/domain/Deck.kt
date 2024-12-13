@@ -34,7 +34,7 @@ class Deck(
         return cards.take(count)
     }
 
-    fun getCurrentCardCount(): Int = cards.size
+    fun getCardsSnapshot(): List<Card> = cards.toList()
 
     companion object {
         private const val MINIMUM_CARD_COUNT_EXCEPTION_MESSAGE = "1장 이상의 카드를 뽑아야 합니다."
