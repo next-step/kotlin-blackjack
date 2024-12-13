@@ -28,6 +28,4 @@ class Hit(hand: Hand) : Running(hand) {
             else -> this
         }
     }
-
-    override fun stay(): State = Stay(hand)
 }

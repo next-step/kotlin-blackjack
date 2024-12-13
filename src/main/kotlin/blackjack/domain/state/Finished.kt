@@ -8,15 +8,9 @@ sealed class Finished(hand: Hand) : Running(hand) {
         throw IllegalStateException("이미 종료된 상태입니다.")
     }
 
-    override fun stay(): State {
-        throw IllegalStateException("이미 종료된 상태입니다.")
-    }
-
     override fun isFinished() = true
 }
 
 class Bust(hand: Hand) : Finished(hand)
-
-class Stay(hand: Hand) : Finished(hand)
 
 class Blackjack(hand: Hand) : Finished(hand)
