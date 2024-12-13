@@ -1,5 +1,8 @@
-package blackjack
+package blackjack.participant
 
+import blackjack.card.Card
+import blackjack.card.CardNumber
+import blackjack.card.CardSuit
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 
@@ -8,7 +11,7 @@ class PlayerTest : StringSpec({
     "플레이어는 카드를 한 장 받을 수 있다." {
         // Arrange:
         val player = Player(PlayerName("test"))
-        val card = Card(CardNumber.ONE, CardSuit.SPADES)
+        val card = Card(CardNumber.ACE, CardSuit.SPADES)
 
         // Act:
         player.take(card)
@@ -20,7 +23,7 @@ class PlayerTest : StringSpec({
     "플레이어는 카드를 여러 장 받을 수 있다." {
         // Arrange:
         val player = Player(PlayerName("test"))
-        val card1 = Card(CardNumber.ONE, CardSuit.SPADES)
+        val card1 = Card(CardNumber.ACE, CardSuit.SPADES)
         val card2 = Card(CardNumber.TWO, CardSuit.SPADES)
 
         // Act:
@@ -55,7 +58,7 @@ class PlayerTest : StringSpec({
         player.take(listOf(card1, card2, card3))
 
         // Assert:
-        player.score() shouldBe 0
+        player.score() shouldBe 22
     }
 
     "플레이어의 점수를 표기한다." {

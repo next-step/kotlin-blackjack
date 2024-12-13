@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.card
 
 enum class CardSuit(val description: String) {
     HEARTS("하트"),

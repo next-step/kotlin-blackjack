@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.card
 
 data class Card(
     val number: CardNumber,
@@ -9,6 +9,6 @@ data class Card(
     }
 
     fun isAce(): Boolean {
-        return number == CardNumber.ONE
+        return number == CardNumber.ACE
     }
 }

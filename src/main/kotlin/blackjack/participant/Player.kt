@@ -1,4 +1,7 @@
-package blackjack
+package blackjack.participant
+
+import blackjack.card.Card
+import blackjack.card.Cards
 
 data class Player(
     val name: PlayerName,

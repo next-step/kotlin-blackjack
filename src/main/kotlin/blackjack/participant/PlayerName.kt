@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.participant
 
 @JvmInline
 value class PlayerName(val value: String) {

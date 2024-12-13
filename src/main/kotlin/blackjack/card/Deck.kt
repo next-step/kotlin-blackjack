@@ -1,6 +1,6 @@
-package blackjack
+package blackjack.card
 
-import blackjack.Cards.Companion.createCardPack
+import blackjack.card.Cards.Companion.createCardPack
 
 data class Deck(private val _cards: MutableList<Card> = createCardPack().shuffled().toMutableList()) {
     val cards: List<Card>
