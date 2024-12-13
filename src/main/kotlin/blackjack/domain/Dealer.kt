@@ -1,7 +1,5 @@
 package blackjack.domain
 
-import blackjack.domain.state.Initial
-
 class Dealer(
     private val name: PlayerName,
 ) : Participant(name) {
@@ -16,7 +14,7 @@ class Dealer(
     companion object {
         fun createNew(cards: List<Card>): Dealer {
             val dealer = Dealer(PlayerName("딜러"))
-            dealer.state = Initial.initialState(Hand.createInitial(cards))
+            cards.forEach { dealer.addCard(it) }
             return dealer
         }
     }

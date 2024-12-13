@@ -1,7 +1,5 @@
 package blackjack.domain
 
-import blackjack.domain.state.Initial
-
 class Player(
     private val name: PlayerName,
     val bettingMoney: BettingMoney,
@@ -30,7 +28,7 @@ class Player(
             cards: List<Card>,
         ): Player {
             val player = Player(playerName, bettingMoney)
-            player.state = Initial.initialState(Hand.createInitial(cards))
+            cards.forEach { player.addCard(it) }
             return player
         }
     }

@@ -5,9 +5,10 @@ import blackjack.domain.state.State
 
 abstract class Participant(private val name: PlayerName) {
     var state: State = Initial.initialState(Hand.createInitial(emptyList()))
+        private set
 
-    fun drawCard(deck: Deck) {
-        state = state.draw(deck.drawCard())
+    fun addCard(card: Card) {
+        state = state.draw(card)
     }
 
     fun calculateTotal(): Int {
