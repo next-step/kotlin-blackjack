@@ -6,10 +6,10 @@ class GameInitializer(private val cardPicker: CardPicker) {
         return Dealer(cards = Cards.of(cards))
     }
 
-    fun initializePlayers(names: List<String>): List<Player> {
-        return names.map { name ->
+    fun initializePlayers(players: List<Player>): List<Player> {
+        return players.map { player ->
             val cards = List(INITIAL_DEAL_COUNT) { cardPicker.pick() }
-            Player(name, Cards.of(cards))
+            Player(player.name, Cards.of(cards), player.bet)
         }
     }
 

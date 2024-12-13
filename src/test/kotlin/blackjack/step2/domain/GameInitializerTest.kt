@@ -18,26 +18,15 @@ class GameInitializerTest : FunSpec({
 
     test("플레이어는 초기화 시 카드 두 장을 가진다.") {
         // given
-        val playerNames = listOf("dongyeon", "pobi", "jason")
+        val inputPlayers = listOf(Player("dongyeon"), Player("pobi"))
 
         // when
-        val players = gameInitializer.initializePlayers(playerNames)
+        val players = gameInitializer.initializePlayers(inputPlayers)
 
         // then
-        players shouldHaveSize playerNames.size
+        players.size shouldBe 2
         players.forEach { player ->
             player.cards.all shouldHaveSize 2
         }
-    }
-
-    test("플레이어의 이름이 초기화에 반영된다.") {
-        // given
-        val playerNames = listOf("dongyeon", "pobi", "jason")
-
-        // when
-        val players = gameInitializer.initializePlayers(playerNames)
-
-        // then
-        players.map { it.name } shouldBe playerNames
     }
 })

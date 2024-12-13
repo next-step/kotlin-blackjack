@@ -19,16 +19,15 @@ enum class CardNumber(val score: Int, val denomination: String) {
     ;
 
     fun calculateScore(currentScore: Int): Int {
-        return if (this == ACE && currentScore + ACE_SCORE_DIFFERENCE <= BLACKJACK_SCORE) {
-            ACE_HIGH_SCORE // ACE를 11로 사용할 수 있는 경우
+        return if (this == ACE && currentScore + ACE_PLUS_SCORE <= BLACKJACK_SCORE) {
+            ACE.score + ACE_PLUS_SCORE // ACE를 11로 사용할 수 있는 경우
         } else {
             score // 기본 점수
         }
     }
 
     companion object {
-        private const val ACE_HIGH_SCORE = 11
-        private const val ACE_SCORE_DIFFERENCE = 10
+        private const val ACE_PLUS_SCORE = 10
 
         fun random(): CardNumber {
             return entries.random()

@@ -11,19 +11,18 @@ import blackjack.step2.view.ConsoleOutputHandler
 fun main() {
     val cardPicker = RandomCardPicker()
     val gameInitializer = GameInitializer(cardPicker)
-    val playerNames = ConsoleInputHandler.inputPlayerNames()
+    val inputPlayers = ConsoleInputHandler.inputPlayerNamesAndBets()
     val interactor = ConsoleGameInteractor()
 
-    val dealer = gameInitializer.initializeDealer()
-    val players = gameInitializer.initializePlayers(playerNames)
-    ConsoleOutputHandler.printInitialCards(dealer, players)
+    val initializedPlayers = gameInitializer.initializePlayers(inputPlayers)
+    val initializedDealer = gameInitializer.initializeDealer()
+    ConsoleOutputHandler.printInitialCards(initializedDealer, initializedPlayers)
 
-    val gameManager = GameManager(cardPicker = cardPicker, interactor = interactor)
-    val finalPlayers = players.map { gameManager.playTurn(it) }
-    val finalDealer = gameManager.playTurn(dealer)
+    val gameManager = GameManager(cardPicker, interactor)
+    val finalPlayers = initializedPlayers.map { gameManager.playTurn(it) }
+    val finalDealer = gameManager.playTurn(initializedDealer)
+    ConsoleOutputHandler.printFinalCards(listOf(finalDealer).plus(finalPlayers))
 
-    ConsoleOutputHandler.printCards(finalDealer)
-    finalPlayers.forEach { ConsoleOutputHandler.printCards(it) }
-    val results = ResultManager.calculate(finalPlayers.plus(finalDealer))
+    val results = ResultManager.calculateFinalProfit(finalPlayers + finalDealer)
     ConsoleOutputHandler.printResults(results)
 }

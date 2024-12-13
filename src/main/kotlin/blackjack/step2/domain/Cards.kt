@@ -1,6 +1,6 @@
 package blackjack.step2.domain
 
-class Cards private constructor(private val cards: List<Card>) {
+data class Cards private constructor(private val cards: List<Card>) {
     val all: List<Card> get() = cards
 
     fun add(card: Card): Cards = Cards(cards + card)
@@ -10,6 +10,11 @@ class Cards private constructor(private val cards: List<Card>) {
             val currentScore = totalScore + card.number.score
             totalScore + card.number.calculateScore(currentScore)
         }
+    }
+
+    fun isInitialBlackjack(): Boolean {
+        if (cards.size != 2) return false
+        return this.totalScore() == Participant.BLACKJACK_SCORE
     }
 
     companion object {

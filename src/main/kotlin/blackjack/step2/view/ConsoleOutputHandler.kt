@@ -1,42 +1,44 @@
 package blackjack.step2.view
 
+import blackjack.step2.domain.Card
 import blackjack.step2.domain.Dealer
 import blackjack.step2.domain.GameResult
-import blackjack.step2.domain.GameResultType
 import blackjack.step2.domain.Participant
 import blackjack.step2.domain.Player
 
 object ConsoleOutputHandler {
-    fun printCards(participant: Participant) {
-        val cards =
-            participant.cards.all.joinToString(", ") {
-                "${it.number.denomination}${it.type.value}"
-            }
-        println("${participant.name} 카드: $cards - 결과: ${participant.score()}")
-    }
-
     fun printInitialCards(
         dealer: Dealer,
         players: List<Player>,
     ) {
         println("딜러와 ${players.joinToString(", ") { it.name }}에게 2장의 카드를 나누었습니다.")
-        this.printCards(dealer)
-        players.forEach { printCards(it) }
+        // 딜러는 첫 카드만 출력
+        println("${dealer.name}: ${formatCard(dealer.cards.all[0])}")
+        // 플레이어는 전체 카드 출력
+        players.forEach { printParticipantCards(it) }
+    }
+
+    fun printFinalCards(participants: List<Participant>) {
+        participants.forEach { this.printParticipantCards(it) }
     }
 
     fun printResults(results: List<GameResult>) {
-        val dealer = results.first { it.participant is Dealer }
-        val players = results.filter { it.participant is Player }
-        println("## 최종 승패")
-        this.printResult(dealer)
-        players.forEach { this.printResult(it) }
+        println("## 최종 수익")
+        results.forEach { result ->
+            val profit = result.profit
+            println("${result.participant.name}: $profit")
+        }
     }
 
-    private fun printResult(result: GameResult) {
-        val winCount = result.resultTypes.count { it == GameResultType.WIN }
-        val loseCount = result.resultTypes.count { it == GameResultType.LOSE }
-        val drawCount = result.resultTypes.count { it == GameResultType.DRAW }
+    private fun printParticipantCards(participant: Participant) {
+        val cardsString =
+            participant.cards.all
+                .joinToString(", ") { formatCard(it) }
 
-        println("${result.participant.name}: ${winCount}승 ${loseCount}패 ${drawCount}무")
+        println("${participant.name}카드: $cardsString - 결과: ${participant.score()}")
+    }
+
+    private fun formatCard(card: Card): String {
+        return "${card.number.denomination}${card.type.value}"
     }
 }

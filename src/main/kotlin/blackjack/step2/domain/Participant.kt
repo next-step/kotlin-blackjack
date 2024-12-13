@@ -17,6 +17,8 @@ sealed class Participant(
 
     fun score(): Int = cards.totalScore()
 
+    fun isInitialBlackjack(): Boolean = cards.isInitialBlackjack()
+
     companion object {
         const val BLACKJACK_SCORE = 21
     }

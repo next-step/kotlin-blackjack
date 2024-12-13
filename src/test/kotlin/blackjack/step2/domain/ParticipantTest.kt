@@ -55,4 +55,37 @@ class ParticipantTest : FunSpec({
             pickedParticipant.score() shouldBe 14
         }
     }
+
+    context("isInitialBlackjack() 테스트") {
+        test("카드가 2장이며, 21점인 경우 true를 반환한다.") {
+            // given
+            val card1 = Card(CardNumber.TEN, CardType.SPADE)
+            val card2 = Card(CardNumber.ACE, CardType.HEART)
+            val participant = Player("dongyeon", Cards.of(listOf(card1, card2))) as Participant
+
+            // when, then
+            participant.isInitialBlackjack() shouldBe true
+        }
+
+        test("카드가 2장이 아닌 경우 false를 반환한다.") {
+            // given
+            val card1 = Card(CardNumber.TEN, CardType.SPADE)
+            val card2 = Card(CardNumber.ACE, CardType.HEART)
+            val card3 = Card(CardNumber.TWO, CardType.CLOVER)
+            val participant = Player("dongyeon", Cards.of(listOf(card1, card2, card3))) as Participant
+
+            // when, then
+            participant.isInitialBlackjack() shouldBe false
+        }
+
+        test("카드가 2장이며, 21점이 아닌 경우 false를 반환한다.") {
+            // given
+            val card1 = Card(CardNumber.TEN, CardType.SPADE)
+            val card2 = Card(CardNumber.TEN, CardType.HEART)
+            val participant = Player("dongyeon", Cards.of(listOf(card1, card2))) as Participant
+
+            // when, then
+            participant.isInitialBlackjack() shouldBe false
+        }
+    }
 })
