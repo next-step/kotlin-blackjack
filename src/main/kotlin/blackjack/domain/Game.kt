@@ -1,12 +1,13 @@
 package blackjack.domain
 
 class Game(
-    private val playerNames: List<String>,
-    private val playerBets: Map<String, Int>,
+    private val playersInfo: List<PlayerInfo>,
 ) {
     private val deck = Deck()
-    val dealer = Dealer(deck, playerBets["딜러"] ?: 0)
-    val players: List<Player> = playerNames.map { Player(it, playerBets[it] ?: 0) }
+    val dealer = Dealer(deck, playersInfo.find { it.name == "딜러" }?.bet ?: 0)
+    val players: List<Player> = playersInfo
+        .filter { it.name != "딜러" }
+        .map { Player(it.name, it.bet) }
 
     init {
         dealer.initialDraw()
@@ -53,9 +54,9 @@ class Game(
     private fun determineResults(): Map<String, GameResult> {
         return players.associate { player ->
             player.name to
-                player.compareWithDealer(dealer).also { result ->
-                    player.setResult(result)
-                }
+                    player.compareWithDealer(dealer).also { result ->
+                        player.setResult(result)
+                    }
         }
     }
 
@@ -72,11 +73,11 @@ class Game(
         val playerProfits =
             players.associate { player ->
                 player.name to
-                    when (player.result) {
-                        GameResult.WIN -> player.bet
-                        GameResult.LOSE -> -player.bet
-                        else -> 0
-                    }
+                        when (player.result) {
+                            GameResult.WIN -> player.bet
+                            GameResult.LOSE -> -player.bet
+                            else -> 0
+                        }
             }
 
         return playerProfits + ("딜러" to dealerProfit)
