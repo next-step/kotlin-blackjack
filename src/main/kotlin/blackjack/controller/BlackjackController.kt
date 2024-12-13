@@ -15,6 +15,8 @@ class BlackjackController(private val inputView: InputView, private val outputVi
         outputView.showGameStart(players = game.players)
 
         gameLoop(game)
+
+        outputView.showGameResult(players = game.players)
     }
 
     private fun gameLoop(game: Game) {
