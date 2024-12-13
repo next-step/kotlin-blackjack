@@ -16,7 +16,7 @@ class BlackjackGame(
     fun start() {
         val names = inputView.inputNames()
         val dealer = Dealer()
-        val players = names.map(::Player)
+        val players = names.map { Player(it, 0) }
 
         initialDraw(players + dealer)
         players.forEach(::progress)
@@ -36,12 +36,10 @@ class BlackjackGame(
             player.hit(deck)
             outputView.printPlayerCards(player)
             progress(player)
-        } else {
-            player.toStay()
         }
     }
 
-    private fun isHitOrStay(player: Player): Boolean = player.isPlayable && inputView.inputHitOrStay(player.name)
+    private fun isHitOrStay(player: Player): Boolean = inputView.inputHitOrStay(player.name)
 
     private fun endGame(
         players: List<Player>,

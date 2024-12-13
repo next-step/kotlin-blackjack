@@ -1,6 +1,7 @@
 package blackjack.domain
 
 import blackjack.fixture.handsFixture
+import blackjack.fixture.playerFixture
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.ints.shouldBeGreaterThan
 import io.kotest.matchers.shouldBe
@@ -35,34 +36,12 @@ class PlayerTest : StringSpec({
                 Card(Suit.SPADE, Rank.TEN),
                 Card(Suit.SPADE, Rank.TWO),
             )
-        val actual = Player(name = "pobi", hands = hands)
+        val actual = playerFixture(hands = hands)
 
         actual.hit(deck)
 
         actual.score shouldBeGreaterThan 21
-        actual.status shouldBe GameStatus.BURST
-    }
-
-    "플레이어는 히트 시 21점이라면 스테이 상태가 된다." {
-        val aceCard = Card(Suit.SPADE, Rank.ACE)
-        val tenCard = Card(Suit.SPADE, Rank.TEN)
-        val deck = Deck(listOf(aceCard))
-        val hands = handsFixture(tenCard)
-
-        val actual = Player(name = "pobi", hands = hands)
-
-        actual.hit(deck)
-
-        actual.score shouldBe 21
-        actual.status shouldBe GameStatus.STAY
-    }
-
-    "플레이어는 스테이 상태가 될 수 있다." {
-        val actual = Player("pobi")
-
-        actual.toStay()
-
-        actual.status shouldBe GameStatus.STAY
+        actual.isBurst shouldBe true
     }
 
     "플레이어는 점수를 가진다" {
@@ -72,7 +51,7 @@ class PlayerTest : StringSpec({
                 Card(Suit.SPADE, Rank.THREE),
                 Card(Suit.SPADE, Rank.TEN),
             )
-        val actual = Player(name = "pobi", hands = hands)
+        val actual = playerFixture(hands = hands)
 
         actual.score shouldBe 15
     }
