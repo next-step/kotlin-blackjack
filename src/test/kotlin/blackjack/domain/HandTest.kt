@@ -18,7 +18,7 @@ class HandTest : StringSpec({
                 TestCards.CLUB_5,
             )
 
-        val updatedHand = initialHand.addCards(newCards)
+        val updatedHand = initialHand.plus(newCards)
         updatedHand.getCards().size shouldBe 2
         updatedHand.getCards() shouldBe newCards
         initialHand.getCards() shouldBe emptyList()
@@ -26,7 +26,7 @@ class HandTest : StringSpec({
 
     "점수는 카드 점수를 정확히 계산한다 - 일반 카드 조합" {
         val hand =
-            Hand().addCards(
+            Hand().plus(
                 listOf(
                     TestCards.HEART_10,
                     TestCards.CLUB_6,
@@ -38,7 +38,7 @@ class HandTest : StringSpec({
 
     "점수는 ACE를 11로 계산한다." {
         val hand =
-            Hand().addCards(
+            Hand().plus(
                 listOf(
                     TestCards.HEART_5,
                     TestCards.SPADE_A,
@@ -50,7 +50,7 @@ class HandTest : StringSpec({
 
     "점수는 ACE를 1로 계산한다 - 합이 21을 초과하는 경우" {
         val hand =
-            Hand().addCards(
+            Hand().plus(
                 listOf(
                     TestCards.HEART_10,
                     TestCards.CLUB_6,
@@ -63,7 +63,7 @@ class HandTest : StringSpec({
 
     "점수는 여러 ACE를 적절히 계산한다." {
         val hand =
-            Hand().addCards(
+            Hand().plus(
                 listOf(
                     TestCards.HEART_A,
                     TestCards.CLUB_A,

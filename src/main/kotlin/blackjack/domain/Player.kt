@@ -6,7 +6,7 @@ open class Player(val name: String, val bet: Int) {
         private set
 
     fun addCards(newCards: List<Card>) {
-        hand = hand.addCards(newCards)
+        hand = hand.plus(newCards)
     }
 
     val cards: List<Card> get() = hand.getCards()

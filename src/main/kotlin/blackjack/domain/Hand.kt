@@ -1,7 +1,7 @@
 package blackjack.domain
 
 class Hand(private val cards: List<Card> = listOf()) {
-    fun addCards(newCards: List<Card>): Hand {
+    fun plus(newCards: List<Card>): Hand {
         return Hand(cards + newCards)
     }
 
