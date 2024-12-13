@@ -5,8 +5,8 @@ import blackjack.domain.card.CardRank
 import blackjack.domain.card.CardSuit
 import blackjack.domain.card.Cards
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 
@@ -64,7 +64,7 @@ class PlayerTest {
         // given
 
         // when
-        val result = assertThrows(IllegalArgumentException::class.java) {
+        val result = assertThrows<IllegalArgumentException> {
             Player(name = "jay", bettingAmount = bettingAmount)
         }
 
