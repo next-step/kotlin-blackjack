@@ -13,6 +13,10 @@ sealed class Running(val hand: Hand) : State {
     override fun isBust() = hand.isBust()
 
     override fun getAllCards() = hand.getAllCards()
+
+    override fun hand(): Hand {
+        return hand
+    }
 }
 
 class Hit(hand: Hand) : Running(hand) {

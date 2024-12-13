@@ -3,8 +3,8 @@ package blackjack.domain
 import blackjack.domain.state.Initial
 import blackjack.domain.state.State
 
-abstract class Participant(private val name: PlayerName, initialHand: Hand) {
-    var state: State = Initial.initialState(initialHand)
+abstract class Participant(private val name: PlayerName) {
+    var state: State = Initial.initialState(Hand.createInitial(emptyList()))
 
     fun drawCard(deck: Deck) {
         state = state.draw(deck.drawCard())

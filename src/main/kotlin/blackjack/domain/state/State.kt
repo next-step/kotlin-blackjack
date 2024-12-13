@@ -1,6 +1,7 @@
 package blackjack.domain.state
 
 import blackjack.domain.Card
+import blackjack.domain.Hand
 
 interface State {
     fun draw(card: Card): State
@@ -16,4 +17,6 @@ interface State {
     fun isBust(): Boolean
 
     fun getAllCards(): List<Card>
+
+    fun hand(): Hand
 }
