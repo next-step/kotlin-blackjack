@@ -9,31 +9,29 @@ import blackjack.domain.result.GameResult
 
 object ResultView {
 
-    fun printStartCards(participants: List<Participant>) {
-        val dealer = participants.filterIsInstance<Dealer>().firstOrNull() ?: return
+    fun printStartCards(dealer: Dealer, players: List<Player>) {
+        val playerNames = players.joinToString { it.name }
 
-        val playerNames = participants.filterIsInstance<Player>().joinToString { it.name }
-        val startCardsInfo = participants.joinToString("\n") { participant ->
-            when (participant) {
-                is Dealer -> getDealerStartCard(participant)
-                else -> getPlayerInformation(participant)
-            }
+        val startPlayerCardsInfo = players.joinToString("\n") { player ->
+            getParticipantInformation(player)
         }
 
         println(buildString {
             append("${dealer.name}와 ${playerNames}에게 2장의 카드를 나누었습니다.\n")
-            append(startCardsInfo)
+            append("${getDealerStartCard(dealer)}\n")
+            append(startPlayerCardsInfo)
         })
     }
 
     fun printPlayerInformation(participant: Participant) {
-        println(getPlayerInformation(participant))
+        println(getParticipantInformation(participant))
     }
 
-    fun printParticipantsResult(participants: List<Participant>) {
+    fun printParticipantsResult(dealer: Dealer, players: List<Player>) {
         println(buildString {
-            participants.forEach { participant ->
-                append("${getPlayerInformation(participant)} - 결과: ${participant.cards.sum()}\n")
+            append("${getParticipantInformation(dealer)} - 결과: ${dealer.cards.sum()}\n")
+            players.forEach { player ->
+                append("${getParticipantInformation(player)} - 결과: ${player.cards.sum()}\n")
             }
         })
     }
@@ -54,7 +52,7 @@ object ResultView {
         })
     }
 
-    private fun getPlayerInformation(participant: Participant): String {
+    private fun getParticipantInformation(participant: Participant): String {
         return buildString {
             append(participant.name)
             append("카드: ")

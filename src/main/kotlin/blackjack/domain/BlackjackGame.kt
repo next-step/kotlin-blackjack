@@ -9,14 +9,19 @@ import blackjack.domain.result.PlayerGameResult
 
 class BlackjackGame(
     private val deck: Deck,
-    dealer: Dealer,
-    players: List<Player>,
+    val dealer: Dealer,
+    val players: List<Player>,
 ) {
-    val participants: List<Participant> = listOf(dealer).plus(players)
-
     fun start() {
-        participants.forEach { participant ->
-            repeat(START_DRAW_COUNT) { draw(participant) }
+        drawInitialCards(dealer)
+        players.forEach { player ->
+            drawInitialCards(player)
+        }
+    }
+
+    private fun drawInitialCards(participant: Participant) {
+        repeat(START_DRAW_COUNT) {
+            draw(participant)
         }
     }
 
@@ -25,9 +30,6 @@ class BlackjackGame(
     }
 
     fun getGameResult(): GameResult {
-        val dealer = participants.filterIsInstance<Dealer>().first()
-        val players = participants.filterIsInstance<Player>()
-
         val playersResult: List<PlayerGameResult> = players.map { player ->
             PlayerGameResult(
                 player = player,

@@ -36,8 +36,7 @@ class BlackjackGameTest {
         blackjackGame.start()
 
         // then
-        val players = blackjackGame.participants.filterIsInstance<Player>()
-        assertThat(players[0].cards.cards.size).isEqualTo(2)
+        assertThat(blackjackGame.players[0].cards.cards.size).isEqualTo(2)
     }
 
     @ParameterizedTest

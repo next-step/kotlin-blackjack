@@ -3,7 +3,6 @@ package blackjack
 import blackjack.domain.BlackjackGame
 import blackjack.domain.Deck
 import blackjack.domain.participant.Dealer
-import blackjack.domain.participant.Player
 import blackjack.domain.participant.PlayerAction
 import blackjack.view.InputView
 import blackjack.view.ResultView
@@ -20,30 +19,27 @@ class BlackjackRunner {
         )
 
         blackjackGame.start()
-        ResultView.printStartCards(blackjackGame.participants)
+        ResultView.printStartCards(blackjackGame.dealer, blackjackGame.players)
 
         drawPlayers(blackjackGame)
         drawDealer(blackjackGame)
 
-        ResultView.printParticipantsResult(blackjackGame.participants)
+        ResultView.printParticipantsResult(blackjackGame.dealer, blackjackGame.players)
         ResultView.printGameResult(blackjackGame.getGameResult())
     }
 
     private fun drawPlayers(blackjackGame: BlackjackGame) {
-        blackjackGame.participants.filterIsInstance<Player>()
-            .forEach { player ->
-                while (player.canReceiveCard() && InputView.showAndGetPlayerAction(player.name) == PlayerAction.HIT) {
-                    blackjackGame.draw(player)
-                    ResultView.printPlayerInformation(player)
-                }
+        blackjackGame.players.forEach { player ->
+            while (player.canReceiveCard() && InputView.showAndGetPlayerAction(player.name) == PlayerAction.HIT) {
+                blackjackGame.draw(player)
+                ResultView.printPlayerInformation(player)
             }
+        }
     }
 
     private fun drawDealer(blackjackGame: BlackjackGame) {
-        val dealer = blackjackGame.participants.filterIsInstance<Dealer>()
-            .firstOrNull() ?: return
-        while (dealer.canReceiveCard()) {
-            blackjackGame.draw(dealer)
+        while (blackjackGame.dealer.canReceiveCard()) {
+            blackjackGame.draw(blackjackGame.dealer)
             ResultView.printGetCardForDealer()
         }
     }
