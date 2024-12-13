@@ -6,9 +6,10 @@ import blackjack.domain.CardNumber
 import blackjack.domain.Deck
 
 class RandomDeck : Deck {
-    override fun draw(): Card? {
+    override fun draw(): Card {
         CACHED_CARDS.shuffle()
-        return CACHED_CARDS.removeLastOrNull()
+        check(CACHED_CARDS.isNotEmpty()) { "Deck이 비었습니다." }
+        return CACHED_CARDS.removeLast()
     }
 
     companion object {
