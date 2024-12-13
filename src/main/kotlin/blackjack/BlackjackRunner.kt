@@ -7,6 +7,7 @@ import blackjack.domain.participant.Player
 import blackjack.domain.participant.PlayerAction
 import blackjack.view.InputView
 import blackjack.view.ResultView
+import blackjack.view.dto.toDomain
 
 class BlackjackRunner {
 
@@ -14,7 +15,8 @@ class BlackjackRunner {
         val blackjackGame = BlackjackGame(
             deck = Deck(),
             dealer = Dealer(),
-            players = InputView.showAndGetPlayers(),
+            players = InputView.showAndGetPlayers()
+                .map { it.toDomain() },
         )
 
         blackjackGame.start()
@@ -28,16 +30,18 @@ class BlackjackRunner {
     }
 
     private fun drawPlayers(blackjackGame: BlackjackGame) {
-        blackjackGame.participants.filterIsInstance<Player>().forEach { player ->
-            while (player.canReceiveCard() && InputView.showAndGetPlayerAction(player.name) == PlayerAction.HIT) {
-                blackjackGame.draw(player)
-                ResultView.printPlayerInformation(player)
+        blackjackGame.participants.filterIsInstance<Player>()
+            .forEach { player ->
+                while (player.canReceiveCard() && InputView.showAndGetPlayerAction(player.name) == PlayerAction.HIT) {
+                    blackjackGame.draw(player)
+                    ResultView.printPlayerInformation(player)
+                }
             }
-        }
     }
 
     private fun drawDealer(blackjackGame: BlackjackGame) {
-        val dealer = blackjackGame.participants.filterIsInstance<Dealer>().firstOrNull() ?: return
+        val dealer = blackjackGame.participants.filterIsInstance<Dealer>()
+            .firstOrNull() ?: return
         while (dealer.canReceiveCard()) {
             blackjackGame.draw(dealer)
             ResultView.printGetCardForDealer()

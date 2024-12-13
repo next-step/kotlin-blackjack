@@ -1,17 +1,15 @@
 package blackjack.view
 
-import blackjack.domain.parser.StringParser
-import blackjack.domain.participant.Player
 import blackjack.domain.participant.PlayerAction
+import blackjack.view.dto.PlayerDto
 
 object InputView {
 
-    fun showAndGetPlayers(): List<Player> {
+    fun showAndGetPlayers(): List<PlayerDto> {
         println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)")
-        return StringParser.parse(readln()).map { playerName ->
-            val bettingAmount = showAndGetPlayersBettingAmount(playerName)
-            return@map Player(name = playerName, bettingAmount = bettingAmount)
-        }
+        return readln().split(",")
+            .map { it.trim() }
+            .map { name -> PlayerDto(name, showAndGetPlayersBettingAmount(name)) }
     }
 
     private fun showAndGetPlayersBettingAmount(playerName: String): Int {
