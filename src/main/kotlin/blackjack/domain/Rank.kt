@@ -45,6 +45,6 @@ enum class Rank(
         private fun checkNotBurst(
             nonAceValue: Int,
             aceCount: Int,
-        ): Boolean = !GameStatus.isBurst(nonAceValue + ACE_ALTERNATIVE_VALUE + (aceCount - 1))
+        ): Boolean = !Rule.isBurst(nonAceValue + ACE_ALTERNATIVE_VALUE + (aceCount - 1))
     }
 }
