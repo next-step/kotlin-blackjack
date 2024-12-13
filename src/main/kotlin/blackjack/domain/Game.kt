@@ -4,7 +4,7 @@ class Game(
     private val playersInfo: List<PlayerInfo>,
 ) {
     private val deck = Deck()
-    val dealer = Dealer(deck, playersInfo.find { it.name == "딜러" }?.bet ?: 0)
+    val dealer: Dealer = Dealer(deck, playersInfo.find { it.name == "딜러" }?.bet ?: 0)
     val players: List<Player> = playersInfo
         .filter { it.name != "딜러" }
         .map { Player(it.name, it.bet) }
@@ -20,22 +20,13 @@ class Game(
 
     fun start(decisionMaker: PlayerDecision): Pair<Map<String, GameResult>, Boolean> {
         players.forEach { handlePlayerTurn(it, decisionMaker) }
-        val dealerDrewCard: Boolean = handleDealerTurn()
-
-        // Check if dealer busts
-        if (dealer.score > 21) {
-            players.filter { it.score <= 21 }.forEach { it.setResult(GameResult.WIN) }
-            return emptyMap<String, GameResult>() to dealerDrewCard
-        }
+        val dealerDrewCard = handleDealerTurn()
 
         val results = determineResults()
         return results to dealerDrewCard
     }
 
-    private fun handlePlayerTurn(
-        player: Player,
-        decisionMaker: PlayerDecision,
-    ) {
+    private fun handlePlayerTurn(player: Player, decisionMaker: PlayerDecision) {
         while (player.canContinue()) {
             if (!decisionMaker.shouldDrawCard(player.name)) break
             player.addCards(deck.drawCards(1))
@@ -53,32 +44,26 @@ class Game(
 
     private fun determineResults(): Map<String, GameResult> {
         return players.associate { player ->
-            player.name to
-                    player.compareWithDealer(dealer).also { result ->
-                        player.setResult(result)
-                    }
+            player.name to GameRules.determineResult(player, dealer)
         }
     }
 
     fun calculateProfits(): Map<String, Int> {
-        val dealerProfit =
-            players.sumOf { player ->
-                when (player.result) {
-                    GameResult.WIN -> -player.bet
-                    GameResult.LOSE -> player.bet
-                    else -> 0
-                }
+        val dealerProfit = players.sumOf { player ->
+            when (GameRules.determineResult(player, dealer)) {
+                GameResult.WIN -> -player.bet
+                GameResult.LOSE -> player.bet
+                else -> 0
             }
+        }
 
-        val playerProfits =
-            players.associate { player ->
-                player.name to
-                        when (player.result) {
-                            GameResult.WIN -> player.bet
-                            GameResult.LOSE -> -player.bet
-                            else -> 0
-                        }
+        val playerProfits = players.associate { player ->
+            player.name to when (GameRules.determineResult(player, dealer)) {
+                GameResult.WIN -> player.bet
+                GameResult.LOSE -> -player.bet
+                else -> 0
             }
+        }
 
         return playerProfits + ("딜러" to dealerProfit)
     }
