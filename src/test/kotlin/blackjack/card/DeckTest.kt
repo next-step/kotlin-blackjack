@@ -1,7 +1,5 @@
-package blackjack
+package blackjack.card
 
-import blackjack.card.Card
-import blackjack.card.Deck
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe

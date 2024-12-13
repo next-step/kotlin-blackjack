@@ -1,8 +1,5 @@
-package blackjack
+package blackjack.card
 
-import blackjack.card.Card
-import blackjack.card.CardNumber
-import blackjack.card.CardSuit
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 

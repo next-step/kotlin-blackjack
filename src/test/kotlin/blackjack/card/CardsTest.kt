@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.card
 
 import blackjack.card.Card
 import blackjack.card.CardNumber
