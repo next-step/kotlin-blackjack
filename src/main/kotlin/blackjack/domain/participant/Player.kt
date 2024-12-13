@@ -14,10 +14,6 @@ class Player(
         }
     }
 
-    override fun canReceiveCard(): Boolean = cards.sum() < BLACKJACK_SUM
-
-    companion object {
-        private const val BLACKJACK_SUM = 21
-    }
+    override fun canReceiveCard(): Boolean = !cards.isBlackjack() && !cards.isBusted()
 
 }
