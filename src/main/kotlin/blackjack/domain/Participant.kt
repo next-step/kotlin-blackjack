@@ -7,7 +7,9 @@ interface Participant {
     val score: Int
 
     fun addCards(newCards: List<Card>)
+
     fun canContinue(): Boolean
+
     fun isBlackjack(): Boolean
 }
 

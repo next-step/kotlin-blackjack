@@ -7,13 +7,14 @@ import blackjack.view.InputView
 import blackjack.view.ResultView
 
 fun main() {
-    val playersInfo = InputView.inputPlayerNames()
-        .split(",")
-        .map { it.trim() }
-        .map { name ->
-            val bet = InputView.inputPlayerBet(name)
-            PlayerInfo(name, bet)
-        }
+    val playersInfo =
+        InputView.inputPlayerNames()
+            .split(",")
+            .map { it.trim() }
+            .map { name ->
+                val bet = InputView.inputPlayerBet(name)
+                PlayerInfo(name, bet)
+            }
     val game = Game(playersInfo)
     val decisionMaker = ConsolePlayerDecision()
 

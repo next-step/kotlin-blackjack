@@ -1,7 +1,10 @@
 package blackjack.domain
 
 object GameRules {
-    fun determineResult(player: Participant, dealer: Participant): GameResult {
+    fun determineResult(
+        player: Participant,
+        dealer: Participant,
+    ): GameResult {
         return when {
             player.isBlackjack() && dealer.isBlackjack() -> GameResult.DRAW
             player.isBlackjack() -> GameResult.WIN

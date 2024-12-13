@@ -24,7 +24,7 @@ class Deck(
     fun drawCards(count: Int): List<Card> {
         require(count > 0) { MINIMUM_CARD_COUNT_EXCEPTION_MESSAGE }
         if (cards.size < count) {
-            throw IllegalStateException( NOT_ENOUGH_CARDS_EXCEPTION_MESSAGE )
+            throw IllegalStateException(NOT_ENOUGH_CARDS_EXCEPTION_MESSAGE)
         }
         return List(count) { cards.removeAt(0) }
     }

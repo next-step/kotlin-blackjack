@@ -5,9 +5,10 @@ class Game(
 ) {
     private val deck = Deck()
     val dealer: Dealer = Dealer(deck, playersInfo.find { it.name == "딜러" }?.bet ?: 0)
-    val players: List<Player> = playersInfo
-        .filter { it.name != "딜러" }
-        .map { Player(it.name, it.bet) }
+    val players: List<Player> =
+        playersInfo
+            .filter { it.name != "딜러" }
+            .map { Player(it.name, it.bet) }
 
     init {
         dealer.initialDraw()
@@ -26,7 +27,10 @@ class Game(
         return results to dealerDrewCard
     }
 
-    private fun handlePlayerTurn(player: Player, decisionMaker: PlayerDecision) {
+    private fun handlePlayerTurn(
+        player: Player,
+        decisionMaker: PlayerDecision,
+    ) {
         while (player.canContinue()) {
             if (!decisionMaker.shouldDrawCard(player.name)) break
             player.addCards(deck.drawCards(1))
@@ -49,21 +53,24 @@ class Game(
     }
 
     fun calculateProfits(): Map<String, Int> {
-        val dealerProfit = players.sumOf { player ->
-            when (GameRules.determineResult(player, dealer)) {
-                GameResult.WIN -> -player.bet
-                GameResult.LOSE -> player.bet
-                else -> 0
+        val dealerProfit =
+            players.sumOf { player ->
+                when (GameRules.determineResult(player, dealer)) {
+                    GameResult.WIN -> -player.bet
+                    GameResult.LOSE -> player.bet
+                    else -> 0
+                }
             }
-        }
 
-        val playerProfits = players.associate { player ->
-            player.name to when (GameRules.determineResult(player, dealer)) {
-                GameResult.WIN -> player.bet
-                GameResult.LOSE -> -player.bet
-                else -> 0
+        val playerProfits =
+            players.associate { player ->
+                player.name to
+                    when (GameRules.determineResult(player, dealer)) {
+                        GameResult.WIN -> player.bet
+                        GameResult.LOSE -> -player.bet
+                        else -> 0
+                    }
             }
-        }
 
         return playerProfits + ("딜러" to dealerProfit)
     }
