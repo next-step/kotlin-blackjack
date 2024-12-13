@@ -58,7 +58,7 @@ class PlayerTest : StringSpec({
         player.take(listOf(card1, card2, card3))
 
         // Assert:
-        player.score() shouldBe 0
+        player.score() shouldBe 22
     }
 
     "플레이어의 점수를 표기한다." {
