@@ -4,11 +4,12 @@ package study.blackjack.model
  * @author 이상준
  */
 
-enum class Match(val text: String) {
-    WIN("승"),
-    LOSE("패"),
-    PUSH("무승부"),
-    WAIT("대기"),
+enum class Match(val operation: (Int) -> Double) {
+    BLACKJACK({ profit -> profit * 1.5 }),
+    WIN({ profit -> profit.toDouble() }),
+    LOSE({ profit -> -profit.toDouble() }),
+    PUSH({ profit -> profit.toDouble() }),
+    WAIT({ profit -> profit.toDouble() }),
     ;
 
     companion object {
@@ -18,7 +19,7 @@ enum class Match(val text: String) {
         ): Match {
             return when {
                 blackjackCheck(playerScore) && blackjackCheck(dealerScore) -> PUSH
-                blackjackCheck(playerScore) -> WIN
+                blackjackCheck(playerScore) -> BLACKJACK
                 blackjackCheck(dealerScore) -> LOSE
                 bustCheck(playerScore) -> LOSE
                 bustCheck(dealerScore) -> WIN
@@ -28,14 +29,14 @@ enum class Match(val text: String) {
             }
         }
 
-        const val BLACKJACK = 21
+        fun bustCheck(score: Int): Boolean {
+            return score > BLACKJACK_NUMBER
+        }
 
         private fun blackjackCheck(score: Int): Boolean {
-            return score == BLACKJACK
+            return score == BLACKJACK_NUMBER
         }
 
-        fun bustCheck(score: Int): Boolean {
-            return score > BLACKJACK
-        }
+        const val BLACKJACK_NUMBER = 21
     }
 }
