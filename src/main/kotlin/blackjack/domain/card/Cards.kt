@@ -20,12 +20,14 @@ data class Cards(
         return totalSum
     }
 
-    fun isBusted(): Boolean = sum() > MAX_CARDS_SUM
+    fun isBusted(): Boolean = sum() > BLACKJACK_SUM
 
-    fun isBlackjack(): Boolean = cards.size == 2 && sum() == MAX_CARDS_SUM
+    fun isTwoCardBlackjack(): Boolean = cards.size == 2 && sum() == BLACKJACK_SUM
+
+    fun isBlackjack(): Boolean = sum() == BLACKJACK_SUM
 
     private fun getAceValue(ace: CardRank.Ace, currentSum: Int): Int {
-        return if (currentSum + ace.toEleven() <= MAX_CARDS_SUM) {
+        return if (currentSum + ace.toEleven() <= BLACKJACK_SUM) {
             ace.toEleven()
         } else {
             ace.value
@@ -33,7 +35,7 @@ data class Cards(
     }
 
     companion object {
-        private const val MAX_CARDS_SUM = 21
+        private const val BLACKJACK_SUM = 21
     }
 
 }

@@ -42,8 +42,8 @@ class BlackjackGame(
     }
 
     private fun Player.resultType(dealer: Dealer): GameResultType {
-        if (this.cards.isBlackjack()) {
-            return if (dealer.cards.isBlackjack()) {
+        if (this.cards.isTwoCardBlackjack()) {
+            return if (dealer.cards.isTwoCardBlackjack()) {
                 GameResultType.PUSH
             } else {
                 GameResultType.BLACKJACK_WIN
