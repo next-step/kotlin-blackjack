@@ -4,7 +4,7 @@ import blackjack.domain.Player
 
 class SinglePlayerResponse(private val player: Player) {
     fun toFormattedStringPlayerName(): String {
-        return player.getName()
+        return player.getName().value
     }
 
     fun toFormattedStringPlayerCards(): String {

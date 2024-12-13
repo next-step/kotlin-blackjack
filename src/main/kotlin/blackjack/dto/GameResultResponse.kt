@@ -34,7 +34,7 @@ class GameResultResponse(private val gameResult: BlackjackGameResult) {
 
     private fun formatPlayerResults(playerGameResults: Map<Player, GameMatchResult>): String {
         return playerGameResults.entries.joinToString("\n") { (player, gameMatchResult) ->
-            "${player.getName()}: ${gameMatchResult.result}"
+            "${player.getName().value}: ${gameMatchResult.result}"
         }
     }
 
@@ -42,7 +42,7 @@ class GameResultResponse(private val gameResult: BlackjackGameResult) {
         val dealerProfit = gameResult.calculateDealerProfit()
         val playerProfits =
             gameResult.calculatePlayerProfits().map { (player, profit) ->
-                "${player.getName()}: $profit"
+                "${player.getName().value}: $profit"
             }
         return "딜러: $dealerProfit\n" + playerProfits.joinToString("\n")
     }

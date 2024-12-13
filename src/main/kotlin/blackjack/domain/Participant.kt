@@ -23,8 +23,8 @@ abstract class Participant(private val name: PlayerName) {
         return state.isBust()
     }
 
-    fun getName(): String {
-        return name.value
+    fun getName(): PlayerName {
+        return name
     }
 
     fun getAllCards(): List<Card> {

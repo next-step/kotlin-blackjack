@@ -8,5 +8,5 @@ interface BlackjackInputAdapter {
 
     fun fetchBettingMoney(playerName: String): Int
 
-    fun fetchMoreCard(playerName: String): HitStayChoice
+    fun fetchMoreCard(playerName: PlayerName): HitStayChoice
 }

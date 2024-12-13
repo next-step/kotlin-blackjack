@@ -5,12 +5,12 @@ import blackjack.domain.Participants
 
 class ParticipantsResponse(private val participants: Participants) {
     fun toFormattedStringPlayerNames(): String {
-        return participants.players.joinToString(", ") { player -> player.getName() }
+        return participants.players.joinToString(", ") { player -> player.getName().value }
     }
 
     fun toFormattedStringInitialParticipantsCard(): String {
         return participants.getAllParticipants().joinToString("\n") { participant ->
-            "${participant.getName()}: ${participant.getInitialCard().joinToString(", ") { it.display() }}"
+            "${participant.getName().value}: ${participant.getInitialCard().joinToString(", ") { it.display() }}"
         }
     }
 
@@ -19,7 +19,7 @@ class ParticipantsResponse(private val participants: Participants) {
             val cards = player.getAllCards()
             val scoreDisplay = formattedStringSpecificCase(player)
 
-            "${player.getName()}: ${cards.joinToString(", ") { it.display() }} - $scoreDisplay"
+            "${player.getName().value}: ${cards.joinToString(", ") { it.display() }} - $scoreDisplay"
         }
     }
 
