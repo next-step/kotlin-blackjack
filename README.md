@@ -4,7 +4,7 @@
 
 ### 피드백 - 1
 
-- [ ] 정적 팩터리 메서드로 Players.of(playerNames)로 변경
+- [x] 정적 팩터리 메서드로 Players.of(playerNames)로 변경
 - [ ] 플레이어가 추가 카드를 받는 것에 대한 로직을 개선
 - [ ] CardNumber의 이름을 개선 
   - [ ] ONE -> ACE

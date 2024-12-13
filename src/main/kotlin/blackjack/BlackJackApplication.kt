@@ -4,7 +4,7 @@ fun main() {
     val playerNames = InputView.inputPlayerNames()
 
     val deck = Deck()
-    val gamePlayer = Players(playerNames.map { Player(PlayerName(it)) })
+    val gamePlayer = Players.of(playerNames)
     val game = BlackJackGame(gamePlayer, deck)
 
     val startGame = game.start()
