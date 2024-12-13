@@ -32,14 +32,4 @@ class DeckTest : StringSpec({
             deck.drawCards(0)
         }.message shouldBe "1장 이상의 카드를 뽑아야 합니다."
     }
-
-    "카드를 모두 소진하면 덱을 다시 채운다." {
-        val deck = Deck(shuffleStrategy = {})
-
-        deck.drawCards(52)
-
-        val newDrawnCards = deck.drawCards(5)
-        newDrawnCards.size shouldBe 5
-        deck.getCurrentCardCount() shouldBe 47
-    }
 })

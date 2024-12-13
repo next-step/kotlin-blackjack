@@ -7,12 +7,10 @@ class Deck(
     private val cards = mutableListOf<Card>()
 
     init {
-        refillDeck()
-        shuffleStrategy(cards)
+        initializeDeck()
     }
 
-    private fun refillDeck() {
-        cards.clear()
+    private fun initializeDeck() {
         repeat(numberOfDecks) {
             CardShape.entries.forEach { shape ->
                 CardNumber.entries.forEach { number ->
@@ -20,15 +18,15 @@ class Deck(
                 }
             }
         }
+        shuffleStrategy(cards)
     }
 
     fun drawCards(count: Int): List<Card> {
         require(count > 0) { MINIMUM_CARD_COUNT_EXCEPTION_MESSAGE }
         if (cards.size < count) {
-            refillDeck()
-            shuffleStrategy(cards)
+            throw IllegalStateException( NOT_ENOUGH_CARDS_EXCEPTION_MESSAGE )
         }
-        return List(count) { cards.removeAt(0) }.toList()
+        return List(count) { cards.removeAt(0) }
     }
 
     fun peekCards(count: Int): List<Card> {
@@ -40,5 +38,6 @@ class Deck(
 
     companion object {
         private const val MINIMUM_CARD_COUNT_EXCEPTION_MESSAGE = "1장 이상의 카드를 뽑아야 합니다."
+        private const val NOT_ENOUGH_CARDS_EXCEPTION_MESSAGE = "더 이상 뽑을 카드가 없습니다."
     }
 }
