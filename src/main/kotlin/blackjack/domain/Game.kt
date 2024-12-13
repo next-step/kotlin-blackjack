@@ -1,58 +1,83 @@
 package blackjack.domain
 
-class Game(playerNames: List<String>) {
+class Game(
+    private val playersInfo: List<PlayerInfo>,
+) {
     private val deck = Deck()
-    val dealer = Dealer(deck)
-    val players: List<Player> = playerNames.map { Player(it) }
+    val dealer: Dealer = Dealer(deck, playersInfo.find { it.name == "딜러" }?.bet ?: 0)
+    val players: List<Player> =
+        playersInfo
+            .filter { it.name != "딜러" }
+            .map { Player(it.name, it.bet) }
 
     init {
         dealer.initialDraw()
         players.forEach { it.addCards(deck.drawCards(2)) }
     }
 
-    fun canContinue(player: Player): Boolean {
-        return player.score <= 21
+    fun getInitialState(): Pair<Card, List<Pair<String, List<Card>>>> {
+        return dealer.cards[0] to players.map { it.name to it.cards }
     }
 
-    fun handlePlayerTurn(
+    fun start(decisionMaker: PlayerDecision): Pair<Map<String, GameResult>, Boolean> {
+        players.forEach { handlePlayerTurn(it, decisionMaker) }
+        val dealerDrewCard = handleDealerTurn()
+
+        val results = determineResults()
+        return results to dealerDrewCard
+    }
+
+    private fun handlePlayerTurn(
         player: Player,
-        input: (String) -> String,
+        decisionMaker: PlayerDecision,
     ) {
-        while (canContinue(player)) {
-            if (input(player.name) != "y") break
+        while (player.canContinue()) {
+            if (!decisionMaker.shouldDrawCard(player.name)) break
             player.addCards(deck.drawCards(1))
         }
     }
 
-    fun handleDealerTurn(): Boolean {
-        if (dealer.shouldDrawCard()) {
+    private fun handleDealerTurn(): Boolean {
+        var drewCard = false
+        while (dealer.shouldDrawCard()) {
             dealer.drawCard()
-            return true
+            drewCard = true
         }
-        return false
+        return drewCard
     }
 
-    fun determineResults(): Map<String, String> {
-        val results = mutableMapOf<String, String>()
-        if (dealer.score > 21) {
-            players.forEach { results[it.name] = "승" }
-            return results
+    private fun determineResults(): Map<String, GameResult> {
+        return players.associate { player ->
+            player.name to GameRules.determineResult(player, dealer)
         }
+    }
 
-        players.forEach { player ->
-            results[player.name] =
-                when {
-                    player.score > 21 || dealer.score > player.score -> "패"
-                    player.score == dealer.score -> "무승부"
-                    else -> "승"
+    fun calculateProfits(): Map<String, Int> {
+        val dealerProfit =
+            players.sumOf { player ->
+                when (GameRules.determineResult(player, dealer)) {
+                    GameResult.WIN -> -player.bet
+                    GameResult.LOSE -> player.bet
+                    else -> 0
                 }
-        }
-        return results
+            }
+
+        val playerProfits =
+            players.associate { player ->
+                player.name to
+                    when (GameRules.determineResult(player, dealer)) {
+                        GameResult.WIN -> player.bet
+                        GameResult.LOSE -> -player.bet
+                        else -> 0
+                    }
+            }
+
+        return playerProfits + ("딜러" to dealerProfit)
     }
 
-    fun calculateDealerResult(results: Map<String, String>): String {
-        val wins = results.values.count { it == "패" }
-        val losses = results.size - wins
-        return "${wins}승 ${losses}패"
+    fun getFinalScores(): Pair<List<Pair<String, Int>>, Pair<List<Card>, Int>> {
+        val playerScores = players.map { it.name to it.score }
+        val dealerState = dealer.cards to dealer.score
+        return playerScores to dealerState
     }
 }
