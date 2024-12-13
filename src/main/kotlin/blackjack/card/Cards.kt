@@ -1,6 +1,8 @@
 package blackjack.card
 
-data class Cards(private val _cards: MutableList<Card> = mutableListOf()) {
+data class Cards(
+    private val _cards: MutableList<Card> = mutableListOf(),
+) {
     val cards: List<Card>
         get() = _cards.toList()
 
@@ -13,11 +15,11 @@ data class Cards(private val _cards: MutableList<Card> = mutableListOf()) {
     }
 
     fun bestScore(): Int {
-        return possibleScoreSum().filter { it <= BLACKJACK }.maxOrNull() ?: ZERO
+        return possibleScoreSum().max()
     }
 
     fun isBust(): Boolean {
-        return possibleScoreSum().any { it >= BLACKJACK }
+        return possibleScoreSum().all { it > SCORE_LIMIT }
     }
 
     private fun possibleScoreSum(): List<Int> {
@@ -33,7 +35,7 @@ data class Cards(private val _cards: MutableList<Card> = mutableListOf()) {
     }
 
     companion object {
-        private const val BLACKJACK = 21
+        private const val SCORE_LIMIT = 21
         private const val ACE_POINT = 10
         private const val ZERO = 0
 

@@ -70,16 +70,17 @@ class CardsTest : StringSpec({
         cards.isBust() shouldBe true
     }
 
-    "보유한 카드팩의 합이 21이 넘으면 버스터(탈락)가 된다. (단, Ace는 11로 계산될 수 있다.)" {
+    "보유한 카드팩의 합이 21이 초과되면 버스터(탈락)가 된다. (단, Ace는 1로 계산될 수 있다.)" {
         // Arrange:
         val cards = Cards()
         val card1 = Card(CardNumber.TEN, CardSuit.SPADES)
-        val card2 = Card(CardNumber.ACE, CardSuit.SPADES)
+        val card2 = Card(CardNumber.JACK, CardSuit.SPADES)
+        val card3 = Card(CardNumber.ACE, CardSuit.SPADES)
 
         // Act:
-        cards.addAll(listOf(card1, card2))
+        cards.addAll(listOf(card1, card2, card3))
 
         // Assert:
-        cards.isBust() shouldBe true
+        cards.isBust() shouldBe false
     }
 })

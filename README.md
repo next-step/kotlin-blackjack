@@ -5,11 +5,11 @@
 ### 피드백 - 1
 
 - [x] 정적 팩터리 메서드로 Players.of(playerNames)로 변경
+- [x] CardNumber의 이름을 개선
+- [x] ONE -> ACE
 - [ ] 플레이어가 추가 카드를 받는 것에 대한 로직을 개선
-- [x] CardNumber의 이름을 개선 
-  - [x] ONE -> ACE
-- [ ] 블랙잭 규칙을 다시 알아보기
-  - [ ] Cards.bestScore() 변경 필요
+- [x] 블랙잭 규칙을 다시 알아보기
+  - [x] Cards.bestScore() 변경 필요
 - [ ] 플레이어의 상태(Bust, Blackjack)를 추가
 - [ ] 버스터에 대한 테스트 케이스 추가
 
