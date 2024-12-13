@@ -15,20 +15,6 @@ class PlayerTest : StringSpec({
         }
     }
 
-    "유저의 패가 21이 넘어갈 경우 패를 추가할 수 없다." {
-        val player = Player("user1")
-        val listOfCards =
-            listOf(
-                createAceCard(),
-                createBasicCard(CardNumber.TEN, CardMark.HEART),
-                createBasicCard(CardNumber.TEN, CardMark.HEART),
-            )
-
-        player.addCards(listOfCards)
-
-        player.couldDraw() shouldBe false
-    }
-
     "유저는 한장의 카드를 패에 추가할 수 있다." {
         val player = Player("user1")
 

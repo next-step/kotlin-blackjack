@@ -1,5 +1,6 @@
 package blackjack.view
 
+import blackjack.BlackJackGame
 import blackjack.domain.CardMark
 import blackjack.domain.Player
 
@@ -8,11 +9,6 @@ object OutputView {
     private const val HEART_STR = "하트"
     private const val DIAMOND_STR = "다이아몬드"
     private const val CLOVER_STR = "클로버"
-
-    fun printDefaultPlayerCards(players: List<Player>) {
-        println("${players.joinToString { it.name }}에게 2장의 카드를 나누었습니다.")
-        players.forEach(::printPlayerCards)
-    }
 
     fun printPlayerCards(player: Player) {
         val outputMessage =
@@ -27,8 +23,16 @@ object OutputView {
         println(outputMessage)
     }
 
-    fun printResult(players: List<Player>) {
-        players.forEach { "${printPlayerCards(it)} - 결과: ${it.getCardsMaxSum()}" }
+    fun printGameResult(game: BlackJackGame) {
+        game.players.members.forEach { printPlayer(it) }
+    }
+
+    fun printCurrentStatus(game: BlackJackGame) {
+        game.players.members.forEach(::printPlayerCards)
+    }
+
+    private fun printPlayer(player: Player) {
+        println("${printPlayerCards(player)} - 결과: ${player.getCardsMaxSum()}")
     }
 
     private fun convertMarkToString(mark: CardMark) =
@@ -38,8 +42,4 @@ object OutputView {
             CardMark.DIAMOND -> DIAMOND_STR
             CardMark.CLOVER -> CLOVER_STR
         }
-
-    fun printBustMessage(player: Player) {
-        println("${player.name} 유저가 bust 되었습니다.")
-    }
 }
