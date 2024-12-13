@@ -47,8 +47,6 @@ class GameTest : DescribeSpec({
                 sut.processPlayerTurn(player, HitCommand.STAY)
                 player.ownedCards.size shouldBe 0
             }
-
-            it("턴을 종료한다.") {}
         }
     }
 
@@ -62,10 +60,10 @@ class GameTest : DescribeSpec({
         }
 
         context("Player가 hit을 원하는 경우") {
-            it("should be true") {
+            it("should be false") {
                 val pobi = players.allPlayers()[0]
                 val actual = sut.isPlayerDone(pobi)
-                actual shouldBe true
+                actual shouldBe false
             }
         }
     }

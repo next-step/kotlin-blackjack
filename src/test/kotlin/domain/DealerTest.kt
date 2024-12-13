@@ -32,7 +32,7 @@ class DealerTest : DescribeSpec({
         }
 
         it("덱에서 카드를 한장 뽑는다.") {
-
+            sut.hit(player)
             player.ownedCards shouldContainExactly
                 listOf(
                     Card(Suit.CLUBS, CardNumber.ACE),
