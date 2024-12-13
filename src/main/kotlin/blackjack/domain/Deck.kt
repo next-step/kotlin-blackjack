@@ -28,7 +28,7 @@ class Deck(
             refillDeck()
             shuffleStrategy(cards)
         }
-        return List(count) { cards.removeAt(0) }
+        return List(count) { cards.removeAt(0) }.toList()
     }
 
     fun peekCards(count: Int): List<Card> {

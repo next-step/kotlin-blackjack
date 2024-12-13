@@ -25,5 +25,5 @@ class Hand(private val cards: List<Card> = listOf()) {
         }
     }
 
-    fun getCards(): List<Card> = cards.toList()
+    fun getCards(): List<Card> = cards
 }
