@@ -16,7 +16,11 @@ fun main() {
     OutputView.printPlayersStartCardPack(startGame.gamePlayers)
 
     gamePlayer.player.forEach { player ->
-        while (player.isNotBust() && InputView.inputMoreCard(player.name)) {
+        while (player.isNotBust()) {
+            val isMoreCard = InputView.inputMoreCard(player.name)
+            if(!isMoreCard) {
+                break
+            }
             player.take(deck.pick())
             OutputView.printPlayerCard(player)
         }
