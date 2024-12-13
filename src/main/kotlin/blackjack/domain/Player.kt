@@ -22,9 +22,26 @@ data class Player(
         return actions.lastOrNull() == HitCommand.STAY
     }
 
-    private fun sumOfCard(): Int {
-        // todo: ACE 카드에 대한 계산 추가
-        return ownedCards.map { it.number.score }
-            .sumOf { it }
+    fun sumOfCard(): Int {
+        var totalSum = 0
+        var numberOfAce = 0
+
+        for (card in ownedCards) {
+            if (card.number == CardNumber.ACE) {
+                numberOfAce++
+                totalSum += CardNumber.ACE.score
+            } else {
+                totalSum += card.number.score
+            }
+        }
+
+        while (numberOfAce > 0 && totalSum < 21) {
+            numberOfAce--
+            totalSum += 10
+            if (totalSum > 21) {
+                totalSum -= 10
+            }
+        }
+        return totalSum
     }
 }

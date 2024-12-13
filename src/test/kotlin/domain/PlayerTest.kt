@@ -29,4 +29,54 @@ class PlayerTest : DescribeSpec({
             player.ownedCards[0] shouldBe card
         }
     }
+
+    describe("플레이어의 카드 숫자를 모두 더한다") {
+        lateinit var sut: Player
+        context("ace가 없는 경우") {
+            it("숫자를 모두 더한다.") {
+                val cardList =
+                    mutableListOf(
+                        Card(Suit.SPADES, CardNumber.NINE),
+                        Card(Suit.SPADES, CardNumber.TEN),
+                    )
+                sut = Player("pobi", cardList)
+                sut.sumOfCard() shouldBe 19
+            }
+
+            it("J, Q, K 는 10으로 계산한다.") {
+                val cardList =
+                    mutableListOf(
+                        Card(Suit.SPADES, CardNumber.KING),
+                        Card(Suit.SPADES, CardNumber.JACK),
+                    )
+                sut = Player("pobi", cardList)
+                val actual = sut.sumOfCard()
+                actual shouldBe 20
+            }
+        }
+
+        context("ACE를 가지고 있는 경우") {
+            it("ACE는 1 또는 11로 계산할 수 있다") {
+                val cardList =
+                    mutableListOf(
+                        Card(Suit.SPADES, CardNumber.ACE),
+                        Card(Suit.SPADES, CardNumber.TEN),
+                    )
+                sut = Player("pobi", cardList)
+                val actual = sut.sumOfCard()
+                actual shouldBe 21
+            }
+
+            it("ACE를 계산할 때 21을 넘으면 안된다.") {
+                val cardList =
+                    mutableListOf(
+                        Card(Suit.SPADES, CardNumber.ACE),
+                        Card(Suit.CLUBS, CardNumber.ACE),
+                    )
+                sut = Player("pobi", cardList)
+                val actual = sut.sumOfCard()
+                actual shouldBe 12
+            }
+        }
+    }
 })
