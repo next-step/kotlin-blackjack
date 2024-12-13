@@ -4,7 +4,7 @@ enum class CardNumber(
     val description: String,
     val score: Int,
 ) {
-    ONE("A", 1),
+    ACE("A", 1),
     TWO("2", 2),
     THREE("3", 3),
     FOUR("4", 4),

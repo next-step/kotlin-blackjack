@@ -6,9 +6,8 @@
 
 - [x] 정적 팩터리 메서드로 Players.of(playerNames)로 변경
 - [ ] 플레이어가 추가 카드를 받는 것에 대한 로직을 개선
-- [ ] CardNumber의 이름을 개선 
-  - [ ] ONE -> ACE
-  - [ ] ELEVEN -> JACK
+- [x] CardNumber의 이름을 개선 
+  - [x] ONE -> ACE
 - [ ] 블랙잭 규칙을 다시 알아보기
   - [ ] Cards.bestScore() 변경 필요
 - [ ] 플레이어의 상태(Bust, Blackjack)를 추가

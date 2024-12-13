@@ -6,20 +6,20 @@ import io.kotest.matchers.shouldBe
 class CardTest : StringSpec({
     "카드는 숫자와 모양으로 구성된다." {
         // Arrange:
-        val number = CardNumber.ONE
+        val number = CardNumber.ACE
         val suit = CardSuit.SPADES
 
         // Act:
         val card = Card(number, suit)
 
         // Assert:
-        card.number shouldBe CardNumber.ONE
+        card.number shouldBe CardNumber.ACE
         card.suit shouldBe CardSuit.SPADES
     }
 
     "카드가 Ace인지 확인할 수 있다." {
         // Arrange:
-        val card = Card(CardNumber.ONE, CardSuit.SPADES)
+        val card = Card(CardNumber.ACE, CardSuit.SPADES)
 
         // Act:
         val result = card.isAce()
@@ -30,7 +30,7 @@ class CardTest : StringSpec({
 
     "카드의 문자열 표현을 확인할 수 있다." {
         // Arrange:
-        val card = Card(CardNumber.ONE, CardSuit.SPADES)
+        val card = Card(CardNumber.ACE, CardSuit.SPADES)
 
         // Act:
         val result = card.toString()

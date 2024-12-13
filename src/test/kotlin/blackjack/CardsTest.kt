@@ -8,7 +8,7 @@ class CardsTest : StringSpec({
     "카드를 받을 수 있다." {
         // Arrange:
         val cards = Cards()
-        val card = Card(CardNumber.ONE, CardSuit.SPADES)
+        val card = Card(CardNumber.ACE, CardSuit.SPADES)
 
         // Act:
         cards.add(card)
@@ -20,7 +20,7 @@ class CardsTest : StringSpec({
     "카드를 여러장 뽑을 수 있다." {
         // Arrange:
         val cards = Cards()
-        val card1 = Card(CardNumber.ONE, CardSuit.SPADES)
+        val card1 = Card(CardNumber.ACE, CardSuit.SPADES)
         val card2 = Card(CardNumber.TWO, CardSuit.SPADES)
 
         // Act:
@@ -57,7 +57,7 @@ class CardsTest : StringSpec({
         val cards = Cards()
         val card1 = Card(CardNumber.TEN, CardSuit.SPADES)
         val card2 = Card(CardNumber.TEN, CardSuit.SPADES)
-        val card3 = Card(CardNumber.ONE, CardSuit.SPADES)
+        val card3 = Card(CardNumber.ACE, CardSuit.SPADES)
 
         // Act:
         cards.addAll(listOf(card1, card2, card3))
@@ -70,7 +70,7 @@ class CardsTest : StringSpec({
         // Arrange:
         val cards = Cards()
         val card1 = Card(CardNumber.TEN, CardSuit.SPADES)
-        val card2 = Card(CardNumber.ONE, CardSuit.SPADES)
+        val card2 = Card(CardNumber.ACE, CardSuit.SPADES)
 
         // Act:
         cards.addAll(listOf(card1, card2))

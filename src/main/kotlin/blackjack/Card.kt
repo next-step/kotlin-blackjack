@@ -9,6 +9,6 @@ data class Card(
     }
 
     fun isAce(): Boolean {
-        return number == CardNumber.ONE
+        return number == CardNumber.ACE
     }
 }

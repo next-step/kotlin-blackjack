@@ -8,7 +8,7 @@ class PlayerTest : StringSpec({
     "플레이어는 카드를 한 장 받을 수 있다." {
         // Arrange:
         val player = Player(PlayerName("test"))
-        val card = Card(CardNumber.ONE, CardSuit.SPADES)
+        val card = Card(CardNumber.ACE, CardSuit.SPADES)
 
         // Act:
         player.take(card)
@@ -20,7 +20,7 @@ class PlayerTest : StringSpec({
     "플레이어는 카드를 여러 장 받을 수 있다." {
         // Arrange:
         val player = Player(PlayerName("test"))
-        val card1 = Card(CardNumber.ONE, CardSuit.SPADES)
+        val card1 = Card(CardNumber.ACE, CardSuit.SPADES)
         val card2 = Card(CardNumber.TWO, CardSuit.SPADES)
 
         // Act:
