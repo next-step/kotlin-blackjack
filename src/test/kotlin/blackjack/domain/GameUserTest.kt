@@ -28,7 +28,6 @@ class GameUserTest {
         numbers.forEach {
             user.addCard(it)
         }
-        ResultView().printResultCards(listOf(user))
         user.points shouldBe points
     }
 

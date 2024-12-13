@@ -1,11 +1,13 @@
 package blackjack.domain
 
+import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
 class BlackJackCardTest {
     @Test
-    fun `카드를 숫자(인덱스)로 생성한다`() {
+    fun `카드 5를 생성하여 포인트를 확인한다`() {
         val card = BlackJackCard(CardType.SPADE, CardInfo.CARD_5)
-        println(card)
+        card.isAceCard() shouldBe false
+        card.getPoint() shouldBe 5
     }
 }

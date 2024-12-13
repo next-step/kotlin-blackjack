@@ -22,23 +22,14 @@ enum class YNBooleanValue(val key: String, val booleanValue: Boolean) {
 }
 
 class BlackJackGame(users: String) {
-    val gameUsers = mutableListOf<GameUser>()
-    lateinit var cardDeck: CardDeck
+    val gameUsers = settingUsers(users)
+    private val cardDeck = CardDeck()
 
-    init {
-        settingUsers(users)
-        initializeCardDeck()
-    }
-
-    private fun settingUsers(users: String) {
+    private fun settingUsers(users: String): List<GameUser> {
         val usersText = users.replace(" ", "")
-        usersText.split(",").forEach {
-            gameUsers.add(GameUser(it))
-        }
-    }
-
-    private fun initializeCardDeck() {
-        cardDeck = CardDeck()
+        return usersText.split(",").map {
+            GameUser(it)
+        }.toList()
     }
 
     private var inputView: InputView? = null
@@ -64,10 +55,9 @@ class BlackJackGame(users: String) {
         // 21이 넘는 경우 종료됨.
         when (decision) {
             true -> user.addCard(cardDeck.getNextCard())
-            false -> user.doneGame = true
+            false -> user.doneGame(true)
             else -> {}
         }
-        resultView?.printUserCards(user)
     }
 
     fun turnGameUser(
@@ -75,7 +65,7 @@ class BlackJackGame(users: String) {
         inputView: InputView,
     ) {
         inputView.startUser()
-        while (user.doneGame.not()) {
+        while (user.isDoneGame().not()) {
             val inputData = inputView.inputNextDecision(user.name)
             val decision = YNBooleanValue.toBoolean(inputData)
             handleCurrentInput(user, decision)

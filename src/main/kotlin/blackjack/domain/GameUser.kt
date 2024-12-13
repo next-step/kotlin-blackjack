@@ -1,13 +1,18 @@
 package blackjack.domain
 
 class GameUser(val name: String) {
-    var doneGame = false
-        get() = field || points >= BLACKJACK_POINT
+    private var doneGame = false
     val cards = mutableListOf<BlackJackCard>()
     val points: Int
-        get() {
-            return calculatePoints()
-        }
+        get() = calculatePoints()
+
+    fun doneGame(status: Boolean) {
+        doneGame = status
+    }
+
+    fun isDoneGame(): Boolean {
+        return doneGame || points >= BLACKJACK_POINT
+    }
 
     fun addCard(card: BlackJackCard) {
         cards.add(card)
@@ -19,19 +24,16 @@ class GameUser(val name: String) {
             cards.sumOf {
                 it.getPoint()
             }
-        val aceCount =
-            cards.filter {
-                it.isAceCard()
-            }.size
+        val aceCount = cards.any{ it.isAceCard() }
         return consumeAceCard(sumPoint, aceCount)
     }
 
     private fun consumeAceCard(
         sumPoint: Int,
-        aceCount: Int,
+        hasAceCard: Boolean,
     ): Int {
         return sumPoint +
-            if (aceCount > 0 && sumPoint <= ACE_CARD_THRESHOLD) {
+            if (hasAceCard && sumPoint <= ACE_CARD_THRESHOLD) {
                 ACE_CARD_EXTRA_POINT
             } else {
                 0
