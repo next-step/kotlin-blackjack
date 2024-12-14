@@ -1,13 +1,16 @@
 package blackjack.domain.player
 
-import blackjack.domain.Card
+import blackjack.domain.CardDeck
 
-class Player(val name: String) : AbstractPlayer() {
-    override fun drawCard(newCard: Card) {
-        cards.add(newCard)
-    }
-
-    override fun isBust(): Boolean {
-        return calculateCard() > 21
+class Player(name: String) : AbstractPlayer(name) {
+    override fun startTurn(
+        onTurnStarted: ((AbstractPlayer) -> String)?,
+        onPrintResultCallback: (List<AbstractPlayer>) -> Unit
+    ) {
+        while (!isBust() && onTurnStarted?.invoke(this) == YES) {
+            val card = CardDeck.drawCard()
+            drawCard(card)
+            onPrintResultCallback(listOf(this))
+        }
     }
 }
