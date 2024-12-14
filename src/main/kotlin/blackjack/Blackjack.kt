@@ -1,5 +1,6 @@
 package blackjack
 
+import blackjack.model.Player
 import blackjack.model.Players
 import blackjack.view.InputView
 import blackjack.view.ResultView
@@ -25,9 +26,17 @@ class Blackjack {
 
     private fun processPlayerTurns(players: Players) {
         for (player in players.players) {
-            while (true) {
-                val answerInput = inputView.getPlayerRequestInput(player.name)
-                if (blackjackController.checkPlayerRequest(answerInput, player)) break
+            processSinglePlayerTurn(player)
+        }
+    }
+
+    private fun processSinglePlayerTurn(player: Player) {
+        var continueTurn = true
+        while (continueTurn) {
+            val answerInput = inputView.getPlayerRequestInput(player.name)
+            if (blackjackController.checkPlayerRequest(answerInput, player)) {
+                continueTurn = false
+            } else {
                 resultView.renderPlayerCardsOutput(player.name, player.cards.toString())
             }
         }

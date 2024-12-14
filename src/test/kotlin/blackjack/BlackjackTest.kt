@@ -28,8 +28,9 @@ class BlackjackTest {
     @ParameterizedTest
     @ValueSource(strings = ["aaa,bbb", "aaa, bbb", "aaa , bbb"])
     fun `parsing test2`(input: String) {
-        val playerNames = input.split(",")
-        playerNames shouldBe listOf("aaa", "bbb")
+        val blackjackController = BlackjackController()
+        val players = blackjackController.createPlayers(input)
+        players.players.map { it.name } shouldBe listOf("aaa", "bbb")
     }
 
     @DisplayName("이름은 쉼표가 아니면 예외를 던진다.")
