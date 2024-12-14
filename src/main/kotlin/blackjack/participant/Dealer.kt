@@ -2,10 +2,13 @@ package blackjack.participant
 
 import blackjack.card.Card
 import blackjack.card.Cards
+import blackjack.domain.PlayerState
+import blackjack.domain.PlayerState.HIT
 
 data class Dealer(
     private val name: PlayerName = PlayerName(DEALER_NAME),
     var cards: Cards = Cards(),
+    var state: PlayerState = HIT
 ) : Participant(name) {
 
     fun take(newCards: List<Card>) {
@@ -16,12 +19,16 @@ data class Dealer(
         return cards.bestScore()
     }
 
-    override fun toString(): String {
-        return "${name.value}카드: $cards"
-    }
-
     fun isMoreCard(): Boolean {
         return score() < MORE_CARD_CONDITION_SCORE
+    }
+
+    fun stand() {
+        state = PlayerState.STAND
+    }
+
+    override fun toString(): String {
+        return "${name.value}카드: $cards"
     }
 
     companion object {

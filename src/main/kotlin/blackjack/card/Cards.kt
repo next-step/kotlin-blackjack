@@ -6,21 +6,12 @@ data class Cards(
     val cards: List<Card>
         get() = _cards.toList()
 
-    fun add(card: Card) {
-        _cards.add(card)
-    }
-
     fun addAll(cards: List<Card>) {
         _cards.addAll(cards)
     }
 
     fun bestScore(): Int {
         return possibleScoreSum().max()
-    }
-
-    // TODO: Player에게 묻도록 변경
-    fun isBust(): Boolean {
-        return possibleScoreSum().all { it > SCORE_LIMIT }
     }
 
     fun getOpenCard(): String {
@@ -40,16 +31,10 @@ data class Cards(
     }
 
     companion object {
-        private const val SCORE_LIMIT = 21
         private const val ACE_POINT = 10
-        private const val ZERO = 0
 
-        fun createCardPack(): List<Card> {
-            return CardSuit.entries.flatMap { suit -> CardNumber.entries.map { Card(it, suit) } }
-        }
-
-        fun create(newCards: List<Card>): Cards {
-            return Cards(newCards.toMutableList())
+        fun createShuffledCardPack(): List<Card> {
+            return CardSuit.entries.flatMap { suit -> CardNumber.entries.map { Card(it, suit) } }.shuffled()
         }
     }
 }

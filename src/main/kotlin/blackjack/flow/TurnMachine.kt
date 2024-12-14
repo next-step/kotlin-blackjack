@@ -16,9 +16,11 @@ data class TurnMachine(
         while (!player.isBust()) {
             val isMoreCard = moreCardPolicy.isMoreCard(player.getName())
             if (!isMoreCard) {
+                player.stand()
                 break
             }
             player.take(listOf(deck.pick()))
+            player.refreshState()
             OutputView.printPlayerCard(player)
         }
     }
@@ -28,5 +30,6 @@ data class TurnMachine(
             dealer.take(listOf(deck.pick()))
             outputView.printDealerMoreCard()
         }
+        dealer.stand()
     }
 }
