@@ -6,5 +6,7 @@ import blackjack.domain.PlayerName
 interface BlackjackInputAdapter {
     fun fetchPlayerNames(): List<PlayerName>
 
-    fun fetchMoreCard(playerName: String): HitStayChoice
+    fun fetchBettingMoney(playerName: String): Int
+
+    fun fetchMoreCard(playerName: PlayerName): HitStayChoice
 }

@@ -5,20 +5,12 @@ import blackjack.domain.Hand
 
 sealed class Finished(hand: Hand) : Running(hand) {
     override fun draw(card: Card): State {
-        throw finishedException()
+        throw IllegalStateException("이미 종료된 상태입니다.")
     }
 
-    override fun stay(): State {
-        throw finishedException()
-    }
-
-    override fun isFinished(): Boolean = true
-
-    private fun finishedException() = IllegalStateException("이미 종료된 상태입니다.")
+    override fun isFinished() = true
 }
 
 class Bust(hand: Hand) : Finished(hand)
-
-class Stay(hand: Hand) : Finished(hand)
 
 class Blackjack(hand: Hand) : Finished(hand)

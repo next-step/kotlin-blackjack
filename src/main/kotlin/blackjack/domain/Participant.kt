@@ -3,23 +3,32 @@ package blackjack.domain
 import blackjack.domain.state.Initial
 import blackjack.domain.state.State
 
-abstract class Participant(private val name: PlayerName, private val hand: Hand) {
-    protected var state: State = Initial.initialState(hand)
+abstract class Participant(private val name: PlayerName) {
+    var state: State = Initial.initialState(Hand.createInitial(emptyList()))
+        private set
 
     fun addCard(card: Card) {
-        hand.addCard(card)
+        state = state.draw(card)
     }
 
     fun calculateTotal(): Int {
-        return hand.calculateBestTotal()
+        return state.calculateTotal()
     }
 
-    fun getName(): String {
-        return name.value
+    fun isBlackjack(): Boolean {
+        return state.isBlackjack()
+    }
+
+    fun isBust(): Boolean {
+        return state.isBust()
+    }
+
+    fun getName(): PlayerName {
+        return name
     }
 
     fun getAllCards(): List<Card> {
-        return hand.getAllCards()
+        return state.getAllCards()
     }
 
     abstract fun isDrawable(): Boolean

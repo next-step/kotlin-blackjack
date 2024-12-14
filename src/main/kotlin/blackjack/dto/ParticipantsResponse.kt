@@ -1,36 +1,32 @@
 package blackjack.dto
 
-import blackjack.domain.Card
+import blackjack.domain.Participant
 import blackjack.domain.Participants
 
 class ParticipantsResponse(private val participants: Participants) {
     fun toFormattedStringPlayerNames(): String {
-        return participants.players.joinToString(", ") { player -> player.getName() }
+        return participants.players.joinToString(", ") { player -> player.getName().value }
     }
 
     fun toFormattedStringInitialParticipantsCard(): String {
         return participants.getAllParticipants().joinToString("\n") { participant ->
-            "${participant.getName()}: ${participant.getInitialCard().joinToString(", ") { it.display() }}"
+            "${participant.getName().value}: ${participant.getInitialCard().joinToString(", ") { it.display() }}"
         }
     }
 
     fun toFormattedStringPlayerResults(): String {
         return participants.getAllParticipants().joinToString("\n") { player ->
-            val total = player.calculateTotal()
             val cards = player.getAllCards()
+            val scoreDisplay = formattedStringSpecificCase(player)
 
-            val scoreDisplay = formattedStringSpecificCase(cards, total)
-
-            "${player.getName()}: ${cards.joinToString(", ") { it.display() }} - $scoreDisplay"
+            "${player.getName().value}: ${cards.joinToString(", ") { it.display() }} - $scoreDisplay"
         }
     }
 
-    private fun formattedStringSpecificCase(
-        cards: List<Card>,
-        total: Int,
-    ) = when {
-        cards.size == 2 && total == 21 -> "Blackjack"
-        total == 0 -> "Bust"
-        else -> total.toString()
-    }
+    private fun formattedStringSpecificCase(participant: Participant) =
+        when {
+            participant.isBlackjack() -> "Blackjack"
+            participant.isBust() -> "Bust"
+            else -> participant.calculateTotal().toString()
+        }
 }

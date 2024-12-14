@@ -2,18 +2,19 @@ package blackjack.domain
 
 class Player(
     private val name: PlayerName,
-    private val hand: Hand,
-) : Participant(name, hand) {
+    val bettingMoney: BettingMoney,
+) : Participant(name) {
     override fun isDrawable(): Boolean {
-        return !state.isFinished() && !hand.isBust()
+        return !state.isFinished() && !state.hand().isBust()
     }
 
     override fun getInitialCard(): List<Card> {
-        return hand.getSpecificRangeCards(0, 2)
+        return state.hand().getSpecificRangeCards(0, 2)
     }
 
     fun compareWithDealer(dealer: Dealer): GameMatchResult {
         return when {
+            dealer.isBust() -> GameMatchResult.WIN
             calculateTotal() > dealer.calculateTotal() -> GameMatchResult.WIN
             calculateTotal() < dealer.calculateTotal() -> GameMatchResult.LOSE
             else -> GameMatchResult.DRAW
@@ -23,9 +24,12 @@ class Player(
     companion object {
         fun createNew(
             playerName: PlayerName,
+            bettingMoney: BettingMoney,
             cards: List<Card>,
         ): Player {
-            return Player(playerName, Hand.createInitial(cards))
+            val player = Player(playerName, bettingMoney)
+            cards.forEach { player.addCard(it) }
+            return player
         }
     }
 }

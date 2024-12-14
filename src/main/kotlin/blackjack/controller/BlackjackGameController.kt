@@ -1,6 +1,7 @@
 package blackjack.controller
 
 import blackjack.adapter.BlackjackInputAdapter
+import blackjack.domain.BettingMoney
 import blackjack.domain.BlackjackGame
 import blackjack.domain.Dealer
 import blackjack.domain.HitStayChoice
@@ -17,6 +18,12 @@ class BlackjackGameController(
 ) {
     fun getPlayersNames(): List<PlayerName> {
         return inputAdapter.fetchPlayerNames()
+    }
+
+    fun getPlayerBettingMoneys(playerNames: List<PlayerName>): List<BettingMoney> {
+        return playerNames.map { playerName ->
+            BettingMoney(inputAdapter.fetchBettingMoney(playerName.value))
+        }
     }
 
     fun announceInitialPlayersCards(blackJackGame: BlackjackGame) {
@@ -58,9 +65,10 @@ class BlackjackGameController(
         val moreCardChoice = inputAdapter.fetchMoreCard(player.getName())
         return when (moreCardChoice) {
             HitStayChoice.HIT -> {
-                blackJackGame.drawCard(player)
+                player.addCard(blackJackGame.deck.drawCard())
                 true
             }
+
             HitStayChoice.STAY -> {
                 false
             }
@@ -78,7 +86,7 @@ class BlackjackGameController(
         blackJackGame: BlackjackGame,
     ) {
         while (dealer.isDrawable()) {
-            blackJackGame.drawCard(dealer)
+            dealer.addCard(blackJackGame.deck.drawCard())
             outputView.printDealerDrawAnnounceMessage()
         }
     }
