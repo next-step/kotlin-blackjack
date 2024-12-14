@@ -3,7 +3,6 @@ package blackjack.controller
 import blackjack.domain.Dealer
 import blackjack.domain.Deck
 import blackjack.domain.Game
-import blackjack.domain.HitCommand
 import blackjack.domain.Player
 import blackjack.domain.Players
 import blackjack.view.InputView
@@ -23,7 +22,7 @@ class BlackjackController() {
         game.players.allPlayers().forEach { player ->
             while (game.isPlayerStillPlaying(player)) {
                 val hitCommand = InputView.askHitOrStay(player.name)
-                game.processPlayerTurn(player, HitCommand.from(hitCommand))
+                game.processPlayerTurn(player, hitCommand)
                 OutputView.printPlayerCards(player)
             }
         }

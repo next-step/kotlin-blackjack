@@ -1,5 +1,7 @@
 package blackjack.view
 
+import blackjack.domain.HitCommand
+
 object InputView {
     fun getPlayerNames(): List<String> {
         println(INPUT_PLAYER_MESSAGE)
@@ -12,18 +14,18 @@ object InputView {
         return input.split(INPUT_PLAYER_DELIMITER).map { it.trim() }
     }
 
-    fun askHitOrStay(playerName: String): String {
+    fun askHitOrStay(playerName: String): HitCommand {
         println(String.format(HIT_MESSAGE, playerName))
         val input = readln()
         return parseHitCommandOrThrow(input)
     }
 
-    private fun parseHitCommandOrThrow(input: String): String {
-        require(input == "y" || input == "n") {
-            INVALID_HIT_COMMAND
+    private fun parseHitCommandOrThrow(input: String): HitCommand =
+        when (input) {
+            "y" -> HitCommand.HIT
+            "n" -> HitCommand.STAY
+            else -> throw IllegalArgumentException(INVALID_HIT_COMMAND)
         }
-        return input
-    }
 
     private const val INPUT_PLAYER_MESSAGE = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)"
     private const val INPUT_PLAYER_DELIMITER = ","
