@@ -30,6 +30,7 @@ private fun playBlackJack(game: BlackJackGame) {
         game.checkCurrentPlayerStatusAndChange()
         handlePlayerCommand(game)
     }
+    game.handleDealer()
 }
 
 private fun handlePlayerCommand(game: BlackJackGame) {

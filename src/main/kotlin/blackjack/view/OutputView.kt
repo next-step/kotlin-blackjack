@@ -2,6 +2,8 @@ package blackjack.view
 
 import blackjack.BlackJackGame
 import blackjack.domain.CardMark
+import blackjack.domain.Cards
+import blackjack.domain.Dealer
 import blackjack.domain.Player
 
 object OutputView {
@@ -15,24 +17,36 @@ object OutputView {
             buildString {
                 append(player.name)
                 append("카드: ")
-                append(player.getCards().joinToString { it.number.symbol + convertMarkToString(it.mark) })
-                append(" - 결과: ")
-                append(player.getCardsMaxSum())
+                append(createCardsOutputMessage(player.hand.cards))
             }
-
         println(outputMessage)
     }
 
-    fun printGameResult(game: BlackJackGame) {
-        game.players.members.forEach { printPlayer(it) }
+    private fun printDealerCards(dealer: Dealer) {
+        val outputMessage =
+            buildString {
+                append("딜러: ")
+                append(createCardsOutputMessage(dealer.hand.cards))
+            }
+        println(outputMessage)
     }
 
     fun printCurrentStatus(game: BlackJackGame) {
+        printDealerCards(game.dealer)
         game.players.members.forEach(::printPlayerCards)
     }
 
-    private fun printPlayer(player: Player) {
-        println("${printPlayerCards(player)} - 결과: ${player.getCardsMaxSum()}")
+    fun printGameResult(game: BlackJackGame) {
+        printDealerResult(game.dealer)
+        game.players.members.forEach { printPlayerResult(it) }
+    }
+
+    private fun printDealerResult(dealer: Dealer) {
+        println("${printDealerCards(dealer)} - 결과: ${dealer.hand.getCardsSum()}")
+    }
+
+    private fun printPlayerResult(player: Player) {
+        println("${printPlayerCards(player)} - 결과: ${player.hand.calculateCardsMaxSum()}")
     }
 
     private fun convertMarkToString(mark: CardMark) =
@@ -42,4 +56,10 @@ object OutputView {
             CardMark.DIAMOND -> DIAMOND_STR
             CardMark.CLOVER -> CLOVER_STR
         }
+
+    private fun createCardsOutputMessage(cards: Cards): String {
+        return cards.group
+            .filter { it.isFaceUp }
+            .joinToString { it.number.symbol + convertMarkToString(it.mark) }
+    }
 }

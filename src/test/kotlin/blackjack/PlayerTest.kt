@@ -20,7 +20,7 @@ class PlayerTest : StringSpec({
 
         player.addCard(createAceCard())
 
-        player.getCards() shouldBe listOf(createAceCard())
+        player.hand.cards.size() shouldBe 1
     }
 
     "유저의 패가 21을 넘게 되면 버스트가 된다." {

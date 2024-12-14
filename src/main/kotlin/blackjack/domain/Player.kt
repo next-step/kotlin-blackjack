@@ -2,7 +2,7 @@ package blackjack.domain
 
 class Player(
     val name: String,
-    private val hand: PlayerCards = PlayerCards(),
+    val hand: PlayerCards = PlayerCards(),
 ) {
     var status: PlayerStatus = PlayerStatus.HIT
         private set
@@ -15,14 +15,6 @@ class Player(
         val result = hand.addCard(card)
         status = changeStatus()
         return result
-    }
-
-    fun getCards(): List<Card> {
-        return hand.cards.group
-    }
-
-    fun getCardsMaxSum(): Int {
-        return hand.calculateCardsMaxSum()
     }
 
     fun isBust(): Boolean {

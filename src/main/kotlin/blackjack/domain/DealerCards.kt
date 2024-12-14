@@ -14,7 +14,7 @@ class DealerCards {
         } else {
             cards.getAceCards()
                 .flatMap { card -> card.number.number.map { it + sumOfBasicCards } }
-                .filter { it > Cards.GAME_LIMIT_NUMBER }
+                .filter { it <= Cards.GAME_LIMIT_NUMBER }
                 .max()
         }
     }

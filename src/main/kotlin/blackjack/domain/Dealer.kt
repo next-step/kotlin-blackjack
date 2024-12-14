@@ -3,6 +3,13 @@ package blackjack.domain
 class Dealer {
     val hand: DealerCards = DealerCards()
 
+    fun drawDefaultCards(
+        deck: Deck,
+        count: Int,
+    ) {
+        repeat(count) { addCard(deck.draw()) }
+    }
+
     fun addCard(card: Card) {
         hand.addCard(card)
     }
