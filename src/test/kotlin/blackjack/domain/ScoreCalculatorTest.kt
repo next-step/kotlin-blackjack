@@ -7,12 +7,13 @@ class ScoreCalculatorTest : FreeSpec({
 
     "카드 목록의 점수를 합산할 수 있다" - {
         "ACE가 없는 경우" {
-            val cards = listOf(
-                Card(Suit.HEARTS, Rank.TEN),
-                Card(Suit.SPADES, Rank.JACK),
-                Card(Suit.DIAMONDS, Rank.QUEEN),
-                Card(Suit.CLUBS, Rank.KING),
-            )
+            val cards =
+                listOf(
+                    Card(Suit.HEARTS, Rank.TEN),
+                    Card(Suit.SPADES, Rank.JACK),
+                    Card(Suit.DIAMONDS, Rank.QUEEN),
+                    Card(Suit.CLUBS, Rank.KING),
+                )
 
             val totalScore: Int = ScoreCalculator.calculate(cards)
 

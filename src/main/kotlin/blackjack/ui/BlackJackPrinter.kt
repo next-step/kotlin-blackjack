@@ -48,7 +48,7 @@ object BlackJackPrinter {
             """
             |카드의 총합이 ${BlackJackRule.WIN_SCORE}을 초과하여 더이상 카드를 받을 수 없습니다.
             |${gambler.name}의 턴을 종료합니다.
-        """.trimMargin()
+            """.trimMargin(),
         )
     }
 }

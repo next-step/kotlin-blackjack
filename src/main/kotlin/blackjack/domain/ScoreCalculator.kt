@@ -2,8 +2,9 @@ package blackjack.domain
 
 object ScoreCalculator {
     fun calculate(cards: List<Card>): Int {
-        val sumOfNotAceScore = cards.filter { card -> card.isAce.not() }
-            .sumOf { card -> card.scores.first() }
+        val sumOfNotAceScore =
+            cards.filter { card -> card.isAce.not() }
+                .sumOf { card -> card.scores.first() }
 
         return cards.filter { card -> card.isAce }
             .fold(sumOfNotAceScore) { accumulatedScore, card ->
@@ -11,7 +12,10 @@ object ScoreCalculator {
             }
     }
 
-    private fun determineAceScore(accumulatedScore: Int, card: Card): Int {
+    private fun determineAceScore(
+        accumulatedScore: Int,
+        card: Card,
+    ): Int {
         if (accumulatedScore >= BlackJackRule.WIN_SCORE) {
             return card.scores.min()
         }

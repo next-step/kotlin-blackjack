@@ -1,6 +1,6 @@
 package blackjack.domain
 
-class Gamblers(private val gamblers: List<Gambler>): Collection<Gambler> by gamblers {
+class Gamblers(private val gamblers: List<Gambler>) : Collection<Gambler> by gamblers {
     fun receiveTwoCardsEach(deck: Deck) {
         gamblers.forEach { gambler ->
             gambler.receive(deck.draw(), deck.draw())

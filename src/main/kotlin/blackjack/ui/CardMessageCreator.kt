@@ -15,7 +15,7 @@ object CardMessageCreator {
     private fun convertToSignature(card: Card): String {
         val rankSignature = convertToSignature(card.rank)
         val suitSignature = convertToSignature(card.suit)
-        return "${rankSignature}${suitSignature}"
+        return "${rankSignature}$suitSignature"
     }
 
     private fun convertToSignature(rank: Rank): String {

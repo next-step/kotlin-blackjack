@@ -17,12 +17,13 @@ class GamblerTest : FreeSpec({
 
     "카드를 여러장 받을 수 있다" {
         val gambler = Gambler("타짜")
-        val cards = arrayOf(
-            Card(Suit.HEARTS, Rank.SIX),
-            Card(Suit.SPADES, Rank.SIX),
-            Card(Suit.DIAMONDS, Rank.SIX),
-            Card(Suit.CLUBS, Rank.SIX),
-        )
+        val cards =
+            arrayOf(
+                Card(Suit.HEARTS, Rank.SIX),
+                Card(Suit.SPADES, Rank.SIX),
+                Card(Suit.DIAMONDS, Rank.SIX),
+                Card(Suit.CLUBS, Rank.SIX),
+            )
 
         gambler.receive(*cards)
 

@@ -2,7 +2,6 @@ package blackjack.ui
 
 import blackjack.domain.Gambler
 
-
 object BlackJackReader {
     private const val NAME_SEPARATOR = ","
 

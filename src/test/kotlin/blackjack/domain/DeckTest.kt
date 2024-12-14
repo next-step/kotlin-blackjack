@@ -3,9 +3,7 @@ package blackjack.domain
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.collections.shouldHaveSize
-import io.kotest.matchers.equals.shouldNotBeEqual
 import io.kotest.matchers.nulls.shouldNotBeNull
-import java.util.*
 
 class DeckTest : FreeSpec({
     "카드 목록은 스페이드/하트/클로버/다이아 각각 13장씩 총 52장이 들어있다" {
@@ -19,7 +17,6 @@ class DeckTest : FreeSpec({
                 cardsOfSuit shouldHaveSize 13
             }
     }
-
 
     "draw() 테스트" - {
         "카드를 하나 뽑을 수 있다" {
