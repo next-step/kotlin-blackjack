@@ -4,15 +4,15 @@ import blackjack.card.Card
 import blackjack.card.Cards
 
 data class Dealer(
-    override val name: PlayerName = PlayerName(DEALER_NAME),
+    private val name: PlayerName = PlayerName(DEALER_NAME),
     var cards: Cards = Cards(),
 ) : Participant(name) {
 
-    override fun take(newCards: List<Card>) {
+    fun take(newCards: List<Card>) {
         cards.addAll(newCards)
     }
 
-    override fun score(): Int {
+    fun score(): Int {
         return cards.bestScore()
     }
 

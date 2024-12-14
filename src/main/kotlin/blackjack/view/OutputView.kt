@@ -10,8 +10,8 @@ object OutputView {
     fun printPlayersStartCardPack(game: BlackJackGame) {
         val dealer = game.dealer
         val gamePlayer = game.gamePlayers.player
-        println("\n${dealer.name.value}와 ${gamePlayer.joinToString { it.name.value }}에게 2장의 카드를 나누었습니다.")
-        println("${dealer.name.value}: ${dealer.cards.getOpenCard()}")
+        println("\n${dealer.getName().value}와 ${gamePlayer.joinToString { it.getName().value }}에게 2장의 카드를 나누었습니다.")
+        println("${dealer.getName().value}: ${dealer.cards.getOpenCard()}")
         gamePlayer.forEach { println("$it") }
         println()
     }
@@ -27,7 +27,7 @@ object OutputView {
 
     fun printBlackJackResult(results: List<ParticipantResult>) {
         println("\n## 최종 승패")
-        val groupedResults = results.groupBy { it.participant.name }
+        val groupedResults = results.groupBy { it.participant.getName() }
             .mapValues { entry ->
                 val wins = entry.value.count { it.result == WIN }
                 val losses = entry.value.count { it.result == LOSE }

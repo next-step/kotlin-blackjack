@@ -20,7 +20,7 @@ data class BlackJackGame(
     fun play(inputMoreCardPolicy: MoreCardPolicy): List<ParticipantResult> {
         return gamePlayers.player.map { player ->
             while (player.isNotBust()) {
-                val isMoreCard = inputMoreCardPolicy.isMoreCard(player.name)
+                val isMoreCard = inputMoreCardPolicy.isMoreCard(player.getName())
                 if(!isMoreCard) {
                     break
                 }
