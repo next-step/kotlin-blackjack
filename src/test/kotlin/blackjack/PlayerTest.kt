@@ -32,7 +32,7 @@ class PlayerTest : StringSpec({
                 createBasicCard(CardNumber.TEN, CardMark.HEART),
             )
 
-        player.addCards(listOfCards)
+        listOfCards.forEach { player.addCard(it) }
 
         player.isBust() shouldBe true
     }

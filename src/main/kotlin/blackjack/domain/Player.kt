@@ -17,14 +17,8 @@ class Player(
         return result
     }
 
-    fun addCards(newCards: List<Card>): Boolean {
-        val result = hand.addCards(newCards)
-        status = changeStatus()
-        return result
-    }
-
     fun getCards(): List<Card> {
-        return hand.cards
+        return hand.cards.group
     }
 
     fun getCardsMaxSum(): Int {

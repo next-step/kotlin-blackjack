@@ -1,19 +1,10 @@
 package blackjack.domain
 
 class PlayerCards {
-    private val _cards: MutableList<Card> = mutableListOf()
-    val cards: List<Card> get() = _cards.toList()
+    val cards: Cards = Cards()
 
-    fun addCard(card: Card?): Boolean {
-        return if (card != null) {
-            this._cards.add(card)
-        } else {
-            false
-        }
-    }
-
-    fun addCards(cards: List<Card>): Boolean {
-        return this._cards.addAll(cards)
+    fun addCard(card: Card): Boolean {
+        return this.cards.add(card)
     }
 
     fun calculateCardsMaxSum(): Int {
@@ -23,8 +14,8 @@ class PlayerCards {
     }
 
     private fun getAllCasesOfSum(): List<Int> {
-        val sumOfBasicCards = cards.filter { !it.isAce() }.sumOf { it.number.number[0] }
-        val aceCards = cards.filter { it.isAce() }
+        val sumOfBasicCards = cards.group.filter { !it.isAce() }.sumOf { it.number.number[0] }
+        val aceCards = cards.group.filter { it.isAce() }
 
         return if (aceCards.isEmpty()) {
             listOf(sumOfBasicCards)
