@@ -24,23 +24,8 @@ data class Player(
 
     fun sumOfCard(): Int {
         var totalSum = 0
-        var numberOfAce = 0
-
-        for (card in ownedCards) {
-            if (card.number == CardNumber.ACE) {
-                numberOfAce++
-                totalSum += CardNumber.ACE.score
-            } else {
-                totalSum += card.number.score
-            }
-        }
-
-        while (numberOfAce > 0 && totalSum < 21) {
-            numberOfAce--
-            totalSum += 10
-            if (totalSum > 21) {
-                totalSum -= 10
-            }
+        ownedCards.forEach {
+            totalSum += it.number.appendScore(totalSum)
         }
         return totalSum
     }
