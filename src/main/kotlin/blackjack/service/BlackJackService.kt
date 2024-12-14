@@ -1,8 +1,8 @@
 package blackjack.service
 
-import blackjack.dto.BlackJackResult
 import blackjack.domain.Deal
 import blackjack.domain.GameResultCalculator
+import blackjack.dto.BlackJackResult
 import blackjack.entity.Dealer
 import blackjack.entity.Game
 import blackjack.entity.Player
@@ -13,7 +13,10 @@ class BlackJackService(private val gameRepository: GameRepository) {
         return gameRepository.findAll()
     }
 
-    fun initPlayers(dealerName: String, playersList: List<String>) {
+    fun initPlayers(
+        dealerName: String,
+        playersList: List<String>,
+    ) {
         val dealer = Dealer(dealerName)
         val players = playersList.map { Player(it) }.toSet()
         gameRepository.saveGame(Game(dealer, players))
@@ -43,7 +46,6 @@ class BlackJackService(private val gameRepository: GameRepository) {
         playerBlackJack.addCardCount(Deal.giveCards(DEFAULT_FACE_UP))
         return player
     }
-
 
     fun gameContinueDealer(): Dealer {
         val dealer = gameRepository.findDealer()

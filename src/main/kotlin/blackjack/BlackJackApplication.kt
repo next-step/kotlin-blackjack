@@ -39,7 +39,10 @@ private fun gameStart() {
     OutputView.gameStart(game)
 }
 
-fun initGameSet(dealerName: String, playersList: List<String>) {
+fun initGameSet(
+    dealerName: String,
+    playersList: List<String>,
+) {
     blackJackController.initPlayers(dealerName, playersList)
 }
 
@@ -67,7 +70,6 @@ private fun dealerGameProgress(dealerName: String) {
     InputView.dealerAddCardComment(dealerName)
     blackJackController.gameContinueDealer()
 }
-
 
 fun gameEnd() {
     val results = blackJackController.getGameResult()

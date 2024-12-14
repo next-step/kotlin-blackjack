@@ -15,9 +15,10 @@ class BlackJack {
     }
 
     fun getTotalCardValue(): Int {
-        val values = cards.map { (cardMap, _) ->
-            cardMap.values.first().getValue()
-        }
+        val values =
+            cards.map { (cardMap, _) ->
+                cardMap.values.first().getValue()
+            }
         var total = values.sum()
         val aceCount = values.count { it == Card.A.getValue() }
         repeat(aceCount) {
@@ -40,6 +41,5 @@ class BlackJack {
         const val BUST_LIMIT_VALUE = 21
         const val MINUS_ACE_VALUE = 10
         private const val DEALER_MIN_VALUE = 10
-
     }
 }

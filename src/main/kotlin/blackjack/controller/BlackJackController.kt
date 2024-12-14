@@ -7,13 +7,17 @@ import blackjack.entity.Player
 import blackjack.service.BlackJackService
 
 class BlackJackController(private val blackJackService: BlackJackService) {
-    fun initPlayers(dealerName: String, playersList: List<String>) {
+    fun initPlayers(
+        dealerName: String,
+        playersList: List<String>,
+    ) {
         blackJackService.initPlayers(dealerName, playersList)
     }
 
     fun startGame(): Game {
         return blackJackService.startGame()
     }
+
     fun getGameInfo(): Game {
         return blackJackService.getGameInfo()
     }
@@ -28,6 +32,5 @@ class BlackJackController(private val blackJackService: BlackJackService) {
 
     fun gameContinueDealer(): Dealer {
         return blackJackService.gameContinueDealer()
-
     }
 }

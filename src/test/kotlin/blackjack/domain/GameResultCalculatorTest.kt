@@ -17,28 +17,29 @@ class GameResultCalculatorTest {
             mutableListOf(
                 mutableMapOf(CardSymbol.HEART to Card.TEN) to true,
                 mutableMapOf(CardSymbol.SPADE to Card.KING) to true,
-                mutableMapOf(CardSymbol.DIAMOND to Card.THREE) to true
-            )
+                mutableMapOf(CardSymbol.DIAMOND to Card.THREE) to true,
+            ),
         )
 
-        val players = setOf(
-            Player("문장호").apply {
-                getPlayerBlackJack().addCardCount(
-                    mutableListOf(
-                        mutableMapOf(CardSymbol.HEART to Card.EIGHT) to true,
-                        mutableMapOf(CardSymbol.SPADE to Card.NINE) to true
+        val players =
+            setOf(
+                Player("문장호").apply {
+                    getPlayerBlackJack().addCardCount(
+                        mutableListOf(
+                            mutableMapOf(CardSymbol.HEART to Card.EIGHT) to true,
+                            mutableMapOf(CardSymbol.SPADE to Card.NINE) to true,
+                        ),
                     )
-                )
-            },
-            Player("장호").apply {
-                getPlayerBlackJack().addCardCount(
-                    mutableListOf(
-                        mutableMapOf(CardSymbol.HEART to Card.SEVEN) to true,
-                        mutableMapOf(CardSymbol.DIAMOND to Card.SIX) to true
+                },
+                Player("장호").apply {
+                    getPlayerBlackJack().addCardCount(
+                        mutableListOf(
+                            mutableMapOf(CardSymbol.HEART to Card.SEVEN) to true,
+                            mutableMapOf(CardSymbol.DIAMOND to Card.SIX) to true,
+                        ),
                     )
-                )
-            }
-        )
+                },
+            )
 
         val game = Game(dealer, players)
 
@@ -54,41 +55,41 @@ class GameResultCalculatorTest {
 
     @Test
     fun `딜러와 플레이어 점수 비교`() {
-
         val dealer = Dealer("딜러")
         dealer.getDealerBlackJack().addCardCount(
             mutableListOf(
                 mutableMapOf(CardSymbol.HEART to Card.TEN) to true,
-                mutableMapOf(CardSymbol.SPADE to Card.SEVEN) to true
-            )
+                mutableMapOf(CardSymbol.SPADE to Card.SEVEN) to true,
+            ),
         )
 
-        val players = setOf(
-            Player("장").apply {
-                getPlayerBlackJack().addCardCount(
-                    mutableListOf(
-                        mutableMapOf(CardSymbol.HEART to Card.EIGHT) to true,
-                        mutableMapOf(CardSymbol.SPADE to Card.NINE) to true
+        val players =
+            setOf(
+                Player("장").apply {
+                    getPlayerBlackJack().addCardCount(
+                        mutableListOf(
+                            mutableMapOf(CardSymbol.HEART to Card.EIGHT) to true,
+                            mutableMapOf(CardSymbol.SPADE to Card.NINE) to true,
+                        ),
                     )
-                )
-            },
-            Player("호").apply {
-                getPlayerBlackJack().addCardCount(
-                    mutableListOf(
-                        mutableMapOf(CardSymbol.HEART to Card.TEN) to true,
-                        mutableMapOf(CardSymbol.DIAMOND to Card.THREE) to true // 총합 13 (딜러 승리)
+                },
+                Player("호").apply {
+                    getPlayerBlackJack().addCardCount(
+                        mutableListOf(
+                            mutableMapOf(CardSymbol.DIAMOND to Card.THREE) to true,
+                            mutableMapOf(CardSymbol.HEART to Card.TEN) to true,
+                        ),
                     )
-                )
-            },
-            Player("제이크").apply {
-                getPlayerBlackJack().addCardCount(
-                    mutableListOf(
-                        mutableMapOf(CardSymbol.DIAMOND to Card.TEN) to true,
-                        mutableMapOf(CardSymbol.SPADE to Card.KING) to true
+                },
+                Player("제이크").apply {
+                    getPlayerBlackJack().addCardCount(
+                        mutableListOf(
+                            mutableMapOf(CardSymbol.DIAMOND to Card.TEN) to true,
+                            mutableMapOf(CardSymbol.SPADE to Card.KING) to true,
+                        ),
                     )
-                )
-            }
-        )
+                },
+            )
 
         val game = Game(dealer, players)
 
@@ -102,5 +103,4 @@ class GameResultCalculatorTest {
         result.playerResults[1].loseCount shouldBe 1
         result.playerResults[2].winCount shouldBe 1
     }
-
 }

@@ -4,7 +4,7 @@ class PlayerResult(
     val playerName: String,
     val winCount: Int,
     val loseCount: Int,
-    val drawCount: Int
+    val drawCount: Int,
 ) {
     fun getResult(): String {
         return when {

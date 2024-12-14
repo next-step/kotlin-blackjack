@@ -3,11 +3,8 @@ package blackjack.service
 import blackjack.domain.enums.Card
 import blackjack.domain.enums.CardSymbol
 import blackjack.repository.GameRepository
-import io.kotest.matchers.collections.shouldBeIn
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
-import io.kotest.matchers.shouldNotBe
-import io.kotest.matchers.string.shouldInclude
 import org.junit.jupiter.api.Test
 
 class BlackJackServiceTest {
@@ -31,7 +28,6 @@ class BlackJackServiceTest {
         cardSize shouldBe 3
     }
 
-
     @Test
     fun `딜러 버스트 시 모든 플레이어가 승리`() {
         blackJackService.initPlayers("딜러", listOf("문장호", "제이크"))
@@ -43,7 +39,7 @@ class BlackJackServiceTest {
             mutableListOf(
                 mutableMapOf(CardSymbol.HEART to Card.KING) to true,
                 mutableMapOf(CardSymbol.DIAMOND to Card.QUEEN) to true,
-                mutableMapOf(CardSymbol.SPADE to Card.A) to true
+                mutableMapOf(CardSymbol.SPADE to Card.A) to true,
             ),
         )
 
@@ -57,12 +53,10 @@ class BlackJackServiceTest {
         playerResult.winCount shouldBe 1
         playerResult.loseCount shouldBe 0
         playerResult.drawCount shouldBe 0
-
     }
 
     @Test
     fun `딜러와 플레이어 점수 비교`() {
-
         blackJackService.initPlayers("딜러", listOf("문장호", "장호"))
         val game = gameRepository.findAll()
         val dealer = game.dealer
@@ -105,6 +99,5 @@ class BlackJackServiceTest {
         playerResultTwo.winCount shouldBe 1
         playerResultTwo.loseCount shouldBe 0
         playerResultTwo.drawCount shouldBe 0
-
     }
 }

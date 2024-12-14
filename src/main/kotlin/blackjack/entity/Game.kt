@@ -1,4 +1,3 @@
 package blackjack.entity
 
-class Game(val dealer: Dealer, val players: Set<Player>) {
-}
+class Game(val dealer: Dealer, val players: Set<Player>)

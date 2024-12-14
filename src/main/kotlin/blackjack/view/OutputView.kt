@@ -9,7 +9,6 @@ import blackjack.entity.Game
 import blackjack.entity.Player
 
 object OutputView {
-
     fun results(blackJackResult: BlackJackResult) {
         println("## 최종 승패")
         dealerResult(blackJackResult.dealerResult)
@@ -49,7 +48,7 @@ object OutputView {
         println(
             "${dealer.name}카드: $dealerCardInfo - ${
                 dealer.getDealerBlackJack().getTotalCardValue()
-            }"
+            }",
         )
     }
 
@@ -58,14 +57,14 @@ object OutputView {
         println(
             "${player.name}카드: $playerCardInfo - ${
                 player.getPlayerBlackJack().getTotalCardValue()
-            }"
+            }",
         )
     }
 
     fun gameStart(game: Game) {
         val dealer = game.dealer
         val players = game.players
-        val playersTString = players.map { player -> player.name } .joinToString(", ")
+        val playersTString = players.map { player -> player.name }.joinToString(", ")
         println("${dealer.name}와 ${playersTString}에게 2장의 나누었습니다.")
         gameStartDealerInfo(dealer)
         players.forEach { gameStartPlayerInfo(it) }
@@ -76,7 +75,7 @@ object OutputView {
         println(
             "${dealer.name} 카드: $cardInfo - 결과: ${
                 dealer.getDealerBlackJack().getTotalCardValue()
-            }"
+            }",
         )
     }
 
@@ -85,8 +84,7 @@ object OutputView {
         println(
             "${player.name} 카드: $playerCardInfo - 결과: ${
                 player.getPlayerBlackJack().getTotalCardValue()
-            }"
+            }",
         )
     }
-
 }

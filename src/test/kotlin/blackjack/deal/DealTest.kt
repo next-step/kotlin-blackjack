@@ -27,7 +27,6 @@ class DealTest {
 
     @Test
     fun `카드는 가능한 조합에서만 반환된다`() {
-
         val cards = Deal.giveCards(3)
 
         cards.shouldNotBeEmpty()

@@ -5,6 +5,7 @@ import blackjack.entity.Player
 
 object InputView {
     private const val DEALER_NAME = "딜러"
+
     fun getDealerName(): String {
         return this.DEALER_NAME
     }
