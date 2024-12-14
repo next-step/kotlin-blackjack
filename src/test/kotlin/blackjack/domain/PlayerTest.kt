@@ -1,6 +1,7 @@
 package blackjack.domain
 
 import blackjack.domain.player.AbstractPlayer
+import blackjack.domain.player.Dealer
 import blackjack.domain.player.Player
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
@@ -118,5 +119,34 @@ class PlayerTest {
         player.calculateCard() shouldBe 28
         turnCallbackCalled shouldBe 0
         printCallbackCalled shouldBe 0
+    }
+
+    @Test
+    fun `test dealer draw - can't draw`() {
+        val player = Dealer()
+        val mockCard =
+            listOf(
+                Card.createCard("9", "클로버"),
+                Card.createCard("8", "하트"),
+            )
+
+        mockCard.forEach { card ->
+            player.drawCard(card)
+        }
+
+        var turnCallbackCalled = 0
+        val turnCallback: ((AbstractPlayer) -> String) = {
+            turnCallbackCalled++
+            "y"
+        }
+
+        var printCallbackCalled = 0
+        val printCallback: ((List<AbstractPlayer>) -> Unit) = {
+            printCallbackCalled++
+        }
+
+        player.startTurn(turnCallback, printCallback)
+        player.calculateCard() shouldBe 17
+        turnCallbackCalled shouldBe 0
     }
 }
