@@ -6,7 +6,6 @@ import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
 class WinningCalculatorTest {
-
     @Test
     fun calculateWinningStatus() {
         val player1 = Player("Player 1")
@@ -45,7 +44,6 @@ class WinningCalculatorTest {
         player2.drawCard(Card.createCard("2", "클로버"))
         player2.drawCard(Card.createCard("8", "클로버"))
         player2.drawCard(Card.createCard("A", "클로버"))
-
 
         val dealer = Dealer()
         dealer.drawCard(Card.createCard("3", "클로버"))

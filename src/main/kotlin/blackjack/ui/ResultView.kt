@@ -39,7 +39,6 @@ class ResultView {
         println("\n## 최종 승패")
         (players + dealer).forEach { player ->
             showWinningResult(player)
-
         }
     }
 
@@ -51,8 +50,11 @@ class ResultView {
             return
         }
 
-        if (player.winCount > 0) println("승")
-        else println("패")
+        if (player.winCount > 0) {
+            println("승")
+        } else {
+            println("패")
+        }
     }
 
     fun printDealerDrawExtra() {

@@ -9,7 +9,7 @@ class Dealer(name: String = DEALER_NAME) : AbstractPlayer(name) {
 
     override fun startTurn(
         onTurnStarted: ((AbstractPlayer) -> String)?,
-        onPrintResultCallback: (List<AbstractPlayer>) -> Unit
+        onPrintResultCallback: (List<AbstractPlayer>) -> Unit,
     ) {
         while (!isBust() && shouldDrawCard()) {
             val card = CardDeck.drawCard()

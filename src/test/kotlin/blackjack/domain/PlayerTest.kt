@@ -97,7 +97,7 @@ class PlayerTest {
             listOf(
                 Card.createCard("9", "클로버"),
                 Card.createCard("9", "하트"),
-                Card.createCard("10", "하트")
+                Card.createCard("10", "하트"),
             )
 
         mockCard.forEach { card ->

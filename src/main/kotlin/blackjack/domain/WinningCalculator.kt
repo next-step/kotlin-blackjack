@@ -16,10 +16,10 @@ object WinningCalculator {
         var dealerLosing = 0
         players.forEach { player ->
             if (player.isBust() || dealer.calculateCard() > player.calculateCard()) {
-                dealerWinning++;
+                dealerWinning++
                 player.updateWinningStatus(0, 1)
             } else {
-                dealerLosing++;
+                dealerLosing++
                 player.updateWinningStatus(1, 0)
             }
         }
