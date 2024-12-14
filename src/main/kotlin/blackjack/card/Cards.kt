@@ -34,6 +34,10 @@ data class Cards(
         return _cards.joinToString(", ")
     }
 
+    fun getOpenCard(): String {
+        return _cards.first().toString()
+    }
+
     companion object {
         private const val SCORE_LIMIT = 21
         private const val ACE_POINT = 10

@@ -15,7 +15,7 @@ fun main() {
     val game = BlackJackGame(dealer, gamePlayer, deck)
 
     val startGame = game.start()
-    OutputView.printPlayersStartCardPack(startGame.gamePlayers)
+    OutputView.printPlayersStartCardPack(startGame)
 
     gamePlayer.player.forEach { player ->
         while (player.isNotBust()) {

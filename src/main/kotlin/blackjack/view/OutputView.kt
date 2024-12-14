@@ -1,12 +1,14 @@
 package blackjack.view
 
+import blackjack.BlackJackGame
 import blackjack.participant.Player
-import blackjack.participant.Players
 
 object OutputView {
-    fun printPlayersStartCardPack(players: Players) {
-        val gamePlayer = players.player
-        println("\n${gamePlayer.joinToString { it.name.value }}에게 2장의 카드를 나누었습니다.")
+    fun printPlayersStartCardPack(game: BlackJackGame) {
+        val dealer = game.dealer
+        val gamePlayer = game.gamePlayers.player
+        println("\n${dealer.name.value}와 ${gamePlayer.joinToString { it.name.value }}에게 2장의 카드를 나누었습니다.")
+        println("${dealer.name.value}: ${dealer.cards.getOpenCard()}")
         gamePlayer.forEach { println("$it") }
         println()
     }
