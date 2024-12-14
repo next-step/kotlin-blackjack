@@ -3,25 +3,36 @@ package blackjack.controller
 import blackjack.domain.BlackJackResultManager
 import blackjack.domain.CardDeck
 import blackjack.domain.Dealer
+import blackjack.domain.Players
 import blackjack.view.InputView
 import blackjack.view.ResultView
 
 object BlackJackController {
     fun play() {
-        val isDrawCard: (String) -> Boolean = { name ->
-            val drawMoreCardYesOrNo = InputView.readIsDrawMore(name)
-            drawMoreCardYesOrNo
-        }
-        val blackJackDealer = Dealer(cardDeck = CardDeck())
+        val cardDeck = CardDeck()
+        val blackJackDealer = Dealer(drawCard = { cardDeck.draw() })
+        val players = initializeGame(blackJackDealer)
 
-        val players =
-            blackJackDealer.initPlayers(
-                fetchPlayerNames = { InputView.readPlayerNames() },
-                onPlayerInit = { names ->
-                    ResultView.printPlayerInitMessage(names)
-                    ResultView.printDealerWithCard(blackJackDealer.getCardForInitialDisplay())
-                },
-            )
+        playTurns(players)
+        finalizeDealer(blackJackDealer)
+        finalizeGame(blackJackDealer, players)
+    }
+
+    private fun initializeGame(dealer: Dealer): Players {
+        val players = dealer.initPlayers(
+            fetchPlayerNames = { InputView.readPlayerNames() },
+            onPlayerInit = { names ->
+                ResultView.printPlayerInitMessage(names)
+                ResultView.printDealerWithCard(dealer.getCardForInitialDisplay())
+            }
+        )
+        return players
+    }
+
+    private fun playTurns(players: Players) {
+        val isDrawCard: (String) -> Boolean = { name ->
+            InputView.readIsDrawMore(name)
+        }
 
         players
             .onEachPreparePlay { player ->
@@ -33,15 +44,19 @@ object BlackJackController {
                     onExitPlay = { ResultView.printPlayerNameWithCards(player) },
                 )
             }
+    }
 
-        blackJackDealer.drawOneMoreCardIfNeeded(
-            onDrawMoreCard = { ResultView.printDealerOneMoreCardDrawn() },
-        )
+    private fun finalizeDealer(dealer: Dealer) {
+        dealer.drawOneMoreCardIfNeeded(onDrawCard = { ResultView.printDealerOneMoreCardDrawn() })
+        ResultView.printFinalScoresForDealer(dealer)
+    }
 
-        ResultView.printFinalScoresForDealer(blackJackDealer)
-        players.onEach { player -> ResultView.printFinalScoresForPlayer(player) }
+    private fun finalizeGame(dealer: Dealer, players: Players) {
+        players.onEach { player ->
+            ResultView.printFinalScoresForPlayer(player)
+        }
 
-        val result = BlackJackResultManager(blackJackDealer, players).getResult()
+        val result = BlackJackResultManager(dealer, players).getResult()
         ResultView.printFinalWinLose(result)
     }
 }

@@ -34,7 +34,7 @@ object ResultView {
     }
 
     fun printFinalScoresForDealer(dealer: Dealer) {
-        println("\n딜러 카드: ${dealer.dealerCards.value.map { "${it.rank.rankName}${it.suit.koreanName}" }} - 결과: ${dealer.cardsSum}")
+        println("\n딜러 카드: ${dealer.cards.value.map { "${it.rank.rankName}${it.suit.koreanName}" }} - 결과: ${dealer.cardsSum}")
     }
 
     private fun playerNameWithCards(player: Player): String {

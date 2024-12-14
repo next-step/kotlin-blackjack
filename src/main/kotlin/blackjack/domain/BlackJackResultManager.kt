@@ -19,7 +19,6 @@ class BlackJackResultManager(
 
         val dealerWinCount = playersWinLose.count { it.value == Result.LOSE }
         val dealerLoseCount = playersWinLose.count { it.value == Result.WIN }
-
         return BlackJackResult(dealerWinCount, dealerLoseCount, PlayerToResultMap(playersWinLose))
     }
 }
