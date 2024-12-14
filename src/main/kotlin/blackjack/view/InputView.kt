@@ -18,6 +18,6 @@ object InputView {
 
     fun inputBettingAmount(player: Participant<*>): BetResult {
         println("${player.name}의 베팅 금액은?")
-        return BetResult(bet = Bet(readlnOrNull()?.toDoubleOrNull() ?: 0.0))
+        return BetResult.Default(bet = Bet(readlnOrNull()?.toDoubleOrNull() ?: 0.0))
     }
 }

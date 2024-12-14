@@ -118,7 +118,11 @@ class BettingBoardTest {
     companion object {
         private val POBI = Player(name = "pobi")
         private val JASON = Player(name = "jason")
-        private val BET_AMOUNTS = mapOf(POBI to BetResult(bet = Bet(amount = 1_000.0)), JASON to BetResult(bet = Bet(amount = 2_000.0)))
+        private val BET_AMOUNTS =
+            mapOf(
+                POBI to BetResult.Default(bet = Bet(amount = 1_000.0)),
+                JASON to BetResult.Default(bet = Bet(amount = 2_000.0)),
+        )
 
         @JvmStatic
         fun bettingBoardTest(): Stream<Arguments> =
@@ -126,7 +130,11 @@ class BettingBoardTest {
                 Arguments.of(
                     mapOf(POBI to BET_AMOUNTS[POBI], JASON to BET_AMOUNTS[JASON]),
                     Dealer(),
-                    mutableMapOf(POBI to BET_AMOUNTS[POBI], JASON to BET_AMOUNTS[JASON], Dealer() to BetResult(bet = Bet(amount = 0.0))),
+                    mutableMapOf(
+                        POBI to BET_AMOUNTS[POBI],
+                        JASON to BET_AMOUNTS[JASON],
+                        Dealer() to BetResult.Default(),
+                    ),
                 ),
             )
     }

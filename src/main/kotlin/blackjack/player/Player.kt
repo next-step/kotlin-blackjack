@@ -16,6 +16,15 @@ data class Player(
             else -> hand.sum() > opponent.hand.sum()
         }
 
+    override fun equals(other: Any?): Boolean =
+        when {
+            this === other -> true
+            other !is Player -> false
+            else -> name == other.name
+        }
+
+    override fun hashCode(): Int = name.hashCode()
+
     companion object {
         fun ready(name: String): Player = Player(name = name)
     }

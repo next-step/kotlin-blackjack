@@ -1,8 +1,6 @@
 package betting.board
 
-import betting.Bet
 import betting.BetResult
-import betting.Winning
 import blackjack.dealer.Dealer
 import blackjack.participant.Participant
 import blackjack.player.Player
@@ -28,7 +26,7 @@ class BettingBoard(
         playerBets.forEach { (player, betResult) ->
             participantBets[player] = betResult
         }
-        participantBets[dealer] = BetResult(bet = Bet(), winning = Winning())
+        participantBets[dealer] = BetResult.Default()
         handleBlackjack()
     }
 
@@ -50,8 +48,8 @@ class BettingBoard(
         val playerBet = participantBets[player] ?: return
         val dealerBet = participantBets[getDealer()] ?: return
 
-        participantBets[getDealer()] = dealerBet.win(playerBet.bet.amount)
-        participantBets[player] = playerBet.lose()
+        participantBets[getDealer()] = BetResult.Win(bet = dealerBet.bet, amount = dealerBet.winning.amount + playerBet.bet.amount)
+        participantBets[player] = BetResult.Lose(bet = playerBet.bet, amount = playerBet.bet.negative())
     }
 
     fun winAllPlayer() {
@@ -63,7 +61,7 @@ class BettingBoard(
         bonusRatio: Double = DEFAULT_RATIO,
     ) {
         players.forEach { (player, betResult) ->
-            participantBets[player] = betResult.win(amount = betResult.bet.amount.times(bonusRatio))
+            participantBets[player] = BetResult.Win(bet = betResult.bet, amount = betResult.bet.amount.times(bonusRatio))
         }
 
         val dealerBet = participantBets[getDealer()] ?: return
@@ -71,7 +69,7 @@ class BettingBoard(
             players
                 .sumOf { (_, betResult) -> betResult.bet.amount.times(bonusRatio) }
                 .times(-1L)
-        participantBets[getDealer()] = dealerBet.lose(amount = sumOfPlayerBetAmount)
+        participantBets[getDealer()] = BetResult.Lose(bet = dealerBet.bet, amount = dealerBet.bet.amount + sumOfPlayerBetAmount)
     }
 
     companion object {

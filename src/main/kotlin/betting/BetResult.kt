@@ -1,12 +1,26 @@
 package betting
 
-data class BetResult (
-    val bet: Bet,
+sealed class BetResult(
+    open val bet: Bet,
     val winning: Winning = Winning(),
 ) {
-    fun win(amount: Double?): BetResult = BetResult(bet, Winning(amount = amount ?: 0.0))
+    data class Default(
+        override val bet: Bet = Bet(),
+    ) : BetResult(bet = bet)
 
-    fun lose(): BetResult = BetResult(bet, Winning(amount = bet.negative()))
+    data class Win(
+        override val bet: Bet,
+        val amount: Double?,
+    ) : BetResult(
+            bet = bet,
+            winning = Winning(amount = amount ?: 0.0),
+        )
 
-    fun lose(amount: Double?): BetResult = BetResult(bet, Winning(amount = this.winning.amount + (amount ?: 0.0)))
+    data class Lose(
+        override val bet: Bet,
+        val amount: Double?,
+    ) : BetResult(
+            bet = bet,
+            winning = Winning(amount = amount ?: 0.0),
+        )
 }
