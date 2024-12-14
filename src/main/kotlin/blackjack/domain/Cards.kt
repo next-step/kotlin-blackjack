@@ -9,4 +9,16 @@ class Cards {
     fun add(card: Card): Boolean {
         return _group.add(card)
     }
+
+    fun hasAceCards() = group.any { it.isAce() }
+
+    fun getAceCards() = group.filter { it.isAce() }
+
+    fun getSumOfBasicCards(): Int {
+        return group.filter { !it.isAce() }.sumOf { it.number.number[0] }
+    }
+
+    companion object {
+        const val GAME_LIMIT_NUMBER = 21
+    }
 }

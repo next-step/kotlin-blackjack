@@ -9,23 +9,20 @@ class PlayerCards {
 
     fun calculateCardsMaxSum(): Int {
         val allCasesOfSum = getAllCasesOfSum()
-        return allCasesOfSum.filter { it <= GAME_LIMIT_NUMBER }
+        return allCasesOfSum.filter { it <= Cards.GAME_LIMIT_NUMBER }
             .maxOrNull() ?: ZERO
     }
 
     private fun getAllCasesOfSum(): List<Int> {
-        val sumOfBasicCards = cards.group.filter { !it.isAce() }.sumOf { it.number.number[0] }
-        val aceCards = cards.group.filter { it.isAce() }
-
-        return if (aceCards.isEmpty()) {
+        val sumOfBasicCards = cards.getSumOfBasicCards()
+        return if (!cards.hasAceCards()) {
             listOf(sumOfBasicCards)
         } else {
-            aceCards.flatMap { card -> card.number.number.map { it + sumOfBasicCards } }
+            cards.getAceCards().flatMap { card -> card.number.number.map { it + sumOfBasicCards } }
         }
     }
 
     companion object {
-        const val GAME_LIMIT_NUMBER = 21
         const val ZERO = 0
     }
 }

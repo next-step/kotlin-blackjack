@@ -40,7 +40,7 @@ class Player(
     private fun changeStatus(): PlayerStatus {
         return when {
             hand.calculateCardsMaxSum() == PlayerCards.ZERO -> PlayerStatus.BUST
-            hand.calculateCardsMaxSum() == PlayerCards.GAME_LIMIT_NUMBER -> PlayerStatus.BLACKJACK
+            hand.calculateCardsMaxSum() == Cards.GAME_LIMIT_NUMBER -> PlayerStatus.BLACKJACK
             else -> PlayerStatus.HIT
         }
     }

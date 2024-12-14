@@ -12,7 +12,7 @@ class PlayerCardsTest : StringSpec({
 
         playerCards.addCard(createAceCard())
 
-        playerCards.cards shouldBe listOf(createAceCard())
+        playerCards.cards.group shouldBe listOf(createAceCard())
     }
 
     "유저의 패는 현재 가진 패의 최대 합산을 반환한다." {
