@@ -50,28 +50,6 @@ object ResultView {
         println("딜러는 ${Dealer.DEALER_STANDING_RULE}이하라 한장의 카드를 더 받았습니다.")
     }
 
-    fun printWinner(players: Players, dealer: Dealer) {
-        println("## 최종 승패")
-
-        println(
-            "${dealer.name}: " +
-                "${players.players.count { player -> dealer.isWin(opponent = player) }}승" +
-                "${players.players.count { player -> player.isWin(opponent = dealer) }}패",
-        )
-        players.players.forEach {
-            println(
-                "${it.name}: ${it.isWin(opponent = dealer).toWinOrLoseString()}"
-            )
-        }
-    }
-
-    private fun Boolean.toWinOrLoseString(): String =
-        if(this) {
-            "승"
-        } else {
-            "패"
-        }
-
     fun printBetResult(participantBets: MutableMap<Participant<*>, BetResult>) {
         println("## 최종 수익")
         participantBets.forEach { (participant, bet) ->
