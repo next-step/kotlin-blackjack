@@ -3,7 +3,7 @@ package blackjack.view
 import blackjack.BlackJackGame
 import blackjack.GameResult
 import blackjack.GameResult.*
-import blackjack.ParticipantResult
+import blackjack.Participants
 import blackjack.participant.Player
 
 object OutputView {
@@ -26,31 +26,27 @@ object OutputView {
         game.gamePlayers.players.forEach { println("$it - 결과:${it.score()}") }
     }
 
-    fun printBlackJackResult(results: List<ParticipantResult>) {
+    fun printBlackJackResult(results: Participants) {
         println("\n## 최종 승패")
+        val dealerRate = results.getDealerRate()
+        val dealerWins = dealerRate.getWinCount()
+        val dealerLosses = dealerRate.getLoseCount()
+        val dealerDraws = dealerRate.getDrawCount()
+        println("딜러: ${dealerWins}승 ${dealerLosses}패 ${dealerDraws}무")
 
-        val dealerResults = getDealerResult(results)
-        val dealerWins = dealerResults.count { it == WIN }
-        val dealerLosses = dealerResults.count { it == LOSE }
-        println("딜러: ${dealerWins}승 ${dealerLosses}패")
+        val playersRate = results.getPlayersRate()
+        playersRate.forEach { playerRate ->
+            val playerName = playerRate.name.value
+            val playerWins = playerRate.getWinCount()
+            val playerLosses = playerRate.getLoseCount()
 
-        val playerResults = results.filter { it.participant.getName().value != "딜러" }
-            .groupBy { it.participant.getName() }
-            .mapValues { entry ->
-                entry.value.map { it.result }
-            }
-        playerResults.forEach { (playerName, resultList) ->
             val result = when {
-                resultList.contains(WIN) -> "승"
-                resultList.contains(LOSE) -> "패"
-                else -> "무"
+                playerWins > 0 -> WIN
+                playerLosses > 0 -> LOSE
+                else -> DRAW
             }
-            println("${playerName.value}: $result")
+            println("$playerName: ${result.description}")
         }
-    }
-
-    private fun getDealerResult(results: List<ParticipantResult>): List<GameResult> {
-        return results.filter { it.participant.getName().value == "딜러" }.map { it.result }
     }
 
     fun printDealerMoreCard() {

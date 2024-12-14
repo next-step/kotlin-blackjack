@@ -4,12 +4,13 @@ import blackjack.card.Deck
 import blackjack.participant.Dealer
 import blackjack.participant.Player
 import blackjack.policy.InputMoreCardPolicy
+import blackjack.policy.MoreCardPolicy
 import blackjack.view.OutputView
 
 data class TurnMachine(
     val deck: Deck,
-    val moreCardPolicy: InputMoreCardPolicy,
-    val outputView: OutputView,
+    val moreCardPolicy: MoreCardPolicy = InputMoreCardPolicy,
+    val outputView: OutputView = OutputView,
 ) {
     fun playerTurn(player: Player) {
         while (!player.isBust()) {

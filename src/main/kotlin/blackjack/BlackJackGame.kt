@@ -12,11 +12,11 @@ data class BlackJackGame(
     val gamePlayers: Players,
     val turnMachine: TurnMachine,
 ) {
-    fun play(): List<ParticipantResult> {
+    fun play(): Participants {
         gamePlayers.players.forEach { player -> turnMachine.playerTurn(player) }
         turnMachine.dealerTurn(dealer)
 
-        return ParticipantResult.of(dealer, gamePlayers)
+        return Participants(dealer, gamePlayers)
     }
 
     companion object {

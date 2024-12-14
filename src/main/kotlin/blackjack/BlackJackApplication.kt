@@ -11,7 +11,7 @@ fun main() {
     val game = BlackJackGame.start(Dealer(), Players.of(playerNames), Deck())
     OutputView.printPlayersStartCardPack(game)
 
-    val results = game.play()
+    val participants = game.play()
     OutputView.printParticipantCardsResult(game)
-    OutputView.printBlackJackResult(results)
+    OutputView.printBlackJackResult(participants)
 }
