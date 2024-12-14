@@ -16,13 +16,13 @@ fun main() {
 
     gamblers.forEach { gambler ->
         while (true) {
-            val wantsMoreCard = BlackJackReader.readDecisionForMoreCard(gambler)
-            if (wantsMoreCard.not()) {
+            if (gambler.canNotReceiveCard()) {
+                BlackJackPrinter.announceCanNotReceiveCard(gambler)
                 break
             }
 
-            if (gambler.canNotReceiveCard()) {
-                BlackJackPrinter.announceCanNotReceiveCard(gambler)
+            val wantsMoreCard = BlackJackReader.readDecisionForMoreCard(gambler)
+            if (wantsMoreCard.not()) {
                 break
             }
 
