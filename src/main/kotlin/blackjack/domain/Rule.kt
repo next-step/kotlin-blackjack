@@ -6,5 +6,8 @@ object Rule {
 
     fun isBurst(score: Int): Boolean = score > THRESHOLD_VALUE
 
-    fun isBlackjack(score: Int, size: Int): Boolean = score == THRESHOLD_VALUE && size == BLACKJACK_SIZE
+    fun isBlackjack(
+        score: Int,
+        size: Int,
+    ): Boolean = score == THRESHOLD_VALUE && size == BLACKJACK_SIZE
 }
