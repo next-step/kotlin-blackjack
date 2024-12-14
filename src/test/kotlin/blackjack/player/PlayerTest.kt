@@ -4,6 +4,7 @@ import blackjack.card.Card
 import blackjack.card.CardFixture
 import blackjack.card.Rank
 import blackjack.card.Suit
+import blackjack.dealer.Dealer
 import io.kotest.matchers.collections.shouldContainAll
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
@@ -40,13 +41,33 @@ class PlayerTest {
         result.hand.cards shouldContainAll player.hand.cards + newCard
     }
 
+    @ParameterizedTest
+    @MethodSource("generateTestPlayer")
+    fun `플레이어의 상대가 Dealer가 아니라면 승패를 판단할 수 없다`(player: Player) {
+        player.isWin(Player.ready("isNotDealer")) shouldBe null
+    }
+
+    @ParameterizedTest
+    @MethodSource("generateTestPlayer")
+    fun `플레이어가 Dealer 보다 카드 수의 합이 크다면 승리한다`(player: Player) {
+        player.isWin(Dealer.ready(emptyList())) shouldBe true
+    }
+
+    @Test
+    fun `플레이어가 Dealer 보다 카드 수의 합이 작다면 패배한다`() {
+        val player = Player.ready(name = NAME)
+        val dealer = Dealer.ready(CardFixture.generateBlackJack())
+
+        player.isWin(dealer) shouldBe false
+    }
+
     companion object {
         @JvmStatic
         private fun generateTestPlayer() =
             listOf(
                 Player.fromNameAndCards(
                     name = NAME,
-                    cards = listOf(CardFixture.generateTestCard(rank = Rank.ACE), CardFixture.generateTestCard(rank = Rank.TEN)),
+                    cards = CardFixture.generateBlackJack(),
                 ),
             )
 

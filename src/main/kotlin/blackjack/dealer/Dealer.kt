@@ -3,6 +3,7 @@ package blackjack.dealer
 import blackjack.card.Card
 import blackjack.participant.Participant
 import blackjack.player.Hand
+import blackjack.player.Player
 import blackjack.view.ResultView
 
 data class Dealer(
@@ -11,11 +12,13 @@ data class Dealer(
 ) : Participant<Dealer> {
     override fun hitCard(card: Card): Dealer = Dealer(name = name, hand = hand.add(card))
 
-    override fun isWin(opponent: Participant<*>): Boolean =
-        when {
-            isBust() -> false
-            opponent.isBust() -> true
-            else -> hand.sum() > opponent.hand.sum()
+    override fun isWin(opponent: Participant<*>): Boolean? =
+        (opponent as? Player)?.let {
+            when {
+                isBust() -> false
+                opponent.isBust() -> true
+                else -> hand.sum() > opponent.hand.sum()
+            }
         }
 
     fun shouldDraw(): Boolean = hand.sum() <= DEALER_STANDING_RULE

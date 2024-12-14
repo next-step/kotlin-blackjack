@@ -13,7 +13,7 @@ interface Participant<out T : Participant<T>> {
 
     fun hitCard(card: Card): T
 
-    fun isWin(opponent: Participant<*>): Boolean
+    fun isWin(opponent: Participant<*>): Boolean?
 
     fun isBlackjack(): Boolean = hand.sum() == BlackJackMachine.BLACKJACK
 }

@@ -1,6 +1,7 @@
 package blackjack.player
 
 import blackjack.card.Card
+import blackjack.dealer.Dealer
 import blackjack.participant.Participant
 
 data class Player(
@@ -9,11 +10,13 @@ data class Player(
 ) : Participant<Player> {
     override fun hitCard(card: Card): Player = Player(name = name, hand = hand.add(card))
 
-    override fun isWin(opponent: Participant<*>): Boolean =
-        when {
-            opponent.isBust() -> true
-            isBust() -> false
-            else -> hand.sum() > opponent.hand.sum()
+    override fun isWin(opponent: Participant<*>): Boolean? =
+        (opponent as? Dealer)?.let { dealer ->
+            when {
+                dealer.isBust() -> true
+                isBust() -> false
+                else -> hand.sum() > opponent.hand.sum()
+            }
         }
 
     override fun equals(other: Any?): Boolean =
