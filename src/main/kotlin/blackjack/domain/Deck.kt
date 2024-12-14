@@ -2,7 +2,7 @@ package blackjack.domain
 
 import java.util.*
 
-class Cards private constructor(private val cards: Queue<Card>) : Collection<Card> by cards {
+class Deck private constructor(private val cards: Queue<Card>) : Collection<Card> by cards {
     fun draw(): Card {
         if (cards.isEmpty()) {
             throw CannotDrawCardsException()
@@ -22,13 +22,13 @@ class Cards private constructor(private val cards: Queue<Card>) : Collection<Car
             }
         }.toList()
 
-        fun create(): Cards {
+        fun create(): Deck {
             return create(ShufflingStrategy.NoShuffling)
         }
 
-        fun create(shufflingStrategy: ShufflingStrategy): Cards {
+        fun create(shufflingStrategy: ShufflingStrategy): Deck {
             val shuffledCards = shufflingStrategy.shuffle(ALL_CARDS)
-            return Cards(shuffledCards)
+            return Deck(shuffledCards)
         }
     }
 }

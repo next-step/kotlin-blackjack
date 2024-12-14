@@ -1,11 +1,11 @@
 package blackjack.domain
 
-class Dealer(private val cards: Cards = Cards.create(ShufflingStrategy.RandomShuffling)) {
+class Dealer(private val deck: Deck = Deck.create(ShufflingStrategy.RandomShuffling)) {
     fun dealTwoCardsEach(gamblers: Gamblers) {
-        gamblers.receive(cards)
+        gamblers.receive(deck)
     }
 
     fun dealCard(gambler: Gambler) {
-        gambler.receive(cards.draw())
+        gambler.receive(deck.draw())
     }
 }
