@@ -4,9 +4,7 @@ import java.util.*
 
 class Deck private constructor(private val cards: Queue<Card>) : Collection<Card> by cards {
     fun draw(): Card {
-        if (cards.isEmpty()) {
-            throw CannotDrawCardsException()
-        }
+        require(cards.isNotEmpty()) { "더이상 뽑을 수 있는 카드가 없습니다." }
 
         return cards.poll()
     }

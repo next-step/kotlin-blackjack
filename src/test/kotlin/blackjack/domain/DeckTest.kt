@@ -51,7 +51,7 @@ class DeckTest : FreeSpec({
                 deck.draw()
             }
 
-            shouldThrow<CannotDrawCardsException> { deck.draw() }
+            shouldThrow<IllegalArgumentException> { deck.draw() }
         }
     }
 })
