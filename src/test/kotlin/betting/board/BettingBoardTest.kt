@@ -63,7 +63,7 @@ class BettingBoardTest {
     ) {
         bettingBoard.setup(playerBets = playerBets, dealer = dealer)
 
-        bettingBoard.winAllPlayer()
+        bettingBoard.winRemainedPlayer()
 
         dealer.betAmount() shouldBe sumOfPlayerBetsWithNegative()
         bettingBoard.participantBets

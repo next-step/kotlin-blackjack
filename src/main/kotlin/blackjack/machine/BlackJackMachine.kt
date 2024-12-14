@@ -38,7 +38,7 @@ class BlackJackMachine(
         while (Rule.isGameActive(players = players, dealer = dealer)) {
             players = Players(players = players.players.map { playTurn(it) })
             dealer = dealer.drawIfBelowDealerStandingRule { deck.draw() }
-                .also { if(it.isBust()) bettingBoard.winAllPlayer() }
+                .also { if(it.isBust()) bettingBoard.winRemainedPlayer() }
             ResultView.printPlayersCardStatusAndSum(participant = createParticipants(dealer = dealer, players = players))
         }
 

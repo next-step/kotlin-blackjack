@@ -14,7 +14,7 @@ class BettingBoard(
             .keys
             .first()
 
-    private fun getPlayers(): List<Pair<Participant<*>, BetResult>> =
+    private fun getAllPlayers(): List<Pair<Participant<*>, BetResult>> =
         participantBets
             .filter { it.key !is Dealer }
             .toList()
@@ -31,7 +31,7 @@ class BettingBoard(
     }
 
     private fun handleBlackjack() {
-        val blackJackPlayers = getPlayers()
+        val blackJackPlayers = getAllPlayers()
             .filter { (participant, _) -> participant is Player && participant.isBlackjack() }
 
         if (blackJackPlayers.isEmpty()) return
@@ -52,8 +52,11 @@ class BettingBoard(
         participantBets[player] = BetResult.Lose(bet = playerBet.bet, amount = playerBet.bet.negative())
     }
 
-    fun winAllPlayer() {
-        distributeBetAmountByWinLoss(players = getPlayers())
+    fun winRemainedPlayer() {
+        val remainedPlayers =
+            getAllPlayers()
+                .filterNot { (player, _) -> player.isBust() }
+        distributeBetAmountByWinLoss(players = remainedPlayers)
     }
 
     private fun distributeBetAmountByWinLoss(
