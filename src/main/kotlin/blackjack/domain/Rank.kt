@@ -15,4 +15,3 @@ enum class Rank(val value: Int, val rankName: String) {
     KING(10, "K"),
     ACE(11, "A"), // ACE is 11, but can also be 1
 }
-

@@ -2,7 +2,7 @@ package blackjack.domain
 
 abstract class Participant(
     private val drawCard: () -> Card,
-    initialCardCount: Int = 2
+    initialCardCount: Int = 2,
 ) {
     private val _cards = mutableListOf<Card>()
     val cards: Cards = Cards(_cards)
@@ -18,7 +18,7 @@ abstract class Participant(
 
     fun addCardIfAvailable(
         requireCard: () -> Card,
-        onDrawCard: () -> Unit
+        onDrawCard: () -> Unit,
     ): Boolean {
         if (isAddCardEnabled()) {
             addCard(requireCard())

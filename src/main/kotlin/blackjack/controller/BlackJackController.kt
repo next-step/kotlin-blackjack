@@ -19,13 +19,14 @@ object BlackJackController {
     }
 
     private fun initializeGame(dealer: Dealer): Players {
-        val players = dealer.initPlayers(
-            fetchPlayerNames = { InputView.readPlayerNames() },
-            onPlayerInit = { names ->
-                ResultView.printPlayerInitMessage(names)
-                ResultView.printDealerWithCard(dealer.getCardForInitialDisplay())
-            }
-        )
+        val players =
+            dealer.initPlayers(
+                fetchPlayerNames = { InputView.readPlayerNames() },
+                onPlayerInit = { names ->
+                    ResultView.printPlayerInitMessage(names)
+                    ResultView.printDealerWithCard(dealer.getCardForInitialDisplay())
+                },
+            )
         return players
     }
 
@@ -51,7 +52,10 @@ object BlackJackController {
         ResultView.printFinalScoresForDealer(dealer)
     }
 
-    private fun finalizeGame(dealer: Dealer, players: Players) {
+    private fun finalizeGame(
+        dealer: Dealer,
+        players: Players,
+    ) {
         players.onEach { player ->
             ResultView.printFinalScoresForPlayer(player)
         }

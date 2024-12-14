@@ -2,7 +2,7 @@ package blackjack.domain
 
 class Player(
     val name: String,
-    private val drawCard: () -> Card
+    private val drawCard: () -> Card,
 ) : Participant(drawCard = drawCard) {
     private lateinit var currentCard: Card
 
