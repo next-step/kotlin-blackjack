@@ -16,7 +16,7 @@ class Game(
         HitCommand.STAY -> player.stay()
     }
 
-    fun isPlayerDone(player: Player): Boolean {
-        return player.hasBusted().not() || player.hasStayed()
+    fun isPlayerStillPlaying(player: Player): Boolean {
+        return player.hasBusted() && player.hasStayed().not()
     }
 }
