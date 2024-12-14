@@ -25,6 +25,22 @@ class Player(
         status = PlayerStatus.STAY
     }
 
+    fun isBlackJack(): Boolean {
+        return status == PlayerStatus.BLACKJACK
+    }
+
+    fun compareWithDealer(dealer: Dealer): PlayerWinLoseResult {
+        return when {
+            dealer.isBlackJack() -> PlayerWinLoseResult.LOSE
+            dealer.isBust() -> PlayerWinLoseResult.WIN
+            isBust() -> PlayerWinLoseResult.LOSE
+            isBlackJack() && !dealer.isBlackJack() -> PlayerWinLoseResult.WIN
+            dealer.getCardSum() > this.hand.calculateCardsMaxSum() -> PlayerWinLoseResult.LOSE
+            dealer.getCardSum() == this.hand.calculateCardsMaxSum() -> PlayerWinLoseResult.PUSH
+            else -> PlayerWinLoseResult.WIN
+        }
+    }
+
     private fun validateName(name: String) {
         require(name.isNotBlank()) { "유저의 이름은 공백일 수 없습니다." }
     }
@@ -32,7 +48,7 @@ class Player(
     private fun changeStatus(): PlayerStatus {
         return when {
             hand.calculateCardsMaxSum() == PlayerCards.ZERO -> PlayerStatus.BUST
-            hand.calculateCardsMaxSum() == Cards.GAME_LIMIT_NUMBER -> PlayerStatus.BLACKJACK
+            hand.cards.size() == 2 && hand.calculateCardsMaxSum() == Cards.GAME_LIMIT_NUMBER -> PlayerStatus.BLACKJACK
             else -> PlayerStatus.HIT
         }
     }

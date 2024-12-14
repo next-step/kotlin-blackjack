@@ -18,6 +18,18 @@ class Dealer {
         return hand.getCardsSum() <= DEALER_CARDS_LIMIT_SIZE
     }
 
+    fun isBlackJack(): Boolean {
+        return hand.cards.size() == 2 && hand.getCardsSum() == Cards.GAME_LIMIT_NUMBER
+    }
+
+    fun isBust(): Boolean {
+        return hand.getCardsSum() > Cards.GAME_LIMIT_NUMBER
+    }
+
+    fun getCardSum(): Int {
+        return hand.getCardsSum()
+    }
+
     companion object {
         private const val DEALER_CARDS_LIMIT_SIZE = 16
     }

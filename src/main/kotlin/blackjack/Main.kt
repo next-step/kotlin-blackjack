@@ -30,7 +30,8 @@ private fun playBlackJack(game: BlackJackGame) {
         game.checkCurrentPlayerStatusAndChange()
         handlePlayerCommand(game)
     }
-    game.handleDealer()
+    val dealerChance = game.handleDealerChance()
+    OutputView.printDealerChance(dealerChance)
 }
 
 private fun handlePlayerCommand(game: BlackJackGame) {

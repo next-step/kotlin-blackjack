@@ -3,6 +3,7 @@ package blackjack
 import blackjack.domain.Dealer
 import blackjack.domain.Deck
 import blackjack.domain.Player
+import blackjack.domain.PlayerGameResult
 import blackjack.domain.PlayerStatus
 import blackjack.domain.Players
 
@@ -38,13 +39,22 @@ class BlackJackGame private constructor(
         }
     }
 
+    fun getGameResult(): GameResult {
+        val playerGameResults = players.members.map { PlayerGameResult(it.name, it.compareWithDealer(dealer)) }
+        val dealerResult = DealerResult(playerGameResults)
+        return GameResult(dealerResult, playerGameResults)
+    }
+
     private fun changeToNextPlayer() {
         currentPlayer = players.getNextPlayer()
     }
 
-    fun handleDealer() {
-        if (dealer.shouldHit()) {
+    fun handleDealerChance(): Boolean {
+        return if (dealer.shouldHit()) {
             dealer.addCard(deck.draw())
+            true
+        } else {
+            false
         }
     }
 

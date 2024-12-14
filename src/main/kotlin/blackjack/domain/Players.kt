@@ -17,7 +17,7 @@ class Players private constructor(
     }
 
     fun hasBlackJackPlayer(): Boolean {
-        return members.any { it.status == PlayerStatus.BLACKJACK }
+        return members.any { it.isBlackJack() }
     }
 
     fun hasHitPlayer(): Boolean {

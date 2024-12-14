@@ -49,7 +49,7 @@ class BlackJackGameTest : StringSpec({
     "딜러의 패가 16이하일 경우 한장을 뽑도록 한다." {
         val game = BlackJackGame.createGame(createPlayers(2), basicDeck())
 
-        game.handleDealer()
+        game.handleDealerChance()
 
         game.dealer.hand.cards.size() shouldBe 3
     }
