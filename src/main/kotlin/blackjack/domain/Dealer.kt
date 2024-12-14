@@ -1,7 +1,7 @@
 package blackjack.domain
 
 class Dealer(
-    private val cardDeck: CardDeck
+    private val cardDeck: CardDeck,
 ) {
     private val _dealerCards = mutableListOf<Card>()
     val dealerCards: Cards = Cards(_dealerCards)
@@ -18,12 +18,13 @@ class Dealer(
         onPlayerInit: (List<String>) -> Unit,
     ): Players {
         val names = fetchPlayerNames()
-        val players = names.map { name ->
-            Player(
-                name = name,
-                drawCard = { cardDeck.draw() }
-            )
-        }
+        val players =
+            names.map { name ->
+                Player(
+                    name = name,
+                    drawCard = { cardDeck.draw() },
+                )
+            }
         onPlayerInit(names)
         return Players(value = players)
     }

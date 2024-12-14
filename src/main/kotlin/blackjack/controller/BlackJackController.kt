@@ -14,13 +14,14 @@ object BlackJackController {
         }
         val blackJackDealer = Dealer(cardDeck = CardDeck())
 
-        val players = blackJackDealer.initPlayers(
-            fetchPlayerNames = { InputView.readPlayerNames() },
-            onPlayerInit = { names ->
-                ResultView.printPlayerInitMessage(names)
-                ResultView.printDealerWithCard(blackJackDealer.getCardForInitialDisplay())
-            },
-        )
+        val players =
+            blackJackDealer.initPlayers(
+                fetchPlayerNames = { InputView.readPlayerNames() },
+                onPlayerInit = { names ->
+                    ResultView.printPlayerInitMessage(names)
+                    ResultView.printDealerWithCard(blackJackDealer.getCardForInitialDisplay())
+                },
+            )
 
         players
             .onEachPreparePlay { player ->
@@ -34,7 +35,7 @@ object BlackJackController {
             }
 
         blackJackDealer.drawOneMoreCardIfNeeded(
-            onDrawMoreCard = { ResultView.printDealerOneMoreCardDrawn() }
+            onDrawMoreCard = { ResultView.printDealerOneMoreCardDrawn() },
         )
 
         ResultView.printFinalScoresForDealer(blackJackDealer)
