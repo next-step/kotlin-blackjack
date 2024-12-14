@@ -29,4 +29,8 @@ object ResultView {
     private fun playerNameWithCards(player: Player): String {
         return "${player.name} 카드: ${player.cards.value.map { "${it.rank.rankName}${it.suit.koreanName}" }}"
     }
+
+    fun printDealerOneMoreCardDrawn() {
+        println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
+    }
 }
