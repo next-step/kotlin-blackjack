@@ -3,17 +3,26 @@ package blackjack.domain
 import blackjack.domain.participant.Dealer
 import blackjack.domain.participant.Participant
 import blackjack.domain.participant.Player
+import blackjack.domain.result.GameResult
+import blackjack.domain.result.PlayerGameResult
+import blackjack.domain.result.GameResultJudge
 
 class BlackjackGame(
     private val deck: Deck,
-    dealer: Dealer,
-    players: List<Player>,
+    val dealer: Dealer,
+    val players: List<Player>,
+    private val gameResultJudge: GameResultJudge,
 ) {
-    val participants: List<Participant> = listOf(dealer).plus(players)
-
     fun start() {
-        participants.forEach { participant ->
-            repeat(START_DRAW_COUNT) { draw(participant) }
+        drawInitialCards(dealer)
+        players.forEach { player ->
+            drawInitialCards(player)
+        }
+    }
+
+    private fun drawInitialCards(participant: Participant) {
+        repeat(START_DRAW_COUNT) {
+            draw(participant)
         }
     }
 
@@ -21,44 +30,18 @@ class BlackjackGame(
         participant.receivedCard(deck.draw())
     }
 
-    fun getGameResult(): GameResult {
-        val dealer = participants.filterIsInstance<Dealer>().first()
-        val players = participants.filterIsInstance<Player>()
-        val dealerResultBuilder = DealerGameResultBuilder(dealer)
-
+    fun judgeGame(): GameResult {
         val playersResult: List<PlayerGameResult> = players.map { player ->
-            val playerWin = player.compareWonOrNot(dealer)
-            dealerResultBuilder.record(!playerWin)
             PlayerGameResult(
                 player = player,
-                isWin = playerWin,
+                resultType = gameResultJudge.judge(player.cards, dealer.cards),
             )
         }
 
         return GameResult(
-            dealerResult = dealerResultBuilder.build(),
+            dealerName = dealer.name,
             playersResult = playersResult,
         )
-    }
-
-    private fun Player.compareWonOrNot(dealer: Dealer): Boolean {
-        if (dealer.cards.isBusted()) {
-            return true
-        }
-
-        if (this.cards.isBusted()) {
-            return false
-        }
-
-        return this.cards.sum() > dealer.cards.sum()
-    }
-
-    private fun DealerGameResultBuilder.record(isWin: Boolean) {
-        if (isWin) {
-            this.win()
-        } else {
-            this.lose()
-        }
     }
 
     companion object {
