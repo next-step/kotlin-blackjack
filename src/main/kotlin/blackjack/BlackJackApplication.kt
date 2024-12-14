@@ -9,10 +9,10 @@ import blackjack.view.OutputView
 
 fun main() {
     val playerNames = InputView.inputPlayerNames()
-    val game = BlackJackGame.start(Dealer(), Players.of(playerNames), Deck())
+    val game = BlackJackGame.start(Dealer(), Players.of(playerNames), Deck(), InputMoreCardPolicy)
     OutputView.printPlayersStartCardPack(game)
 
-    val results = game.play(InputMoreCardPolicy)
+    val results = game.play()
     OutputView.printParticipantCardsResult(game)
     OutputView.printBlackJackResult(results)
 }

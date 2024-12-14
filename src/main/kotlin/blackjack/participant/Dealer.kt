@@ -20,7 +20,12 @@ data class Dealer(
         return "${name.value}카드: $cards"
     }
 
+    fun isMoreCard(): Boolean {
+        return score() < MORE_CARD_CONDITION_SCORE
+    }
+
     companion object {
         private const val DEALER_NAME = "딜러"
+        private const val MORE_CARD_CONDITION_SCORE = 17
     }
 }

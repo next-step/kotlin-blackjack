@@ -5,6 +5,7 @@ import blackjack.participant.Dealer
 import blackjack.participant.Player
 import blackjack.participant.PlayerName
 import blackjack.participant.Players
+import blackjack.policy.InputMoreCardPolicy
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 
@@ -17,10 +18,10 @@ class BlackJackGameTest : StringSpec({
         val deck = Deck()
 
         // Act:
-        val blackJackGame = BlackJackGame(dealer, players, deck)
+        val blackJackGame = BlackJackGame(dealer, players, deck, moreCardPolicy)
 
         // Assert:
-        blackJackGame shouldBe BlackJackGame(dealer, players, deck)
+        blackJackGame shouldBe BlackJackGame(dealer, players, deck, moreCardPolicy)
     }
 
     "블랙잭 게임은 시작과 동시에 딜러와 게임 플레이어에게 카드를 2장씩 나눠준다." {
@@ -30,7 +31,7 @@ class BlackJackGameTest : StringSpec({
         val deck = Deck()
 
         // Act:
-        val result = BlackJackGame.start(dealer, playerNames, deck)
+        val result = BlackJackGame.start(dealer, playerNames, deck, InputMoreCardPolicy)
 
         // Assert:
         result.gamePlayers.players[0].cards.cards.size shouldBe 2
