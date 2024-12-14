@@ -2,6 +2,7 @@ package blackjack
 
 import blackjack.card.Deck
 import blackjack.participant.Dealer
+import blackjack.participant.Player
 import blackjack.participant.Players
 import blackjack.policy.MoreCardPolicy
 import blackjack.view.OutputView
@@ -11,14 +12,8 @@ data class BlackJackGame(
     val gamePlayers: Players,
     val deck: Deck,
 ) {
-    fun start(): BlackJackGame {
-        dealer.take(listOf(deck.pick(), deck.pick()))
-        gamePlayers.player.forEach { player -> player.take(listOf(deck.pick(), deck.pick())) }
-        return BlackJackGame(dealer, gamePlayers, deck)
-    }
-
     fun play(inputMoreCardPolicy: MoreCardPolicy): List<ParticipantResult> {
-        return gamePlayers.player.map { player ->
+        return gamePlayers.players.map { player ->
             while (player.isNotBust()) {
                 val isMoreCard = inputMoreCardPolicy.isMoreCard(player.getName())
                 if(!isMoreCard) {
@@ -29,5 +24,18 @@ data class BlackJackGame(
             }
             ParticipantResult.of(dealer, player)
         }.flatten()
+    }
+
+    companion object {
+        fun start(
+            dealer: Dealer,
+            players: List<Player>,
+            deck: Deck,
+        ): BlackJackGame {
+            dealer.take(listOf(deck.pick(), deck.pick()))
+            players.forEach { player -> player.take(listOf(deck.pick(), deck.pick())) }
+
+            return BlackJackGame(dealer, Players(players), deck)
+        }
     }
 }

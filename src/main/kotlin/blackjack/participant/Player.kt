@@ -7,6 +7,7 @@ data class Player(
     private val name: PlayerName,
     var cards: Cards = Cards(),
 ) : Participant(name) {
+    // TODO: Player가 받을지 결정하도록 변경
     fun isNotBust(): Boolean {
         return cards.isBust().not()
     }

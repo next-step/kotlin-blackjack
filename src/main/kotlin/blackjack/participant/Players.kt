@@ -1,9 +1,9 @@
 package blackjack.participant
 
-data class Players(val player: List<Player>) {
+data class Players(val players: List<Player>) {
     companion object {
-        fun of(playerNames: List<String>): Players {
-            return Players(playerNames.map { Player(PlayerName(it)) })
+        fun of(playerNames: List<String>): List<Player> {
+            return playerNames.map { Player(PlayerName(it)) }
         }
     }
 }

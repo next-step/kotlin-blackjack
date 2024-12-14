@@ -18,8 +18,13 @@ data class Cards(
         return possibleScoreSum().max()
     }
 
+    // TODO: Player에게 묻도록 변경
     fun isBust(): Boolean {
         return possibleScoreSum().all { it > SCORE_LIMIT }
+    }
+
+    fun getOpenCard(): String {
+        return _cards.first().toString()
     }
 
     private fun possibleScoreSum(): List<Int> {
@@ -34,10 +39,6 @@ data class Cards(
         return _cards.joinToString(", ")
     }
 
-    fun getOpenCard(): String {
-        return _cards.first().toString()
-    }
-
     companion object {
         private const val SCORE_LIMIT = 21
         private const val ACE_POINT = 10
@@ -45,6 +46,10 @@ data class Cards(
 
         fun createCardPack(): List<Card> {
             return CardSuit.entries.flatMap { suit -> CardNumber.entries.map { Card(it, suit) } }
+        }
+
+        fun create(newCards: List<Card>): Cards {
+            return Cards(newCards.toMutableList())
         }
     }
 }
