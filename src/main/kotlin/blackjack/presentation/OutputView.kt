@@ -20,6 +20,10 @@ class OutputView {
         println("${player.name}카드: ${player.cards}")
     }
 
+    fun printDealerExtraDraw() {
+        println("딜러는 16 이하라 한장의 카드를 더 받았습니다.")
+    }
+
     fun printResult(result: GameResult) {
         val (players, dealer) = result
 

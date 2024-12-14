@@ -20,6 +20,7 @@ class BlackjackGame(
 
         initialDraw(players + dealer)
         players.forEach(::progress)
+        dealerExtraDraw(dealer)
 
         endGame(players, dealer)
     }
@@ -40,6 +41,13 @@ class BlackjackGame(
     }
 
     private fun isHitOrStay(player: Player): Boolean = inputView.inputHitOrStay(player.name)
+
+    private fun dealerExtraDraw(dealer: Dealer) {
+        if (dealer.shouldDraw()) {
+            dealer.hit(deck)
+            outputView.printDealerExtraDraw()
+        }
+    }
 
     private fun endGame(
         players: List<Player>,
