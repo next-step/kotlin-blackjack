@@ -9,7 +9,8 @@ fun main() {
     val gamblerNames = BlackJackReader.readGamblerNames()
     val gamblers = Gamblers.from(gamblerNames)
 
-    Dealer.dealTwoCardsEach(gamblers)
+    val dealer = Dealer()
+    dealer.dealTwoCardsEach(gamblers)
     BlackJackPrinter.announceCardDistribution(gamblers)
     BlackJackPrinter.printAllGamblersCardMessage(gamblers)
 
@@ -25,7 +26,7 @@ fun main() {
                 break
             }
 
-            Dealer.dealCard(gambler)
+            dealer.dealCard(gambler)
             BlackJackPrinter.printGamblerCardMessage(gambler)
         }
 
