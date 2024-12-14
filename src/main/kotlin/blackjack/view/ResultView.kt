@@ -50,7 +50,7 @@ object ResultView {
         println("딜러는 ${Dealer.DEALER_STANDING_RULE}이하라 한장의 카드를 더 받았습니다.")
     }
 
-    fun printBetResult(participantBets: MutableMap<Participant<*>, BetResult>) {
+    fun printBetResult(participantBets: Map<Participant<*>, BetResult>) {
         println("## 최종 수익")
         participantBets.forEach { (participant, bet) ->
             println("${participant.name}: ${bet.winning.amount.toInt()}")

@@ -1,5 +1,7 @@
 package blackjack.participant
 
+import betting.Bet
+import betting.BetResult
 import blackjack.card.Card
 import blackjack.machine.BlackJackMachine
 import blackjack.player.Hand
@@ -8,12 +10,25 @@ import blackjack.player.Players
 interface Participant<out T : Participant<T>> {
     val name: String
     val hand: Hand
+    var betResult: BetResult
+    val bet: Bet
+        get() = betResult.bet
+
+    val betAmount: Double
+        get() = betResult.bet.amount
+
+    val winingAmount: Double
+        get() = betResult.winning.amount
 
     fun isBust(): Boolean = hand.sum() > BlackJackMachine.BLACKJACK
 
     fun hitCard(card: Card): T
 
     fun isWin(opponent: Participant<*>): Boolean?
+
+    fun updateBetResult(betResult: BetResult) {
+        this.betResult = betResult
+    }
 
     fun isBlackjack(): Boolean = hand.sum() == BlackJackMachine.BLACKJACK
 }

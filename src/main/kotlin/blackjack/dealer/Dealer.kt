@@ -1,16 +1,18 @@
 package blackjack.dealer
 
+import betting.BetResult
 import blackjack.card.Card
 import blackjack.participant.Participant
 import blackjack.player.Hand
 import blackjack.player.Player
 import blackjack.view.ResultView
 
-data class Dealer(
+class Dealer(
     override val name: String = "딜러",
     override val hand: Hand = Hand(cards = emptyList()),
+    override var betResult: BetResult = BetResult.Default(),
 ) : Participant<Dealer> {
-    override fun hitCard(card: Card): Dealer = Dealer(name = name, hand = hand.add(card))
+    override fun hitCard(card: Card): Dealer = Dealer(name = name, hand = hand.add(card), betResult = betResult)
 
     override fun isWin(opponent: Participant<*>): Boolean? =
         (opponent as? Player)?.let {

@@ -1,82 +1,93 @@
 package betting.board
 
+import betting.Bet
 import betting.BetResult
 import blackjack.dealer.Dealer
 import blackjack.participant.Participant
 import blackjack.player.Player
+import blackjack.player.Players
 
-class BettingBoard(
-    val participantBets: MutableMap<Participant<*>, BetResult> = mutableMapOf(),
-) {
-    private fun getDealer(): Participant<*> =
-        participantBets
-            .filter { it.key is Dealer }
-            .keys
-            .first()
+object BettingBoard {
+    private const val DEFAULT_RATIO = 1.0
+    const val BONUS_RATIO = 1.5
 
-    private fun getAllPlayers(): List<Pair<Participant<*>, BetResult>> =
-        participantBets
-            .filter { it.key !is Dealer }
-            .toList()
+    private data class BetAction(
+        val participant: Participant<*>,
+        val amount: Double?,
+        val evaluate: (Bet, Double?) -> BetResult,
+    )
 
-    fun setup(
-        playerBets: Map<Participant<*>, BetResult>,
-        dealer: Dealer,
-    ) {
-        playerBets.forEach { (player, betResult) ->
-            participantBets[player] = betResult
-        }
-        participantBets[dealer] = BetResult.Default()
-        handleBlackjack()
-    }
-
-    private fun handleBlackjack() {
-        val blackJackPlayers = getAllPlayers()
-            .filter { (participant, _) -> participant is Player && participant.isBlackjack() }
+    fun handleBlackjack(players: Players, dealer: Dealer) {
+        val blackJackPlayers =
+            players.players
+                .filter { it.isBlackjack() }
 
         if (blackJackPlayers.isEmpty()) return
 
         distributeBetAmountByWinLoss(
             players = blackJackPlayers,
-            bonusRatio = BONUS_RATIO.takeIf { getDealer().isNotBlackjack() } ?: DEFAULT_RATIO,
+            dealer = dealer,
+            bonusRatio = BONUS_RATIO.takeIf { dealer.isNotBlackjack() } ?: DEFAULT_RATIO,
         )
     }
 
     private fun Participant<*>.isNotBlackjack() = !this.isBlackjack()
 
-    fun bust(player: Player) {
-        val playerBet = participantBets[player] ?: return
-        val dealerBet = participantBets[getDealer()] ?: return
+    fun winDealer(
+        player: Player,
+        dealer: Dealer,
+    ) {
+        val betActions =
+            listOf(
+                BetAction(participant = dealer, amount = dealer.winingAmount + player.betAmount) { bet, amount ->
+                    BetResult.Win(bet = bet, amount = amount)
+                },
+                BetAction(participant = player, amount = player.bet.negative()) { bet, amount ->
+                    BetResult.Lose(bet = bet, amount = amount)
+                },
+            )
 
-        participantBets[getDealer()] = BetResult.Win(bet = dealerBet.bet, amount = dealerBet.winning.amount + playerBet.bet.amount)
-        participantBets[player] = BetResult.Lose(bet = playerBet.bet, amount = playerBet.bet.negative())
+        betActions.forEach { (participant, amount, evaluate) ->
+            updateBetResult(
+                participant = participant,
+                amount = amount,
+                evaluate = evaluate,
+            )
+        }
     }
 
-    fun winRemainedPlayer() {
+    private fun updateBetResult(
+        participant: Participant<*>,
+        amount: Double?,
+        evaluate: (Bet, Double?) -> BetResult,
+    ) {
+        participant.updateBetResult(evaluate(participant.bet, amount))
+    }
+
+    fun winRemainedPlayer(
+        players: Players,
+        dealer: Dealer,
+    ) {
         val remainedPlayers =
-            getAllPlayers()
-                .filterNot { (player, _) -> player.isBust() }
-        distributeBetAmountByWinLoss(players = remainedPlayers)
+            players.players
+                .filterNot { it.isBust() }
+        distributeBetAmountByWinLoss(players = remainedPlayers, dealer = dealer)
     }
 
     private fun distributeBetAmountByWinLoss(
-        players: List<Pair<Participant<*>, BetResult>>,
+        players: List<Player>,
+        dealer: Dealer,
         bonusRatio: Double = DEFAULT_RATIO,
     ) {
-        players.forEach { (player, betResult) ->
-            participantBets[player] = BetResult.Win(bet = betResult.bet, amount = betResult.bet.amount.times(bonusRatio))
+        players.forEach {
+            val betResult = BetResult.Win(bet = it.bet, amount = it.betAmount.times(bonusRatio))
+            it.updateBetResult(betResult)
         }
 
-        val dealerBet = participantBets[getDealer()] ?: return
         val sumOfPlayerBetAmount =
             players
-                .sumOf { (_, betResult) -> betResult.bet.amount.times(bonusRatio) }
+                .sumOf { it.betAmount.times(bonusRatio) }
                 .times(-1L)
-        participantBets[getDealer()] = BetResult.Lose(bet = dealerBet.bet, amount = dealerBet.bet.amount + sumOfPlayerBetAmount)
-    }
-
-    companion object {
-        private const val DEFAULT_RATIO = 1.0
-        const val BONUS_RATIO = 1.5
+        dealer.updateBetResult(BetResult.Lose(bet = dealer.bet, amount = dealer.bet.amount + sumOfPlayerBetAmount))
     }
 }

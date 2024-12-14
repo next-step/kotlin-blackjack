@@ -8,134 +8,73 @@ import blackjack.dealer.Dealer
 import blackjack.participant.Participant
 import blackjack.player.Hand
 import blackjack.player.Player
+import blackjack.player.Players
 import io.kotest.inspectors.forAll
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
-import org.junit.jupiter.params.ParameterizedTest
-import org.junit.jupiter.params.provider.Arguments
-import org.junit.jupiter.params.provider.MethodSource
-import java.util.stream.Stream
+import org.junit.jupiter.api.Test
 
 class BettingBoardTest {
-    private lateinit var bettingBoard: BettingBoard
+    private lateinit var dealer: Dealer
+    private lateinit var pobi: Player
+    private lateinit var jason: Player
+    private lateinit var players: List<Player>
 
     @BeforeEach
     fun setUp() {
-        bettingBoard = BettingBoard()
-    }
-    
-    @ParameterizedTest
-    @MethodSource("bettingBoardTest")
-    fun `BettingBoard의 participantBets 초기화를 테스트한다`(
-        playerBets: Map<Participant<*>, BetResult>,
-        dealer: Dealer,
-        expectedResult: MutableMap<Participant<*>, BetResult>,
-    ) {
-        bettingBoard.setup(playerBets = playerBets, dealer = dealer)
-
-        bettingBoard.participantBets.size shouldBe expectedResult.size
-        bettingBoard.participantBets shouldBe expectedResult
+        dealer = Dealer()
+        pobi = Player(name = "pobi", betResult = BetResult.Default(bet = Bet(amount = 1_000.0)))
+        jason = Player(name = "jason", betResult = BetResult.Default(bet = Bet(amount = 2_000.0)))
+        players = listOf(pobi, jason)
     }
 
-    @ParameterizedTest
-    @MethodSource("bettingBoardTest")
-    fun `플레이어가 패배한 경우 베팅한 금액을 잃고 딜러가 베팅금을 얻는다`(
-        playerBets: Map<Participant<*>, BetResult>,
-        dealer: Dealer,
-    ) {
-        bettingBoard.setup(playerBets = playerBets, dealer = dealer)
-
-        bettingBoard.bust(player = POBI)
-
-        val pobiBet = bettingBoard.participantBets[POBI] ?: return
-        pobiBet.winning.amount shouldBe BET_AMOUNTS[POBI]?.bet?.negative()
-
-        val dealerBet = bettingBoard.participantBets[dealer] ?: return
-        dealerBet.winning.amount shouldBe BET_AMOUNTS[POBI]?.bet?.amount
+    @Test
+    fun `플레이어가 패배한 경우 베팅한 금액을 잃고 딜러가 베팅금을 얻는다`() {
+        BettingBoard.winDealer(player = pobi, dealer = dealer)
+        dealer.betResult.winning.amount shouldBe pobi.betAmount
     }
 
-    @ParameterizedTest
-    @MethodSource("bettingBoardTest")
-    fun `딜러가 패배하는 경우 모든 플레이어는 베팅 금액을 받는다`(
-        playerBets: Map<Participant<*>, BetResult>,
-        dealer: Dealer,
-    ) {
-        bettingBoard.setup(playerBets = playerBets, dealer = dealer)
+    @Test
+    fun `딜러가 패배하는 경우 모든 플레이어는 베팅 금액을 받는다`() {
+        BettingBoard.winRemainedPlayer(players = Players(players = listOf(pobi, jason)), dealer = dealer)
 
-        bettingBoard.winRemainedPlayer()
-
-        dealer.betAmount() shouldBe sumOfPlayerBetsWithNegative()
-        bettingBoard.participantBets
-            .filter { it.key != dealer }
-            .forAll { (_, betResult) -> betResult.bet.amount shouldBe betResult.winning.amount }
+        dealer.betResult.winning.amount shouldBe sumOfPlayerBetsWithNegative()
+        players.forAll { it.betAmount shouldBe it.betResult.winning.amount }
     }
 
-    @ParameterizedTest
-    @MethodSource("bettingBoardTest")
+    @Test
     @DisplayName("플레이어의 처음 2장의 합이 21이고, 딜러는 아닌 경우 플레이어는 베팅 금액의 1.5배를 받는다")
-    fun playerIsBlackjackButDealerIsNotBlackjack(
-        playerBetParameters: Map<Participant<*>, BetResult>,
-        dealer: Dealer,
-    ) {
-        val playerBets = playerBetParameters.mapKeys { (player, _ ) -> player.hitCards(CardFixture.generateBlackJack()) }
-        
-        bettingBoard.setup(playerBets = playerBets, dealer = dealer)
+    fun playerIsBlackjackButDealerIsNotBlackjack() {
+        players = players.map { it.hitCards(CardFixture.generateBlackJack()) as Player }
 
-        playerBets.forAll { (player, _ ) -> player.isBlackjack() shouldBe true }
+        BettingBoard.handleBlackjack(players = Players(players = players), dealer = dealer)
+
+        players.forAll { it.isBlackjack() shouldBe true }
         dealer.isBlackjack() shouldBe false
-        dealer.betAmount() shouldBe sumOfPlayerBetsWithNegative().times(BettingBoard.BONUS_RATIO)
+        dealer.betResult.winning.amount shouldBe sumOfPlayerBetsWithNegative().times(BettingBoard.BONUS_RATIO)
     }
 
-    @ParameterizedTest
-    @MethodSource("bettingBoardTest")
+    @Test
     @DisplayName("플레이어의 처음 2장의 합이 21이고, 딜러도 21인 경우 플레이어는 베팅 금액을 돌려 받는다")
-    fun playerAndDealerIsBlackjack(
-        playerBetParameters: Map<Participant<*>, BetResult>,
-        dealerParameter: Dealer,
-    ) {
-        val playerBets = playerBetParameters.mapKeys { (player, _ ) -> player.hitCards(CardFixture.generateBlackJack()) }
-        val dealer = Dealer(name = dealerParameter.name, hand = Hand(cards = CardFixture.generateBlackJack()))
+    fun playerAndDealerIsBlackjack() {
+        players = players.map { it.hitCards(CardFixture.generateBlackJack()) as Player }
+        dealer = dealer.hitCards(CardFixture.generateBlackJack()) as Dealer
 
-        bettingBoard.setup(playerBets = playerBets, dealer = dealer)
+        BettingBoard.handleBlackjack(players = Players(players = players), dealer = dealer)
 
-        playerBets.forAll { (player, _ ) -> player.isBlackjack() shouldBe true }
+        players.forAll { it.isBlackjack() shouldBe true }
         dealer.isBlackjack() shouldBe true
-        dealer.betAmount() shouldBe sumOfPlayerBetsWithNegative()
+        dealer.betResult.winning.amount shouldBe sumOfPlayerBetsWithNegative()
     }
 
-    private fun sumOfPlayerBetsWithNegative() = bettingBoard.participantBets
-        .filter { it.key !is Dealer }
-        .values
-        .sumOf { it.bet.negative() }
+    private fun sumOfPlayerBetsWithNegative() = players.sumOf { it.bet.negative() }
 
-    private fun Dealer.betAmount() = bettingBoard.participantBets[this]?.winning?.amount
-
-    private fun Participant<*>.hitCards(cards: List<Card>): Participant<*> =
-        Player(name = this.name, hand = Hand(cards = this.hand.cards.plus(cards)))
-
-
-    companion object {
-        private val POBI = Player(name = "pobi")
-        private val JASON = Player(name = "jason")
-        private val BET_AMOUNTS =
-            mapOf(
-                POBI to BetResult.Default(bet = Bet(amount = 1_000.0)),
-                JASON to BetResult.Default(bet = Bet(amount = 2_000.0)),
-        )
-
-        @JvmStatic
-        fun bettingBoardTest(): Stream<Arguments> =
-            Stream.of(
-                Arguments.of(
-                    mapOf(POBI to BET_AMOUNTS[POBI], JASON to BET_AMOUNTS[JASON]),
-                    Dealer(),
-                    mutableMapOf(
-                        POBI to BET_AMOUNTS[POBI],
-                        JASON to BET_AMOUNTS[JASON],
-                        Dealer() to BetResult.Default(),
-                    ),
-                ),
-            )
+    private fun Participant<*>.hitCards(cards: List<Card>): Participant<*> {
+        return when (this) {
+            is Player -> Player(name = this.name, hand = Hand(cards = this.hand.cards.plus(cards)))
+            is Dealer -> Dealer(name = this.name, hand = Hand(cards = this.hand.cards.plus(cards)))
+            else -> throw IllegalArgumentException("Unsupported participant type")
+        }
     }
 }

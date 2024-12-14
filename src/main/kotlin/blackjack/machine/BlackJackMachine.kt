@@ -12,7 +12,6 @@ import blackjack.view.ResultView
 
 class BlackJackMachine(
     private val deck: Deck,
-    private val bettingBoard: BettingBoard = BettingBoard(),
 ) {
     fun play() {
         val playerList =
@@ -27,25 +26,25 @@ class BlackJackMachine(
         var players = Players(players = playerList)
         var dealer = Dealer.ready(initialCards = listOf(deck.draw(), deck.draw()))
 
-        bettingBoard.setup(
-            playerBets = players.players.associateWith { InputView.inputBettingAmount(it) },
-            dealer = dealer,
-        )
+        players.players.forEach { player ->
+            player.updateBetResult(InputView.inputBettingAmount(player))
+        }
+        BettingBoard.handleBlackjack(players = players, dealer = dealer)
 
         ResultView.printPlayerNamesAndDealer(players = players, dealer = dealer)
         ResultView.printPlayersCardStatus(participants = createParticipants(dealer = dealer, players = players))
 
         while (Rule.isGameActive(players = players, dealer = dealer)) {
-            players = Players(players = players.players.map { playTurn(it) })
+            players = Players(players = players.players.map { playTurn(player = it, dealer = dealer) })
             dealer = dealer.drawIfBelowDealerStandingRule { deck.draw() }
-                .also { if(it.isBust()) bettingBoard.winRemainedPlayer() }
+                .also { if(it.isBust()) BettingBoard.winRemainedPlayer(players = players, dealer = it) }
             ResultView.printPlayersCardStatusAndSum(participant = createParticipants(dealer = dealer, players = players))
         }
 
-        ResultView.printBetResult(participantBets = bettingBoard.participantBets)
+        ResultView.printBetResult(participantBets = (players.players + dealer).associateWith { it.betResult })
     }
 
-    private fun playTurn(player: Player): Player =
+    private fun playTurn(player: Player, dealer: Dealer): Player =
         when {
             player.isBust() -> player
             !InputView.isHitCard(player) ->
@@ -56,7 +55,7 @@ class BlackJackMachine(
                 player
                     .hitCard(deck.draw())
                     .also {
-                        if(it.isBust()) bettingBoard.bust(it)
+                        if(it.isBust()) BettingBoard.winDealer(player = it, dealer = dealer)
                         ResultView.printPlayerCard(it)
                     }
         }
