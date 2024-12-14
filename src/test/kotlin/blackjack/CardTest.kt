@@ -1,5 +1,6 @@
 package blackjack
 
+import blackjack.domain.Card
 import blackjack.domain.CardMark
 import blackjack.domain.CardNumber
 import io.kotest.core.spec.style.StringSpec
@@ -12,5 +13,13 @@ class CardTest : StringSpec({
 
         aceCard.isAce() shouldBe true
         basicCard.isAce() shouldBe false
+    }
+
+    "카드는 공개 여부 상태를 가지고 있다." {
+        val faceUpCard = Card(CardNumber.TEN, CardMark.CLOVER)
+        val faceDownCard = Card(CardNumber.TEN, CardMark.CLOVER, false)
+
+        faceUpCard.isFaceUp shouldBe true
+        faceDownCard.isFaceUp shouldBe false
     }
 })
