@@ -24,6 +24,14 @@
   - [ ] 스탠드
   - [ ] 히트
 
+### Improvement Point
+
+- [x] 1. inputMoreCard를 외부에서 주입하도록 한다. (추가 카드를 받는 기능을 제어 가능하도록 한다)
+- [ ] 2. BlackJackGame에 아래 코드를 이동시킨다.
+   - 외부에서 어떻게 메시지를 주고 받을지 고민해야 한다.
+- [ ] 3. 최종 결과로 Result를 던지도록 한다.
+  - Result에는 Player, Dealer에 대한 정보가 담긴다
+
 
 ## STEP 2
 
