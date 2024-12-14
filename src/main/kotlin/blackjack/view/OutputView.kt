@@ -1,7 +1,7 @@
 package blackjack.view
 
 import blackjack.flow.BlackJackGame
-import blackjack.result.GameResult.*
+import blackjack.domain.GameResult.*
 import blackjack.participant.Participants
 import blackjack.participant.Player
 

@@ -1,5 +1,6 @@
 package blackjack.result
 
+import blackjack.domain.GameResult
 import blackjack.participant.PlayerName
 
 data class ParticipantResult(
