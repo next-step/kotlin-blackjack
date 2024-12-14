@@ -1,5 +1,8 @@
 package blackjack.domain
 
+import blackjack.domain.player.AbstractPlayer
+import blackjack.domain.player.Player
+import io.kotest.matchers.collections.shouldBeIn
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
@@ -12,11 +15,11 @@ class GameTest {
         var initCallbackCalled = 0
         var turnCallbackCalled = 0
 
-        val initCallback: ((List<Player>) -> Unit) = {
+        val initCallback: ((List<AbstractPlayer>) -> Unit) = {
             initCallbackCalled++
         }
 
-        val turnCallback: ((Player) -> String) = {
+        val turnCallback: ((AbstractPlayer) -> String) = {
             turnCallbackCalled++
             "n"
         }
@@ -30,29 +33,14 @@ class GameTest {
     }
 
     @Test
-    fun `check player can't draw card`() {
+    fun `check add dealer when create game`() {
         val mockPlayers = listOf(Player("pobi"), Player("jason"))
         val game = Game.createGame(mockPlayers)
 
-        val mockPlayer = Player("pobi")
-        mockPlayer.drawCard(Card.createCard("6", "하트"))
-        mockPlayer.drawCard(Card.createCard("6", "하트"))
-        mockPlayer.drawCard(Card.createCard("10", "하트"))
-
-        var turnCallbackCalled = 0
-        val turnCallback: ((Player) -> String) = {
-            turnCallbackCalled++
-            "y"
+        val playerName = listOf("pobi", "jason", "딜러")
+        game.players.size shouldBe 2
+        game.players.forEach { player ->
+            player.name shouldBeIn playerName
         }
-
-        var printCallbackCalled = 0
-        val printCallback: ((List<Player>) -> Unit) = {
-            printCallbackCalled++
-        }
-
-        game.startTurn(mockPlayer, turnCallback, printCallback)
-
-        turnCallbackCalled shouldBe 0
-        printCallbackCalled shouldBe 0
     }
 }

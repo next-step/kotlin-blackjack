@@ -3,11 +3,23 @@ package blackjack.domain.player
 import blackjack.domain.Card
 import blackjack.domain.Card.Companion.SpecialNumber
 
-abstract class AbstractPlayer {
+abstract class AbstractPlayer(val name: String) {
     protected var cards = mutableListOf<Card>()
+    var winCount = 0
+    var loseCount = 0
 
-    abstract fun drawCard(newCard: Card)
-    abstract fun isBust(): Boolean
+    abstract fun startTurn(
+        onTurnStarted: ((AbstractPlayer) -> String)?,
+        onPrintResultCallback: (List<AbstractPlayer>) -> Unit,
+    )
+
+    fun isBust(): Boolean {
+        return calculateCard() > 21
+    }
+
+    fun drawCard(newCard: Card) {
+        cards.add(newCard)
+    }
 
     fun calculateCard(): Int {
         val aceCards = cards.filter { it.number == SpecialNumber.A.name }
@@ -22,5 +34,14 @@ abstract class AbstractPlayer {
 
     fun getAllCards(): List<Card> {
         return cards.toList()
+    }
+
+    fun updateWinningStatus(winCount: Int, loseCount: Int) {
+        this.winCount = winCount
+        this.loseCount = loseCount
+    }
+
+    companion object {
+        const val YES = "y"
     }
 }
