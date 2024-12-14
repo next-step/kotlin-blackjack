@@ -1,12 +1,15 @@
 package blackjack.domain
 
-class Player(val name: String, private val deck: Deck) {
+class Player(
+    val name: String,
+    private val drawCard: () -> Card,
+) {
     private val _cards = mutableListOf<Card>()
     val cards: Cards = Cards(_cards)
     val cardsSum: Int get() = cards.sumValues()
 
     init {
-        repeat(DEFAULT_CARD_COUNT) { addCard(deck.draw()) }
+        repeat(DEFAULT_CARD_COUNT) { addCard(drawCard()) }
     }
 
     fun play(
@@ -15,7 +18,7 @@ class Player(val name: String, private val deck: Deck) {
         onExitPlay: () -> Unit,
     ) {
         while (isDrawCard(name)) {
-            val card = deck.draw()
+            val card = drawCard()
             val isCardAdded = addCard(card, onDrawCard)
             if (isCardAdded.not()) break
         }
