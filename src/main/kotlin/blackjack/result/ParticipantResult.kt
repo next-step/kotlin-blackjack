@@ -1,7 +1,9 @@
 package blackjack.result
 
 import blackjack.domain.GameResult
-import blackjack.domain.GameResult.*
+import blackjack.domain.GameResult.DRAW
+import blackjack.domain.GameResult.LOSE
+import blackjack.domain.GameResult.WIN
 import blackjack.participant.PlayerName
 
 data class ParticipantResult(

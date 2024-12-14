@@ -3,7 +3,7 @@ package blackjack.card
 import blackjack.card.Cards.Companion.createShuffledCardPack
 
 data class Deck(
-    private val _cards: MutableList<Card> = createShuffledCardPack().toMutableList()
+    private val _cards: MutableList<Card> = createShuffledCardPack().toMutableList(),
 ) {
     val cards: List<Card>
         get() = _cards.toList()

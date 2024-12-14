@@ -1,7 +1,9 @@
 package blackjack.view
 
+import blackjack.domain.GameResult.DRAW
+import blackjack.domain.GameResult.LOSE
+import blackjack.domain.GameResult.WIN
 import blackjack.flow.BlackJackGame
-import blackjack.domain.GameResult.*
 import blackjack.participant.Participants
 import blackjack.participant.Player
 
@@ -39,11 +41,12 @@ object OutputView {
             val playerWins = playerRate.getWinCount()
             val playerLosses = playerRate.getLoseCount()
 
-            val result = when {
-                playerWins > 0 -> WIN
-                playerLosses > 0 -> LOSE
-                else -> DRAW
-            }
+            val result =
+                when {
+                    playerWins > 0 -> WIN
+                    playerLosses > 0 -> LOSE
+                    else -> DRAW
+                }
             println("$playerName: ${result.description}")
         }
     }

@@ -19,13 +19,17 @@ data class Participants(
     }
 
     fun getPlayersRate(): List<ParticipantResult> {
-        return gamePlayers.players.map { player -> ParticipantResult(player.getName(), listOf(
-            when {
-                player.bestScore() > dealer.score() -> GameResult.WIN
-                player.bestScore() < dealer.score() -> GameResult.LOSE
-                else -> GameResult.DRAW
-            }
-        )) }
+        return gamePlayers.players.map { player ->
+            ParticipantResult(
+                player.getName(),
+                listOf(
+                    when {
+                        player.bestScore() > dealer.score() -> GameResult.WIN
+                        player.bestScore() < dealer.score() -> GameResult.LOSE
+                        else -> GameResult.DRAW
+                    },
+                ),
+            )
+        }
     }
-
 }

@@ -3,12 +3,11 @@ package blackjack.participant
 import blackjack.card.Card
 import blackjack.card.Cards
 import blackjack.domain.PlayerState
-import blackjack.domain.PlayerState.*
 
 data class Player(
     private val name: PlayerName,
     var cards: Cards = Cards(),
-    var state: PlayerState = HIT
+    var state: PlayerState = PlayerState.HIT,
 ) : Participant(name) {
     fun take(newCards: List<Card>) {
         cards.addAll(newCards)
@@ -25,21 +24,22 @@ data class Player(
 
     fun score(): Int {
         return when {
-            state == BUST -> 0
+            state == PlayerState.BUST -> 0
             else -> cards.bestScore()
         }
     }
 
     fun stand() {
-        state = STAND
+        state = PlayerState.STAND
     }
 
     fun refreshState() {
-        state = when {
-            bestScore() > BLACK_JACK -> BUST
-            bestScore() == BLACK_JACK -> BLACKJACK
-            else -> state
-        }
+        state =
+            when {
+                bestScore() > BLACK_JACK -> PlayerState.BUST
+                bestScore() == BLACK_JACK -> PlayerState.BLACKJACK
+                else -> state
+            }
     }
 
     override fun toString(): String {

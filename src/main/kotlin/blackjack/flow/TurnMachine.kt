@@ -3,9 +3,9 @@ package blackjack.flow
 import blackjack.card.Deck
 import blackjack.participant.Dealer
 import blackjack.participant.Player
-import blackjack.view.policy.InputMoreCardPolicy
 import blackjack.policy.MoreCardPolicy
 import blackjack.view.OutputView
+import blackjack.view.policy.InputMoreCardPolicy
 
 data class TurnMachine(
     val deck: Deck,

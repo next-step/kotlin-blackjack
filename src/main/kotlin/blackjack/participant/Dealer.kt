@@ -8,9 +8,8 @@ import blackjack.domain.PlayerState.HIT
 data class Dealer(
     private val name: PlayerName = PlayerName(DEALER_NAME),
     var cards: Cards = Cards(),
-    var state: PlayerState = HIT
+    var state: PlayerState = HIT,
 ) : Participant(name) {
-
     fun take(newCards: List<Card>) {
         cards.addAll(newCards)
     }
