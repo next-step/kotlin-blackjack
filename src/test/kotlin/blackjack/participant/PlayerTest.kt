@@ -44,7 +44,7 @@ class PlayerTest : StringSpec({
         player.take(listOf(card1, card2, card3))
 
         // Assert:
-        player.isNotBust() shouldBe false
+        player.isBust() shouldBe true
     }
 
     "플레이어의 점수를 확인할 수 있다." {

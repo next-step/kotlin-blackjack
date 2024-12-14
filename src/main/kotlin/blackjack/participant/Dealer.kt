@@ -16,6 +16,10 @@ data class Dealer(
         return cards.bestScore()
     }
 
+    override fun toString(): String {
+        return "${name.value}카드: $cards"
+    }
+
     companion object {
         private const val DEALER_NAME = "딜러"
     }

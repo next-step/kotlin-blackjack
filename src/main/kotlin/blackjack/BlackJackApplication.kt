@@ -13,6 +13,6 @@ fun main() {
     OutputView.printPlayersStartCardPack(game)
 
     val results = game.play(InputMoreCardPolicy)
-    OutputView.printParticipantCardsResult(game.gamePlayers.players)
+    OutputView.printParticipantCardsResult(game)
     OutputView.printBlackJackResult(results)
 }
