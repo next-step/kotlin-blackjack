@@ -11,10 +11,11 @@ class DealerTest {
         val dealer = Dealer(drawCard = { Card(Rank.TWO, Suit.HEARTS) })
 
         // when
-        val players = dealer.initPlayers(
-            fetchPlayerNames = { playerNames },
-            onPlayerInit = {}
-        )
+        val players =
+            dealer.initPlayers(
+                fetchPlayerNames = { playerNames },
+                onPlayerInit = {},
+            )
 
         // then
         assertThat(players.value[0]).hasFieldOrPropertyWithValue("name", "Sara")
