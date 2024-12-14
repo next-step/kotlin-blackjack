@@ -1,9 +1,5 @@
 package blackjack.entity
 
-class Player(val name: String) {
-    private val blackJack: BlackJack = BlackJack()
-
-    fun getPlayerBlackJack(): BlackJack {
-        return blackJack
-    }
+class Player(val name: String, initialCards: List<CardInfo>) {
+    val hand: PlayerHand = PlayerHand(initialCards)
 }

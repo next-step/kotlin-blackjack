@@ -4,13 +4,7 @@ import blackjack.entity.Dealer
 import blackjack.entity.Game
 import blackjack.entity.Player
 
-class GameRepository {
-    private lateinit var game: Game
-
-    fun saveGame(game: Game) {
-        this.game = game
-    }
-
+class GameRepository(private val game: Game) {
     fun findAll(): Game {
         return this.game
     }

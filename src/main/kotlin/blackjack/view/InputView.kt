@@ -1,6 +1,5 @@
 package blackjack.view
 
-import blackjack.entity.BlackJack
 import blackjack.entity.Player
 
 object InputView {
@@ -22,20 +21,7 @@ object InputView {
     }
 
     fun playerInfo(player: Player) {
-        val cardInfo = createCardInfos(player.getPlayerBlackJack())
-        println("${player.name}카드는 $cardInfo")
-    }
-
-    private fun createCardInfos(blackJack: BlackJack): String {
-        val cards = blackJack.cards
-        return cards
-            .filter { it.second }
-            .flatMap { (cardMap, _) ->
-                cardMap.map { (symbol, card) ->
-                    String.format("%s%s", card.getValue(), symbol.getType())
-                }
-            }
-            .joinToString(", ")
+        println("${player.name}카드는 ${player.hand.showCards()}")
     }
 
     fun dealerAddCardComment(dealerName: String) {

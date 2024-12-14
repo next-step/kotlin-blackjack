@@ -2,6 +2,7 @@ package blackjack.domain
 
 import blackjack.domain.enums.Card
 import blackjack.domain.enums.CardSymbol
+import blackjack.entity.CardInfo
 
 object Deal {
     private val cards = Card.entries.toMutableList()
@@ -11,13 +12,11 @@ object Deal {
     fun giveCards(
         count: Int,
         isFaceUp: Boolean = true,
-    ): MutableList<Pair<MutableMap<CardSymbol, Card>, Boolean>> {
+    ): List<CardInfo> {
         val remainingCards = symbols.size * cards.size - gaveCards.size
         require(count <= remainingCards) { "Requested cards exceed the available deck size. Remaining: $remainingCards" }
 
-        val cardsToGive = mutableListOf<Pair<MutableMap<CardSymbol, Card>, Boolean>>()
-
-        repeat(count) {
+        return List(count) {
             val cardPair =
                 generateSequence {
                     val shuffledSymbols = symbols.shuffled()
@@ -26,10 +25,8 @@ object Deal {
                 }.first { it !in gaveCards }
 
             gaveCards.add(cardPair)
-            cardsToGive.add(mutableMapOf(cardPair.first to cardPair.second) to isFaceUp)
+            CardInfo(mapOf(cardPair.first to cardPair.second), isFaceUp)
         }
-
-        return cardsToGive
     }
 
     fun resetDeck() {

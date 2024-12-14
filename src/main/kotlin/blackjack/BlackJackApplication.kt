@@ -1,62 +1,68 @@
 package blackjack
 
-import blackjack.controller.BlackJackController
+import blackjack.domain.BlackJackGame
+import blackjack.domain.BlackJackGame.DEFAULT_FACE_UP
+import blackjack.domain.BlackJackGame.INIT_FACE_UP
+import blackjack.domain.Deal
+import blackjack.entity.Dealer
+import blackjack.entity.Game
 import blackjack.entity.Player
-import blackjack.repository.GameRepository
-import blackjack.service.BlackJackService
 import blackjack.view.InputView
 import blackjack.view.OutputView
-
-private val blackJackController = BlackJackController(BlackJackService(GameRepository()))
 
 fun main() {
     val playersList = InputView.getPlayers()
     val dealerName = InputView.getDealerName()
-    initGameSet(dealerName, playersList)
-
-    gameStart()
+    initBlackJack(dealerName, playersList)
 
     gameContinue()
-
     gameCardResult()
-
     gameEnd()
 }
 
-private fun gameCardResult() {
-    val game = blackJackController.getGameInfo()
-    OutputView.gameCardResult(game)
-}
-
-private fun gameProgress(player: String): Boolean {
-    val player = blackJackController.gameContinue(player)
-    InputView.playerInfo(player)
-    return player.getPlayerBlackJack().isBust()
-}
-
-private fun gameStart() {
-    val game = blackJackController.startGame()
-    OutputView.gameStart(game)
-}
-
-fun initGameSet(
-    dealerName: String,
-    playersList: List<String>,
-) {
-    blackJackController.initPlayers(dealerName, playersList)
-}
-
 fun gameContinue() {
-    val game = blackJackController.getGameInfo()
+    val game = BlackJackGame.getGameInfo()
     val playersList = game.players
     val dealer = game.dealer
-    val isLessThanSixTeen = dealer.getDealerBlackJack().isLessThanSixTeen()
+    val isLessThanSixTeen = dealer.hand.isLessThanSixteen()
     playersList.forEach { player ->
         playerGameProgress(player)
     }
     if (isLessThanSixTeen) {
         dealerGameProgress(dealer.name)
     }
+}
+
+private fun initBlackJack(
+    dealerName: String,
+    players: List<String>,
+) {
+    val dealer = initDealer(dealerName)
+    val players = initPlayers(players)
+    val game = Game(dealer, players)
+    OutputView.gameStart(game)
+    BlackJackGame.setGameRepository(game)
+}
+
+private fun initDealer(dealerName: String): Dealer {
+    val initDealerCard =
+        (Deal.giveCards(DEFAULT_FACE_UP, false) + Deal.giveCards(DEFAULT_FACE_UP, true))
+    return Dealer(dealerName, initDealerCard)
+}
+
+private fun initPlayers(players: List<String>): Set<Player> {
+    return players.map { Player(it, Deal.giveCards(INIT_FACE_UP)) }.toSet()
+}
+
+private fun gameCardResult() {
+    val game = BlackJackGame.getGameInfo()
+    OutputView.gameCardResult(game)
+}
+
+private fun gameProgress(playerName: String): Boolean {
+    val player = BlackJackGame.gameContinue(playerName)
+    InputView.playerInfo(player)
+    return player.hand.isBust()
 }
 
 private fun playerGameProgress(player: Player) {
@@ -68,10 +74,10 @@ private fun playerGameProgress(player: Player) {
 
 private fun dealerGameProgress(dealerName: String) {
     InputView.dealerAddCardComment(dealerName)
-    blackJackController.gameContinueDealer()
+    BlackJackGame.gameContinueDealer()
 }
 
 fun gameEnd() {
-    val results = blackJackController.getGameResult()
+    val results = BlackJackGame.getGameResult()
     OutputView.results(results)
 }
