@@ -12,15 +12,22 @@ data class Player(
 ) : Participant(name) {
     fun take(newCards: List<Card>) {
         cards.addAll(newCards)
-        score()
+        refreshState()
     }
 
     fun isBust(): Boolean {
         return state.isBust()
     }
 
-    fun score(): Int {
+    fun bestScore(): Int {
         return cards.bestScore()
+    }
+
+    fun score(): Int {
+        return when {
+            state == BUST -> 0
+            else -> cards.bestScore()
+        }
     }
 
     fun stand() {
@@ -29,8 +36,8 @@ data class Player(
 
     fun refreshState() {
         state = when {
-            score() > BLACK_JACK -> BUST
-            score() == BLACK_JACK -> BLACKJACK
+            bestScore() > BLACK_JACK -> BUST
+            bestScore() == BLACK_JACK -> BLACKJACK
             else -> state
         }
     }

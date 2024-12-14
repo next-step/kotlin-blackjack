@@ -22,7 +22,7 @@ object OutputView {
 
     fun printParticipantCardsResult(game: BlackJackGame) {
         println("${game.dealer} - 결과:${game.dealer.score()}")
-        game.gamePlayers.players.forEach { println("$it - 결과:${it.score()}") }
+        game.gamePlayers.players.forEach { println("$it - 결과:${it.bestScore()}") }
     }
 
     fun printBlackJackResult(results: Participants) {

@@ -1,6 +1,7 @@
 package blackjack.result
 
 import blackjack.domain.GameResult
+import blackjack.domain.GameResult.*
 import blackjack.participant.PlayerName
 
 data class ParticipantResult(
@@ -8,14 +9,14 @@ data class ParticipantResult(
     val results: List<GameResult>,
 ) {
     fun getWinCount(): Int {
-        return results.count { it == GameResult.WIN }
+        return results.count { it == WIN }
     }
 
     fun getLoseCount(): Int {
-        return results.count { it == GameResult.LOSE }
+        return results.count { it == LOSE }
     }
 
     fun getDrawCount(): Int {
-        return results.count { it == GameResult.DRAW }
+        return results.count { it == DRAW }
     }
 }

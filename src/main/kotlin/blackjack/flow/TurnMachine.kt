@@ -3,7 +3,7 @@ package blackjack.flow
 import blackjack.card.Deck
 import blackjack.participant.Dealer
 import blackjack.participant.Player
-import blackjack.policy.InputMoreCardPolicy
+import blackjack.view.policy.InputMoreCardPolicy
 import blackjack.policy.MoreCardPolicy
 import blackjack.view.OutputView
 
@@ -20,7 +20,6 @@ data class TurnMachine(
                 break
             }
             player.take(listOf(deck.pick()))
-            player.refreshState()
             OutputView.printPlayerCard(player)
         }
     }

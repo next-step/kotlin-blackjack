@@ -12,16 +12,16 @@ data class Deck(
         require(_cards.size == NUMBER_OF_CARDS) { "카드의 수가 52장이 아닙니다." }
     }
 
-    override fun toString(): String {
-        return _cards.joinToString("\n")
-    }
-
     fun pick(): Card {
         require(_cards.size >= DEFAULT_PICK_COUNT) { "더 이상 뽑을 카드가 없습니다." }
 
         val card = _cards.take(DEFAULT_PICK_COUNT).first()
         _cards.remove(card)
         return card
+    }
+
+    override fun toString(): String {
+        return _cards.joinToString("\n")
     }
 
     companion object {

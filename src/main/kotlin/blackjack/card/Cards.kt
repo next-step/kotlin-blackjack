@@ -11,7 +11,9 @@ data class Cards(
     }
 
     fun bestScore(): Int {
-        return possibleScoreSum().max()
+        return possibleScoreSum()
+            .filter { it <= MAX_SCORE }
+            .maxOrNull() ?: possibleScoreSum().min()
     }
 
     fun getOpenCard(): String {
@@ -32,6 +34,7 @@ data class Cards(
 
     companion object {
         private const val ACE_POINT = 10
+        private const val MAX_SCORE = 21
 
         fun createShuffledCardPack(): List<Card> {
             return CardSuit.entries.flatMap { suit -> CardNumber.entries.map { Card(it, suit) } }.shuffled()

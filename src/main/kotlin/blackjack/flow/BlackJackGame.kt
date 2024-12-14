@@ -5,7 +5,7 @@ import blackjack.participant.Dealer
 import blackjack.participant.Participants
 import blackjack.participant.Player
 import blackjack.participant.Players
-import blackjack.policy.InputMoreCardPolicy
+import blackjack.view.policy.InputMoreCardPolicy
 import blackjack.view.OutputView
 
 data class BlackJackGame(

@@ -1,6 +1,7 @@
-package blackjack.policy
+package blackjack.view.policy
 
 import blackjack.participant.PlayerName
+import blackjack.policy.MoreCardPolicy
 import blackjack.view.InputView
 
 object InputMoreCardPolicy: MoreCardPolicy {
