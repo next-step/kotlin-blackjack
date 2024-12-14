@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.result
 
 import blackjack.participant.PlayerName
 

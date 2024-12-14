@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.flow
 
 import blackjack.card.Deck
 import blackjack.participant.Dealer

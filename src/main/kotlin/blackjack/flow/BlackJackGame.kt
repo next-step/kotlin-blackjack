@@ -1,7 +1,8 @@
-package blackjack
+package blackjack.flow
 
 import blackjack.card.Deck
 import blackjack.participant.Dealer
+import blackjack.participant.Participants
 import blackjack.participant.Player
 import blackjack.participant.Players
 import blackjack.policy.InputMoreCardPolicy

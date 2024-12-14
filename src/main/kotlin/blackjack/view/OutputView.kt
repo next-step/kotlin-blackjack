@@ -1,9 +1,8 @@
 package blackjack.view
 
-import blackjack.BlackJackGame
-import blackjack.GameResult
-import blackjack.GameResult.*
-import blackjack.Participants
+import blackjack.flow.BlackJackGame
+import blackjack.result.GameResult.*
+import blackjack.participant.Participants
 import blackjack.participant.Player
 
 object OutputView {

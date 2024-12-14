@@ -1,7 +1,7 @@
-package blackjack
+package blackjack.participant
 
-import blackjack.participant.Dealer
-import blackjack.participant.Players
+import blackjack.result.GameResult
+import blackjack.result.ParticipantResult
 
 data class Participants(
     val dealer: Dealer,

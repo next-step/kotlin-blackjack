@@ -1,4 +1,4 @@
-package blackjack
+package blackjack.result
 
 enum class GameResult(
     val description: String,
