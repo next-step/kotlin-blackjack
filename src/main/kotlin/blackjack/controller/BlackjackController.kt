@@ -9,28 +9,28 @@ import blackjack.domain.Players
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
-class BlackjackController(private val inputView: InputView, private val outputView: OutputView) {
+class BlackjackController() {
     fun start() {
         val game = createGame()
-        outputView.showGameStart(players = game.players)
+        OutputView.showGameStart(players = game.players)
 
         gameLoop(game)
 
-        outputView.showGameResult(players = game.players)
+        OutputView.showGameResult(players = game.players)
     }
 
     private fun gameLoop(game: Game) {
         game.players.allPlayers().forEach { player ->
             while (!game.isPlayerDone(player)) {
-                val hitCommand = inputView.askHitOrStay(player.name)
+                val hitCommand = InputView.askHitOrStay(player.name)
                 game.processPlayerTurn(player, HitCommand.from(hitCommand))
-                outputView.printPlayerCards(player)
+                OutputView.printPlayerCards(player)
             }
         }
     }
 
     private fun createGame(): Game {
-        val playerNames = inputView.getPlayerNames()
+        val playerNames = InputView.getPlayerNames()
         val dealer = createDealer()
         val players = createPlayers(playerNames)
         return Game(dealer = dealer, players = players)
