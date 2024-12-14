@@ -4,22 +4,18 @@ import blackjack.card.Card
 import blackjack.card.Cards
 
 data class Player(
-    val name: PlayerName,
+    override val name: PlayerName,
     var cards: Cards = Cards(),
-) {
-    fun take(newCard: Card) {
-        cards.add(newCard)
-    }
-
-    fun take(newCards: List<Card>) {
-        cards.addAll(newCards)
-    }
-
+) : Participant(name) {
     fun isNotBust(): Boolean {
         return cards.isBust().not()
     }
 
-    fun score(): Int {
+    override fun take(newCards: List<Card>) {
+        cards.addAll(newCards)
+    }
+
+    override fun score(): Int {
         return cards.bestScore()
     }
 

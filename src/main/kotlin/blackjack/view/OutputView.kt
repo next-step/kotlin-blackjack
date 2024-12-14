@@ -1,6 +1,9 @@
 package blackjack.view
 
 import blackjack.BlackJackGame
+import blackjack.GameResult.LOSE
+import blackjack.GameResult.WIN
+import blackjack.ParticipantResult
 import blackjack.participant.Player
 
 object OutputView {
@@ -17,8 +20,22 @@ object OutputView {
         println(player)
     }
 
-    fun printBlackJackResult(players: List<Player>) {
+    fun printParticipantCardsResult(players: List<Player>) {
         println()
         players.forEach { println("$it - 결과:${it.score()}") }
+    }
+
+    fun printBlackJackResult(results: List<ParticipantResult>) {
+        println("\n## 최종 승패")
+        val groupedResults = results.groupBy { it.participant.name }
+            .mapValues { entry ->
+                val wins = entry.value.count { it.result == WIN }
+                val losses = entry.value.count { it.result == LOSE }
+                wins to losses
+            }
+        groupedResults.forEach { (playerName, winLoss) ->
+            val (wins, losses) = winLoss
+            println("${playerName.value}: ${wins}승, ${losses}패")
+        }
     }
 }

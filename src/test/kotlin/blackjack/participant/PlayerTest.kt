@@ -14,7 +14,7 @@ class PlayerTest : StringSpec({
         val card = Card(CardNumber.ACE, CardSuit.SPADES)
 
         // Act:
-        player.take(card)
+        player.take(listOf(card))
 
         // Assert:
         player.cards.cards.size shouldBe 1
