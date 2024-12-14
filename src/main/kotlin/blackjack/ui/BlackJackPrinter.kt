@@ -37,12 +37,7 @@ object BlackJackPrinter {
         }
     }
 
-    private fun createGamblerCardMessage(gambler: Gambler) = "${gambler.name}카드: ${createCardMessage(gambler)}"
-
-    private fun createCardMessage(gambler: Gambler): String {
-        return gambler.cards
-            .joinToString(separator = PRINT_SEPARATOR) { card -> card.signature }
-    }
+    private fun createGamblerCardMessage(gambler: Gambler) = "${gambler.name}카드: ${CardMessageCreator.create(gambler.cards)}"
 
     fun printLineFeed() {
         println()
