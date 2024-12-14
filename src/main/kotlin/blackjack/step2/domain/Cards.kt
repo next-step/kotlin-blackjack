@@ -1,5 +1,7 @@
 package blackjack.step2.domain
 
+import blackjack.step2.domain.GameInitializer.Companion.INITIAL_DEAL_COUNT
+
 data class Cards private constructor(private val cards: List<Card>) {
     val all: List<Card> get() = cards
 
@@ -13,7 +15,7 @@ data class Cards private constructor(private val cards: List<Card>) {
     }
 
     fun isInitialBlackjack(): Boolean {
-        if (cards.size != 2) return false
+        if (cards.size != INITIAL_DEAL_COUNT) return false
         return this.totalScore() == Participant.BLACKJACK_SCORE
     }
 

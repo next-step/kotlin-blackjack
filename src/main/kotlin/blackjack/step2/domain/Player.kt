@@ -3,10 +3,9 @@ package blackjack.step2.domain
 class Player(
     override val name: String,
     override val cards: Cards = Cards.of(emptyList()),
-    val bet: Int = 0,
 ) : Participant(name, cards) {
     override fun pickCard(card: Card): Player {
-        return Player(name, cards.add(card), bet)
+        return Player(name, cards.add(card))
     }
 
     override fun canDraw(): Boolean {

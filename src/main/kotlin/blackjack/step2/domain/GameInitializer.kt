@@ -9,11 +9,11 @@ class GameInitializer(private val cardPicker: CardPicker) {
     fun initializePlayers(players: List<Player>): List<Player> {
         return players.map { player ->
             val cards = List(INITIAL_DEAL_COUNT) { cardPicker.pick() }
-            Player(player.name, Cards.of(cards), player.bet)
+            Player(player.name, Cards.of(cards))
         }
     }
 
     companion object {
-        private const val INITIAL_DEAL_COUNT = 2
+        const val INITIAL_DEAL_COUNT = 2
     }
 }

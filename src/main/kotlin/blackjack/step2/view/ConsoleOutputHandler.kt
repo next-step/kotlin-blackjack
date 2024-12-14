@@ -2,9 +2,9 @@ package blackjack.step2.view
 
 import blackjack.step2.domain.Card
 import blackjack.step2.domain.Dealer
-import blackjack.step2.domain.GameResult
 import blackjack.step2.domain.Participant
 import blackjack.step2.domain.Player
+import blackjack.step2.domain.ProfitResult
 
 object ConsoleOutputHandler {
     fun printInitialCards(
@@ -22,12 +22,16 @@ object ConsoleOutputHandler {
         participants.forEach { this.printParticipantCards(it) }
     }
 
-    fun printResults(results: List<GameResult>) {
+    fun printResults(results: List<ProfitResult>) {
         println("## 최종 수익")
         results.forEach { result ->
             val profit = result.profit
-            println("${result.participant.name}: $profit")
+            println("${result.participant.name}: ${profit.formatProfit()}")
         }
+    }
+
+    private fun Double.formatProfit(): String {
+        return if (this % 1.0 == 0.0) this.toInt().toString() else this.toString()
     }
 
     private fun printParticipantCards(participant: Participant) {
