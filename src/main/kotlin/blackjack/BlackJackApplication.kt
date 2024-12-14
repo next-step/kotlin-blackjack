@@ -20,18 +20,10 @@ fun main() {
 
     // Action Item
     // [x] 1. inputMoreCard를 외부에서 주입하도록 한다. (추가 카드를 받는 기능을 제어 가능하도록 한다)
-    // 2. BlackJackGame에 아래 코드를 이동시킨다.
-    // 3. 최종 결과로 Result를 던지도록 한다.
+    // [ ] 2. BlackJackGame에 아래 코드를 이동시킨다.
+    // [ ] 3. 최종 결과로 Result를 던지도록 한다.
     //  - Result에는 Player, Dealer에 대한 정보가 담긴다
-    gamePlayer.player.map { player ->
-        while (player.isNotBust()) {
-            val isMoreCard = InputMoreCardPolicy.isMoreCard(player.name)
-            if(!isMoreCard) {
-                break
-            }
-            player.take(deck.pick())
-            OutputView.printPlayerCard(player)
-        }
-    }
+    startGame.play(InputMoreCardPolicy)
+
     OutputView.printBlackJackResult(gamePlayer.player)
 }
