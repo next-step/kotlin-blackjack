@@ -1,13 +1,34 @@
 package blackjack.dealer
 
+import betting.Bet
+import betting.BetResult
 import blackjack.card.CardFixture
 import blackjack.card.Rank
+import blackjack.machine.BlackJackMachine.Companion.BONUS_RATIO
+import blackjack.participant.ParticipantFixture.hitCards
 import blackjack.player.Hand
+import blackjack.player.Player
+import io.kotest.inspectors.forAll
 import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.shouldBe
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
 class DealerTest {
+    private lateinit var dealer: Dealer
+    private lateinit var pobi: Player
+    private lateinit var jason: Player
+    private lateinit var players: List<Player>
+
+    @BeforeEach
+    fun setUp() {
+        dealer = Dealer()
+        pobi = Player(name = "pobi", betResult = BetResult.Default(bet = Bet(amount = 1_000.0)))
+        jason = Player(name = "jason", betResult = BetResult.Default(bet = Bet(amount = 2_000.0)))
+        players = listOf(pobi, jason)
+    }
+
     @Test
     fun `딜러 객체 생성 테스트`() {
         val dealer = Dealer()
@@ -69,4 +90,31 @@ class DealerTest {
 
         dealer.shouldDraw() shouldBe true
     }
+
+    @Test
+    @DisplayName("플레이어의 처음 2장의 합이 21이고, 딜러는 아닌 경우 플레이어는 베팅 금액의 1.5배를 받는다")
+    fun playerIsBlackjackButDealerIsNotBlackjack() {
+        players = players.map { it.hitCards(CardFixture.generateBlackJack()) as Player }
+
+        dealer = dealer.handleBlackJack(blackJackPlayers = players.filter { it.isBlackjack() })
+
+        players.forAll { it.isBlackjack() shouldBe true }
+        dealer.isBlackjack() shouldBe false
+        dealer.winingAmount shouldBe sumOfPlayerBetsWithNegative().times(BONUS_RATIO)
+    }
+
+    @Test
+    @DisplayName("플레이어의 처음 2장의 합이 21이고, 딜러도 21인 경우 플레이어는 베팅 금액을 돌려 받는다")
+    fun playerAndDealerIsBlackjack() {
+        players = players.map { it.hitCards(CardFixture.generateBlackJack()) as Player }
+        dealer = dealer.hitCards(CardFixture.generateBlackJack()) as Dealer
+
+        dealer = dealer.handleBlackJack(blackJackPlayers = players.filter { it.isBlackjack() })
+
+        players.forAll { it.isBlackjack() shouldBe true }
+        dealer.isBlackjack() shouldBe true
+        dealer.winingAmount shouldBe sumOfPlayerBetsWithNegative()
+    }
+
+    private fun sumOfPlayerBetsWithNegative() = players.sumOf { it.bet.negative() }
 }

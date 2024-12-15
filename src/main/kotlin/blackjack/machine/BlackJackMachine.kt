@@ -26,10 +26,13 @@ class BlackJackMachine(
         var players = Players(players = playerList)
         var dealer = Dealer.ready(initialCards = listOf(deck.draw(), deck.draw()))
 
-        players.players.forEach { player ->
-            player.updateBetResult(InputView.inputBettingAmount(player))
-        }
-        BettingBoard.handleBlackjack(players = players, dealer = dealer)
+        players =
+            Players(
+                players.players
+                    .map { it.updateBetResult(InputView.inputBettingAmount(it)) }
+                    .map { it.handleBlackJack(dealer = dealer) },
+            )
+        dealer = dealer.handleBlackJack(blackJackPlayers = players.players.filter { it.isBlackjack() })
 
         ResultView.printPlayerNamesAndDealer(players = players, dealer = dealer)
         ResultView.printPlayersCardStatus(participants = createParticipants(dealer = dealer, players = players))
@@ -63,5 +66,6 @@ class BlackJackMachine(
     companion object {
         private const val DEFAULT_HAND_SIZE = 2
         const val BLACKJACK = 21
+        const val BONUS_RATIO = 1.5
     }
 }
