@@ -1,35 +1,20 @@
 package blackjack.participant
 
-import blackjack.card.Card
-import blackjack.card.Cards
+import blackjack.card.DefaultCardHolder
 
 data class Player(
     private val name: PlayerName,
-    var cards: Cards = Cards(),
+    val cardHolder: DefaultCardHolder = DefaultCardHolder(),
     var state: PlayerState = PlayerState.HIT,
-) : Participant(name) {
-    fun take(newCard: Card) {
-        cards.add(newCard)
-        refreshState()
-    }
-
-    fun take(newCards: List<Card>) {
-        cards.addAll(newCards)
-        refreshState()
-    }
-
+) : Participant(name, cardHolder) {
     fun isBust(): Boolean {
         return state.isBust()
     }
 
-    fun bestScore(): Int {
-        return cards.bestScore()
-    }
-
-    fun score(): Int {
+    fun getScore(): Int {
         return when {
             state == PlayerState.BUST -> 0
-            else -> cards.bestScore()
+            else -> score()
         }
     }
 
@@ -40,14 +25,14 @@ data class Player(
     fun refreshState() {
         state =
             when {
-                bestScore() > BLACK_JACK -> PlayerState.BUST
-                bestScore() == BLACK_JACK -> PlayerState.BLACKJACK
+                score() > BLACK_JACK -> PlayerState.BUST
+                score() == BLACK_JACK -> PlayerState.BLACKJACK
                 else -> state
             }
     }
 
     override fun toString(): String {
-        return "${name.value}카드: $cards"
+        return "${name.value}카드: ${cardHolder.cards}"
     }
 
     companion object {

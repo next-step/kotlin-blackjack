@@ -20,6 +20,7 @@ data class TurnMachine(
                 break
             }
             player.take(deck.pick())
+            player.refreshState()
             OutputView.printPlayerCard(player)
         }
     }

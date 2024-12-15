@@ -9,8 +9,8 @@ data class Participants(
     fun getDealerRate(): ParticipantResult {
         val gameResults = gamePlayers.players.map { player ->
             when {
-                dealer.score() > player.score() -> GameResult.WIN
-                dealer.score() < player.score() -> GameResult.LOSE
+                dealer.score() > player.getScore() -> GameResult.WIN
+                dealer.score() < player.getScore() -> GameResult.LOSE
                 else -> GameResult.DRAW
             }
         }
@@ -23,8 +23,8 @@ data class Participants(
                 player.getName(),
                 listOf(
                     when {
-                        player.bestScore() > dealer.score() -> GameResult.WIN
-                        player.bestScore() < dealer.score() -> GameResult.LOSE
+                        player.getScore() > dealer.score() -> GameResult.WIN
+                        player.getScore() < dealer.score() -> GameResult.LOSE
                         else -> GameResult.DRAW
                     },
                 ),

@@ -1,9 +1,9 @@
 package blackjack.view
 
+import blackjack.flow.BlackJackGame
 import blackjack.participant.GameResult.DRAW
 import blackjack.participant.GameResult.LOSE
 import blackjack.participant.GameResult.WIN
-import blackjack.flow.BlackJackGame
 import blackjack.participant.Participants
 import blackjack.participant.Player
 
@@ -13,7 +13,7 @@ object OutputView {
         val gamePlayer = game.participants.gamePlayers.players
         val playerNames = gamePlayer.joinToString { it.getName().value }
         println("\n${dealer.getName().value}와 ${playerNames}에게 2장의 카드를 나누었습니다.")
-        println("${dealer.getName().value}: ${dealer.cards.getOpenCard()}")
+        println("${dealer.getName().value}: ${dealer.cardHolder.cards.getOpenCard()}")
         gamePlayer.forEach { println("$it") }
         println()
     }
@@ -24,7 +24,7 @@ object OutputView {
 
     fun printParticipantCardsResult(game: BlackJackGame) {
         println("${game.participants.dealer} - 결과:${game.participants.dealer.score()}")
-        game.participants.gamePlayers.players.forEach { println("$it - 결과:${it.bestScore()}") }
+        game.participants.gamePlayers.players.forEach { println("$it - 결과:${it.score()}") }
     }
 
     fun printBlackJackResult(results: Participants) {

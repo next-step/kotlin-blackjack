@@ -22,9 +22,7 @@ class DeckTest : StringSpec({
         val cards = mutableListOf<Card>()
 
         // Act:
-        val result = shouldThrow<IllegalArgumentException> {
-            Deck(cards)
-        }
+        val result = shouldThrow<IllegalArgumentException> { Deck(cards) }
 
         // Assert:
         result.message shouldBe "카드의 수가 52장이 아닙니다."
@@ -49,9 +47,7 @@ class DeckTest : StringSpec({
         }
 
         // Act:
-        val result = shouldThrow<IllegalArgumentException> {
-            deck.pick()
-        }
+        val result = shouldThrow<IllegalArgumentException> { deck.pick() }
 
         // Assert:
         result.message shouldBe "더 이상 뽑을 카드가 없습니다."

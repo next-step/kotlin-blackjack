@@ -1,8 +1,11 @@
 package blackjack.participant
 
 import blackjack.card.Card
-import blackjack.card.CardNumber.*
-import blackjack.card.CardSuit.*
+import blackjack.card.CardNumber.NINE
+import blackjack.card.CardNumber.TEN
+import blackjack.card.CardNumber.TWO
+import blackjack.card.CardSuit.HEARTS
+import blackjack.card.CardSuit.SPADES
 import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 
@@ -52,7 +55,7 @@ class ParticipantsTest : StringSpec({
             listOf(
                 Card(TEN, SPADES),
                 Card(NINE, HEARTS),
-            )
+            ),
         )
         val player = Player(PlayerName("player1"))
         player.take(
@@ -60,10 +63,11 @@ class ParticipantsTest : StringSpec({
                 Card(TEN, SPADES),
                 Card(TEN, HEARTS),
                 Card(TWO, HEARTS),
-            )
+            ),
         )
         val players = Players(listOf(player))
         val participants = Participants(dealer, players)
+        player.refreshState()
 
         // Act:
         val dealerRate = participants.getDealerRate()

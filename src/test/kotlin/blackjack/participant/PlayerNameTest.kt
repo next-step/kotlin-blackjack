@@ -22,9 +22,7 @@ class PlayerNameTest : StringSpec({
         val value = ""
 
         // Act:
-        val result = shouldThrow<IllegalArgumentException> {
-            PlayerName(value)
-        }
+        val result = shouldThrow<IllegalArgumentException> { PlayerName(value) }
 
         // Assert:
         result.message shouldBe "이름은 공백일 수 없습니다. input = "

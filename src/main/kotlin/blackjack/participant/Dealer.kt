@@ -1,22 +1,13 @@
 package blackjack.participant
 
-import blackjack.card.Card
-import blackjack.card.Cards
+import blackjack.card.DefaultCardHolder
 import blackjack.participant.PlayerState.HIT
 
 data class Dealer(
     private val name: PlayerName = PlayerName(DEALER_NAME),
-    var cards: Cards = Cards(),
+    val cardHolder: DefaultCardHolder = DefaultCardHolder(),
     var state: PlayerState = HIT,
-) : Participant(name) {
-    fun take(newCards: List<Card>) {
-        cards.addAll(newCards)
-    }
-
-    fun score(): Int {
-        return cards.bestScore()
-    }
-
+) : Participant(name, cardHolder) {
     fun isMoreCard(): Boolean {
         return score() < MORE_CARD_CONDITION_SCORE
     }
@@ -26,7 +17,7 @@ data class Dealer(
     }
 
     override fun toString(): String {
-        return "${name.value}카드: $cards"
+        return "${name.value}카드: ${cardHolder.cards}"
     }
 
     companion object {

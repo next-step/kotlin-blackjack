@@ -17,7 +17,7 @@ class PlayerTest : StringSpec({
         player.take(listOf(card))
 
         // Assert:
-        player.cards.cards.size shouldBe 1
+        player.cardHolder.cards.cards.size shouldBe 1
     }
 
     "플레이어는 카드를 여러 장 받을 수 있다." {
@@ -30,7 +30,7 @@ class PlayerTest : StringSpec({
         player.take(listOf(card1, card2))
 
         // Assert:
-        player.cards.cards.size shouldBe 2
+        player.cardHolder.cards.cards.size shouldBe 2
     }
 
     "플레이어는 버스트가 되었는지 확인할 수 있다." {
@@ -42,6 +42,7 @@ class PlayerTest : StringSpec({
 
         // Act:
         player.take(listOf(card1, card2, card3))
+        player.refreshState()
 
         // Assert:
         player.isBust() shouldBe true
@@ -58,7 +59,7 @@ class PlayerTest : StringSpec({
         player.take(listOf(card1, card2, card3))
 
         // Assert:
-        player.bestScore() shouldBe 22
+        player.score() shouldBe 22
     }
 
     "플레이어의 점수를 표기한다." {
