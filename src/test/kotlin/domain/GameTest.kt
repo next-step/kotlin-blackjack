@@ -19,9 +19,9 @@ class GameTest : DescribeSpec({
     lateinit var sut: Game
 
     beforeTest {
-        players = Players(listOf(Player("pobi"), Player("jason")))
         dealer = Dealer(Deck(CardListFixture.simpleCardList()))
-        sut = Game(dealer, players)
+        players = Players(listOf(dealer, Player("pobi"), Player("jason")))
+        sut = Game(players)
     }
 
     describe("init test") {
