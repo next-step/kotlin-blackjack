@@ -9,8 +9,8 @@ import blackjack.participant.Player
 
 object OutputView {
     fun printPlayersStartCardPack(game: BlackJackGame) {
-        val dealer = game.dealer
-        val gamePlayer = game.gamePlayers.players
+        val dealer = game.participants.dealer
+        val gamePlayer = game.participants.gamePlayers.players
         val playerNames = gamePlayer.joinToString { it.getName().value }
         println("\n${dealer.getName().value}와 ${playerNames}에게 2장의 카드를 나누었습니다.")
         println("${dealer.getName().value}: ${dealer.cards.getOpenCard()}")
@@ -23,8 +23,8 @@ object OutputView {
     }
 
     fun printParticipantCardsResult(game: BlackJackGame) {
-        println("${game.dealer} - 결과:${game.dealer.score()}")
-        game.gamePlayers.players.forEach { println("$it - 결과:${it.bestScore()}") }
+        println("${game.participants.dealer} - 결과:${game.participants.dealer.score()}")
+        game.participants.gamePlayers.players.forEach { println("$it - 결과:${it.bestScore()}") }
     }
 
     fun printBlackJackResult(results: Participants) {

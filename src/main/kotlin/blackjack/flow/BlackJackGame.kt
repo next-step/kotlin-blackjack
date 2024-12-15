@@ -9,15 +9,18 @@ import blackjack.view.OutputView
 import blackjack.view.policy.InputMoreCardPolicy
 
 data class BlackJackGame(
-    val dealer: Dealer,
-    val gamePlayers: Players,
+    val participants: Participants,
     val turnMachine: TurnMachine,
 ) {
     fun play(): Participants {
-        gamePlayers.players.forEach { player -> turnMachine.playerTurn(player) }
+        val gamePlayers = participants.gamePlayers
+        val players = gamePlayers.players
+        players.forEach { player -> turnMachine.playerTurn(player) }
+
+        val dealer = participants.dealer
         turnMachine.dealerTurn(dealer)
 
-        return Participants(dealer, gamePlayers)
+        return participants
     }
 
     companion object {
@@ -30,8 +33,7 @@ data class BlackJackGame(
             players.forEach { player -> player.take(listOf(deck.pick(), deck.pick())) }
 
             return BlackJackGame(
-                dealer,
-                Players(players),
+                Participants(dealer, Players(players)),
                 TurnMachine(deck, InputMoreCardPolicy, OutputView),
             )
         }
