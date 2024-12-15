@@ -2,7 +2,7 @@ package blackjack.domain
 
 data class GameState(
     private val hands: Hands = Hands(),
-    private var bet: Bet = Bet(0),
+    private var bet: Bet = Bet.zero(),
 ) {
     val score: Int
         get() = hands.calculateTotalValue()
@@ -26,12 +26,13 @@ data class GameState(
     }
 
     fun applyBet(bet: Bet): Bet {
-        this.bet = this.bet.apply(bet)
+        this.bet += bet
         return this.bet
     }
 
     fun loseBet(): Bet {
-        this.bet = bet.lose()
+        val bet = this.bet
+        this.bet = this.bet.lose()
         return bet
     }
 }

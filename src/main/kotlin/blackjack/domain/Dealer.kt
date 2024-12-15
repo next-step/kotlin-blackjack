@@ -15,10 +15,18 @@ class Dealer(
                 player.score < score -> Result.LOSE
                 else -> Result.DRAW
             }
-        val playerBet = player.adjustBet(result)
-        gameState.applyBet(playerBet)
+        val playerBet = player.settleBet(result)
+        settleBet(result, playerBet)
 
         return result
+    }
+
+    private fun settleBet(result: Result, playerBet: Bet) {
+        if (result == Result.WIN) {
+            gameState.applyBet(Bet.negative(playerBet))
+        } else if (result == Result.LOSE) {
+            gameState.applyBet(playerBet)
+        }
     }
 
     fun shouldDraw(): Boolean {

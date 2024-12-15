@@ -9,7 +9,7 @@ class Player(
         betValue: Int = 0,
     ) : this(name, GameState(bet = Bet(betValue)))
 
-    fun adjustBet(result: Result): Bet =
+    fun settleBet(result: Result): Bet =
         when {
             isBlackjack && result == Result.WIN -> gameState.blackjackBet()
             result == Result.WIN || result == Result.DRAW -> Bet(profit)

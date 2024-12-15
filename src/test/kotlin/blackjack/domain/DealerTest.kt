@@ -43,7 +43,7 @@ class DealerTest : StringSpec({
         actual.handSize shouldBe 2
     }
 
-    "딜러가 버스트한 경우 플레이어들은 손패 상관없이 승리한다." {
+    "딜러가 버스트한 경우 플레이어들은 손패 상관없이 승리하고 베팅금을 받는다." {
         val burstHands =
             handsFixture(
                 cardFixture(rank = Rank.TEN),
@@ -51,24 +51,19 @@ class DealerTest : StringSpec({
                 cardFixture(rank = Rank.TEN),
             )
         val dealer = dealerFixture(hands = burstHands)
-        val normalPlayer = playerFixture()
-        val burstPlayer = playerFixture(hands = burstHands)
+        val normalPlayer = playerFixture(bet = Bet(10_000))
+        val burstPlayer = playerFixture(hands = burstHands, Bet(10_000))
 
         val actual1 = dealer vs normalPlayer
         val actual2 = dealer vs burstPlayer
 
         actual1 shouldBe Result.WIN
         actual2 shouldBe Result.WIN
+        normalPlayer.profit shouldBe 10_000
+        burstPlayer.profit shouldBe 10_000
     }
 
     "딜러가 버스트하지 않은 경우 플레이어와 비교하여 결과를 반환하고 베팅금을 조정한다." {
-        val dealerHands =
-            handsFixture(
-                cardFixture(rank = Rank.TEN),
-                cardFixture(rank = Rank.TEN),
-            )
-        val dealer = dealerFixture(hands = dealerHands)
-
         forAll(
             row(
                 handsFixture(
@@ -77,6 +72,7 @@ class DealerTest : StringSpec({
                 ),
                 Result.DRAW,
                 10_000,
+                0,
             ),
             row(
                 handsFixture(
@@ -85,7 +81,8 @@ class DealerTest : StringSpec({
                     cardFixture(rank = Rank.TEN),
                 ),
                 Result.LOSE,
-                0,
+                -10_000,
+                10_000,
             ),
             row(
                 handsFixture(
@@ -94,6 +91,7 @@ class DealerTest : StringSpec({
                 ),
                 Result.WIN,
                 15_000,
+                -15_000,
             ),
             row(
                 handsFixture(
@@ -103,8 +101,15 @@ class DealerTest : StringSpec({
                 ),
                 Result.WIN,
                 10_000,
+                -10_000,
             ),
-        ) { playerHands, result, betIncome ->
+        ) { playerHands, result, playerProfit, dealerProfit ->
+            val dealerHands =
+                handsFixture(
+                    cardFixture(rank = Rank.TEN),
+                    cardFixture(rank = Rank.TEN),
+                )
+            val dealer = dealerFixture(hands = dealerHands)
             val player =
                 playerFixture(
                     hands = playerHands,
@@ -114,7 +119,8 @@ class DealerTest : StringSpec({
             val actual = dealer vs player
 
             actual shouldBe result
-            player.profit shouldBe betIncome
+            player.profit shouldBe playerProfit
+            dealer.profit shouldBe dealerProfit
         }
     }
 })
