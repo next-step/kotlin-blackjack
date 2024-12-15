@@ -6,6 +6,10 @@ data class Cards(
     val cards: List<Card>
         get() = _cards.toList()
 
+    fun add(newCard: Card) {
+        _cards.add(newCard)
+    }
+
     fun addAll(cards: List<Card>) {
         _cards.addAll(cards)
     }

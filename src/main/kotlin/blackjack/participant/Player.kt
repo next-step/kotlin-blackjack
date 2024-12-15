@@ -9,6 +9,11 @@ data class Player(
     var cards: Cards = Cards(),
     var state: PlayerState = PlayerState.HIT,
 ) : Participant(name) {
+    fun take(newCard: Card) {
+        cards.add(newCard)
+        refreshState()
+    }
+
     fun take(newCards: List<Card>) {
         cards.addAll(newCards)
         refreshState()

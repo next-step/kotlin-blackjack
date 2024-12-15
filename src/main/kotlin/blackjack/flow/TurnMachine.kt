@@ -19,7 +19,7 @@ data class TurnMachine(
                 player.stand()
                 break
             }
-            player.take(listOf(deck.pick()))
+            player.take(deck.pick())
             OutputView.printPlayerCard(player)
         }
     }
