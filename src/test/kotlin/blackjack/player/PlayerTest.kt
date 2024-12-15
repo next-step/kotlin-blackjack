@@ -92,7 +92,7 @@ class PlayerTest {
 
         dealer.isBlackjack() shouldBe false
         players.forAll { it.isBlackjack() shouldBe true }
-        players.forAll { it.winingAmount shouldBe it.betAmount.times(BONUS_RATIO) }
+        players.forAll { it.winningAmount shouldBe it.betAmount.times(BONUS_RATIO) }
     }
 
     @Test
@@ -105,14 +105,14 @@ class PlayerTest {
 
         dealer.isBlackjack() shouldBe true
         players.forAll { it.isBlackjack() shouldBe true }
-        players.forAll { it.winingAmount shouldBe it.betAmount }
+        players.forAll { it.winningAmount shouldBe it.betAmount }
     }
 
     @Test
     fun `플레이어가 패배한 경우 베팅한 금액을 잃는다`() {
         pobi = pobi.lose()
         pobi.betResult should beInstanceOf<BetResult.Lose>()
-        pobi.winingAmount shouldBe pobi.bet.negative()
+        pobi.winningAmount shouldBe pobi.bet.negative()
     }
 
     @Test

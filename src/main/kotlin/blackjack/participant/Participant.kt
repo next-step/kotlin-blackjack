@@ -17,7 +17,7 @@ interface Participant<out T : Participant<T>> {
     val betAmount: Double
         get() = betResult.bet.amount
 
-    val winingAmount: Double
+    val winningAmount: Double
         get() = betResult.winning.amount
 
     fun isBust(): Boolean = hand.sum() > BlackJackMachine.BLACKJACK

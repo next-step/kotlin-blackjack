@@ -102,7 +102,7 @@ class DealerTest {
 
         players.forAll { it.isBlackjack() shouldBe true }
         dealer.isBlackjack() shouldBe false
-        dealer.winingAmount shouldBe sumOfPlayerBetsWithNegative().times(BONUS_RATIO)
+        dealer.winningAmount shouldBe sumOfPlayerBetsWithNegative().times(BONUS_RATIO)
     }
 
     @Test
@@ -115,14 +115,14 @@ class DealerTest {
 
         players.forAll { it.isBlackjack() shouldBe true }
         dealer.isBlackjack() shouldBe true
-        dealer.winingAmount shouldBe sumOfPlayerBetsWithNegative()
+        dealer.winningAmount shouldBe sumOfPlayerBetsWithNegative()
     }
 
     @Test
     fun `플레이어가 패배한 경우 베팅한 금액을 딜러가 얻는다`() {
         dealer = dealer.win(player = pobi)
         dealer.betResult should beInstanceOf<BetResult.Win>()
-        dealer.winingAmount shouldBe pobi.betAmount
+        dealer.winningAmount shouldBe pobi.betAmount
     }
 
     private fun sumOfPlayerBetsWithNegative() = players.sumOf { it.bet.negative() }

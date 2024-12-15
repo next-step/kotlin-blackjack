@@ -50,14 +50,14 @@ class Dealer(
     private fun generateBetLose(
         bet: Bet,
         amount: Double,
-    ): BetResult.Lose = BetResult.Lose(bet = bet, amount = this.winingAmount + amount)
+    ): BetResult.Lose = BetResult.Lose(bet = bet, amount = this.winningAmount + amount)
 
     fun win(player: Player): Dealer =
-        updateBetResult(betResult = BetResult.Win(bet = this.bet, amount = this.winingAmount + player.betAmount))
+        updateBetResult(betResult = BetResult.Win(bet = this.bet, amount = this.winningAmount + player.betAmount))
 
     fun lose(players: List<Player>): Dealer {
         val sumOfPlayersBetAmount = players.sumOf { it.betAmount}
-        return updateBetResult(betResult = BetResult.Lose(bet = this.bet, amount = this.winingAmount - sumOfPlayersBetAmount))
+        return updateBetResult(betResult = BetResult.Lose(bet = this.bet, amount = this.winningAmount - sumOfPlayersBetAmount))
     }
 
     private fun updateBetResult(betResult: BetResult): Dealer =
