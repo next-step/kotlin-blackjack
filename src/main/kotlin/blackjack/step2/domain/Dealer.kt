@@ -21,8 +21,7 @@ class Dealer(
                 null
             } else {
                 interactor.notifyDealerDraw()
-                val card = cardPicker.pick()
-                currentDealer.pickCard(card)
+                currentDealer.pickCard(cardPicker.pick())
             }
         }.last()
     }

@@ -20,8 +20,7 @@ class Player(
             if (currentPlayer.isBust() || !interactor.askForMoreCard(currentPlayer)) {
                 null
             } else {
-                val card = cardPicker.pick()
-                val updatedPlayer = currentPlayer.pickCard(card)
+                val updatedPlayer = currentPlayer.pickCard(cardPicker.pick())
                 interactor.printPlayerCards(updatedPlayer)
                 updatedPlayer
             }

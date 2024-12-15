@@ -1,6 +1,6 @@
 package blackjack.step2.domain
 
-data class GameResult(
+data class ProfitResult(
     val participant: Participant,
-    val resultTypes: List<GameResultType>,
+    val profit: Double,
 )
