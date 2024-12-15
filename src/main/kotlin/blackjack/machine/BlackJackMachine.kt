@@ -1,6 +1,5 @@
 package blackjack.machine
 
-import betting.board.BettingBoard
 import blackjack.dealer.Dealer
 import blackjack.deck.Deck
 import blackjack.participant.createParticipants
