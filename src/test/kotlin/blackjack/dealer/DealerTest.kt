@@ -10,7 +10,9 @@ import blackjack.player.Hand
 import blackjack.player.Player
 import io.kotest.inspectors.forAll
 import io.kotest.matchers.collections.shouldContainExactly
+import io.kotest.matchers.should
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.types.beInstanceOf
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -114,6 +116,13 @@ class DealerTest {
         players.forAll { it.isBlackjack() shouldBe true }
         dealer.isBlackjack() shouldBe true
         dealer.winingAmount shouldBe sumOfPlayerBetsWithNegative()
+    }
+
+    @Test
+    fun `플레이어가 패배한 경우 베팅한 금액을 딜러가 얻는다`() {
+        dealer = dealer.win(player = pobi)
+        dealer.betResult should beInstanceOf<BetResult.Win>()
+        dealer.winingAmount shouldBe pobi.betAmount
     }
 
     private fun sumOfPlayerBetsWithNegative() = players.sumOf { it.bet.negative() }

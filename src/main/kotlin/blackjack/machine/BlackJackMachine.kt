@@ -12,6 +12,8 @@ import blackjack.view.ResultView
 
 class BlackJackMachine(
     private val deck: Deck,
+    private var players: Players = Players(players = emptyList()),
+    private var dealer: Dealer = Dealer.ready(initialCards = emptyList()),
 ) {
     fun play() {
         val playerList =
@@ -23,8 +25,8 @@ class BlackJackMachine(
                         updatedPlayer.hitCard(deck.draw())
                     }
                 }
-        var players = Players(players = playerList)
-        var dealer = Dealer.ready(initialCards = listOf(deck.draw(), deck.draw()))
+        players = Players(players = playerList)
+        dealer = Dealer.ready(initialCards = listOf(deck.draw(), deck.draw()))
 
         players =
             Players(
@@ -38,7 +40,7 @@ class BlackJackMachine(
         ResultView.printPlayersCardStatus(participants = createParticipants(dealer = dealer, players = players))
 
         while (Rule.isGameActive(players = players, dealer = dealer)) {
-            players = Players(players = players.players.map { playTurn(player = it, dealer = dealer) })
+            players = Players(players = players.players.map { playTurn(player = it) })
             dealer = dealer.drawIfBelowDealerStandingRule { deck.draw() }
                 .also { if(it.isBust()) BettingBoard.winRemainedPlayer(players = players, dealer = it) }
             ResultView.printPlayersCardStatusAndSum(participant = createParticipants(dealer = dealer, players = players))
@@ -47,19 +49,21 @@ class BlackJackMachine(
         ResultView.printBetResult(participantBets = (players.players + dealer).associateWith { it.betResult })
     }
 
-    private fun playTurn(player: Player, dealer: Dealer): Player =
+    private fun playTurn(
+        player: Player,
+    ): Player =
         when {
             player.isBust() -> player
-            !InputView.isHitCard(player) ->
-                player
-                    .also { ResultView.printPlayerCard(it) }
-
+            !InputView.isHitCard(player) -> player.also { ResultView.printPlayerCard(it) }
             else ->
                 player
                     .hitCard(deck.draw())
-                    .also {
-                        if(it.isBust()) BettingBoard.winDealer(player = it, dealer = dealer)
-                        ResultView.printPlayerCard(it)
+                    .let { playerAfterDraw ->
+                        ResultView.printPlayerCard(playerAfterDraw)
+                        playerAfterDraw.lose()
+                            .takeIf { it.isBust() }
+                            ?.also { dealer = dealer.win(player = it) }
+                            ?: playerAfterDraw
                     }
         }
 

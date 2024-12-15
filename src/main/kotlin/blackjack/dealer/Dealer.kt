@@ -52,6 +52,9 @@ class Dealer(
         amount: Double,
     ): BetResult.Lose = BetResult.Lose(bet = bet, amount = this.winingAmount + amount)
 
+    fun win(player: Player): Dealer =
+        updateBetResult(betResult = BetResult.Win(bet = this.bet, amount = this.winingAmount + player.betAmount))
+
     private fun updateBetResult(betResult: BetResult): Dealer =
         Dealer(name = this.name, hand = this.hand, betResult = betResult)
 

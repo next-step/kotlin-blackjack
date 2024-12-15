@@ -11,7 +11,9 @@ import blackjack.machine.BlackJackMachine.Companion.BONUS_RATIO
 import blackjack.participant.ParticipantFixture.hitCards
 import io.kotest.inspectors.forAll
 import io.kotest.matchers.collections.shouldContainAll
+import io.kotest.matchers.should
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.types.beInstanceOf
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -104,6 +106,13 @@ class PlayerTest {
         dealer.isBlackjack() shouldBe true
         players.forAll { it.isBlackjack() shouldBe true }
         players.forAll { it.winingAmount shouldBe it.betAmount }
+    }
+
+    @Test
+    fun `플레이어가 패배한 경우 베팅한 금액을 잃는다`() {
+        pobi = pobi.lose()
+        pobi.betResult should beInstanceOf<BetResult.Lose>()
+        pobi.winingAmount shouldBe pobi.bet.negative()
     }
 
     companion object {
