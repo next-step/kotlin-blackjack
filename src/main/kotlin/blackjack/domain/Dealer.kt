@@ -1,8 +1,8 @@
 package blackjack.domain
 
-class Gambler(name: String) : Player(name) {
+class Dealer : Player("딜러") {
     override fun canNotReceiveCard(): Boolean {
         val totalScore = calculateTotalScore()
-        return totalScore >= BlackJackRule.WIN_SCORE
+        return totalScore >= 17
     }
 }
