@@ -10,11 +10,11 @@ object BlackJackReader {
 
     private val Y_OR_N_REGEX = Regex("[${YES_SIGN}${NO_SIGN}${YES_SIGN.uppercase()}${NO_SIGN.uppercase()}]")
 
-    fun readGamblerNames(): List<String> {
+    fun readGamblers(): List<Gambler> {
         BlackJackPrinter.askForPlayerName()
         return ConsoleReader.readLine()
             .split(NAME_SEPARATOR)
-            .map { name -> name.trim() }
+            .map { name -> Gambler(name.trim()) }
     }
 
     fun readDecisionForMoreCard(gambler: Gambler): Boolean {

@@ -1,11 +1,11 @@
 package blackjack.domain
 
 class DealingShoe(private val deck: Deck = Deck()) {
-    fun dealTwoCardsEach(gamblers: Gamblers) {
-        gamblers.receiveTwoCardsEach(deck)
+    fun dealTwoCardsEach(participants: Participants) {
+        participants.receiveTwoCardsEach(deck)
     }
 
-    fun dealCard(gambler: Gambler) {
-        gambler.receive(deck.draw())
+    fun dealCard(participant: Participant) {
+        participant.receive(deck.draw())
     }
 }

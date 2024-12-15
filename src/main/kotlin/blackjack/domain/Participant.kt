@@ -1,6 +1,6 @@
 package blackjack.domain
 
-sealed class Player(val name: String) {
+sealed class Participant(val name: String) {
     private val _cards: MutableList<Card> = mutableListOf()
 
     val cards: List<Card>
@@ -12,11 +12,6 @@ sealed class Player(val name: String) {
 
     fun receive(card: Card) {
         _cards.add(card)
-    }
-
-    fun exceedsWinScore(): Boolean {
-        val totalScore = calculateTotalScore()
-        return totalScore > BlackJackRule.WIN_SCORE
     }
 
     fun calculateTotalScore(): Int {

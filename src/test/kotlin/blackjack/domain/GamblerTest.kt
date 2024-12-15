@@ -31,29 +31,6 @@ class GamblerTest : FreeSpec({
         gambler.cards shouldBe cards
     }
 
-    "총합이 21을 초과했는지 여부를 확인할 수 있다" - {
-        "21을 초과하면 true" {
-            val gambler = Gambler("타짜")
-            gambler.receive(
-                Card(Suit.HEARTS, Rank.TEN),
-                Card(Suit.SPADES, Rank.TEN),
-                Card(Suit.SPADES, Rank.TEN),
-            )
-
-            gambler.exceedsWinScore() shouldBe true
-        }
-
-        "21 이하면 false" {
-            val gambler = Gambler("타짜")
-            gambler.receive(
-                Card(Suit.HEARTS, Rank.TEN),
-                Card(Suit.SPADES, Rank.ACE),
-            )
-
-            gambler.exceedsWinScore() shouldBe false
-        }
-    }
-
     "총합이 21 이상이면 카드를 받을 수 없다" - {
         "카드를 받을 수 있는 경우" {
             val gambler = Gambler("타짜")
