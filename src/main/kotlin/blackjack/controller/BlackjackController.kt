@@ -27,6 +27,11 @@ class BlackjackController {
                 OutputView.printPlayerCards(player)
             }
         }
+
+        if (game.isDealerCardSumLessThan16()) {
+            OutputView.dealerHitResult()
+            game.dealerHit()
+        }
     }
 
     private fun createGame(): Game {

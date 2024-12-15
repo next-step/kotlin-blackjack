@@ -113,7 +113,6 @@ class GameTest : DescribeSpec({
                     )
                 val pobi = Player("pobi", cards)
                 pobi.stay()
-
                 val actual = sut.isPlayerStillPlaying(pobi)
                 actual shouldBe false
             }
@@ -130,6 +129,79 @@ class GameTest : DescribeSpec({
                 val actual = sut.isPlayerStillPlaying(pobi)
                 actual shouldBe true
             }
+        }
+    }
+
+    describe("isDealerCardSumLessThan16 Test") {
+        context("16 이하인 경우") {
+            it("should be true") {
+                val fixedDealer =
+                    Dealer(
+                        Deck(
+                            mutableListOf(
+                                Card(Suit.SPADES, CardNumber.TWO),
+                                Card(Suit.SPADES, CardNumber.THREE),
+                                Card(Suit.SPADES, CardNumber.FOUR),
+                                Card(Suit.SPADES, CardNumber.FIVE),
+                            ),
+                        ),
+                    )
+                val fixedPlayers = Players(listOf(Player("pobi")))
+
+                val gameMembers = GameMembers(fixedPlayers, fixedDealer)
+                sut = Game(gameMembers)
+
+                val actual = sut.isDealerCardSumLessThan16()
+                actual shouldBe true
+            }
+        }
+
+        context("16 초과인 경우") {
+            it("should be false") {
+                val fixedDealer =
+                    Dealer(
+                        Deck(
+                            mutableListOf(
+                                Card(Suit.SPADES, CardNumber.TEN),
+                                Card(Suit.CLUBS, CardNumber.TEN),
+                                Card(Suit.DIAMONDS, CardNumber.TEN),
+                                Card(Suit.HEARTS, CardNumber.TEN),
+                            ),
+                        ),
+                    )
+                val fixedPlayers = Players(listOf(Player("pobi")))
+
+                val gameMembers = GameMembers(fixedPlayers, fixedDealer)
+                sut = Game(gameMembers)
+
+                val actual = sut.isDealerCardSumLessThan16()
+                actual shouldBe false
+            }
+        }
+    }
+
+    describe("dealerHit test") {
+        it("딜러의 패에 한장의 카드를 추가한다.") {
+            val fixedDealer =
+                Dealer(
+                    Deck(
+                        mutableListOf(
+                            Card(Suit.SPADES, CardNumber.TEN),
+                            Card(Suit.CLUBS, CardNumber.TEN),
+                            Card(Suit.DIAMONDS, CardNumber.TEN),
+                            Card(Suit.HEARTS, CardNumber.TEN),
+                            Card(Suit.HEARTS, CardNumber.NINE),
+                        ),
+                    ),
+                )
+            val fixedPlayers = Players(listOf(Player("pobi")))
+
+            val gameMembers = GameMembers(fixedPlayers, fixedDealer)
+            sut = Game(gameMembers)
+
+            sut.dealerHit()
+
+            fixedDealer.ownedCards.size shouldBe 3
         }
     }
 })

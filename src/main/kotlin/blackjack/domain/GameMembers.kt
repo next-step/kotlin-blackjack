@@ -1,7 +1,9 @@
 package blackjack.domain
 
-class GameMembers(private val players: Players, val dealer: Dealer) {
-    fun allPlayersWithDealer(): Players = Players(players, dealer)
+class GameMembers(private val players: Players, private val dealer: Dealer) {
+    fun allPlayers(): Players = Players(players, dealer)
 
     fun playersWithoutDealer(): Players = players
+
+    fun dealer(): Dealer = dealer
 }
