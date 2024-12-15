@@ -1,9 +1,9 @@
 package blackjack.domain
 
-data class Player(
+open class Player(
     val name: String,
     val ownedCards: MutableList<Card> = mutableListOf(),
-    val actions: MutableList<HitCommand> = mutableListOf(),
+    private val actions: MutableList<HitCommand> = mutableListOf(),
 ) {
     fun receiveCard(card: Card) {
         ownedCards.add(card)

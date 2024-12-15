@@ -30,12 +30,12 @@ class BlackjackController() {
 
     private fun createGame(): Game {
         val playerNames = InputView.getPlayerNames()
-        val dealer = createDealer()
-        val players = createPlayers(playerNames)
-        return Game(dealer = dealer, players = players)
+        val gameMembers = createGameMembers(playerNames)
+        return Game(gameMembers)
     }
 
-    private fun createDealer() = Dealer(Deck())
-
-    private fun createPlayers(playerNames: List<String>) = Players(playerNames.map { Player(it) })
+    private fun createGameMembers(playerNames: List<String>): Players {
+        val dealer = Dealer(Deck())
+        return Players(listOf(dealer) + playerNames.map { Player(it) })
+    }
 }
