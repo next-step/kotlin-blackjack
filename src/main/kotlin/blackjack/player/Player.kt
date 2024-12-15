@@ -44,6 +44,9 @@ class Player(
                 )
         }
 
+    fun win(): Player =
+        updateBetResult(betResult = BetResult.Win(bet = this.bet, amount = this.betAmount))
+
     fun lose(): Player =
         updateBetResult(betResult = BetResult.Lose(bet = this.bet, amount = this.bet.negative()))
 

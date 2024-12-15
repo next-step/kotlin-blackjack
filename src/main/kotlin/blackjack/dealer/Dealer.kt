@@ -55,6 +55,11 @@ class Dealer(
     fun win(player: Player): Dealer =
         updateBetResult(betResult = BetResult.Win(bet = this.bet, amount = this.winingAmount + player.betAmount))
 
+    fun lose(players: List<Player>): Dealer {
+        val sumOfPlayersBetAmount = players.sumOf { it.betAmount}
+        return updateBetResult(betResult = BetResult.Lose(bet = this.bet, amount = this.winingAmount - sumOfPlayersBetAmount))
+    }
+
     private fun updateBetResult(betResult: BetResult): Dealer =
         Dealer(name = this.name, hand = this.hand, betResult = betResult)
 

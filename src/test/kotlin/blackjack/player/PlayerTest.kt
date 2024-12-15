@@ -115,6 +115,13 @@ class PlayerTest {
         pobi.winingAmount shouldBe pobi.bet.negative()
     }
 
+    @Test
+    fun `플레이어가 승리하는 경우 베팅 금액을 받는다`() {
+        players = players.map { it.win() }
+        players.forAll { it.betResult should beInstanceOf<BetResult.Win>() }
+        players.forAll { it.betAmount shouldBe it.betResult.winning.amount }
+    }
+
     companion object {
         @JvmStatic
         private fun generateTestPlayer() =
