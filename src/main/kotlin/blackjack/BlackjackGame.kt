@@ -1,6 +1,6 @@
 package blackjack
 
-import blackjack.domain.Dealer
+import blackjack.domain.DealingShoe
 import blackjack.domain.Gamblers
 import blackjack.ui.BlackJackPrinter
 import blackjack.ui.BlackJackReader
@@ -9,8 +9,8 @@ fun main() {
     val gamblerNames = BlackJackReader.readGamblerNames()
     val gamblers = Gamblers.from(gamblerNames)
 
-    val dealer = Dealer()
-    dealer.dealTwoCardsEach(gamblers)
+    val dealingShoe = DealingShoe()
+    dealingShoe.dealTwoCardsEach(gamblers)
     BlackJackPrinter.announceCardDistribution(gamblers)
     BlackJackPrinter.printAllGamblersCardMessage(gamblers)
 
@@ -26,7 +26,7 @@ fun main() {
                 break
             }
 
-            dealer.dealCard(gambler)
+            dealingShoe.dealCard(gambler)
             BlackJackPrinter.printGamblerCardMessage(gambler)
         }
 
