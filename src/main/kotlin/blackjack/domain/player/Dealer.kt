@@ -2,14 +2,14 @@ package blackjack.domain.player
 
 import blackjack.domain.CardDeck
 
-class Dealer(name: String = DEALER_NAME) : AbstractPlayer(name) {
+class Dealer(name: String = DEALER_NAME) : Participant(name) {
     private fun shouldDrawCard(): Boolean {
         return calculateCard() <= 16
     }
 
     override fun startTurn(
-        onTurnStarted: ((AbstractPlayer) -> String)?,
-        onPrintResultCallback: (List<AbstractPlayer>) -> Unit,
+        onTurnStarted: ((Participant) -> String)?,
+        onPrintResultCallback: (List<Participant>) -> Unit,
     ) {
         while (!isBust() && shouldDrawCard()) {
             val card = CardDeck.drawCard()

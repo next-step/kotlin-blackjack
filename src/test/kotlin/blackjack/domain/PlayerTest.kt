@@ -1,6 +1,6 @@
 package blackjack.domain
 
-import blackjack.domain.player.AbstractPlayer
+import blackjack.domain.player.Participant
 import blackjack.domain.player.Dealer
 import blackjack.domain.player.Player
 import io.kotest.matchers.shouldBe
@@ -105,13 +105,13 @@ class PlayerTest {
         }
 
         var turnCallbackCalled = 0
-        val turnCallback: ((AbstractPlayer) -> String) = {
+        val turnCallback: ((Participant) -> String) = {
             turnCallbackCalled++
             "y"
         }
 
         var printCallbackCalled = 0
-        val printCallback: ((List<AbstractPlayer>) -> Unit) = {
+        val printCallback: ((List<Participant>) -> Unit) = {
             printCallbackCalled++
         }
 
@@ -135,13 +135,13 @@ class PlayerTest {
         }
 
         var turnCallbackCalled = 0
-        val turnCallback: ((AbstractPlayer) -> String) = {
+        val turnCallback: ((Participant) -> String) = {
             turnCallbackCalled++
             "y"
         }
 
         var printCallbackCalled = 0
-        val printCallback: ((List<AbstractPlayer>) -> Unit) = {
+        val printCallback: ((List<Participant>) -> Unit) = {
             printCallbackCalled++
         }
 

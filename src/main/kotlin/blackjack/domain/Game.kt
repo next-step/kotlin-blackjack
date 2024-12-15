@@ -1,13 +1,17 @@
 package blackjack.domain
 
-import blackjack.domain.player.AbstractPlayer
+import blackjack.domain.player.Participant
 import blackjack.domain.player.Dealer
 import blackjack.domain.player.Player
 
-data class Game(val players: List<Player>, val drawer: Deck, val dealer: Dealer) {
+data class Game(
+    val players: List<Player>,
+    val drawer: Deck,
+    val dealer: Dealer,
+) {
     fun startGame(
-        onPrintResultCallback: ((List<AbstractPlayer>) -> Unit),
-        onTurnStarted: (AbstractPlayer) -> String,
+        onPrintResultCallback: ((List<Participant>) -> Unit),
+        onTurnStarted: (Participant) -> String,
     ) {
         drawer.fillDeck(Card.cards)
         initTurn(onPrintResultCallback)
@@ -17,7 +21,7 @@ data class Game(val players: List<Player>, val drawer: Deck, val dealer: Dealer)
         dealer.startTurn(onTurnStarted, onPrintResultCallback)
     }
 
-    private fun initTurn(onPrintResultCallback: ((List<AbstractPlayer>) -> Unit)) {
+    private fun initTurn(onPrintResultCallback: ((List<Participant>) -> Unit)) {
         (players + dealer).forEach { player ->
             repeat(2) { player.drawCard(CardDeck.drawCard()) }
         }

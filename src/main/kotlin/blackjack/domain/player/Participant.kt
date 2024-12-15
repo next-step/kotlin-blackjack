@@ -3,14 +3,14 @@ package blackjack.domain.player
 import blackjack.domain.Card
 import blackjack.domain.Card.Companion.SpecialNumber
 
-abstract class AbstractPlayer(val name: String) {
+abstract class Participant(val name: String) {
     protected var cards = mutableListOf<Card>()
     var winCount = 0
     var loseCount = 0
 
     abstract fun startTurn(
-        onTurnStarted: ((AbstractPlayer) -> String)?,
-        onPrintResultCallback: (List<AbstractPlayer>) -> Unit,
+        onTurnStarted: ((Participant) -> String)?,
+        onPrintResultCallback: (List<Participant>) -> Unit,
     )
 
     fun isBust(): Boolean {

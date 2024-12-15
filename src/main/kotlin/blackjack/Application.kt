@@ -2,7 +2,7 @@ package blackjack
 
 import blackjack.domain.Game
 import blackjack.domain.WinningCalculator
-import blackjack.domain.player.AbstractPlayer
+import blackjack.domain.player.Participant
 import blackjack.domain.player.Dealer
 import blackjack.domain.player.Player
 import blackjack.ui.InputView
@@ -14,7 +14,7 @@ fun main() {
     val players = inputView.getPlayers().map { Player(it) }
 
     val game = Game.createGame(players)
-    val printCallback: ((List<AbstractPlayer>) -> Unit) = {
+    val printCallback: ((List<Participant>) -> Unit) = {
         it.forEach { player ->
             if (player.name == Dealer.DEALER_NAME) {
                 resultView.showDealerCards(player)
@@ -23,7 +23,7 @@ fun main() {
             }
         }
     }
-    val turnCallback: ((AbstractPlayer) -> String) = { player ->
+    val turnCallback: ((Participant) -> String) = { player ->
         if (player.name == Dealer.DEALER_NAME) {
             resultView.printDealerDrawExtra()
             ""

@@ -1,6 +1,6 @@
 package blackjack.ui
 
-import blackjack.domain.player.AbstractPlayer
+import blackjack.domain.player.Participant
 import blackjack.domain.player.Dealer
 import blackjack.domain.player.Player
 
@@ -16,7 +16,7 @@ class ResultView {
         println("딜러와 ${playersName}에게 2장씩 나누었습니다.")
     }
 
-    fun showPlayerCards(player: AbstractPlayer) {
+    fun showPlayerCards(player: Participant) {
         print("${player.name}카드: ")
 
         val lastIndex = player.getAllCards().lastIndex
@@ -26,7 +26,7 @@ class ResultView {
         }
     }
 
-    fun showDealerCards(dealer: AbstractPlayer) {
+    fun showDealerCards(dealer: Participant) {
         println("${dealer.name}: ${dealer.getAllCards()[0].printCard()}")
     }
 
@@ -42,7 +42,7 @@ class ResultView {
         }
     }
 
-    fun showWinningResult(player: AbstractPlayer) {
+    fun showWinningResult(player: Participant) {
         print("${player.name}: ")
 
         if (player.name == Dealer.DEALER_NAME) {
