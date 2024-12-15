@@ -5,6 +5,7 @@ import blackjack.domain.CardNumber
 import blackjack.domain.Dealer
 import blackjack.domain.Deck
 import blackjack.domain.Game
+import blackjack.domain.GameMembers
 import blackjack.domain.HitCommand
 import blackjack.domain.Player
 import blackjack.domain.Players
@@ -20,8 +21,9 @@ class GameTest : DescribeSpec({
 
     beforeTest {
         dealer = Dealer(Deck(CardListFixture.simpleCardList()))
-        players = Players(listOf(dealer, Player("pobi"), Player("jason")))
-        sut = Game(players)
+        players = Players(listOf(Player("pobi"), Player("jason")))
+        val members = GameMembers(players, dealer)
+        sut = Game(members)
     }
 
     describe("init test") {

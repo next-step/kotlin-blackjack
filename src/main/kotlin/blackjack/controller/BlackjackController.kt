@@ -3,6 +3,7 @@ package blackjack.controller
 import blackjack.domain.Dealer
 import blackjack.domain.Deck
 import blackjack.domain.Game
+import blackjack.domain.GameMembers
 import blackjack.domain.Player
 import blackjack.domain.Players
 import blackjack.view.InputView
@@ -11,15 +12,15 @@ import blackjack.view.OutputView
 class BlackjackController() {
     fun start() {
         val game = createGame()
-        OutputView.showGameStart(players = game.players)
+        OutputView.showGameStart(players = game.allPlayers())
 
         gameLoop(game)
 
-        OutputView.showGameResult(players = game.players)
+        OutputView.showGameResult(players = game.allPlayers())
     }
 
     private fun gameLoop(game: Game) {
-        game.players.allPlayers().forEach { player ->
+        game.allPlayers().allPlayers().forEach { player ->
             while (game.isPlayerStillPlaying(player)) {
                 val hitCommand = InputView.askHitOrStay(player.name)
                 game.processPlayerTurn(player, hitCommand)
@@ -30,12 +31,13 @@ class BlackjackController() {
 
     private fun createGame(): Game {
         val playerNames = InputView.getPlayerNames()
-        val gameMembers = createGameMembers(playerNames)
+        val dealer = createDealer()
+        val players = createPlayers(playerNames)
+        val gameMembers = GameMembers(players, dealer)
         return Game(gameMembers)
     }
 
-    private fun createGameMembers(playerNames: List<String>): Players {
-        val dealer = Dealer(Deck())
-        return Players(listOf(dealer) + playerNames.map { Player(it) })
-    }
+    private fun createDealer() = Dealer(Deck())
+
+    private fun createPlayers(playerNames: List<String>) = Players(players = playerNames.map { Player(it) })
 }

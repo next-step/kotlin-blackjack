@@ -1,17 +1,19 @@
 package blackjack.domain
 
 class Game(
-    val players: Players,
+    private val gameMembers: GameMembers,
 ) {
     init {
-        players.dealer().deal(players)
+        gameMembers.dealer.deal(gameMembers.allPlayersWithDealer())
     }
+
+    fun allPlayers(): Players = gameMembers.allPlayersWithDealer()
 
     fun processPlayerTurn(
         player: Player,
         hitCommand: HitCommand,
     ) = when (hitCommand) {
-        HitCommand.HIT -> players.dealer().hit(player)
+        HitCommand.HIT -> gameMembers.dealer.hit(player)
         HitCommand.STAY -> player.stay()
     }
 

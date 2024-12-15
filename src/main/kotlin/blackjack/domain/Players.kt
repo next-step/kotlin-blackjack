@@ -1,7 +1,7 @@
 package blackjack.domain
 
 data class Players(private val players: List<Player>) {
-    fun allPlayers(): List<Player> = players
+    constructor(players: Players, dealer: Dealer) : this(listOf(dealer) + players.players)
 
-    fun dealer() = players[0] as Dealer // todo: 개선
+    fun allPlayers(): List<Player> = players
 }
