@@ -3,7 +3,6 @@ package blackjack
 import blackjack.domain.Game
 import blackjack.domain.WinningCalculator
 import blackjack.domain.player.Participant
-import blackjack.domain.player.Dealer
 import blackjack.domain.player.Player
 import blackjack.ui.InputView
 import blackjack.ui.ResultView
@@ -21,13 +20,9 @@ fun main() {
     }
 
     val turnCallback: ((Participant) -> String) = { player ->
-        if (player.name == Dealer.DEALER_NAME) {
-            resultView.printDealerDrawExtra()
-            ""
-        } else {
-            inputView.setUserAnswer(player.name)
-            inputView.getUserAnswer()
-        }
+        resultView.printDealerDrawExtra(player)
+        inputView.setUserAnswer(player.name)
+        inputView.getUserAnswer()
     }
 
     resultView.printStartMessage(game.players)
