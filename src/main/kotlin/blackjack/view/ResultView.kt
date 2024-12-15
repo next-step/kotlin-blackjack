@@ -16,29 +16,29 @@ object ResultView {
     private fun printPlayersName(players: Players): String =
         "${players.players.joinToString { it.name }}에게 ${players.players.size}장을 나누었습니다."
 
-    fun <T : Participant<T>> printPlayersCardStatus(participants: List<T>) {
+    fun printPlayersCardStatus(participants: List<Participant<*>>) {
         participants.forEach { participant ->
             printPlayerCard(participant)
         }
         println()
     }
 
-    fun <T : Participant<T>> printPlayersCardStatusAndSum(participant: List<T>) {
+    fun printPlayersCardStatusAndSum(participant: List<Participant<*>>) {
         println()
         participant.forEach { player ->
             printPlayerCard(player, sum = player.hand.sum())
         }
     }
 
-    fun <T : Participant<T>> printPlayerCard(
-        participant: T,
+    fun printPlayerCard(
+        participant: Participant<*>,
         sum: Int? = null,
     ) {
         println(generateCardListString(participant, sum))
     }
 
-    private fun <T : Participant<T>> generateCardListString(
-        participant: T,
+    private fun generateCardListString(
+        participant: Participant<*>,
         sum: Int? = null,
     ) = "${participant.name}카드: ${participant.hand.cards.joinToString(
         ", ",
