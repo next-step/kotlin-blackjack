@@ -202,26 +202,28 @@ class GameTest : DescribeSpec({
         }
     }
 
-    describe("determineWinner test") {
-        it("딜러의 카드보다 합이 큰 플레이어 이름을 리턴한다.") {
-            val player1 = Player("player1")
-            val player2 = Player("player2")
-            val player3 = Player("player3")
-            val player4 = Player("player4")
+    describe("승패를 계산한다.") {
+        lateinit var player1: Player
+        lateinit var player2: Player
+        lateinit var player3: Player
+        lateinit var player4: Player
+        lateinit var sut: Game
+
+        beforeTest {
+            player1 = Player("player1")
+            player2 = Player("player2")
+            player3 = Player("player3")
+            player4 = Player("player4")
             val fixedDealer = Dealer(Deck(CardListFixture.mixedCardList()))
             val fixedPlayers = Players(listOf(player1, player2, player3, player4))
             sut = Game(GameMembers(fixedPlayers, fixedDealer))
-            println(player1.ownedCards)
-            println(player2.ownedCards)
-            println(player3.ownedCards)
-            println(player4.ownedCards)
-            println(fixedDealer.ownedCards)
+        }
 
+        it("딜러의 카드보다 합이 큰 플레이어 이름을 리턴한다.") {
             player1.sumOfCard() shouldBe 17
             player2.sumOfCard() shouldBe 18
             player3.sumOfCard() shouldBe 19
             player4.sumOfCard() shouldBe 15
-            fixedDealer.sumOfCard() shouldBe 16
             val actual = sut.determineWinner()
 
             actual.filter { it.results == Result.WIN }.map { it.player.name } shouldContainExactly
@@ -229,31 +231,15 @@ class GameTest : DescribeSpec({
                     "player1", "player2", "player3",
                 )
         }
-    }
 
-    describe("calculateDealerWinningScore test") {
         it("dealer의 승리 횟수를 계산한다.") {
-            val player1 = Player("player1")
-            val player2 = Player("player2")
-            val player3 = Player("player3")
-            val player4 = Player("player4")
-            val fixedDealer = Dealer(Deck(CardListFixture.mixedCardList()))
-            val fixedPlayers = Players(listOf(player1, player2, player3, player4))
-            sut = Game(GameMembers(fixedPlayers, fixedDealer))
-            println(player1.ownedCards)
-            println(player2.ownedCards)
-            println(player3.ownedCards)
-            println(player4.ownedCards)
-            println(fixedDealer.ownedCards)
-
-            player1.sumOfCard() shouldBe 17
-            player2.sumOfCard() shouldBe 18
-            player3.sumOfCard() shouldBe 19
-            player4.sumOfCard() shouldBe 15
-            fixedDealer.sumOfCard() shouldBe 16
             val actual = sut.calculateDealerWinningScore()
-
             actual shouldBe 1
+        }
+
+        it("dealer의 패배 횟수를 계산한다.") {
+            val actual = sut.calculateDealerLoseScore()
+            actual shouldBe 3
         }
     }
 })
