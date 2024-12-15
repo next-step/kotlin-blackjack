@@ -2,41 +2,54 @@ package blackjack.domain
 
 class Player(
     val name: String,
-    private val hand: PlayerCards = PlayerCards(),
+    val hand: PlayerCards = PlayerCards(),
 ) {
+    var status: PlayerStatus = PlayerStatus.HIT
+        private set
+
     init {
         validateName(name)
     }
 
-    fun addCard(card: Card?): Boolean {
-        return hand.addCard(card)
-    }
-
-    fun addCards(newCards: List<Card>): Boolean {
-        return hand.addCards(newCards)
-    }
-
-    fun getCards(): List<Card> {
-        return hand.cards
-    }
-
-    fun getCardsMaxSum(): Int {
-        return hand.calculateCardsMaxSum()
-    }
-
-    fun couldDraw(): Boolean {
-        return hand.calculateCardsMaxSum() < PlayerCards.GAME_LIMIT_NUMBER
+    fun addCard(card: Card): Boolean {
+        val result = hand.addCard(card)
+        status = changeStatus()
+        return result
     }
 
     fun isBust(): Boolean {
-        return hand.calculateCardsMaxSum() == PlayerCards.ZERO
+        return status == PlayerStatus.BUST
+    }
+
+    fun stay() {
+        status = PlayerStatus.STAY
     }
 
     fun isBlackJack(): Boolean {
-        return hand.calculateCardsMaxSum() == PlayerCards.GAME_LIMIT_NUMBER
+        return status == PlayerStatus.BLACKJACK
+    }
+
+    fun compareWithDealer(dealer: Dealer): PlayerWinLoseResult {
+        return when {
+            dealer.isBlackJack() -> PlayerWinLoseResult.LOSE
+            dealer.isBust() -> PlayerWinLoseResult.WIN
+            isBust() -> PlayerWinLoseResult.LOSE
+            isBlackJack() && !dealer.isBlackJack() -> PlayerWinLoseResult.WIN
+            dealer.getCardSum() > this.hand.calculateCardsMaxSum() -> PlayerWinLoseResult.LOSE
+            dealer.getCardSum() == this.hand.calculateCardsMaxSum() -> PlayerWinLoseResult.PUSH
+            else -> PlayerWinLoseResult.WIN
+        }
     }
 
     private fun validateName(name: String) {
         require(name.isNotBlank()) { "유저의 이름은 공백일 수 없습니다." }
+    }
+
+    private fun changeStatus(): PlayerStatus {
+        return when {
+            hand.calculateCardsMaxSum() == PlayerCards.ZERO -> PlayerStatus.BUST
+            hand.cards.size() == 2 && hand.calculateCardsMaxSum() == Cards.GAME_LIMIT_NUMBER -> PlayerStatus.BLACKJACK
+            else -> PlayerStatus.HIT
+        }
     }
 }

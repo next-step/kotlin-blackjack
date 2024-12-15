@@ -1,7 +1,13 @@
 package blackjack.view
 
+import blackjack.BlackJackGame
+import blackjack.GameResult
 import blackjack.domain.CardMark
+import blackjack.domain.Cards
+import blackjack.domain.Dealer
 import blackjack.domain.Player
+import blackjack.domain.PlayerWinLoseResult
+import blackjack.domain.Players
 
 object OutputView {
     private const val SPADE_STR = "스페이드"
@@ -9,21 +15,60 @@ object OutputView {
     private const val DIAMOND_STR = "다이아몬드"
     private const val CLOVER_STR = "클로버"
 
-    fun printDefaultPlayerCards(players: List<Player>) {
-        println("${players.joinToString { it.name }}에게 2장의 카드를 나누었습니다.")
-        players.forEach { printPlayerCards(it) }
-    }
-
     fun printPlayerCards(player: Player) {
-        println(
-            "${player.name}카드: ${
-                player.getCards().joinToString { it.number.symbol + convertMarkToString(it.mark) }
-            } - 결과: ${player.getCardsMaxSum()}",
-        )
+        println(createPlayerCardMessage(player))
     }
 
-    fun printResult(players: List<Player>) {
-        players.forEach { "${printPlayerCards(it)} - 결과: ${it.getCardsMaxSum()}" }
+    private fun printDealerCards(dealer: Dealer) {
+        println(createDealerCardMessage(dealer))
+    }
+
+    fun printCurrentStatus(game: BlackJackGame) {
+        printDealerCards(game.dealer)
+        game.players.members.forEach(::printPlayerCards)
+        println()
+    }
+
+    fun printGameResult(game: BlackJackGame) {
+        println()
+        printDealerResult(game.dealer)
+        printPlayersResult(game.players)
+        printGameWinLoseResult(game.getGameResult())
+    }
+
+    fun printDealerChance(dealerChance: Boolean) {
+        if (dealerChance) {
+            println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
+        }
+    }
+
+    private fun printGameWinLoseResult(gameResult: GameResult) {
+        val dealerResult = gameResult.dealerResult
+        val playerGameResults = gameResult.playerGameResults
+
+        println()
+        println("딜러: ${dealerResult.winCount}승 ${dealerResult.pushCount}무 ${dealerResult.loseCount}패")
+        playerGameResults.forEach { println("${it.name}: ${convertResultToMessage(it.result)}") }
+    }
+
+    private fun convertResultToMessage(result: PlayerWinLoseResult): String {
+        return when (result) {
+            PlayerWinLoseResult.WIN -> "승"
+            PlayerWinLoseResult.LOSE -> "패"
+            PlayerWinLoseResult.PUSH -> "무"
+        }
+    }
+
+    private fun printDealerResult(dealer: Dealer) {
+        println("${createDealerCardMessage(dealer)} - 결과: ${dealer.hand.getCardsSum()}")
+    }
+
+    private fun printPlayersResult(players: Players) {
+        players.members.forEach { printPlayerResult(it) }
+    }
+
+    private fun printPlayerResult(player: Player) {
+        println("${createPlayerCardMessage(player)} - 결과: ${player.hand.calculateCardsMaxSum()}")
     }
 
     private fun convertMarkToString(mark: CardMark) =
@@ -34,7 +79,24 @@ object OutputView {
             CardMark.CLOVER -> CLOVER_STR
         }
 
-    fun printBustMessage(player: Player) {
-        println("${player.name} 유저가 bust 되었습니다.")
+    private fun createDealerCardMessage(dealer: Dealer): String {
+        return buildString {
+            append("딜러: ")
+            append(createCardsOutputMessage(dealer.hand.cards))
+        }
+    }
+
+    private fun createPlayerCardMessage(player: Player): String {
+        return buildString {
+            append(player.name)
+            append("카드: ")
+            append(createCardsOutputMessage(player.hand.cards))
+        }
+    }
+
+    private fun createCardsOutputMessage(cards: Cards): String {
+        return cards.group
+            .filter { it.isFaceUp }
+            .joinToString { it.number.symbol + convertMarkToString(it.mark) }
     }
 }

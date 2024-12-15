@@ -1,5 +1,5 @@
 package blackjack.domain
 
 fun interface Deck {
-    fun draw(): Card?
+    fun draw(): Card
 }
