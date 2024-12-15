@@ -3,7 +3,6 @@ package blackjack.machine
 import blackjack.dealer.Dealer
 import blackjack.deck.Deck
 import blackjack.participant.createParticipants
-import blackjack.player.Player
 import blackjack.player.Players
 import blackjack.rule.Rule
 import blackjack.view.InputView
@@ -11,9 +10,8 @@ import blackjack.view.ResultView
 
 class BlackJackMachine(
     private val deck: Deck,
-    private var players: Players = Players(players = emptyList()),
-    private var dealer: Dealer = Dealer.ready(initialCards = emptyList()),
 ) {
+
     fun play() {
         val playerList =
             Players
@@ -24,52 +22,44 @@ class BlackJackMachine(
                         updatedPlayer.hitCard(deck.draw())
                     }
                 }
-        players = Players(players = playerList)
-        dealer = Dealer.ready(initialCards = listOf(deck.draw(), deck.draw()))
+        val initialPlayers = Players(players = playerList)
+        val initialDealer = Dealer.ready(initialCards = listOf(deck.draw(), deck.draw()))
 
-        players =
-            Players(
-                players.players
-                    .map { it.updateBetResult(InputView.inputBettingAmount(it)) }
-                    .map { it.handleBlackJack(dealer = dealer) },
-            )
-        dealer = dealer.handleBlackJack(blackJackPlayers = players.players.filter { it.isBlackjack() })
-
+        var (players, dealer) = handleBlackJack(players = initialPlayers, dealer = initialDealer)
         ResultView.printPlayerNamesAndDealer(players = players, dealer = dealer)
         ResultView.printPlayersCardStatus(participants = createParticipants(dealer = dealer, players = players))
 
         while (Rule.isGameActive(players = players, dealer = dealer)) {
-            players = Players(players = players.players.map { playTurn(player = it) })
-            dealer = dealer.drawIfBelowDealerStandingRule { deck.draw() }
+            val (playersAfterTurn, dealerAfterPlayerTurn) = players.play(
+                isHitCard = { player -> InputView.isHitCard(player) },
+                draw = { deck.draw() },
+                afterPlay = { player -> ResultView.printPlayerCard(player) },
+                dealer = dealer,
+            )
 
-            if(dealer.isBlackjack()) {
-                dealer = dealer.lose(players = players.getRemainedPlayers())
-                players = Players(players = players.players.map { if (it.isBust()) it else it.win() })
-            }
+            val (playersAfterDealerDraw, dealerAfterDraw) = dealerAfterPlayerTurn.drawIfBelowDealerStandingRule(
+                players = playersAfterTurn,
+                draw = { deck.draw() },
+                afterDraw = { ResultView.printDealerDrawCard() },
+            )
 
+            players = playersAfterDealerDraw
+            dealer = dealerAfterDraw
             ResultView.printPlayersCardStatusAndSum(participant = createParticipants(dealer = dealer, players = players))
         }
 
         ResultView.printBetResult(participantBets = (players.players + dealer).associateWith { it.betResult })
     }
 
-    private fun playTurn(
-        player: Player,
-    ): Player =
-        when {
-            player.isBust() -> player
-            !InputView.isHitCard(player) -> player.also { ResultView.printPlayerCard(it) }
-            else ->
-                player
-                    .hitCard(deck.draw())
-                    .let { playerAfterDraw ->
-                        ResultView.printPlayerCard(playerAfterDraw)
-                        playerAfterDraw.lose()
-                            .takeIf { it.isBust() }
-                            ?.also { dealer = dealer.win(player = it) }
-                            ?: playerAfterDraw
-                    }
-        }
+    private fun handleBlackJack(
+        players: Players,
+        dealer: Dealer,
+    ): Pair<Players, Dealer> =
+        Players(
+            players.players
+                .map { it.updateBetResult(InputView.inputBettingAmount(it)) }
+                .map { it.handleBlackJack(dealer = dealer) },
+        ) to dealer.handleBlackJack(blackJackPlayers = players.players.filter { it.isBlackjack() })
 
     companion object {
         private const val DEFAULT_HAND_SIZE = 2

@@ -5,6 +5,8 @@ import blackjack.card.Card
 import blackjack.dealer.Dealer
 import blackjack.machine.BlackJackMachine.Companion.BONUS_RATIO
 import blackjack.participant.Participant
+import blackjack.view.InputView
+import blackjack.view.ResultView
 
 class Player(
     override val name: String,
@@ -34,6 +36,15 @@ class Player(
 
     fun updateBetResult(betResult: BetResult): Player =
         Player(name = this.name, hand = this.hand, betResult = betResult)
+
+    fun play(
+        isHitCard: Boolean,
+        draw: () -> Card,
+    ): Player =
+        when {
+            !isHitCard -> this
+            else -> this.hitCard(draw())
+        }
 
     companion object {
         fun ready(name: String): Player = Player(name = name)

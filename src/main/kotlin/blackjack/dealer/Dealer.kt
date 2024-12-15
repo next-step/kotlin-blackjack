@@ -7,7 +7,7 @@ import blackjack.machine.BlackJackMachine.Companion.BONUS_RATIO
 import blackjack.participant.Participant
 import blackjack.player.Hand
 import blackjack.player.Player
-import blackjack.view.ResultView
+import blackjack.player.Players
 
 class Dealer(
     override val name: String = "딜러",
@@ -18,14 +18,24 @@ class Dealer(
 
     fun shouldDraw(): Boolean = hand.sum() <= DEALER_STANDING_RULE
 
-    fun drawIfBelowDealerStandingRule(draw: () -> Card): Dealer =
-        if (shouldDraw()) {
-            this
-                .hitCard(draw())
-                .also { ResultView.printDealerDrawCard() }
-        } else {
-            this
+    fun drawIfBelowDealerStandingRule(
+        players: Players,
+        draw: () -> Card,
+        afterDraw: (Dealer) -> Unit,
+    ): Pair<Players, Dealer> =
+        when {
+            shouldDraw() -> {
+                this
+                    .hitCard(draw())
+                    .also { afterDraw(it) }
+                    .handleBust(players = players)
+            }
+
+            else -> players to this
         }
+
+    private fun handleBust(players: Players): Pair<Players, Dealer> =
+        players.applyWinToWinners() to this.lose(players = players.getRemainedPlayers())
 
     fun handleBlackJack(blackJackPlayers: List<Player>): Dealer {
         val sumOfPlayersBetAmount = blackJackPlayers.sumOf { it.bet.negative() }
@@ -46,8 +56,8 @@ class Dealer(
     fun win(player: Player): Dealer =
         updateBetResult(betResult = BetResult.Win(bet = this.bet, amount = this.winningAmount + player.betAmount))
 
-    fun lose(players: List<Player>): Dealer {
-        val sumOfPlayersBetAmount = players.sumOf { it.betAmount}
+    private fun lose(players: Players): Dealer {
+        val sumOfPlayersBetAmount = players.sum()
         return updateBetResult(betResult = BetResult.Lose(bet = this.bet, amount = this.winningAmount - sumOfPlayersBetAmount))
     }
 

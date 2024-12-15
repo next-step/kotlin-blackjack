@@ -8,6 +8,7 @@ import blackjack.machine.BlackJackMachine.Companion.BONUS_RATIO
 import blackjack.participant.ParticipantFixture.hitCards
 import blackjack.player.Hand
 import blackjack.player.Player
+import blackjack.player.Players
 import io.kotest.inspectors.forAll
 import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.should
@@ -126,4 +127,51 @@ class DealerTest {
     }
 
     private fun sumOfPlayerBetsWithNegative() = players.sumOf { it.bet.negative() }
+
+    @Test
+    fun `딜러가 카드를 뽑았는데 21을 초과하는 경우 남아있던 플레이어들은 승리한다`() {
+        val winner = pobi.hitCards(
+                listOf(
+                    CardFixture.generateTestCard(Rank.TWO),
+                    CardFixture.generateTestCard(Rank.FIVE)
+                )
+            ) as Player
+
+        val jasonBet = jason.betResult
+        val loser = jason.updateBetResult(BetResult.Lose(bet = jasonBet.bet, amount = jasonBet.bet.negative()))
+            .hitCards(
+                listOf(
+                    CardFixture.generateTestCard(Rank.EIGHT),
+                    CardFixture.generateTestCard(Rank.NINE),
+                    CardFixture.generateTestCard(Rank.TEN),
+                )
+            ) as Player
+
+        dealer =
+            dealer.hitCards(
+                cards =
+                    listOf(
+                        CardFixture.generateTestCard(Rank.TEN),
+                        CardFixture.generateTestCard(Rank.SIX),
+            ),
+        ) as Dealer
+
+        players = listOf(winner, loser)
+        val (testPlayers, testDealer) = dealer.drawIfBelowDealerStandingRule(
+            players = Players(players = players),
+            draw = { CardFixture.generateTestCard(Rank.EIGHT)},
+            afterDraw = {},
+        )
+
+        testPlayers.players.size shouldBe players.size
+        testDealer.betResult should beInstanceOf<BetResult.Lose>()
+
+        val winners = testPlayers.players.filterNot { it.isBust() }
+        winners.forAll { it.betResult should beInstanceOf<BetResult.Win>() }
+        winners.forAll { it.winningAmount shouldBe it.betAmount }
+
+        val losers = testPlayers.players.filter { it.isBust() }
+        losers.forAll { it.betResult should beInstanceOf<BetResult.Lose>() }
+        losers.forAll { it.winningAmount shouldBe it.bet.negative() }
+    }
 }
