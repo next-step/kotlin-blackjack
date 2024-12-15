@@ -6,8 +6,8 @@ data class Cards(
     val cards: List<Card>
         get() = _cards.toList()
 
-    fun add(card: Card) {
-        _cards.add(card)
+    fun add(newCard: Card) {
+        _cards.add(newCard)
     }
 
     fun addAll(cards: List<Card>) {
@@ -15,11 +15,13 @@ data class Cards(
     }
 
     fun bestScore(): Int {
-        return possibleScoreSum().max()
+        return possibleScoreSum()
+            .filter { it <= MAX_SCORE }
+            .maxOrNull() ?: possibleScoreSum().min()
     }
 
-    fun isBust(): Boolean {
-        return possibleScoreSum().all { it > SCORE_LIMIT }
+    fun getOpenCard(): String {
+        return _cards.first().toString()
     }
 
     private fun possibleScoreSum(): List<Int> {
@@ -35,12 +37,11 @@ data class Cards(
     }
 
     companion object {
-        private const val SCORE_LIMIT = 21
         private const val ACE_POINT = 10
-        private const val ZERO = 0
+        private const val MAX_SCORE = 21
 
-        fun createCardPack(): List<Card> {
-            return CardSuit.entries.flatMap { suit -> CardNumber.entries.map { Card(it, suit) } }
+        fun createShuffledCardPack(): List<Card> {
+            return CardSuit.entries.flatMap { suit -> CardNumber.entries.map { Card(it, suit) } }.shuffled()
         }
     }
 }
