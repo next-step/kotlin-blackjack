@@ -16,15 +16,6 @@ class Dealer(
 ) : Participant<Dealer> {
     override fun hitCard(card: Card): Dealer = Dealer(name = name, hand = hand.add(card), betResult = betResult)
 
-    override fun isWin(opponent: Participant<*>): Boolean? =
-        (opponent as? Player)?.let {
-            when {
-                isBust() -> false
-                opponent.isBust() -> true
-                else -> hand.sum() > opponent.hand.sum()
-            }
-        }
-
     fun shouldDraw(): Boolean = hand.sum() <= DEALER_STANDING_RULE
 
     fun drawIfBelowDealerStandingRule(draw: () -> Card): Dealer =
