@@ -1,6 +1,7 @@
 package blackjack.view
 
 import blackjack.domain.Player
+import blackjack.domain.PlayerOutcomes
 import blackjack.domain.Players
 
 object OutputView {
@@ -26,6 +27,12 @@ object OutputView {
 
     fun dealerHitResult() {
         println(DEALER_HIT_MESSAGE)
+    }
+
+    fun showWinnerPlayers(playerOutcomes: List<PlayerOutcomes>) {
+        playerOutcomes.forEach {
+            println("${it.player.name}: ${it.results.message}")
+        }
     }
 
     private const val DEAL_RESULT_MESSAGE = "%s 에게 2장의 카드를 카드를 나누었습니다."

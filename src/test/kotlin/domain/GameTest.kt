@@ -9,9 +9,11 @@ import blackjack.domain.GameMembers
 import blackjack.domain.HitCommand
 import blackjack.domain.Player
 import blackjack.domain.Players
+import blackjack.domain.Result
 import blackjack.domain.Suit
 import fixture.CardListFixture
 import io.kotest.core.spec.style.DescribeSpec
+import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.shouldBe
 
 class GameTest : DescribeSpec({
@@ -147,10 +149,8 @@ class GameTest : DescribeSpec({
                         ),
                     )
                 val fixedPlayers = Players(listOf(Player("pobi")))
-
                 val gameMembers = GameMembers(fixedPlayers, fixedDealer)
                 sut = Game(gameMembers)
-
                 val actual = sut.isDealerCardSumLessThan16()
                 actual shouldBe true
             }
@@ -170,10 +170,8 @@ class GameTest : DescribeSpec({
                         ),
                     )
                 val fixedPlayers = Players(listOf(Player("pobi")))
-
                 val gameMembers = GameMembers(fixedPlayers, fixedDealer)
                 sut = Game(gameMembers)
-
                 val actual = sut.isDealerCardSumLessThan16()
                 actual shouldBe false
             }
@@ -195,13 +193,41 @@ class GameTest : DescribeSpec({
                     ),
                 )
             val fixedPlayers = Players(listOf(Player("pobi")))
-
             val gameMembers = GameMembers(fixedPlayers, fixedDealer)
             sut = Game(gameMembers)
 
             sut.dealerHit()
 
             fixedDealer.ownedCards.size shouldBe 3
+        }
+    }
+
+    describe("determineWinner test") {
+        it("딜러의 카드보다 합이 큰 플레이어 이름을 리턴한다.") {
+            val player1 = Player("player1")
+            val player2 = Player("player2")
+            val player3 = Player("player3")
+            val player4 = Player("player4")
+            val fixedDealer = Dealer(Deck(CardListFixture.mixedCardList()))
+            val fixedPlayers = Players(listOf(player1, player2, player3, player4))
+            sut = Game(GameMembers(fixedPlayers, fixedDealer))
+            println(player1.ownedCards)
+            println(player2.ownedCards)
+            println(player3.ownedCards)
+            println(player4.ownedCards)
+            println(fixedDealer.ownedCards)
+
+            player1.sumOfCard() shouldBe 17
+            player2.sumOfCard() shouldBe 18
+            player3.sumOfCard() shouldBe 19
+            player4.sumOfCard() shouldBe 15
+            fixedDealer.sumOfCard() shouldBe 16
+            val actual = sut.determineWinner()
+
+            actual.filter { it.results == Result.WIN }.map { it.player.name } shouldContainExactly
+                listOf(
+                    "player1", "player2", "player3",
+                )
         }
     }
 })

@@ -18,6 +18,8 @@ class BlackjackController {
         dealerTurn(game)
 
         OutputView.showGameResult(players = game.allPlayers())
+
+        OutputView.showWinnerPlayers(game.determineWinner())
     }
 
     private fun gameLoop(game: Game) {

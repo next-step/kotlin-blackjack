@@ -28,4 +28,10 @@ class Game(
     fun isPlayerStillPlaying(player: Player): Boolean {
         return player.hasBusted() && player.hasStayed().not()
     }
+
+    fun determineWinner(): List<PlayerOutcomes> {
+        val dealerCardSum = gameMembers.dealer().sumOfCard()
+
+        return gameMembers.playersWithoutDealer().allPlayers().map { PlayerOutcomes.from(it, dealerCardSum) }
+    }
 }
