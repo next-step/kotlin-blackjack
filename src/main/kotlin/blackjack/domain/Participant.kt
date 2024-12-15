@@ -19,6 +19,9 @@ sealed class Participant(
     val isBlackjack: Boolean
         get() = Rule.isBlackjack(score, handSize)
 
+    val profit: Int
+        get() = gameState.betValue
+
     open fun initialDraw(deck: Deck) {
         repeat(INITIAL_DRAW_COUNT) {
             hit(deck)

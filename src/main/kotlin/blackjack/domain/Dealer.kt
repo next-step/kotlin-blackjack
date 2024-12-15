@@ -16,7 +16,7 @@ class Dealer(
                 else -> Result.DRAW
             }
         val playerBet = player.adjustBet(result)
-        gameState.addBet(playerBet)
+        gameState.applyBet(playerBet)
 
         return result
     }

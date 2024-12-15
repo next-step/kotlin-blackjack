@@ -9,9 +9,6 @@ class Player(
         betValue: Int = 0,
     ) : this(name, GameState(bet = Bet(betValue)))
 
-    val profit: Int
-        get() = gameState.betValue
-
     fun adjustBet(result: Result): Bet =
         when {
             isBlackjack && result == Result.WIN -> gameState.blackjackBet()
