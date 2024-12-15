@@ -6,6 +6,11 @@ class InputView {
         return readLine().split(",")
     }
 
+    fun inputBet(name: String): Int {
+        println("${name}님의 배팅 금액은?")
+        return readLine().toInt()
+    }
+
     fun inputHitOrStay(name: String): Boolean {
         println("${name}님은 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
         return when (readLine()) {

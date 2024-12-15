@@ -14,15 +14,24 @@ class BlackjackGame(
     private val deck: Deck = Deck(),
 ) {
     fun start() {
-        val names = inputView.inputNames()
-        val dealer = Dealer()
-        val players = names.map { Player(it, 0) }
-
+        val (players, dealer) = setup()
         initialDraw(players + dealer)
         players.forEach(::progress)
         dealerExtraDraw(dealer)
 
         endGame(players, dealer)
+    }
+
+    private fun setup(): Pair<List<Player>, Dealer> {
+        val names = inputView.inputNames()
+
+        val players = names.map { name ->
+            val bet = inputView.inputBet(name)
+            Player(name, bet)
+        }
+        val dealer = Dealer()
+
+        return Pair(players, dealer)
     }
 
     private fun initialDraw(players: List<Participant>) {
