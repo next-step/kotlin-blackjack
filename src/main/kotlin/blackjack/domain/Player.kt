@@ -14,6 +14,11 @@ sealed class Player(val name: String) {
         _cards.add(card)
     }
 
+    fun exceedsWinScore(): Boolean {
+        val totalScore = calculateTotalScore()
+        return totalScore > BlackJackRule.WIN_SCORE
+    }
+
     fun calculateTotalScore(): Int {
         return ScoreCalculator.calculate(cards)
     }
