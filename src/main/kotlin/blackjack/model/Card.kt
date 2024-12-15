@@ -28,12 +28,23 @@ class Card private constructor(private val suit: Suit, private val rank: Rank) {
         }
 
     companion object {
-        private var allCards: MutableSet<Card> =
-            Suit.entries.flatMap { suit ->
-                Rank.entries.map { rank ->
-                    Card(suit, rank)
+        private var allCards: MutableSet<Card> = generateAllCards().toMutableSet()
+
+        private fun generateAllCards(): Set<Card> {
+            val cards = mutableSetOf<Card>()
+
+            for (suit in Suit.list) {
+                for (rank in Rank.list) {
+                    cards.add(createCard(suit, rank))
                 }
-            }.toMutableSet()
+            }
+
+            return cards
+        }
+
+        private fun createCard(suit: Suit, rank: Rank): Card {
+            return Card(suit, rank)
+        }
 
         fun takeRandomCard(): Card {
             if (allCards.isEmpty()) throw IllegalStateException("남는 카드가 없습니다.")

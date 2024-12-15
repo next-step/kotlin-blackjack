@@ -13,5 +13,9 @@ enum class Rank(val value: Int) {
     JACK(10),
     QUEEN(10),
     KING(10),
-    ACE(1), // 에이스는 1 또는 11로 계산 필요
+    ACE(1);
+
+    companion object {
+        val list = entries
+    }
 }
