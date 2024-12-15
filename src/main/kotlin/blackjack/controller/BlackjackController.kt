@@ -9,7 +9,7 @@ import blackjack.domain.Players
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
-class BlackjackController() {
+class BlackjackController {
     fun start() {
         val game = createGame()
         OutputView.showGameStart(players = game.allPlayers())
@@ -20,7 +20,7 @@ class BlackjackController() {
     }
 
     private fun gameLoop(game: Game) {
-        game.allPlayers().allPlayers().forEach { player ->
+        game.onlyPlayers().forEach { player ->
             while (game.isPlayerStillPlaying(player)) {
                 val hitCommand = InputView.askHitOrStay(player.name)
                 game.processPlayerTurn(player, hitCommand)

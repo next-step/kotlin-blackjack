@@ -9,6 +9,8 @@ class Game(
 
     fun allPlayers(): Players = gameMembers.allPlayersWithDealer()
 
+    fun onlyPlayers(): Players = gameMembers.playersWithoutDealer()
+
     fun processPlayerTurn(
         player: Player,
         hitCommand: HitCommand,

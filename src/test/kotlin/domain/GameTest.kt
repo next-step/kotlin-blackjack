@@ -26,6 +26,25 @@ class GameTest : DescribeSpec({
         sut = Game(members)
     }
 
+    describe("all players") {
+        it("딜러를 포함한 모든 플레이어를 조회한다.") {
+            val actual = sut.allPlayers()
+            actual.allPlayers().size shouldBe 3
+            actual.allPlayers()[0].name shouldBe "Dealer"
+            actual.allPlayers()[1].name shouldBe "pobi"
+            actual.allPlayers()[2].name shouldBe "jason"
+        }
+    }
+
+    describe("onlyPlayers") {
+        it("딜러를 제외한 플레이어만 조회한다") {
+            val actual = sut.onlyPlayers()
+            actual.allPlayers().size shouldBe 2
+            actual.allPlayers()[0].name shouldBe "pobi"
+            actual.allPlayers()[1].name shouldBe "jason"
+        }
+    }
+
     describe("init test") {
         it("게임을 시작하면 각 플레이어들에게 카드를 2장씩 나누어준다.") {
             players.allPlayers()[0].ownedCards.size shouldBe 2
