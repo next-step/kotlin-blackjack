@@ -15,7 +15,6 @@ class DealTest {
     @Test
     fun `요청한 카드 수만큼 반환된다`() {
         val cards = Deal.giveCards(5)
-
         cards.size shouldBe 5
     }
 
@@ -32,7 +31,7 @@ class DealTest {
 
         cards.shouldNotBeEmpty()
 
-        cards.forEach { cardMap ->
+        cards.forEach { (cardMap, _) ->
             val (symbol, card) = cardMap.entries.first()
             symbol shouldBeIn CardSymbol.entries
             card shouldBeIn Card.entries
@@ -47,23 +46,4 @@ class DealTest {
             }
         exception.message shouldInclude "Requested cards exceed the available deck size. Remaining:"
     }
-
-//    @Test
-//    fun `랜덤한 문양의 카드를 지급`() {
-//        val cards = Deal.giveCards(1)
-//
-//        cards.shouldNotBeEmpty()
-//        val card = cards.first()
-//
-//        symbol shouldBeIn CardSymbol.entries
-//
-//        cardValue shouldBeIn Card.entries
-//    }
-//
-//    @Test
-//    fun `다양한 문양과 카드 값 반환되는지 반복`() {
-//        val results = mutableListOf(mutableMapOf<CardSymbol, Card>())
-//        repeat(100) { results.addAll(Deal.giveCards(1)) }
-//        results.size shouldBeGreaterThan 10
-//    }
 }
