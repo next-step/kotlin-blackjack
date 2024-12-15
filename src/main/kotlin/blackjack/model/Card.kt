@@ -54,12 +54,7 @@ class Card private constructor(private val suit: Suit, private val rank: Rank) {
         }
 
         fun resetAllCards() {
-            allCards =
-                Suit.entries.flatMap { suit ->
-                    Rank.entries.map { rank ->
-                        Card(suit, rank)
-                    }
-                }.toMutableSet()
+            allCards = generateAllCards().toMutableSet()
         }
     }
 }
