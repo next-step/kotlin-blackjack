@@ -22,7 +22,7 @@ class BlackjackGame(
         endGame(players, dealer)
     }
 
-    private fun setup(): Pair<List<Player>, Dealer> {
+    private fun setup(): Participants {
         val names = inputView.inputNames()
 
         val players =
@@ -32,7 +32,7 @@ class BlackjackGame(
             }
         val dealer = Dealer()
 
-        return Pair(players, dealer)
+        return Participants(players, dealer)
     }
 
     private fun initialDraw(players: List<Participant>) {
@@ -66,4 +66,9 @@ class BlackjackGame(
         val result = GameResult(players, dealer)
         outputView.printResult(result)
     }
+
+    data class Participants(
+        val players: List<Player>,
+        val dealer: Dealer,
+    )
 }
