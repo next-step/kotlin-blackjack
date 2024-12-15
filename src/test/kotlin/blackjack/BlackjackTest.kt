@@ -48,9 +48,9 @@ class BlackjackTest {
     @ParameterizedTest
     @ValueSource(strings = [",aaa,,bbb"])
     fun `parsing test4`(input: String) {
-        val playerNames = input.split(",")
-        val players = playerNames.map { Player(name = it) }
-        players shouldBe listOf(Player("aaa"), Player("bbb"))
+        val blackjackController = BlackjackController()
+        val players = blackjackController.createPlayers(input)
+        players.players shouldBe listOf(Player("aaa"), Player("bbb"))
     }
 
     @DisplayName("플레이어는 처음 2장의 카드를 받는다")

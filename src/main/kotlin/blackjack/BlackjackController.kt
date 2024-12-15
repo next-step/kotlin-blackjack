@@ -26,8 +26,7 @@ class BlackjackController {
 
     private fun String.split(delimiter: String = ","): List<String> {
         if (this.isBlank()) return emptyList()
-
-        val regex = Regex.escape(delimiter).toRegex()
+        val regex = if (delimiter == ",") DEFAULT_DELIMITER_REGEX else Regex.escape(delimiter).toRegex()
         return this.split(regex)
             .map { it.trim() }
             .filter { it.isNotEmpty() }
@@ -36,5 +35,6 @@ class BlackjackController {
     private companion object {
         const val REFUSE_INPUT = "n"
         const val ACCEPT_INPUT = "y"
+        val DEFAULT_DELIMITER_REGEX = Regex.escape(",").toRegex()
     }
 }
