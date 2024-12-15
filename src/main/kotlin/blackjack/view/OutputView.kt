@@ -1,8 +1,8 @@
 package blackjack.view
 
-import blackjack.domain.GameResult.DRAW
-import blackjack.domain.GameResult.LOSE
-import blackjack.domain.GameResult.WIN
+import blackjack.participant.GameResult.DRAW
+import blackjack.participant.GameResult.LOSE
+import blackjack.participant.GameResult.WIN
 import blackjack.flow.BlackJackGame
 import blackjack.participant.Participants
 import blackjack.participant.Player

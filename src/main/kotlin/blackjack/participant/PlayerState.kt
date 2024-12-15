@@ -1,4 +1,4 @@
-package blackjack.domain
+package blackjack.participant
 
 enum class PlayerState(
     private val description: String,

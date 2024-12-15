@@ -2,8 +2,7 @@ package blackjack.participant
 
 import blackjack.card.Card
 import blackjack.card.Cards
-import blackjack.domain.PlayerState
-import blackjack.domain.PlayerState.HIT
+import blackjack.participant.PlayerState.HIT
 
 data class Dealer(
     private val name: PlayerName = PlayerName(DEALER_NAME),

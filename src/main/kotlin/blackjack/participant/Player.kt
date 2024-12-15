@@ -2,7 +2,6 @@ package blackjack.participant
 
 import blackjack.card.Card
 import blackjack.card.Cards
-import blackjack.domain.PlayerState
 
 data class Player(
     private val name: PlayerName,
