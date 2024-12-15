@@ -11,13 +11,16 @@ import blackjack.presentation.OutputView
 class BlackjackGame(
     private val inputView: InputView = InputView(),
     private val outputView: OutputView = OutputView(),
-    private val deck: Deck = Deck(),
 ) {
     fun start() {
+        val deck = Deck()
         val (players, dealer) = setup()
-        initialDraw(players + dealer)
-        players.forEach(::progress)
-        dealerExtraDraw(dealer)
+
+        initialDraw(players + dealer, deck)
+        players.forEach { player ->
+            progress(player, deck)
+        }
+        dealerExtraDraw(dealer, deck)
 
         endGame(players, dealer)
     }
@@ -35,24 +38,24 @@ class BlackjackGame(
         return Participants(players, dealer)
     }
 
-    private fun initialDraw(players: List<Participant>) {
+    private fun initialDraw(players: List<Participant>, deck: Deck) {
         players.forEach { player ->
             player.initialDraw(deck)
         }
         outputView.printInitialCards(players)
     }
 
-    private fun progress(player: Player) {
+    private fun progress(player: Player, deck: Deck) {
         if (isHitOrStay(player)) {
             player.hit(deck)
             outputView.printPlayerCards(player)
-            progress(player)
+            progress(player, deck)
         }
     }
 
     private fun isHitOrStay(player: Player): Boolean = inputView.inputHitOrStay(player.name)
 
-    private fun dealerExtraDraw(dealer: Dealer) {
+    private fun dealerExtraDraw(dealer: Dealer, deck: Deck) {
         if (dealer.shouldDraw()) {
             dealer.hit(deck)
             outputView.printDealerExtraDraw()
@@ -67,7 +70,7 @@ class BlackjackGame(
         outputView.printResult(result)
     }
 
-    data class Participants(
+    private data class Participants(
         val players: List<Player>,
         val dealer: Dealer,
     )
