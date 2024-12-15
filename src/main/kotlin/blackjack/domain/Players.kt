@@ -1,17 +1,17 @@
 package blackjack.domain
 
 data class Players(val value: List<Player>) {
-    fun onPreparePlay(action: (Player) -> Unit): Players {
+    fun onEachPreparePlay(action: (Player) -> Unit): Players {
         value.forEach { action(it) }
         return this
     }
 
-    fun onStartPlay(action: (Player) -> Unit): Players {
+    fun onEachStartPlay(action: (Player) -> Unit): Players {
         value.forEach { action(it) }
         return this
     }
 
-    fun onEndPlay(action: (Player) -> Unit): Players {
+    fun onEach(action: (Player) -> Unit): Players {
         value.forEach { action(it) }
         return this
     }
