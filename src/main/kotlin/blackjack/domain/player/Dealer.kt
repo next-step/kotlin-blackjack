@@ -19,6 +19,10 @@ class Dealer(name: String = DEALER_NAME) : Participant(name) {
         }
     }
 
+    override fun showCards() {
+        println("$name: ${getAllCards()[0].printCard()}")
+    }
+
     companion object {
         const val DEALER_NAME = "딜러"
         const val DRAW_THREAD = 16

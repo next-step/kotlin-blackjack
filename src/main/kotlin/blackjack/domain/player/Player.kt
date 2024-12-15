@@ -13,4 +13,14 @@ class Player(name: String) : Participant(name) {
             onPrintResultCallback(listOf(this))
         }
     }
+
+    override fun showCards() {
+        print("${name}카드: ")
+
+        val lastIndex = getAllCards().lastIndex
+        getAllCards().forEachIndexed { index, card ->
+            print(card.printCard())
+            if (index != lastIndex) print(", ") else println()
+        }
+    }
 }

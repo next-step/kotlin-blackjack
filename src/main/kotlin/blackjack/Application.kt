@@ -16,13 +16,10 @@ fun main() {
     val game = Game.createGame(players)
     val printCallback: ((List<Participant>) -> Unit) = {
         it.forEach { player ->
-            if (player.name == Dealer.DEALER_NAME) {
-                resultView.showDealerCards(player)
-            } else {
-                resultView.showPlayerCards(player)
-            }
+            player.showCards()
         }
     }
+
     val turnCallback: ((Participant) -> String) = { player ->
         if (player.name == Dealer.DEALER_NAME) {
             resultView.printDealerDrawExtra()

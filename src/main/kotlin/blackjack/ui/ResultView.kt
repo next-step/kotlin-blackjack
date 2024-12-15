@@ -16,23 +16,9 @@ class ResultView {
         println("딜러와 ${playersName}에게 2장씩 나누었습니다.")
     }
 
-    fun showPlayerCards(player: Participant) {
-        print("${player.name}카드: ")
-
-        val lastIndex = player.getAllCards().lastIndex
-        player.getAllCards().forEachIndexed { index, card ->
-            print(card.printCard())
-            if (index != lastIndex) print(", ") else println()
-        }
-    }
-
-    fun showDealerCards(dealer: Participant) {
-        println("${dealer.name}: ${dealer.getAllCards()[0].printCard()}")
-    }
-
     fun printGameResult(players: List<Player>, dealer: Dealer) {
         (players + dealer).forEach { player ->
-            showPlayerCards(player)
+            player.showCards()
             println(" - 결과: ${player.calculateCard()}")
         }
 
