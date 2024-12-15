@@ -2,12 +2,12 @@ package blackjack.domain
 
 @JvmInline
 value class Bet(val value: Int) {
-    fun apply(bet: Bet): Bet {
-        return Bet(this.value + bet.value)
+    operator fun plus(bet: Bet): Bet {
+        return Bet(value + bet.value)
     }
 
     fun lose(): Bet {
-        return Bet(0)
+        return negative(this)
     }
 
     fun blackjack(): Bet {
@@ -20,5 +20,13 @@ value class Bet(val value: Int) {
 
     companion object {
         private const val BLACKJACK_BETTING_RATE = 1.5
+
+        fun zero(): Bet {
+            return Bet(0)
+        }
+
+        fun negative(bet: Bet): Bet {
+            return Bet(-bet.value)
+        }
     }
 }

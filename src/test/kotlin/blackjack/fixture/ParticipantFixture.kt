@@ -16,7 +16,7 @@ internal fun dealerFixture(hands: Hands = Hands()): Dealer =
 
 internal fun playerFixture(
     hands: Hands = Hands(),
-    bet: Bet = Bet(0),
+    bet: Bet = Bet.zero(),
 ): Player =
     Player(
         name = "player",
