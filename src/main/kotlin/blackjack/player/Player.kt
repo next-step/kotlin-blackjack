@@ -5,8 +5,6 @@ import blackjack.card.Card
 import blackjack.dealer.Dealer
 import blackjack.machine.BlackJackMachine.Companion.BONUS_RATIO
 import blackjack.participant.Participant
-import blackjack.view.InputView
-import blackjack.view.ResultView
 
 class Player(
     override val name: String,
