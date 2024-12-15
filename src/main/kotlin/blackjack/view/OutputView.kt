@@ -29,7 +29,11 @@ object OutputView {
         println(DEALER_HIT_MESSAGE)
     }
 
-    fun showWinnerPlayers(playerOutcomes: List<PlayerOutcomes>) {
+    fun showWinnerPlayers(
+        dealerWinningCount: Int,
+        playerOutcomes: List<PlayerOutcomes>,
+    ) {
+        println("딜러: $dealerWinningCount 승 ${playerOutcomes.size - dealerWinningCount} 패")
         playerOutcomes.forEach {
             println("${it.player.name}: ${it.results.message}")
         }

@@ -34,4 +34,6 @@ class Game(
 
         return gameMembers.playersWithoutDealer().allPlayers().map { PlayerOutcomes.from(it, dealerCardSum) }
     }
+
+    fun calculateDealerWinningScore(): Int = determineWinner().filter { it.results == Result.LOSE }.size
 }

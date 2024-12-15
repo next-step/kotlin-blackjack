@@ -230,4 +230,30 @@ class GameTest : DescribeSpec({
                 )
         }
     }
+
+    describe("calculateDealerWinningScore test") {
+        it("dealer의 승리 횟수를 계산한다.") {
+            val player1 = Player("player1")
+            val player2 = Player("player2")
+            val player3 = Player("player3")
+            val player4 = Player("player4")
+            val fixedDealer = Dealer(Deck(CardListFixture.mixedCardList()))
+            val fixedPlayers = Players(listOf(player1, player2, player3, player4))
+            sut = Game(GameMembers(fixedPlayers, fixedDealer))
+            println(player1.ownedCards)
+            println(player2.ownedCards)
+            println(player3.ownedCards)
+            println(player4.ownedCards)
+            println(fixedDealer.ownedCards)
+
+            player1.sumOfCard() shouldBe 17
+            player2.sumOfCard() shouldBe 18
+            player3.sumOfCard() shouldBe 19
+            player4.sumOfCard() shouldBe 15
+            fixedDealer.sumOfCard() shouldBe 16
+            val actual = sut.calculateDealerWinningScore()
+
+            actual shouldBe 1
+        }
+    }
 })
