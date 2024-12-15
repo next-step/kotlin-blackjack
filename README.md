@@ -2,6 +2,13 @@
 
 ## STEP 3
 
+## 피드백 - 1
+
+- [ ] Player가 한 장의 카드도 받을 수 있도록 변경
+- [ ] Dealer와 Player의 중복 코드를 조합으로 풀어내기
+- [ ] 패키지 구조 다시 한 번 정리해보기 ex) GameResult
+- [ ] BlackJackGame의 프로퍼티를 Dealer, Players에서 Participants로 변경
+
 ## 기능 요구 사항
 
 - [x] 딜러가 블랙잭 게임에 추가된다.

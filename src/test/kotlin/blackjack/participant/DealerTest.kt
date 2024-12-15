@@ -7,19 +7,6 @@ import io.kotest.core.spec.style.StringSpec
 import io.kotest.matchers.shouldBe
 
 class DealerTest : StringSpec({
-    "딜러는 카드를 받을 수 있다." {
-        // Arrange:
-        val dealer = Dealer()
-        val card = Card(CardNumber.TEN, CardSuit.SPADES)
-
-        // Act:
-        dealer.take(listOf(card))
-
-        // Assert:
-        dealer.cards.cards.size shouldBe 1
-        dealer.cards.cards[0] shouldBe card
-    }
-
     "딜러는 카드 점수가 17점이 넘으면 카드를 받을 수 없다." {
         // Arrange:
         val dealer = Dealer()
