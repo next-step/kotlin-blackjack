@@ -21,7 +21,10 @@ class Dealer(
         return result
     }
 
-    private fun settleBet(result: Result, playerBet: Bet) {
+    private fun settleBet(
+        result: Result,
+        playerBet: Bet,
+    ) {
         if (result == Result.WIN) {
             gameState.applyBet(Bet.negative(playerBet))
         } else if (result == Result.LOSE) {

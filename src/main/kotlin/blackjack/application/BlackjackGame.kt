@@ -25,10 +25,11 @@ class BlackjackGame(
     private fun setup(): Pair<List<Player>, Dealer> {
         val names = inputView.inputNames()
 
-        val players = names.map { name ->
-            val bet = inputView.inputBet(name)
-            Player(name, bet)
-        }
+        val players =
+            names.map { name ->
+                val bet = inputView.inputBet(name)
+                Player(name, bet)
+            }
         val dealer = Dealer()
 
         return Pair(players, dealer)
