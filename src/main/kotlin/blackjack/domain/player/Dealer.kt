@@ -4,7 +4,7 @@ import blackjack.domain.CardDeck
 
 class Dealer(name: String = DEALER_NAME) : Participant(name) {
     private fun shouldDrawCard(): Boolean {
-        return calculateCard() <= 16
+        return calculateCard() <= DRAW_THREAD
     }
 
     override fun startTurn(
@@ -21,5 +21,6 @@ class Dealer(name: String = DEALER_NAME) : Participant(name) {
 
     companion object {
         const val DEALER_NAME = "딜러"
+        const val DRAW_THREAD = 16
     }
 }
