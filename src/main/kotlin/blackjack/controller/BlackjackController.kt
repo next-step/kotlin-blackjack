@@ -30,6 +30,8 @@ class BlackjackController {
                 OutputView.printPlayerCards(player)
             }
         }
+
+        if (game.isDealerBust()) return
     }
 
     private fun dealerTurn(game: Game) {

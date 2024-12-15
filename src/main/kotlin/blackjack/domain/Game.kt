@@ -38,4 +38,8 @@ class Game(
     fun calculateDealerWinningScore(): Int = determineWinner().filter { it.results == Result.LOSE }.size
 
     fun calculateDealerLoseScore(): Int = determineWinner().filter { it.results == Result.WIN }.size
+
+    fun isDealerBust(): Boolean {
+        return gameMembers.dealer().sumOfCard() > 21
+    }
 }
