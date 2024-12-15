@@ -2,6 +2,7 @@ package blackjack.dealer
 
 import betting.Bet
 import betting.BetResult
+import betting.TurnResult
 import blackjack.card.Card
 import blackjack.machine.BlackJackMachine.Companion.BONUS_RATIO
 import blackjack.participant.Participant
@@ -22,7 +23,7 @@ class Dealer(
         players: Players,
         draw: () -> Card,
         afterDraw: (Dealer) -> Unit,
-    ): Pair<Players, Dealer> =
+    ): TurnResult =
         when {
             shouldDraw() -> {
                 this
@@ -31,11 +32,14 @@ class Dealer(
                     .handleBust(players = players)
             }
 
-            else -> players to this
+            else -> TurnResult.status(players = players, dealer = this)
         }
 
-    private fun handleBust(players: Players): Pair<Players, Dealer> =
-        players.applyWinToWinners() to this.lose(players = players.getRemainedPlayers())
+    private fun handleBust(players: Players): TurnResult =
+        TurnResult.status(
+            players = players.applyWinToWinners(),
+            dealer = this.lose(players = players.getRemainedPlayers()),
+        )
 
     fun handleBlackJack(blackJackPlayers: List<Player>): Dealer {
         val sumOfPlayersBetAmount = blackJackPlayers.sumOf { it.bet.negative() }

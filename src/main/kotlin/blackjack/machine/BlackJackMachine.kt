@@ -1,5 +1,6 @@
 package blackjack.machine
 
+import betting.TurnResult
 import blackjack.dealer.Dealer
 import blackjack.deck.Deck
 import blackjack.participant.createParticipants
@@ -54,12 +55,16 @@ class BlackJackMachine(
     private fun handleBlackJack(
         players: Players,
         dealer: Dealer,
-    ): Pair<Players, Dealer> =
-        Players(
-            players.players
-                .map { it.updateBetResult(InputView.inputBettingAmount(it)) }
-                .map { it.handleBlackJack(dealer = dealer) },
-        ) to dealer.handleBlackJack(blackJackPlayers = players.players.filter { it.isBlackjack() })
+    ): TurnResult =
+        TurnResult.status(
+            players =
+                Players(
+                    players.players
+                        .map { it.updateBetResult(InputView.inputBettingAmount(it)) }
+                        .map { it.handleBlackJack(dealer = dealer) },
+                ),
+            dealer = dealer.handleBlackJack(blackJackPlayers = players.players.filter { it.isBlackjack() })
+        )
 
     companion object {
         private const val DEFAULT_HAND_SIZE = 2

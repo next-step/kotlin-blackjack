@@ -1,5 +1,6 @@
 package blackjack.player
 
+import betting.TurnResult
 import blackjack.card.Card
 import blackjack.dealer.Dealer
 
@@ -15,7 +16,7 @@ class Players(
         draw: () -> Card,
         afterPlay: (Player) -> Unit,
         dealer: Dealer,
-    ): Pair<Players, Dealer> {
+    ): TurnResult {
         val (updatedPlayers, updatedDealer) =
             players.fold(initial = emptyList<Player>() to dealer) { (currentPlayers, currentDealer), player ->
                 if (player.isBust()) {
@@ -31,7 +32,7 @@ class Players(
                 return@fold currentPlayers + playerAfterTurn to currentDealer
             }
 
-        return Players(players = updatedPlayers) to updatedDealer
+        return TurnResult.status(players = updatedPlayers, dealer = updatedDealer)
     }
 
     fun sum(): Double = players.sumOf { it.betAmount }
