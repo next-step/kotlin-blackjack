@@ -15,6 +15,7 @@ class BlackjackController {
         OutputView.showGameStart(players = game.allPlayers())
 
         gameLoop(game)
+        dealerTurn(game)
 
         OutputView.showGameResult(players = game.allPlayers())
     }
@@ -27,7 +28,9 @@ class BlackjackController {
                 OutputView.printPlayerCards(player)
             }
         }
+    }
 
+    private fun dealerTurn(game: Game) {
         if (game.isDealerCardSumLessThan16()) {
             OutputView.dealerHitResult()
             game.dealerHit()
