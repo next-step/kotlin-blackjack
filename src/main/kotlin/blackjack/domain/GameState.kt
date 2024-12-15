@@ -25,8 +25,8 @@ data class GameState(
         return bet
     }
 
-    fun addBet(bet: Bet): Bet {
-        this.bet = this.bet.add(bet)
+    fun applyBet(bet: Bet): Bet {
+        this.bet = this.bet.apply(bet)
         return this.bet
     }
 

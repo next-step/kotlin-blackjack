@@ -2,7 +2,7 @@ package blackjack.domain
 
 @JvmInline
 value class Bet(val value: Int) {
-    fun add(bet: Bet): Bet {
+    fun apply(bet: Bet): Bet {
         return Bet(this.value + bet.value)
     }
 
