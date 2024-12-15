@@ -1,6 +1,6 @@
 package blackjack.domain
 
-object Rule {
+object BlackjackRule {
     private const val THRESHOLD_VALUE = 21
     private const val BLACKJACK_SIZE = 2
 

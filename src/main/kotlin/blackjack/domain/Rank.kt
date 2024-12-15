@@ -45,6 +45,6 @@ enum class Rank(
         private fun checkNotBurst(
             nonAceValue: Int,
             aceCount: Int,
-        ): Boolean = !Rule.isBurst(nonAceValue + ACE_ALTERNATIVE_VALUE + (aceCount - 1))
+        ): Boolean = !BlackjackRule.isBurst(nonAceValue + ACE_ALTERNATIVE_VALUE + (aceCount - 1))
     }
 }

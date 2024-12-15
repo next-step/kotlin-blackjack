@@ -14,10 +14,10 @@ sealed class Participant(
         get() = gameState.cards
 
     val isBurst: Boolean
-        get() = Rule.isBurst(score)
+        get() = BlackjackRule.isBurst(score)
 
     val isBlackjack: Boolean
-        get() = Rule.isBlackjack(score, handSize)
+        get() = BlackjackRule.isBlackjack(score, handSize)
 
     val profit: Int
         get() = gameState.betValue
