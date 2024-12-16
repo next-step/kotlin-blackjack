@@ -9,11 +9,16 @@ class Player(
         onDrawCard: () -> Unit,
         onExitPlay: () -> Unit,
     ) {
-        while (isDrawCard(name)) {
+        var shouldContinue = shouldContinueDrawing(isDrawCard)
+        while (shouldContinue) {
             val isCardAdded = addCardIfAvailable(requireCard = drawCard, onDrawCard = onDrawCard)
-            if (isCardAdded.not()) break
+            shouldContinue = isCardAdded && shouldContinueDrawing(isDrawCard)
         }
         onExitPlay()
+    }
+
+    private fun shouldContinueDrawing(isDrawCard: (String) -> Boolean): Boolean {
+        return isDrawCard(name)
     }
 
     override fun isAddCardEnabled(): Boolean {
