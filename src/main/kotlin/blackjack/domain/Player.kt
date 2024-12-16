@@ -5,8 +5,6 @@ class Player(
     private val betMoney: BetMoney,
     private val drawCard: () -> Card,
 ) : Participant(drawCard = drawCard) {
-    val originalBetAmount get() = betMoney.getOriginalBetAmount()
-
     fun play(
         isDrawCard: (String) -> Boolean,
         onDrawCard: () -> Unit,
