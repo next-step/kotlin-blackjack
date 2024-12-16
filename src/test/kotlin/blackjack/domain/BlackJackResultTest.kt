@@ -19,7 +19,7 @@ class BlackJackResultTest {
             (Deal.giveCards(DEFAULT_FACE_UP, false) + Deal.giveCards(DEFAULT_FACE_UP, true))
         val dealer = Dealer("딜러", initDealerCard)
         val playersName = listOf("문장호", "제이크")
-        val players = playersName.map { Player(it, Deal.giveCards(INIT_FACE_UP)) }.toSet()
+        val players = playersName.map { Player(it, 1000, Deal.giveCards(INIT_FACE_UP)) }.toSet()
         BlackJackGame.setGameRepository(Game(dealer, players))
 
         val game = BlackJackGame.getGameInfo()
@@ -40,20 +40,15 @@ class BlackJackResultTest {
         val dealer = Dealer("딜러", initDealerCard)
 
         val playersName = listOf("문장호", "제이크")
-        val players = playersName.map { Player(it, Deal.giveCards(INIT_FACE_UP)) }.toSet()
+        val players = playersName.map { Player(it, 10000, Deal.giveCards(INIT_FACE_UP)) }.toSet()
         BlackJackGame.setGameRepository(Game(dealer, players))
 
-//        BlackJackGame
         val result = BlackJackGame.getGameResult()
         val dealerResult = result.getDealerResult()
-        dealerResult.winCount shouldBe 0
-        dealerResult.loseCount shouldBe 2
-        dealerResult.drawCount shouldBe 0
+        dealerResult.dealerProfitAmount shouldBe result.getPlayerResults().sumOf { -it.getResult() }
 
         val playerResult = result.getPlayerResults().first { it.playerName == "문장호" }
-        playerResult.winCount shouldBe 1
-        playerResult.loseCount shouldBe 0
-        playerResult.drawCount shouldBe 0
+        playerResult.getResult() shouldBe 10000
     }
 
     @Test
@@ -68,6 +63,7 @@ class BlackJackResultTest {
             setOf(
                 Player(
                     "문장호",
+                    1000,
                     listOf(
                         CardInfo(mapOf(CardSymbol.HEART to Card.KING), false),
                         CardInfo(mapOf(CardSymbol.DIAMOND to Card.QUEEN), false),
@@ -75,6 +71,7 @@ class BlackJackResultTest {
                 ),
                 Player(
                     "장호",
+                    1000,
                     listOf(
                         CardInfo(mapOf(CardSymbol.HEART to Card.KING), false),
                         CardInfo(mapOf(CardSymbol.DIAMOND to Card.TWO), false),
@@ -85,18 +82,12 @@ class BlackJackResultTest {
 
         val result = BlackJackGame.getGameResult()
         val dealerResult = result.getDealerResult()
-        dealerResult.winCount shouldBe 0
-        dealerResult.loseCount shouldBe 2
-        dealerResult.drawCount shouldBe 0
+        dealerResult.dealerProfitAmount shouldBe result.getPlayerResults().sumOf { -it.getResult() }
 
         val playerResult = result.getPlayerResults().first { it.playerName == "문장호" }
-        playerResult.winCount shouldBe 1
-        playerResult.loseCount shouldBe 0
-        playerResult.drawCount shouldBe 0
+        playerResult.getResult() shouldBe 1000
 
         val playerResultTwo = result.getPlayerResults().first { it.playerName == "장호" }
-        playerResultTwo.winCount shouldBe 1
-        playerResultTwo.loseCount shouldBe 0
-        playerResultTwo.drawCount shouldBe 0
+        playerResult.getResult() shouldBe 1000
     }
 }

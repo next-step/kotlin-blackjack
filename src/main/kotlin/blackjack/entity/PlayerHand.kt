@@ -5,6 +5,10 @@ import blackjack.domain.enums.Card
 class PlayerHand(private val defaultCards: List<CardInfo>) {
     private var cards: List<CardInfo> = defaultCards
 
+    fun getCardsCount(): Int {
+        return this.cards.size
+    }
+
     fun addCards(cardInfo: List<CardInfo>) {
         this.cards.plus(cardInfo)
     }
@@ -18,12 +22,14 @@ class PlayerHand(private val defaultCards: List<CardInfo>) {
         }
     }
 
-    private fun cardBustFromA(value: Int, newTotal: Int) =
-        if (value == Card.A.getValue() && newTotal > BUST_LIMIT_VALUE) {
-            newTotal - MINUS_ACE_VALUE
-        } else {
-            newTotal
-        }
+    private fun cardBustFromA(
+        value: Int,
+        newTotal: Int,
+    ) = if (value == Card.A.getValue() && newTotal > BUST_LIMIT_VALUE) {
+        newTotal - MINUS_ACE_VALUE
+    } else {
+        newTotal
+    }
 
     fun isBust(): Boolean {
         return getTotalCardValue() > BUST_LIMIT_VALUE

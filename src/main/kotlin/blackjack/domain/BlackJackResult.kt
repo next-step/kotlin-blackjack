@@ -1,5 +1,6 @@
 package blackjack.domain
 
+import blackjack.domain.PlayerResult.Companion.BET_WIN_MULTIPLIER
 import blackjack.entity.Dealer
 import blackjack.entity.Player
 import blackjack.entity.PlayerHand.Companion.BUST_LIMIT_VALUE
@@ -22,7 +23,7 @@ class BlackJackResult(
             if (dealerScore > BUST_LIMIT_VALUE) {
                 calculateDealerBust()
             } else {
-                compareWithDealer(dealerScore)
+                compareWithDealer(dealerScore, dealer.isBlackJack())
             }
 
         dealerResult = DealerResult.from(dealer, playerResults!!)
@@ -31,13 +32,24 @@ class BlackJackResult(
 
     private fun calculateDealerBust(): List<PlayerResult> {
         return players.map { player ->
-            PlayerResult(player.name, winCount = 1, loseCount = 0, drawCount = 0)
+            PlayerResult(player.name, dealerBustAndPlayerBlackJack(player))
         }
     }
 
-    private fun compareWithDealer(dealerScore: Int): List<PlayerResult> {
+    private fun dealerBustAndPlayerBlackJack(player: Player): Int {
+        return if (player.isBlackJack()) {
+            (player.betAmount * BET_WIN_MULTIPLIER).toInt()
+        } else {
+            player.betAmount
+        }
+    }
+
+    private fun compareWithDealer(
+        dealerScore: Int,
+        isDealerBlackJack: Boolean,
+    ): List<PlayerResult> {
         return players.map { player ->
-            PlayerResult.from(player, dealerScore, BUST_LIMIT_VALUE)
+            PlayerResult.from(player, isDealerBlackJack, dealerScore, BUST_LIMIT_VALUE)
         }
     }
 }

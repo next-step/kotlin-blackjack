@@ -14,6 +14,11 @@ object InputView {
         return readln().split(",").map { it.trim() }
     }
 
+    fun getBetAmount(name: String): Int {
+        println("${name}의 배팅 금액은?")
+        return readln().toIntOrNull() ?: throw RuntimeException("베팅금액은 숫자를 입력해주세요.")
+    }
+
     fun isGameContinue(player: String): Boolean {
         println("${player}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
         val continueYN = readln()
