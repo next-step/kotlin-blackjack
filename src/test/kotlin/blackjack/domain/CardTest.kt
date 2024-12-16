@@ -23,14 +23,6 @@ class CardTest {
 
     companion object {
         @JvmStatic
-        fun provideDataForIsOverMaxSumTest(): List<Arguments> {
-            return listOf(
-                Arguments.of(Card(Rank.ACE, Suit.HEARTS), 20, false),
-                Arguments.of(Card(Rank.ACE, Suit.HEARTS), 21, true),
-            )
-        }
-
-        @JvmStatic
         fun provideDataForSumValuesTest(): List<Arguments> {
             return listOf(
                 Arguments.of(

@@ -3,6 +3,7 @@ package blackjack.domain
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
+import java.math.BigDecimal
 
 class DealerTest {
     @Test
@@ -16,6 +17,7 @@ class DealerTest {
         val players =
             dealer.initPlayers(
                 fetchPlayerNames = { playerNames },
+                getBettingAmount = { BigDecimal.ZERO },
                 onPlayerInit = {},
             )
 
