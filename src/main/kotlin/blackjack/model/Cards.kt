@@ -1,5 +1,7 @@
 package blackjack.model
 
+import kotlin.math.min
+
 class Cards(cards: Set<Card> = setOf()) {
     private val _cards = cards.toMutableSet()
     val cards: Set<Card>
@@ -10,24 +12,10 @@ class Cards(cards: Set<Card> = setOf()) {
     }
 
     fun calculateCardValues(): Int {
-        var total = 0
-        var aceCount = 0
-
-        // 모든 카드의 값을 합산하고, 에이스의 개수를 셈
-        for (card in _cards) {
-            total += card.getValue()
-            if (card.isAce) {
-                aceCount++
-            }
-        }
-
-        // 에이스의 값을 11로 변경할 수 있는지 확인하고, 가능하면 변경
-        while (aceCount > 0 && total + ACE_VALUE <= WINNING_NUMBER) {
-            total += ACE_VALUE
-            aceCount--
-        }
-
-        return total
+        val total = _cards.sumOf { it.getValue() }
+        val aceCount = _cards.count { it.isAce }
+        val extraAces = min(aceCount, (WINNING_NUMBER - total) / ACE_VALUE)
+        return total + extraAces * ACE_VALUE
     }
 
     override fun toString(): String {
