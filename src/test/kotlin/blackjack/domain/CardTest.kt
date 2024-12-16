@@ -7,7 +7,6 @@ import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 
 class CardTest {
-
     @ParameterizedTest
     @DisplayName("카드의 합이 21을 넘는지 여부를 확인")
     @MethodSource("provideDataForIsOverMaxSumTest")

@@ -3,8 +3,8 @@ package blackjack.view
 import blackjack.domain.BlackJackResult
 import blackjack.domain.Card
 import blackjack.domain.Dealer
-import blackjack.domain.Player
 import blackjack.domain.GameResult
+import blackjack.domain.Player
 
 object ResultView {
     fun printPlayerInitMessage(names: List<String>) {
