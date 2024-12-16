@@ -1,6 +1,6 @@
 package blackjack.view
 
-import blackjack.domain.BlackJackResultV2
+import blackjack.domain.BlackJackResult
 import blackjack.domain.Card
 import blackjack.domain.Dealer
 import blackjack.domain.Player
@@ -40,7 +40,7 @@ object ResultView {
         return "${player.name} 카드: ${player.cards.value.map { "${it.rank.rankName}${it.suit.koreanName}" }}"
     }
 
-    fun printFinalProfit(result: BlackJackResultV2) {
+    fun printFinalProfit(result: BlackJackResult) {
         println("\n### 최종 수익")
         println("딜러 : ${result.dealerProfitMoney.getCurrentProfit()}")
         result.playerToProfit.value.forEach { (player, profit) ->

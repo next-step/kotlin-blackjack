@@ -60,7 +60,7 @@ object BlackJackController {
         players.onEach { player ->
             ResultView.printFinalScoresForPlayer(player)
         }
-        val result = BlackJackResultManager(dealer, players).getResultV2()
+        val result = BlackJackResultManager(dealer, players).getResult()
         ResultView.printFinalProfit(result)
     }
 }
