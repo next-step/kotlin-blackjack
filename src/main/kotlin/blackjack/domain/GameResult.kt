@@ -1,5 +1,7 @@
 package blackjack.domain
 
+import java.math.BigDecimal
+
 enum class GameResult {
     WIN,
     BUST,
@@ -7,6 +9,16 @@ enum class GameResult {
     PUSH,
     BLACK_JACK,
     ;
+
+    fun getBetMoneyAmount(betMoney: BetMoney): BigDecimal {
+        return when (this) {
+            BLACK_JACK -> betMoney.getAmountOnBlackJack()
+            WIN -> betMoney.getOriginalBetAmount()
+            PUSH -> betMoney.getOriginalBetAmount()
+            LOSE -> betMoney.getAmountOnLose()
+            BUST -> betMoney.getAmountOnBust()
+        }
+    }
 
     companion object {
         fun fromScores(
