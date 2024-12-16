@@ -12,15 +12,16 @@ class Dealer(
     ): Players {
         val names = fetchPlayerNames()
         val nameAndBets = names.associateWith(getBettingAmount)
-        val players = Players(
-            nameAndBets.map { (name, bet) ->
-                Player(
-                    name = name,
-                    betMoney = BetMoney(bet),
-                    drawCard = drawCard,
-                )
-            }
-        )
+        val players =
+            Players(
+                nameAndBets.map { (name, bet) ->
+                    Player(
+                        name = name,
+                        betMoney = BetMoney(bet),
+                        drawCard = drawCard,
+                    )
+                },
+            )
         onPlayerInit(names)
         initProfitMoney(players.getTotalBetMoneyFromPlayers())
         return players
