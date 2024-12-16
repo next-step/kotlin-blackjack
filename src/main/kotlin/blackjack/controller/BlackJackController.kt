@@ -22,6 +22,7 @@ object BlackJackController {
         val players =
             dealer.initPlayers(
                 fetchPlayerNames = { InputView.readPlayerNames() },
+                getBettingAmount = { name -> InputView.readBettingAmount(name) },
                 onPlayerInit = { names ->
                     ResultView.printPlayerInitMessage(names)
                     ResultView.printDealerWithCard(dealer.getCardForInitialDisplay())

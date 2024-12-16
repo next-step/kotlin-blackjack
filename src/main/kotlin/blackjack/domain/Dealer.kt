@@ -1,14 +1,25 @@
 package blackjack.domain
 
+import java.math.BigDecimal
+
 class Dealer(
     private val drawCard: () -> Card,
 ) : Participant(drawCard = drawCard) {
     fun initPlayers(
         fetchPlayerNames: () -> List<String>,
+        getBettingAmount: (String) -> BigDecimal,
         onPlayerInit: (List<String>) -> Unit,
     ): Players {
         val names = fetchPlayerNames()
-        val players = names.map { name -> Player(name = name, drawCard = drawCard) }
+        val players = names.map { name ->
+            val betAmount = getBettingAmount(name)
+            val player = Player(
+                name = name,
+                betAmount = betAmount,
+                drawCard = drawCard,
+            )
+            player
+        }
         onPlayerInit(names)
         return Players(value = players)
     }
