@@ -39,7 +39,7 @@ class BlackjackController {
     }
 
     private fun dealerTurn(game: Game) {
-        if (game.isDealerCardSumLessThan16()) {
+        if (game.isDealerDrawCard()) {
             OutputView.dealerHitResult()
             game.giveCardToDealer()
         }

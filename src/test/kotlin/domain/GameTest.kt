@@ -151,7 +151,7 @@ class GameTest : DescribeSpec({
                 val fixedParticipants = Participants(listOf(Player("pobi")))
                 val gameMembers = GameMembers(fixedParticipants, fixedDealer)
                 sut = Game(gameMembers)
-                val actual = sut.isDealerCardSumLessThan16()
+                val actual = sut.isDealerDrawCard()
                 actual shouldBe true
             }
         }
@@ -172,7 +172,7 @@ class GameTest : DescribeSpec({
                 val fixedParticipants = Participants(listOf(Player("pobi")))
                 val gameMembers = GameMembers(fixedParticipants, fixedDealer)
                 sut = Game(gameMembers)
-                val actual = sut.isDealerCardSumLessThan16()
+                val actual = sut.isDealerDrawCard()
                 actual shouldBe false
             }
         }

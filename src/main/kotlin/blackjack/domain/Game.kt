@@ -21,7 +21,7 @@ class Game(
         HitCommand.STAY -> participant.stay()
     }
 
-    fun isDealerCardSumLessThan16(): Boolean = gameMembers.dealer().sumOfCard() <= 16
+    fun isDealerDrawCard(): Boolean = gameMembers.dealer().shouldDrawCard()
 
     fun giveCardToDealer() {
         gameMembers.dealer().giveCardTo(gameMembers.dealer())

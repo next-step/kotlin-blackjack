@@ -52,8 +52,11 @@ sealed class Participant(
             participant.receiveCard(deck.draw())
         }
 
+        fun shouldDrawCard(): Boolean = sumOfCard() <= DRAW_LIMIT
+
         companion object {
             private const val NUMBER_OF_DEAL_CARD = 2
+            private const val DRAW_LIMIT: Int = 16
         }
     }
 }
