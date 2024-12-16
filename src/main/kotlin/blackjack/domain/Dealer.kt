@@ -11,15 +11,15 @@ class Dealer(
         onPlayerInit: (List<String>) -> Unit,
     ): Players {
         val names = fetchPlayerNames()
-        val players = names.map { name ->
-            val betAmount = getBettingAmount(name)
-            val player = Player(
-                name = name,
-                betAmount = betAmount,
-                drawCard = drawCard,
-            )
-            player
-        }
+        val nameAndBets = names.associateWith(getBettingAmount)
+        val players =
+            nameAndBets.map { (name, bet) ->
+                Player(
+                    name = name,
+                    betMoney = BetMoney(bet),
+                    drawCard = drawCard,
+                )
+            }
         onPlayerInit(names)
         return Players(value = players)
     }
@@ -35,6 +35,21 @@ class Dealer(
     fun getCardForInitialDisplay(): Card {
         require(cards.value.isNotEmpty()) { "Dealer should be initialized with $DEALER_CARD_COUNT cards." }
         return cards.value[0]
+    }
+
+    fun adjustProfit(
+        totalBet: BigDecimal,
+        profitMoney: ProfitMoney,
+    ) {
+        setDealerProfitMoney(totalBet, profitMoney)
+    }
+
+    private fun setDealerProfitMoney(
+        totalBet: BigDecimal,
+        playerProfit: ProfitMoney,
+    ) {
+        val profit = totalBet - playerProfit.getCurrentProfit()
+        profitMoney.set(profit) // FIXME add 일듯 ?
     }
 
     companion object {

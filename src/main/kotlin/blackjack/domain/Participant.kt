@@ -2,14 +2,16 @@ package blackjack.domain
 
 abstract class Participant(
     private val drawCard: () -> Card,
-    initialCardCount: Int = 2,
 ) {
     private val _cards = mutableListOf<Card>()
     val cards: Cards = Cards(_cards)
     val cardsSum: Int get() = cards.sumValues()
+    val profitMoney: ProfitMoney = ProfitMoney()
+    val isBlackJackInitially: Boolean
 
     init {
-        repeat(initialCardCount) { addCard(drawCard()) }
+        repeat(INITIAL_CARD_COUNT) { addCard(drawCard()) }
+        isBlackJackInitially = cardsSum == Card.MAX_SUM
     }
 
     private fun addCard(card: Card) {
@@ -28,5 +30,9 @@ abstract class Participant(
         return false
     }
 
-    abstract fun isAddCardEnabled(): Boolean
+    protected abstract fun isAddCardEnabled(): Boolean
+
+    companion object {
+        private const val INITIAL_CARD_COUNT = 2
+    }
 }

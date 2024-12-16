@@ -1,5 +1,7 @@
 package blackjack.domain
 
+import java.math.BigDecimal
+
 data class Players(val value: List<Player>) {
     fun onEachPreparePlay(action: (Player) -> Unit): Players {
         onEach(action)
@@ -14,5 +16,9 @@ data class Players(val value: List<Player>) {
     fun onEach(action: (Player) -> Unit): Players {
         value.forEach { action(it) }
         return this
+    }
+
+    fun getTotalBetMoneyFromPlayers(): BigDecimal {
+        return value.sumOf { it.originalBetAmount }
     }
 }

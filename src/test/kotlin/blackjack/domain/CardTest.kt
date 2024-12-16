@@ -8,21 +8,6 @@ import org.junit.jupiter.params.provider.MethodSource
 
 class CardTest {
     @ParameterizedTest
-    @DisplayName("카드의 합이 21을 넘는지 여부를 확인")
-    @MethodSource("provideDataForIsOverMaxSumTest")
-    fun `should check if the sum of cards exceeds 21`(
-        card: Card,
-        currentSum: Int,
-        expectedResult: Boolean,
-    ) {
-        // When
-        val result = card.isOverMaxSum(currentSum)
-
-        // Then
-        assertThat(result).isEqualTo(expectedResult)
-    }
-
-    @ParameterizedTest
     @DisplayName("임의의 카드 리스트가 주어졌을 때 카드의 합이 룰과 일치하는지 확인")
     @MethodSource("provideDataForSumValuesTest")
     fun `should verify if the sum of a given card list matches the rule`(

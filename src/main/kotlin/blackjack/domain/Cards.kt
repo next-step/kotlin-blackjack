@@ -9,6 +9,10 @@ data class Cards(val value: List<Card>) {
         return adjustForAces(nonAcesSum, aceCount)
     }
 
+    fun isBust(): Boolean {
+        return sumValues() > MAX_SUM
+    }
+
     private fun calculateNonAcesAndCountAces(): Pair<Int, Int> {
         var sum = 0
         var aceCount = 0
