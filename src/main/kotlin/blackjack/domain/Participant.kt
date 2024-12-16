@@ -30,7 +30,7 @@ abstract class Participant(
         return false
     }
 
-    protected abstract fun isAddCardEnabled(): Boolean
+    abstract fun isAddCardEnabled(): Boolean
 
     companion object {
         private const val INITIAL_CARD_COUNT = 2

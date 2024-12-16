@@ -18,13 +18,14 @@ class BlackJackResultManager(
     fun getResultV2(): BlackJackResultV2 {
         val playersToProfits =
             players.value.associateWith { player ->
-                val result = PlayerResultCalculator.calculate(dealer.cardsSum, player.cardsSum)
+                val result = GameResult.fromScores(dealer.cardsSum, player.cardsSum)
                 when {
                     player.isBlackJackInitially && dealer.isBlackJackInitially.not() -> player.onBlackJackInitially()
                     player.isBlackJackInitially && dealer.isBlackJackInitially -> player.onPush()
-                    result == GameResult.WIN -> player.onWin()
-                    result == GameResult.LOSE -> player.onLose()
-                    result == GameResult.PUSH -> player.onPush()
+                    result.isWin() -> player.onWin()
+                    result.isBust() -> player.onBust()
+                    result.isLose() -> player.onLose()
+                    result.isPush() -> player.onPush()
                 }
 
                 player.profitMoney
@@ -69,6 +70,25 @@ value class PlayerToResultMap(val value: Map<Player, GameResult>) {
 
 enum class GameResult {
     WIN,
+    BUST,
     LOSE,
-    PUSH,
+    PUSH;
+
+    fun isWin() = this == WIN
+    fun isBust() = this == BUST
+    fun isLose() = this == LOSE
+    fun isPush() = this == PUSH
+
+
+    companion object {
+        fun fromScores(dealerScore: Int, playerScore: Int): GameResult {
+            return when {
+                dealerScore > Card.MAX_SUM -> WIN // Dealer bust
+                playerScore > Card.MAX_SUM -> BUST // Player bust
+                dealerScore > playerScore -> LOSE
+                playerScore > dealerScore -> WIN
+                else -> PUSH
+            }
+        }
+    }
 }

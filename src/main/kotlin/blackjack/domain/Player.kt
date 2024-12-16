@@ -15,18 +15,21 @@ class Player(
         var shouldContinue = shouldContinueDrawing(isDrawCard)
         while (shouldContinue) {
             val isCardAdded = addCardIfAvailable(requireCard = drawCard, onDrawCard = onDrawCard)
-            checkOverCardMaxSum()
             shouldContinue = isCardAdded && shouldContinueDrawing(isDrawCard)
         }
         onExitPlay()
+    }
+
+    fun onBlackJackInitially() {
+        profitMoney.set(betMoney.getAmountOnBlackJack())
     }
 
     fun onWin() {
         profitMoney.set(betMoney.getOriginalBetAmount())
     }
 
-    fun onBlackJackInitially() {
-        profitMoney.set(betMoney.getAmountOnBlackJack())
+    fun onBust() {
+        profitMoney.set(betMoney.getAmountOnBust())
     }
 
     fun onLose() {
@@ -35,13 +38,6 @@ class Player(
 
     fun onPush() {
         profitMoney.set(betMoney.getOriginalBetAmount())
-    }
-
-    private fun checkOverCardMaxSum() {
-        if (cards.isBust()) {
-            val profit = betMoney.getAmountOnBust()
-            profitMoney.set(profit)
-        }
     }
 
     private fun shouldContinueDrawing(isDrawCard: (String) -> Boolean): Boolean {
