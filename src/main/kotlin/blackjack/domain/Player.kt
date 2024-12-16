@@ -17,7 +17,6 @@ class Player(
             val isCardAdded = addCardIfAvailable(requireCard = drawCard, onDrawCard = onDrawCard)
             checkOverCardMaxSum()
             shouldContinue = isCardAdded && shouldContinueDrawing(isDrawCard)
-            println("수익 ${profitMoney.getCurrentProfit()}")
         }
         onExitPlay()
     }
