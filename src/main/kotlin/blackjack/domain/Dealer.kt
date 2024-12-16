@@ -23,7 +23,6 @@ class Dealer(
                 },
             )
         onPlayerInit(names)
-        initProfitMoney(players.getTotalBetMoneyFromPlayers())
         return players
     }
 
@@ -43,10 +42,6 @@ class Dealer(
     fun adjustProfit(playerProfit: ProfitMoney) {
         val profit = profitMoney.getCurrentProfit() - playerProfit.getCurrentProfit()
         profitMoney.set(profit)
-    }
-
-    private fun initProfitMoney(totalBet: BigDecimal) {
-        profitMoney.set(totalBet)
     }
 
     companion object {
