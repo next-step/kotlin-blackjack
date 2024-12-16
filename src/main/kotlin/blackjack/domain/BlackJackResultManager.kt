@@ -16,7 +16,10 @@ class BlackJackResultManager(
     }
 
     fun getResultV2(): BlackJackResultV2 {
-        val playersProfits = players.getPlayersToProfitMoney(dealer)
+        val playersProfits = players.getPlayersToProfitMoney(
+            getGameResult = { player -> player.getGameResultWith(dealer) },
+            onSetPlayerProfitMoney = { profitMoney -> dealer.adjustProfit(profitMoney) }
+        )
         return BlackJackResultV2(dealer.profitMoney, playersProfits)
     }
 }

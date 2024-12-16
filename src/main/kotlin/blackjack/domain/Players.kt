@@ -16,15 +16,16 @@ data class Players(val value: List<Player>) {
         return this
     }
 
-    fun getPlayersToProfitMoney(dealer: Dealer): PlayerToProfitMoney {
+    fun getPlayersToProfitMoney(
+        getGameResult: (Player) -> GameResult,
+        onSetPlayerProfitMoney: (ProfitMoney) -> Unit
+    ): PlayerToProfitMoney {
         val map =
             value.associateWith { player ->
-                val gameResult = player.getGameResultWith(dealer)
+                val gameResult = getGameResult(player)
                 player.setProfitMoneyFromGameResult(gameResult)
-
-                val playerProfitMoney = player.profitMoney
-                dealer.adjustProfit(playerProfitMoney)
-                playerProfitMoney
+                onSetPlayerProfitMoney(player.profitMoney)
+                player.profitMoney
             }
         return PlayerToProfitMoney(map)
     }
