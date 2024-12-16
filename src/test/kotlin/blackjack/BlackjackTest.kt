@@ -89,7 +89,7 @@ class BlackjackTest {
     @DisplayName("카드는 총 52개 존재한다.")
     @Test
     fun `card test3`() {
-        shouldThrow<IllegalStateException> {
+        shouldThrow<IllegalArgumentException> {
             repeat(53) {
                 Card.takeRandomCard()
             }

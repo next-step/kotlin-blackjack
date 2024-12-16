@@ -43,7 +43,8 @@ class Card private constructor(private val suit: Suit, private val rank: Rank) {
         }
 
         fun takeRandomCard(): Card {
-            if (allCards.isEmpty()) throw IllegalStateException("남는 카드가 없습니다.")
+            require(allCards.isNotEmpty()) { "남는 카드가 없습니다." }
+
             val card = allCards.random()
             allCards.remove(card)
             return card
