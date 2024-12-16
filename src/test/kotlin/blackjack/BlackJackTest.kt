@@ -115,16 +115,47 @@ class BlackJackGame(
         }
     }
 
+    fun handlePlayerDraw(player: Player, gameCards: GameCards) {
+        val previousCardCount = player.cardSize()
+        InputView.enterIsContinueDrawCard(player)
+        if (player.isDrawContinue) {
+            player.receiveCard(gameCards.drawCard())
+            OutputView.printPlayerCard(player)
+            handlePlayerDraw(player, gameCards) // 재귀 호출
+        }
+
+        if (!player.isDrawContinue && player.cardSize() == previousCardCount) {
+            OutputView.printPlayerCard(player)
+        }
+    }
+
     companion object {
         private const val FIRST_ROUND_HAND_SIZE = 2
     }
 }
 
 object InputView {
+    private const val CONTINUE_OR_STOP_MESSAGE = "는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)"
+
     fun enterParticipatingPlayers(): Players {
         println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)")
         val playerNames = readln()
         return Players.create(playerNames)
+    }
+
+    fun enterIsContinueDrawCard(player: Player) {
+        val userInput = getIsContinueDraw(player)
+        when (userInput.lowercase()) {
+            "n" -> player.stopCardDraw()
+            "y" -> player.continueCardDraw()
+            else -> println("잘못된 입력입니다. 다시 입력해주세요.")
+        }
+    }
+
+    fun getIsContinueDraw(player: Player): String {
+        println()
+        println(player.name + CONTINUE_OR_STOP_MESSAGE)
+        return readln()
     }
 }
 
@@ -133,7 +164,7 @@ object OutputView {
     private const val BLANK_PREFIX_MESSAGE = ""
     private const val POST_MESSAGE = "에게 2장의 나누었습니다."
     private const val RESULT_EXPRESSION = " - 결과: "
-    private const val NAME_POSTFIX_EXPRESSION = ": "
+    private const val NAME_POSTFIX_EXPRESSION = "카드: "
 
     fun printFirstAllPlayersCards(players: Players) {
         println()
@@ -145,11 +176,33 @@ object OutputView {
             )
         println(result)
         players.forEach { player ->
-            print(player.name + NAME_POSTFIX_EXPRESSION)
-            print(player.findAllCardsNames().joinToString(PLAYER_NAME_DELIMITER))
-            print(RESULT_EXPRESSION)
-            println(player.calculateCardPoints())
+            printPlayerAllCards(player)
+            println()
         }
+    }
+
+    fun printFinalResults(players: Players) {
+        println()
+        println()
+        println("게임 종료!")
+        players.forEach { player ->
+            printPlayerAllCards(player)
+            resultExpression(player)
+        }
+    }
+
+    fun printPlayerCard(player: Player) {
+        printPlayerAllCards(player)
+    }
+
+    private fun printPlayerAllCards(player: Player) {
+        print(player.name + NAME_POSTFIX_EXPRESSION)
+        print(player.findAllCardsNames().joinToString(PLAYER_NAME_DELIMITER))
+    }
+
+    private fun resultExpression(player: Player) {
+        print(RESULT_EXPRESSION)
+        println(player.calculateCardPoints())
     }
 }
 
@@ -218,7 +271,7 @@ class GameCards private constructor(private val deck: Queue<Card>) {
     }
 }
 
-class Player(val name: String, private var isDrawContinue: Boolean = true) {
+class Player(val name: String, var isDrawContinue: Boolean = true) {
     private var userCards = UserCards(mutableListOf())
 
     fun receiveCard(card: Card) {
@@ -236,6 +289,10 @@ class Player(val name: String, private var isDrawContinue: Boolean = true) {
 
     fun stopCardDraw() {
         isDrawContinue = false
+    }
+
+    fun continueCardDraw() {
+        isDrawContinue = true
     }
 
     fun findAllCardsNames(): List<String> {
@@ -262,7 +319,12 @@ data class Players(val players: List<Player>) : Collection<Player> by players {
 
 fun main() {
     val players = InputView.enterParticipatingPlayers()
-    val blackJackGame = BlackJackGame(players, GameCards.create())
+    val gameCards = GameCards.create()
+    val blackJackGame = BlackJackGame(players, gameCards)
     blackJackGame.startGame()
     OutputView.printFirstAllPlayersCards(players)
+    players.forEach { player ->
+        blackJackGame.handlePlayerDraw(player, gameCards)
+    }
+    OutputView.printFinalResults(players)
 }
