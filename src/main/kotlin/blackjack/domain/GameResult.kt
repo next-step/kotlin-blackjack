@@ -5,15 +5,8 @@ enum class GameResult {
     BUST,
     LOSE,
     PUSH,
+    BLACK_JACK,
     ;
-
-    fun isWin() = this == WIN
-
-    fun isBust() = this == BUST
-
-    fun isLose() = this == LOSE
-
-    fun isPush() = this == PUSH
 
     companion object {
         fun fromScores(

@@ -1,5 +1,7 @@
 package blackjack.domain
 
+import java.math.BigDecimal
+
 class Player(
     val name: String,
     private val betMoney: BetMoney,
@@ -18,24 +20,19 @@ class Player(
         onExitPlay()
     }
 
-    fun onBlackJackInitially() {
-        profitMoney.set(betMoney.getAmountOnBlackJack())
+    fun setProfitMoneyFromGameResult(result: GameResult) {
+        val betMoney = getBetMoneyFromGameResult(result)
+        profitMoney.set(betMoney)
     }
 
-    fun onWin() {
-        profitMoney.set(betMoney.getOriginalBetAmount())
-    }
-
-    fun onBust() {
-        profitMoney.set(betMoney.getAmountOnBust())
-    }
-
-    fun onLose() {
-        profitMoney.set(betMoney.getAmountOnLose())
-    }
-
-    fun onPush() {
-        profitMoney.set(betMoney.getOriginalBetAmount())
+    private fun getBetMoneyFromGameResult(gameResult: GameResult): BigDecimal {
+        return when (gameResult) {
+            GameResult.BLACK_JACK -> betMoney.getAmountOnBlackJack()
+            GameResult.WIN -> betMoney.getOriginalBetAmount()
+            GameResult.PUSH -> betMoney.getOriginalBetAmount()
+            GameResult.LOSE -> betMoney.getAmountOnLose()
+            GameResult.BUST -> betMoney.getAmountOnBust()
+        }
     }
 
     private fun shouldContinueDrawing(isDrawCard: (String) -> Boolean): Boolean {

@@ -15,4 +15,17 @@ data class Players(val value: List<Player>) {
         value.forEach { action(it) }
         return this
     }
+
+    fun getPlayersToProfitMoney(dealer: Dealer): PlayerToProfitMoney {
+        val map =
+            value.associateWith { player ->
+                val gameResult = player.getGameResultWith(dealer)
+                player.setProfitMoneyFromGameResult(gameResult)
+
+                val playerProfitMoney = player.profitMoney
+                dealer.adjustProfit(playerProfitMoney)
+                playerProfitMoney
+            }
+        return PlayerToProfitMoney(map)
+    }
 }
