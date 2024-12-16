@@ -11,15 +11,19 @@ class PlayerHand(private val defaultCards: List<CardInfo>) {
 
     fun getTotalCardValue(): Int {
         val values = cards.map { it.card.values.first().getValue() }
-        var total = values.sum()
-        val aceCount = values.count { it == Card.A.getValue() }
-        repeat(aceCount) {
-            if (total > BUST_LIMIT_VALUE) {
-                total -= MINUS_ACE_VALUE
-            }
+
+        return values.fold(0) { total, value ->
+            val newTotal = total + value
+            cardBustFromA(value, newTotal)
         }
-        return total
     }
+
+    private fun cardBustFromA(value: Int, newTotal: Int) =
+        if (value == Card.A.getValue() && newTotal > BUST_LIMIT_VALUE) {
+            newTotal - MINUS_ACE_VALUE
+        } else {
+            newTotal
+        }
 
     fun isBust(): Boolean {
         return getTotalCardValue() > BUST_LIMIT_VALUE

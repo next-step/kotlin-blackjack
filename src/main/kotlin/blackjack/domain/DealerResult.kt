@@ -2,7 +2,7 @@ package blackjack.domain
 
 import blackjack.entity.Dealer
 
-data class DealerResult(
+data class DealerResult private constructor(
     val dealerName: String,
     val winCount: Int,
     val loseCount: Int,
