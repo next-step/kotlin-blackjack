@@ -10,7 +10,9 @@ data class Player(
     }
 
     private fun validateName() {
-        if (!name.matches(Regex("^[A-Za-z]+$"))) throw IllegalArgumentException("이름이 잘못 입력되었습니다.")
+        require(name.matches(ALPHABET_REGEX)) {
+            "이름이 잘못 입력되었습니다."
+        }
     }
 
     private fun initCards(): Cards = Cards(setOf(Card.takeRandomCard(), Card.takeRandomCard()))
@@ -21,5 +23,9 @@ data class Player(
 
     fun calculateResult(): Int {
         return cards.calculateCardValues()
+    }
+
+    private companion object {
+        val ALPHABET_REGEX = Regex("^[A-Za-z]+$")
     }
 }
