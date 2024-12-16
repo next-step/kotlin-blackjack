@@ -9,7 +9,7 @@ class Game(
 
     fun allPlayers(): Players = gameMembers.allPlayers()
 
-    fun onlyPlayers(): Players = gameMembers.playersWithoutDealer()
+    fun playersWithOutDealer(): Players = gameMembers.playersWithoutDealer()
 
     fun processPlayerTurn(
         player: Player,
