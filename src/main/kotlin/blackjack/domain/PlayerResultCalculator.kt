@@ -1,6 +1,6 @@
 package blackjack.domain
 
-@Deprecated("deprecated")
+@Deprecated("deprecated - step3 에서만 사용됨")
 object PlayerResultCalculator {
     fun calculate(
         dealerScore: Int,

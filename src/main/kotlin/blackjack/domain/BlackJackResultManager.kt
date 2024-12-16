@@ -4,7 +4,7 @@ class BlackJackResultManager(
     private val dealer: Dealer,
     private val players: Players,
 ) {
-    @Deprecated("getResultV2 를 사용하세요")
+    @Deprecated("step4에서는 getResultV2 를 사용하세요 - step3 에서만 사용됨")
     fun getResult(): BlackJackResult {
         val dealerScore = dealer.cardsSum
         val playersWinLose =
@@ -87,7 +87,7 @@ enum class GameResult {
     }
 }
 
-@Deprecated("deprecated")
+@Deprecated("deprecated - step3 에서만 사용됨")
 data class BlackJackResult(
     val playerToResultMap: PlayerToResultMap,
 ) {
@@ -97,7 +97,7 @@ data class BlackJackResult(
         get() = playerToResultMap.getPlayerWinningCounts()
 }
 
-@Deprecated("deprecated")
+@Deprecated("deprecated - step3 에서만 사용됨")
 @JvmInline
 value class PlayerToResultMap(val value: Map<Player, GameResult>) {
     fun getPlayerWinningCounts(): Int {
