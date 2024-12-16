@@ -196,7 +196,7 @@ class GameTest : DescribeSpec({
             val gameMembers = GameMembers(fixedParticipants, fixedDealer)
             sut = Game(gameMembers)
 
-            sut.dealerHit()
+            sut.giveCardToDealer()
 
             fixedDealer.ownedCards.size shouldBe 3
         }

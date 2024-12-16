@@ -23,7 +23,7 @@ class Game(
 
     fun isDealerCardSumLessThan16(): Boolean = gameMembers.dealer().sumOfCard() <= 16
 
-    fun dealerHit() {
+    fun giveCardToDealer() {
         gameMembers.dealer().giveCardTo(gameMembers.dealer())
     }
 
