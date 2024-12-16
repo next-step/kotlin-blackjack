@@ -7,8 +7,8 @@ import blackjack.domain.Deck
 import blackjack.domain.Game
 import blackjack.domain.GameMembers
 import blackjack.domain.HitCommand
+import blackjack.domain.Participant.Player
 import blackjack.domain.Participants
-import blackjack.domain.Player
 import blackjack.domain.Result
 import blackjack.domain.Suit
 import fixture.CardListFixture

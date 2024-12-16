@@ -4,8 +4,8 @@ import blackjack.domain.Card
 import blackjack.domain.CardNumber
 import blackjack.domain.Dealer
 import blackjack.domain.Deck
+import blackjack.domain.Participant.Player
 import blackjack.domain.Participants
-import blackjack.domain.Player
 import blackjack.domain.Suit
 import fixture.CardListFixture
 import io.kotest.core.spec.style.DescribeSpec

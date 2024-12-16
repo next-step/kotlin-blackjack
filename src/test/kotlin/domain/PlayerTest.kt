@@ -2,7 +2,7 @@ package domain
 
 import blackjack.domain.Card
 import blackjack.domain.CardNumber
-import blackjack.domain.Player
+import blackjack.domain.Participant.Player
 import blackjack.domain.Suit
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe

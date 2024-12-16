@@ -1,5 +1,7 @@
 package blackjack.domain
 
+import blackjack.domain.Participant.Player
+
 class Dealer(
     private val deck: Deck,
     private val displayName: String = "Dealer",

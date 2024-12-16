@@ -1,5 +1,7 @@
 package blackjack.domain
 
+import blackjack.domain.Participant.Player
+
 class Game(
     private val gameMembers: GameMembers,
 ) {
