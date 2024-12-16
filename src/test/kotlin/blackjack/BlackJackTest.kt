@@ -78,6 +78,20 @@ class BlackJackTest {
             it.message shouldBe "카드를 받을 수 없습니다"
         }
     }
+
+    @Test
+    fun `게임에 참여할 사람들의 이름을 입력 받을 수 있다`() {
+        val players = Players.create("kim,lee,hong")
+        players.size shouldBe 3
+    }
+}
+
+object UserInput {
+    fun enterParticipatingPlayers(): Players {
+        println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)")
+        val playerNames = readln()
+        return Players.create(playerNames)
+    }
 }
 
 data class Card(val rank: Ranks, val suits: Suits)
@@ -140,9 +154,8 @@ class GameCards private constructor(private val deck: Queue<Card>) {
     }
 }
 
-class Player(val name: String) {
+class Player(val name: String, private var isDrawContinue: Boolean = true) {
     private var userCards = UserCards(mutableListOf())
-    private var isDrawContinue: Boolean = true
 
     fun receiveCard(card: Card) {
         require(isDrawContinue) { "카드를 받을 수 없습니다" }
@@ -159,6 +172,17 @@ class Player(val name: String) {
 
     fun stopCardDraw() {
         isDrawContinue = false
+    }
+}
+
+data class Players(private val players: List<Player>) : Collection<Player> by players {
+    companion object {
+        private const val DELIMITER = ","
+
+        fun create(playerNames: String): Players {
+            val players = playerNames.split(DELIMITER).map { playerName -> Player(playerName, true) }
+            return Players(players)
+        }
     }
 }
 
