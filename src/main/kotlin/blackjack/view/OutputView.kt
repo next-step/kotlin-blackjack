@@ -1,15 +1,15 @@
 package blackjack.view
 
+import blackjack.domain.Participants
 import blackjack.domain.Player
 import blackjack.domain.PlayerOutcomes
-import blackjack.domain.Players
 
 object OutputView {
-    fun showGameStart(players: Players) {
-        val playerNames = players.allPlayers().map { it.name }
+    fun showGameStart(participants: Participants) {
+        val playerNames = participants.allPlayers().map { it.name }
 
         println(String.format(DEAL_RESULT_MESSAGE, playerNames))
-        players.allPlayers().forEach {
+        participants.allPlayers().forEach {
             println("${it.name}카드: ${it.ownedCards}")
         }
         println()
@@ -19,8 +19,8 @@ object OutputView {
         println(String.format(CURRENT_CARD_STATUS, player.name, player.ownedCards))
     }
 
-    fun showGameResult(players: Players) {
-        players.allPlayers().forEach {
+    fun showGameResult(participants: Participants) {
+        participants.allPlayers().forEach {
             println(String.format(GAME_RESULT_MESSAGE, it.name, it.ownedCards, it.sumOfCard()))
         }
     }

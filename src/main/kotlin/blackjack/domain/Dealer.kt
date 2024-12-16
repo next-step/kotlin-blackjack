@@ -4,14 +4,14 @@ class Dealer(
     private val deck: Deck,
     private val displayName: String = "Dealer",
 ) : Player(displayName) {
-    fun deal(players: Players) {
+    fun deal(participants: Participants) {
         repeat(NUMBER_OF_DEAL_CARD) {
-            dealOneCardToEachPlayer(players)
+            dealOneCardToEachPlayer(participants)
         }
     }
 
-    private fun dealOneCardToEachPlayer(players: Players) {
-        players.allPlayers().forEach {
+    private fun dealOneCardToEachPlayer(participants: Participants) {
+        participants.allPlayers().forEach {
             it.receiveCard(deck.draw())
         }
     }

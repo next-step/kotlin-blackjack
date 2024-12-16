@@ -7,8 +7,8 @@ import blackjack.domain.Deck
 import blackjack.domain.Game
 import blackjack.domain.GameMembers
 import blackjack.domain.HitCommand
+import blackjack.domain.Participants
 import blackjack.domain.Player
-import blackjack.domain.Players
 import blackjack.domain.Result
 import blackjack.domain.Suit
 import fixture.CardListFixture
@@ -17,14 +17,14 @@ import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.shouldBe
 
 class GameTest : DescribeSpec({
-    lateinit var players: Players
+    lateinit var participants: Participants
     lateinit var dealer: Dealer
     lateinit var sut: Game
 
     beforeTest {
         dealer = Dealer(Deck(CardListFixture.simpleCardList()))
-        players = Players(listOf(Player("pobi"), Player("jason")))
-        val members = GameMembers(players, dealer)
+        participants = Participants(listOf(Player("pobi"), Player("jason")))
+        val members = GameMembers(participants, dealer)
         sut = Game(members)
     }
 
@@ -49,8 +49,8 @@ class GameTest : DescribeSpec({
 
     describe("init test") {
         it("게임을 시작하면 각 플레이어들에게 카드를 2장씩 나누어준다.") {
-            players.allPlayers()[0].ownedCards.size shouldBe 2
-            players.allPlayers()[1].ownedCards.size shouldBe 2
+            participants.allPlayers()[0].ownedCards.size shouldBe 2
+            participants.allPlayers()[1].ownedCards.size shouldBe 2
         }
     }
 
@@ -76,7 +76,7 @@ class GameTest : DescribeSpec({
     describe("Player 상태를 기준으로 완료 여부를 결정한다.") {
         context("Player가 stay를 원하는 경우") {
             it("should be ture") {
-                val pobi = players.allPlayers()[0]
+                val pobi = participants.allPlayers()[0]
                 val actual = sut.isPlayerStillPlaying(pobi)
                 actual shouldBe true
             }
@@ -84,7 +84,7 @@ class GameTest : DescribeSpec({
 
         context("Player가 hit을 원하는 경우") {
             it("should be true") {
-                val pobi = players.allPlayers()[0]
+                val pobi = participants.allPlayers()[0]
                 val actual = sut.isPlayerStillPlaying(pobi)
                 actual shouldBe true
             }
@@ -148,8 +148,8 @@ class GameTest : DescribeSpec({
                             ),
                         ),
                     )
-                val fixedPlayers = Players(listOf(Player("pobi")))
-                val gameMembers = GameMembers(fixedPlayers, fixedDealer)
+                val fixedParticipants = Participants(listOf(Player("pobi")))
+                val gameMembers = GameMembers(fixedParticipants, fixedDealer)
                 sut = Game(gameMembers)
                 val actual = sut.isDealerCardSumLessThan16()
                 actual shouldBe true
@@ -169,8 +169,8 @@ class GameTest : DescribeSpec({
                             ),
                         ),
                     )
-                val fixedPlayers = Players(listOf(Player("pobi")))
-                val gameMembers = GameMembers(fixedPlayers, fixedDealer)
+                val fixedParticipants = Participants(listOf(Player("pobi")))
+                val gameMembers = GameMembers(fixedParticipants, fixedDealer)
                 sut = Game(gameMembers)
                 val actual = sut.isDealerCardSumLessThan16()
                 actual shouldBe false
@@ -192,8 +192,8 @@ class GameTest : DescribeSpec({
                         ),
                     ),
                 )
-            val fixedPlayers = Players(listOf(Player("pobi")))
-            val gameMembers = GameMembers(fixedPlayers, fixedDealer)
+            val fixedParticipants = Participants(listOf(Player("pobi")))
+            val gameMembers = GameMembers(fixedParticipants, fixedDealer)
             sut = Game(gameMembers)
 
             sut.dealerHit()
@@ -215,8 +215,8 @@ class GameTest : DescribeSpec({
             player3 = Player("player3")
             player4 = Player("player4")
             val fixedDealer = Dealer(Deck(CardListFixture.mixedCardList()))
-            val fixedPlayers = Players(listOf(player1, player2, player3, player4))
-            sut = Game(GameMembers(fixedPlayers, fixedDealer))
+            val fixedParticipants = Participants(listOf(player1, player2, player3, player4))
+            sut = Game(GameMembers(fixedParticipants, fixedDealer))
         }
 
         it("딜러의 카드보다 합이 큰 플레이어 이름을 리턴한다.") {

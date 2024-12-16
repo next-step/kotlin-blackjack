@@ -4,20 +4,20 @@ import blackjack.domain.Dealer
 import blackjack.domain.Deck
 import blackjack.domain.Game
 import blackjack.domain.GameMembers
+import blackjack.domain.Participants
 import blackjack.domain.Player
-import blackjack.domain.Players
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
 class BlackjackController {
     fun start() {
         val game = createGame()
-        OutputView.showGameStart(players = game.allPlayers())
+        OutputView.showGameStart(participants = game.allPlayers())
 
         gameLoop(game)
         dealerTurn(game)
 
-        OutputView.showGameResult(players = game.allPlayers())
+        OutputView.showGameResult(participants = game.allPlayers())
 
         OutputView.showWinnerPlayers(game.calculateDealerWinningScore(), game.calculateDealerLoseScore(), game.determineWinner())
     }
@@ -51,5 +51,5 @@ class BlackjackController {
 
     private fun createDealer() = Dealer(Deck())
 
-    private fun createPlayers(playerNames: List<String>) = Players(players = playerNames.map { Player(it) })
+    private fun createPlayers(playerNames: List<String>) = Participants(players = playerNames.map { Player(it) })
 }

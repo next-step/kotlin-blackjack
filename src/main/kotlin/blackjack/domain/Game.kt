@@ -7,9 +7,9 @@ class Game(
         gameMembers.dealer().deal(gameMembers.allPlayers())
     }
 
-    fun allPlayers(): Players = gameMembers.allPlayers()
+    fun allPlayers(): Participants = gameMembers.allPlayers()
 
-    fun playersWithOutDealer(): Players = gameMembers.playersWithoutDealer()
+    fun playersWithOutDealer(): Participants = gameMembers.playersWithoutDealer()
 
     fun processPlayerTurn(
         player: Player,
