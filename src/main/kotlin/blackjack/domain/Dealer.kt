@@ -14,7 +14,7 @@ class Dealer(
     }
 
     fun drawOneMoreCardIfNeeded(onDrawCard: () -> Unit) {
-        addCardIfAvailable(requireCard = { drawCard() }, onDrawCard = onDrawCard)
+        addCardIfAvailable(requireCard = drawCard, onDrawCard = onDrawCard)
     }
 
     override fun isAddCardEnabled(): Boolean {
