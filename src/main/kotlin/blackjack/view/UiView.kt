@@ -1,6 +1,6 @@
 package blackjack.view
 
-import blackjack.domain.GameUser
+import blackjack.domain.GameUserInterface
 
 class InputView {
     fun inputUsers(): String {
@@ -9,10 +9,10 @@ class InputView {
     }
 
     fun startGame(
-        users: List<GameUser>,
+        users: List<GameUserInterface>,
         count: Int,
     ) {
-        println("${users.joinToString { it.name }}에게 ${count}장을 나누었습니다.")
+        println("${users.joinToString { it.getName() }}에게 ${count}장을 나누었습니다.")
         println()
     }
 
@@ -24,17 +24,36 @@ class InputView {
         println("${name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
         return readln()
     }
+
+    fun printAddCardDealer(points: Int) {
+        println("딜러는 ${points}이하라 한장의 카드를 더 받았습니다.")
+    }
 }
 
 class ResultView {
-    fun printUserCards(user: GameUser) {
-        println("${user.name}카드: ${user.cards}")
+    fun printUserCards(user: GameUserInterface) {
+        println("${user.getName()}카드: ${user.getCards()}")
     }
 
-    fun printResultCards(users: List<GameUser>) {
+    fun printResultCards(
+        users: List<GameUserInterface>,
+        dealer: GameUserInterface,
+    ) {
         println()
+        println("${dealer.getName()}카드: ${dealer.getCards()} - 결과: ${dealer.getPoints()}")
         users.forEach { user ->
-            println("${user.name}카드: ${user.cards} - 결과: ${user.points}")
+            println("${user.getName()}카드: ${user.getCards()} - 결과: ${user.getPoints()}")
         }
+
+        println("##최종 승패")
+        val winCount = users.filter { it.comparePoints(dealer).not() }.size
+        println("${dealer.getName()}카드: ${winCount}승 ${users.size - winCount}패")
+        users.forEach { user ->
+            println("${user.getName()}카드: ${getUserResultString(user.comparePoints(dealer))}")
+        }
+    }
+
+    private fun getUserResultString(resultStatus: Boolean): String {
+        return if (resultStatus) "승" else "패"
     }
 }

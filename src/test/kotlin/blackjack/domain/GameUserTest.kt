@@ -1,7 +1,7 @@
 package blackjack.domain
 
-import blackjack.view.ResultView
 import io.kotest.matchers.shouldBe
+import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
@@ -11,11 +11,39 @@ import java.util.stream.Stream
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class GameUserTest {
+    @Test
+    fun `오버포인트와 비교시 승리 함을 확인한다`() {
+        val user1 = GameUser("A")
+        user1.addCard(BlackJackCard(CardType.SPADE, CardInfo.CARD_10))
+        user1.addCard(BlackJackCard(CardType.SPADE, CardInfo.CARD_6))
+        val user2 = GameUser("B")
+        user2.addCard(BlackJackCard(CardType.HEART, CardInfo.CARD_10))
+        user2.addCard(BlackJackCard(CardType.HEART, CardInfo.CARD_9))
+        user2.addCard(BlackJackCard(CardType.HEART, CardInfo.CARD_6))
+        user1.comparePoints(user2) shouldBe true
+        user2.comparePoints(user1) shouldBe false
+    }
+
+    @Test
+    fun `둘 모두 오버포인트 시 패로 한다`() {
+        val user1 = GameUser("A")
+        user1.addCard(BlackJackCard(CardType.SPADE, CardInfo.CARD_10))
+        user1.addCard(BlackJackCard(CardType.SPADE, CardInfo.CARD_9))
+        user1.addCard(BlackJackCard(CardType.SPADE, CardInfo.CARD_6))
+
+        val user2 = GameUser("B")
+        user2.addCard(BlackJackCard(CardType.HEART, CardInfo.CARD_10))
+        user2.addCard(BlackJackCard(CardType.HEART, CardInfo.CARD_9))
+        user2.addCard(BlackJackCard(CardType.HEART, CardInfo.CARD_6))
+        user1.comparePoints(user2) shouldBe false
+        user2.comparePoints(user1) shouldBe false
+    }
+
     @ParameterizedTest
     @ValueSource(strings = ["A", "B", "C"])
     fun `사용자를 생성한다`(name: String) {
         val user = GameUser(name)
-        (user.name == name) shouldBe true
+        (user.getName() == name) shouldBe true
     }
 
     @ParameterizedTest
@@ -28,7 +56,7 @@ class GameUserTest {
         numbers.forEach {
             user.addCard(it)
         }
-        user.points shouldBe points
+        user.getPoints() shouldBe points
     }
 
     @ParameterizedTest
@@ -38,8 +66,7 @@ class GameUserTest {
         numbers.forEach {
             user.addCard(it)
         }
-        ResultView().printResultCards(listOf(user))
-        user.points shouldBe 21
+        user.getPoints() shouldBe 21
     }
 
     private fun generateCardNumbers(): Stream<Arguments> {

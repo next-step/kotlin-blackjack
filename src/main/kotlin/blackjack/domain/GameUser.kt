@@ -1,22 +1,52 @@
 package blackjack.domain
 
-class GameUser(val name: String) {
-    private var doneGame = false
-    val cards = mutableListOf<BlackJackCard>()
-    val points: Int
-        get() = calculatePoints()
+interface GameUserInterface {
+    fun getName(): String
 
-    fun doneGame(status: Boolean) {
+    fun doneGame(status: Boolean)
+
+    fun isDoneGame(): Boolean
+
+    fun addCard(card: BlackJackCard)
+
+    fun getCards(): List<BlackJackCard>
+
+    fun getPoints(): Int
+
+    fun comparePoints(opponent: GameUserInterface): Boolean
+}
+
+class GameUser(private val name: String) : GameUserInterface {
+    private var doneGame = false
+    private val cards = mutableListOf<BlackJackCard>()
+
+    override fun getName(): String {
+        return name
+    }
+
+    override fun doneGame(status: Boolean) {
         doneGame = status
     }
 
-    fun isDoneGame(): Boolean {
-        return doneGame || points >= BLACKJACK_POINT
+    override fun isDoneGame(): Boolean {
+        return doneGame || calculatePoints() >= BLACKJACK_POINT
     }
 
-    fun addCard(card: BlackJackCard) {
+    override fun addCard(card: BlackJackCard) {
         cards.add(card)
-        println(points)
+    }
+
+    override fun getCards(): List<BlackJackCard> {
+        return cards
+    }
+
+    override fun getPoints(): Int {
+        return calculatePoints()
+    }
+
+    override fun comparePoints(opponent: GameUserInterface): Boolean {
+        return (getPoints() <= BLACKJACK_POINT) &&
+            ((opponent.getPoints() > BLACKJACK_POINT) || (getPoints() > opponent.getPoints()))
     }
 
     private fun calculatePoints(): Int {
@@ -24,7 +54,7 @@ class GameUser(val name: String) {
             cards.sumOf {
                 it.getPoint()
             }
-        val aceCount = cards.any{ it.isAceCard() }
+        val aceCount = cards.any { it.isAceCard() }
         return consumeAceCard(sumPoint, aceCount)
     }
 

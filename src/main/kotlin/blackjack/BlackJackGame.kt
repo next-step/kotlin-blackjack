@@ -1,7 +1,9 @@
 package blackjack
 
 import blackjack.domain.CardDeck
+import blackjack.domain.Dealer
 import blackjack.domain.GameUser
+import blackjack.domain.GameUserInterface
 import blackjack.view.InputView
 import blackjack.view.ResultView
 
@@ -22,24 +24,35 @@ enum class YNBooleanValue(val key: String, val booleanValue: Boolean) {
 }
 
 class BlackJackGame(users: String) {
-    val gameUsers = settingUsers(users)
+    val allUsers = settingUsers(users)
     private val cardDeck = CardDeck()
-
-    private fun settingUsers(users: String): List<GameUser> {
-        val usersText = users.replace(" ", "")
-        return usersText.split(",").map {
-            GameUser(it)
-        }.toList()
-    }
-
     private var inputView: InputView? = null
     private var resultView: ResultView? = null
+
+    fun getUsers(): List<GameUserInterface> {
+        val userCount = allUsers.size - 1
+        return allUsers.take(userCount)
+    }
+
+    fun getDealer(): GameUserInterface {
+        return allUsers.last()
+    }
+
+    private fun settingUsers(users: String): List<GameUserInterface> {
+        val usersText = users.replace(" ", "")
+        val userList =
+            usersText.split(",").map {
+                GameUser(it)
+            }.toMutableList<GameUserInterface>()
+        userList.add(Dealer())
+        return userList.toList()
+    }
 
     fun start(
         inputView: InputView,
         resultView: ResultView,
     ) {
-        gameUsers.forEach {
+        allUsers.forEach {
             it.addCard(cardDeck.getNextCard())
             it.addCard(cardDeck.getNextCard())
         }
@@ -48,10 +61,9 @@ class BlackJackGame(users: String) {
     }
 
     private fun handleCurrentInput(
-        user: GameUser,
+        user: GameUserInterface,
         decision: Boolean?,
     ) {
-        println(decision)
         // 21이 넘는 경우 종료됨.
         when (decision) {
             true -> user.addCard(cardDeck.getNextCard())
@@ -61,15 +73,40 @@ class BlackJackGame(users: String) {
     }
 
     fun turnGameUser(
-        user: GameUser,
+        user: GameUserInterface,
         inputView: InputView,
     ) {
         inputView.startUser()
         while (user.isDoneGame().not()) {
-            val inputData = inputView.inputNextDecision(user.name)
-            val decision = YNBooleanValue.toBoolean(inputData)
-            handleCurrentInput(user, decision)
+            turnGameWithType(user, inputView)
         }
+    }
+
+    private fun turnGameWithType(
+        user: GameUserInterface,
+        inputView: InputView,
+    ) {
+        when (user) {
+            is GameUser -> turnUser(user, inputView)
+            is Dealer -> turnDealer(user, inputView)
+        }
+    }
+
+    private fun turnDealer(
+        user: GameUserInterface,
+        inputView: InputView,
+    ) {
+        inputView.printAddCardDealer(user.getPoints())
+        user.addCard(cardDeck.getNextCard())
+    }
+
+    private fun turnUser(
+        user: GameUserInterface,
+        inputView: InputView,
+    ) {
+        val inputData = inputView.inputNextDecision(user.getName())
+        val decision = YNBooleanValue.toBoolean(inputData)
+        handleCurrentInput(user, decision)
     }
 }
 
@@ -80,15 +117,14 @@ fun main() {
     val game = BlackJackGame(users)
 
     game.start(inputView, resultView)
-    inputView.startGame(game.gameUsers, 2)
+    inputView.startGame(game.allUsers, 2)
 
-    game.gameUsers.forEach {
+    game.allUsers.forEach {
         resultView.printUserCards(it)
     }
 
-    game.gameUsers.forEach {
+    game.allUsers.forEach {
         game.turnGameUser(it, inputView)
     }
-
-    resultView.printResultCards(game.gameUsers)
+    resultView.printResultCards(game.getUsers(), game.getDealer())
 }
