@@ -20,6 +20,14 @@ class Player(
         onExitPlay()
     }
 
+    fun getGameResultWith(dealer: Dealer): GameResult {
+        return when {
+            this.isBlackJackInitially && dealer.isBlackJackInitially.not() -> GameResult.BLACK_JACK
+            this.isBlackJackInitially && dealer.isBlackJackInitially -> GameResult.PUSH
+            else -> GameResult.fromScores(dealer.cardsSum, this.cardsSum)
+        }
+    }
+
     fun setProfitMoneyFromGameResult(result: GameResult) {
         val betMoney = getBetMoneyFromGameResult(result)
         profitMoney.set(betMoney)

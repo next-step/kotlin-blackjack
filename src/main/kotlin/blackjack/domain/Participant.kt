@@ -30,14 +30,6 @@ abstract class Participant(
         return false
     }
 
-    fun getGameResultWith(dealer: Participant): GameResult {
-        return when {
-            this.isBlackJackInitially && dealer.isBlackJackInitially.not() -> GameResult.BLACK_JACK
-            this.isBlackJackInitially && dealer.isBlackJackInitially -> GameResult.PUSH
-            else -> GameResult.fromScores(dealer.cardsSum, this.cardsSum)
-        }
-    }
-
     abstract fun isAddCardEnabled(): Boolean
 
     companion object {
