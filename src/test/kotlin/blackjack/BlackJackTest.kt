@@ -3,7 +3,8 @@ package blackjack
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
-import java.util.*
+import java.util.LinkedList
+import java.util.Queue
 
 class BlackJackTest {
     @Test
@@ -48,19 +49,17 @@ class BlackJackTest {
 
     @Test
     fun `플레이어는 드로우 된 카드를 가질 수 있다`() {
-        val gameCards = GameCards.create()
-        val card = gameCards.drawCard()
         val player = Player("lee")
-        player.receiveCard(Card(rank = Ranks.TEN, suits = Suits.CLUB))
-        player.receiveCard(Card(rank = Ranks.TWO, suits = Suits.DIAMOND))
-        player.receiveCard(Card(rank = Ranks.FIVE, suits = Suits.HEART))
-        player.cardSize() shouldBe 3
+        val gameCards = GameCards.create()
+        val card1 = gameCards.drawCard()
+        player.receiveCard(card1)
+        val card2 = gameCards.drawCard()
+        player.receiveCard(card2)
+        player.cardSize() shouldBe 2
     }
 
     @Test
     fun `플레이어의 카드 점수를 합산 할 수 있다`() {
-        val gameCards = GameCards.create()
-        val card = gameCards.drawCard()
         val player = Player("lee")
         player.receiveCard(Card(rank = Ranks.TEN, suits = Suits.CLUB))
         player.receiveCard(Card(rank = Ranks.TWO, suits = Suits.DIAMOND))
@@ -83,6 +82,7 @@ class BlackJackTest {
     fun `게임에 참여할 사람들의 이름을 입력 받을 수 있다`() {
         val players = Players.create("kim,lee,hong")
         players.size shouldBe 3
+        players.getPlayerNames() shouldBe listOf("kim", "lee", "hong")
     }
 
     @Test
@@ -101,7 +101,7 @@ class BlackJackTest {
 
 class BlackJackGame(
     private val players: Players,
-    private val gameCards: GameCards
+    private val gameCards: GameCards,
 ) {
     fun startGame() {
         repeat(FIRST_ROUND_HAND_SIZE) {
@@ -118,10 +118,9 @@ class BlackJackGame(
     companion object {
         private const val FIRST_ROUND_HAND_SIZE = 2
     }
-
 }
 
-object UserInput {
+object InputView {
     fun enterParticipatingPlayers(): Players {
         println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)")
         val playerNames = readln()
@@ -129,29 +128,59 @@ object UserInput {
     }
 }
 
-data class Card(val rank: Ranks, val suits: Suits)
+object OutputView {
+    private const val PLAYER_NAME_DELIMITER = ", "
+    private const val BLANK_PREFIX_MESSAGE = ""
+    private const val POST_MESSAGE = "에게 2장의 나누었습니다."
+    private const val RESULT_EXPRESSION = " - 결과: "
+    private const val NAME_POSTFIX_EXPRESSION = ": "
 
-enum class Ranks(val points: List<Int>) {
-    ACE(listOf(1, 11)),
-    TWO(listOf(2)),
-    THREE(listOf(3)),
-    FOUR(listOf(4)),
-    FIVE(listOf(5)),
-    SIX(listOf(6)),
-    SEVEN(listOf(7)),
-    EIGHT(listOf(8)),
-    NINE(listOf(9)),
-    TEN(listOf(10)),
-    JACK(listOf(10)),
-    QUEEN(listOf(10)),
-    KING(listOf(10)),;
+    fun printFirstAllPlayersCards(players: Players) {
+        println()
+        val result =
+            players.getPlayerNames().joinToString(
+                PLAYER_NAME_DELIMITER,
+                BLANK_PREFIX_MESSAGE,
+                POST_MESSAGE,
+            )
+        println(result)
+        players.forEach { player ->
+            print(player.name + NAME_POSTFIX_EXPRESSION)
+            print(player.findAllCardsNames().joinToString(PLAYER_NAME_DELIMITER))
+            print(RESULT_EXPRESSION)
+            println(player.calculateCardPoints())
+        }
+    }
 }
 
-enum class Suits {
-    SPADE,
-    HEART,
-    DIAMOND,
-    CLUB,
+data class Card(val rank: Ranks, val suits: Suits)
+
+enum class Ranks(
+    val keyword: String,
+    val points: List<Int>,
+) {
+    ACE("A", listOf(1, 11)),
+    TWO("2", listOf(2)),
+    THREE("3", listOf(3)),
+    FOUR("4", listOf(4)),
+    FIVE("5", listOf(5)),
+    SIX("6", listOf(6)),
+    SEVEN("7", listOf(7)),
+    EIGHT("8", listOf(8)),
+    NINE("9", listOf(9)),
+    TEN("10", listOf(10)),
+    JACK("J", listOf(10)),
+    QUEEN("Q", listOf(10)),
+    KING("K", listOf(10)),
+}
+
+enum class Suits(
+    val koreanName: String,
+) {
+    SPADE("스페이드"),
+    HEART("하트"),
+    DIAMOND("다이어"),
+    CLUB("클로버"),
 }
 
 class UserCards(private val cards: MutableList<Card>) : Collection<Card> by cards {
@@ -170,7 +199,6 @@ class UserCards(private val cards: MutableList<Card>) : Collection<Card> by card
 }
 
 class GameCards private constructor(private val deck: Queue<Card>) {
-
     fun drawCard(): Card {
         return deck.poll()
     }
@@ -181,9 +209,10 @@ class GameCards private constructor(private val deck: Queue<Card>) {
 
     companion object {
         fun create(): GameCards {
-            val allCards = Suits.entries.flatMap { suit ->
-                Ranks.entries.map { rank -> Card(rank, suit) }
-            }
+            val allCards =
+                Suits.entries.flatMap { suit ->
+                    Ranks.entries.map { rank -> Card(rank, suit) }
+                }
             return GameCards(LinkedList(allCards.shuffled()))
         }
     }
@@ -194,7 +223,7 @@ class Player(val name: String, private var isDrawContinue: Boolean = true) {
 
     fun receiveCard(card: Card) {
         require(isDrawContinue) { "카드를 받을 수 없습니다" }
-            userCards.addCard(card)
+        userCards.addCard(card)
     }
 
     fun cardSize(): Int {
@@ -208,17 +237,32 @@ class Player(val name: String, private var isDrawContinue: Boolean = true) {
     fun stopCardDraw() {
         isDrawContinue = false
     }
+
+    fun findAllCardsNames(): List<String> {
+        return userCards.map { card ->
+            card.rank.keyword + card.suits.koreanName
+        }
+    }
 }
 
-data class Players(private val players: List<Player>) : Collection<Player> by players {
+data class Players(val players: List<Player>) : Collection<Player> by players {
+    fun getPlayerNames(): List<String> {
+        return players.map { it.name }
+    }
+
     companion object {
         private const val DELIMITER = ","
 
         fun create(playerNames: String): Players {
-            val players = playerNames.split(DELIMITER).map { playerName -> Player(playerName, true) }
+            val players = playerNames.split(DELIMITER).map { playerName -> Player(playerName) }
             return Players(players)
         }
     }
 }
 
-
+fun main() {
+    val players = InputView.enterParticipatingPlayers()
+    val blackJackGame = BlackJackGame(players, GameCards.create())
+    blackJackGame.startGame()
+    OutputView.printFirstAllPlayersCards(players)
+}
