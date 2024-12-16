@@ -12,11 +12,7 @@ class Card private constructor(private val suit: Suit, private val rank: Rank) {
         return suit == other.suit && rank == other.rank
     }
 
-    override fun hashCode(): Int {
-        var result = suit.hashCode()
-        result = 31 * result + rank.hashCode()
-        return result
-    }
+    override fun hashCode(): Int = 31 * suit.hashCode() + rank.hashCode()
 
     override fun toString(): String =
         when (rank) {
