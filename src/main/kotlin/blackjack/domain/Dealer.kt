@@ -1,6 +1,9 @@
 package blackjack.domain
 
-class Dealer(private val deck: Deck) : Player("Dealer") {
+class Dealer(
+    private val deck: Deck,
+    private val displayName: String = "Dealer",
+) : Player(displayName) {
     fun deal(players: Players) {
         repeat(NUMBER_OF_DEAL_CARD) {
             dealOneCardToEachPlayer(players)
