@@ -84,6 +84,41 @@ class BlackJackTest {
         val players = Players.create("kim,lee,hong")
         players.size shouldBe 3
     }
+
+    @Test
+    fun `게임을 시작하면 각 플레이어들은 2장씩 카드를 지급 받는다`() {
+        val players = Players.create("kim,lee,hong")
+        val gameCards = GameCards.create()
+        val game = BlackJackGame(players, gameCards)
+        game.startGame()
+        players.size shouldBe 3
+        players.sumOf { player -> player.cardSize() } shouldBe 6
+        players.forEach {
+            it.cardSize() shouldBe 2
+        }
+    }
+}
+
+class BlackJackGame(
+    private val players: Players,
+    private val gameCards: GameCards
+) {
+    fun startGame() {
+        repeat(FIRST_ROUND_HAND_SIZE) {
+            giveOutCards()
+        }
+    }
+
+    private fun giveOutCards() {
+        players.forEach { players ->
+            players.receiveCard(gameCards.drawCard())
+        }
+    }
+
+    companion object {
+        private const val FIRST_ROUND_HAND_SIZE = 2
+    }
+
 }
 
 object UserInput {
