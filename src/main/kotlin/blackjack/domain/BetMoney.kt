@@ -1,6 +1,7 @@
 package blackjack.domain
 
 import java.math.BigDecimal
+import java.math.RoundingMode
 
 @JvmInline
 value class BetMoney(private val amount: BigDecimal) {
@@ -9,7 +10,7 @@ value class BetMoney(private val amount: BigDecimal) {
     }
 
     fun getAmountOnBlackJack(): BigDecimal {
-        return amount.multiply((1.5).toBigDecimal())
+        return amount.multiply((1.5).toBigDecimal()).setScale(0, RoundingMode.DOWN)
     }
 
     fun getAmountOnBust(): BigDecimal {

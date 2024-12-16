@@ -16,24 +16,36 @@ class BlackJackResultManager(
     }
 
     fun getResultV2(): BlackJackResultV2 {
-        val playersToProfits =
-            players.value.associateWith { player ->
-                val result = GameResult.fromScores(dealer.cardsSum, player.cardsSum)
-                when {
-                    player.isBlackJackInitially && dealer.isBlackJackInitially.not() -> player.onBlackJackInitially()
-                    player.isBlackJackInitially && dealer.isBlackJackInitially -> player.onPush()
-                    result.isWin() -> player.onWin()
-                    result.isBust() -> player.onBust()
-                    result.isLose() -> player.onLose()
-                    result.isPush() -> player.onPush()
-                }
+        val playersProfits = players.getPlayersToProfitMoney(dealer)
+        return BlackJackResultV2(dealer.profitMoney, playersProfits)
+    }
+}
 
-                player.profitMoney
-            }
-        playersToProfits.forEach { (_, profitMoney) ->
-            dealer.adjustProfit(profitMoney)
-        }
-        return BlackJackResultV2(dealer.profitMoney, PlayerToProfitMoney(playersToProfits))
+private fun Players.getPlayersToProfitMoney(dealer: Dealer): PlayerToProfitMoney {
+    val map = value.associateWith { player ->
+        player.setPlayersProfitMoney(
+            result = GameResult.fromScores(dealer.cardsSum, player.cardsSum),
+            isDealerBlackJackInitially = dealer.isBlackJackInitially,
+        )
+
+        val playerProfitMoney = player.profitMoney
+        dealer.adjustProfit(playerProfitMoney)
+        playerProfitMoney
+    }
+    return PlayerToProfitMoney(map)
+}
+
+private fun Player.setPlayersProfitMoney(
+    result: GameResult,
+    isDealerBlackJackInitially: Boolean
+) {
+    when {
+        this.isBlackJackInitially && isDealerBlackJackInitially.not() -> this.onBlackJackInitially()
+        this.isBlackJackInitially && isDealerBlackJackInitially -> this.onPush()
+        result.isWin() -> this.onWin()
+        result.isBust() -> this.onBust()
+        result.isLose() -> this.onLose()
+        result.isPush() -> this.onPush()
     }
 }
 
@@ -42,31 +54,7 @@ data class BlackJackResultV2(
     val playerToProfit: PlayerToProfitMoney,
 )
 
-data class PlayerToProfitMoney(
-    val value: Map<Player, ProfitMoney>,
-)
-
-@Deprecated("deprecated")
-data class BlackJackResult(
-    val playerToResultMap: PlayerToResultMap,
-) {
-    val dealerWinCount: Int
-        get() = playerToResultMap.getPlayerLoseCounts()
-    val dealerLoseCount: Int
-        get() = playerToResultMap.getPlayerWinningCounts()
-}
-
-@Deprecated("deprecated")
-@JvmInline
-value class PlayerToResultMap(val value: Map<Player, GameResult>) {
-    fun getPlayerWinningCounts(): Int {
-        return value.count { it.value == GameResult.WIN }
-    }
-
-    fun getPlayerLoseCounts(): Int {
-        return value.count { it.value == GameResult.LOSE }
-    }
-}
+data class PlayerToProfitMoney(val value: Map<Player, ProfitMoney>)
 
 enum class GameResult {
     WIN,
@@ -96,5 +84,27 @@ enum class GameResult {
                 else -> PUSH
             }
         }
+    }
+}
+
+@Deprecated("deprecated")
+data class BlackJackResult(
+    val playerToResultMap: PlayerToResultMap,
+) {
+    val dealerWinCount: Int
+        get() = playerToResultMap.getPlayerLoseCounts()
+    val dealerLoseCount: Int
+        get() = playerToResultMap.getPlayerWinningCounts()
+}
+
+@Deprecated("deprecated")
+@JvmInline
+value class PlayerToResultMap(val value: Map<Player, GameResult>) {
+    fun getPlayerWinningCounts(): Int {
+        return value.count { it.value == GameResult.WIN }
+    }
+
+    fun getPlayerLoseCounts(): Int {
+        return value.count { it.value == GameResult.LOSE }
     }
 }
