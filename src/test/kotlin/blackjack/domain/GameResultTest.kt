@@ -23,10 +23,11 @@ class GameResultTest {
         playerScore: Int,
         expectedResult: GameResult,
     ) {
-        val result = GameResult.fromScores(
-            dealerScore = dealerScore,
-            playerScore = playerScore,
-        )
+        val result =
+            GameResult.fromScores(
+                dealerScore = dealerScore,
+                playerScore = playerScore,
+            )
         assertEquals(expectedResult, result)
     }
 }

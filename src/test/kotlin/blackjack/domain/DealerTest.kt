@@ -1,7 +1,6 @@
 package blackjack.domain
 
 import org.assertj.core.api.Assertions.assertThat
-import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import java.math.BigDecimal
@@ -69,7 +68,7 @@ class DealerTest {
         // when
         dealer.adjustProfit(playerProfit = ProfitMoney().apply { set(BigDecimal(10000)) })
 
-        //then
+        // then
         assertThat(dealer.profitMoney.getCurrentProfit()).isEqualTo(BigDecimal(20000))
     }
 }

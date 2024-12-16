@@ -22,22 +22,23 @@ class BlackJackResultManager(
 }
 
 private fun Players.getPlayersToProfitMoney(dealer: Dealer): PlayerToProfitMoney {
-    val map = value.associateWith { player ->
-        player.setPlayersProfitMoney(
-            result = GameResult.fromScores(dealer.cardsSum, player.cardsSum),
-            isDealerBlackJackInitially = dealer.isBlackJackInitially,
-        )
+    val map =
+        value.associateWith { player ->
+            player.setPlayersProfitMoney(
+                result = GameResult.fromScores(dealer.cardsSum, player.cardsSum),
+                isDealerBlackJackInitially = dealer.isBlackJackInitially,
+            )
 
-        val playerProfitMoney = player.profitMoney
-        dealer.adjustProfit(playerProfitMoney)
-        playerProfitMoney
-    }
+            val playerProfitMoney = player.profitMoney
+            dealer.adjustProfit(playerProfitMoney)
+            playerProfitMoney
+        }
     return PlayerToProfitMoney(map)
 }
 
 private fun Player.setPlayersProfitMoney(
     result: GameResult,
-    isDealerBlackJackInitially: Boolean
+    isDealerBlackJackInitially: Boolean,
 ) {
     when {
         this.isBlackJackInitially && isDealerBlackJackInitially.not() -> this.onBlackJackInitially()

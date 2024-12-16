@@ -122,28 +122,31 @@ class PlayerTest {
     private fun initFakePlayer(): Player {
         val betAmount = BetMoney(BigDecimal(10000))
         val fakeDeck = Deck { Card(Rank.KING, Suit.HEARTS) }
-        val player = Player(
-            name = "Pobi",
-            betMoney = betAmount,
-            drawCard = { fakeDeck.draw() }
-        )
+        val player =
+            Player(
+                name = "Pobi",
+                betMoney = betAmount,
+                drawCard = { fakeDeck.draw() },
+            )
         return player
     }
 
     private fun initBlackJackPlayer(): Player {
         val betAmount = BetMoney(BigDecimal(10000))
-        val cards = ArrayDeque(
-            listOf(
-                Card(Rank.ACE, Suit.HEARTS),
-                Card(Rank.KING, Suit.HEARTS)
+        val cards =
+            ArrayDeque(
+                listOf(
+                    Card(Rank.ACE, Suit.HEARTS),
+                    Card(Rank.KING, Suit.HEARTS),
+                ),
             )
-        )
         val fakeDeck = Deck { cards.removeFirst() }
-        val player = Player(
-            name = "Pobi",
-            betMoney = betAmount,
-            drawCard = { fakeDeck.draw() }
-        )
+        val player =
+            Player(
+                name = "Pobi",
+                betMoney = betAmount,
+                drawCard = { fakeDeck.draw() },
+            )
         return player
     }
 }
