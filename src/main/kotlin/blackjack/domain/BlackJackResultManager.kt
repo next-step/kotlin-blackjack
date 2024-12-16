@@ -29,10 +29,8 @@ class BlackJackResultManager(
 
                 player.profitMoney
             }
-
-        val totalBet = players.getTotalBetMoneyFromPlayers()
         playersToProfits.forEach { (_, profitMoney) ->
-            dealer.adjustProfit(totalBet, profitMoney)
+            dealer.adjustProfit(profitMoney)
         }
         return BlackJackResultV2(dealer.profitMoney, PlayerToProfitMoney(playersToProfits))
     }

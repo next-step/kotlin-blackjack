@@ -12,7 +12,7 @@ class Dealer(
     ): Players {
         val names = fetchPlayerNames()
         val nameAndBets = names.associateWith(getBettingAmount)
-        val players =
+        val players = Players(
             nameAndBets.map { (name, bet) ->
                 Player(
                     name = name,
@@ -20,8 +20,10 @@ class Dealer(
                     drawCard = drawCard,
                 )
             }
+        )
         onPlayerInit(names)
-        return Players(value = players)
+        initProfitMoney(players.getTotalBetMoneyFromPlayers())
+        return players
     }
 
     fun drawOneMoreCardIfNeeded(onDrawCard: () -> Unit) {
@@ -37,19 +39,13 @@ class Dealer(
         return cards.value[0]
     }
 
-    fun adjustProfit(
-        totalBet: BigDecimal,
-        profitMoney: ProfitMoney,
-    ) {
-        setDealerProfitMoney(totalBet, profitMoney)
+    fun adjustProfit(playerProfit: ProfitMoney) {
+        val profit = profitMoney.getCurrentProfit() - playerProfit.getCurrentProfit()
+        profitMoney.set(profit)
     }
 
-    private fun setDealerProfitMoney(
-        totalBet: BigDecimal,
-        playerProfit: ProfitMoney,
-    ) {
-        val profit = totalBet - playerProfit.getCurrentProfit()
-        profitMoney.set(profit) // FIXME add 일듯 ?
+    private fun initProfitMoney(totalBet: BigDecimal) {
+        profitMoney.set(totalBet)
     }
 
     companion object {
