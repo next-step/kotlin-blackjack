@@ -18,7 +18,7 @@ class Dealer(
     }
 
     override fun isAddCardEnabled(): Boolean {
-        return cardsSum <= 16
+        return cardsSum <= DEALER_DRAW_ONE_MORE_CARD_THRESHOLD
     }
 
     fun getCardForInitialDisplay(): Card {
@@ -28,5 +28,6 @@ class Dealer(
 
     companion object {
         private const val DEALER_CARD_COUNT = 2
+        private const val DEALER_DRAW_ONE_MORE_CARD_THRESHOLD = 16
     }
 }

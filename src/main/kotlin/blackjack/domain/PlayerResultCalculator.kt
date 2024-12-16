@@ -6,8 +6,8 @@ class PlayerResultCalculator {
         playerScore: Int,
     ): PlayerResult {
         return when {
-            dealerScore > 21 -> PlayerResult.WIN
-            playerScore > 21 -> PlayerResult.LOSE
+            dealerScore > Card.MAX_SUM -> PlayerResult.WIN
+            playerScore > Card.MAX_SUM -> PlayerResult.LOSE
             playerScore > dealerScore -> PlayerResult.WIN
             else -> PlayerResult.LOSE
         }

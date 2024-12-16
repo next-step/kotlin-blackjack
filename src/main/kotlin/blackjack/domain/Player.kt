@@ -17,6 +17,6 @@ class Player(
     }
 
     override fun isAddCardEnabled(): Boolean {
-        return cardsSum <= 21
+        return cardsSum <= Card.MAX_SUM
     }
 }
