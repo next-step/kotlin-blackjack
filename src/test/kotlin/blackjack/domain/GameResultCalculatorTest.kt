@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 
 class GameResultCalculatorTest {
-    private val calculator = PlayerResultCalculator()
+    private val calculator = PlayerResultCalculator
 
     @Test
     fun `{given} 딜러 = Bust 이면 {when & then} 플레이어 승리`() {

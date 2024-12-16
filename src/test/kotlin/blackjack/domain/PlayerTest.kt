@@ -6,15 +6,14 @@ import org.junit.jupiter.api.Test
 class PlayerTest {
     @Test
     fun `Player 가 계속해서 Rank SEVEN 만 뽑으면, 최대 3번 뽑을 수 있고 카드 합은 21이다`() {
-        val fakeDeck = Deck { Card(Rank.SEVEN, Suit.HEARTS) } // King 만 리턴한다
+        val fakeDeck = Deck { Card(Rank.SEVEN, Suit.HEARTS) }
         val player = Player("sara", drawCard = { fakeDeck.draw() })
         player.play(
-            // 계속해서 King 만 뽑을때
             isDrawCard = { true },
             onDrawCard = {},
             onExitPlay = {},
         )
-        assertThat(player.cards.value.size).isEqualTo(3) // 최대 3개를 뽑을 수 있다
+        assertThat(player.cards.value.size).isEqualTo(3)
         assertThat(player.cardsSum).isEqualTo(21)
     }
 
