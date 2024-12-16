@@ -48,7 +48,7 @@ sealed class Participant(
             }
         }
 
-        fun hit(participant: Participant) {
+        fun giveCardTo(participant: Participant) {
             participant.receiveCard(deck.draw())
         }
 

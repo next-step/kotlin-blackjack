@@ -17,14 +17,14 @@ class Game(
         participant: Participant,
         hitCommand: HitCommand,
     ) = when (hitCommand) {
-        HitCommand.HIT -> gameMembers.dealer().hit(participant)
+        HitCommand.HIT -> gameMembers.dealer().giveCardTo(participant)
         HitCommand.STAY -> participant.stay()
     }
 
     fun isDealerCardSumLessThan16(): Boolean = gameMembers.dealer().sumOfCard() <= 16
 
     fun dealerHit() {
-        gameMembers.dealer().hit(gameMembers.dealer())
+        gameMembers.dealer().giveCardTo(gameMembers.dealer())
     }
 
     fun isPlayerStillPlaying(participant: Participant): Boolean {
