@@ -1,5 +1,7 @@
 package blackjack.domain
 
+import blackjack.view.Result
+
 class Game(
     private val gameMembers: GameMembers,
 ) {

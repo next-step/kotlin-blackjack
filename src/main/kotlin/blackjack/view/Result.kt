@@ -1,4 +1,4 @@
-package blackjack.domain
+package blackjack.view
 
 enum class Result(val message: String) {
     WIN("승"),

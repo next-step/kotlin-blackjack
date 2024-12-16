@@ -1,5 +1,7 @@
 package blackjack.domain
 
+import blackjack.view.Result
+
 data class PlayerOutcomes(val participant: Participant, val results: Result) {
     companion object {
         fun from(

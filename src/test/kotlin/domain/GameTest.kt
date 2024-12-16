@@ -9,8 +9,8 @@ import blackjack.domain.HitCommand
 import blackjack.domain.Participant.Dealer
 import blackjack.domain.Participant.Player
 import blackjack.domain.Participants
-import blackjack.domain.Result
 import blackjack.domain.Suit
+import blackjack.view.Result
 import fixture.CardListFixture
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.collections.shouldContainExactly
