@@ -1,14 +1,17 @@
 package blackjack.domain
 
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
 
 class CardTest {
+
     @ParameterizedTest
+    @DisplayName("카드의 합이 21을 넘는지 여부를 확인")
     @MethodSource("provideDataForIsOverMaxSumTest")
-    fun `카드의 합이 21을 넘는지 여부를 확인`(
+    fun `should check if the sum of cards exceeds 21`(
         card: Card,
         currentSum: Int,
         expectedResult: Boolean,
@@ -21,8 +24,9 @@ class CardTest {
     }
 
     @ParameterizedTest
+    @DisplayName("임의의 카드 리스트가 주어졌을 때 카드의 합이 룰과 일치하는지 확인")
     @MethodSource("provideDataForSumValuesTest")
-    fun `임의의 카드 리스트가 주어졌을 때 카드의 합이 룰과 일치하는지 확인`(
+    fun `should verify if the sum of a given card list matches the rule`(
         cards: Cards,
         expectedSum: Int,
     ) {

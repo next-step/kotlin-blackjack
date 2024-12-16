@@ -3,11 +3,13 @@ package blackjack.domain
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Assertions.assertThrows
+import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
 class CardDeckTest {
     @Test
-    fun `{given} 초기 Deck 상태 {when} draw() {then} 카드 리스트 사이즈 1 감소`() {
+    @DisplayName("{given} 초기 Deck 상태 {when} draw() {then} 카드 리스트 사이즈 1 감소")
+    fun `should decrease card list size by 1 when draw() is called on an initial deck`() {
         // Given
         val deck = CardDeck()
         val initialSize = Rank.entries.size * Suit.entries.size
@@ -22,7 +24,8 @@ class CardDeckTest {
     }
 
     @Test
-    fun `{given} Empty Deck {when} draw() {then} IllegalStateException 발생`() {
+    @DisplayName("{given} Empty Deck {when} draw() {then} IllegalStateException 발생")
+    fun `should throw IllegalStateException when draw() is called on an empty deck`() {
         // Given
         val deck =
             CardDeck(
