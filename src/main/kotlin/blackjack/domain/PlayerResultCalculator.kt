@@ -1,6 +1,6 @@
 package blackjack.domain
 
-class PlayerResultCalculator {
+object PlayerResultCalculator {
     fun calculate(
         dealerScore: Int,
         playerScore: Int,

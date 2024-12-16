@@ -3,13 +3,12 @@ package blackjack.domain
 class BlackJackResultManager(
     private val dealer: Dealer,
     private val players: Players,
-    private val playerResultCalculator: PlayerResultCalculator = PlayerResultCalculator(),
 ) {
     fun getResult(): BlackJackResult {
         val dealerScore = dealer.cardsSum
         val playersWinLose =
             players.value.associateWith { player ->
-                playerResultCalculator.calculate(dealerScore, player.cardsSum)
+                PlayerResultCalculator.calculate(dealerScore, player.cardsSum)
             }
 
         return BlackJackResult(PlayerToResultMap(playersWinLose))
