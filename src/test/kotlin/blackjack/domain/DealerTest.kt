@@ -1,6 +1,7 @@
 package blackjack.domain
 
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import java.math.BigDecimal
@@ -55,5 +56,20 @@ class DealerTest {
 
         // then
         assertThat(card).isSameAs(firstCard)
+    }
+
+    @Test
+    @DisplayName("플레이어가 10000원 만큼 얻었다면 딜러는 최초 총 베팅 금액에서 10000원을 차감한 금액을 갖는다")
+    fun `when player gains 10000, dealer loses 10000`() {
+        // given
+        val dealer = Dealer(drawCard = { Card(Rank.TWO, Suit.HEARTS) })
+        val totalBet = BigDecimal(30000)
+        dealer.profitMoney.set(totalBet)
+
+        // when
+        dealer.adjustProfit(playerProfit = ProfitMoney().apply { set(BigDecimal(10000)) })
+
+        //then
+        assertThat(dealer.profitMoney.getCurrentProfit()).isEqualTo(BigDecimal(20000))
     }
 }

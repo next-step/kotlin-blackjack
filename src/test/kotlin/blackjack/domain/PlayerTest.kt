@@ -1,6 +1,7 @@
 package blackjack.domain
 
 import org.assertj.core.api.Assertions.assertThat
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import java.math.BigDecimal
@@ -43,5 +44,106 @@ class PlayerTest {
         )
         assertThat(player.cards.value.size).isEqualTo(2)
         assertThat(player.cardsSum).isEqualTo(4)
+    }
+
+    @Test
+    @DisplayName("BUST 되었다면 플레이어의 베팅 금액을 모두 잃는다")
+    fun `player loses all money on bust`() {
+        // Given
+        val player = initFakePlayer()
+
+        // When
+        player.onBust() // Player loses on bust
+
+        // Then
+        assertEquals(BigDecimal(-10000), player.profitMoney.getCurrentProfit())
+    }
+
+    @Test
+    @DisplayName("WIN 이면 플레이어의 베팅 금액을 그대로 가져간다")
+    fun `player wins and keeps the bet amount`() {
+        // Given
+        val player = initFakePlayer()
+
+        // When
+        player.onWin()
+
+        // Then
+        assertEquals(BigDecimal(10000), player.profitMoney.getCurrentProfit())
+    }
+
+    @Test
+    @DisplayName("LOSE 이면 플레이어의 베팅 금액을 모두 잃는다")
+    fun `player loses all money on lose`() {
+        // Given
+        val player = initFakePlayer()
+
+        // When
+        player.onLose()
+
+        // Then
+        assertEquals(BigDecimal(-10000), player.profitMoney.getCurrentProfit())
+    }
+
+    @Test
+    @DisplayName("PUSH 이면 플레이어의 베팅 금액은 변동되지 않는다")
+    fun `player's profit remains the same on push`() {
+        // Given
+        val player = initFakePlayer()
+
+        // When
+        player.onPush()
+
+        // Then
+        assertEquals(BigDecimal(10000), player.profitMoney.getCurrentProfit())
+    }
+
+    @Test
+    @DisplayName("최초 할당된 2장의 카드 합이 21 이라면 블랙잭이다")
+    fun `if player's initial two cards sum is 21, it is blackjack`() {
+        val player = initBlackJackPlayer()
+        assertThat(player.cardsSum == Card.MAX_SUM).isTrue()
+        assertThat(player.isBlackJackInitially).isTrue()
+    }
+
+    @Test
+    @DisplayName("플레이어에 할당된 최초 2장이 블랙잭이면, 베팅금액의 1.5배를 받는다")
+    fun `player's profit multiplies by 150 percent on blackjack`() {
+        // Given
+        val player = initBlackJackPlayer()
+
+        // When
+        player.onBlackJackInitially()
+
+        // Then
+        assertEquals(BigDecimal(15000), player.profitMoney.getCurrentProfit())
+    }
+
+    private fun initFakePlayer(): Player {
+        val betAmount = BetMoney(BigDecimal(10000))
+        val fakeDeck = Deck { Card(Rank.KING, Suit.HEARTS) }
+        val player = Player(
+            name = "Pobi",
+            betMoney = betAmount,
+            drawCard = { fakeDeck.draw() }
+        )
+        return player
+    }
+
+    private fun initBlackJackPlayer(): Player {
+        val betAmount = BetMoney(BigDecimal(10000))
+        val cards = ArrayDeque(
+            listOf(
+                Card(Rank.ACE, Suit.HEARTS),
+                Card(Rank.KING, Suit.HEARTS)
+            )
+        )
+        val fakeDeck = Deck { cards.removeFirst() }
+        val player = Player(
+            name = "Pobi",
+            betMoney = betAmount,
+            drawCard = { fakeDeck.draw() }
+        )
+        return player
     }
 }
