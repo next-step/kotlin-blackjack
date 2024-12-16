@@ -1,12 +1,11 @@
 package blackjack.domain
 
 import blackjack.domain.Participant.Dealer
-import blackjack.domain.Participant.Player
 
-data class Participants(private val players: List<Player>) {
-    constructor(participants: Participants, dealer: Dealer) : this(listOf(dealer) + participants.players)
+data class Participants(private val players: List<Participant>) {
+    constructor(dealer: Dealer, participant: Participants) : this(listOf(dealer) + participant.players)
 
-    fun allPlayers(): List<Player> = players
+    fun allPlayers(): List<Participant> = players
 
-    fun forEach(action: (Player) -> Unit) = players.forEach(action)
+    fun forEach(action: (Participant) -> Unit) = players.forEach(action)
 }

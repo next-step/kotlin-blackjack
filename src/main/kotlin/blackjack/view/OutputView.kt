@@ -1,6 +1,6 @@
 package blackjack.view
 
-import blackjack.domain.Participant.Player
+import blackjack.domain.Participant
 import blackjack.domain.Participants
 import blackjack.domain.PlayerOutcomes
 
@@ -15,8 +15,8 @@ object OutputView {
         println()
     }
 
-    fun printPlayerCards(player: Player) {
-        println(String.format(CURRENT_CARD_STATUS, player.name, player.ownedCards))
+    fun printPlayerCards(participant: Participant) {
+        println(String.format(CURRENT_CARD_STATUS, participant.name, participant.ownedCards))
     }
 
     fun showGameResult(participants: Participants) {
@@ -36,7 +36,7 @@ object OutputView {
     ) {
         println("딜러: $dealerWinningCount 승 $dealerLoseCount 패")
         playerOutcomes.forEach {
-            println("${it.player.name}: ${it.results.message}")
+            println("${it.participant.name}: ${it.results.message}")
         }
     }
 

@@ -1,7 +1,5 @@
 package blackjack.domain
 
-import blackjack.domain.Participant.Player
-
 class Game(
     private val gameMembers: GameMembers,
 ) {
@@ -14,11 +12,11 @@ class Game(
     fun playersWithOutDealer(): Participants = gameMembers.playersWithoutDealer()
 
     fun processPlayerTurn(
-        player: Player,
+        participant: Participant,
         hitCommand: HitCommand,
     ) = when (hitCommand) {
-        HitCommand.HIT -> gameMembers.dealer().hit(player)
-        HitCommand.STAY -> player.stay()
+        HitCommand.HIT -> gameMembers.dealer().hit(participant)
+        HitCommand.STAY -> participant.stay()
     }
 
     fun isDealerCardSumLessThan16(): Boolean = gameMembers.dealer().sumOfCard() <= 16
@@ -27,8 +25,8 @@ class Game(
         gameMembers.dealer().hit(gameMembers.dealer())
     }
 
-    fun isPlayerStillPlaying(player: Player): Boolean {
-        return player.hasBusted() && player.hasStayed().not()
+    fun isPlayerStillPlaying(participant: Participant): Boolean {
+        return participant.hasBusted() && participant.hasStayed().not()
     }
 
     fun determineWinner(): List<PlayerOutcomes> {

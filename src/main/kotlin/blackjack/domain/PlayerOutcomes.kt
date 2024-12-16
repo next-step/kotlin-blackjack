@@ -1,11 +1,9 @@
 package blackjack.domain
 
-import blackjack.domain.Participant.Player
-
-data class PlayerOutcomes(val player: Player, val results: Result) {
+data class PlayerOutcomes(val participant: Participant, val results: Result) {
     companion object {
         fun from(
-            player: Player,
+            player: Participant,
             dealerCardSum: Int,
         ): PlayerOutcomes {
             val result =

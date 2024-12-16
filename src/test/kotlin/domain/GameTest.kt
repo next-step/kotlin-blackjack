@@ -226,7 +226,7 @@ class GameTest : DescribeSpec({
             player4.sumOfCard() shouldBe 15
             val actual = sut.determineWinner()
 
-            actual.filter { it.results == Result.WIN }.map { it.player.name } shouldContainExactly
+            actual.filter { it.results == Result.WIN }.map { it.participant.name } shouldContainExactly
                 listOf(
                     "player1", "player2", "player3",
                 )
