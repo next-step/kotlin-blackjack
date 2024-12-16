@@ -2,8 +2,8 @@ package domain
 
 import blackjack.domain.Card
 import blackjack.domain.CardNumber
-import blackjack.domain.Dealer
 import blackjack.domain.Deck
+import blackjack.domain.Participant.Dealer
 import blackjack.domain.Participant.Player
 import blackjack.domain.Participants
 import blackjack.domain.Suit

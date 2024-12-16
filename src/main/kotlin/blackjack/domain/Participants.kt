@@ -1,5 +1,6 @@
 package blackjack.domain
 
+import blackjack.domain.Participant.Dealer
 import blackjack.domain.Participant.Player
 
 data class Participants(private val players: List<Player>) {
