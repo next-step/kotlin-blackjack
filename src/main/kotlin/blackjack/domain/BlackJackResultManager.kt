@@ -12,22 +12,31 @@ class BlackJackResultManager(
                 playerResultCalculator.calculate(dealerScore, player.cardsSum)
             }
 
-        val dealerWinCount = playersWinLose.count { it.value == PlayerResult.LOSE }
-        val dealerLoseCount = playersWinLose.count { it.value == PlayerResult.WIN }
-        return BlackJackResult(dealerWinCount, dealerLoseCount, PlayerToResultMap(playersWinLose))
+        return BlackJackResult(PlayerToResultMap(playersWinLose))
     }
 }
 
 data class BlackJackResult(
-    val dealerWinCount: Int,
-    val dealerLoseCount: Int,
     val playerToResultMap: PlayerToResultMap,
-)
+) {
+    val dealerWinCount: Int
+        get() = playerToResultMap.getPlayerLoseCounts()
+    val dealerLoseCount: Int
+        get() = playerToResultMap.getPlayerWinningCounts()
+}
 
 @JvmInline
-value class PlayerToResultMap(val value: Map<Player, PlayerResult>)
+value class PlayerToResultMap(val value: Map<Player, GameResult>) {
+    fun getPlayerWinningCounts(): Int {
+        return value.count { it.value == GameResult.WIN }
+    }
 
-enum class PlayerResult {
+    fun getPlayerLoseCounts(): Int {
+        return value.count { it.value == GameResult.LOSE }
+    }
+}
+
+enum class GameResult {
     WIN,
     LOSE,
 }

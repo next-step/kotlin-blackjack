@@ -4,12 +4,12 @@ class PlayerResultCalculator {
     fun calculate(
         dealerScore: Int,
         playerScore: Int,
-    ): PlayerResult {
+    ): GameResult {
         return when {
-            dealerScore > Card.MAX_SUM -> PlayerResult.WIN
-            playerScore > Card.MAX_SUM -> PlayerResult.LOSE
-            playerScore > dealerScore -> PlayerResult.WIN
-            else -> PlayerResult.LOSE
+            dealerScore > Card.MAX_SUM -> GameResult.WIN
+            playerScore > Card.MAX_SUM -> GameResult.LOSE
+            playerScore > dealerScore -> GameResult.WIN
+            else -> GameResult.LOSE
         }
     }
 }
