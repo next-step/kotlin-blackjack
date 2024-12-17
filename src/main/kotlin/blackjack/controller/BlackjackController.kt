@@ -27,7 +27,7 @@ class BlackjackController {
     }
 
     private fun gameLoop(game: Game) {
-        game.playersWithOutDealer().forEach { player ->
+        game.participants().forEach { player ->
             while (game.isPlayerStillPlaying(player)) {
                 val hitCommand = InputView.askHitOrStay(player.name)
                 game.processPlayerTurn(player, hitCommand)

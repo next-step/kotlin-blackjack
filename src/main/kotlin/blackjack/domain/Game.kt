@@ -11,7 +11,7 @@ class Game(
 
     fun allPlayers(): Participants = gameMembers.allPlayers()
 
-    fun playersWithOutDealer(): Participants = gameMembers.playersWithoutDealer()
+    fun participants(): Participants = gameMembers.playersWithoutDealer()
 
     fun processPlayerTurn(
         participant: Participant,
