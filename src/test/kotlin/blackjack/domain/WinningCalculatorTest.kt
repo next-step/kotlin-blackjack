@@ -2,6 +2,7 @@ package blackjack.domain
 
 import blackjack.domain.player.Dealer
 import blackjack.domain.player.Player
+import blackjack.domain.player.Players
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
@@ -25,7 +26,7 @@ class WinningCalculatorTest {
         dealer.drawCard(Card.createCard("A", "클로버"))
         dealer.drawCard(Card.createCard("10", "하트"))
 
-        WinningCalculator.calculatorGameResult(listOf(player1, player2), dealer)
+        WinningCalculator.calculatorGameResult(Players(listOf(player1, player2)), dealer)
 
         dealer.winCount shouldBe 2
         dealer.loseCount shouldBe 0
@@ -50,7 +51,7 @@ class WinningCalculatorTest {
         dealer.drawCard(Card.createCard("9", "클로버"))
         dealer.drawCard(Card.createCard("8", "다이아몬드"))
 
-        WinningCalculator.calculatorGameResult(listOf(player1, player2), dealer)
+        WinningCalculator.calculatorGameResult(Players(listOf(player1, player2)), dealer)
 
         dealer.winCount shouldBe 1
         dealer.loseCount shouldBe 1

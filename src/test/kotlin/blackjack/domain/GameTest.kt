@@ -2,6 +2,7 @@ package blackjack.domain
 
 import blackjack.domain.player.Participant
 import blackjack.domain.player.Player
+import blackjack.domain.player.Players
 import io.kotest.matchers.collections.shouldBeIn
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
@@ -9,13 +10,13 @@ import org.junit.jupiter.api.Test
 class GameTest {
     @Test
     fun `check each players get two cards in first turn`() {
-        val mockPlayers = listOf(Player("pobi"), Player("jason"))
+        val mockPlayers = Players(listOf(Player("pobi"), Player("jason")))
         val game = Game.createGame(mockPlayers)
 
         var initCallbackCalled = 0
         var turnCallbackCalled = 0
 
-        val initCallback: ((List<Participant>) -> Unit) = {
+        val initCallback: ((Participant) -> Unit) = {
             initCallbackCalled++
         }
 
@@ -26,15 +27,15 @@ class GameTest {
 
         game.startGame(initCallback, turnCallback)
 
-        mockPlayers[0].getAllCards().size shouldBe 2
-        mockPlayers[1].getAllCards().size shouldBe 2
-        initCallbackCalled shouldBe 1
+        mockPlayers.get(0).getAllCards().size shouldBe 2
+        mockPlayers.get(1).getAllCards().size shouldBe 2
+        initCallbackCalled shouldBe 4
         turnCallbackCalled shouldBe 2
     }
 
     @Test
     fun `check add dealer when create game`() {
-        val mockPlayers = listOf(Player("pobi"), Player("jason"))
+        val mockPlayers = Players(listOf(Player("pobi"), Player("jason")))
         val game = Game.createGame(mockPlayers)
 
         val playerName = listOf("pobi", "jason", "딜러")

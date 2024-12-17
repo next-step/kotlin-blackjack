@@ -111,7 +111,7 @@ class PlayerTest {
         }
 
         var printCallbackCalled = 0
-        val printCallback: ((List<Participant>) -> Unit) = {
+        val printCallback: ((Participant) -> Unit) = {
             printCallbackCalled++
         }
 
@@ -141,7 +141,7 @@ class PlayerTest {
         }
 
         var printCallbackCalled = 0
-        val printCallback: ((List<Participant>) -> Unit) = {
+        val printCallback: ((Participant) -> Unit) = {
             printCallbackCalled++
         }
 

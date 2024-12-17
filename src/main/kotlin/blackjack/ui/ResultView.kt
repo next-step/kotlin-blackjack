@@ -2,30 +2,32 @@ package blackjack.ui
 
 import blackjack.domain.player.Participant
 import blackjack.domain.player.Dealer
-import blackjack.domain.player.Player
+import blackjack.domain.player.Players
 
 class ResultView {
-    fun printStartMessage(players: List<Player>) {
+    fun printStartMessage(players: Players) {
         val playersName = StringBuilder()
-        players.forEachIndexed { index, player ->
-            playersName.append(player.name)
-            if (index != players.lastIndex) {
-                playersName.append(", ")
-            }
+        players.forEach { player ->
+            playersName.append(player.name + ",")
         }
+        playersName.deleteCharAt(playersName.lastIndex)
         println("딜러와 ${playersName}에게 2장씩 나누었습니다.")
     }
 
-    fun printGameResult(players: List<Player>, dealer: Dealer) {
-        (players + dealer).forEach { player ->
+    fun printGameResult(players: Players, dealer: Dealer) {
+        players.forEach { player ->
             player.showCards()
             println(" - 결과: ${player.calculateCard()}")
         }
 
+        dealer.showCards()
+        println(" - 결과: ${dealer.calculateCard()}")
+
         println("\n## 최종 승패")
-        (players + dealer).forEach { player ->
+        players.forEach { player ->
             showWinningResult(player)
         }
+        showWinningResult(dealer)
     }
 
     fun showWinningResult(player: Participant) {
