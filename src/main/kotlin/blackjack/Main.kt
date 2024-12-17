@@ -8,9 +8,8 @@ import blackjack.view.PlayerCommands
 fun main() {
     // 1. 유저명 입력 및 유저 생성
     val deck = RandomDeck()
-    val userNames = InputView.getUserNames()
-    val game = BlackJackGame.createGame(userNames, deck)
-
+    val playerInfos = InputView.getPlayerInfos()
+    val game = BlackJackGame.createGame(playerInfos, deck)
     OutputView.printCurrentStatus(game)
 
     // 2-1. 블랙잭 여부 확인
@@ -36,7 +35,7 @@ private fun playBlackJack(game: BlackJackGame) {
 
 private fun handlePlayerCommand(game: BlackJackGame) {
     val player = game.currentPlayer
-    val command = InputView.getUserCommand(player)
+    val command = InputView.getPlayerCommand(player)
     when (command) {
         PlayerCommands.HIT -> game.hit(player)
         PlayerCommands.STAY -> game.stay(player)

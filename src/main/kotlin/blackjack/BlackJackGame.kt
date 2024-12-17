@@ -5,7 +5,9 @@ import blackjack.domain.Deck
 import blackjack.domain.Player
 import blackjack.domain.PlayerGameResult
 import blackjack.domain.PlayerStatus
+import blackjack.domain.PlayerWinLoseResult
 import blackjack.domain.Players
+import blackjack.view.PlayerInfo
 
 class BlackJackGame private constructor(
     val dealer: Dealer,
@@ -40,7 +42,14 @@ class BlackJackGame private constructor(
     }
 
     fun getGameResult(): GameResult {
-        val playerGameResults = players.members.map { PlayerGameResult(it.name, it.compareWithDealer(dealer)) }
+        val playerGameResults =
+            players.members.map {
+                PlayerGameResult(
+                    it.name,
+                    it.betAmount,
+                    PlayerWinLoseResult.compareResult(dealer, it),
+                )
+            }
         val dealerResult = DealerResult(playerGameResults)
         return GameResult(dealerResult, playerGameResults)
     }
@@ -62,19 +71,19 @@ class BlackJackGame private constructor(
         private const val DEFAULT_CARD_COUNT = 2
 
         fun createGame(
-            playerNames: List<String>,
+            playerInfos: List<PlayerInfo>,
             deck: Deck,
         ): BlackJackGame {
             val dealer = createDealer(deck)
-            val players = createPlayers(playerNames, deck)
+            val players = createPlayers(playerInfos, deck)
             return BlackJackGame(dealer, players, deck)
         }
 
         private fun createPlayers(
-            playerNames: List<String>,
+            playerInfos: List<PlayerInfo>,
             deck: Deck,
         ): Players {
-            val players = Players.from(playerNames)
+            val players = Players.from(playerInfos)
             players.drawDefaultCards(deck, DEFAULT_CARD_COUNT)
             return players
         }

@@ -2,6 +2,7 @@ package blackjack.domain
 
 class Player(
     val name: String,
+    val betAmount: BetAmount,
     val hand: PlayerCards = PlayerCards(),
 ) {
     var status: PlayerStatus = PlayerStatus.HIT
@@ -27,18 +28,6 @@ class Player(
 
     fun isBlackJack(): Boolean {
         return status == PlayerStatus.BLACKJACK
-    }
-
-    fun compareWithDealer(dealer: Dealer): PlayerWinLoseResult {
-        return when {
-            dealer.isBlackJack() -> PlayerWinLoseResult.LOSE
-            dealer.isBust() -> PlayerWinLoseResult.WIN
-            isBust() -> PlayerWinLoseResult.LOSE
-            isBlackJack() && !dealer.isBlackJack() -> PlayerWinLoseResult.WIN
-            dealer.getCardSum() > this.hand.calculateCardsMaxSum() -> PlayerWinLoseResult.LOSE
-            dealer.getCardSum() == this.hand.calculateCardsMaxSum() -> PlayerWinLoseResult.PUSH
-            else -> PlayerWinLoseResult.WIN
-        }
     }
 
     private fun validateName(name: String) {
