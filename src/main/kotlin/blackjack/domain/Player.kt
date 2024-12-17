@@ -2,6 +2,7 @@ package blackjack.domain
 
 class Player(
     val name: String,
+    val betAmount: BetAmount,
     val hand: PlayerCards = PlayerCards(),
 ) {
     var status: PlayerStatus = PlayerStatus.HIT

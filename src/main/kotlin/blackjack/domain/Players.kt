@@ -1,5 +1,7 @@
 package blackjack.domain
 
+import blackjack.view.PlayerInfo
+
 class Players private constructor(
     val members: List<Player>,
 ) {
@@ -25,8 +27,8 @@ class Players private constructor(
     }
 
     companion object {
-        fun from(names: List<String>): Players {
-            return Players(names.map { Player(it) })
+        fun from(names: List<PlayerInfo>): Players {
+            return Players(names.map { Player(it.name, BetAmount(it.amount)) })
         }
     }
 }

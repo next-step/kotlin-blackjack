@@ -4,6 +4,7 @@ import blackjack.domain.Card
 import blackjack.domain.CardMark
 import blackjack.domain.CardNumber
 import blackjack.domain.Deck
+import blackjack.view.PlayerInfo
 
 fun createAceCard(): Card {
     return Card(CardNumber.ACE, CardMark.HEART)
@@ -16,8 +17,8 @@ fun createBasicCard(
     return Card(number, mark)
 }
 
-fun createPlayers(number: Int): List<String> {
-    return (1..number).map { "name$it" }
+fun createPlayerInfos(number: Int): List<PlayerInfo> {
+    return (1..number).map { PlayerInfo("name$it", 1000.0) }
 }
 
 private val CACHED_CARDS =

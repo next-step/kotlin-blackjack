@@ -1,23 +1,15 @@
 package blackjack
 
+import blackjack.domain.CalculateEarnAmount
 import blackjack.domain.PlayerGameResult
-import blackjack.domain.PlayerWinLoseResult
 
-class DealerResult(playerGameResults: List<PlayerGameResult>) {
-    var winCount: Int = 0
-        private set
-    var loseCount: Int = 0
-        private set
-    var pushCount: Int = 0
-        private set
+class DealerResult(playerGameResults: List<PlayerGameResult>) : CalculateEarnAmount {
+    private var earnAmount: Int =
+        playerGameResults
+            .map { it.getEarnAmount() }
+            .fold(0) { total, amount -> total + amount }.toInt()
 
-    init {
-        playerGameResults.forEach {
-            when (it.result) {
-                PlayerWinLoseResult.WIN -> loseCount++
-                PlayerWinLoseResult.LOSE -> winCount++
-                PlayerWinLoseResult.PUSH -> pushCount++
-            }
-        }
+    override fun getEarnAmount(): Int {
+        return -earnAmount
     }
 }

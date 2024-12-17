@@ -6,7 +6,6 @@ import blackjack.domain.CardMark
 import blackjack.domain.Cards
 import blackjack.domain.Dealer
 import blackjack.domain.Player
-import blackjack.domain.PlayerWinLoseResult
 import blackjack.domain.Players
 
 object OutputView {
@@ -47,16 +46,8 @@ object OutputView {
         val playerGameResults = gameResult.playerGameResults
 
         println()
-        println("딜러: ${dealerResult.winCount}승 ${dealerResult.pushCount}무 ${dealerResult.loseCount}패")
-        playerGameResults.forEach { println("${it.name}: ${convertResultToMessage(it.result)}") }
-    }
-
-    private fun convertResultToMessage(result: PlayerWinLoseResult): String {
-        return when (result) {
-            PlayerWinLoseResult.WIN -> "승"
-            PlayerWinLoseResult.LOSE -> "패"
-            PlayerWinLoseResult.PUSH -> "무"
-        }
+        println("딜러: ${dealerResult.getEarnAmount()}")
+        playerGameResults.forEach { println("${it.name}: ${it.getEarnAmount()}") }
     }
 
     private fun printDealerResult(dealer: Dealer) {
