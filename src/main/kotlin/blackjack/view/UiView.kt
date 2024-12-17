@@ -12,7 +12,7 @@ class InputView {
         users: List<GameUserInterface>,
         count: Int,
     ) {
-        println("${users.joinToString { it.getName() }}에게 ${count}장을 나누었습니다.")
+        println("${users.joinToString { it.name }}에게 ${count}장을 나누었습니다.")
         println()
     }
 
@@ -32,7 +32,7 @@ class InputView {
 
 class ResultView {
     fun printUserCards(user: GameUserInterface) {
-        println("${user.getName()}카드: ${user.getCards()}")
+        println("${user.name}카드: ${user.cards}")
     }
 
     fun printResultCards(
@@ -40,16 +40,16 @@ class ResultView {
         dealer: GameUserInterface,
     ) {
         println()
-        println("${dealer.getName()}카드: ${dealer.getCards()} - 결과: ${dealer.getPoints()}")
+        println("${dealer.name}카드: ${dealer.cards} - 결과: ${dealer.points}")
         users.forEach { user ->
-            println("${user.getName()}카드: ${user.getCards()} - 결과: ${user.getPoints()}")
+            println("${user.name}카드: ${user.cards} - 결과: ${user.points}")
         }
 
         println("##최종 승패")
         val winCount = users.filter { it.comparePoints(dealer).not() }.size
-        println("${dealer.getName()}카드: ${winCount}승 ${users.size - winCount}패")
+        println("${dealer.name}카드: ${winCount}승 ${users.size - winCount}패")
         users.forEach { user ->
-            println("${user.getName()}카드: ${getUserResultString(user.comparePoints(dealer))}")
+            println("${user.name}카드: ${getUserResultString(user.comparePoints(dealer))}")
         }
     }
 

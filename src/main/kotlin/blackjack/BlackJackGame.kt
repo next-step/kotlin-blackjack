@@ -53,8 +53,8 @@ class BlackJackGame(users: String) {
         resultView: ResultView,
     ) {
         allUsers.forEach {
-            it.addCard(cardDeck.getNextCard())
-            it.addCard(cardDeck.getNextCard())
+            it.cards.add(cardDeck.getNextCard())
+            it.cards.add(cardDeck.getNextCard())
         }
         this.inputView = inputView
         this.resultView = resultView
@@ -66,8 +66,8 @@ class BlackJackGame(users: String) {
     ) {
         // 21이 넘는 경우 종료됨.
         when (decision) {
-            true -> user.addCard(cardDeck.getNextCard())
-            false -> user.doneGame(true)
+            true -> user.cards.add(cardDeck.getNextCard())
+            false -> user.setDoneGame(true)
             else -> {}
         }
     }
@@ -96,15 +96,15 @@ class BlackJackGame(users: String) {
         user: GameUserInterface,
         inputView: InputView,
     ) {
-        inputView.printAddCardDealer(user.getPoints())
-        user.addCard(cardDeck.getNextCard())
+        inputView.printAddCardDealer(user.points)
+        user.cards.add(cardDeck.getNextCard())
     }
 
     private fun turnUser(
         user: GameUserInterface,
         inputView: InputView,
     ) {
-        val inputData = inputView.inputNextDecision(user.getName())
+        val inputData = inputView.inputNextDecision(user.name)
         val decision = YNBooleanValue.toBoolean(inputData)
         handleCurrentInput(user, decision)
     }

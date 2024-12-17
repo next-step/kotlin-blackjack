@@ -1,30 +1,24 @@
 package blackjack.domain
 
 interface GameUserInterface {
-    fun getName(): String
+    val name: String
+    val cards: MutableList<BlackJackCard>
+    val points: Int
 
-    fun doneGame(status: Boolean)
+    fun setDoneGame(status: Boolean)
 
     fun isDoneGame(): Boolean
-
-    fun addCard(card: BlackJackCard)
-
-    fun getCards(): List<BlackJackCard>
-
-    fun getPoints(): Int
 
     fun comparePoints(opponent: GameUserInterface): Boolean
 }
 
-class GameUser(private val name: String) : GameUserInterface {
+class GameUser(override val name: String) : GameUserInterface {
     private var doneGame = false
-    private val cards = mutableListOf<BlackJackCard>()
+    override val cards = mutableListOf<BlackJackCard>()
+    override val points: Int
+        get() = calculatePoints()
 
-    override fun getName(): String {
-        return name
-    }
-
-    override fun doneGame(status: Boolean) {
+    override fun setDoneGame(status: Boolean) {
         doneGame = status
     }
 
@@ -32,21 +26,9 @@ class GameUser(private val name: String) : GameUserInterface {
         return doneGame || calculatePoints() >= BLACKJACK_POINT
     }
 
-    override fun addCard(card: BlackJackCard) {
-        cards.add(card)
-    }
-
-    override fun getCards(): List<BlackJackCard> {
-        return cards
-    }
-
-    override fun getPoints(): Int {
-        return calculatePoints()
-    }
-
     override fun comparePoints(opponent: GameUserInterface): Boolean {
-        return (getPoints() <= BLACKJACK_POINT) &&
-            ((opponent.getPoints() > BLACKJACK_POINT) || (getPoints() > opponent.getPoints()))
+        return (points <= BLACKJACK_POINT) &&
+            ((opponent.points > BLACKJACK_POINT) || (points > opponent.points))
     }
 
     private fun calculatePoints(): Int {

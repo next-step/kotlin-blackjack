@@ -14,12 +14,12 @@ class GameUserTest {
     @Test
     fun `오버포인트와 비교시 승리 함을 확인한다`() {
         val user1 = GameUser("A")
-        user1.addCard(BlackJackCard(CardType.SPADE, CardInfo.CARD_10))
-        user1.addCard(BlackJackCard(CardType.SPADE, CardInfo.CARD_6))
+        user1.cards.add(BlackJackCard(CardType.SPADE, CardInfo.CARD_10))
+        user1.cards.add(BlackJackCard(CardType.SPADE, CardInfo.CARD_6))
         val user2 = GameUser("B")
-        user2.addCard(BlackJackCard(CardType.HEART, CardInfo.CARD_10))
-        user2.addCard(BlackJackCard(CardType.HEART, CardInfo.CARD_9))
-        user2.addCard(BlackJackCard(CardType.HEART, CardInfo.CARD_6))
+        user2.cards.add(BlackJackCard(CardType.HEART, CardInfo.CARD_10))
+        user2.cards.add(BlackJackCard(CardType.HEART, CardInfo.CARD_9))
+        user2.cards.add(BlackJackCard(CardType.HEART, CardInfo.CARD_6))
         user1.comparePoints(user2) shouldBe true
         user2.comparePoints(user1) shouldBe false
     }
@@ -27,14 +27,14 @@ class GameUserTest {
     @Test
     fun `둘 모두 오버포인트 시 패로 한다`() {
         val user1 = GameUser("A")
-        user1.addCard(BlackJackCard(CardType.SPADE, CardInfo.CARD_10))
-        user1.addCard(BlackJackCard(CardType.SPADE, CardInfo.CARD_9))
-        user1.addCard(BlackJackCard(CardType.SPADE, CardInfo.CARD_6))
+        user1.cards.add(BlackJackCard(CardType.SPADE, CardInfo.CARD_10))
+        user1.cards.add(BlackJackCard(CardType.SPADE, CardInfo.CARD_9))
+        user1.cards.add(BlackJackCard(CardType.SPADE, CardInfo.CARD_6))
 
         val user2 = GameUser("B")
-        user2.addCard(BlackJackCard(CardType.HEART, CardInfo.CARD_10))
-        user2.addCard(BlackJackCard(CardType.HEART, CardInfo.CARD_9))
-        user2.addCard(BlackJackCard(CardType.HEART, CardInfo.CARD_6))
+        user2.cards.add(BlackJackCard(CardType.HEART, CardInfo.CARD_10))
+        user2.cards.add(BlackJackCard(CardType.HEART, CardInfo.CARD_9))
+        user2.cards.add(BlackJackCard(CardType.HEART, CardInfo.CARD_6))
         user1.comparePoints(user2) shouldBe false
         user2.comparePoints(user1) shouldBe false
     }
@@ -43,7 +43,7 @@ class GameUserTest {
     @ValueSource(strings = ["A", "B", "C"])
     fun `사용자를 생성한다`(name: String) {
         val user = GameUser(name)
-        (user.getName() == name) shouldBe true
+        (user.name == name) shouldBe true
     }
 
     @ParameterizedTest
@@ -54,9 +54,9 @@ class GameUserTest {
     ) {
         val user = GameUser("홍길동")
         numbers.forEach {
-            user.addCard(it)
+            user.cards.add(it)
         }
-        user.getPoints() shouldBe points
+        user.points shouldBe points
     }
 
     @ParameterizedTest
@@ -64,9 +64,9 @@ class GameUserTest {
     fun `블랙잭이 맞는지 확인`(numbers: List<BlackJackCard>) {
         val user = GameUser("홍길동")
         numbers.forEach {
-            user.addCard(it)
+            user.cards.add(it)
         }
-        user.getPoints() shouldBe 21
+        user.points shouldBe 21
     }
 
     private fun generateCardNumbers(): Stream<Arguments> {
