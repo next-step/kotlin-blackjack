@@ -1,14 +1,13 @@
 package blackjack.domain
 
 import blackjack.domain.player.Dealer
-import blackjack.domain.player.Player
+import blackjack.domain.player.Players
 
 object WinningCalculator {
-    fun calculatorGameResult(players: List<Player>, dealer: Dealer) {
+    fun calculatorGameResult(players: Players, dealer: Dealer) {
         // 딜러는 21초과시 딜러 승
         if (dealer.isBust()) {
             dealer.updateWinningStatus(players.size, 0)
-            dealer.updateWinningStatus(0, 1)
             return
         }
 
