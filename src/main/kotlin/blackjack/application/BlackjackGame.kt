@@ -38,14 +38,20 @@ class BlackjackGame(
         return Participants(players, dealer)
     }
 
-    private fun initialDraw(players: List<Participant>, deck: Deck) {
+    private fun initialDraw(
+        players: List<Participant>,
+        deck: Deck,
+    ) {
         players.forEach { player ->
             player.initialDraw(deck)
         }
         outputView.printInitialCards(players)
     }
 
-    private fun progress(player: Player, deck: Deck) {
+    private fun progress(
+        player: Player,
+        deck: Deck,
+    ) {
         if (isHitOrStay(player)) {
             player.hit(deck)
             outputView.printPlayerCards(player)
@@ -55,7 +61,10 @@ class BlackjackGame(
 
     private fun isHitOrStay(player: Player): Boolean = inputView.inputHitOrStay(player.name)
 
-    private fun dealerExtraDraw(dealer: Dealer, deck: Deck) {
+    private fun dealerExtraDraw(
+        dealer: Dealer,
+        deck: Deck,
+    ) {
         if (dealer.shouldDraw()) {
             dealer.hit(deck)
             outputView.printDealerExtraDraw()
