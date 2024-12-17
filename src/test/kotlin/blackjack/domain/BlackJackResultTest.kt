@@ -88,6 +88,6 @@ class BlackJackResultTest {
         playerResult.getResult() shouldBe 1000
 
         val playerResultTwo = result.getPlayerResults().first { it.playerName == "장호" }
-        playerResult.getResult() shouldBe 1000
+        playerResultTwo.getResult() shouldBe 1000
     }
 }

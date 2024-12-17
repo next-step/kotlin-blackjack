@@ -9,4 +9,12 @@ class Player(val name: String, val betAmount: Int, initialCards: List<CardInfo>)
     fun isPlayerFirstBlackJack(): Boolean = this.hand.getCardsCount() == INIT_FACE_UP && this.hand.getTotalCardValue() == BUST_LIMIT_VALUE
 
     fun isBlackJack(): Boolean = this.hand.getTotalCardValue() == BUST_LIMIT_VALUE
+
+    fun dealerBustAndPlayerBlackJack(betWinMultiplier: Double): Int {
+        return if (isBlackJack()) {
+            (this.betAmount * betWinMultiplier).toInt()
+        } else {
+            this.betAmount
+        }
+    }
 }

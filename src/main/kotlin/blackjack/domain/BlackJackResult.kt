@@ -32,15 +32,7 @@ class BlackJackResult(
 
     private fun calculateDealerBust(): List<PlayerResult> {
         return players.map { player ->
-            PlayerResult(player.name, dealerBustAndPlayerBlackJack(player))
-        }
-    }
-
-    private fun dealerBustAndPlayerBlackJack(player: Player): Int {
-        return if (player.isBlackJack()) {
-            (player.betAmount * BET_WIN_MULTIPLIER).toInt()
-        } else {
-            player.betAmount
+            PlayerResult(player.name, player.dealerBustAndPlayerBlackJack(BET_WIN_MULTIPLIER))
         }
     }
 
