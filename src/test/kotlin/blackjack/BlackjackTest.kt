@@ -16,38 +16,30 @@ class BlackjackTest {
         Card.resetAllCards()
     }
 
-    @DisplayName("게임에 참여할 사람의 이름을 입력받는다.")
-    @ParameterizedTest
-    @ValueSource(strings = ["aaa,bbb"])
-    fun `parsing test1`(input: String) {
-        val playerNames = input.split(",")
-        playerNames shouldBe listOf("aaa", "bbb")
-    }
-
     @DisplayName("이름은 쉼표를 기준으로 구분한다.")
     @ParameterizedTest
     @ValueSource(strings = ["aaa,bbb", "aaa, bbb", "aaa , bbb"])
-    fun `parsing test2`(input: String) {
+    fun `이름은 쉼표로 구분한다`(input: String) {
         val blackjackController = BlackjackController()
         val players = blackjackController.createPlayers(input)
         players.players.map { it.name } shouldBe listOf("aaa", "bbb")
     }
 
-    @DisplayName("이름은 쉼표가 아니면 예외를 던진다.")
+    @DisplayName("이름을 쉼표가 아닌 다른 것으로 구분하면 예외를 던진다.")
     @ParameterizedTest
     @ValueSource(strings = ["aaa|bbb", "aaa;bbb"])
-    fun `parsing test3`(input: String) {
-        val playerNames = input.split(",")
+    fun `이름을 쉼표가 아닌 다른 것으로 구분하면 예외를 던진다`(input: String) {
+        val blackjackController = BlackjackController()
+
         shouldThrow<IllegalArgumentException> {
-            val players = playerNames.map { Player(name = it) }
-            players
+            blackjackController.createPlayers(input)
         }.message shouldBe "이름이 잘못 입력되었습니다."
     }
 
     @DisplayName("공백은 이름으로 인식하지 않는다.")
     @ParameterizedTest
     @ValueSource(strings = [",aaa,,bbb"])
-    fun `parsing test4`(input: String) {
+    fun `공백은 이름으로 인식하지 않는다`(input: String) {
         val blackjackController = BlackjackController()
         val players = blackjackController.createPlayers(input)
         players.players shouldBe listOf(Player("aaa"), Player("bbb"))
@@ -55,14 +47,14 @@ class BlackjackTest {
 
     @DisplayName("플레이어는 처음 2장의 카드를 받는다")
     @Test
-    fun `person test`() {
+    fun `플레이어는 처음 2장의 카드를 받는다`() {
         val players = Player("aaa")
         players.cards.cards.size shouldBe 2
     }
 
     @DisplayName("카드는 중복하지 않는다.")
     @Test
-    fun `card test1`() {
+    fun `카드는 중복하지 않는다`() {
         val player = Player("aaa")
         val initialCards = player.cards.cards
 
@@ -80,7 +72,7 @@ class BlackjackTest {
 
     @DisplayName("카드는 총 52개 존재한다.")
     @Test
-    fun `card test2`() {
+    fun `카드는 총 52개 존재한다`() {
         repeat(52) {
             Card.takeRandomCard()
         }
@@ -88,7 +80,7 @@ class BlackjackTest {
 
     @DisplayName("카드는 총 52개 존재한다.")
     @Test
-    fun `card test3`() {
+    fun `52개를 초과하면 예외를 던진다`() {
         shouldThrow<IllegalArgumentException> {
             repeat(53) {
                 Card.takeRandomCard()
@@ -98,7 +90,7 @@ class BlackjackTest {
 
     @DisplayName("플레이어는 'y'혹은 'n'가 아닌 문자를 입력 시 예외가 발생한다.")
     @Test
-    fun `game test2`() {
+    fun `플레이어는 'y'혹은 'n'가 아닌 문자를 입력 시 예외가 발생한다`() {
         val blackjackController = BlackjackController()
         val player = Player("aaa")
         shouldThrow<IllegalArgumentException> {
@@ -108,7 +100,7 @@ class BlackjackTest {
 
     @DisplayName("플레이어가 카드를 받지 않을 때까지 계속 받을 수 있다.")
     @Test
-    fun `game test3`() {
+    fun `플레이어가 카드를 받지 않을 때까지 계속 받을 수 있다`() {
         val blackjackController = BlackjackController()
         val player = Player("aaa")
         // 처음에 2개를 가져가기 때문
