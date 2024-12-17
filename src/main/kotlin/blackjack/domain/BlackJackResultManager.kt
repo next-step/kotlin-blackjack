@@ -1,10 +1,7 @@
 package blackjack.domain
 
-class BlackJackResultManager(
-    private val dealer: Dealer,
-    private val players: Players,
-) {
-    fun getResult(): BlackJackResult {
+object BlackJackResultManager {
+    fun getResult(dealer: Dealer, players: Players): BlackJackResult {
         val playersProfits = players.getPlayersToProfitMoney(
             getGameResult = { player -> player.getGameResultWith(dealer) },
             onSetPlayerProfitMoney = { profitMoney -> dealer.adjustProfit(profitMoney) }
