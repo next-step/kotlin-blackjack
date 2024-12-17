@@ -4,17 +4,17 @@ import blackjack.domain.CardDeck
 
 class Dealer(name: String = DEALER_NAME) : Participant(name) {
     private fun shouldDrawCard(): Boolean {
-        return calculateCard() <= DRAW_THREAD
+        return calculateCard() <= DRAW_THRESHOLD
     }
 
     override fun startTurn(
         onTurnStarted: ((Participant) -> String)?,
-        onPrintResultCallback: (List<Participant>) -> Unit,
+        onPrintResultCallback: (Participant) -> Unit,
     ) {
         while (!isBust() && shouldDrawCard()) {
             val card = CardDeck.drawCard()
             drawCard(card)
-            onPrintResultCallback(listOf(this))
+            onPrintResultCallback(this)
             onTurnStarted?.invoke(this)
         }
     }
@@ -25,6 +25,6 @@ class Dealer(name: String = DEALER_NAME) : Participant(name) {
 
     companion object {
         const val DEALER_NAME = "딜러"
-        const val DRAW_THREAD = 16
+        const val DRAW_THRESHOLD = 16
     }
 }
