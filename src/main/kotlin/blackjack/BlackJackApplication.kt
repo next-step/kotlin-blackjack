@@ -59,7 +59,9 @@ private fun initDealer(dealerName: String): Dealer {
 }
 
 private fun initPlayers(betInfos: List<BetInfo>): Set<Player> {
-    return betInfos.map { Player(it.name, it.betAmount, Deal.giveCards(INIT_FACE_UP)) }.toSet()
+    return betInfos
+        .map { Player(it.name, it.betAmount, Deal.giveCards(INIT_FACE_UP)) }
+        .toSet()
 }
 
 private fun gameCardResult() {
