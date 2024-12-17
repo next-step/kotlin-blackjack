@@ -8,21 +8,18 @@ object WinningCalculator {
         // 딜러는 21초과시 딜러 승
         if (dealer.isBust()) {
             dealer.updateWinningStatus(players.size, 0)
+            players.forEach { it.updateWinningStatus(winCount = 0, loseCount = 1) }
             return
         }
 
-        var dealerWinning = 0
-        var dealerLosing = 0
-        players.forEach { player ->
-            if (player.isBust() || dealer.calculateCard() > player.calculateCard()) {
-                dealerWinning++
-                player.updateWinningStatus(0, 1)
-            } else {
-                dealerLosing++
-                player.updateWinningStatus(1, 0)
-            }
+        val losePlayers = players.getLosePlayers(dealer.calculateCard())
+        losePlayers.forEach { it.updateWinningStatus(winCount = 0, loseCount = 1) }
+
+        players.forEach {
+            if(losePlayers.contains(it)) it.updateWinningStatus(winCount = 0, loseCount = 1)
+            else it.updateWinningStatus(winCount = 1, loseCount = 0)
         }
 
-        dealer.updateWinningStatus(dealerWinning, dealerLosing)
+        dealer.updateWinningStatus(winCount = players.size - losePlayers.size, loseCount = losePlayers.size)
     }
 }

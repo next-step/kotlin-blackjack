@@ -26,4 +26,8 @@ class Players(private val players: List<Player>) {
             player.initTurn(onPrintResultCallback)
         }
     }
+
+    fun getLosePlayers(dealerResult: Int): List<Player> {
+        return players.filter { it.isBust() || dealerResult > it.calculateCard() }
+    }
 }
