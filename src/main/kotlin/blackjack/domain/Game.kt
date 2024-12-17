@@ -2,35 +2,29 @@ package blackjack.domain
 
 import blackjack.domain.player.Participant
 import blackjack.domain.player.Dealer
-import blackjack.domain.player.Player
+import blackjack.domain.player.Players
 
 data class Game(
-    val players: List<Player>,
+    val players: Players,
     val drawer: Deck,
     val dealer: Dealer,
 ) {
     fun startGame(
-        onPrintResultCallback: ((List<Participant>) -> Unit),
+        onPrintResultCallback: ((Participant) -> Unit),
         onTurnStarted: (Participant) -> String,
     ) {
         drawer.fillDeck(Card.cards)
-        initTurn(onPrintResultCallback)
-        players.forEach { player ->
-            player.startTurn(onTurnStarted, onPrintResultCallback)
-        }
-        dealer.startTurn(onTurnStarted, onPrintResultCallback)
-    }
 
-    private fun initTurn(onPrintResultCallback: ((List<Participant>) -> Unit)) {
-        (players + dealer).forEach { player ->
-            repeat(2) { player.drawCard(CardDeck.drawCard()) }
-        }
-        onPrintResultCallback(players + dealer)
+        players.initTurns(onPrintResultCallback)
+        dealer.initTurn(onPrintResultCallback)
+
+        players.startTurns(onTurnStarted, onPrintResultCallback)
+        dealer.startTurn(onTurnStarted, onPrintResultCallback)
     }
 
     companion object {
         fun createGame(
-            players: List<Player>,
+            players: Players,
             cardDeck: Deck = CardDeck,
         ): Game {
             return Game(players, cardDeck, Dealer())

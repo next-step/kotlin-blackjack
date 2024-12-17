@@ -2,6 +2,7 @@ package blackjack.domain.player
 
 import blackjack.domain.Card
 import blackjack.domain.Card.Companion.SpecialNumber
+import blackjack.domain.CardDeck
 
 abstract class Participant(val name: String) {
     protected var cards = mutableListOf<Card>()
@@ -10,7 +11,7 @@ abstract class Participant(val name: String) {
 
     abstract fun startTurn(
         onTurnStarted: ((Participant) -> String)?,
-        onPrintResultCallback: (List<Participant>) -> Unit,
+        onPrintResultCallback: (Participant) -> Unit,
     )
 
     abstract fun showCards()
@@ -21,6 +22,11 @@ abstract class Participant(val name: String) {
 
     fun drawCard(newCard: Card) {
         cards.add(newCard)
+    }
+
+    fun initTurn(onPrintResultCallback: (Participant) -> Unit) {
+        repeat(2) { drawCard(CardDeck.drawCard()) }
+        onPrintResultCallback(this)
     }
 
     fun calculateCard(): Int {
