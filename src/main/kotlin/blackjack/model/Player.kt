@@ -2,6 +2,7 @@ package blackjack.model
 
 data class Player(
     val name: String,
+    private val deck: Deck
 ) {
     val cards: Cards = initCards()
 
@@ -15,7 +16,7 @@ data class Player(
         }
     }
 
-    private fun initCards(): Cards = Cards(setOf(Card.takeRandomCard(), Card.takeRandomCard()))
+    private fun initCards(): Cards = Cards(deck, setOf(deck.takeRandomCard(), deck.takeRandomCard()))
 
     fun takeNewCard() {
         cards.addNewCard()
@@ -29,3 +30,4 @@ data class Player(
         val ALPHABET_REGEX = Regex("^[A-Za-z]+$")
     }
 }
+

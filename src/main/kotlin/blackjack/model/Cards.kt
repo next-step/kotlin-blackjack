@@ -2,13 +2,13 @@ package blackjack.model
 
 import kotlin.math.min
 
-class Cards(cards: Set<Card> = setOf()) {
+class Cards(private val deck: Deck, cards: Set<Card> = setOf()) {
     private val _cards = cards.toMutableSet()
     val cards: Set<Card>
         get() = _cards.toSet()
 
     fun addNewCard() {
-        _cards.add(Card.takeRandomCard())
+        _cards.add(deck.takeRandomCard())
     }
 
     fun calculateCardValues(): Int {

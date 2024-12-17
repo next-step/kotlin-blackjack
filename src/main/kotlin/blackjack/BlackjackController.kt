@@ -1,12 +1,13 @@
 package blackjack
 
+import blackjack.model.Deck
 import blackjack.model.Player
 import blackjack.model.Players
 
-class BlackjackController {
+class BlackjackController(private val deck: Deck = Deck()) {
     fun createPlayers(playerNamesInput: String): Players {
         val playersNames = playerNamesInput.split()
-        val players = Players(playersNames.map(::Player))
+        val players = Players(playersNames.map { Player(it, deck) })
         return players
     }
 
