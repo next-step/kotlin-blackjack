@@ -10,7 +10,7 @@ object OutputView {
 
         println(String.format(DEAL_RESULT_MESSAGE, playerNames))
         participants.allPlayers().forEach {
-            println("${it.name}카드: ${it.ownedCards}")
+            println("${if (it.name == "Unknown") "딜러" else it.name} 카드: ${it.ownedCards}")
         }
         println()
     }
