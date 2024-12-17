@@ -1,7 +1,7 @@
 package blackjack.domain
 
 sealed class Participant(
-    val name: String,
+    val name: String = "Unknown",
     val ownedCards: MutableList<Card> = mutableListOf(),
     private val actions: MutableList<HitCommand> = mutableListOf(),
 ) {
@@ -34,8 +34,7 @@ sealed class Participant(
 
     class Dealer(
         private val deck: Deck,
-        private val displayName: String = "Dealer",
-    ) : Participant(displayName) {
+    ) : Participant() {
         fun deal(participants: Participants) {
             repeat(NUMBER_OF_DEAL_CARD) {
                 dealOneCardToEachPlayer(participants)
