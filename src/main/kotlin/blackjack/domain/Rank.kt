@@ -1,5 +1,7 @@
 package blackjack.domain
 
+import blackjack.domain.Hands.Companion
+
 enum class Rank(
     val value: Int,
     val tier: String,
@@ -23,7 +25,7 @@ enum class Rank(
 
     companion object {
         private const val ACE_ALTERNATIVE_VALUE = 10
-        private const val BLACKJACK_VALUE = 21
+        private const val THRESHOLD_VALUE = 21
 
         fun calculateTotalValue(ranks: List<Rank>): Int {
             val nonAceValue = ranks.filterNot(Rank::isAce).sumOf(Rank::value)
@@ -40,10 +42,10 @@ enum class Rank(
         private fun checkAceValue(
             aceCount: Int,
             aceAlternativeTotal: Int,
-        ): Boolean = checkAceCount(aceCount) && checkNotBust(aceAlternativeTotal)
+        ): Boolean = checkAceCount(aceCount) && checkNotOverflow(aceAlternativeTotal)
 
         private fun checkAceCount(aceCount: Int): Boolean = aceCount > 0
 
-        private fun checkNotBust(totalValue: Int): Boolean = BLACKJACK_VALUE >= totalValue
+        private fun checkNotOverflow(totalValue: Int): Boolean = THRESHOLD_VALUE >= totalValue
     }
 }
