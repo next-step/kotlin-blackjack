@@ -1,8 +1,10 @@
 package blackjack.view
 
+import blackjack.domain.DealerOutcomes
 import blackjack.domain.Participant
 import blackjack.domain.Participants
 import blackjack.domain.PlayerOutcomes
+import blackjack.domain.Result
 
 object OutputView {
     fun showGameStart(participants: Participants) {
@@ -29,12 +31,13 @@ object OutputView {
         println(DEALER_HIT_MESSAGE)
     }
 
-    fun showWinnerPlayers(
-        dealerWinningCount: Int,
-        dealerLoseCount: Int,
-        playerOutcomes: List<PlayerOutcomes>,
-    ) {
-        println("딜러: $dealerWinningCount 승 $dealerLoseCount 패")
+    fun showDealerWinningCount(results: DealerOutcomes) {
+        val winCount = results.numberOfWinds()
+        val loseCount = results.numberOfLose()
+        println("딜러: $winCount ${Result.WIN.message} $loseCount ${Result.LOSE.message}")
+    }
+
+    fun showWinnerPlayers(playerOutcomes: List<PlayerOutcomes>) {
         playerOutcomes.forEach {
             println("${it.participant.name}: ${it.results.message}")
         }

@@ -19,9 +19,9 @@ class BlackjackController {
 
         OutputView.showGameResult(participants = game.allPlayers())
 
+        OutputView.showDealerWinningCount(game.determineDealerWinningOutcome())
+
         OutputView.showWinnerPlayers(
-            game.calculateDealerWinningScore(),
-            game.calculateDealerLoseScore(),
             game.determineWinner(),
         )
     }

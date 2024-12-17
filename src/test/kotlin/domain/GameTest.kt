@@ -9,8 +9,8 @@ import blackjack.domain.HitCommand
 import blackjack.domain.Participant.Dealer
 import blackjack.domain.Participant.Player
 import blackjack.domain.Participants
+import blackjack.domain.Result
 import blackjack.domain.Suit
-import blackjack.view.Result
 import fixture.CardListFixture
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.collections.shouldContainExactly
@@ -231,15 +231,37 @@ class GameTest : DescribeSpec({
                     "player1", "player2", "player3",
                 )
         }
+    }
 
-        it("dealer의 승리 횟수를 계산한다.") {
-            val actual = sut.calculateDealerWinningScore()
-            actual shouldBe 1
+    describe("딜러의 승률을 계산한다.") {
+        lateinit var player1: Player
+        lateinit var player2: Player
+        lateinit var player3: Player
+        lateinit var player4: Player
+        lateinit var sut: Game
+
+        beforeTest {
+            player1 = Player("player1")
+            player2 = Player("player2")
+            player3 = Player("player3")
+            player4 = Player("player4")
+            val fixedDealer = Dealer(Deck(CardListFixture.mixedCardList()))
+            val fixedParticipants = Participants(listOf(player1, player2, player3, player4))
+            sut = Game(GameMembers(fixedParticipants, fixedDealer))
         }
 
-        it("dealer의 패배 횟수를 계산한다.") {
-            val actual = sut.calculateDealerLoseScore()
-            actual shouldBe 3
+        context("딜러의 카드 합이 플레이어보다 크거나 같으면") {
+            it("딜러가 승리한다.") {
+                val actual = sut.determineDealerWinningOutcome()
+                actual.results.filter { it == Result.WIN }.size shouldBe 1
+            }
+        }
+
+        context("딜러의 카드 합이 플레이어보다 작으면") {
+            it("패배한다.") {
+                val actual = sut.determineDealerWinningOutcome()
+                actual.results.filter { it == Result.LOSE }.size shouldBe 3
+            }
         }
     }
 })

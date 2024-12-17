@@ -1,7 +1,5 @@
 package blackjack.domain
 
-import blackjack.view.Result
-
 class Game(
     private val gameMembers: GameMembers,
 ) {
@@ -37,9 +35,19 @@ class Game(
         return gameMembers.playersWithoutDealer().allPlayers().map { PlayerOutcomes.from(it, dealerCardSum) }
     }
 
-    fun calculateDealerWinningScore(): Int = determineWinner().filter { it.results == Result.LOSE }.size
+    fun determineDealerWinningOutcome(): DealerOutcomes {
+        val dealer = gameMembers.dealer()
+        val players = gameMembers.playersWithoutDealer()
 
-    fun calculateDealerLoseScore(): Int = determineWinner().filter { it.results == Result.WIN }.size
+        val dealerComparisonResults =
+            players.allPlayers().map { player ->
+                when {
+                    dealer.sumOfCard() >= player.sumOfCard() -> Result.WIN
+                    else -> Result.LOSE
+                }
+            }
+        return DealerOutcomes(dealerComparisonResults)
+    }
 
     fun isDealerBust(): Boolean {
         return gameMembers.dealer().sumOfCard() > 21
