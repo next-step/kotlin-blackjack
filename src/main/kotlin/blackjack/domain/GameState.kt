@@ -16,6 +16,12 @@ data class GameState(
     val betValue: Int
         get() = bet.value
 
+    val isBust: Boolean
+        get() = hands.isBust
+
+    val isBlackjack: Boolean
+        get() = hands.isBlackjack
+
     fun addCard(card: Card) {
         hands.add(card)
     }
