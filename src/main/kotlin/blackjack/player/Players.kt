@@ -1,6 +1,6 @@
 package blackjack.player
 
-import betting.TurnResult
+import betting.BetResult
 import blackjack.card.Card
 import blackjack.dealer.Dealer
 
@@ -15,29 +15,22 @@ class Players(
         isHitCard: (Player) -> Boolean,
         draw: () -> Card,
         afterPlay: (Player) -> Unit,
-        dealer: Dealer,
-    ): TurnResult {
-        val (updatedPlayers, updatedDealer) =
-            players.fold(initial = emptyList<Player>() to dealer) { (currentPlayers, currentDealer), player ->
-                if (player.isBust()) {
-                    return@fold currentPlayers + player to currentDealer
-                }
-
-                val playerAfterTurn = player.play(isHitCard = isHitCard(player), draw = draw).also(afterPlay)
-                if (playerAfterTurn.isBust()) {
-                    val newDealer = currentDealer.win(player = playerAfterTurn)
-                    return@fold currentPlayers + playerAfterTurn.lose() to newDealer
-                }
-
-                return@fold currentPlayers + playerAfterTurn to currentDealer
-            }
-
-        return TurnResult.status(players = updatedPlayers, dealer = updatedDealer)
-    }
+    ): Players =
+        Players(
+            players.map { it.play(isHitCard = isHitCard(it), draw = draw).also(afterPlay) },
+        )
 
     fun sum(): Double = players.sumOf { it.betAmount }
 
-    fun applyWinToWinners(): Players = Players(players = players.map { if (it.isBust()) it else it.win() })
+    fun applyWinToRemainPlayer(dealer: Dealer): Players {
+        if(dealer.isBust()) {
+            return Players(players = players.map { if (it.isBust()) it else it.win() })
+        }
+
+        return this
+    }
+
+    fun getLosers(): List<Player> = players.filter { it.betResult is BetResult.Lose }
 
     companion object {
         fun generateFromNames(playerNames: List<String>) = Players(players = playerNames.map { Player.ready(name = it) })

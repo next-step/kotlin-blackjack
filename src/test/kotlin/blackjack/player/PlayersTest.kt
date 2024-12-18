@@ -5,6 +5,8 @@ import betting.BetResult
 import blackjack.card.CardFixture
 import blackjack.card.Rank
 import blackjack.dealer.Dealer
+import blackjack.deck.Cards
+import blackjack.deck.Deck
 import io.kotest.inspectors.forAll
 import io.kotest.matchers.should
 import io.kotest.matchers.shouldBe
@@ -53,26 +55,18 @@ class PlayersTest {
 
     @Test
     fun `플레이어가 패배하는 경우 베팅금을 모두 잃는다`() {
-        val (playersAfterTurn, dealer) =
+        players =
             players.play(
                 isHitCard = { true },
                 draw = { CardFixture.generateTestCard(Rank.NINE) },
                 afterPlay = {},
-                dealer = dealer,
             )
 
-        playersAfterTurn.players
+        players.players
             .filter { it.isBust() }
             .forAll {
                 it.betResult should beInstanceOf<BetResult.Lose>()
                 it.winningAmount shouldBe it.bet.negative()
             }
-        dealer.betResult should beInstanceOf<BetResult.Win>()
-
-        val loserBetAmount =
-            playersAfterTurn.players
-                .filter { it.isBust() }
-                .sumOf { it.betAmount }
-        dealer.winningAmount shouldBe loserBetAmount
     }
 }

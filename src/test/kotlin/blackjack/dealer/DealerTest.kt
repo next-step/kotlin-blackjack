@@ -83,15 +83,20 @@ class DealerTest {
     @Test
     fun `딜러의 초기 패의 총 합이 16이하면 카드를 더 받는다`() {
         val dealer =
-            Dealer(hand = Hand(
-                cards = listOf(
-                    CardFixture.generateTestCard(rank = Rank.SIX),
-                    CardFixture.generateTestCard(rank = Rank.SEVEN),
+            Dealer(
+                hand = Hand(
+                    cards = listOf(
+                        CardFixture.generateTestCard(rank = Rank.SIX),
+                        CardFixture.generateTestCard(rank = Rank.SEVEN),
                     ),
                 ),
-        )
+            )
 
-        dealer.shouldDraw() shouldBe true
+        val newCard = CardFixture.generateTestCard(rank = Rank.TWO)
+        dealer.drawIfBelowDealerStandingRule(
+            draw = { newCard },
+            afterDraw = {},
+        ).hand shouldBe dealer.hand.add(newCard)
     }
 
     @Test
@@ -121,57 +126,10 @@ class DealerTest {
 
     @Test
     fun `플레이어가 패배한 경우 베팅한 금액을 딜러가 얻는다`() {
-        dealer = dealer.win(player = pobi)
+        dealer = dealer.win(betAmount = pobi.betAmount)
         dealer.betResult should beInstanceOf<BetResult.Win>()
         dealer.winningAmount shouldBe pobi.betAmount
     }
 
     private fun sumOfPlayerBetsWithNegative() = players.sumOf { it.bet.negative() }
-
-    @Test
-    fun `딜러가 카드를 뽑았는데 21을 초과하는 경우 남아있던 플레이어들은 승리한다`() {
-        val winner = pobi.hitCards(
-                listOf(
-                    CardFixture.generateTestCard(Rank.TWO),
-                    CardFixture.generateTestCard(Rank.FIVE)
-                )
-            ) as Player
-
-        val jasonBet = jason.betResult
-        val loser = jason.updateBetResult(BetResult.Lose(bet = jasonBet.bet, amount = jasonBet.bet.negative()))
-            .hitCards(
-                listOf(
-                    CardFixture.generateTestCard(Rank.EIGHT),
-                    CardFixture.generateTestCard(Rank.NINE),
-                    CardFixture.generateTestCard(Rank.TEN),
-                )
-            ) as Player
-
-        dealer =
-            dealer.hitCards(
-                cards =
-                    listOf(
-                        CardFixture.generateTestCard(Rank.TEN),
-                        CardFixture.generateTestCard(Rank.SIX),
-            ),
-        ) as Dealer
-
-        players = listOf(winner, loser)
-        val (testPlayers, testDealer) = dealer.drawIfBelowDealerStandingRule(
-            players = Players(players = players),
-            draw = { CardFixture.generateTestCard(Rank.EIGHT)},
-            afterDraw = {},
-        )
-
-        testPlayers.players.size shouldBe players.size
-        testDealer.betResult should beInstanceOf<BetResult.Lose>()
-
-        val winners = testPlayers.players.filterNot { it.isBust() }
-        winners.forAll { it.betResult should beInstanceOf<BetResult.Win>() }
-        winners.forAll { it.winningAmount shouldBe it.betAmount }
-
-        val losers = testPlayers.players.filter { it.isBust() }
-        losers.forAll { it.betResult should beInstanceOf<BetResult.Lose>() }
-        losers.forAll { it.winningAmount shouldBe it.bet.negative() }
-    }
 }

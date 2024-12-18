@@ -11,7 +11,15 @@ class Player(
     override val hand: Hand = Hand(cards = emptyList()),
     override val betResult: BetResult = BetResult.Default(),
 ) : Participant<Player> {
-    override fun hitCard(card: Card): Player = Player(name = name, hand = hand.add(card), betResult = betResult)
+    override fun hitCard(card: Card): Player {
+        val handWithNewCard = hand.add(card)
+        val result = Player(name = name, hand = handWithNewCard, betResult = betResult)
+
+        return when {
+            result.isBust() -> result.lose()
+            else -> result
+        }
+    }
 
     fun handleBlackJack(dealer: Dealer): Player =
         when {
@@ -26,20 +34,18 @@ class Player(
                 )
         }
 
-    fun win(): Player =
-        updateBetResult(betResult = BetResult.Win(bet = this.bet, amount = this.betAmount))
+    fun win(): Player = updateBetResult(betResult = BetResult.Win(bet = this.bet, amount = this.betAmount))
 
-    fun lose(): Player =
-        updateBetResult(betResult = BetResult.Lose(bet = this.bet, amount = this.bet.negative()))
+    fun lose(): Player = updateBetResult(betResult = BetResult.Lose(bet = this.bet, amount = this.bet.negative()))
 
-    fun updateBetResult(betResult: BetResult): Player =
-        Player(name = this.name, hand = this.hand, betResult = betResult)
+    fun updateBetResult(betResult: BetResult): Player = Player(name = this.name, hand = this.hand, betResult = betResult)
 
     fun play(
         isHitCard: Boolean,
         draw: () -> Card,
     ): Player =
         when {
+            this.isBust() -> this
             !isHitCard -> this
             else -> this.hitCard(draw())
         }

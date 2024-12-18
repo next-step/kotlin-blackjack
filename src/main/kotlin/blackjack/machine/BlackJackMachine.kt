@@ -1,6 +1,5 @@
 package blackjack.machine
 
-import betting.TurnResult
 import blackjack.dealer.Dealer
 import blackjack.deck.Deck
 import blackjack.participant.createParticipants
@@ -31,21 +30,24 @@ class BlackJackMachine(
         ResultView.printPlayersCardStatus(participants = createParticipants(dealer = dealer, players = players))
 
         while (Rule.isGameActive(players = players, dealer = dealer)) {
-            val (playersAfterTurn, dealerAfterPlayerTurn) = players.play(
+            players = players.play(
                 isHitCard = { player -> InputView.isHitCard(player) },
                 draw = { deck.draw() },
                 afterPlay = { player -> ResultView.printPlayerCard(player) },
-                dealer = dealer,
             )
 
-            val (playersAfterDealerDraw, dealerAfterDraw) = dealerAfterPlayerTurn.drawIfBelowDealerStandingRule(
-                players = playersAfterTurn,
+            players.getLosers()
+                .takeIf { it.isNotEmpty() }
+                ?.sumOf { it.betAmount }
+                ?.run {dealer = dealer.win(betAmount = this) }
+
+            dealer = dealer.drawIfBelowDealerStandingRule(
                 draw = { deck.draw() },
                 afterDraw = { ResultView.printDealerDrawCard() },
             )
+            dealer = dealer.handleBust(players.getRemainedPlayers().sum())
+            players = players.applyWinToRemainPlayer(dealer = dealer)
 
-            players = playersAfterDealerDraw
-            dealer = dealerAfterDraw
             ResultView.printPlayersCardStatusAndSum(participant = createParticipants(dealer = dealer, players = players))
         }
 
@@ -55,16 +57,12 @@ class BlackJackMachine(
     private fun handleBlackJack(
         players: Players,
         dealer: Dealer,
-    ): TurnResult =
-        TurnResult.status(
-            players =
-                Players(
-                    players.players
-                        .map { it.updateBetResult(InputView.inputBettingAmount(it)) }
-                        .map { it.handleBlackJack(dealer = dealer) },
-                ),
-            dealer = dealer.handleBlackJack(blackJackPlayers = players.players.filter { it.isBlackjack() })
-        )
+    ): Pair<Players, Dealer> =
+        Players(
+            players.players
+                .map { it.updateBetResult(InputView.inputBettingAmount(it)) }
+                .map { it.handleBlackJack(dealer = dealer) },
+        ) to dealer.handleBlackJack(blackJackPlayers = players.players.filter { it.isBlackjack() })
 
     companion object {
         private const val DEFAULT_HAND_SIZE = 2
