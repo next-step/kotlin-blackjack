@@ -68,15 +68,15 @@ class DealerTest {
 
     @Test
     fun `딜러의 패의 총 합이 21을 넘어가면 false를 반환한다`() {
-        val dealer =
-            Dealer(hand = Hand(
-                cards = listOf(
+        val hand =
+            Hand(
+                listOf(
                     CardFixture.generateTestCard(rank = Rank.SIX),
                     CardFixture.generateTestCard(rank = Rank.SEVEN),
                     CardFixture.generateTestCard(rank = Rank.TEN),
-                    ),
                 ),
-        )
+            )
+        val dealer = Dealer(hand = hand)
 
         dealer.isBust() shouldBe true
     }
@@ -85,19 +85,22 @@ class DealerTest {
     fun `딜러의 초기 패의 총 합이 16이하면 카드를 더 받는다`() {
         val dealer =
             Dealer(
-                hand = Hand(
-                    cards = listOf(
-                        CardFixture.generateTestCard(rank = Rank.SIX),
-                        CardFixture.generateTestCard(rank = Rank.SEVEN),
+                hand =
+                    Hand(
+                        cards =
+                            listOf(
+                                CardFixture.generateTestCard(rank = Rank.SIX),
+                                CardFixture.generateTestCard(rank = Rank.SEVEN),
+                            ),
                     ),
-                ),
             )
 
         val newCard = CardFixture.generateTestCard(rank = Rank.TWO)
-        dealer.drawIfBelowDealerStandingRule(
-            deck = Deck(cards = Cards(listOf(newCard))),
-            afterDraw = {},
-        ).hand shouldBe dealer.hand.add(newCard)
+        dealer
+            .drawIfBelowDealerStandingRule(
+                deck = Deck(cards = Cards(listOf(newCard))),
+                afterDraw = {},
+            ).hand shouldBe dealer.hand.add(newCard)
     }
 
     @Test

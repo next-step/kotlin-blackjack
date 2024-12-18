@@ -23,7 +23,7 @@ class Players(
     fun sum(): Double = players.sumOf { it.betAmount }
 
     fun applyWinToRemainPlayer(dealer: Dealer): Players {
-        if(dealer.isBust()) {
+        if (dealer.isBust()) {
             return Players(players = players.map { if (it.isBust()) it else it.win() })
         }
 

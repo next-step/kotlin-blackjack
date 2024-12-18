@@ -31,16 +31,15 @@ class DeckTest {
     }
 
     companion object {
-        fun generateTestDeck() = Deck(
-            cards =
-            Cards(
-                cards =
-                listOf(
-                    CardFixture.generateTestCard(Rank.ACE),
-                    CardFixture.generateTestCard(Rank.FIVE),
-                    CardFixture.generateTestCard(Rank.SIX),
+        fun generateTestDeck() =
+            Deck(
+                Cards(
+                    listOf(
+                        CardFixture.generateTestCard(Rank.ACE),
+                        CardFixture.generateTestCard(Rank.FIVE),
+                        CardFixture.generateTestCard(Rank.SIX),
+                    ),
                 ),
-            ),
-        )
+            )
     }
 }

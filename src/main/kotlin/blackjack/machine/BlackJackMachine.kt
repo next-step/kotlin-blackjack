@@ -11,7 +11,6 @@ import blackjack.view.ResultView
 class BlackJackMachine(
     private val deck: Deck,
 ) {
-
     fun play() {
         val playerList =
             Players
@@ -30,25 +29,34 @@ class BlackJackMachine(
         ResultView.printPlayersCardStatus(participants = createParticipants(dealer = dealer, players = players))
 
         while (Rule.isGameActive(players = players, dealer = dealer)) {
-            players = players.play(
-                isHitCard = { player -> InputView.isHitCard(player) },
-                deck = deck,
-                afterPlay = { player -> ResultView.printPlayerCard(player) },
-            )
+            players =
+                players.play(
+                    isHitCard = { player -> InputView.isHitCard(player) },
+                    deck = deck,
+                    afterPlay = { player -> ResultView.printPlayerCard(player) },
+                )
 
-            players.getLosers()
+            players
+                .getLosers()
                 .takeIf { it.isNotEmpty() }
                 ?.sumOf { it.betAmount }
-                ?.run {dealer = dealer.win(betAmount = this) }
+                ?.run { dealer = dealer.win(betAmount = this) }
 
-            dealer = dealer.drawIfBelowDealerStandingRule(
-                deck = deck,
-                afterDraw = { ResultView.printDealerDrawCard() },
-            )
+            dealer =
+                dealer.drawIfBelowDealerStandingRule(
+                    deck = deck,
+                    afterDraw = { ResultView.printDealerDrawCard() },
+                )
             dealer = dealer.handleBust(players.getRemainedPlayers().sum())
             players = players.applyWinToRemainPlayer(dealer = dealer)
 
-            ResultView.printPlayersCardStatusAndSum(participant = createParticipants(dealer = dealer, players = players))
+            ResultView.printPlayersCardStatusAndSum(
+                participant =
+                    createParticipants(
+                        dealer = dealer,
+                        players = players,
+                    ),
+            )
         }
 
         ResultView.printBetResult(participantBets = (players.players + dealer).associateWith { it.betResult })
