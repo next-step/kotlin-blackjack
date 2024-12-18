@@ -4,11 +4,12 @@ import betting.Bet
 import betting.BetResult
 import blackjack.card.CardFixture
 import blackjack.card.Rank
+import blackjack.deck.Cards
+import blackjack.deck.Deck
 import blackjack.machine.BlackJackMachine.Companion.BONUS_RATIO
 import blackjack.participant.ParticipantFixture.hitCards
 import blackjack.player.Hand
 import blackjack.player.Player
-import blackjack.player.Players
 import io.kotest.inspectors.forAll
 import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.should
@@ -94,7 +95,7 @@ class DealerTest {
 
         val newCard = CardFixture.generateTestCard(rank = Rank.TWO)
         dealer.drawIfBelowDealerStandingRule(
-            draw = { newCard },
+            deck = Deck(cards = Cards(listOf(newCard))),
             afterDraw = {},
         ).hand shouldBe dealer.hand.add(newCard)
     }

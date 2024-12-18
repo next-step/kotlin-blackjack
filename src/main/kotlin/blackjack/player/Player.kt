@@ -3,6 +3,7 @@ package blackjack.player
 import betting.BetResult
 import blackjack.card.Card
 import blackjack.dealer.Dealer
+import blackjack.deck.Deck
 import blackjack.machine.BlackJackMachine.Companion.BONUS_RATIO
 import blackjack.participant.Participant
 
@@ -42,12 +43,12 @@ class Player(
 
     fun play(
         isHitCard: Boolean,
-        draw: () -> Card,
+        deck: Deck,
     ): Player =
         when {
             this.isBust() -> this
             !isHitCard -> this
-            else -> this.hitCard(draw())
+            else -> this.hitCard(deck.draw())
         }
 
     companion object {

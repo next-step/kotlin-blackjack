@@ -3,6 +3,7 @@ package blackjack.dealer
 import betting.Bet
 import betting.BetResult
 import blackjack.card.Card
+import blackjack.deck.Deck
 import blackjack.machine.BlackJackMachine.Companion.BONUS_RATIO
 import blackjack.participant.Participant
 import blackjack.player.Hand
@@ -18,13 +19,13 @@ class Dealer(
     private val notDraw: Boolean = hand.sum() > DEALER_STANDING_RULE
 
     fun drawIfBelowDealerStandingRule(
-        draw: () -> Card,
+        deck: Deck,
         afterDraw: (Dealer) -> Unit,
     ): Dealer {
         if (notDraw) return this
 
         return this
-            .hitCard(draw())
+            .hitCard(deck.draw())
             .also { afterDraw(it) }
     }
 

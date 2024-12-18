@@ -1,8 +1,8 @@
 package blackjack.player
 
 import betting.BetResult
-import blackjack.card.Card
 import blackjack.dealer.Dealer
+import blackjack.deck.Deck
 
 class Players(
     val players: List<Player>,
@@ -13,11 +13,11 @@ class Players(
 
     fun play(
         isHitCard: (Player) -> Boolean,
-        draw: () -> Card,
+        deck: Deck,
         afterPlay: (Player) -> Unit,
     ): Players =
         Players(
-            players.map { it.play(isHitCard = isHitCard(it), draw = draw).also(afterPlay) },
+            players.map { it.play(isHitCard = isHitCard(it), deck = deck).also(afterPlay) },
         )
 
     fun sum(): Double = players.sumOf { it.betAmount }

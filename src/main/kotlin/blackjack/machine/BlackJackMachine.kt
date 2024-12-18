@@ -32,7 +32,7 @@ class BlackJackMachine(
         while (Rule.isGameActive(players = players, dealer = dealer)) {
             players = players.play(
                 isHitCard = { player -> InputView.isHitCard(player) },
-                draw = { deck.draw() },
+                deck = deck,
                 afterPlay = { player -> ResultView.printPlayerCard(player) },
             )
 
@@ -42,7 +42,7 @@ class BlackJackMachine(
                 ?.run {dealer = dealer.win(betAmount = this) }
 
             dealer = dealer.drawIfBelowDealerStandingRule(
-                draw = { deck.draw() },
+                deck = deck,
                 afterDraw = { ResultView.printDealerDrawCard() },
             )
             dealer = dealer.handleBust(players.getRemainedPlayers().sum())

@@ -55,10 +55,13 @@ class PlayersTest {
 
     @Test
     fun `플레이어가 패배하는 경우 베팅금을 모두 잃는다`() {
+        val deck =
+            Deck(cards = Cards(listOf(CardFixture.generateTestCard(Rank.NINE), CardFixture.generateTestCard(Rank.TEN))))
+
         players =
             players.play(
                 isHitCard = { true },
-                draw = { CardFixture.generateTestCard(Rank.NINE) },
+                deck = deck,
                 afterPlay = {},
             )
 
