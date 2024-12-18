@@ -1,5 +1,6 @@
 package blackjack.controller
 
+import blackjack.domain.card.GeneratorCards
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 

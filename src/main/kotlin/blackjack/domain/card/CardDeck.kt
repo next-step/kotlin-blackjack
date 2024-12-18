@@ -1,6 +1,5 @@
-package blackjack.domain
+package blackjack.domain.card
 
-import blackjack.controller.GeneratorCards
 import java.util.LinkedList
 
 class CardDeck {

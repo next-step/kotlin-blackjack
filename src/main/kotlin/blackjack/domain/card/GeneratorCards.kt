@@ -1,8 +1,5 @@
-package blackjack.controller
+package blackjack.domain.card
 
-import blackjack.domain.BlackJackCard
-import blackjack.domain.CardInfo
-import blackjack.domain.CardType
 import java.util.LinkedList
 
 class GeneratorCards {
@@ -14,7 +11,7 @@ class GeneratorCards {
     private fun generateCards(): List<BlackJackCard> {
         val cards = mutableListOf<BlackJackCard>()
         CardType.entries.map { type ->
-            CardInfo.entries.map { info ->
+            CardNumber.entries.map { info ->
                 cards.add(BlackJackCard(type, info))
             }
         }
