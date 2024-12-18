@@ -1,6 +1,6 @@
-package blackjack.domain
+package blackjack.domain.card
 
-enum class Rank(val value: Int) {
+enum class Denomination(val score: Int) {
     ACE(11),
     TWO(2),
     THREE(3),
@@ -14,4 +14,7 @@ enum class Rank(val value: Int) {
     JACK(10),
     QUEEN(10),
     KING(10),
+    ;
+    val isAce: Boolean
+        get() = this == ACE
 }
