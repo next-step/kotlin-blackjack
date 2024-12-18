@@ -6,6 +6,12 @@ class Hands {
     val size: Int
         get() = cards.size
 
+    val isBust: Boolean
+        get() = Rank.isBust(calculateTotalValue())
+
+    val isBlackjack: Boolean
+        get() = Rank.isBlackjack(calculateTotalValue(), size)
+
     fun add(card: Card) {
         cards.add(card)
     }

@@ -22,29 +22,32 @@ enum class Rank(
     fun isAce(): Boolean = this == ACE
 
     companion object {
-        private const val ACE_ALTERNATIVE_VALUE = 11
+        private const val ACE_ALTERNATIVE_VALUE = 10
+        private const val BLACKJACK_VALUE = 21
+        private const val BLACKJACK_SIZE = 2
 
         fun calculateTotalValue(ranks: List<Rank>): Int {
             val nonAceValue = ranks.filterNot(Rank::isAce).sumOf(Rank::value)
             val aceCount = ranks.count(Rank::isAce)
+            val aceAlternativeTotal = nonAceValue + aceCount + ACE_ALTERNATIVE_VALUE
 
-            return if (checkAceValue(aceCount, nonAceValue)) {
-                nonAceValue + ACE_ALTERNATIVE_VALUE + (aceCount - 1)
+            return if (shouldUseAceAlternativeValue(aceCount, aceAlternativeTotal)) {
+                aceAlternativeTotal
             } else {
                 nonAceValue + aceCount
             }
         }
 
-        private fun checkAceValue(
-            aceCount: Int,
-            nonAceValue: Int,
-        ): Boolean = checkAceCount(aceCount) && checkNotBurst(nonAceValue, aceCount)
+        fun isBust(totalValue: Int): Boolean = totalValue > BLACKJACK_VALUE
 
-        private fun checkAceCount(aceCount: Int): Boolean = aceCount > 0
+        fun isBlackjack(
+            totalValue: Int,
+            size: Int,
+        ): Boolean = size == BLACKJACK_SIZE && totalValue == BLACKJACK_VALUE
 
-        private fun checkNotBurst(
-            nonAceValue: Int,
+        private fun shouldUseAceAlternativeValue(
             aceCount: Int,
-        ): Boolean = !GameStatus.isBurst(nonAceValue + ACE_ALTERNATIVE_VALUE + (aceCount - 1))
+            aceAlternativeTotal: Int,
+        ): Boolean = aceCount > 0 && !isBust(aceAlternativeTotal)
     }
 }

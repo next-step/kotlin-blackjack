@@ -2,39 +2,38 @@ package blackjack.domain
 
 sealed class Participant(
     open val name: String,
-    protected open val hands: Hands,
-    status: GameStatus = GameStatus.PLAYING,
+    protected open val gameState: GameState,
 ) {
     val score: Int
-        get() = hands.calculateTotalValue()
+        get() = gameState.score
 
     val handSize: Int
-        get() = hands.size
+        get() = gameState.handSize
 
     val cards: String
-        get() = hands.toString()
+        get() = gameState.cards
 
-    val isPlayable: Boolean
-        get() = status.isPlayable()
+    val isBurst: Boolean
+        get() = gameState.isBust
 
-    open var status = status
-        protected set
+    val isBlackjack: Boolean
+        get() = gameState.isBlackjack
+
+    val profit: Int
+        get() = gameState.betValue
 
     open fun initialDraw(deck: Deck) {
-        hands.add(deck.draw())
-        hands.add(deck.draw())
-        handleStatus()
+        repeat(INITIAL_DRAW_COUNT) {
+            hit(deck)
+        }
     }
 
     fun hit(deck: Deck) {
-        if (!isPlayable) {
-            return
-        }
-
         val card = deck.draw()
-        hands.add(card)
-        handleStatus()
+        gameState.addCard(card)
     }
 
-    abstract fun handleStatus()
+    companion object {
+        const val INITIAL_DRAW_COUNT = 2
+    }
 }
