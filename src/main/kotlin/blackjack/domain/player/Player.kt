@@ -1,7 +1,7 @@
 package blackjack.domain.player
 
 import blackjack.domain.card.BlackJackCard
-import blackjack.view.InputView
+import blackjack.domain.state.ResultState
 
 interface Player {
     val name: String
@@ -15,11 +15,11 @@ interface Player {
     fun isDoneGame(): Boolean
 
     fun turn(
-        inputView: InputView,
         nextCard: () -> BlackJackCard,
+        display: (Any) -> Unit,
     )
 
-    fun comparePoints(opponent: Player): Boolean
+    fun comparePoints(opponent: Player): ResultState
 
     companion object {
         const val BLACKJACK_POINT = 21

@@ -1,13 +1,13 @@
 package blackjack.domain.player
 
-import blackjack.controller.YNBooleanValue
 import blackjack.domain.card.BlackJackCard
 import blackjack.domain.player.Player.Companion.ACE_CARD_EXTRA_POINT
 import blackjack.domain.player.Player.Companion.ACE_CARD_THRESHOLD
 import blackjack.domain.player.Player.Companion.BLACKJACK_POINT
-import blackjack.view.InputView
+import blackjack.domain.state.InputState
+import blackjack.domain.state.ResultState
 
-class GameUser(override val name: String) : Player {
+class GameUser(override val name: String, private val decision: () -> InputState = { InputState.STAY }) : Player {
     private var doneGame = false
     override val cards = mutableListOf<BlackJackCard>()
     override val points: Int
@@ -47,27 +47,21 @@ class GameUser(override val name: String) : Player {
     }
 
     override fun turn(
-        inputView: InputView,
         nextCard: () -> BlackJackCard,
-    ) {
-        val inputData = inputView.inputNextDecision(this.name)
-        val decision = YNBooleanValue.toBoolean(inputData)
-        handleCurrentInput(decision, nextCard)
-    }
-
-    override fun comparePoints(opponent: Player): Boolean {
-        throw IllegalStateException("승패는 딜러와 확인해 주세요")
-    }
-
-    private fun handleCurrentInput(
-        decision: Boolean?,
-        nextCard: () -> BlackJackCard,
+        display: (Any) -> Unit,
     ) {
         // 21이 넘는 경우 종료됨.
-        when (decision) {
-            true -> cards.add(nextCard())
-            false -> setDoneGame(true)
-            else -> {}
+        when (decision()) {
+            InputState.HIT -> {
+                cards.add(nextCard())
+                display(cards)
+            }
+            InputState.STAY -> setDoneGame(true)
+            InputState.NONE -> {}
         }
+    }
+
+    override fun comparePoints(opponent: Player): ResultState {
+        throw IllegalStateException("승패는 딜러와 확인해 주세요")
     }
 }

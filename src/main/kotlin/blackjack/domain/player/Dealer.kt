@@ -2,10 +2,18 @@ package blackjack.domain.player
 
 import blackjack.domain.card.BlackJackCard
 import blackjack.domain.player.Player.Companion.BLACKJACK_POINT
-import blackjack.view.InputView
+import blackjack.domain.state.InputState
+import blackjack.domain.state.ResultState
 
 class Dealer : Player {
-    private val gameUser = GameUser(DEALER_NAME)
+    private val gameUser =
+        GameUser(DEALER_NAME) {
+            if (points > DEALER_THRESHOLD_POINTS) {
+                InputState.STAY
+            } else {
+                InputState.HIT
+            }
+        }
 
     override val name: String
         get() = gameUser.name
@@ -28,20 +36,27 @@ class Dealer : Player {
     }
 
     override fun turn(
-        inputView: InputView,
         nextCard: () -> BlackJackCard,
+        display: (Any) -> Unit,
     ) {
-        inputView.printAddCardDealer(points)
+        display("딜러는 16이하라 한장의 카드를 더 받았습니다.")
         cards.add(nextCard())
     }
 
-    override fun comparePoints(opponent: Player): Boolean {
-        return if (gameUser.points > BLACKJACK_POINT) {
-            false
-        } else {
-            (points <= BLACKJACK_POINT) &&
-                ((opponent.points > BLACKJACK_POINT) || (points > opponent.points))
+    override fun comparePoints(opponent: Player): ResultState {
+        if (isBust(points)) return ResultState.LOSE
+        if (isBust(opponent.points)) return ResultState.WIN
+        points.compareTo(opponent.points).let {
+            when {
+                it > 0 -> return ResultState.WIN
+                it < 0 -> return ResultState.LOSE
+                else -> return ResultState.DRAW
+            }
         }
+    }
+
+    private fun isBust(points: Int): Boolean {
+        return points > BLACKJACK_POINT
     }
 
     companion object {

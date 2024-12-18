@@ -4,24 +4,10 @@ import blackjack.domain.card.CardDeck
 import blackjack.domain.player.Dealer
 import blackjack.domain.player.GameUser
 import blackjack.domain.player.Player
+import blackjack.domain.state.GameResult
+import blackjack.domain.state.toInputState
 import blackjack.view.InputView
 import blackjack.view.ResultView
-
-enum class YNBooleanValue(val key: String, val booleanValue: Boolean) {
-    YES("y", true),
-    NO("n", false),
-    ;
-
-    companion object {
-        fun toBoolean(key: String): Boolean? {
-            return when (key) {
-                YES.key -> YES.booleanValue
-                NO.key -> NO.booleanValue
-                else -> null
-            }
-        }
-    }
-}
 
 class BlackJackGame(users: String) {
     val allUsers = settingUsers(users)
@@ -42,7 +28,7 @@ class BlackJackGame(users: String) {
         val usersText = users.replace(" ", "")
         val userList =
             usersText.split(",").map {
-                GameUser(it)
+                GameUser(it) { InputView.inputNextDecision(it).toInputState() }
             }.toMutableList<Player>()
         return userList.toList()
     }
@@ -60,44 +46,34 @@ class BlackJackGame(users: String) {
         this.resultView = resultView
     }
 
-    private fun handleCurrentInput(
-        user: Player,
-        decision: Boolean?,
-    ) {
-        // 21이 넘는 경우 종료됨.
-        when (decision) {
-            true -> user.cards.add(cardDeck.getNextCard())
-            false -> user.setDoneGame(true)
-            else -> {}
-        }
-    }
-
-    fun turnGameUser(
-        user: Player,
-        inputView: InputView,
-    ) {
-        inputView.startUser()
+    fun turnGameUser(user: Player) {
         while (user.isDoneGame().not()) {
-            user.turn(inputView) { cardDeck.getNextCard() }
+            user.turn(
+                nextCard = { cardDeck.getNextCard() },
+                display = { message -> ResultView.printMessage(message) },
+            )
         }
     }
 }
 
 fun main() {
-    val inputView = InputView()
-    val resultView = ResultView()
-    val users = inputView.inputUsers()
+    val users = InputView.inputUsers()
     val game = BlackJackGame(users)
 
-    game.start(inputView, resultView)
-    inputView.startGame(game.dealer, game.allUsers, 2)
+    game.start(InputView, ResultView)
+    ResultView.printStartGame(game.dealer, game.allUsers, 2)
 
     (listOf(game.dealer) + game.allUsers).forEach {
-        resultView.printPlayerCards(it)
+        ResultView.printPlayerCards(it)
     }
 
-    game.allUsers.forEach {
-        game.turnGameUser(it, inputView)
+    (game.allUsers + game.dealer).forEach {
+        game.turnGameUser(it)
     }
-    resultView.printResultCards(game.getUsers(), game.getDealer())
+
+    val gameResult = GameResult(game.dealer, game.allUsers)
+
+    ResultView.printResultCards(game.getUsers(), game.getDealer())
+
+    ResultView.printGameResult(gameResult)
 }
