@@ -1,5 +1,6 @@
 package blackjack
 
+import blackjack.domain.BetInfo
 import blackjack.domain.BlackJackGame
 import blackjack.domain.BlackJackGame.DEFAULT_FACE_UP
 import blackjack.domain.BlackJackGame.INIT_FACE_UP
@@ -35,10 +36,17 @@ fun gameContinue() {
 
 private fun initBlackJack(
     dealerName: String,
-    players: List<String>,
+    playersName: List<String>,
 ) {
     val dealer = initDealer(dealerName)
-    val players = initPlayers(players)
+    val betInfos =
+        playersName.map { playerName ->
+            BetInfo(
+                playerName,
+                InputView.getBetAmount(playerName),
+            )
+        }
+    val players = initPlayers(betInfos)
     val game = Game(dealer, players)
     OutputView.gameStart(game)
     BlackJackGame.setGameRepository(game)
@@ -50,8 +58,10 @@ private fun initDealer(dealerName: String): Dealer {
     return Dealer(dealerName, initDealerCard)
 }
 
-private fun initPlayers(players: List<String>): Set<Player> {
-    return players.map { Player(it, Deal.giveCards(INIT_FACE_UP)) }.toSet()
+private fun initPlayers(betInfos: List<BetInfo>): Set<Player> {
+    return betInfos
+        .map { Player(it.name, it.betAmount, Deal.giveCards(INIT_FACE_UP)) }
+        .toSet()
 }
 
 private fun gameCardResult() {

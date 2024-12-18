@@ -17,7 +17,7 @@ object OutputView {
     }
 
     fun dealerResult(dealerResult: DealerResult) {
-        println("${dealerResult.dealerName}: ${dealerResult.winCount}승 ${dealerResult.loseCount}패")
+        println("${dealerResult.dealerName}: ${dealerResult.dealerProfitAmount}")
     }
 
     fun playerResult(playerResult: PlayerResult) {

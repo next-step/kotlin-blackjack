@@ -4,55 +4,40 @@ import blackjack.entity.Player
 
 data class PlayerResult(
     val playerName: String,
-    val winCount: Int,
-    val loseCount: Int,
-    val drawCount: Int,
+    val playerProfitAmount: Int,
 ) {
-    fun getResult(): String {
-        return when {
-            winCount > WIN_COMPARE_COUNT -> WIN_RETURN_VALUE
-            else -> LOSE_RETURN_VALUE
-        }
+    fun getResult(): Int {
+        return playerProfitAmount
     }
 
     companion object {
-        private const val WIN_COMPARE_COUNT = 0
-        private const val WIN_RETURN_VALUE = "승"
-        private const val LOSE_RETURN_VALUE = "패"
+        const val BET_WIN_MULTIPLIER = 1.5
 
         fun from(
             player: Player,
+            isDealerBlackJack: Boolean,
             dealerScore: Int,
             bustLimit: Int,
         ): PlayerResult {
             val playerScore = player.hand.getTotalCardValue()
+            val profit = calculateProfit(player, isDealerBlackJack, playerScore, dealerScore, bustLimit)
+            return PlayerResult(player.name, profit)
+        }
 
+        private fun calculateProfit(
+            player: Player,
+            isDealerBlackJack: Boolean,
+            playerScore: Int,
+            dealerScore: Int,
+            bustLimit: Int,
+        ): Int {
             return when {
-                playerScore > bustLimit ->
-                    PlayerResult(
-                        player.name,
-                        winCount = 0,
-                        loseCount = 1,
-                        drawCount = 0,
-                    )
-
-                playerScore > dealerScore ->
-                    PlayerResult(
-                        player.name,
-                        winCount = 1,
-                        loseCount = 0,
-                        drawCount = 0,
-                    )
-
-                playerScore == dealerScore ->
-                    PlayerResult(
-                        player.name,
-                        winCount = 0,
-                        loseCount = 0,
-                        drawCount = 1,
-                    )
-
-                else -> PlayerResult(player.name, winCount = 0, loseCount = 1, drawCount = 0)
+                playerScore > bustLimit -> -player.betAmount
+                player.isPlayerFirstBlackJack() -> (player.betAmount * BET_WIN_MULTIPLIER).toInt()
+                player.isBlackJack() && isDealerBlackJack -> player.betAmount
+                playerScore > dealerScore -> player.betAmount
+                playerScore == dealerScore -> 0
+                else -> -player.betAmount
             }
         }
     }
