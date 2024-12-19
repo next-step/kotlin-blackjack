@@ -1,30 +1,47 @@
 package blackjack.controller
 
-import blackjack.domain.Dealer
 import blackjack.domain.Deck
 import blackjack.domain.Game
-import blackjack.domain.Player
-import blackjack.domain.Players
+import blackjack.domain.GameMembers
+import blackjack.domain.Participant.Dealer
+import blackjack.domain.Participant.Player
+import blackjack.domain.Participants
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
-class BlackjackController() {
+class BlackjackController {
     fun start() {
         val game = createGame()
-        OutputView.showGameStart(players = game.players)
+        OutputView.showGameStart(participants = game.allPlayers())
 
         gameLoop(game)
+        dealerTurn(game)
 
-        OutputView.showGameResult(players = game.players)
+        OutputView.showGameResult(participants = game.allPlayers())
+
+        OutputView.showDealerWinningCount(game.determineDealerWinningOutcome())
+
+        OutputView.showWinnerPlayers(
+            game.determineWinner(),
+        )
     }
 
     private fun gameLoop(game: Game) {
-        game.players.allPlayers().forEach { player ->
+        game.participants().forEach { player ->
             while (game.isPlayerStillPlaying(player)) {
                 val hitCommand = InputView.askHitOrStay(player.name)
                 game.processPlayerTurn(player, hitCommand)
                 OutputView.printPlayerCards(player)
             }
+        }
+
+        if (game.isDealerBust()) return
+    }
+
+    private fun dealerTurn(game: Game) {
+        if (game.isDealerDrawCard()) {
+            OutputView.dealerHitResult()
+            game.giveCardToDealer()
         }
     }
 
@@ -32,10 +49,19 @@ class BlackjackController() {
         val playerNames = InputView.getPlayerNames()
         val dealer = createDealer()
         val players = createPlayers(playerNames)
-        return Game(dealer = dealer, players = players)
+        val gameMembers = GameMembers(players, dealer)
+        return Game(gameMembers)
     }
 
     private fun createDealer() = Dealer(Deck())
 
-    private fun createPlayers(playerNames: List<String>) = Players(playerNames.map { Player(it) })
+    private fun createPlayers(playerNames: List<String>) =
+        Participants(
+            players =
+                playerNames.map {
+                    Player(
+                        it,
+                    )
+                },
+        )
 }

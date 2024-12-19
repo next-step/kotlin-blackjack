@@ -2,10 +2,10 @@ package domain
 
 import blackjack.domain.Card
 import blackjack.domain.CardNumber
-import blackjack.domain.Dealer
 import blackjack.domain.Deck
-import blackjack.domain.Player
-import blackjack.domain.Players
+import blackjack.domain.Participant.Dealer
+import blackjack.domain.Participant.Player
+import blackjack.domain.Participants
 import blackjack.domain.Suit
 import fixture.CardListFixture
 import io.kotest.core.spec.style.DescribeSpec
@@ -32,7 +32,7 @@ class DealerTest : DescribeSpec({
         }
 
         it("덱에서 카드를 한장 뽑는다.") {
-            sut.hit(player)
+            sut.giveCardTo(player)
             player.ownedCards shouldContainExactly
                 listOf(
                     Card(Suit.CLUBS, CardNumber.ACE),
@@ -43,7 +43,7 @@ class DealerTest : DescribeSpec({
     describe("deal test") {
         lateinit var pobi: Player
         lateinit var crong: Player
-        lateinit var players: Players
+        lateinit var participants: Participants
         lateinit var cardList: MutableList<Card>
 
         lateinit var sut: Dealer
@@ -51,8 +51,8 @@ class DealerTest : DescribeSpec({
         beforeTest {
             pobi = Player(name = "pobi")
             crong = Player(name = "crong")
-            players =
-                Players(
+            participants =
+                Participants(
                     listOf(
                         pobi, crong,
                     ),
@@ -65,13 +65,13 @@ class DealerTest : DescribeSpec({
         }
 
         it("플레이어들에게 카드를 2장씩 나누어준다.") {
-            sut.deal(players)
+            sut.deal(participants)
             pobi.ownedCards.size shouldBe 2
             crong.ownedCards.size shouldBe 2
         }
 
         it("카드는 차례대로 한장씩 나두어 준다.") {
-            sut.deal(players)
+            sut.deal(participants)
 
             pobi.ownedCards[0] shouldBe CardListFixture.simpleCardList()[0]
             crong.ownedCards[0] shouldBe CardListFixture.simpleCardList()[1]

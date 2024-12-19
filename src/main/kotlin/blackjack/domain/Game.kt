@@ -1,22 +1,55 @@
 package blackjack.domain
 
 class Game(
-    private val dealer: Dealer,
-    val players: Players,
+    private val gameMembers: GameMembers,
 ) {
     init {
-        dealer.deal(players)
+        gameMembers.dealer().deal(gameMembers.allPlayers())
     }
+
+    fun allPlayers(): Participants = gameMembers.allPlayers()
+
+    fun participants(): Participants = gameMembers.playersWithoutDealer()
 
     fun processPlayerTurn(
-        player: Player,
+        participant: Participant,
         hitCommand: HitCommand,
     ) = when (hitCommand) {
-        HitCommand.HIT -> dealer.hit(player)
-        HitCommand.STAY -> player.stay()
+        HitCommand.HIT -> gameMembers.dealer().giveCardTo(participant)
+        HitCommand.STAY -> participant.stay()
     }
 
-    fun isPlayerStillPlaying(player: Player): Boolean {
-        return player.hasBusted() && player.hasStayed().not()
+    fun isDealerDrawCard(): Boolean = gameMembers.dealer().shouldDrawCard()
+
+    fun giveCardToDealer() {
+        gameMembers.dealer().giveCardTo(gameMembers.dealer())
+    }
+
+    fun isPlayerStillPlaying(participant: Participant): Boolean {
+        return participant.hasBusted() && participant.hasStayed().not()
+    }
+
+    fun determineWinner(): List<PlayerOutcomes> {
+        val dealerCardSum = gameMembers.dealer().sumOfCard()
+
+        return gameMembers.playersWithoutDealer().allPlayers().map { PlayerOutcomes.from(it, dealerCardSum) }
+    }
+
+    fun determineDealerWinningOutcome(): DealerOutcomes {
+        val dealer = gameMembers.dealer()
+        val players = gameMembers.playersWithoutDealer()
+
+        val dealerComparisonResults =
+            players.allPlayers().map { player ->
+                when {
+                    dealer.sumOfCard() >= player.sumOfCard() -> Result.WIN
+                    else -> Result.LOSE
+                }
+            }
+        return DealerOutcomes(dealerComparisonResults)
+    }
+
+    fun isDealerBust(): Boolean {
+        return gameMembers.dealer().sumOfCard() > 21
     }
 }
