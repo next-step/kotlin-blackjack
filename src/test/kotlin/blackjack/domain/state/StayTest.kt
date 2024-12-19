@@ -10,7 +10,7 @@ import org.junit.jupiter.api.assertThrows
 
 class StayTest {
     @Test
-    fun `생성자 테스트`() {
+    fun constructor() {
         assertThrows<IllegalArgumentException> {
             Stay(Hands())
         }

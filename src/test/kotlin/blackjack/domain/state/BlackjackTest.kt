@@ -8,7 +8,7 @@ import org.junit.jupiter.api.assertThrows
 
 class BlackjackTest {
     @Test
-    fun `생성자 테스트`() {
+    fun constructor() {
         assertThrows<IllegalArgumentException> {
             Blackjack(Hands())
         }
