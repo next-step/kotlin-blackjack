@@ -115,14 +115,16 @@
       - [x] DEALING -> DEALING
       - [x] DEALING -> DEALING -> READY (카드의 합이 21 미만인 경우)
       - [x] DEALING -> DEALING -> BLACKJACK (카드의 합이 21인 경우)
-    - 행동(힛, 스탠드)을 할 수 있는 상태 구현
-      - [ ] READY -> READY (카드의 합이 21 미만인 경우)
-      - [ ] READY -> BUSTED (카드의 합이 21 초과한 경우)
-      - [ ] READY -> READY -자동-> STAND (카드의 합이 21인 경우)
+    - 행동(힛, 스탠드)을 할 수 있는 READY 상태 구현
+      - [x] READY -> READY (카드의 합이 21 미만인 경우)
+      - [x] READY -> BUSTED (카드의 합이 21 초과한 경우)
+      - [x] READY -> STAND (카드의 합이 21인 경우)
     - 종단 상태 구현
       - [ ] STAND
       - [ ] BUSTED
       - [ ] BLACKJACK
+  - 스탠드 하는 경우 상태 변환을 구현한다.
+    - [ ] READY -> STAND
 
 게임 예시:
 
