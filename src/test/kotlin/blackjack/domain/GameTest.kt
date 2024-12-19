@@ -27,10 +27,10 @@ class GameTest {
 
         game.startGame(initCallback, turnCallback)
 
-        mockPlayers.get(0).getAllCards().size shouldBe 2
-        mockPlayers.get(1).getAllCards().size shouldBe 2
+        mockPlayers[0].getAllCards().size shouldBe 2
+        mockPlayers[1].getAllCards().size shouldBe 2
         initCallbackCalled shouldBe 4
-        turnCallbackCalled shouldBe 2
+        turnCallbackCalled shouldBe 3
     }
 
     @Test
