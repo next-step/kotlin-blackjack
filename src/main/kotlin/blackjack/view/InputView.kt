@@ -1,5 +1,8 @@
 package blackjack.view
 
+import betting.Bet
+import betting.BetResult
+import blackjack.participant.Participant
 import blackjack.player.Player
 
 object InputView {
@@ -11,5 +14,10 @@ object InputView {
     fun isHitCard(player: Player): Boolean {
         println("${player.name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
         return "y" == readlnOrNull()
+    }
+
+    fun inputBettingAmount(player: Participant<*>): BetResult {
+        println("${player.name}의 베팅 금액은?")
+        return BetResult.Default(bet = Bet(readlnOrNull()?.toDoubleOrNull() ?: 0.0))
     }
 }

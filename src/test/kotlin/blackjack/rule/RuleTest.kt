@@ -16,7 +16,7 @@ class RuleTest {
             Players(
                 listOf(
                     Player(name = "pobi", hand = Hand(progressCardSet)),
-                    Player(name = "jason", hand = Hand(bustCardSet))
+                    Player(name = "jason", hand = Hand(bustCardSet)),
                 ),
             )
 
@@ -31,7 +31,7 @@ class RuleTest {
             Players(
                 listOf(
                     Player(name = "pobi", hand = Hand(bustCardSet)),
-                    Player(name = "jason", hand = Hand(bustCardSet))
+                    Player(name = "jason", hand = Hand(bustCardSet)),
                 ),
             )
 
@@ -46,7 +46,7 @@ class RuleTest {
             Players(
                 listOf(
                     Player(name = "pobi", hand = Hand(progressCardSet)),
-                    Player(name = "jason", hand = Hand(progressCardSet))
+                    Player(name = "jason", hand = Hand(progressCardSet)),
                 ),
             )
 
@@ -54,18 +54,20 @@ class RuleTest {
 
         Rule.isGameActive(players = players, dealer = dealer) shouldBe false
     }
-    
-    companion object {
-        private val progressCardSet = listOf(
-            CardFixture.generateTestCard(Rank.TEN),
-            CardFixture.generateTestCard(Rank.FIVE),
-            CardFixture.generateTestCard(Rank.SIX),
-        )
 
-        private val bustCardSet = listOf(
-            CardFixture.generateTestCard(Rank.TEN),
-            CardFixture.generateTestCard(Rank.FIVE),
-            CardFixture.generateTestCard(Rank.SEVEN),
-        )
+    companion object {
+        private val progressCardSet =
+            listOf(
+                CardFixture.generateTestCard(Rank.TEN),
+                CardFixture.generateTestCard(Rank.FIVE),
+                CardFixture.generateTestCard(Rank.SIX),
+            )
+
+        private val bustCardSet =
+            listOf(
+                CardFixture.generateTestCard(Rank.TEN),
+                CardFixture.generateTestCard(Rank.FIVE),
+                CardFixture.generateTestCard(Rank.SEVEN),
+            )
     }
 }
