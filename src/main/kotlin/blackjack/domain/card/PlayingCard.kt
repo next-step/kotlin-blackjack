@@ -7,6 +7,8 @@ class PlayingCard private constructor(
     val isAce: Boolean = denomination.isAce
     val score: Int = denomination.score
 
+    override fun toString(): String = "${denomination.score}${suit.symbol}"
+
     companion object {
         private val CARDS: MutableMap<String, PlayingCard> = mutableMapOf()
 
@@ -26,8 +28,8 @@ class PlayingCard private constructor(
         }
 
         init {
-            for (suit in Suit.values()) {
-                for (rank in Denomination.values()) {
+            for (suit in Suit.entries) {
+                for (rank in Denomination.entries) {
                     CARDS[toKey(suit, rank)] = PlayingCard(suit, rank)
                 }
             }
