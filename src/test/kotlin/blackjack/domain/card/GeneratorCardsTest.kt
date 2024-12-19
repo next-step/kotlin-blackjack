@@ -1,4 +1,4 @@
-package blackjack.controller
+package blackjack.domain.card
 
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
