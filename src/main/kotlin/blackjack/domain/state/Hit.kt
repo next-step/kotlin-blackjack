@@ -15,7 +15,7 @@ class Hit(private val hands: Hands) : State {
         return Hit(hands + card)
     }
 
-    fun stay(clubsTwo: PlayingCard): State {
+    fun stay(card: PlayingCard): State {
         return Stay(hands)
     }
 

@@ -1,6 +1,8 @@
 package blackjack.domain.state
 
-import blackjack.domain.card.PlayingCard
 
-class Stay(hands: Hands) : Finished(hands)
+class Stay(hands: Hands) : Finished(hands){
+    override val profitRate: Double = 1.0
+}
+
 
