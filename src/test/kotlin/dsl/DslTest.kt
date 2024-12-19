@@ -6,7 +6,6 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 
 class DslTest {
-
     @ValueSource(strings = ["머스크", "트럼프"])
     @ParameterizedTest
     fun name(name: String) {
