@@ -11,7 +11,7 @@ class Dealer(name: String = DEALER_NAME) : Participant(name) {
         onTurnStarted: ((Participant) -> String)?,
         onPrintResultCallback: (Participant) -> Unit,
     ) {
-        while (!isBust() && shouldDrawCard()) {
+        if (!isBust() && shouldDrawCard()) {
             val card = CardDeck.drawCard()
             drawCard(card)
             onPrintResultCallback(this)
@@ -21,6 +21,20 @@ class Dealer(name: String = DEALER_NAME) : Participant(name) {
 
     override fun showCards() {
         println("$name: ${getAllCards()[0].printCard()}")
+    }
+
+    override fun showGameResult() {
+        println("${gameResult.getWinCount()}승 ${gameResult.getLoseCount()}패")
+    }
+
+    fun showAllCards() {
+        print("${name}카드: ")
+
+        val lastIndex = getAllCards().lastIndex
+        getAllCards().forEachIndexed { index, card ->
+            print(card.printCard())
+            if (index != lastIndex) print(", ") else println()
+        }
     }
 
     companion object {

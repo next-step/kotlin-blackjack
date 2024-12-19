@@ -1,7 +1,7 @@
 package blackjack.ui
 
-import blackjack.domain.player.Participant
 import blackjack.domain.player.Dealer
+import blackjack.domain.player.Participant
 import blackjack.domain.player.Players
 
 class ResultView {
@@ -14,39 +14,32 @@ class ResultView {
         println("딜러와 ${playersName}에게 2장씩 나누었습니다.")
     }
 
-    fun printGameResult(players: Players, dealer: Dealer) {
+    fun printGameResult(
+        players: Players,
+        dealer: Dealer,
+    ) {
+        dealer.showAllCards()
+        println(" - 결과: ${dealer.calculateCard()}")
+
         players.forEach { player ->
             player.showCards()
             println(" - 결과: ${player.calculateCard()}")
         }
 
-        dealer.showCards()
-        println(" - 결과: ${dealer.calculateCard()}")
-
         println("\n## 최종 승패")
+        showWinningResult(dealer)
         players.forEach { player ->
             showWinningResult(player)
         }
-        showWinningResult(dealer)
     }
 
-    fun showWinningResult(player: Participant) {
+    private fun showWinningResult(player: Participant) {
         print("${player.name}: ")
-
-        if (player.name == Dealer.DEALER_NAME) {
-            println("${player.winCount}승 ${player.loseCount} 패")
-            return
-        }
-
-        if (player.winCount > 0) {
-            println("승")
-        } else {
-            println("패")
-        }
+        player.showGameResult()
     }
 
     fun printDealerDrawExtra(participant: Participant) {
         if (participant.name != Dealer.DEALER_NAME) return
-        println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.")
+        println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.\n")
     }
 }

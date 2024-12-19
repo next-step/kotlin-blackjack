@@ -23,4 +23,8 @@ class Player(name: String) : Participant(name) {
             if (index != lastIndex) print(", ") else println()
         }
     }
+
+    override fun showGameResult() {
+        if (gameResult.getWinCount() > 0) println("승") else println("패")
+    }
 }
