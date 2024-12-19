@@ -53,7 +53,7 @@ class PlayerTest {
         val player = initFakePlayer()
 
         // When
-        val profit = player.getProfitMoney(GameResult.BUST)
+        val profit = player.getProfitMoney(GameResult.BUST).getCurrentProfit()
 
         // Then
         assertEquals(BigDecimal(-10000), profit)
@@ -66,7 +66,7 @@ class PlayerTest {
         val player = initFakePlayer()
 
         // When
-        val profit = player.getProfitMoney(GameResult.WIN)
+        val profit = player.getProfitMoney(GameResult.WIN).getCurrentProfit()
 
         // Then
         assertEquals(BigDecimal(10000), profit)
@@ -79,7 +79,7 @@ class PlayerTest {
         val player = initFakePlayer()
 
         // When
-        val profit = player.getProfitMoney(GameResult.LOSE)
+        val profit = player.getProfitMoney(GameResult.LOSE).getCurrentProfit()
 
         // Then
         assertEquals(BigDecimal(-10000), profit)
@@ -92,7 +92,7 @@ class PlayerTest {
         val player = initFakePlayer()
 
         // When
-        val profit = player.getProfitMoney(GameResult.PUSH)
+        val profit = player.getProfitMoney(GameResult.PUSH).getCurrentProfit()
 
         // Then
         assertEquals(BigDecimal(10000), profit)
@@ -113,7 +113,7 @@ class PlayerTest {
         val player = initBlackJackPlayer()
 
         // When
-        val profit = player.getProfitMoney(GameResult.BLACK_JACK)
+        val profit = player.getProfitMoney(GameResult.BLACK_JACK).getCurrentProfit()
 
         // Then
         assertEquals(BigDecimal(15000), profit)
