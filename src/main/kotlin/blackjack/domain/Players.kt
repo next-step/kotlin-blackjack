@@ -17,16 +17,19 @@ data class Players(val value: List<Player>) {
     }
 
     fun getPlayersToProfitMoney(
-        getGameResult: (Player) -> GameResult,
-        onSetPlayerProfitMoney: (ProfitMoney) -> Unit
+        isDealerBlackJack: Boolean,
+        dealerCardSum: Int,
     ): PlayerToProfitMoney {
-        val map =
+        return PlayerToProfitMoney(
             value.associateWith { player ->
-                val gameResult = getGameResult(player)
-                player.setProfitMoneyFromGameResult(gameResult)
-                onSetPlayerProfitMoney(player.profitMoney)
-                player.profitMoney
+                val gameResult = GameResult.getGameResultsWith(
+                    isPlayerBlackJackInitially = player.isBlackJackInitially,
+                    isDealerBlackJackInitially = isDealerBlackJack,
+                    dealerCardSum = dealerCardSum,
+                    playerCardSum = player.cardsSum
+                )
+                player.getProfitMoney(gameResult)
             }
-        return PlayerToProfitMoney(map)
+        )
     }
 }

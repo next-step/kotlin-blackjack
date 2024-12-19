@@ -1,18 +1,23 @@
 package blackjack.domain
 
+import java.math.BigDecimal
+
 object BlackJackResultManager {
     fun getResult(dealer: Dealer, players: Players): BlackJackResult {
         val playersProfits = players.getPlayersToProfitMoney(
-            getGameResult = { player -> player.getGameResultWith(dealer) },
-            onSetPlayerProfitMoney = { profitMoney -> dealer.adjustProfit(profitMoney) }
+            dealer.isBlackJackInitially,
+            dealer.cardsSum
         )
-        return BlackJackResult(dealer.profitMoney, playersProfits)
+        return BlackJackResult(playersProfits)
     }
 }
 
 data class BlackJackResult(
-    val dealerProfitMoney: ProfitMoney,
     val playerToProfit: PlayerToProfitMoney,
-)
+) {
+    val dealerProfitMoney: ProfitMoney get() = ProfitMoney().apply { set(-playerToProfit.getAllProfitSum) }
+}
 
-data class PlayerToProfitMoney(val value: Map<Player, ProfitMoney>)
+data class PlayerToProfitMoney(val value: Map<Player, ProfitMoney>) {
+    val getAllProfitSum: BigDecimal get() = value.values.sumOf { it.getCurrentProfit() }
+}
