@@ -7,7 +7,9 @@ import blackjack.domain.Game
 import blackjack.domain.Player
 import blackjack.ui.InputView
 import blackjack.ui.PlayerCommand
-import blackjack.ui.ResultView
+import blackjack.ui.ResultView.render
+import blackjack.ui.ResultView.renderActions
+import blackjack.ui.ResultView.renderResults
 
 class BlackjackController(
     private val blackjackService: BlackjackService,
@@ -18,21 +20,22 @@ class BlackjackController(
         val bets = InputView.getBets(names)
 
         // 게임 생성
-        val command =
-            CreateGameCommand(
-                names.toSet(),
-                bets,
-                deck,
+        val game =
+            blackjackService.createGame(
+                CreateGameCommand(
+                    names.toSet(),
+                    bets,
+                    deck,
+                ),
             )
-        val game = blackjackService.createGame(command)
-        ResultView.displayState(game)
+        game.render()
 
         // 게임 진행
         runGameLoop(game)
-        ResultView.displayDealerActions(game.dealer)
+        game.dealer.renderActions()
 
         // 결과 출력
-        ResultView.displayFinalResults(game)
+        game.renderResults()
     }
 
     private fun runGameLoop(game: Game) {
@@ -64,7 +67,7 @@ class BlackjackController(
         player: Player,
     ) {
         if (command.isHit) {
-            ResultView.displayPlayer(player)
+            player.render()
         }
     }
 }
