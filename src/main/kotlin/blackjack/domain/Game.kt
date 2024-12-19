@@ -5,10 +5,8 @@ class Game(
     val deck: Deck,
     val dealer: Dealer = Dealer(),
 ) {
-    val arePlayersDone: Boolean
-        get() = players.isDone
-    val currentPlayer: Player
-        get() = players.currentPlayer
+    val arePlayersDone: Boolean get() = players.isDone
+    val currentPlayer: Player get() = players.currentPlayer
 
     fun initialDeal() {
         repeat(INITIAL_ROUNDS) {
@@ -39,7 +37,7 @@ class Game(
         dealer.takeAction(deck)
     }
 
-    fun gameResult(): GameResult = GameResult(players.result(dealer))
+    fun gameResult(): GameResult = GameResult(players.results(dealer))
 
     private fun isDealerActionNecessary() = players.isOutcomeUnknown
 

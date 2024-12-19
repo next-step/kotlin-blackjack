@@ -48,7 +48,7 @@ class GameTest {
         game.initialDeal()
 
         game.dealer.hand[0] shouldBe Card(DUMMY_SUIT, Rank.THREE)
-        game.dealer.hand[1] shouldBe Card(DUMMY_SUIT, Rank.SIX, Face.DOWN)
+        game.dealer.hand[1] shouldBe Card(DUMMY_SUIT, Rank.SIX, false)
     }
 
     @Test
@@ -113,6 +113,21 @@ class GameTest {
         game.playerHits()
 
         game.currentPlayer shouldBe game.players[0]
+    }
+
+    @Test
+    fun `힛해서 21점이 되면 턴이 종료한다`() {
+        val deck = StubDeck.from(Rank.FIVE, Rank.TWO, Rank.THREE, Rank.SEVEN, Rank.FOUR, Rank.SIX, Rank.NINE)
+        val players = Players.from("black", "jack")
+        val game = Game(players, deck).apply { initialDeal() }
+        // black:  5, 7
+        // jack:   2, 4
+        // dealer: 3, 6
+
+        game.playerHits()
+        // black:  5 + 7 + 9 = 12
+
+        game.currentPlayer shouldBe game.players[1]
     }
 
     @Test
@@ -286,7 +301,15 @@ class GameTest {
 
     @Test
     fun `게임의 결과를 리턴한다`() {
-        val players = Players.from("black", "jack")
+        val players =
+            Players.from("black", "jack").apply {
+                placeBets(
+                    listOf(
+                        Bet(10_000L),
+                        Bet(20_000L),
+                    ),
+                )
+            }
         val game =
             Game(players, deck).apply {
                 initialDeal()
@@ -299,8 +322,8 @@ class GameTest {
         val expected =
             GameResult(
                 listOf(
-                    PlayerResult("black", PlayerOutcome.WIN),
-                    PlayerResult("jack", PlayerOutcome.LOSE),
+                    PlayerResult("black", Bet(10_000L), PlayerOutcome.WIN),
+                    PlayerResult("jack", Bet(20_000L), PlayerOutcome.LOSE),
                 ),
             )
 

@@ -2,31 +2,24 @@ package blackjack.domain
 
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
+import java.math.BigDecimal
 
 @Suppress("NonAsciiCharacters")
 class GameResultTest {
-    private val result =
-        GameResult(
-            listOf(
-                PlayerResult("black", PlayerOutcome.WIN),
-                PlayerResult("jack", PlayerOutcome.LOSE),
-                PlayerResult("game", PlayerOutcome.DRAW),
-                PlayerResult("player", PlayerOutcome.WIN),
-            ),
-        )
-
     @Test
-    fun `플레이어의 패바한 수가 딜러가 승리한 수다`() {
-        result.dealerWins shouldBe 1
-    }
+    fun `딜러의 수익을 계산한다`() {
+        val result =
+            GameResult(
+                listOf(
+                    PlayerResult("black", Bet(10_000L), PlayerOutcome.WIN),
+                    PlayerResult("jack", Bet(20_000L), PlayerOutcome.LOSE),
+                    PlayerResult("game", Bet(30_000L), PlayerOutcome.DRAW),
+                    PlayerResult("result", Bet(40_000L), PlayerOutcome.BLACKJACK),
+                ),
+            )
 
-    @Test
-    fun `딜러의 무승부 수`() {
-        result.dealerDraws shouldBe 1
-    }
+        val profit = result.dealerProfit()
 
-    @Test
-    fun `딜러가 패배한 수가 플레이어 승리한 숫자이다`() {
-        result.dealerLosses shouldBe 2
+        profit shouldBe BigDecimal(-50_000L)
     }
 }

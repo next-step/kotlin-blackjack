@@ -2,6 +2,7 @@ package blackjack.domain
 
 import blackjack.domain.StubDeck.Companion.DUMMY_SUIT
 import blackjack.support.Fixtures.createBustedPlayer
+import blackjack.support.Fixtures.createPlayers
 import blackjack.support.Fixtures.createStandingPlayer
 import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.shouldBe
@@ -75,7 +76,7 @@ class PlayersTest {
     @Test
     fun `현재 플레이어가 힛을 한다`() {
         val deck = StubDeck.from(Rank.ACE, Rank.TWO, Rank.THREE, Rank.FOUR, Rank.FIVE)
-        val players = createPlayersFrom(listOf("black", "jack"), deck)
+        val players = createPlayers(listOf("black", "jack"), deck)
 
         players.hit(deck)
 
@@ -90,7 +91,7 @@ class PlayersTest {
     @Test
     fun `연속해서 힛 할 있다`() {
         val deck = StubDeck.from(Rank.ACE, Rank.TWO, Rank.THREE, Rank.FOUR, Rank.FIVE, Rank.SIX)
-        val players = createPlayersFrom(listOf("black", "jack"), deck)
+        val players = createPlayers(listOf("black", "jack"), deck)
 
         players.hit(deck)
         players.hit(deck)
@@ -107,7 +108,7 @@ class PlayersTest {
     @Test
     fun `힛을 해서 버스트 상태가 되면 다음 플레이어로 넘어간다`() {
         val deck = StubDeck.from(Rank.KING, Rank.TWO, Rank.QUEEN, Rank.FOUR, Rank.JACK)
-        val players = createPlayersFrom(listOf("black", "jack"), deck)
+        val players = createPlayers(listOf("black", "jack"), deck)
 
         players.hit(deck)
 
@@ -117,7 +118,7 @@ class PlayersTest {
     @Test
     fun `게임이 종료되면 힛할 수 없다`() {
         val deck = StubDeck.from(Rank.KING, Rank.QUEEN, Rank.JACK, Rank.TEN, Rank.NINE, Rank.EIGHT)
-        val players = createPlayersFrom(listOf("black", "jack"), deck)
+        val players = createPlayers(listOf("black", "jack"), deck)
         players.hit(deck)
         players.hit(deck)
 
@@ -125,9 +126,22 @@ class PlayersTest {
     }
 
     @Test
+    fun `힛해서 21점이 되면 플레이어의 턴이 종료된다`() {
+        val deck = StubDeck.from(Rank.FIVE, Rank.TWO, Rank.SEVEN, Rank.THREE, Rank.NINE)
+        val players = createPlayers(listOf("black", "jack"), deck)
+        // black: 5, 7
+        // jack:  2, 3
+
+        players.hit(deck)
+        // 5 + 7 + 9 = 21
+
+        players.currentPlayer shouldBe players[1]
+    }
+
+    @Test
     fun `현재 플레이어가 스탠드할 수 있다`() {
         val deck = StubDeck.from(Rank.ACE, Rank.TWO, Rank.THREE, Rank.FOUR, Rank.FIVE)
-        val players = createPlayersFrom(listOf("black", "jack"), deck)
+        val players = createPlayers(listOf("black", "jack"), deck)
 
         players.stand()
 
@@ -137,7 +151,7 @@ class PlayersTest {
     @Test
     fun `스탣드하면 다음 플레이어로 차례가 넘어간다`() {
         val deck = StubDeck.from(Rank.ACE, Rank.TWO, Rank.THREE, Rank.FOUR, Rank.FIVE)
-        val players = createPlayersFrom(listOf("black", "jack"), deck)
+        val players = createPlayers(listOf("black", "jack"), deck)
 
         players.stand()
 
@@ -147,7 +161,7 @@ class PlayersTest {
     @Test
     fun `게임이 종료된 상태에서 스탠드할 수 없다`() {
         val deck = StubDeck.from(Rank.ACE, Rank.TWO, Rank.THREE, Rank.FOUR, Rank.FIVE)
-        val players = createPlayersFrom(listOf("black", "jack"), deck)
+        val players = createPlayers(listOf("black", "jack"), deck)
 
         players.stand()
         players.stand()
@@ -169,20 +183,43 @@ class PlayersTest {
     @Test
     fun `플레이어의 결과가 미정인지 리턴한다`() {
         val deck = StubDeck.from(Rank.ACE, Rank.TWO, Rank.KING, Rank.FOUR)
-        val players = createPlayersFrom(listOf("black", "jack"), deck).apply { stand() }
+        val players = createPlayers(listOf("black", "jack"), deck).apply { stand() }
         players.isOutcomeUnknown shouldBe true
     }
 
     @Test
-    fun `종료 전에 결과를 요청하면 예외를 던진다`() {
-        val players =
-            Players.from("black", "jack")
-        val dealer = Dealer()
-        assertThrows<IllegalStateException> { players.result(dealer) }
+    fun `베팅을 걸 수 있다`() {
+        val players = Players.from("black", "jack", "game")
+        val bets = listOf(Bet(1_000L), Bet(2_000L), Bet(3_000L))
+
+        players.placeBets(bets)
+
+        players.roster.map { it.bet } shouldBe bets
     }
 
     @Test
-    fun `플레이어들의 결과를 리턴한다`() {
+    fun `베팅 숫자가 플레이어들의 숫자와 같아야 한다`() {
+        val players = Players.from("black", "jack")
+        val bets = listOf(Bet(1_000L))
+        assertThrows<IllegalArgumentException> { players.placeBets(bets) }
+    }
+
+    @Test
+    fun `종료 전에 결과를 요청할 수 없다`() {
+        val players =
+            Players.from("black", "jack")
+        players.placeBets(
+            listOf(
+                Bet(1_000L),
+                Bet(2_000L),
+            ),
+        )
+        val dealer = Dealer()
+        assertThrows<IllegalStateException> { players.results(dealer) }
+    }
+
+    @Test
+    fun `결과를 리턴한다`() {
         val deck =
             StubDeck.from(
                 Rank.ACE,
@@ -196,13 +233,23 @@ class PlayersTest {
                 Rank.TWO,
             )
         val players =
-            createPlayersFrom(listOf("black", "jack", "game"), deck).apply {
+            createPlayers(listOf("black", "jack", "game"), deck).apply {
+                // black 블랙잭
+                // jack 스탠드
                 stand()
+                // game 스탠드
                 stand()
             }
         // black: A, K = 21
         // jack:  Q, 4 = 14
         // game:  J, 8 = 18
+        players.placeBets(
+            listOf(
+                Bet(1_000L),
+                Bet(2_000L),
+                Bet(3_000L),
+            ),
+        )
         val dealer =
             Dealer().apply {
                 drawFrom(deck)
@@ -210,25 +257,15 @@ class PlayersTest {
                 drawFrom(deck)
             }
         // dealer: 10, 6, 2 = 18
-
         val expected =
             listOf(
-                PlayerResult("black", PlayerOutcome.WIN),
-                PlayerResult("jack", PlayerOutcome.LOSE),
-                PlayerResult("game", PlayerOutcome.DRAW),
+                PlayerResult("black", Bet(1_000L), PlayerOutcome.BLACKJACK),
+                PlayerResult("jack", Bet(2_000L), PlayerOutcome.LOSE),
+                PlayerResult("game", Bet(3_000L), PlayerOutcome.DRAW),
             )
 
-        val results = players.result(dealer)
+        val results = players.results(dealer)
 
         results shouldBe expected
     }
-
-    private fun createPlayersFrom(
-        names: List<String>,
-        deck: Deck,
-    ): Players =
-        Players.from(names).apply {
-            dealRoundOfCardsFrom(deck)
-            dealRoundOfCardsFrom(deck)
-        }
 }
