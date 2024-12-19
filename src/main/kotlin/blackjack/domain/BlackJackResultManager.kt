@@ -3,11 +3,15 @@ package blackjack.domain
 import java.math.BigDecimal
 
 object BlackJackResultManager {
-    fun getResult(dealer: Dealer, players: Players): BlackJackResult {
-        val playersProfits = players.getPlayersToProfitMoney(
-            dealer.isBlackJackInitially,
-            dealer.cardsSum
-        )
+    fun getResult(
+        dealer: Dealer,
+        players: Players,
+    ): BlackJackResult {
+        val playersProfits =
+            players.getPlayersToProfitMoney(
+                dealer.isBlackJackInitially,
+                dealer.cardsSum,
+            )
         return BlackJackResult(playersProfits)
     }
 }

@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
-import org.junit.jupiter.params.provider.CsvSource
 import org.junit.jupiter.params.provider.MethodSource
 
 class GameResultTest {
@@ -18,12 +17,13 @@ class GameResultTest {
         playerCardSum: Int,
         expected: GameResult,
     ) {
-        val result = GameResult.getGameResultsWith(
-            isPlayerBlackJackInitially,
-            isDealerBlackJackInitially,
-            dealerCardSum,
-            playerCardSum
-        )
+        val result =
+            GameResult.getGameResultsWith(
+                isPlayerBlackJackInitially,
+                isDealerBlackJackInitially,
+                dealerCardSum,
+                playerCardSum,
+            )
         assertEquals(expected, result)
     }
 
@@ -37,7 +37,7 @@ class GameResultTest {
                 Arguments.of(false, false, 20, 22, GameResult.BUST),
                 Arguments.of(false, false, 20, 19, GameResult.LOSE),
                 Arguments.of(false, false, 19, 20, GameResult.WIN),
-                Arguments.of(false, false, 20, 20, GameResult.PUSH)
+                Arguments.of(false, false, 20, 20, GameResult.PUSH),
             )
         }
     }

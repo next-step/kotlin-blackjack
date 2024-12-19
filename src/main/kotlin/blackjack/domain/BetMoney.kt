@@ -31,5 +31,4 @@ value class BetMoney(private val amount: BigDecimal) {
     private fun getAmountOnLose(): BigDecimal {
         return -(amount)
     }
-
 }

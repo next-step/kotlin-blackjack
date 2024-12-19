@@ -22,14 +22,15 @@ data class Players(val value: List<Player>) {
     ): PlayerToProfitMoney {
         return PlayerToProfitMoney(
             value.associateWith { player ->
-                val gameResult = GameResult.getGameResultsWith(
-                    isPlayerBlackJackInitially = player.isBlackJackInitially,
-                    isDealerBlackJackInitially = isDealerBlackJack,
-                    dealerCardSum = dealerCardSum,
-                    playerCardSum = player.cardsSum
-                )
+                val gameResult =
+                    GameResult.getGameResultsWith(
+                        isPlayerBlackJackInitially = player.isBlackJackInitially,
+                        isDealerBlackJackInitially = isDealerBlackJack,
+                        dealerCardSum = dealerCardSum,
+                        playerCardSum = player.cardsSum,
+                    )
                 player.getProfitMoney(gameResult)
-            }
+            },
         )
     }
 }
