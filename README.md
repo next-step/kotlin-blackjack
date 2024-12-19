@@ -110,13 +110,19 @@
   - [x] 딜러와 플레이어들의 최종 수익을 출력한다.
 - enum 으로 관리하는 플레이어 상태를 다형성과 상태 패턴을 활용하도록 리팩토링 한다.
   - [x] 플레이어의 상태를 나타내는 인터페이스를 도출한다.
-  - 카드 한장을 받을 때의 상태 변환을 구현한다.
-    - [ ] DEALING -> DEALING
-    - [ ] DEALING -> DEALING -> READY (카드의 합이 21 미만인 경우)
-    - [ ] DEALING -> DEALING -> BLACKJACK (카드의 합이 21인 경우)
-    - [ ] READY -> READY (카드의 합이 21 미만인 경우)
-    - [ ] READY -> BUSTED (카드의 합이 21 초과한 경우)
-    - [ ] READY -> READY -자동-> STAND (카드의 합이 21인 경우)
+  - 카드 한 장을 받을 때의 상태 변환을 구현한다.
+    - 딜러로 부터 카드를 받는 중인 DEALING 상태 구현
+      - [x] DEALING -> DEALING
+      - [x] DEALING -> DEALING -> READY (카드의 합이 21 미만인 경우)
+      - [x] DEALING -> DEALING -> BLACKJACK (카드의 합이 21인 경우)
+    - 행동(힛, 스탠드)을 할 수 있는 상태 구현
+      - [ ] READY -> READY (카드의 합이 21 미만인 경우)
+      - [ ] READY -> BUSTED (카드의 합이 21 초과한 경우)
+      - [ ] READY -> READY -자동-> STAND (카드의 합이 21인 경우)
+    - 종단 상태 구현
+      - [ ] STAND
+      - [ ] BUSTED
+      - [ ] BLACKJACK
 
 게임 예시:
 

@@ -3,8 +3,9 @@ package blackjack.domain
 open class Hand(
     cards: List<Card> = emptyList(),
 ) {
-    val cards = cards.toMutableList()
+    val cards: MutableList<Card> = cards.toMutableList()
     val isTwentyOne: Boolean get() = value() == BLACKJACK_VALUE
+    val size: Int get() = cards.size
 
     operator fun get(index: Int): Card = cards[index]
 
