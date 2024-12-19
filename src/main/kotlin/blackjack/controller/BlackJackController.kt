@@ -22,6 +22,7 @@ object BlackJackController {
         val players =
             dealer.initPlayers(
                 fetchPlayerNames = { InputView.readPlayerNames() },
+                getBettingAmount = { name -> InputView.readBettingAmount(name) },
                 onPlayerInit = { names ->
                     ResultView.printPlayerInitMessage(names)
                     ResultView.printDealerWithCard(dealer.getCardForInitialDisplay())
@@ -59,8 +60,7 @@ object BlackJackController {
         players.onEach { player ->
             ResultView.printFinalScoresForPlayer(player)
         }
-
-        val result = BlackJackResultManager(dealer, players).getResult()
-        ResultView.printFinalWinLose(result)
+        val result = BlackJackResultManager.getResult(dealer, players)
+        ResultView.printFinalProfit(result)
     }
 }

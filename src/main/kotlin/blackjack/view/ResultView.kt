@@ -4,7 +4,6 @@ import blackjack.domain.BlackJackResult
 import blackjack.domain.Card
 import blackjack.domain.Dealer
 import blackjack.domain.Player
-import blackjack.domain.PlayerResult
 
 object ResultView {
     fun printPlayerInitMessage(names: List<String>) {
@@ -41,12 +40,11 @@ object ResultView {
         return "${player.name} 카드: ${player.cards.value.map { "${it.rank.rankName}${it.suit.koreanName}" }}"
     }
 
-    fun printFinalWinLose(result: BlackJackResult) {
-        println("\n### 최종 승패")
-        println("딜러 ${result.dealerWinCount}승 ${result.dealerLoseCount}패")
-        result.playerToResultMap.value.forEach { (player, result) ->
-            val winOrLose = if (result == PlayerResult.WIN) "승" else "패"
-            println("${player.name} : $winOrLose")
+    fun printFinalProfit(result: BlackJackResult) {
+        println("\n### 최종 수익")
+        println("딜러 : ${result.dealerProfitMoney.getCurrentProfit()}")
+        result.playerToProfit.value.forEach { (player, profit) ->
+            println("${player.name} : ${profit.getCurrentProfit()}")
         }
     }
 }
