@@ -5,10 +5,8 @@ data class Card(
     val rank: Rank,
     private var _isFaceUp: Boolean = true,
 ) {
-    val rankValue: Int
-        get() = rank.value
-    val isFaceUp: Boolean
-        get() = _isFaceUp
+    val rankValue: Int get() = rank.value
+    val isFaceUp: Boolean get() = _isFaceUp
 
     fun flip() {
         _isFaceUp = !_isFaceUp

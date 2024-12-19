@@ -4,8 +4,7 @@ open class Hand(
     cards: List<Card> = emptyList(),
 ) {
     val cards = cards.toMutableList()
-    val isTwentyOne: Boolean
-        get() = value() == BLACKJACK_VALUE
+    val isTwentyOne: Boolean get() = value() == BLACKJACK_VALUE
 
     constructor(vararg cards: Card) : this(cards.toList())
 
@@ -13,10 +12,11 @@ open class Hand(
 
     fun value(): Int {
         val handValue = cards.sumOf { it.rankValue }
-        if (isAceEleven(handValue)) {
-            return handValue + ACE_EXTRA_VALUE
+        return if (isAceEleven(handValue)) {
+            handValue + ACE_EXTRA_VALUE
+        } else {
+            handValue
         }
-        return handValue
     }
 
     open fun drawFrom(deck: Deck) {

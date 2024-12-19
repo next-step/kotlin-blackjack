@@ -4,16 +4,12 @@ class Player(
     val name: String,
     val hand: Hand = Hand(),
 ) {
-    val value: Int
-        get() = hand.value()
-    val isBlackjack: Boolean
-        get() = hand.isBlackjack()
-    val isBusted: Boolean
-        get() = hand.isBusted()
+    val value: Int get() = hand.value()
+    val isBlackjack: Boolean get() = hand.isBlackjack()
+    val isBusted: Boolean get() = hand.isBusted()
     var reasonDone: PlayerReasonDone? = null
         private set
-    val isDone: Boolean
-        get() = reasonDone != null
+    val isDone: Boolean get() = reasonDone != null
     var bet: Bet? = null
         private set
 
