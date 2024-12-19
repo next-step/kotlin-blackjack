@@ -120,11 +120,11 @@
       - [x] READY -> BUSTED (카드의 합이 21 초과한 경우)
       - [x] READY -> STAND (카드의 합이 21인 경우)
     - 종단 상태 구현
-      - [ ] STAND
-      - [ ] BUSTED
-      - [ ] BLACKJACK
+      - [x] STAND
+      - [x] BUSTED
+      - [x] BLACKJACK
   - 스탠드 하는 경우 상태 변환을 구현한다.
-    - [ ] READY -> STAND
+    - [x] READY -> STAND
 
 게임 예시:
 

@@ -1,11 +1,21 @@
 package blackjack.domain
 
+import blackjack.support.Fixtures.createHand
+import io.kotest.assertions.assertSoftly
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeInstanceOf
 import org.junit.jupiter.api.Test
 
 @Suppress("NonAsciiCharacters")
 class DealingTest {
+    @Test
+    fun `카드 숫자가 두 장을 초과할 수 없다`() {
+        assertSoftly {
+            shouldThrow<IllegalArgumentException> { Dealing(createHand(Rank.TWO, Rank.THREE, Rank.FOUR)) }
+        }
+    }
+
     @Test
     fun `카드 한 장을 배급을 받으면 여전히 DEALING 상태이다`() {
         var state: State = Dealing()
