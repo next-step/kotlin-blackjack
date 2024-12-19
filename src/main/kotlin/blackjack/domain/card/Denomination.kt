@@ -15,6 +15,7 @@ enum class Denomination(val score: Int) {
     QUEEN(10),
     KING(10),
     ;
+
     val isAce: Boolean
         get() = this == ACE
 }

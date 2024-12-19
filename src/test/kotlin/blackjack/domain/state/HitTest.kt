@@ -1,16 +1,18 @@
 package blackjack.domain.state
 
-import blackjack.domain.*
+import blackjack.domain.CLUBS_ACE
+import blackjack.domain.CLUBS_KING
+import blackjack.domain.CLUBS_TEN
+import blackjack.domain.CLUBS_THREE
+import blackjack.domain.CLUBS_TWO
 import io.kotest.matchers.collections.shouldContainAnyOf
 import io.kotest.matchers.types.shouldBeInstanceOf
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
 class HitTest {
-
     @Test
     fun `생성자 테스트`() {
-
         assertThrows<IllegalArgumentException> {
             Hit(Hands())
         }
@@ -25,7 +27,6 @@ class HitTest {
         val acutal = state.draw(CLUBS_TEN)
         acutal.shouldBeInstanceOf<Hit>()
         acutal.hands.shouldContainAnyOf(CLUBS_TWO, CLUBS_THREE, CLUBS_TEN)
-
     }
 
     @Test

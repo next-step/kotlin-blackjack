@@ -16,7 +16,7 @@ class Ready(override val hands: Hands = Hands()) : Running() {
         throw IllegalArgumentException("게임이 종료되지 않았습니다.")
     }
 
-    companion object{
+    companion object {
         private const val NEXT_STATE_HANDS_SIZE: Int = 2
     }
 }

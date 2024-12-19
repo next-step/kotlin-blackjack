@@ -9,7 +9,6 @@ import io.kotest.matchers.types.shouldBeInstanceOf
 import org.junit.jupiter.api.Test
 
 class ReadyTest {
-
     @Test
     fun `Ready 생성 테스트`() {
         val state = Ready()
@@ -33,5 +32,4 @@ class ReadyTest {
         actual.shouldBeInstanceOf<Blackjack>()
         actual.hands.shouldContainAnyOf(CLUBS_TWO, CLUBS_TEN)
     }
-
 }

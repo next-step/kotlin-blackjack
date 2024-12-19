@@ -8,10 +8,9 @@ import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
-class StayTest{
-
+class StayTest {
     @Test
-    fun `생성자 테스트`(){
+    fun `생성자 테스트`() {
         assertThrows<IllegalArgumentException> {
             Stay(Hands())
         }
@@ -21,11 +20,10 @@ class StayTest{
     }
 
     @Test
-    fun profit(){
+    fun profit() {
         val state = Stay(Hands(CLUBS_TWO, CLUBS_TEN, CLUBS_KING))
         val acutal = state.profit(1_000)
 
         acutal shouldBe 1_000
     }
-
 }

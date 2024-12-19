@@ -4,8 +4,8 @@ import blackjack.domain.card.PlayingCard
 
 class Hands(private val cards: List<PlayingCard> = emptyList()) : List<PlayingCard> by cards {
     constructor(vararg cards: PlayingCard) : this(cards.toList())
-    fun score(): Int {
 
+    fun score(): Int {
         val sum = cards.sumOf { it.score }
         val weight = getWeight()
         val total = sum + weight
@@ -18,7 +18,7 @@ class Hands(private val cards: List<PlayingCard> = emptyList()) : List<PlayingCa
 
     fun isBlackJackScore(): Boolean = score() == BLACKJACK
 
-    private fun getWeight() : Int   = if (isSoft()) ACE_WEIGHT else 0
+    private fun getWeight(): Int = if (isSoft()) ACE_WEIGHT else 0
 
     private fun isSoft(): Boolean {
         return cards.any { it.isAce }

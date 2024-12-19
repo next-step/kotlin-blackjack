@@ -7,10 +7,8 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
 class BlackjackTest {
-
     @Test
     fun `생성자 테스트`() {
-
         assertThrows<IllegalArgumentException> {
             Blackjack(Hands())
         }
@@ -25,5 +23,4 @@ class BlackjackTest {
         val actual = state.profit(1_000)
         actual shouldBe 1_500
     }
-
 }

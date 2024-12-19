@@ -4,6 +4,7 @@ import blackjack.domain.card.PlayingCard
 
 abstract class Finished(final override val hands: Hands) : State {
     abstract val profitRate: Double
+
     init {
         require(hands.size >= 2) { "Finished 상태는 최소한 2장을 갖고있어야 합니다." }
     }
@@ -17,5 +18,4 @@ abstract class Finished(final override val hands: Hands) : State {
     }
 
     override fun profit(money: Int): Double = money * profitRate
-
 }

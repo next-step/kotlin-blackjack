@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
 class BustTest {
-
     @Test
     fun `생성자 테스트`() {
         assertThrows<IllegalArgumentException> {
