@@ -34,13 +34,13 @@ abstract class Participant(val name: String) {
 
     fun calculateCard(): Int {
         val aceCards = cards.filter { it.number == SpecialNumber.A.name }
-        var currentSum = cards.sumOf { card -> card.getCardNumber(card.number) }
+        val currentSum = cards.sumOf { card -> card.getCardNumber(card.number) }
 
-        aceCards.forEach { _ ->
-            if (currentSum + 10 <= 21) currentSum += 10
+        val totalSum = aceCards.fold(currentSum) { sum, _ ->
+            if (sum + 10 <= 21) sum + 10 else sum
         }
 
-        return currentSum
+        return totalSum
     }
 
     fun getAllCards(): List<Card> {
