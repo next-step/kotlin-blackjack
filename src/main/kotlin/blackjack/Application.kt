@@ -1,27 +1,31 @@
 package blackjack
 
 import blackjack.domain.Game
-import blackjack.domain.Player
+import blackjack.domain.WinningCalculator
+import blackjack.domain.player.Participant
+import blackjack.domain.player.Player
+import blackjack.domain.player.Players
 import blackjack.ui.InputView
 import blackjack.ui.ResultView
 
 fun main() {
     val inputView = InputView()
     val resultView = ResultView()
-    val players = inputView.getPlayers().map { Player(it) }
+    val players = Players(inputView.getPlayers().map { Player(it) })
 
     val game = Game.createGame(players)
-    val printCallback: ((List<Player>) -> Unit) = {
-        it.forEach { player ->
-            resultView.printPlayerResult(player)
-        }
+    val printCallback: ((Participant) -> Unit) = { player ->
+        player.showCards()
     }
-    val turnCallback: ((Player) -> String) = { player ->
+
+    val turnCallback: ((Participant) -> String) = { player ->
+        resultView.printDealerDrawExtra(player)
         inputView.setUserAnswer(player.name)
         inputView.getUserAnswer()
     }
 
-    resultView.printStartMessage(game.players)
+    resultView.printStartMessage(players)
     game.startGame(printCallback, turnCallback)
-    resultView.printGameResult(game.players)
+    WinningCalculator.calculatorGameResult(game.players, game.dealer)
+    resultView.printGameResult(game.players, game.dealer)
 }

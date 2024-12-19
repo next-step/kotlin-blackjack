@@ -1,33 +1,45 @@
 package blackjack.ui
 
-import blackjack.domain.Player
+import blackjack.domain.player.Dealer
+import blackjack.domain.player.Participant
+import blackjack.domain.player.Players
 
 class ResultView {
-    fun printStartMessage(players: List<Player>) {
+    fun printStartMessage(players: Players) {
         val playersName = StringBuilder()
-        players.forEachIndexed { index, player ->
-            playersName.append(player.name)
-            if (index != players.lastIndex) {
-                playersName.append(", ")
-            }
-        }
-        println("${playersName}에게 2장씩 나누었습니다.")
-    }
-
-    fun printPlayerResult(player: Player) {
-        print("${player.name}카드: ")
-
-        val lastIndex = player.getAllCards().lastIndex
-        player.getAllCards().forEachIndexed { index, card ->
-            print(card.printCard())
-            if (index != lastIndex) print(", ") else println()
-        }
-    }
-
-    fun printGameResult(players: List<Player>) {
         players.forEach { player ->
-            printPlayerResult(player)
+            playersName.append(player.name + ",")
+        }
+        playersName.deleteCharAt(playersName.lastIndex)
+        println("딜러와 ${playersName}에게 2장씩 나누었습니다.")
+    }
+
+    fun printGameResult(
+        players: Players,
+        dealer: Dealer,
+    ) {
+        dealer.showAllCards()
+        println(" - 결과: ${dealer.calculateCard()}")
+
+        players.forEach { player ->
+            player.showCards()
             println(" - 결과: ${player.calculateCard()}")
         }
+
+        println("\n## 최종 승패")
+        showWinningResult(dealer)
+        players.forEach { player ->
+            showWinningResult(player)
+        }
+    }
+
+    private fun showWinningResult(player: Participant) {
+        print("${player.name}: ")
+        player.showGameResult()
+    }
+
+    fun printDealerDrawExtra(participant: Participant) {
+        if (participant.name != Dealer.DEALER_NAME) return
+        println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.\n")
     }
 }

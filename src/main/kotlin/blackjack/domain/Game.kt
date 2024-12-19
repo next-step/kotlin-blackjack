@@ -1,44 +1,33 @@
 package blackjack.domain
 
-data class Game(val players: List<Player>, val drawer: Deck) {
+import blackjack.domain.player.Dealer
+import blackjack.domain.player.Participant
+import blackjack.domain.player.Players
+
+data class Game(
+    val players: Players,
+    val drawer: Deck,
+    val dealer: Dealer,
+) {
     fun startGame(
-        onPrintResultCallback: ((List<Player>) -> Unit),
-        onTurnStarted: (Player) -> String,
+        onPrintResultCallback: ((Participant) -> Unit),
+        onTurnStarted: (Participant) -> String,
     ) {
         drawer.fillDeck(Card.cards)
-        initTurn(onPrintResultCallback)
-        players.forEach { player ->
-            startTurn(player, onTurnStarted, onPrintResultCallback)
-        }
-    }
 
-    private fun initTurn(onPrintResultCallback: ((List<Player>) -> Unit)) {
-        players.forEach { player ->
-            repeat(2) { player.drawCard(CardDeck.drawCard()) }
-        }
-        onPrintResultCallback(players)
-    }
+        players.initTurns(onPrintResultCallback)
+        dealer.initTurn(onPrintResultCallback)
 
-    fun startTurn(
-        currentPlayer: Player,
-        onTurnStarted: ((Player) -> String),
-        onPrintResultCallback: (List<Player>) -> Unit,
-    ) {
-        while (!currentPlayer.isDone() && onTurnStarted(currentPlayer) == YES) {
-            val card = CardDeck.drawCard()
-            currentPlayer.drawCard(card)
-            onPrintResultCallback(listOf(currentPlayer))
-        }
+        players.startTurns(onTurnStarted, onPrintResultCallback)
+        dealer.startTurn(onTurnStarted, onPrintResultCallback)
     }
 
     companion object {
-        private const val YES = "y"
-
         fun createGame(
-            players: List<Player>,
+            players: Players,
             cardDeck: Deck = CardDeck,
         ): Game {
-            return Game(players, cardDeck)
+            return Game(players, cardDeck, Dealer())
         }
     }
 }
