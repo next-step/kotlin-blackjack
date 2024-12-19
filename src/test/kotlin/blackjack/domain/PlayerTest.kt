@@ -4,6 +4,7 @@ import blackjack.domain.StubDeck.Companion.DUMMY_SUIT
 import blackjack.support.Fixtures.createBlackjackPlayer
 import blackjack.support.Fixtures.createBustedPlayer
 import blackjack.support.Fixtures.createDealer
+import blackjack.support.Fixtures.createHand
 import blackjack.support.Fixtures.createPlayer
 import blackjack.support.Fixtures.createStandingPlayer
 import io.kotest.matchers.shouldBe
@@ -82,11 +83,7 @@ class PlayerTest {
 
     @Test
     fun `힛을 하여 21점을 넘으면 버스트된다`() {
-        val hand =
-            Hand(
-                Card(Suit.CLUBS, Rank.KING),
-                Card(Suit.CLUBS, Rank.QUEEN),
-            )
+        val hand = createHand(Rank.KING, Rank.QUEEN)
         val player = Player("jack", hand)
         val deck = StubDeck.from(Rank.JACK)
 

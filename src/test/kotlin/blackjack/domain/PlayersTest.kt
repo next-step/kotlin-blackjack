@@ -4,6 +4,7 @@ import blackjack.domain.StubDeck.Companion.DUMMY_SUIT
 import blackjack.support.Fixtures.createBustedPlayer
 import blackjack.support.Fixtures.createPlayers
 import blackjack.support.Fixtures.createStandingPlayer
+import blackjack.support.Fixtures.playersOf
 import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
@@ -54,7 +55,7 @@ class PlayersTest {
 
     @Test
     fun `모든 플레이어들이 턴 종료하면 종료 상태이다`() {
-        val players = Players(createStandingPlayer("black"), createBustedPlayer("jack"))
+        val players = playersOf(createStandingPlayer("black"), createBustedPlayer("jack"))
         players.isDone shouldBe true
     }
 
@@ -62,7 +63,7 @@ class PlayersTest {
     fun `모든 플레이어들이 종료하기 전까지는 종료 상태가 아니다`() {
         val deck = StubDeck.from(Rank.TWO, Rank.THREE)
         val players =
-            Players(
+            playersOf(
                 createBustedPlayer("black"),
                 Player("jack").apply {
                     initialDrawFrom(deck)

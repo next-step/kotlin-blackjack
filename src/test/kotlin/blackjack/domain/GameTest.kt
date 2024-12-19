@@ -1,6 +1,9 @@
 package blackjack.domain
 
 import blackjack.domain.StubDeck.Companion.DUMMY_SUIT
+import blackjack.support.Fixtures.createBustedPlayer
+import blackjack.support.Fixtures.createStandingPlayer
+import blackjack.support.Fixtures.playersOf
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -85,9 +88,9 @@ class GameTest {
     @Test
     fun `모든 플레이어들의 턴이 종료했으면 게임도 종료 상태이다`() {
         val players =
-            Players(
-                Player("black", Hand()).apply { stand() },
-                Player("jack", Hand()).apply { stand() },
+            playersOf(
+                createStandingPlayer("black"),
+                createBustedPlayer("jack"),
             )
 
         val game = Game(players, StubDeck.from())

@@ -11,6 +11,8 @@ import blackjack.domain.Rank
 import blackjack.domain.StubDeck
 
 object Fixtures {
+    fun playersOf(vararg players: Player): Players = Players(players.toList())
+
     fun createPlayers(
         names: List<String>,
         deck: Deck,

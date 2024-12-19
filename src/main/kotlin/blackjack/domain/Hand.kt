@@ -6,8 +6,6 @@ open class Hand(
     val cards = cards.toMutableList()
     val isTwentyOne: Boolean get() = value() == BLACKJACK_VALUE
 
-    constructor(vararg cards: Card) : this(cards.toList())
-
     operator fun get(index: Int): Card = cards[index]
 
     fun value(): Int {

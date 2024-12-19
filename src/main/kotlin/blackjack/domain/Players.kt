@@ -18,8 +18,6 @@ class Players(
         currentPlayer = iterator.next()
     }
 
-    constructor(vararg player: Player) : this(player.toList())
-
     operator fun get(index: Int): Player = roster[index]
 
     fun dealRoundOfCardsFrom(deck: Deck) {
