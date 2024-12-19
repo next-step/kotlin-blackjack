@@ -6,7 +6,6 @@ abstract class Participant(
     private val _cards = mutableListOf<Card>()
     val cards: Cards = Cards(_cards)
     val cardsSum: Int get() = cards.sumValues()
-    val profitMoney: ProfitMoney = ProfitMoney()
     val isBlackJackInitially: Boolean
 
     init {

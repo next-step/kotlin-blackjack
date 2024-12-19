@@ -5,6 +5,8 @@ class Player(
     private val betMoney: BetMoney,
     private val drawCard: () -> Card,
 ) : Participant(drawCard = drawCard) {
+    private val profitMoney: ProfitMoney = ProfitMoney()
+
     fun play(
         isDrawCard: (String) -> Boolean,
         onDrawCard: () -> Unit,
