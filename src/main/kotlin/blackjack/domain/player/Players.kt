@@ -4,12 +4,12 @@ class Players(private val players: List<Player>) {
 
     val size: Int = players.size
 
-    fun forEach(action: (Player) -> Unit) {
-        players.forEach(action)
+    operator fun Players.get(index: Int): Player {
+        return players[index]
     }
 
-    fun get(index: Int): Player {
-        return players[index]
+    fun forEach(action: (Player) -> Unit) {
+        players.forEach(action)
     }
 
     fun startTurns(
