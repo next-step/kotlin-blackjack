@@ -2,16 +2,18 @@ package blackjack.domain.state
 
 import blackjack.domain.card.PlayingCard
 
-class Ready(private val hands: Hands = Hands()) : State {
-    override val cards: List<PlayingCard>
-        get() = hands.toList()
+class Ready(override val hands: Hands = Hands()) : Running() {
     constructor(card: PlayingCard) : this(Hands(listOf(card)))
 
-    fun draw(card: PlayingCard): State {
+    override fun draw(card: PlayingCard): State {
         val hands = hands + card
         if (hands.size < NEXT_STATE_HANDS_SIZE) return Ready(card)
-        if (Hands(hands).isBlackJackScore()) return Blackjack(hands)
+        if (hands.isBlackJackScore()) return Blackjack(hands)
         return Hit(hands)
+    }
+
+    override fun stay(card: PlayingCard): State {
+        throw IllegalArgumentException("게임이 종료되지 않았습니다.")
     }
 
     companion object{
