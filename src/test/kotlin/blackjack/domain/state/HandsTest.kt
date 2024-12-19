@@ -31,4 +31,20 @@ class HandsTest {
         hands.score() shouldBe 11
 
     }
+
+    @Test
+    fun `21`(
+    ) {
+        val hands = Hands(listOf(CLUBS_ACE, CLUBS_TEN))
+        hands.score() shouldBe 21
+
+    }
+
+    @Test
+    fun `ace12`(
+    ) {
+        val hands = Hands(listOf(CLUBS_ACE, CLUBS_TEN, CLUBS_ACE))
+        hands.score() shouldBe 12
+
+    }
 }

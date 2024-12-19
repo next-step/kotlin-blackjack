@@ -1,5 +1,6 @@
 package blackjack.domain.state
 
+import blackjack.domain.CLUBS_ACE
 import blackjack.domain.CLUBS_TEN
 import blackjack.domain.CLUBS_TWO
 import io.kotest.matchers.collections.shouldContain
@@ -14,7 +15,7 @@ class ReadyTest {
         val state = Ready()
         val actual = state.draw(CLUBS_TWO)
         actual.shouldBeInstanceOf<Ready>()
-        actual.cards shouldContain CLUBS_TWO
+        actual.hands shouldContain CLUBS_TWO
     }
 
     @Test
@@ -22,15 +23,15 @@ class ReadyTest {
         val state = Ready(CLUBS_TWO)
         val actual = state.draw(CLUBS_TWO)
         actual.shouldBeInstanceOf<Hit>()
-        actual.cards.shouldContainAnyOf(CLUBS_TWO, CLUBS_TEN)
+        actual.hands.shouldContainAnyOf(CLUBS_TWO, CLUBS_TEN)
     }
 
     @Test
     fun blackjack() {
-        val state = Ready(CLUBS_TWO)
+        val state = Ready(CLUBS_ACE)
         val actual = state.draw(CLUBS_TEN)
         actual.shouldBeInstanceOf<Blackjack>()
-        actual.cards.shouldContainAnyOf(CLUBS_TWO, CLUBS_TEN)
+        actual.hands.shouldContainAnyOf(CLUBS_TWO, CLUBS_TEN)
     }
 
 }

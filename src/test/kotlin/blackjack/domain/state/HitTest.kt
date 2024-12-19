@@ -20,23 +20,23 @@ class HitTest {
     }
 
     @Test
-    fun hit(){
-        val state = Hit(Hands(CLUBS_ACE, CLUBS_THREE))
+    fun hit() {
+        val state = Hit(Hands(CLUBS_TWO, CLUBS_THREE))
         val acutal = state.draw(CLUBS_TEN)
         acutal.shouldBeInstanceOf<Hit>()
-        acutal.cards.shouldContainAnyOf(CLUBS_TWO, CLUBS_KING, CLUBS_TEN)
+        acutal.hands.shouldContainAnyOf(CLUBS_TWO, CLUBS_THREE, CLUBS_TEN)
 
     }
 
     @Test
-    fun bust(){
-        val state = Hit(Hands(CLUBS_ACE, CLUBS_KING))
+    fun bust() {
+        val state = Hit(Hands(CLUBS_TEN, CLUBS_KING))
         val acutal = state.draw(CLUBS_TEN)
         acutal.shouldBeInstanceOf<Bust>()
     }
 
     @Test
-    fun stay(){
+    fun stay() {
         val state = Hit(Hands(CLUBS_ACE, CLUBS_KING))
         val acutal = state.stay(CLUBS_TWO)
         acutal.shouldBeInstanceOf<Stay>()
