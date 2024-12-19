@@ -3,16 +3,19 @@ package blackjack.domain.player
 import blackjack.domain.Card
 import blackjack.domain.Card.Companion.SpecialNumber
 import blackjack.domain.CardDeck
+import blackjack.domain.status.GameResult
+import blackjack.domain.status.ResultRecord
 
 abstract class Participant(val name: String) {
     protected var cards = mutableListOf<Card>()
-    var winCount = 0
-    var loseCount = 0
+    val gameResult = ResultRecord(0, 0)
 
     abstract fun startTurn(
         onTurnStarted: ((Participant) -> String)?,
         onPrintResultCallback: (Participant) -> Unit,
     )
+
+    abstract fun showGameResult()
 
     abstract fun showCards()
 
@@ -44,9 +47,11 @@ abstract class Participant(val name: String) {
         return cards.toList()
     }
 
-    fun updateWinningStatus(winCount: Int, loseCount: Int) {
-        this.winCount = winCount
-        this.loseCount = loseCount
+    fun updateWinningStatus(
+        result: GameResult,
+        count: Int = 1,
+    ) {
+        gameResult.updateResult(result, count)
     }
 
     companion object {

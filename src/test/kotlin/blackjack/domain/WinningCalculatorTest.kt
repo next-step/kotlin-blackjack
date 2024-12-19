@@ -28,11 +28,11 @@ class WinningCalculatorTest {
 
         WinningCalculator.calculatorGameResult(Players(listOf(player1, player2)), dealer)
 
-        dealer.winCount shouldBe 2
-        dealer.loseCount shouldBe 0
+        dealer.gameResult.getWinCount() shouldBe 2
+        dealer.gameResult.getLoseCount() shouldBe 0
 
-        player1.loseCount shouldBe 1
-        player2.loseCount shouldBe 1
+        player1.gameResult.getLoseCount() shouldBe 1
+        player2.gameResult.getLoseCount() shouldBe 1
     }
 
     @Test
@@ -53,13 +53,13 @@ class WinningCalculatorTest {
 
         WinningCalculator.calculatorGameResult(Players(listOf(player1, player2)), dealer)
 
-        dealer.winCount shouldBe 1
-        dealer.loseCount shouldBe 1
+        dealer.gameResult.getWinCount() shouldBe 1
+        dealer.gameResult.getLoseCount() shouldBe 1
 
-        player1.winCount shouldBe 0
-        player1.loseCount shouldBe 1
+        player1.gameResult.getWinCount() shouldBe 0
+        player1.gameResult.getLoseCount() shouldBe 1
 
-        player2.winCount shouldBe 1
-        player2.loseCount shouldBe 0
+        player2.gameResult.getWinCount() shouldBe 1
+        player2.gameResult.getLoseCount() shouldBe 0
     }
 }

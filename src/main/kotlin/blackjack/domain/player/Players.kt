@@ -1,10 +1,11 @@
 package blackjack.domain.player
 
-class Players(private val players: List<Player>) {
+import blackjack.domain.status.GameResult
 
+class Players(private val players: List<Player>) {
     val size: Int = players.size
 
-    operator fun Players.get(index: Int): Player {
+    operator fun get(index: Int): Player {
         return players[index]
     }
 
@@ -14,7 +15,7 @@ class Players(private val players: List<Player>) {
 
     fun startTurns(
         onTurnStarted: (Participant) -> String,
-        onPrintResultCallback: (Participant) -> Unit
+        onPrintResultCallback: (Participant) -> Unit,
     ) {
         players.forEach { player ->
             player.startTurn(onTurnStarted, onPrintResultCallback)
@@ -27,7 +28,9 @@ class Players(private val players: List<Player>) {
         }
     }
 
-    fun getLosePlayers(dealerResult: Int): List<Player> {
-        return players.filter { it.isBust() || dealerResult > it.calculateCard() }
+    fun updateWinningStatus(result: GameResult) {
+        players.forEach { player ->
+            player.updateWinningStatus(result)
+        }
     }
 }

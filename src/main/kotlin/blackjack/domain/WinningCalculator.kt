@@ -1,25 +1,55 @@
 package blackjack.domain
 
 import blackjack.domain.player.Dealer
+import blackjack.domain.player.Player
 import blackjack.domain.player.Players
+import blackjack.domain.status.GameResult
 
 object WinningCalculator {
-    fun calculatorGameResult(players: Players, dealer: Dealer) {
+    fun calculatorGameResult(
+        players: Players,
+        dealer: Dealer,
+    ) {
         // 딜러는 21초과시 딜러 승
         if (dealer.isBust()) {
-            dealer.updateWinningStatus(players.size, 0)
-            players.forEach { it.updateWinningStatus(winCount = 0, loseCount = 1) }
+            handleDealerBust(players, dealer)
             return
         }
 
-        val losePlayers = players.getLosePlayers(dealer.calculateCard())
-        losePlayers.forEach { it.updateWinningStatus(winCount = 0, loseCount = 1) }
+        val dealerWinCount = calculatePlayerResults(players, dealer)
+        dealer.updateWinningStatus(result = GameResult.WIN, count = dealerWinCount)
+    }
 
+    private fun handleDealerBust(
+        players: Players,
+        dealer: Dealer,
+    ) {
+        dealer.updateWinningStatus(result = GameResult.WIN, count = players.size)
+        players.updateWinningStatus(result = GameResult.LOSE)
+    }
+
+    private fun calculatePlayerResults(
+        players: Players,
+        dealer: Dealer,
+    ): Int {
+        var dealerWinCount = 0
         players.forEach {
-            if(losePlayers.contains(it)) it.updateWinningStatus(winCount = 0, loseCount = 1)
-            else it.updateWinningStatus(winCount = 1, loseCount = 0)
+            val result = calculateResult(dealer, it)
+            it.updateWinningStatus(result)
+            if (result == GameResult.LOSE) {
+                dealerWinCount++
+            }
         }
+        return dealerWinCount
+    }
 
-        dealer.updateWinningStatus(winCount = players.size - losePlayers.size, loseCount = losePlayers.size)
+    private fun calculateResult(
+        dealer: Dealer,
+        player: Player,
+    ): GameResult {
+        return when {
+            player.isBust() || dealer.calculateCard() > player.calculateCard() -> GameResult.LOSE
+            else -> GameResult.WIN
+        }
     }
 }
