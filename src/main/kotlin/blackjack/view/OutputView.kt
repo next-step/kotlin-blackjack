@@ -34,14 +34,20 @@ object OutputView {
     fun showDealerWinningCount(results: DealerOutcomes) {
         val winCount = results.numberOfWinds()
         val loseCount = results.numberOfLose()
-        println("딜러: $winCount ${Result.WIN.message} $loseCount ${Result.LOSE.message}")
+        println("딜러: $winCount ${parseResult(Result.WIN)} $loseCount ${parseResult(Result.LOSE)}")
     }
 
     fun showWinnerPlayers(playerOutcomes: List<PlayerOutcomes>) {
         playerOutcomes.forEach {
-            println("${it.participant.name}: ${it.results.message}")
+            println("${it.participant.name}: ${parseResult(it.results)}")
         }
     }
+
+    private fun parseResult(result: Result): String =
+        when (result) {
+            Result.WIN -> "승"
+            Result.LOSE -> "패"
+        }
 
     private const val DEAL_RESULT_MESSAGE = "%s 에게 2장의 카드를 카드를 나누었습니다."
     private const val CURRENT_CARD_STATUS = "%s카드: %s"
