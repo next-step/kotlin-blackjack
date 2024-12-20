@@ -52,7 +52,7 @@ sealed class Participant(
         }
 
         private fun dealOneCardToEachPlayer(participants: Participants) {
-            participants.allPlayers().forEach {
+            participants.members.forEach {
                 it.receiveCard(deck.draw())
             }
         }

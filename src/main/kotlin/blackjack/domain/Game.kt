@@ -34,15 +34,15 @@ class Game(
     fun determineWinner(): List<PlayerOutcomes> {
         val dealerCardSum = gameMembers.dealer().sumOfCard()
 
-        return gameMembers.playersWithoutDealer().allPlayers().map { PlayerOutcomes.from(it, dealerCardSum) }
+        return gameMembers.playersWithoutDealer().members.map { PlayerOutcomes.from(it, dealerCardSum) }
     }
 
     fun determineDealerWinningOutcome(): DealerOutcomes {
         val dealer = gameMembers.dealer()
-        val players = gameMembers.playersWithoutDealer()
+        val players = gameMembers.playersWithoutDealer().members
 
         val dealerComparisonResults =
-            players.allPlayers().map { player ->
+            players.map { player ->
                 when {
                     dealer.sumOfCard() >= player.sumOfCard() -> Result.WIN
                     else -> Result.LOSE

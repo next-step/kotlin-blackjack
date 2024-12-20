@@ -2,10 +2,16 @@ package blackjack.domain
 
 import blackjack.domain.Participant.Dealer
 
-class GameMembers(private val participants: Participants, private val dealer: Dealer) {
-    fun allParticipants(): Participants = Participants(dealer, participants)
+class GameMembers(private val players: List<Participant.Player>, private val dealer: Dealer) {
+    fun allParticipants(): Participants {
+        return Participants(listOf(dealer) + players)
+    }
 
-    fun playersWithoutDealer(): Participants = participants
+    fun playersWithoutDealer(): Participants {
+        return Participants(players)
+    }
 
-    fun dealer(): Dealer = dealer
+    fun dealer(): Dealer {
+        return dealer
+    }
 }

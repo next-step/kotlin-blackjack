@@ -8,10 +8,10 @@ import blackjack.domain.Result
 
 object OutputView {
     fun showGameStart(participants: Participants) {
-        val playerNames = participants.allPlayers().map { it.name() }
+        val playerNames = participants.members.map { it.name() }
 
         println(String.format(DEAL_RESULT_MESSAGE, playerNames))
-        participants.allPlayers().forEach {
+        participants.members.forEach {
             println("${it.name()} 카드: ${it.ownedCards}")
         }
         println()
@@ -22,7 +22,7 @@ object OutputView {
     }
 
     fun showGameResult(participants: Participants) {
-        participants.allPlayers().forEach {
+        participants.members.forEach {
             println(String.format(GAME_RESULT_MESSAGE, it.name(), it.ownedCards, it.sumOfCard()))
         }
     }

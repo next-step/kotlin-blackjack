@@ -5,7 +5,6 @@ import blackjack.domain.Game
 import blackjack.domain.GameMembers
 import blackjack.domain.Participant.Dealer
 import blackjack.domain.Participant.Player
-import blackjack.domain.Participants
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
@@ -27,7 +26,7 @@ class BlackjackController {
     }
 
     private fun gameLoop(game: Game) {
-        game.participants().forEach { participant ->
+        game.participants().members.forEach { participant ->
             while (game.isPlayerStillPlaying(participant)) {
                 val hitCommand = InputView.askHitOrStay(participant.name())
                 game.processPlayerTurn(participant, hitCommand)
@@ -57,12 +56,10 @@ class BlackjackController {
 
     private fun createDealer() = Dealer(Deck())
 
-    private fun createPlayers(playerNames: List<String>): Participants {
-        val playerList =
-            playerNames.map { name ->
-                val bettingAmount = InputView.askBettingAmount(name)
-                Player(name = name, bettingAmount = bettingAmount)
-            }
-        return Participants(playerList)
+    private fun createPlayers(playerNames: List<String>): List<Player> {
+        return playerNames.map { name ->
+            val bettingAmount = InputView.askBettingAmount(name)
+            Player(name = name, bettingAmount = bettingAmount)
+        }
     }
 }
