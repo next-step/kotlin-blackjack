@@ -11,6 +11,8 @@ class Game(
 
     fun participants(): Participants = gameMembers.playersWithoutDealer()
 
+    fun dealer(): Participant.Dealer = gameMembers.dealer()
+
     fun processPlayerTurn(
         participant: Participant,
         hitCommand: HitCommand,
@@ -51,5 +53,9 @@ class Game(
 
     fun isDealerBust(): Boolean {
         return gameMembers.dealer().sumOfCard() > 21
+    }
+
+    fun busted(participant: Participant) {
+        participant.clearOwnedCards()
     }
 }

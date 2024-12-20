@@ -30,6 +30,10 @@ sealed class Participant(
         return totalSum
     }
 
+    fun clearOwnedCards() {
+        ownedCards.clear()
+    }
+
     class Player(name: String, bettingAmount: Int = 0, ownedCards: MutableList<Card> = mutableListOf()) : Participant(
         name = name,
         ownedCards = ownedCards,

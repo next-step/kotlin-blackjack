@@ -35,7 +35,9 @@ class BlackjackController {
             }
         }
 
-        if (game.isDealerBust()) return
+        if (game.isDealerBust()) {
+            game.busted(game.dealer())
+        }
     }
 
     private fun dealerTurn(game: Game) {
