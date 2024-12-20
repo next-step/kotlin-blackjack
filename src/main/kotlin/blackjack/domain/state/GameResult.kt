@@ -8,7 +8,7 @@ class GameResult(dealer: Dealer, gameUsers: List<GameUser>) {
         private set
     val usersResult: Map<GameUser, ResultState> =
         gameUsers.associateWith {
-            val userResultState = dealer.comparePoints(it).not(it.isBlackJack())
+            val userResultState = dealer.compareGetResultOpponent(it)
             dealerBalance -= it.bettingRevenue(userResultState)
             userResultState
         }

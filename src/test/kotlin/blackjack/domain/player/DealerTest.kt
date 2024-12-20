@@ -39,7 +39,7 @@ class DealerTest {
         val user2 = GameUser("B")
         user2.cards.add(BlackJackCard(CardType.HEART, CardNumber.CARD_10))
         user2.cards.add(BlackJackCard(CardType.HEART, CardNumber.CARD_9))
-        dealer.comparePoints(user2) shouldBe ResultState.DRAW
+        dealer.compareGetResultOpponent(user2) shouldBe ResultState.PUSH
     }
 
     @Test
@@ -53,6 +53,6 @@ class DealerTest {
         user1.cards.add(BlackJackCard(CardType.SPADE, CardNumber.CARD_10))
         user1.cards.add(BlackJackCard(CardType.SPADE, CardNumber.CARD_6))
 
-        dealer.comparePoints(user1) shouldBe ResultState.LOSE
+        dealer.compareGetResultOpponent(user1) shouldBe ResultState.LOSE
     }
 }
