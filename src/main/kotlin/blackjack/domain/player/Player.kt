@@ -1,7 +1,6 @@
 package blackjack.domain.player
 
 import blackjack.domain.card.BlackJackCard
-import blackjack.domain.state.ResultState
 
 interface Player {
     val name: String
@@ -19,7 +18,8 @@ interface Player {
         display: (Any) -> Unit,
     )
 
-    fun isBlackJack(): Boolean = // 블랙잭 요건: 21포인트, 카드 2장
+    fun isBlackJack(): Boolean =
+        // 블랙잭 요건: 21포인트, 카드 2장
         (
             points == BLACKJACK_POINT && cards.size == BLACKJACK_CARD_COUNT
         )

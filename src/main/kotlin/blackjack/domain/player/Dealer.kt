@@ -48,7 +48,7 @@ class Dealer : Player {
         if (isBust(points)) return ResultState.LOSE
 
         points.compareTo(opponent.points).let {
-            return  when {
+            return when {
                 it > 0 -> ResultState.WIN
                 it < 0 -> ResultState.LOSE
                 // 같은 경우

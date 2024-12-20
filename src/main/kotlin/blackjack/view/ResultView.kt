@@ -1,7 +1,9 @@
 package blackjack.view
 
+import blackjack.domain.player.Dealer
+import blackjack.domain.player.GameUser
 import blackjack.domain.player.Player
-import blackjack.domain.state.GameResult
+import blackjack.domain.state.ResultState
 
 object ResultView {
     fun printMessage(message: Any) {
@@ -21,22 +23,33 @@ object ResultView {
         println("${player.name}카드: ${player.getFirstCards()}")
     }
 
-    fun printGameResult(gameResult: GameResult) {
-        println("##최종 승패")
-        println("${gameResult.winCountDealer}승 ${gameResult.drawCount}무 ${gameResult.loseCountDealer}패")
+    fun printGameResult(
+        dealer: Dealer,
+        users: List<GameUser>,
+    ) {
+        val usersResultMessageBuilder = StringBuilder()
 
-        gameResult.getGameUserResult().forEach {
-            println(it)
+        var dealerWinCount = 0
+        var dealerLostCount = 0
+        var dealerDrawCount = 0
+        users.forEach {
+            val resultState = it.resultState(dealer)
+            when (resultState) {
+                ResultState.WIN -> dealerLostCount++
+                ResultState.LOSE -> dealerWinCount++
+                else -> dealerDrawCount++
+            }
+            usersResultMessageBuilder.append("${it.name}: ${resultState.displayMessage}\n")
         }
+
+        println("##최종 승패")
+        println("${dealer.name}: ${dealerWinCount}승 ${dealerDrawCount}무 ${dealerLostCount}패")
+        println(usersResultMessageBuilder.toString())
     }
 
-    fun printResultCards(
-        dealer: Player,
-        users: List<Player>,
-    ) {
+    fun printResultCards(players: List<Player>) {
         println()
-        println("${dealer.name}카드: ${dealer.cards} - 결과: ${dealer.points}")
-        users.forEach { user ->
+        players.forEach { user ->
             println("${user.name}카드: ${user.cards} - 결과: ${user.points}")
         }
     }

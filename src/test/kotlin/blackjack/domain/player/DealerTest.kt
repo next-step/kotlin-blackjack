@@ -55,5 +55,4 @@ class DealerTest {
 
         dealer.comparePoints(user1) shouldBe ResultState.LOSE
     }
-
 }

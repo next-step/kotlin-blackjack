@@ -13,6 +13,10 @@ class GameUser(override val name: String, private val decision: () -> InputState
     override val points: Int
         get() = calculatePoints()
 
+    fun resultState(dealer: Dealer): ResultState {
+        return dealer.comparePoints(this).not()
+    }
+
     override fun getFirstCards(): List<BlackJackCard> {
         return cards
     }

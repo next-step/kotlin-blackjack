@@ -4,7 +4,6 @@ import blackjack.domain.card.CardDeck
 import blackjack.domain.player.Dealer
 import blackjack.domain.player.GameUser
 import blackjack.domain.player.Player
-import blackjack.domain.state.GameResult
 import blackjack.domain.state.toInputState
 import blackjack.view.InputView
 import blackjack.view.ResultView
@@ -16,13 +15,11 @@ class BlackJackGame(users: String) {
     private var inputView: InputView? = null
     private var resultView: ResultView? = null
 
-    private fun settingUsers(users: String): List<Player> {
+    private fun settingUsers(users: String): List<GameUser> {
         val usersText = users.replace(" ", "")
-        val userList =
-            usersText.split(",").map {
-                GameUser(it) { InputView.inputNextDecision(it).toInputState() }
-            }.toMutableList<Player>()
-        return userList.toList()
+        return usersText.split(",").map {
+            GameUser(it) { InputView.inputNextDecision(it).toInputState() }
+        }
     }
 
     fun start(
@@ -63,9 +60,7 @@ fun main() {
         game.turnGameUser(it)
     }
 
-    val gameResult = GameResult(game.dealer, game.allUsers)
+    ResultView.printResultCards(listOf(game.dealer) + game.allUsers)
 
-    ResultView.printResultCards(game.dealer, game.allUsers)
-
-    ResultView.printGameResult(gameResult)
+    ResultView.printGameResult(game.dealer, game.allUsers)
 }
