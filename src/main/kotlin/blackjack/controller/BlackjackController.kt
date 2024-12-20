@@ -34,7 +34,7 @@ class BlackjackController {
         val dealerEarningMoneyResults = EarningMoneyResult("딜러", earningCalculator.dealerMoney(game.players()))
         val playerEarningMoneyResults =
             game.players().map {
-                val money = earningCalculator.playerMoney(it)
+                val money = earningCalculator.calculatePlayerEarnings(it)
                 EarningMoneyResult(it.name(), money)
             }
         return listOf(dealerEarningMoneyResults) + playerEarningMoneyResults
