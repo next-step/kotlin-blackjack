@@ -15,10 +15,6 @@ abstract class Participant(val name: String) {
         onPrintResultCallback: (Participant) -> Unit,
     )
 
-    abstract fun showGameResult()
-
-    abstract fun showCards()
-
     fun isBust(): Boolean {
         return calculateCard() > 21
     }

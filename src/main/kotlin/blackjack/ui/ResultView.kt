@@ -18,11 +18,11 @@ class ResultView {
         players: Players,
         dealer: Dealer,
     ) {
-        dealer.showAllCards()
+        showAllCards(dealer)
         println(" - 결과: ${dealer.calculateCard()}")
 
         players.forEach { player ->
-            player.showCards()
+            showAllCards(player)
             println(" - 결과: ${player.calculateCard()}")
         }
 
@@ -35,7 +35,37 @@ class ResultView {
 
     private fun showWinningResult(player: Participant) {
         print("${player.name}: ")
-        player.showGameResult()
+        if (player.name == Dealer.DEALER_NAME) {
+            printDealerResult(player)
+        } else {
+            printPlayerResult(player)
+        }
+    }
+
+    fun showCards(player: Participant) {
+        if (player.name == Dealer.DEALER_NAME) {
+            println("${player.name}: ${player.getAllCards()[0].printCard()}")
+            return
+        }
+        showAllCards(player)
+    }
+
+    private fun showAllCards(player: Participant) {
+        print("${player.name}카드: ")
+
+        val lastIndex = player.getAllCards().lastIndex
+        player.getAllCards().forEachIndexed { index, card ->
+            print(card.printCard())
+            if (index != lastIndex) print(", ") else println()
+        }
+    }
+
+    private fun printDealerResult(player: Participant) {
+        println("${player.gameResult.getWinCount()}승 ${player.gameResult.getLoseCount()}패")
+    }
+
+    private fun printPlayerResult(player: Participant) {
+        if (player.gameResult.getWinCount() > 0) println("승") else println("패")
     }
 
     fun printDealerDrawExtra(participant: Participant) {

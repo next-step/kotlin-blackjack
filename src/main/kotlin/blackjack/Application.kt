@@ -15,7 +15,7 @@ fun main() {
 
     val game = Game.createGame(players)
     val printCallback: ((Participant) -> Unit) = { player ->
-        player.showCards()
+        resultView.showCards(player)
     }
 
     val turnCallback: ((Participant) -> String) = { player ->

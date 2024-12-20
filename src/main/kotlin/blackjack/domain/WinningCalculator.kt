@@ -18,6 +18,7 @@ object WinningCalculator {
 
         val dealerWinCount = calculatePlayerResults(players, dealer)
         dealer.updateWinningStatus(result = GameResult.WIN, count = dealerWinCount)
+        dealer.updateWinningStatus(result = GameResult.LOSE, count = players.size - dealerWinCount)
     }
 
     private fun handleDealerBust(
