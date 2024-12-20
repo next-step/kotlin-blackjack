@@ -3,6 +3,7 @@ package blackjack.domain.player
 import blackjack.domain.card.BlackJackCard
 import blackjack.domain.card.CardNumber
 import blackjack.domain.card.CardType
+import blackjack.domain.state.ResultState
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
@@ -30,22 +31,19 @@ class DealerTest {
     }
 
     @Test
-    fun `딜러와 게이머의 승패를 확인한다`() {
-        val user1 = GameUser("A")
-        user1.cards.add(BlackJackCard(CardType.SPADE, CardNumber.CARD_10))
-        user1.cards.add(BlackJackCard(CardType.SPADE, CardNumber.CARD_9))
-        user1.cards.add(BlackJackCard(CardType.SPADE, CardNumber.CARD_6))
+    fun `딜러와 게이머의 무승부를 확인한다`() {
+        val dealer = Dealer()
+        dealer.cards.add(BlackJackCard(CardType.SPADE, CardNumber.CARD_10))
+        dealer.cards.add(BlackJackCard(CardType.SPADE, CardNumber.CARD_9))
 
         val user2 = GameUser("B")
         user2.cards.add(BlackJackCard(CardType.HEART, CardNumber.CARD_10))
         user2.cards.add(BlackJackCard(CardType.HEART, CardNumber.CARD_9))
-        user2.cards.add(BlackJackCard(CardType.HEART, CardNumber.CARD_6))
-//        user1.comparePoints(user2) shouldBe false
-//        user2.comparePoints(user1) shouldBe false
+        dealer.comparePoints(user2) shouldBe ResultState.DRAW
     }
 
     @Test
-    fun `딜러가 오버포인트 시 모든 사용자는 승리한다`() {
+    fun `딜러가 오버포인트 시 딜러는 패배한다`() {
         val dealer = Dealer()
         dealer.cards.add(BlackJackCard(CardType.HEART, CardNumber.CARD_10))
         dealer.cards.add(BlackJackCard(CardType.HEART, CardNumber.CARD_9))
@@ -55,11 +53,7 @@ class DealerTest {
         user1.cards.add(BlackJackCard(CardType.SPADE, CardNumber.CARD_10))
         user1.cards.add(BlackJackCard(CardType.SPADE, CardNumber.CARD_6))
 
-//        user1.comparePoints(user2) shouldBe true
-//        user2.comparePoints(user1) shouldBe false
+        dealer.comparePoints(user1) shouldBe ResultState.LOSE
     }
 
-//    companion object {
-//        val dealer = Dealer()
-//    }
 }

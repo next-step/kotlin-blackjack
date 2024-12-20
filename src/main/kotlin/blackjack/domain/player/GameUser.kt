@@ -60,8 +60,4 @@ class GameUser(override val name: String, private val decision: () -> InputState
             InputState.NONE -> {}
         }
     }
-
-    override fun comparePoints(opponent: Player): ResultState {
-        throw IllegalStateException("승패는 딜러와 확인해 주세요")
-    }
 }

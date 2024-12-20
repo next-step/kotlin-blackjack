@@ -43,14 +43,19 @@ class Dealer : Player {
         cards.add(nextCard())
     }
 
-    override fun comparePoints(opponent: Player): ResultState {
-        if (isBust(points)) return ResultState.LOSE
+    fun comparePoints(opponent: Player): ResultState {
         if (isBust(opponent.points)) return ResultState.WIN
+        if (isBust(points)) return ResultState.LOSE
+
         points.compareTo(opponent.points).let {
-            when {
-                it > 0 -> return ResultState.WIN
-                it < 0 -> return ResultState.LOSE
-                else -> return ResultState.DRAW
+            return  when {
+                it > 0 -> ResultState.WIN
+                it < 0 -> ResultState.LOSE
+                // 같은 경우
+                isBlackJack() && opponent.isBlackJack() -> ResultState.DRAW
+                isBlackJack() -> ResultState.WIN
+                opponent.isBlackJack() -> ResultState.LOSE
+                else -> ResultState.DRAW
             }
         }
     }
