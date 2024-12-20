@@ -18,6 +18,15 @@ object CardListFixture {
         )
     }
 
+    fun blackjackCardList(): MutableList<Card> {
+        return mutableListOf(
+            Card(Suit.CLUBS, CardNumber.ACE),
+            Card(Suit.DIAMONDS, CardNumber.TEN),
+            Card(Suit.SPADES, CardNumber.ACE),
+            Card(Suit.SPADES, CardNumber.TEN),
+        )
+    }
+
     fun mixedCardList(): MutableList<Card> {
         return mutableListOf(
             Card(Suit.CLUBS, CardNumber.KING),

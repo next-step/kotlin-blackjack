@@ -44,7 +44,8 @@ sealed class Participant(
 
     class Dealer(
         private val deck: Deck,
-    ) : Participant() {
+        ownedCards: MutableList<Card> = mutableListOf(),
+    ) : Participant(ownedCards = ownedCards) {
         fun deal(participants: Participants) {
             repeat(NUMBER_OF_DEAL_CARD) {
                 dealOneCardToEachPlayer(participants)
