@@ -70,5 +70,53 @@ class WinningMoneyTest : DescribeSpec({
                 sut.calculate(player) shouldBe -1000.0
             }
         }
+
+        context("딜러가 bust된 경우") {
+            it("플레이어가 bust 되지 않았다면 돈을 받는다.") {
+                val player =
+                    Participant.Player(
+                        "pobi",
+                        1000,
+                        mutableListOf(Card(Suit.CLUBS, CardNumber.ACE), Card(Suit.CLUBS, CardNumber.KING)),
+                    )
+                val dealer =
+                    Participant.Dealer(
+                        Deck(CardListFixture.blackjackCardList()),
+                        mutableListOf(
+                            Card(Suit.DIAMONDS, CardNumber.JACK),
+                            Card(Suit.DIAMONDS, CardNumber.KING),
+                            Card(Suit.DIAMONDS, CardNumber.QUEEN),
+                        ),
+                    )
+
+                val sut = EarningMoney(dealer)
+                sut.calculate(player) shouldBe 2000.0
+            }
+
+            it("플레이어가 bust 되었다면 돈을 잃는다.") {
+                val player =
+                    Participant.Player(
+                        "pobi",
+                        1000,
+                        mutableListOf(
+                            Card(Suit.DIAMONDS, CardNumber.JACK),
+                            Card(Suit.DIAMONDS, CardNumber.KING),
+                            Card(Suit.DIAMONDS, CardNumber.QUEEN),
+                        ),
+                    )
+                val dealer =
+                    Participant.Dealer(
+                        Deck(CardListFixture.blackjackCardList()),
+                        mutableListOf(
+                            Card(Suit.DIAMONDS, CardNumber.JACK),
+                            Card(Suit.DIAMONDS, CardNumber.KING),
+                            Card(Suit.DIAMONDS, CardNumber.QUEEN),
+                        ),
+                    )
+
+                val sut = EarningMoney(dealer)
+                sut.calculate(player) shouldBe -1000.0
+            }
+        }
     }
 })

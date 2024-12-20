@@ -1,15 +1,19 @@
 package blackjack.domain
 
 class EarningMoney(private val dealer: Participant) {
-    fun calculate(participant: Participant.Player): Double {
-        if (dealer.isBlackjack() && participant.isBlackjack()) {
-            return participant.bettingAmount.toDouble()
+    fun calculate(player: Participant.Player): Double {
+        if (dealer.hasBusted() && player.hasBusted().not()) {
+            return (player.bettingAmount * 2).toDouble()
         }
 
-        if (participant.isBlackjack()) {
-            return participant.bettingAmount * 1.5
+        if (dealer.isBlackjack() && player.isBlackjack()) {
+            return player.bettingAmount.toDouble()
         }
 
-        return (participant.bettingAmount * -1).toDouble()
+        if (player.isBlackjack()) {
+            return player.bettingAmount * 1.5
+        }
+
+        return (player.bettingAmount * -1).toDouble()
     }
 }
