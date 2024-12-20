@@ -16,14 +16,6 @@ class BlackJackGame(users: String) {
     private var inputView: InputView? = null
     private var resultView: ResultView? = null
 
-    fun getUsers(): List<Player> {
-        return allUsers
-    }
-
-    fun getDealer(): Player {
-        return dealer
-    }
-
     private fun settingUsers(users: String): List<Player> {
         val usersText = users.replace(" ", "")
         val userList =
@@ -73,7 +65,7 @@ fun main() {
 
     val gameResult = GameResult(game.dealer, game.allUsers)
 
-    ResultView.printResultCards(game.getUsers(), game.getDealer())
+    ResultView.printResultCards(game.dealer, game.allUsers)
 
     ResultView.printGameResult(gameResult)
 }

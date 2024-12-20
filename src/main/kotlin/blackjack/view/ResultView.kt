@@ -23,7 +23,7 @@ object ResultView {
 
     fun printGameResult(gameResult: GameResult) {
         println("##최종 승패")
-        println(gameResult.getDealerResult())
+        println("${gameResult.winCountDealer}승 ${gameResult.drawCount}무 ${gameResult.loseCountDealer}패")
 
         gameResult.getGameUserResult().forEach {
             println(it)
@@ -31,8 +31,8 @@ object ResultView {
     }
 
     fun printResultCards(
-        users: List<Player>,
         dealer: Player,
+        users: List<Player>,
     ) {
         println()
         println("${dealer.name}카드: ${dealer.cards} - 결과: ${dealer.points}")
