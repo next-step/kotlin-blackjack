@@ -11,7 +11,7 @@ import blackjack.ui.ResultView
 fun main() {
     val inputView = InputView()
     val resultView = ResultView()
-    val players = Players(inputView.getPlayers().map { Player(it, 0) })
+    val players = Players(inputView.getPlayers().map { Player(it, inputView.getUserBetMoney(it)) })
 
     val game = Game.createGame(players)
     val printCallback: ((Participant) -> Unit) = { player ->

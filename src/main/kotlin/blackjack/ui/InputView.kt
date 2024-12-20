@@ -19,6 +19,17 @@ class InputView {
         require(input.isNotEmpty())
     }
 
+    fun getUserBetMoney(name: String): Int {
+        println("\n${name}의 배팅 금액은?")
+        val input = readln()
+        checkValidNumber(input)
+        return input.toInt()
+    }
+
+    fun checkValidNumber(input: String) {
+        requireNotNull(input.toIntOrNull()) { "Wrong type input" }
+    }
+
     fun setUserAnswer(name: String) {
         if (name == Dealer.DEALER_NAME) return
         println("${name}은/는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
