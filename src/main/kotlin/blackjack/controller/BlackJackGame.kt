@@ -18,7 +18,8 @@ class BlackJackGame(users: String) {
     private fun settingUsers(users: String): List<GameUser> {
         val usersText = users.replace(" ", "")
         return usersText.split(",").map {
-            GameUser(it) { InputView.inputNextDecision(it).toInputState() }
+            val bettingMoney = InputView.inputBetting(it).toInt()
+            GameUser(it, bettingMoney) { InputView.inputNextDecision(it).toInputState() }
         }
     }
 
@@ -59,6 +60,7 @@ fun main() {
     (game.allUsers + game.dealer).forEach {
         game.turnGameUser(it)
     }
+    game.dealer.updateRevenue(game.allUsers)
 
     ResultView.printResultCards(listOf(game.dealer) + game.allUsers)
 

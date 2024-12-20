@@ -1,9 +1,9 @@
 package blackjack.domain.state
 
-enum class ResultState(val displayMessage: String) {
-    WIN("승"),
-    LOSE("패"),
-    DRAW("무"),
+enum class ResultState(val displayMessage: String, val revenueRate: Double) {
+    WIN("승", 1.0),
+    LOSE("패", -1.0),
+    DRAW("무", 0.0),
     ;
 
     fun not(): ResultState {

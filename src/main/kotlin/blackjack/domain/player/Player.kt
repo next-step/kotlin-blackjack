@@ -29,5 +29,6 @@ interface Player {
         const val BLACKJACK_CARD_COUNT = 2
         const val ACE_CARD_THRESHOLD = 11
         const val ACE_CARD_EXTRA_POINT = 10
+        const val BLACKJACK_EXTRA_REVENUE_RATE = 0.5
     }
 }

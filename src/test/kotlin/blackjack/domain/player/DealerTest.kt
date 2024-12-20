@@ -55,4 +55,32 @@ class DealerTest {
 
         dealer.comparePoints(user1) shouldBe ResultState.LOSE
     }
+
+    @Test
+    fun `딜러의 승리로 수익을 확인한다`() {
+        val dealer = Dealer()
+        dealer.cards.add(BlackJackCard(CardType.HEART, CardNumber.CARD_10))
+        dealer.cards.add(BlackJackCard(CardType.HEART, CardNumber.CARD_9))
+
+        val user1 = GameUser("A", 100)
+        user1.cards.add(BlackJackCard(CardType.SPADE, CardNumber.CARD_10))
+        user1.cards.add(BlackJackCard(CardType.SPADE, CardNumber.CARD_6))
+
+        dealer.updateRevenue(listOf(user1))
+        dealer.revenueMoney shouldBe 100
+    }
+
+    @Test
+    fun `유저의 블랙잭 승리로 딜러의 수익을 확인한다`() {
+        val dealer = Dealer()
+        dealer.cards.add(BlackJackCard(CardType.HEART, CardNumber.CARD_10))
+        dealer.cards.add(BlackJackCard(CardType.HEART, CardNumber.CARD_9))
+
+        val user1 = GameUser("A", 100)
+        user1.cards.add(BlackJackCard(CardType.SPADE, CardNumber.CARD_10))
+        user1.cards.add(BlackJackCard(CardType.SPADE, CardNumber.CARD_A))
+
+        dealer.updateRevenue(listOf(user1))
+        dealer.revenueMoney shouldBe -150
+    }
 }

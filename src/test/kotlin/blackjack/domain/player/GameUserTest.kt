@@ -14,6 +14,29 @@ import java.util.stream.Stream
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class GameUserTest {
     @ParameterizedTest
+    @ValueSource(ints = [10000, 20000, 30000])
+    fun `블랙잭을 가진 사용자의 수익 금액을 확인한다`(money: Int) {
+        val user = GameUser("홍길동", money)
+        user.cards.add(BlackJackCard(CardType.CLOVER, CardNumber.CARD_10))
+        user.cards.add(BlackJackCard(CardType.CLOVER, CardNumber.CARD_A))
+        user.bettingRevenue() shouldBe (money + money / 2)
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = [10000, 20000, 30000])
+    fun `사용자의 수익 금액을 확인한다`(money: Int) {
+        val user = GameUser("홍길동", money)
+        user.bettingRevenue() shouldBe money
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = [10000, 20000, 30000])
+    fun `사용자의 배팅 금액을 확인한다`(money: Int) {
+        val user = GameUser("홍길동", money)
+        user.bettingMoney shouldBe money
+    }
+
+    @ParameterizedTest
     @ValueSource(strings = ["A", "B", "C"])
     fun `사용자를 생성한다`(name: String) {
         val user = GameUser(name)

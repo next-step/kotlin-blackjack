@@ -3,18 +3,27 @@ package blackjack.domain.player
 import blackjack.domain.card.BlackJackCard
 import blackjack.domain.player.Player.Companion.ACE_CARD_EXTRA_POINT
 import blackjack.domain.player.Player.Companion.ACE_CARD_THRESHOLD
+import blackjack.domain.player.Player.Companion.BLACKJACK_EXTRA_REVENUE_RATE
 import blackjack.domain.player.Player.Companion.BLACKJACK_POINT
 import blackjack.domain.state.InputState
 import blackjack.domain.state.ResultState
 
-class GameUser(override val name: String, private val decision: () -> InputState = { InputState.STAY }) : Player {
+class GameUser(
+    override val name: String,
+    var bettingMoney: Int = 0,
+    private val decision: () -> InputState = {
+        InputState.STAY
+    },
+) : Player {
+    var resultState = ResultState.WIN
     private var doneGame = false
     override val cards = mutableListOf<BlackJackCard>()
     override val points: Int
         get() = calculatePoints()
 
-    fun resultState(dealer: Dealer): ResultState {
-        return dealer.comparePoints(this).not()
+    fun bettingRevenue(): Int {
+        val revenueRate = resultState.revenueRate + if (isBlackJack()) BLACKJACK_EXTRA_REVENUE_RATE else 0.0
+        return (revenueRate * bettingMoney).toInt()
     }
 
     override fun getFirstCards(): List<BlackJackCard> {
