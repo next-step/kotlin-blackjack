@@ -32,9 +32,9 @@ class GameTest : DescribeSpec({
         it("딜러를 포함한 모든 플레이어를 조회한다.") {
             val actual = sut.allPlayers()
             actual.allPlayers().size shouldBe 3
-            actual.allPlayers()[0].name shouldBe "Dealer"
-            actual.allPlayers()[1].name shouldBe "pobi"
-            actual.allPlayers()[2].name shouldBe "jason"
+            actual.allPlayers()[0].name() shouldBe "딜러"
+            actual.allPlayers()[1].name() shouldBe "pobi"
+            actual.allPlayers()[2].name() shouldBe "jason"
         }
     }
 
@@ -42,8 +42,8 @@ class GameTest : DescribeSpec({
         it("딜러를 제외한 플레이어만 조회한다") {
             val actual = sut.participants()
             actual.allPlayers().size shouldBe 2
-            actual.allPlayers()[0].name shouldBe "pobi"
-            actual.allPlayers()[1].name shouldBe "jason"
+            actual.allPlayers()[0].name() shouldBe "pobi"
+            actual.allPlayers()[1].name() shouldBe "jason"
         }
     }
 
@@ -226,7 +226,7 @@ class GameTest : DescribeSpec({
             player4.sumOfCard() shouldBe 15
             val actual = sut.determineWinner()
 
-            actual.filter { it.results == Result.WIN }.map { it.participant.name } shouldContainExactly
+            actual.filter { it.results == Result.WIN }.map { it.participant.name() } shouldContainExactly
                 listOf(
                     "player1", "player2", "player3",
                 )

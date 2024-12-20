@@ -8,22 +8,22 @@ import blackjack.domain.Result
 
 object OutputView {
     fun showGameStart(participants: Participants) {
-        val playerNames = participants.allPlayers().map { it.name }
+        val playerNames = participants.allPlayers().map { it.name() }
 
         println(String.format(DEAL_RESULT_MESSAGE, playerNames))
         participants.allPlayers().forEach {
-            println("${if (it.name == "Unknown") "딜러" else it.name} 카드: ${it.ownedCards}")
+            println("${it.name()} 카드: ${it.ownedCards}")
         }
         println()
     }
 
     fun printPlayerCards(participant: Participant) {
-        println(String.format(CURRENT_CARD_STATUS, participant.name, participant.ownedCards))
+        println(String.format(CURRENT_CARD_STATUS, participant.name(), participant.ownedCards))
     }
 
     fun showGameResult(participants: Participants) {
         participants.allPlayers().forEach {
-            println(String.format(GAME_RESULT_MESSAGE, it.name, it.ownedCards, it.sumOfCard()))
+            println(String.format(GAME_RESULT_MESSAGE, it.name(), it.ownedCards, it.sumOfCard()))
         }
     }
 
@@ -39,7 +39,7 @@ object OutputView {
 
     fun showWinnerPlayers(playerOutcomes: List<PlayerOutcomes>) {
         playerOutcomes.forEach {
-            println("${it.participant.name}: ${parseResult(it.results)}")
+            println("${it.participant.name()}: ${parseResult(it.results)}")
         }
     }
 

@@ -1,7 +1,6 @@
 package blackjack.domain
 
 sealed class Participant(
-    val name: String = "Unknown",
     val ownedCards: MutableList<Card> = mutableListOf(),
     private val actions: MutableList<HitCommand> = mutableListOf(),
 ) {
@@ -30,10 +29,14 @@ sealed class Participant(
         return totalSum
     }
 
+    fun name(): String {
+        if (this is Player) return this.name
+        return "딜러"
+    }
+
     abstract fun busted()
 
-    class Player(name: String, var bettingAmount: Int, ownedCards: MutableList<Card> = mutableListOf()) : Participant(
-        name = name,
+    class Player(val name: String, var bettingAmount: Int, ownedCards: MutableList<Card> = mutableListOf()) : Participant(
         ownedCards = ownedCards,
     ) {
         override fun busted() {

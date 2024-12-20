@@ -4,10 +4,10 @@ class Game(
     private val gameMembers: GameMembers,
 ) {
     init {
-        gameMembers.dealer().deal(gameMembers.allPlayers())
+        gameMembers.dealer().deal(gameMembers.allParticipants())
     }
 
-    fun allPlayers(): Participants = gameMembers.allPlayers()
+    fun allPlayers(): Participants = gameMembers.allParticipants()
 
     fun participants(): Participants = gameMembers.playersWithoutDealer()
 
