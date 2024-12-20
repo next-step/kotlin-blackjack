@@ -5,6 +5,7 @@ import blackjack.support.Fixtures.createBustedPlayer
 import blackjack.support.Fixtures.createStandingPlayer
 import blackjack.support.Fixtures.playersOf
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.types.shouldBeInstanceOf
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -34,6 +35,9 @@ class GameTest {
         val game = Game(players, deck)
 
         game.initialDeal()
+        // black:  A, 4
+        // jack:   2, 5
+        // dealer: 3, 6
 
         // black
         game.players[0].hand[0] shouldBe Card(DUMMY_SUIT, Rank.ACE)
@@ -49,6 +53,9 @@ class GameTest {
         val game = Game(players, deck)
 
         game.initialDeal()
+        // black:  A, 4
+        // jack:   2, 5
+        // dealer: 3, 6
 
         game.dealer.hand[0] shouldBe Card(DUMMY_SUIT, Rank.THREE)
         game.dealer.hand[1] shouldBe Card(DUMMY_SUIT, Rank.SIX, false)
@@ -60,6 +67,9 @@ class GameTest {
         val game = Game(players, deck)
 
         game.initialDeal()
+        // black:  A, 4
+        // jack:   2, 5
+        // dealer: 3, 6
 
         game.dealer.hand[0].isFaceUp shouldBe true
     }
@@ -80,9 +90,13 @@ class GameTest {
         val players = Players.from("black", "jack")
 
         val game = Game(players, deck).apply { initialDeal() }
+        // black:  2, 4
+        // jack:   3, 5
+        // dealer: A, K (블랙잭)
 
-        game.players[0].reasonDone shouldBe PlayerReasonDone.DEALER_DEALT_BLACKJACK
-        game.players[1].reasonDone shouldBe PlayerReasonDone.DEALER_DEALT_BLACKJACK
+        game.arePlayersDone shouldBe true
+        game.players[0].state.shouldBeInstanceOf<Stand>()
+        game.players[1].state.shouldBeInstanceOf<Stand>()
     }
 
     @Test
@@ -94,6 +108,8 @@ class GameTest {
             )
 
         val game = Game(players, StubDeck.from())
+        // black: 스탠드
+        // jack:  바스트
 
         game.arePlayersDone shouldBe true
     }
@@ -102,8 +118,12 @@ class GameTest {
     fun `플레이어가 힛하면 덱에서 카드를 뽑는다`() {
         val players = Players.from("black", "jack")
         val game = Game(players, deck).apply { initialDeal() }
+        // black:  A, 4
+        // jack:   2, 5
+        // dealer: 3, 6
 
         game.playerHits()
+        // black:  A, 4, 7
 
         game.currentPlayer.hand[2] shouldBe Card(DUMMY_SUIT, Rank.SEVEN)
     }
@@ -112,8 +132,12 @@ class GameTest {
     fun `플레이어가 힛하면 플레이어의 턴이 계속된다`() {
         val players = Players.from("black", "jack")
         val game = Game(players, deck).apply { initialDeal() }
+        // black:  A, 4
+        // jack:   2, 5
+        // dealer: 3, 6
 
         game.playerHits()
+        // black:  A, 4, 7
 
         game.currentPlayer shouldBe game.players[0]
     }
@@ -128,7 +152,7 @@ class GameTest {
         // dealer: 3, 6
 
         game.playerHits()
-        // black:  5 + 7 + 9 = 12
+        // black:  5 + 7 + 9 = 21 (블랙잭)
 
         game.currentPlayer shouldBe game.players[1]
     }
@@ -137,18 +161,27 @@ class GameTest {
     fun `플레이어가 스탠드하면 플레이어의 턴이 종료한다`() {
         val players = Players.from("black", "jack")
         val game = Game(players, deck).apply { initialDeal() }
+        // black:  A, 4
+        // jack:   2, 5
+        // dealer: 3, 6
 
         game.playerStands()
+        // black:  A, 4 (스탠드)
 
-        game.players[0].reasonDone shouldBe PlayerReasonDone.PLAYER_STANDS
+        game.players[0].isDone shouldBe true
+        game.players[0].state.shouldBeInstanceOf<Stand>()
     }
 
     @Test
     fun `플레이러가 스탠드하면 다음 선수로 턴이 넘어간다`() {
         val players = Players.from("black", "jack")
         val game = Game(players, deck).apply { initialDeal() }
+        // black:  A, 4
+        // jack:   2, 5
+        // dealer: 3, 6
 
         game.playerStands()
+        // black 스탠드
 
         game.currentPlayer shouldBe game.players[1]
     }
@@ -209,6 +242,7 @@ class GameTest {
         // dealer: 3, 6
 
         game.dealerTurn()
+        // dealer: 3 + 6 + 7 = 16
 
         game.dealer.hand[2] shouldBe Card(DUMMY_SUIT, Rank.SEVEN)
     }
@@ -239,7 +273,7 @@ class GameTest {
         // dealer: 3, 6
 
         game.dealerTurn()
-        // dealer: 3, 6, 7, 8
+        // dealer: 3 + 6 + 7 + 8 = 24 (버스트)
 
         game.dealer.hand[2] shouldBe Card(DUMMY_SUIT, Rank.SEVEN)
         game.dealer.hand[3] shouldBe Card(DUMMY_SUIT, Rank.EIGHT)
@@ -270,6 +304,7 @@ class GameTest {
         // dealer: 7, 10
 
         game.dealerTurn()
+        // dealer: 7 + 10 = 17 (스탠드)
 
         game.dealer.value shouldBe 17
     }

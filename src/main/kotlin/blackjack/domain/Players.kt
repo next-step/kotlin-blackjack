@@ -6,10 +6,8 @@ class Players(
     val iterator: Iterator<Player>
     var currentPlayer: Player
         private set
-    val isDone: Boolean
-        get() = roster.all { it.isDone }
-    val isOutcomeUnknown: Boolean
-        get() = roster.any { it.reasonDone == PlayerReasonDone.PLAYER_STANDS }
+    val isDone: Boolean get() = roster.all { it.isDone }
+    val isOutcomeUnknown: Boolean get() = roster.any { it.state is Stand }
 
     init {
         requireNamesIsNotEmpty()
@@ -37,15 +35,15 @@ class Players(
         skipToNextPlayerIfDone()
     }
 
-    fun dealerDealtBlackjack() {
-        roster.forEach(Player::dealerDealtBlackjack)
-    }
-
     fun placeBets(bets: List<Bet>) {
         requireBetsSizeEqualsRosterSize(bets)
         roster
             .zip(bets)
             .forEach { (player, bet) -> player.placeBet(bet) }
+    }
+
+    fun dealerDealtBlackjack() {
+        roster.forEach(Player::dealerDealtBlackjack)
     }
 
     fun results(dealer: Dealer): List<PlayerResult> {

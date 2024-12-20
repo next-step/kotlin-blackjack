@@ -23,7 +23,7 @@ object ResultView {
                     appendLine("딜러와 ${names.joinToString()}에게 2장의 나누었습니다.")
                 }
                 appendLine(dealer.format(isInitial))
-                roster.forEach { appendLine(it.format(isInitial)) }
+                roster.forEach { player -> appendLine(player.format(isInitial)) }
             }
         println(message)
     }
@@ -59,8 +59,8 @@ object ResultView {
             buildString {
                 appendLine("## 최종 수익")
                 appendLine("딜러: ${dealerProfit()}")
-                playerResults.forEach {
-                    appendLine("${it.name}: ${it.profit()}")
+                playerResults.forEach { result ->
+                    appendLine("${result.name}: ${result.profit()}")
                 }
             }
         println(message)

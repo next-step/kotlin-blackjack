@@ -48,10 +48,14 @@ object Fixtures {
         }
     }
 
-    fun createStandingPlayer(name: String = "jack"): Player =
-        Player(name).apply {
+    fun createStandingPlayer(name: String = "jack"): Player {
+        val deck = StubDeck.from(Rank.NINE, Rank.TEN)
+        return Player(name).apply {
+            initialDrawFrom(deck)
+            initialDrawFrom(deck)
             stand()
         }
+    }
 
     fun createDealer(deck: Deck = StubDeck.from(Rank.TWO, Rank.THREE)) =
         Dealer().apply {

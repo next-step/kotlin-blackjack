@@ -4,10 +4,10 @@ import blackjack.domain.StubDeck.Companion.DUMMY_SUIT
 import blackjack.support.Fixtures.createBlackjackPlayer
 import blackjack.support.Fixtures.createBustedPlayer
 import blackjack.support.Fixtures.createDealer
-import blackjack.support.Fixtures.createHand
 import blackjack.support.Fixtures.createPlayer
 import blackjack.support.Fixtures.createStandingPlayer
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.types.shouldBeInstanceOf
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
@@ -58,7 +58,7 @@ class PlayerTest {
         player.initialDrawFrom(deck)
 
         player.isDone shouldBe true
-        player.reasonDone shouldBe PlayerReasonDone.PLAYER_HAS_BLACKJACK
+        player.state.shouldBeInstanceOf<Blackjack>()
     }
 
     @Test
@@ -83,14 +83,13 @@ class PlayerTest {
 
     @Test
     fun `힛을 하여 21점을 넘으면 버스트된다`() {
-        val hand = createHand(Rank.KING, Rank.QUEEN)
-        val player = Player("jack", hand)
-        val deck = StubDeck.from(Rank.JACK)
+        val deck = StubDeck.from(Rank.KING, Rank.QUEEN, Rank.JACK)
+        val player = createPlayer(deck, "jack")
 
         player.hit(deck)
 
         player.isDone shouldBe true
-        player.reasonDone shouldBe PlayerReasonDone.PLAYER_BUSTED
+        player.state.shouldBeInstanceOf<Busted>()
     }
 
     @Test
@@ -102,7 +101,7 @@ class PlayerTest {
         player.hit(deck)
         // 5 + 7 + 9 = 21
 
-        player.reasonDone shouldBe PlayerReasonDone.PLAYER_STANDS
+        player.state.shouldBeInstanceOf<Stand>()
     }
 
     @Test
@@ -119,12 +118,12 @@ class PlayerTest {
 
     @Test
     fun `스탠드를 하면 턴이 종료된다`() {
-        val player = Player("jack")
+        val player = createPlayer(StubDeck.from(Rank.TWO, Rank.THREE))
 
         player.stand()
 
         player.isDone shouldBe true
-        player.reasonDone shouldBe PlayerReasonDone.PLAYER_STANDS
+        player.state.shouldBeInstanceOf<Stand>()
     }
 
     @ParameterizedTest(name = "{index} 플레이어 상태 = {1}")
@@ -144,11 +143,11 @@ class PlayerTest {
 
     @Test
     fun `딜러가 블랙잭이라 플레이어 턴이 종료된다`() {
-        val player = Player("jack")
+        val player = createPlayer(StubDeck.from(Rank.FIVE, Rank.TEN))
 
         player.dealerDealtBlackjack()
 
-        player.reasonDone shouldBe PlayerReasonDone.DEALER_DEALT_BLACKJACK
+        player.state.shouldBeInstanceOf<Stand>()
     }
 
     @ParameterizedTest(name = "{index} {3}")
