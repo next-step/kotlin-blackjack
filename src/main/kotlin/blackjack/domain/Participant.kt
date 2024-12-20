@@ -30,14 +30,17 @@ sealed class Participant(
         return totalSum
     }
 
-    fun clearOwnedCards() {
-        ownedCards.clear()
-    }
+    abstract fun busted()
 
-    class Player(name: String, bettingAmount: Int = 0, ownedCards: MutableList<Card> = mutableListOf()) : Participant(
+    class Player(name: String, var bettingAmount: Int, ownedCards: MutableList<Card> = mutableListOf()) : Participant(
         name = name,
         ownedCards = ownedCards,
-    )
+    ) {
+        override fun busted() {
+            ownedCards.clear()
+            bettingAmount = 0
+        }
+    }
 
     class Dealer(
         private val deck: Deck,
@@ -63,6 +66,10 @@ sealed class Participant(
         companion object {
             private const val NUMBER_OF_DEAL_CARD = 2
             private const val DRAW_LIMIT: Int = 16
+        }
+
+        override fun busted() {
+            ownedCards.clear()
         }
     }
 }

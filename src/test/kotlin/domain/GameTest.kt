@@ -23,7 +23,7 @@ class GameTest : DescribeSpec({
 
     beforeTest {
         dealer = Dealer(Deck(CardListFixture.simpleCardList()))
-        participants = Participants(listOf(Player("pobi"), Player("jason")))
+        participants = Participants(listOf(Player("pobi", 1000), Player("jason", 1000)))
         val members = GameMembers(participants, dealer)
         sut = Game(members)
     }
@@ -56,7 +56,7 @@ class GameTest : DescribeSpec({
 
     describe("processPlayerTurn Test") {
         lateinit var player: Player
-        beforeTest { player = Player("pobi") }
+        beforeTest { player = Player("pobi", 1000) }
 
         context("`command`가 `HIT`인 경우") {
             it("카드를 한장 받는다.") {
@@ -100,7 +100,7 @@ class GameTest : DescribeSpec({
                         Card(Suit.SPADES, CardNumber.QUEEN),
                         Card(Suit.SPADES, CardNumber.KING),
                     )
-                val pobi = Player("pobi", cards)
+                val pobi = Player("pobi", 1000, cards)
                 val actual = sut.isPlayerStillPlaying(pobi)
                 actual shouldBe false
             }
@@ -113,7 +113,7 @@ class GameTest : DescribeSpec({
                         Card(Suit.SPADES, CardNumber.TEN),
                         Card(Suit.SPADES, CardNumber.QUEEN),
                     )
-                val pobi = Player("pobi", cards)
+                val pobi = Player("pobi", 1000, cards)
                 pobi.stay()
                 val actual = sut.isPlayerStillPlaying(pobi)
                 actual shouldBe false
@@ -127,7 +127,7 @@ class GameTest : DescribeSpec({
                         Card(Suit.SPADES, CardNumber.TEN),
                         Card(Suit.SPADES, CardNumber.QUEEN),
                     )
-                val pobi = Player("pobi", cards)
+                val pobi = Player("pobi", 1000, cards)
                 val actual = sut.isPlayerStillPlaying(pobi)
                 actual shouldBe true
             }
@@ -148,7 +148,7 @@ class GameTest : DescribeSpec({
                             ),
                         ),
                     )
-                val fixedParticipants = Participants(listOf(Player("pobi")))
+                val fixedParticipants = Participants(listOf(Player("pobi", 1000)))
                 val gameMembers = GameMembers(fixedParticipants, fixedDealer)
                 sut = Game(gameMembers)
                 val actual = sut.isDealerDrawCard()
@@ -169,7 +169,7 @@ class GameTest : DescribeSpec({
                             ),
                         ),
                     )
-                val fixedParticipants = Participants(listOf(Player("pobi")))
+                val fixedParticipants = Participants(listOf(Player("pobi", 1000)))
                 val gameMembers = GameMembers(fixedParticipants, fixedDealer)
                 sut = Game(gameMembers)
                 val actual = sut.isDealerDrawCard()
@@ -192,7 +192,7 @@ class GameTest : DescribeSpec({
                         ),
                     ),
                 )
-            val fixedParticipants = Participants(listOf(Player("pobi")))
+            val fixedParticipants = Participants(listOf(Player("pobi", 1000)))
             val gameMembers = GameMembers(fixedParticipants, fixedDealer)
             sut = Game(gameMembers)
 
@@ -210,10 +210,10 @@ class GameTest : DescribeSpec({
         lateinit var sut: Game
 
         beforeTest {
-            player1 = Player("player1")
-            player2 = Player("player2")
-            player3 = Player("player3")
-            player4 = Player("player4")
+            player1 = Player("player1", 1000)
+            player2 = Player("player2", 1000)
+            player3 = Player("player3", 1000)
+            player4 = Player("player4", 1000)
             val fixedDealer = Dealer(Deck(CardListFixture.mixedCardList()))
             val fixedParticipants = Participants(listOf(player1, player2, player3, player4))
             sut = Game(GameMembers(fixedParticipants, fixedDealer))
@@ -241,10 +241,10 @@ class GameTest : DescribeSpec({
         lateinit var sut: Game
 
         beforeTest {
-            player1 = Player("player1")
-            player2 = Player("player2")
-            player3 = Player("player3")
-            player4 = Player("player4")
+            player1 = Player("player1", 1000)
+            player2 = Player("player2", 1000)
+            player3 = Player("player3", 1000)
+            player4 = Player("player4", 1000)
             val fixedDealer = Dealer(Deck(CardListFixture.mixedCardList()))
             val fixedParticipants = Participants(listOf(player1, player2, player3, player4))
             sut = Game(GameMembers(fixedParticipants, fixedDealer))

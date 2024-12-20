@@ -56,6 +56,6 @@ class Game(
     }
 
     fun busted(participant: Participant) {
-        participant.clearOwnedCards()
+        participant.busted()
     }
 }
