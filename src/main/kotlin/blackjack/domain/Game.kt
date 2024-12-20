@@ -44,17 +44,11 @@ class Game(
         val dealerComparisonResults =
             players.map { player ->
                 when {
+                    player.hasBusted() -> Result.WIN
                     dealer.sumOfCard() >= player.sumOfCard() -> Result.WIN
                     else -> Result.LOSE
                 }
             }
         return DealerOutcomes(dealerComparisonResults)
-    }
-
-    fun isDealerBust(): Boolean {
-        return gameMembers.dealer().sumOfCard() > 21
-    }
-
-    fun busted(dealer: Participant.Dealer) {
     }
 }

@@ -8,6 +8,7 @@ data class PlayerOutcomes(val participant: Participant, val results: Result) {
         ): PlayerOutcomes {
             val result =
                 when {
+                    player.hasBusted() -> Result.LOSE
                     player.sumOfCard() > dealerCardSum -> Result.WIN
                     else -> Result.LOSE
                 }
