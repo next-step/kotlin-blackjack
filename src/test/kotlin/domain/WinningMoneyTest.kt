@@ -3,9 +3,9 @@ package domain
 import blackjack.domain.Card
 import blackjack.domain.CardNumber
 import blackjack.domain.Deck
+import blackjack.domain.EarningMoney
 import blackjack.domain.Participant
 import blackjack.domain.Suit
-import blackjack.domain.WinningMoney
 import fixture.CardListFixture
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
@@ -25,8 +25,8 @@ class WinningMoneyTest : DescribeSpec({
                         Deck(CardListFixture.blackjackCardList()),
                         mutableListOf(Card(Suit.CLUBS, CardNumber.ACE), Card(Suit.CLUBS, CardNumber.TWO)),
                     )
-                val sut = WinningMoney(dealer, player)
-                val actual = sut.calculate()
+                val sut = EarningMoney(dealer)
+                val actual = sut.calculate(player)
                 actual shouldBe 1500.0
             }
         }
@@ -44,9 +44,30 @@ class WinningMoneyTest : DescribeSpec({
                         Deck(CardListFixture.blackjackCardList()),
                         mutableListOf(Card(Suit.CLUBS, CardNumber.ACE), Card(Suit.CLUBS, CardNumber.KING)),
                     )
-                val sut = WinningMoney(dealer, player)
-                sut.calculate()
-                sut.calculate() shouldBe 1000.0
+                val sut = EarningMoney(dealer)
+                sut.calculate(player) shouldBe 1000.0
+            }
+        }
+
+        context("플레이어가 bust 된 경우") {
+            it("배팅 금액을 잃는다.") {
+                val player =
+                    Participant.Player(
+                        "pobi",
+                        1000,
+                        mutableListOf(
+                            Card(Suit.DIAMONDS, CardNumber.JACK),
+                            Card(Suit.DIAMONDS, CardNumber.KING),
+                            Card(Suit.DIAMONDS, CardNumber.QUEEN),
+                        ),
+                    )
+                val dealer =
+                    Participant.Dealer(
+                        Deck(CardListFixture.blackjackCardList()),
+                        mutableListOf(Card(Suit.CLUBS, CardNumber.ACE), Card(Suit.CLUBS, CardNumber.KING)),
+                    )
+                val sut = EarningMoney(dealer)
+                sut.calculate(player) shouldBe -1000.0
             }
         }
     }
