@@ -44,6 +44,7 @@ class Game(
         val dealerComparisonResults =
             players.map { player ->
                 when {
+                    dealer.hasBusted() -> Result.LOSE
                     player.hasBusted() -> Result.WIN
                     dealer.sumOfCard() >= player.sumOfCard() -> Result.WIN
                     else -> Result.LOSE
