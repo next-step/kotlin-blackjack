@@ -1,7 +1,6 @@
 package blackjack.domain
 
 sealed class Participant(
-    val name: String = "Unknown",
     val ownedCards: MutableList<Card> = mutableListOf(),
     private val actions: MutableList<HitCommand> = mutableListOf(),
 ) {
@@ -15,7 +14,7 @@ sealed class Participant(
     }
 
     fun hasBusted(): Boolean {
-        return sumOfCard() <= 21
+        return sumOfCard() > 21
     }
 
     fun hasStayed(): Boolean {
@@ -30,11 +29,23 @@ sealed class Participant(
         return totalSum
     }
 
-    class Player(name: String, ownedCards: MutableList<Card> = mutableListOf()) : Participant(name = name, ownedCards = ownedCards)
+    fun isBlackjack(): Boolean {
+        return ownedCards.size == 2 && sumOfCard() == 21
+    }
+
+    fun name(): String {
+        if (this is Player) return this.name
+        return "딜러"
+    }
+
+    class Player(val name: String, val bettingAmount: Int, ownedCards: MutableList<Card> = mutableListOf()) : Participant(
+        ownedCards = ownedCards,
+    )
 
     class Dealer(
         private val deck: Deck,
-    ) : Participant() {
+        ownedCards: MutableList<Card> = mutableListOf(),
+    ) : Participant(ownedCards = ownedCards) {
         fun deal(participants: Participants) {
             repeat(NUMBER_OF_DEAL_CARD) {
                 dealOneCardToEachPlayer(participants)
@@ -42,7 +53,7 @@ sealed class Participant(
         }
 
         private fun dealOneCardToEachPlayer(participants: Participants) {
-            participants.allPlayers().forEach {
+            participants.members.forEach {
                 it.receiveCard(deck.draw())
             }
         }

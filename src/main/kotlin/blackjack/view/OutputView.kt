@@ -1,6 +1,7 @@
 package blackjack.view
 
 import blackjack.domain.DealerOutcomes
+import blackjack.domain.EarningMoneyResult
 import blackjack.domain.Participant
 import blackjack.domain.Participants
 import blackjack.domain.PlayerOutcomes
@@ -8,22 +9,22 @@ import blackjack.domain.Result
 
 object OutputView {
     fun showGameStart(participants: Participants) {
-        val playerNames = participants.allPlayers().map { it.name }
+        val playerNames = participants.members.map { it.name() }
 
         println(String.format(DEAL_RESULT_MESSAGE, playerNames))
-        participants.allPlayers().forEach {
-            println("${if (it.name == "Unknown") "딜러" else it.name} 카드: ${it.ownedCards}")
+        participants.members.forEach {
+            println("${it.name()} 카드: ${it.ownedCards}")
         }
         println()
     }
 
     fun printPlayerCards(participant: Participant) {
-        println(String.format(CURRENT_CARD_STATUS, participant.name, participant.ownedCards))
+        println(String.format(CURRENT_CARD_STATUS, participant.name(), participant.ownedCards))
     }
 
     fun showGameResult(participants: Participants) {
-        participants.allPlayers().forEach {
-            println(String.format(GAME_RESULT_MESSAGE, it.name, it.ownedCards, it.sumOfCard()))
+        participants.members.forEach {
+            println(String.format(GAME_RESULT_MESSAGE, it.name(), it.ownedCards, it.sumOfCard()))
         }
     }
 
@@ -32,14 +33,27 @@ object OutputView {
     }
 
     fun showDealerWinningCount(results: DealerOutcomes) {
-        val winCount = results.numberOfWinds()
+        val winCount = results.numberOfWins()
         val loseCount = results.numberOfLose()
-        println("딜러: $winCount ${Result.WIN.message} $loseCount ${Result.LOSE.message}")
+        println("딜러: $winCount ${parseResult(Result.WIN)} $loseCount ${parseResult(Result.LOSE)}")
     }
 
     fun showWinnerPlayers(playerOutcomes: List<PlayerOutcomes>) {
         playerOutcomes.forEach {
-            println("${it.participant.name}: ${it.results.message}")
+            println("${it.participant.name()}: ${parseResult(it.results)}")
+        }
+    }
+
+    private fun parseResult(result: Result): String =
+        when (result) {
+            Result.WIN -> "승"
+            Result.LOSE -> "패"
+        }
+
+    fun showEarningMoneyResult(earningMoneyResults: List<EarningMoneyResult>) {
+        println(EARNING_MONEY_RESULT_MESSAGE)
+        earningMoneyResults.forEach {
+            println("${it.name}: ${it.amount}")
         }
     }
 
@@ -47,4 +61,5 @@ object OutputView {
     private const val CURRENT_CARD_STATUS = "%s카드: %s"
     private const val GAME_RESULT_MESSAGE = "%s카드: %s - 결과 %d"
     private const val DEALER_HIT_MESSAGE = "딜러는 16이하라 한장의 카드를 더 받았습니다."
+    private const val EARNING_MONEY_RESULT_MESSAGE = "## 최종수익"
 }

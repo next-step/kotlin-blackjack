@@ -27,7 +27,7 @@ class DealerTest : DescribeSpec({
                     Card(Suit.HEARTS, CardNumber.FOUR),
                 )
             deck = Deck(cardList)
-            player = Player("name")
+            player = Player("name", 1000)
             sut = Dealer(deck)
         }
 
@@ -49,8 +49,8 @@ class DealerTest : DescribeSpec({
         lateinit var sut: Dealer
 
         beforeTest {
-            pobi = Player(name = "pobi")
-            crong = Player(name = "crong")
+            pobi = Player(name = "pobi", 1000)
+            crong = Player(name = "crong", 1000)
             participants =
                 Participants(
                     listOf(
