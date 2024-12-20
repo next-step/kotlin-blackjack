@@ -3,7 +3,7 @@ package domain
 import blackjack.domain.Card
 import blackjack.domain.CardNumber
 import blackjack.domain.Deck
-import blackjack.domain.EarningMoney
+import blackjack.domain.EarningCalculator
 import blackjack.domain.Participant
 import blackjack.domain.Suit
 import fixture.CardListFixture
@@ -25,8 +25,8 @@ class WinningMoneyTest : DescribeSpec({
                         Deck(CardListFixture.blackjackCardList()),
                         mutableListOf(Card(Suit.CLUBS, CardNumber.ACE), Card(Suit.CLUBS, CardNumber.TWO)),
                     )
-                val sut = EarningMoney(dealer)
-                val actual = sut.calculate(player)
+                val sut = EarningCalculator(dealer)
+                val actual = sut.playerMoney(player)
                 actual shouldBe 1500.0
             }
         }
@@ -44,8 +44,8 @@ class WinningMoneyTest : DescribeSpec({
                         Deck(CardListFixture.blackjackCardList()),
                         mutableListOf(Card(Suit.CLUBS, CardNumber.ACE), Card(Suit.CLUBS, CardNumber.KING)),
                     )
-                val sut = EarningMoney(dealer)
-                sut.calculate(player) shouldBe 1000.0
+                val sut = EarningCalculator(dealer)
+                sut.playerMoney(player) shouldBe 1000.0
             }
         }
 
@@ -66,8 +66,8 @@ class WinningMoneyTest : DescribeSpec({
                         Deck(CardListFixture.blackjackCardList()),
                         mutableListOf(Card(Suit.CLUBS, CardNumber.ACE), Card(Suit.CLUBS, CardNumber.KING)),
                     )
-                val sut = EarningMoney(dealer)
-                sut.calculate(player) shouldBe -1000.0
+                val sut = EarningCalculator(dealer)
+                sut.playerMoney(player) shouldBe -1000.0
             }
         }
 
@@ -89,11 +89,11 @@ class WinningMoneyTest : DescribeSpec({
                         ),
                     )
 
-                val sut = EarningMoney(dealer)
-                sut.calculate(player) shouldBe 2000.0
+                val sut = EarningCalculator(dealer)
+                sut.playerMoney(player) shouldBe 2000.0
             }
 
-            it("플레이어가 bust 되었다면 돈을 잃는다.") {
+            it("플레이어도 bust 되었다면 돈을 잃는다.") {
                 val player =
                     Participant.Player(
                         "pobi",
@@ -114,9 +114,32 @@ class WinningMoneyTest : DescribeSpec({
                         ),
                     )
 
-                val sut = EarningMoney(dealer)
-                sut.calculate(player) shouldBe -1000.0
+                val sut = EarningCalculator(dealer)
+                sut.playerMoney(player) shouldBe -1000.0
             }
+        }
+    }
+
+    describe("딜러가 얻은 상금을 계산한다.") {
+        it("딜러가 얻은 돈은 플레이어가 잃은 돈과 같다.") {
+            val player =
+                Participant.Player(
+                    "pobi",
+                    1000,
+                    mutableListOf(Card(Suit.CLUBS, CardNumber.ACE), Card(Suit.CLUBS, CardNumber.KING)),
+                )
+            val dealer =
+                Participant.Dealer(
+                    Deck(CardListFixture.blackjackCardList()),
+                    mutableListOf(
+                        Card(Suit.DIAMONDS, CardNumber.JACK),
+                        Card(Suit.DIAMONDS, CardNumber.KING),
+                        Card(Suit.DIAMONDS, CardNumber.QUEEN),
+                    ),
+                )
+
+            val sut = EarningCalculator(dealer)
+            sut.dealerMoney(listOf(player)) shouldBe -2000.0
         }
     }
 })

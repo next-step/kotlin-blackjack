@@ -1,7 +1,10 @@
 package blackjack.domain
 
-class EarningMoney(private val dealer: Participant) {
-    fun calculate(player: Participant.Player): Double {
+import blackjack.domain.Participant.Dealer
+import blackjack.domain.Participant.Player
+
+class EarningCalculator(private val dealer: Dealer) {
+    fun playerMoney(player: Player): Double {
         if (dealer.hasBusted() && player.hasBusted().not()) {
             return (player.bettingAmount * 2).toDouble()
         }
@@ -15,5 +18,9 @@ class EarningMoney(private val dealer: Participant) {
         }
 
         return (player.bettingAmount * -1).toDouble()
+    }
+
+    fun dealerMoney(players: List<Player>): Double {
+        return players.sumOf { playerMoney(it) } * -1
     }
 }

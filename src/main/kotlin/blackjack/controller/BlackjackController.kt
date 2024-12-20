@@ -1,6 +1,8 @@
 package blackjack.controller
 
 import blackjack.domain.Deck
+import blackjack.domain.EarningCalculator
+import blackjack.domain.EarningMoneyResult
 import blackjack.domain.Game
 import blackjack.domain.GameMembers
 import blackjack.domain.Participant.Dealer
@@ -23,6 +25,19 @@ class BlackjackController {
         OutputView.showWinnerPlayers(
             game.determineWinner(),
         )
+
+        OutputView.showEarningMoneyResult(toEarningMoneyResults(game))
+    }
+
+    private fun toEarningMoneyResults(game: Game): List<EarningMoneyResult> {
+        val earningCalculator = EarningCalculator(game.dealer())
+        val dealerEarningMoneyResults = EarningMoneyResult("딜러", earningCalculator.dealerMoney(game.players()))
+        val playerEarningMoneyResults =
+            game.players().map {
+                val money = earningCalculator.playerMoney(it)
+                EarningMoneyResult(it.name(), money)
+            }
+        return listOf(dealerEarningMoneyResults) + playerEarningMoneyResults
     }
 
     private fun gameLoop(game: Game) {
