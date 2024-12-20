@@ -1,7 +1,7 @@
 package blackjack
 
 import blackjack.domain.Game
-import blackjack.domain.WinningCalculator
+import blackjack.domain.calculator.WinningCalculator
 import blackjack.domain.player.Participant
 import blackjack.domain.player.Player
 import blackjack.domain.player.Players
