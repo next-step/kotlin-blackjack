@@ -19,7 +19,6 @@ interface Player {
     )
 
     fun isBlackJack(): Boolean =
-        // 블랙잭 요건: 21포인트, 카드 2장
         (
             points == BLACKJACK_POINT && cards.size == BLACKJACK_CARD_COUNT
         )

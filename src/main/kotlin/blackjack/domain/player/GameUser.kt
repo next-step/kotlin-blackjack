@@ -10,7 +10,7 @@ import blackjack.domain.state.ResultState
 
 class GameUser(
     override val name: String,
-    var bettingMoney: Int = 0,
+    val bettingMoney: Int = 0,
     private val decision: () -> InputState = {
         InputState.STAY
     },

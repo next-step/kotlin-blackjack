@@ -23,6 +23,7 @@ class Dealer : Player {
         get() = gameUser.points
 
     var revenueMoney = 0
+        private set
 
     private fun currentGameUserRevenue(
         user: GameUser,
