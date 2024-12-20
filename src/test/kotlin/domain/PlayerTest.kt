@@ -79,4 +79,21 @@ class PlayerTest : DescribeSpec({
             }
         }
     }
+
+    describe("베팅") {
+        context("카드의 합이 21 보다 큰 경우") {
+            it("베팅한 금액을 모두 잃는다") {
+                val cardList =
+                    mutableListOf(
+                        Card(Suit.SPADES, CardNumber.NINE),
+                        Card(Suit.CLUBS, CardNumber.NINE),
+                        Card(Suit.DIAMONDS, CardNumber.NINE),
+                    )
+                val sut = Player(name = "pobi", bettingAmount = 1000, cardList)
+                sut.busted()
+
+                sut.bettingAmount shouldBe 0
+            }
+        }
+    }
 })
