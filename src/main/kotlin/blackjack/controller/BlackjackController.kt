@@ -55,13 +55,12 @@ class BlackjackController {
 
     private fun createDealer() = Dealer(Deck())
 
-    private fun createPlayers(playerNames: List<String>) =
-        Participants(
-            players =
-                playerNames.map {
-                    Player(
-                        it,
-                    )
-                },
-        )
+    private fun createPlayers(playerNames: List<String>): Participants {
+        val playerList =
+            playerNames.map { name ->
+                val bettingAmount = InputView.askBettingAmount(name)
+                Player(name = name, bettingAmount = bettingAmount)
+            }
+        return Participants(playerList)
+    }
 }
