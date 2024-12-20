@@ -29,6 +29,10 @@ sealed class Participant(
         return totalSum
     }
 
+    fun isBlackjack(): Boolean {
+        return ownedCards.size == 2 && sumOfCard() == 21
+    }
+
     fun name(): String {
         if (this is Player) return this.name
         return "딜러"

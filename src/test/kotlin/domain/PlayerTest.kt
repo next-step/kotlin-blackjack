@@ -96,4 +96,19 @@ class PlayerTest : DescribeSpec({
             }
         }
     }
+
+    describe("블랙잭") {
+        context("처음 받은 두 장의 카드 합이 21인 경우") {
+            it("should be true") {
+                val cardList =
+                    mutableListOf(
+                        Card(Suit.SPADES, CardNumber.ACE),
+                        Card(Suit.CLUBS, CardNumber.KING),
+                    )
+
+                val sut = Player(name = "pobi", bettingAmount = 1000, cardList)
+                sut.isBlackjack() shouldBe true
+            }
+        }
+    }
 })
