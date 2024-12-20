@@ -28,7 +28,7 @@ class Game(
     }
 
     fun isPlayerStillPlaying(participant: Participant): Boolean {
-        return participant.hasBusted() && participant.hasStayed().not()
+        return participant.hasBusted().not() && participant.hasStayed().not()
     }
 
     fun determineWinner(): List<PlayerOutcomes> {
@@ -55,7 +55,6 @@ class Game(
         return gameMembers.dealer().sumOfCard() > 21
     }
 
-    fun busted(participant: Participant) {
-        participant.busted()
+    fun busted(dealer: Participant.Dealer) {
     }
 }

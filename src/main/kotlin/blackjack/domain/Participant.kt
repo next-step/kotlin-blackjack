@@ -14,7 +14,7 @@ sealed class Participant(
     }
 
     fun hasBusted(): Boolean {
-        return sumOfCard() <= 21
+        return sumOfCard() > 21
     }
 
     fun hasStayed(): Boolean {
@@ -38,16 +38,9 @@ sealed class Participant(
         return "딜러"
     }
 
-    abstract fun busted()
-
-    class Player(val name: String, var bettingAmount: Int, ownedCards: MutableList<Card> = mutableListOf()) : Participant(
+    class Player(val name: String, val bettingAmount: Int, ownedCards: MutableList<Card> = mutableListOf()) : Participant(
         ownedCards = ownedCards,
-    ) {
-        override fun busted() {
-            ownedCards.clear()
-            bettingAmount = 0
-        }
-    }
+    )
 
     class Dealer(
         private val deck: Deck,
@@ -73,10 +66,6 @@ sealed class Participant(
         companion object {
             private const val NUMBER_OF_DEAL_CARD = 2
             private const val DRAW_LIMIT: Int = 16
-        }
-
-        override fun busted() {
-            ownedCards.clear()
         }
     }
 }
