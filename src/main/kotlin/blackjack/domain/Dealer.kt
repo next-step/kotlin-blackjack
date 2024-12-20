@@ -1,17 +1,22 @@
 package blackjack.domain
 
 class Dealer(
-    val hand: DealerHand = DealerHand(),
+    state: State = Dealing(DealerHand()),
 ) {
-    val value: Int get() = hand.value()
-    val isBusted: Boolean get() = hand.isBusted()
-    val isBlackjack: Boolean get() = hand.isBlackjack()
+    var state: State = state
+        private set
+    val hand: DealerHand get() = state.hand as DealerHand
+    val value: Int get() = state.hand.value()
+    val isBusted: Boolean get() = state.hand.isBusted()
+    val isBlackjack: Boolean get() = state.hand.isBlackjack()
 
     fun drawFrom(deck: Deck) {
-        hand.drawFrom(deck)
+        state = state.drawFrom(deck)
     }
 
     fun flipHoleCardUp() {
+        val hand = state.hand
+        check(hand is DealerHand)
         hand.flipHoleCardUp()
     }
 

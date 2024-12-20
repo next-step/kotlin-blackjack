@@ -9,7 +9,7 @@ class Game(
     val currentPlayer: Player get() = players.currentPlayer
 
     fun initialDeal() {
-        repeat(INITIAL_ROUNDS) {
+        repeat(Hand.INITIAL_HAND_SIZE) {
             players.dealRoundOfCardsFrom(deck)
             dealer.drawFrom(deck)
         }
@@ -43,9 +43,5 @@ class Game(
 
     private fun checkPlayersAreDone() {
         check(arePlayersDone) { "플레이어들의 턴이 종료되어야 합니다." }
-    }
-
-    companion object {
-        private const val INITIAL_ROUNDS = 2
     }
 }

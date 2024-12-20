@@ -38,9 +38,9 @@ class Player(
         stand()
     }
 
-    fun pushes(dealer: Dealer) = state.hand.pushes(dealer.hand)
+    fun pushes(dealer: Dealer): Boolean = state.hand.pushes(dealer.hand)
 
-    fun beats(dealer: Dealer) = state.hand.beats(dealer.hand)
+    fun beats(dealer: Dealer): Boolean = state.hand.beats(dealer.hand)
 
     fun result(dealer: Dealer): PlayerResult {
         check(state is Finished) { "플레이어의 턴이 종료되지 않았습니다." }
