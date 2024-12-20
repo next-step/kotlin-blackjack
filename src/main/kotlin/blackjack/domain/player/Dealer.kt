@@ -22,23 +22,6 @@ class Dealer : Player {
     override val points: Int
         get() = gameUser.points
 
-    var revenueMoney = 0
-        private set
-
-    private fun currentGameUserRevenue(
-        user: GameUser,
-        resultState: ResultState,
-    ): Int {
-        user.resultState = resultState.not()
-        return user.bettingRevenue()
-    }
-
-    fun updateRevenue(users: List<GameUser>) {
-        users.forEach {
-            revenueMoney -= currentGameUserRevenue(it, comparePoints(it))
-        }
-    }
-
     override fun getFirstCards(): List<BlackJackCard> {
         check(cards.size > 0) { "카드가 없어요" }
         return cards.take(1)

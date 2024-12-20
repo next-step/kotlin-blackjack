@@ -15,15 +15,13 @@ class GameUser(
         InputState.STAY
     },
 ) : Player {
-    var resultState = ResultState.WIN
     private var doneGame = false
     override val cards = mutableListOf<BlackJackCard>()
     override val points: Int
         get() = calculatePoints()
 
-    fun bettingRevenue(): Int {
-        val revenueRate = resultState.revenueRate + if (isBlackJack()) BLACKJACK_EXTRA_REVENUE_RATE else 0.0
-        return (revenueRate * bettingMoney).toInt()
+    fun bettingRevenue(resultState: ResultState): Int {
+        return (resultState.revenueRate * bettingMoney).toInt()
     }
 
     override fun getFirstCards(): List<BlackJackCard> {

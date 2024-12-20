@@ -1,8 +1,7 @@
 package blackjack.view
 
-import blackjack.domain.player.Dealer
-import blackjack.domain.player.GameUser
 import blackjack.domain.player.Player
+import blackjack.domain.state.GameResult
 
 object ResultView {
     fun printMessage(message: Any) {
@@ -22,14 +21,11 @@ object ResultView {
         println("${player.name}카드: ${player.getFirstCards()}")
     }
 
-    fun printGameResult(
-        dealer: Dealer,
-        users: List<GameUser>,
-    ) {
+    fun printGameResult(gameResult: GameResult) {
         println("##최종 수익")
-        println("${dealer.name}: ${dealer.revenueMoney}")
-        users.forEach {
-            println("${it.name}: ${it.bettingRevenue()}")
+        println("딜러: ${gameResult.dealerBalance}")
+        gameResult.usersResult.forEach {
+            println("${it.key.name}: ${it.key.bettingRevenue(it.value)}")
         }
     }
 

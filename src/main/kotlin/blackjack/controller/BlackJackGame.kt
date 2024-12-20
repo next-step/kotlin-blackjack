@@ -4,6 +4,7 @@ import blackjack.domain.card.CardDeck
 import blackjack.domain.player.Dealer
 import blackjack.domain.player.GameUser
 import blackjack.domain.player.Player
+import blackjack.domain.state.GameResult
 import blackjack.domain.state.toInputState
 import blackjack.view.InputView
 import blackjack.view.ResultView
@@ -26,9 +27,25 @@ class BlackJackGame(users: String) {
             it.cards.add(cardDeck.getNextCard())
             it.cards.add(cardDeck.getNextCard())
         }
+
+        ResultView.printStartGame(dealer, allUsers, 2)
+
+        (listOf(dealer) + allUsers).forEach {
+            ResultView.printPlayerCards(it)
+        }
+
+        (allUsers + dealer).forEach {
+            turnGameUser(it)
+        }
+
+        ResultView.printResultCards(listOf(dealer) + allUsers)
+
+        val gameResult = GameResult(dealer, allUsers)
+
+        ResultView.printGameResult(gameResult)
     }
 
-    fun turnGameUser(user: Player) {
+    private fun turnGameUser(user: Player) {
         while (user.isDoneGame().not()) {
             user.turn(
                 nextCard = { cardDeck.getNextCard() },
@@ -43,18 +60,4 @@ fun main() {
     val game = BlackJackGame(users)
 
     game.start()
-    ResultView.printStartGame(game.dealer, game.allUsers, 2)
-
-    (listOf(game.dealer) + game.allUsers).forEach {
-        ResultView.printPlayerCards(it)
-    }
-
-    (game.allUsers + game.dealer).forEach {
-        game.turnGameUser(it)
-    }
-    game.dealer.updateRevenue(game.allUsers)
-
-    ResultView.printResultCards(listOf(game.dealer) + game.allUsers)
-
-    ResultView.printGameResult(game.dealer, game.allUsers)
 }

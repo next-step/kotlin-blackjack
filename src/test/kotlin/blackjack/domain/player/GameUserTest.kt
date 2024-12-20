@@ -3,6 +3,7 @@ package blackjack.domain.player
 import blackjack.domain.card.BlackJackCard
 import blackjack.domain.card.CardNumber
 import blackjack.domain.card.CardType
+import blackjack.domain.state.ResultState
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.TestInstance
 import org.junit.jupiter.params.ParameterizedTest
@@ -19,14 +20,14 @@ class GameUserTest {
         val user = GameUser("홍길동", money)
         user.cards.add(BlackJackCard(CardType.CLOVER, CardNumber.CARD_10))
         user.cards.add(BlackJackCard(CardType.CLOVER, CardNumber.CARD_A))
-        user.bettingRevenue() shouldBe (money + money / 2)
+        user.bettingRevenue(ResultState.BLACKJACK) shouldBe (money + money / 2)
     }
 
     @ParameterizedTest
     @ValueSource(ints = [10000, 20000, 30000])
     fun `사용자의 수익 금액을 확인한다`(money: Int) {
         val user = GameUser("홍길동", money)
-        user.bettingRevenue() shouldBe money
+        user.bettingRevenue(ResultState.WIN) shouldBe money
     }
 
     @ParameterizedTest
