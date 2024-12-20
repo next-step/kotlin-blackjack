@@ -2,7 +2,7 @@ package blackjack.domain.player
 
 import blackjack.domain.CardDeck
 
-class Player(name: String) : Participant(name) {
+class Player(name: String, initBet: Int) : Participant(name, initBet) {
     override fun startTurn(
         onTurnStarted: ((Participant) -> String)?,
         onPrintResultCallback: (Participant) -> Unit,

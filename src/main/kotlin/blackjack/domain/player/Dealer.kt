@@ -2,7 +2,7 @@ package blackjack.domain.player
 
 import blackjack.domain.CardDeck
 
-class Dealer(name: String = DEALER_NAME) : Participant(name) {
+class Dealer(name: String = DEALER_NAME) : Participant(name, initBet = 0) {
     private fun shouldDrawCard(): Boolean {
         return calculateCard() <= DRAW_THRESHOLD
     }

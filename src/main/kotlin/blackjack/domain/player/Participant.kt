@@ -6,9 +6,10 @@ import blackjack.domain.CardDeck
 import blackjack.domain.status.GameResult
 import blackjack.domain.status.ResultRecord
 
-abstract class Participant(val name: String) {
+abstract class Participant(val name: String, val initBet: Int) {
     protected var cards = mutableListOf<Card>()
     val gameResult = ResultRecord(0, 0)
+    val betMoney: Int = 0
 
     abstract fun startTurn(
         onTurnStarted: ((Participant) -> String)?,
