@@ -1,4 +1,4 @@
-package blackjack.domain.view
+package blackjack.view
 
 object InputView {
     fun readNames(): List<String> {

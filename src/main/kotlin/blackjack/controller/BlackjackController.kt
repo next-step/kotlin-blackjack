@@ -1,8 +1,8 @@
-package blackjack.domain.controller
+package blackjack.controller
 
 import blackjack.domain.BlackjackGame
-import blackjack.domain.view.InputView
-import blackjack.domain.view.OutputView
+import blackjack.view.InputView
+import blackjack.view.OutputView
 
 class BlackjackController {
     private val game = BlackjackGame()

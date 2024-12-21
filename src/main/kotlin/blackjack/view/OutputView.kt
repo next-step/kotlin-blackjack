@@ -1,4 +1,4 @@
-package blackjack.domain.view
+package blackjack.view
 
 import blackjack.domain.state.Hands
 import blackjack.domain.state.State
