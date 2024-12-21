@@ -4,7 +4,7 @@ class Cards(private val cards: MutableList<Card> = mutableListOf()) {
     val elements: List<Card>
         get() = cards.toList()
 
-    fun calculate(): Int {
+    fun calculateTotalScore(): Int {
         val sumOfNotAceScore =
             cards.doNotFilter { card -> card.isAce }
                 .sumOf { card -> card.scores.first() }

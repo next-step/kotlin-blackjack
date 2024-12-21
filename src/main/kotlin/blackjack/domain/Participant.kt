@@ -15,7 +15,7 @@ sealed class Participant(val name: String) {
     }
 
     fun calculateTotalScore(): Int {
-        return _cards.calculate()
+        return _cards.calculateTotalScore()
     }
 
     abstract fun canNotReceiveCard(): Boolean

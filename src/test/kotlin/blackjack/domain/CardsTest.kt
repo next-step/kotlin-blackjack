@@ -16,7 +16,7 @@ class CardsTest : FreeSpec({
                 )
             )
 
-            val totalScore: Int = cards.calculate()
+            val totalScore: Int = cards.calculateTotalScore()
 
             totalScore shouldBe 40
         }
@@ -52,7 +52,7 @@ class CardsTest : FreeSpec({
                         val totalScore = cardsTotalScorePair.second
 
                         "입력값: cards=$cards, expectedTotalScore=$totalScore" {
-                            cards.calculate() shouldBe totalScore
+                            cards.calculateTotalScore() shouldBe totalScore
                         }
                     }
                 }
@@ -76,7 +76,7 @@ class CardsTest : FreeSpec({
                         val totalScore = cardsTotalScorePair.second
 
                         "입력값: cards=$cards, expectedTotalScore=$totalScore" {
-                            cards.calculate() shouldBe totalScore
+                            cards.calculateTotalScore() shouldBe totalScore
                         }
                     }
                 }
@@ -102,7 +102,7 @@ class CardsTest : FreeSpec({
                     val cards = cardsTotalScorePair.first
                     val totalScore = cardsTotalScorePair.second
                     "입력값: cards=$cards, expectedTotalScore=$totalScore" {
-                        cards.calculate() shouldBe totalScore
+                        cards.calculateTotalScore() shouldBe totalScore
                     }
                 }
             }
