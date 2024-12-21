@@ -1,13 +1,13 @@
 package blackjack.domain
 
 sealed class Participant(val name: String) {
-    private val _cards: MutableList<Card> = mutableListOf()
+    private val _cards: Cards = Cards()
 
     val cards: List<Card>
-        get() = _cards.toList()
+        get() = _cards.elements
 
     fun receive(vararg cards: Card) {
-        _cards.addAll(cards)
+        _cards.addAll(*cards)
     }
 
     fun receive(card: Card) {
@@ -15,7 +15,7 @@ sealed class Participant(val name: String) {
     }
 
     fun calculateTotalScore(): Int {
-        return ScoreCalculator.calculate(cards)
+        return _cards.calculate()
     }
 
     abstract fun canNotReceiveCard(): Boolean
