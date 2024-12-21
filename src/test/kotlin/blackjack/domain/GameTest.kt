@@ -9,6 +9,7 @@ import io.kotest.matchers.types.shouldBeInstanceOf
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
+import java.math.BigDecimal
 
 @Suppress("NonAsciiCharacters")
 class GameTest {
@@ -360,8 +361,8 @@ class GameTest {
         val expected =
             GameResult(
                 listOf(
-                    PlayerResult("black", Bet(10_000L), PlayerOutcome.WIN),
-                    PlayerResult("jack", Bet(20_000L), PlayerOutcome.LOSE),
+                    PlayerResult("black", BigDecimal(10_000L)),
+                    PlayerResult("jack", BigDecimal(-20_000L)),
                 ),
             )
 

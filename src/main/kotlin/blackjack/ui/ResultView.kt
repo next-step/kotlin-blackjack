@@ -60,7 +60,7 @@ object ResultView {
                 appendLine("## 최종 수익")
                 appendLine("딜러: ${dealerProfit()}")
                 playerResults.forEach { result ->
-                    appendLine("${result.name}: ${result.profit()}")
+                    appendLine("${result.name}: ${result.profit}")
                 }
             }
         println(message)

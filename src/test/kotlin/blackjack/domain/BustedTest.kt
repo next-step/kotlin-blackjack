@@ -19,11 +19,11 @@ class BustedTest {
     }
 
     @Test
-    fun `수익은 0이다`() {
+    fun `수익은 베팅 금액을 잃는다`() {
         val state = Busted(createHand(Rank.FIVE, Rank.SEVEN, Rank.TEN))
 
         val profit = state.profit(Bet(1_000L))
 
-        profit shouldBe BigDecimal.ZERO
+        profit shouldBe BigDecimal(-1_000L)
     }
 }

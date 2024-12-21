@@ -1,5 +1,7 @@
 package blackjack.domain
 
+import java.math.BigDecimal
+
 class Player(
     val name: String,
     state: State = Dealing(Hand()),
@@ -41,12 +43,22 @@ class Player(
     fun result(dealer: Dealer): PlayerResult {
         checkStateIsFinished()
         checkBetIsNotNull()
-        return PlayerResult(name, bet, outcome(dealer))
+        val outcome = PlayerOutcome.of(this, dealer)
+        return PlayerResult(name, profit(bet, outcome))
     }
 
-    fun pushes(dealer: Dealer): Boolean = state.hand.pushes(dealer.hand)
+    private fun profit(
+        bet: Bet,
+        outcome: PlayerOutcome,
+    ) = when (outcome) {
+        PlayerOutcome.WIN -> state.profit(bet)
+        PlayerOutcome.LOSE -> bet.value.negate()
+        PlayerOutcome.DRAW -> BigDecimal.ZERO
+    }
 
-    fun beats(dealer: Dealer): Boolean = state.hand.beats(dealer.hand)
+    fun pushes(dealer: Dealer): Boolean = hand.pushes(dealer.hand)
+
+    fun beats(dealer: Dealer): Boolean = hand.beats(dealer.hand)
 
     private fun checkStateIsFinished() {
         check(state is Finished) { "플레이어의 턴이 종료되지 않았습니다." }
@@ -55,6 +67,4 @@ class Player(
     private fun checkBetIsNotNull() {
         check(::bet.isInitialized) { "베팅이 없습니다." }
     }
-
-    private fun outcome(dealer: Dealer): PlayerOutcome = PlayerOutcome.of(this, dealer)
 }

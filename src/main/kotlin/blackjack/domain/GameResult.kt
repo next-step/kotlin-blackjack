@@ -7,7 +7,7 @@ data class GameResult(
 ) {
     fun dealerProfit(): BigDecimal =
         playerResults
-            .map { it.profit() }
+            .map { it.profit }
             .fold(BigDecimal.ZERO, BigDecimal::add)
             .negate()
 }

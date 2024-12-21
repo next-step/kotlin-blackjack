@@ -13,6 +13,7 @@ import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.Arguments
 import org.junit.jupiter.params.provider.MethodSource
+import java.math.BigDecimal
 
 @Suppress("NonAsciiCharacters")
 class PlayerTest {
@@ -197,20 +198,88 @@ class PlayerTest {
             createPlayer(StubDeck.from(Rank.FOUR, Rank.FIVE)).apply {
                 placeBet(Bet(10_000L))
             }
+        // jack: 4, 5, ...
         val dealer = createDealer(StubDeck.from(Rank.TWO, Rank.THREE))
         assertThrows<IllegalStateException> { player.result(dealer) }
     }
 
     @Test
-    fun `딜러와의 승부 결과를 리턴한다`() {
+    fun `승리한 경우 베팅 금액의 수익을 본다`() {
         val player =
             createPlayer(StubDeck.from(Rank.FOUR, Rank.FIVE)).apply {
                 placeBet(Bet(10_000L))
                 stand()
             }
         val dealer = createDealer(StubDeck.from(Rank.TWO, Rank.THREE))
+        // jack: 9
+        // dealer: 5
+        val expected = PlayerResult("jack", BigDecimal(10_000L))
 
-        val expected = PlayerResult("jack", Bet(10_000L), PlayerOutcome.WIN)
+        val result = player.result(dealer)
+
+        result shouldBe expected
+    }
+
+    @Test
+    fun `블랙잭인 경우 1_5 배의 수익을 본다`() {
+        val player =
+            createPlayer(StubDeck.from(Rank.ACE, Rank.TEN)).apply {
+                placeBet(Bet(10_000L))
+            }
+        val dealer = createDealer(StubDeck.from(Rank.FOUR, Rank.FIVE))
+        // jack: 21 (블랙잭)
+        // dealer: 9
+        val expected = PlayerResult("jack", BigDecimal(15_000L))
+
+        val result = player.result(dealer)
+
+        result shouldBe expected
+    }
+
+    @Test
+    fun `패배한 경우 베팅 금액의 손해를 본다`() {
+        val player =
+            createPlayer(StubDeck.from(Rank.TWO, Rank.THREE)).apply {
+                placeBet(Bet(10_000L))
+                stand()
+            }
+        // jack: 5
+        val dealer = createDealer(StubDeck.from(Rank.FOUR, Rank.FIVE))
+        // dealer: 9
+        val expected = PlayerResult("jack", BigDecimal(-10_000L))
+
+        val result = player.result(dealer)
+
+        result shouldBe expected
+    }
+
+    @Test
+    fun `플레이어와 딜러 모두 블랙잭인 경우 수익 0을 본다`() {
+        val player =
+            createPlayer(StubDeck.from(Rank.ACE, Rank.TEN)).apply {
+                placeBet(Bet(10_000L))
+            }
+        // jack: 21 (블랙잭)
+        val dealer = createDealer(StubDeck.from(Rank.ACE, Rank.KING))
+        // dealer: 21 (블랙잭)
+        val expected = PlayerResult("jack", BigDecimal.ZERO)
+
+        val result = player.result(dealer)
+
+        result shouldBe expected
+    }
+
+    @Test
+    fun `무승부인 경우 수익 0을 본다`() {
+        val player =
+            createPlayer(StubDeck.from(Rank.EIGHT, Rank.NINE)).apply {
+                placeBet(Bet(10_000L))
+                stand()
+            }
+        // jack: 17
+        val dealer = createDealer(StubDeck.from(Rank.TEN, Rank.SEVEN))
+        // dealer: 17
+        val expected = PlayerResult("jack", BigDecimal.ZERO)
 
         val result = player.result(dealer)
 

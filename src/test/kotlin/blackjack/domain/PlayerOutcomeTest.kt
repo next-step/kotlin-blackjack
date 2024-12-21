@@ -8,7 +8,6 @@ import blackjack.support.Fixtures.createDealer
 import blackjack.support.Fixtures.createPlayer
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
-import java.math.BigDecimal
 
 @Suppress("NonAsciiCharacters")
 class PlayerOutcomeTest {
@@ -49,7 +48,7 @@ class PlayerOutcomeTest {
 
         val outcome = PlayerOutcome.of(blackjackPlayer, dealer)
 
-        outcome shouldBe PlayerOutcome.BLACKJACK
+        outcome shouldBe PlayerOutcome.WIN
     }
 
     @Test
@@ -90,45 +89,5 @@ class PlayerOutcomeTest {
         val outcome = PlayerOutcome.of(player, dealer)
 
         outcome shouldBe PlayerOutcome.LOSE
-    }
-
-    @Test
-    fun `승리한 경우 베팅 금액의 수익을 본다`() {
-        val bet = Bet(10_000L)
-        val outcome = PlayerOutcome.WIN
-
-        val profit = outcome.profit(bet)
-
-        profit shouldBe BigDecimal(10_000L)
-    }
-
-    @Test
-    fun `패배한 경우 베팅 금액의 손해를 본다`() {
-        val bet = Bet(10_000L)
-        val outcome = PlayerOutcome.LOSE
-
-        val profit = outcome.profit(bet)
-
-        profit shouldBe BigDecimal(-10_000L)
-    }
-
-    @Test
-    fun `무승부인 경우 수익 0을 본다`() {
-        val bet = Bet(10_000L)
-        val outcome = PlayerOutcome.DRAW
-
-        val profit = outcome.profit(bet)
-
-        profit shouldBe BigDecimal.ZERO
-    }
-
-    @Test
-    fun `블랙잭인 경우 1_5 배의 수익을 본다`() {
-        val bet = Bet(10_000L)
-        val outcome = PlayerOutcome.BLACKJACK
-
-        val profit = outcome.profit(bet)
-
-        profit shouldBe BigDecimal(15_000L)
     }
 }
