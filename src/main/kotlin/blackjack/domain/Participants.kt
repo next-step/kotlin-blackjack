@@ -5,8 +5,8 @@ class Participants(private val participants: List<Participant>) {
         get() = participants.toList()
 
     fun receiveTwoCardsEach(deck: Deck) {
-        participants.forEach { player ->
-            player.receive(deck.draw(), deck.draw())
+        participants.forEach { participant ->
+            participant.receive(deck.draw(), deck.draw())
         }
     }
 
