@@ -2,8 +2,7 @@ package blackjack.domain
 
 import java.math.BigDecimal
 
-@JvmInline
-value class Bet(
+data class Bet(
     val value: BigDecimal,
 ) {
     init {

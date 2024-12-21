@@ -11,7 +11,7 @@ class Player(
     val isBlackjack: Boolean get() = state is Blackjack
     val isBusted: Boolean get() = state is Busted
     val isDone: Boolean get() = state is Finished
-    var bet: Bet? = null
+    lateinit var bet: Bet
         private set
 
     init {
@@ -38,18 +38,22 @@ class Player(
         stand()
     }
 
+    fun result(dealer: Dealer): PlayerResult {
+        checkStateIsFinished()
+        checkBetIsNotNull()
+        return PlayerResult(name, bet, outcome(dealer))
+    }
+
     fun pushes(dealer: Dealer): Boolean = state.hand.pushes(dealer.hand)
 
     fun beats(dealer: Dealer): Boolean = state.hand.beats(dealer.hand)
 
-    fun result(dealer: Dealer): PlayerResult {
+    private fun checkStateIsFinished() {
         check(state is Finished) { "플레이어의 턴이 종료되지 않았습니다." }
-        checkBetIsNotNull()
-        return PlayerResult(name, requireNotNull(bet), outcome(dealer))
     }
 
     private fun checkBetIsNotNull() {
-        check(bet != null) { "베팅이 없습니다." }
+        check(::bet.isInitialized) { "베팅이 없습니다." }
     }
 
     private fun outcome(dealer: Dealer): PlayerOutcome = PlayerOutcome.of(this, dealer)
