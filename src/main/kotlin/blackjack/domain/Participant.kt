@@ -14,6 +14,18 @@ sealed class Participant(val name: String) {
         _cards.add(card)
     }
 
+    fun isExceedWinScore(): Boolean {
+        return calculateTotalScore() > BlackJackRule.WIN_SCORE
+    }
+
+    fun isNotExceedWinScore(): Boolean {
+        return isExceedWinScore().not()
+    }
+
+    fun isScoreLargerThan(other: Participant): Boolean {
+        return calculateTotalScore() > other.calculateTotalScore()
+    }
+
     fun calculateTotalScore(): Int {
         return _cards.calculateTotalScore()
     }

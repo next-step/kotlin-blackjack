@@ -1,5 +1,6 @@
 package blackjack
 
+import blackjack.domain.BlackjackResults
 import blackjack.domain.Dealer
 import blackjack.domain.DealingShoe
 import blackjack.domain.Participants
@@ -7,9 +8,8 @@ import blackjack.ui.BlackJackPrinter
 import blackjack.ui.BlackJackReader
 
 fun main() {
-    val dealer = Dealer()
     val gamblers = BlackJackReader.readGamblers()
-    val participants = Participants.of(dealer, gamblers)
+    val participants = Participants.of(Dealer(), gamblers)
 
     val dealingShoe = DealingShoe()
     dealingShoe.dealTwoCardsEach(participants)
@@ -37,6 +37,7 @@ fun main() {
             BlackJackPrinter.printLineFeed()
         }
 
+    val dealer = participants.extractDealer()
     if (dealer.canNotReceiveCard()) {
         BlackJackPrinter.announceCanNotReceiveCard(dealer)
     } else {
@@ -44,5 +45,9 @@ fun main() {
         BlackJackPrinter.announceReceiveCard()
     }
 
-    BlackJackPrinter.printResult(participants)
+    BlackJackPrinter.printAllFinalScore(participants)
+
+    val blackjackResults = BlackjackResults(participants)
+    BlackJackPrinter.printWinOrDefeatResults(blackjackResults)
 }
+

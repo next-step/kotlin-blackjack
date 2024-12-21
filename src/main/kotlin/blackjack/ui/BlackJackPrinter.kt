@@ -1,13 +1,16 @@
 package blackjack.ui
 
 import blackjack.domain.BlackJackRule
+import blackjack.domain.BlackjackResults
 import blackjack.domain.Dealer
 import blackjack.domain.Gambler
+import blackjack.domain.GamblerResult
 import blackjack.domain.Participant
 import blackjack.domain.Participants
 
 object BlackJackPrinter {
     private const val PRINT_SEPARATOR = ", "
+    private const val LINE_FEED = "\n"
 
     fun askForPlayerName() {
         println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)")
@@ -33,7 +36,7 @@ object BlackJackPrinter {
         println("${participant.name}은(는) 한장의 카드를 더 받겠습니까?(예는 ${BlackJackReader.YES_SIGN}, 아니오는 ${BlackJackReader.NO_SIGN}. 대소문자 구분 X)")
     }
 
-    fun printResult(participants: Participants) {
+    fun printAllFinalScore(participants: Participants) {
         participants.elements.forEach { participant ->
             println("${createCardMessage(participant)} - 결과: ${participant.calculateTotalScore()}")
         }
@@ -61,5 +64,32 @@ object BlackJackPrinter {
     fun announceReceiveCard() {
         println("딜러는 ${Dealer.MAXIMUM_SCORE_TO_RECEIVE_CARD}점 이하라 한장의 카드를 더 받았습니다.")
         printLineFeed()
+    }
+
+    fun printWinOrDefeatResults(blackjackResults: BlackjackResults) {
+        val dealerResult = blackjackResults.dealerResult
+        val gamblerResultsMessage = createGamblerResultsMessage(blackjackResults)
+
+        val resultsMessage = """
+            |${dealerResult.dealer.name}: ${dealerResult.winCount}승 ${dealerResult.defeatCount}패
+            |$gamblerResultsMessage
+        """.trimMargin()
+        println(resultsMessage)
+    }
+
+    private fun createGamblerResultsMessage(blackjackResults: BlackjackResults): String {
+        val gamblerResults = blackjackResults.gamblerResults
+        return gamblerResults.joinToString(separator = LINE_FEED) { gamblerResult ->
+            val gambler = gamblerResult.gambler
+            "${gambler.name}: ${createWinOrDefeatMessage(gamblerResult)}"
+        }
+    }
+
+    private fun createWinOrDefeatMessage(gamblerResult: GamblerResult): String {
+        return if (gamblerResult.isWin) {
+            "승"
+        } else {
+            "패"
+        }
     }
 }

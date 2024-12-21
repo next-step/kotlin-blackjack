@@ -5,4 +5,8 @@ class Gambler(name: String) : Participant(name) {
         val totalScore = calculateTotalScore()
         return totalScore >= BlackJackRule.WIN_SCORE
     }
+
+    fun isWin(dealer: Dealer): Boolean {
+        return isNotExceedWinScore() && isScoreLargerThan(dealer)
+    }
 }
