@@ -1,6 +1,9 @@
 package blackjack.domain
 
-class Participants(private val participants: List<Participant>) : Collection<Participant> by participants {
+class Participants(private val participants: List<Participant>) {
+    val elements: List<Participant>
+        get() = participants.toList()
+
     fun receiveTwoCardsEach(deck: Deck) {
         participants.forEach { player ->
             player.receive(deck.draw(), deck.draw())
@@ -9,6 +12,10 @@ class Participants(private val participants: List<Participant>) : Collection<Par
 
     fun extractGamblers(): List<Gambler> {
         return participants.filterIsInstance<Gambler>()
+    }
+
+    fun extractNames(): List<String> {
+        return participants.map { participant -> participant.name }
     }
 
     companion object {

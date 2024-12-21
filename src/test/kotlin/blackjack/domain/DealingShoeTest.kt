@@ -10,7 +10,7 @@ class DealingShoeTest : FreeSpec({
 
         dealingShoe.dealTwoCardsEach(participants)
 
-        participants.forEach() { participant ->
+        participants.elements.forEach() { participant ->
             participant.cards shouldHaveSize 2
         }
     }

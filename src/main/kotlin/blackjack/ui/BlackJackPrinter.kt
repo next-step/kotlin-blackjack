@@ -14,12 +14,12 @@ object BlackJackPrinter {
     }
 
     fun announceCardDistribution(participants: Participants) {
-        val names = participants.joinToString(separator = PRINT_SEPARATOR) { gambler -> gambler.name }
+        val names = participants.extractNames().joinToString(separator = PRINT_SEPARATOR)
         println("${names}에게 2장의 카드를 나누었습니다.")
     }
 
     fun printCardMessage(participants: Participants) {
-        participants.forEach { participant ->
+        participants.elements.forEach { participant ->
             printCardMessage(participant)
         }
         printLineFeed()
@@ -34,7 +34,7 @@ object BlackJackPrinter {
     }
 
     fun printResult(participants: Participants) {
-        participants.forEach { participant ->
+        participants.elements.forEach { participant ->
             println("${createCardMessage(participant)} - 결과: ${participant.calculateTotalScore()}")
         }
     }
