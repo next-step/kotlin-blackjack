@@ -6,10 +6,8 @@ class Players(
     val iterator: Iterator<Player>
     var currentPlayer: Player
         private set
-    val isDone: Boolean
-        get() = roster.all { it.isDone }
-    val isOutcomeUnknown: Boolean
-        get() = roster.any { it.reasonDone == PlayerReasonDone.PLAYER_STANDS }
+    val isDone: Boolean get() = roster.all { it.isDone }
+    val isOutcomeUnknown: Boolean get() = roster.any { it.state is Stand }
 
     init {
         requireNamesIsNotEmpty()
@@ -17,8 +15,6 @@ class Players(
         iterator = roster.iterator()
         currentPlayer = iterator.next()
     }
-
-    constructor(vararg player: Player) : this(player.toList())
 
     operator fun get(index: Int): Player = roster[index]
 
@@ -39,13 +35,24 @@ class Players(
         skipToNextPlayerIfDone()
     }
 
+    fun placeBets(bets: List<Bet>) {
+        requireBetsSizeEqualsRosterSize(bets)
+        roster
+            .zip(bets)
+            .forEach { (player, bet) -> player.placeBet(bet) }
+    }
+
     fun dealerDealtBlackjack() {
         roster.forEach(Player::dealerDealtBlackjack)
     }
 
-    fun result(dealer: Dealer): List<PlayerResult> {
+    fun results(dealer: Dealer): List<PlayerResult> {
         checkIsDone()
-        return roster.map { PlayerResult(it.name, it.outcome(dealer)) }
+        return roster.map { it.result(dealer) }
+    }
+
+    private fun requireBetsSizeEqualsRosterSize(bets: List<Bet>) {
+        require(roster.size == bets.size) { "플레이어 수와 베팅 수가 일치하지 않습니다." }
     }
 
     private fun checkIsDone() {

@@ -1,12 +1,27 @@
 package blackjack.support
 
+import blackjack.domain.Card
 import blackjack.domain.Dealer
+import blackjack.domain.DealerHand
 import blackjack.domain.Deck
+import blackjack.domain.Hand
 import blackjack.domain.Player
+import blackjack.domain.Players
 import blackjack.domain.Rank
 import blackjack.domain.StubDeck
 
 object Fixtures {
+    fun playersOf(vararg players: Player): Players = Players(players.toList())
+
+    fun createPlayers(
+        names: List<String>,
+        deck: Deck,
+    ): Players =
+        Players.from(names).apply {
+            dealRoundOfCardsFrom(deck)
+            dealRoundOfCardsFrom(deck)
+        }
+
     fun createPlayer(
         deck: Deck,
         name: String = "jack",
@@ -33,10 +48,14 @@ object Fixtures {
         }
     }
 
-    fun createStandingPlayer(name: String = "jack"): Player =
-        Player(name).apply {
+    fun createStandingPlayer(name: String = "jack"): Player {
+        val deck = StubDeck.from(Rank.NINE, Rank.TEN)
+        return Player(name).apply {
+            initialDrawFrom(deck)
+            initialDrawFrom(deck)
             stand()
         }
+    }
 
     fun createDealer(deck: Deck = StubDeck.from(Rank.TWO, Rank.THREE)) =
         Dealer().apply {
@@ -58,6 +77,20 @@ object Fixtures {
             drawFrom(deck)
             drawFrom(deck)
             drawFrom(deck)
+        }
+    }
+
+    fun createHand(vararg ranks: Rank): Hand =
+        Hand(
+            ranks.map { Card(StubDeck.DUMMY_SUIT, it) },
+        )
+
+    fun createDealerHand(vararg ranks: Rank): DealerHand {
+        val deck = StubDeck.from(*ranks)
+        return DealerHand().apply {
+            repeat(ranks.size) {
+                drawFrom(deck)
+            }
         }
     }
 }

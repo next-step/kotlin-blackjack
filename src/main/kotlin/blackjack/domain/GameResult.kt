@@ -1,14 +1,13 @@
 package blackjack.domain
 
+import java.math.BigDecimal
+
 data class GameResult(
     val playerResults: List<PlayerResult>,
 ) {
-    val dealerWins: Int
-        get() = playerResults.count { it.outcome == PlayerOutcome.LOSE }
-
-    val dealerLosses: Int
-        get() = playerResults.count { it.outcome == PlayerOutcome.WIN }
-
-    val dealerDraws: Int
-        get() = playerResults.count { it.outcome == PlayerOutcome.DRAW }
+    fun dealerProfit(): BigDecimal =
+        playerResults
+            .map { it.profit }
+            .fold(BigDecimal.ZERO, BigDecimal::add)
+            .negate()
 }

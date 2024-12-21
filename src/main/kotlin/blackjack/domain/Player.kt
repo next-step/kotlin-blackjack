@@ -1,71 +1,70 @@
 package blackjack.domain
 
+import java.math.BigDecimal
+
 class Player(
     val name: String,
-    val hand: Hand = Hand(),
+    state: State = Dealing(Hand()),
 ) {
-    val value: Int
-        get() = hand.value()
-    val isBlackjack: Boolean
-        get() = hand.isBlackjack()
-    val isBusted: Boolean
-        get() = hand.isBusted()
-    var reasonDone: PlayerReasonDone? = null
+    var state: State = state
         private set
-    val isDone: Boolean
-        get() = reasonDone != null
+    val hand: Hand get() = state.hand
+    val value: Int get() = state.hand.value()
+    val isBlackjack: Boolean get() = state is Blackjack
+    val isBusted: Boolean get() = state is Busted
+    val isDone: Boolean get() = state is Finished
+    lateinit var bet: Bet
+        private set
 
     init {
         require(name.isNotBlank()) { "이름이 빈 문자열입니다." }
     }
 
     fun initialDrawFrom(deck: Deck) {
-        drawFrom(deck)
-        if (hand.isBlackjack()) {
-            done(PlayerReasonDone.PLAYER_HAS_BLACKJACK)
-        }
+        state = state.drawFrom(deck)
     }
 
     fun hit(deck: Deck) {
-        checkIsNotDone()
-        hand.drawFrom(deck)
-        if (isBusted) {
-            done(PlayerReasonDone.PLAYER_BUSTED)
-        }
+        state = state.drawFrom(deck)
     }
 
     fun stand() {
-        checkIsNotDone()
-        done(PlayerReasonDone.PLAYER_STANDS)
+        state = state.stand()
+    }
+
+    fun placeBet(bet: Bet) {
+        this.bet = bet
     }
 
     fun dealerDealtBlackjack() {
-        done(PlayerReasonDone.DEALER_DEALT_BLACKJACK)
+        stand()
     }
 
-    fun outcome(dealer: Dealer): PlayerOutcome =
-        when {
-            isBusted -> PlayerOutcome.LOSE
-            dealer.isBusted -> PlayerOutcome.WIN
-            isBlackjack && !dealer.isBlackjack -> PlayerOutcome.WIN
-            pushes(dealer) -> PlayerOutcome.DRAW
-            beats(dealer) -> PlayerOutcome.WIN
-            else -> PlayerOutcome.LOSE
-        }
-
-    private fun pushes(dealer: Dealer) = hand.pushes(dealer.hand)
-
-    private fun beats(dealer: Dealer) = hand.beats(dealer.hand)
-
-    private fun checkIsNotDone() {
-        check(!isDone) { "이미 턴이 끝난 상태입니다." }
+    fun result(dealer: Dealer): PlayerResult {
+        checkStateIsFinished()
+        checkBetIsNotNull()
+        val outcome = PlayerOutcome.of(this, dealer)
+        return PlayerResult(name, profit(bet, outcome))
     }
 
-    private fun drawFrom(deck: Deck) {
-        hand.drawFrom(deck)
+    private fun profit(
+        bet: Bet,
+        outcome: PlayerOutcome,
+    ) = when (outcome) {
+        PlayerOutcome.WIN -> state.profit(bet)
+        PlayerOutcome.LOSE -> bet.value.negate()
+        PlayerOutcome.DRAW -> BigDecimal.ZERO
     }
 
-    private fun done(reasonDone: PlayerReasonDone) {
-        this.reasonDone = reasonDone
+    fun pushes(dealer: Dealer): Boolean = hand.pushes(dealer.hand)
+
+    fun beats(dealer: Dealer): Boolean = hand.beats(dealer.hand)
+
+    private fun checkStateIsFinished() {
+        check(state is Finished) { "플레이어의 턴이 종료되지 않았습니다." }
+    }
+
+    private fun checkBetIsNotNull() {
+        check(::bet.isInitialized) { "베팅이 없습니다." }
     }
 }

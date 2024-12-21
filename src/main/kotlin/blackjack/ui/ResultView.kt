@@ -5,20 +5,16 @@ import blackjack.domain.Dealer
 import blackjack.domain.Game
 import blackjack.domain.GameResult
 import blackjack.domain.Hand
+import blackjack.domain.Hand.Companion.INITIAL_HAND_SIZE
 import blackjack.domain.Player
-import blackjack.domain.PlayerOutcome
 import blackjack.domain.Rank
 import blackjack.domain.Suit
 
 object ResultView {
     private const val BUSTED = "🪦"
-    private const val INITIAL_HAND_SIZE = 2
 
-    fun displayState(
-        game: Game,
-        isInitial: Boolean = true,
-    ) {
-        val roster = game.players.roster
+    fun Game.render(isInitial: Boolean = true) {
+        val roster = players.roster
         val names = roster.map { it.name }
         val message =
             buildString {
@@ -26,18 +22,18 @@ object ResultView {
                 if (isInitial) {
                     appendLine("딜러와 ${names.joinToString()}에게 2장의 나누었습니다.")
                 }
-                appendLine(formatDealer(game.dealer, isInitial))
-                roster.forEach { appendLine(formatPlayer(it, isInitial)) }
+                appendLine(dealer.format(isInitial))
+                roster.forEach { player -> appendLine(player.format(isInitial)) }
             }
         println(message)
     }
 
-    fun displayPlayer(player: Player) {
-        println(formatPlayer(player))
+    fun Player.render() {
+        println(format())
     }
 
-    fun displayDealerActions(dealer: Dealer) {
-        val numberOfCardsDrawn = dealer.hand.cards.size - INITIAL_HAND_SIZE
+    fun Dealer.renderActions() {
+        val numberOfCardsDrawn = hand.cards.size - INITIAL_HAND_SIZE
         if (numberOfCardsDrawn == 0) {
             return
         }
@@ -51,53 +47,47 @@ object ResultView {
         print(message)
     }
 
-    fun displayResults(result: GameResult) {
+    fun Game.renderResults() {
+        // 게임 최종 상태 출력
+        render(false)
+        // 수익 출력
+        gameResult().render()
+    }
+
+    private fun GameResult.render() {
         val message =
             buildString {
-                appendLine("## 최종 승패")
-                appendLine("딜러: ${result.dealerWins}승, ${result.dealerDraws}무, ${result.dealerLosses}패")
-                result.playerResults.forEach {
-                    appendLine("${it.name}: ${formatOutcome(it.outcome)}")
+                appendLine("## 최종 수익")
+                appendLine("딜러: ${dealerProfit()}")
+                playerResults.forEach { result ->
+                    appendLine("${result.name}: ${result.profit}")
                 }
             }
         println(message)
     }
 
-    private fun formatOutcome(outcome: PlayerOutcome): String =
-        when (outcome) {
-            PlayerOutcome.WIN -> "승"
-            PlayerOutcome.LOSE -> "패"
-            PlayerOutcome.DRAW -> "무"
-        }
-
-    private fun formatPlayer(
-        player: Player,
-        isInitial: Boolean = true,
-    ): String {
-        val result = "${player.name}카드: ${formatHand(player.hand)}"
+    private fun Player.format(isInitial: Boolean = true): String {
+        val result = "${name}카드: ${hand.format()}"
         if (isInitial) {
             return result
         }
-        return result + " - 결과: ${if (player.isBusted) BUSTED else player.value}"
+        return result + " - 결과: ${if (isBusted) BUSTED else value}"
     }
 
-    private fun formatDealer(
-        dealer: Dealer,
-        isInitial: Boolean,
-    ): String {
-        val result = "딜러: ${formatHand(dealer.hand)}"
+    private fun Dealer.format(isInitial: Boolean): String {
+        val result = "딜러: ${hand.format()}"
         if (isInitial) {
             return result
         }
-        return result + " - 결과: ${if (dealer.isBusted) BUSTED else dealer.value}"
+        return result + " - 결과: ${if (isBusted) BUSTED else value}"
     }
 
-    private fun formatHand(hand: Hand): String = hand.cards.filter { it.isFaceUp }.joinToString { formatCard(it) }
+    private fun Hand.format(): String = cards.filter { it.isFaceUp }.joinToString { it.format() }
 
-    private fun formatCard(card: Card): String = "${formatRank(card.rank)}${formatSuit(card.suit)}"
+    private fun Card.format(): String = "${rank.format()}${suit.format()}"
 
-    private fun formatRank(rank: Rank): String =
-        when (rank) {
+    private fun Rank.format(): String =
+        when (this) {
             Rank.ACE -> "A"
             Rank.TWO -> "2"
             Rank.THREE -> "3"
@@ -113,8 +103,8 @@ object ResultView {
             Rank.KING -> "K"
         }
 
-    private fun formatSuit(suit: Suit): String =
-        when (suit) {
+    private fun Suit.format(): String =
+        when (this) {
             Suit.HEARTS -> "하트"
             Suit.DIAMONDS -> "다이아몬드"
             Suit.CLUBS -> "클로버"
