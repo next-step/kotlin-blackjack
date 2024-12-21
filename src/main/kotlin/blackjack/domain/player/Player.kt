@@ -18,10 +18,7 @@ interface Player {
         display: (Any) -> Unit,
     )
 
-    fun isBlackJack(): Boolean =
-        (
-            points == BLACKJACK_POINT && cards.size == BLACKJACK_CARD_COUNT
-        )
+    fun isBlackJack() = (points == BLACKJACK_POINT) && (cards.size == BLACKJACK_CARD_COUNT)
 
     companion object {
         const val BLACKJACK_POINT = 21

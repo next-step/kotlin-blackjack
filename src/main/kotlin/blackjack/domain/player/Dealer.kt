@@ -53,7 +53,7 @@ class Dealer : Player {
         // 딜러와 플레이어가 동시에 블랙잭인 경우에는 푸시(Push)라 하여 무승부가 된다. 푸시가 될 경우, 해당 플레이어는 자신이 베팅한 금액을 돌려받는다.
         opponent.points.compareTo(dealerPoints).let {
             return when {
-                it > 0 -> if(opponent.isBlackJack()) ResultState.BLACKJACK else ResultState.WIN
+                it > 0 -> if (opponent.isBlackJack()) ResultState.BLACKJACK else ResultState.WIN
                 it < 0 -> ResultState.LOSE
                 // 같은 경우
                 else -> ResultState.PUSH

@@ -3,7 +3,6 @@ package blackjack.domain.player
 import blackjack.domain.card.BlackJackCard
 import blackjack.domain.player.Player.Companion.ACE_CARD_EXTRA_POINT
 import blackjack.domain.player.Player.Companion.ACE_CARD_THRESHOLD
-import blackjack.domain.player.Player.Companion.BLACKJACK_EXTRA_REVENUE_RATE
 import blackjack.domain.player.Player.Companion.BLACKJACK_POINT
 import blackjack.domain.state.InputState
 import blackjack.domain.state.ResultState
