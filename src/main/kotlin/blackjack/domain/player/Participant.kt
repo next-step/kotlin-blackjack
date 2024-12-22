@@ -6,10 +6,10 @@ import blackjack.domain.CardDeck
 import blackjack.domain.status.GameResult
 import blackjack.domain.status.ResultRecord
 
-abstract class Participant(val name: String, val initBet: Int) {
+abstract class Participant(val name: String, val initBet: Float) {
     protected var cards = mutableListOf<Card>()
     val gameResult = ResultRecord(0, 0)
-    val betMoney: Int = 0
+    var betMoney: Float = 0f
 
     abstract fun startTurn(
         onTurnStarted: ((Participant) -> String)?,
@@ -49,6 +49,10 @@ abstract class Participant(val name: String, val initBet: Int) {
         count: Int = 1,
     ) {
         gameResult.updateResult(result, count)
+    }
+
+    fun updateBetMoney(money: Float) {
+        betMoney = money
     }
 
     companion object {

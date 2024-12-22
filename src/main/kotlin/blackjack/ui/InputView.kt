@@ -19,15 +19,15 @@ class InputView {
         require(input.isNotEmpty())
     }
 
-    fun getUserBetMoney(name: String): Int {
+    fun getUserBetMoney(name: String): Float {
         println("\n${name}의 배팅 금액은?")
         val input = readln()
         checkValidNumber(input)
-        return input.toInt()
+        return input.toFloat()
     }
 
     fun checkValidNumber(input: String) {
-        requireNotNull(input.toIntOrNull()) { "Wrong type input" }
+        requireNotNull(input.toFloatOrNull()) { "Wrong type input" }
     }
 
     fun setUserAnswer(name: String) {

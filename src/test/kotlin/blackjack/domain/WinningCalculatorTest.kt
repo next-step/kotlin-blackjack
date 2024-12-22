@@ -10,8 +10,8 @@ import org.junit.jupiter.api.Test
 class WinningCalculatorTest {
     @Test
     fun calculateWinningStatus() {
-        val player1 = Player("Player 1", 0)
-        val player2 = Player("Player 2", 0)
+        val player1 = Player("Player 1")
+        val player2 = Player("Player 2")
         val mockCard =
             listOf(
                 Card.createCard("9", "클로버"),
@@ -38,11 +38,11 @@ class WinningCalculatorTest {
 
     @Test
     fun `calculateWinningStatus - dealer 1 win 1 lose`() {
-        val player1 = Player("Player 1", 0)
+        val player1 = Player("Player 1")
         player1.drawCard(Card.createCard("A", "하트"))
         player1.drawCard(Card.createCard("3", "하트"))
 
-        val player2 = Player("Player 2", 0)
+        val player2 = Player("Player 2")
         player2.drawCard(Card.createCard("2", "클로버"))
         player2.drawCard(Card.createCard("8", "클로버"))
         player2.drawCard(Card.createCard("A", "클로버"))
