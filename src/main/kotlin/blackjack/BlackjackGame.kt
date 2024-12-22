@@ -3,6 +3,7 @@ package blackjack
 import blackjack.domain.BlackjackResults
 import blackjack.domain.Dealer
 import blackjack.domain.DealingShoe
+import blackjack.domain.Gambler
 import blackjack.domain.Participants
 import blackjack.ui.BlackJackPrinter
 import blackjack.ui.BlackJackReader
@@ -18,25 +19,35 @@ fun main() {
     BlackJackPrinter.printCardMessage(participants)
 
     participants.extractGamblers()
-        .forEach { gambler ->
-            while (true) {
-                if (gambler.canNotReceiveCard()) {
-                    BlackJackPrinter.announceCanNotReceiveCard(gambler)
-                    break
-                }
+        .forEach { gambler -> dealCardToGambler(gambler, dealingShoe) }
 
-                val wantsMoreCard = BlackJackReader.readDecisionForMoreCard(gambler)
-                if (wantsMoreCard.not()) {
-                    break
-                }
+    dealCardToDealer(participants, dealingShoe)
+    BlackJackPrinter.printAllFinalScore(participants)
 
-                dealingShoe.dealCard(gambler)
-                BlackJackPrinter.printCardMessage(gambler)
-            }
+    val blackjackResults = BlackjackResults(participants)
+    BlackJackPrinter.printWinOrDefeatResults(blackjackResults)
+}
 
-            BlackJackPrinter.printLineFeed()
+private fun dealCardToGambler(gambler: Gambler, dealingShoe: DealingShoe) {
+    while (true) {
+        if (gambler.canNotReceiveCard()) {
+            BlackJackPrinter.announceCanNotReceiveCard(gambler)
+            break
         }
 
+        val wantsMoreCard = BlackJackReader.readDecisionForMoreCard(gambler)
+        if (wantsMoreCard.not()) {
+            break
+        }
+
+        dealingShoe.dealCard(gambler)
+        BlackJackPrinter.printCardMessage(gambler)
+    }
+
+    BlackJackPrinter.printLineFeed()
+}
+
+private fun dealCardToDealer(participants: Participants, dealingShoe: DealingShoe) {
     val dealer = participants.extractDealer()
     if (dealer.canNotReceiveCard()) {
         BlackJackPrinter.announceCanNotReceiveCard(dealer)
@@ -44,10 +55,5 @@ fun main() {
         dealingShoe.dealCard(dealer)
         BlackJackPrinter.announceReceiveCard()
     }
-
-    BlackJackPrinter.printAllFinalScore(participants)
-
-    val blackjackResults = BlackjackResults(participants)
-    BlackJackPrinter.printWinOrDefeatResults(blackjackResults)
 }
 
