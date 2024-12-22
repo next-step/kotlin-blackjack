@@ -3,6 +3,7 @@ package blackjack.domain.status
 enum class GameResult {
     WIN,
     LOSE,
+    DRAW,
 }
 
 data class ResultRecord(
@@ -16,6 +17,7 @@ data class ResultRecord(
         when (result) {
             GameResult.WIN -> winCount += count
             GameResult.LOSE -> loseCount += count
+            GameResult.DRAW -> {}
         }
     }
 

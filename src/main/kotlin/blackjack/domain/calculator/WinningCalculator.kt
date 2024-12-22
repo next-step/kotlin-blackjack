@@ -6,6 +6,7 @@ import blackjack.domain.player.Players
 import blackjack.domain.status.GameResult
 
 object WinningCalculator {
+    private const val BLACK_JACK = 21
     fun calculatorGameResult(
         players: Players,
         dealer: Dealer,
@@ -50,6 +51,7 @@ object WinningCalculator {
     ): GameResult {
         return when {
             player.isBust() || dealer.calculateCard() > player.calculateCard() -> GameResult.LOSE
+            player.calculateCard() == BLACK_JACK && dealer.calculateCard() == BLACK_JACK -> GameResult.DRAW
             else -> GameResult.WIN
         }
     }
