@@ -1,8 +1,9 @@
 package blackjack.domain.player
 
 import blackjack.domain.CardDeck
+import java.math.BigDecimal
 
-class Dealer(name: String = DEALER_NAME) : Participant(name, initBet = 0f) {
+class Dealer(name: String = DEALER_NAME) : Participant(name, initBet = BigDecimal.ZERO) {
     private fun shouldDrawCard(): Boolean {
         return calculateCard() <= DRAW_THRESHOLD
     }
