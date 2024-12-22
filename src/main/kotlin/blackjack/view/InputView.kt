@@ -7,7 +7,7 @@ object InputView {
         messageBuilder.append("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)")
         print(messageBuilder.toString())
 
-        val input = readLine()?.trim() ?: throw IllegalArgumentException("입력이 없습니다.")
+        val input = readlnOrNull()?.trim() ?: throw IllegalArgumentException("입력이 없습니다.")
         require(input.isNotEmpty()) { "이름은 최소 1개 이상 입력해야 합니다." }
         return input.split(",").map { it.trim() }.also {
             require(it.all { name -> name.isNotEmpty() }) { "빈 이름은 입력할 수 없습니다." }
