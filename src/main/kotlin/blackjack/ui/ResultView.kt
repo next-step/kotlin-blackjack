@@ -33,15 +33,6 @@ class ResultView {
         }
     }
 
-    private fun showWinningResult(player: Participant) {
-        print("${player.name}: ")
-        if (player.isDealer()) {
-            printDealerResult(player)
-        } else {
-            printPlayerResult(player)
-        }
-    }
-
     fun showCards(player: Participant) {
         if (player.name == Dealer.DEALER_NAME) {
             println("${player.name}: ${player.getAllCards()[0].printCard()}")
