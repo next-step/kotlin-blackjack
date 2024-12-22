@@ -13,7 +13,7 @@ class Hit(override val hands: Hands) : Running() {
         return Hit(hands)
     }
 
-    override fun stay(card: PlayingCard): State {
+    override fun stay(): State {
         return Stay(hands)
     }
 }

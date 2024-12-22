@@ -12,7 +12,7 @@ class Ready(override val hands: Hands = Hands()) : Running() {
         return Hit(hands)
     }
 
-    override fun stay(card: PlayingCard): State {
+    override fun stay(): State {
         throw IllegalArgumentException("게임이 종료되지 않았습니다.")
     }
 

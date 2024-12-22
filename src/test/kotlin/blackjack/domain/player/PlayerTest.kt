@@ -61,7 +61,7 @@ class PlayerTest : StringSpec({
         player.drawCard(PlayingCard.of(Suit.HEARTS, Denomination.TEN))
         player.drawCard(PlayingCard.of(Suit.SPADES, Denomination.EIGHT))
 
-        player.stay(PlayingCard.of(Suit.DIAMONDS, Denomination.TWO))
+        player.stay()
 
         player.isRunning() shouldBe false
     }

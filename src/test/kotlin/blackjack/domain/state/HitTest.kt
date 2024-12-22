@@ -1,10 +1,6 @@
 package blackjack.domain.state
 
-import blackjack.domain.CLUBS_ACE
-import blackjack.domain.CLUBS_KING
-import blackjack.domain.CLUBS_TEN
-import blackjack.domain.CLUBS_THREE
-import blackjack.domain.CLUBS_TWO
+import blackjack.domain.*
 import io.kotest.matchers.collections.shouldContainAnyOf
 import io.kotest.matchers.types.shouldBeInstanceOf
 import org.junit.jupiter.api.Test
@@ -39,7 +35,7 @@ class HitTest {
     @Test
     fun stay() {
         val state = Hit(Hands(CLUBS_ACE, CLUBS_KING))
-        val acutal = state.stay(CLUBS_TWO)
+        val acutal = state.stay()
         acutal.shouldBeInstanceOf<Stay>()
     }
 }
