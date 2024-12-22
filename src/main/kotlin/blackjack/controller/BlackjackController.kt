@@ -41,11 +41,11 @@ class BlackjackController {
     }
 
     private fun gameLoop(game: Game) {
-        game.participants().members.forEach { participant ->
-            while (game.isPlayerStillPlaying(participant)) {
-                val hitCommand = InputView.askHitOrStay(participant)
-                game.processPlayerTurn(participant, hitCommand)
-                OutputView.printPlayerCards(participant)
+        game.members().forEach { member ->
+            while (game.isPlayerStillPlaying(member)) {
+                val hitCommand = InputView.askHitOrStay(member)
+                game.processPlayerTurn(member, hitCommand)
+                OutputView.printPlayerCards(member)
             }
         }
     }

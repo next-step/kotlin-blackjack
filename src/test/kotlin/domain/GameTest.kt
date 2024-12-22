@@ -36,8 +36,8 @@ class GameTest : DescribeSpec({
 
     describe("onlyPlayers") {
         it("딜러를 제외한 플레이어만 조회한다") {
-            val actual = sut.participants()
-            actual.members.size shouldBe 2
+            val actual = sut.members()
+            actual.size shouldBe 2
         }
     }
 

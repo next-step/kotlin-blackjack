@@ -9,7 +9,7 @@ class Game(
 
     fun allPlayers(): Participants = gameMembers.allParticipants()
 
-    fun participants(): Participants = gameMembers.playersWithoutDealer()
+    fun members() = gameMembers.playersWithoutDealer().members
 
     fun dealer(): Participant.Dealer = gameMembers.dealer
 
