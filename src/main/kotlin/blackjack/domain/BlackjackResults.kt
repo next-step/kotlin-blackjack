@@ -8,13 +8,13 @@ class BlackjackResults(participants: Participants) {
         val dealer = participants.extractDealer()
         val gamblers = participants.extractGamblers()
 
-        gamblerResults = gamblers.map { gambler ->
-            val isWin = dealer.isExceedWinScore() || gambler.isWin(dealer)
-            GamblerResult(gambler, isWin)
-        }
+        gamblerResults = determineGamblerResults(dealer, gamblers)
+        dealerResult = DealerResult(dealer, gamblerResults)
+    }
 
-        val winGamblerCount = gamblerResults.count { gamblerResult -> gamblerResult.isWin }
-        val defeatGamblerCount = gamblerResults.size - winGamblerCount
-        dealerResult = DealerResult(dealer, defeatGamblerCount, winGamblerCount)
+    private fun determineGamblerResults(dealer: Dealer, gamblers: List<Gambler>): List<GamblerResult> {
+        return gamblers.map { gambler ->
+            GamblerResult(gambler, gambler.determineResultStatus(dealer))
+        }
     }
 }

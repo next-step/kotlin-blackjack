@@ -1,12 +1,13 @@
 package blackjack.ui
 
-import blackjack.domain.BlackJackRule
+import blackjack.domain.BlackjackRule
 import blackjack.domain.BlackjackResults
 import blackjack.domain.Dealer
 import blackjack.domain.Gambler
 import blackjack.domain.GamblerResult
 import blackjack.domain.Participant
 import blackjack.domain.Participants
+import blackjack.domain.ResultStatus
 
 object BlackJackPrinter {
     private const val PRINT_SEPARATOR = ", "
@@ -53,7 +54,7 @@ object BlackJackPrinter {
             is Dealer -> println("딜러는 ${Dealer.MAXIMUM_SCORE_TO_RECEIVE_CARD}점을 초과하여 카드를 받을 수 없습니다.")
             is Gambler -> println(
                 """
-                    |카드의 총합이 ${BlackJackRule.WIN_SCORE}을 초과하여 더이상 카드를 받을 수 없습니다.
+                    |카드의 총합이 ${BlackjackRule.BLACKJACK_SCORE}을 초과하여 더이상 카드를 받을 수 없습니다.
                     |${participant.name}의 턴을 종료합니다.
                 """.trimMargin()
             )
@@ -71,7 +72,7 @@ object BlackJackPrinter {
         val gamblerResultsMessage = createGamblerResultsMessage(blackjackResults)
 
         val resultsMessage = """
-            |${dealerResult.dealer.name}: ${dealerResult.winCount}승 ${dealerResult.defeatCount}패
+            |${dealerResult.dealer.name}: ${dealerResult.winCount}승 ${dealerResult.defeatCount}패 ${dealerResult.drawCount}무
             |$gamblerResultsMessage
         """.trimMargin()
         println(resultsMessage)
@@ -86,10 +87,10 @@ object BlackJackPrinter {
     }
 
     private fun createWinOrDefeatMessage(gamblerResult: GamblerResult): String {
-        return if (gamblerResult.isWin) {
-            "승"
-        } else {
-            "패"
+        return when (gamblerResult.resultStatus) {
+            ResultStatus.WIN -> "승"
+            ResultStatus.DEFEAT -> "패"
+            ResultStatus.DRAW -> "무"
         }
     }
 }

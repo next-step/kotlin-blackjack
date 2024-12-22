@@ -23,12 +23,12 @@ class Cards(private val cards: MutableList<Card> = mutableListOf()) {
         accumulatedScore: Int,
         card: Card,
     ): Int {
-        if (accumulatedScore >= BlackJackRule.WIN_SCORE) {
+        if (accumulatedScore >= BlackjackRule.BLACKJACK_SCORE) {
             return card.scores.min()
         }
 
         return card.scores
-            .filter { score -> score + accumulatedScore <= BlackJackRule.WIN_SCORE }
+            .filter { score -> score + accumulatedScore <= BlackjackRule.BLACKJACK_SCORE }
             .max()
     }
 
