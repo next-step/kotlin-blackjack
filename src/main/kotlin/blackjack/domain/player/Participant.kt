@@ -16,6 +16,8 @@ abstract class Participant(val name: String, val initBet: Float) {
         onPrintResultCallback: (Participant) -> Unit,
     )
 
+    abstract fun isDealer(): Boolean
+
     fun isBust(): Boolean {
         return calculateCard() > 21
     }

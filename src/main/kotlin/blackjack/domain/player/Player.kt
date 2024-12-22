@@ -13,4 +13,8 @@ class Player(name: String, initBet: Float = 0f) : Participant(name, initBet) {
             onPrintResultCallback(this)
         }
     }
+
+    override fun isDealer(): Boolean {
+        return false
+    }
 }

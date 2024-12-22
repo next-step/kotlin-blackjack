@@ -19,6 +19,10 @@ class Dealer(name: String = DEALER_NAME) : Participant(name, initBet = 0f) {
         }
     }
 
+    override fun isDealer(): Boolean {
+        return true
+    }
+
     companion object {
         const val DEALER_NAME = "딜러"
         const val DRAW_THRESHOLD = 16

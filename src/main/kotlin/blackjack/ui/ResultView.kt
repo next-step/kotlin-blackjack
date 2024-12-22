@@ -35,7 +35,7 @@ class ResultView {
 
     private fun showWinningResult(player: Participant) {
         print("${player.name}: ")
-        if (player.name == Dealer.DEALER_NAME) {
+        if (player.isDealer()) {
             printDealerResult(player)
         } else {
             printPlayerResult(player)
