@@ -13,40 +13,39 @@ class BlackJackGame(users: String) {
     val allUsers = settingUsers(users)
     val dealer = Dealer()
     private val cardDeck = CardDeck()
-    private var inputView: InputView? = null
-    private var resultView: ResultView? = null
 
-    fun getUsers(): List<Player> {
-        return allUsers
-    }
-
-    fun getDealer(): Player {
-        return dealer
-    }
-
-    private fun settingUsers(users: String): List<Player> {
+    private fun settingUsers(users: String): List<GameUser> {
         val usersText = users.replace(" ", "")
-        val userList =
-            usersText.split(",").map {
-                GameUser(it) { InputView.inputNextDecision(it).toInputState() }
-            }.toMutableList<Player>()
-        return userList.toList()
+        return usersText.split(",").map {
+            val bettingMoney = InputView.inputBetting(it).toInt()
+            GameUser(it, bettingMoney) { InputView.inputNextDecision(it).toInputState() }
+        }
     }
 
-    fun start(
-        inputView: InputView,
-        resultView: ResultView,
-    ) {
+    fun start() {
         (allUsers + dealer).forEach {
             it.cards.add(cardDeck.getNextCard())
             it.cards.add(cardDeck.getNextCard())
         }
 
-        this.inputView = inputView
-        this.resultView = resultView
+        ResultView.printStartGame(dealer, allUsers, 2)
+
+        (listOf(dealer) + allUsers).forEach {
+            ResultView.printPlayerCards(it)
+        }
+
+        (allUsers + dealer).forEach {
+            turnGameUser(it)
+        }
+
+        ResultView.printResultCards(listOf(dealer) + allUsers)
+
+        val gameResult = GameResult(dealer, allUsers)
+
+        ResultView.printGameResult(gameResult)
     }
 
-    fun turnGameUser(user: Player) {
+    private fun turnGameUser(user: Player) {
         while (user.isDoneGame().not()) {
             user.turn(
                 nextCard = { cardDeck.getNextCard() },
@@ -60,20 +59,5 @@ fun main() {
     val users = InputView.inputUsers()
     val game = BlackJackGame(users)
 
-    game.start(InputView, ResultView)
-    ResultView.printStartGame(game.dealer, game.allUsers, 2)
-
-    (listOf(game.dealer) + game.allUsers).forEach {
-        ResultView.printPlayerCards(it)
-    }
-
-    (game.allUsers + game.dealer).forEach {
-        game.turnGameUser(it)
-    }
-
-    val gameResult = GameResult(game.dealer, game.allUsers)
-
-    ResultView.printResultCards(game.getUsers(), game.getDealer())
-
-    ResultView.printGameResult(gameResult)
+    game.start()
 }

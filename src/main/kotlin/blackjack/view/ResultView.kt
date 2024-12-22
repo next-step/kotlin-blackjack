@@ -22,21 +22,16 @@ object ResultView {
     }
 
     fun printGameResult(gameResult: GameResult) {
-        println("##최종 승패")
-        println(gameResult.getDealerResult())
-
-        gameResult.getGameUserResult().forEach {
-            println(it)
+        println("##최종 수익")
+        println("딜러: ${gameResult.dealerBalance}")
+        gameResult.usersResult.forEach {
+            println("${it.key.name}: ${it.key.bettingRevenue(it.value)}")
         }
     }
 
-    fun printResultCards(
-        users: List<Player>,
-        dealer: Player,
-    ) {
+    fun printResultCards(players: List<Player>) {
         println()
-        println("${dealer.name}카드: ${dealer.cards} - 결과: ${dealer.points}")
-        users.forEach { user ->
+        players.forEach { user ->
             println("${user.name}카드: ${user.cards} - 결과: ${user.points}")
         }
     }

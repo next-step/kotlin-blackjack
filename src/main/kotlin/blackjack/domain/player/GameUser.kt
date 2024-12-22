@@ -7,11 +7,21 @@ import blackjack.domain.player.Player.Companion.BLACKJACK_POINT
 import blackjack.domain.state.InputState
 import blackjack.domain.state.ResultState
 
-class GameUser(override val name: String, private val decision: () -> InputState = { InputState.STAY }) : Player {
+class GameUser(
+    override val name: String,
+    val bettingMoney: Int = 0,
+    private val decision: () -> InputState = {
+        InputState.STAY
+    },
+) : Player {
     private var doneGame = false
     override val cards = mutableListOf<BlackJackCard>()
     override val points: Int
         get() = calculatePoints()
+
+    fun bettingRevenue(resultState: ResultState): Int {
+        return (resultState.revenueRate * bettingMoney).toInt()
+    }
 
     override fun getFirstCards(): List<BlackJackCard> {
         return cards
@@ -59,9 +69,5 @@ class GameUser(override val name: String, private val decision: () -> InputState
             InputState.STAY -> setDoneGame(true)
             InputState.NONE -> {}
         }
-    }
-
-    override fun comparePoints(opponent: Player): ResultState {
-        throw IllegalStateException("승패는 딜러와 확인해 주세요")
     }
 }

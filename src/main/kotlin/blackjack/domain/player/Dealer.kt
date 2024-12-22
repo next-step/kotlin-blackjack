@@ -43,14 +43,20 @@ class Dealer : Player {
         cards.add(nextCard())
     }
 
-    override fun comparePoints(opponent: Player): ResultState {
-        if (isBust(points)) return ResultState.LOSE
-        if (isBust(opponent.points)) return ResultState.WIN
-        points.compareTo(opponent.points).let {
-            when {
-                it > 0 -> return ResultState.WIN
-                it < 0 -> return ResultState.LOSE
-                else -> return ResultState.DRAW
+    fun compareGetResultOpponent(opponent: Player): ResultState {
+        // 플레이어가 버스트 되면 딜러가 무조건 이긴다
+        if (isBust(opponent.points)) return ResultState.LOSE
+
+        // 21을 넘긴 경우 딜러 버스트가 되어 버스트 되지 않은 모든 플레이어가 승리한다
+        val dealerPoints = if (isBust(points)) -1 else points
+
+        // 딜러와 플레이어가 동시에 블랙잭인 경우에는 푸시(Push)라 하여 무승부가 된다. 푸시가 될 경우, 해당 플레이어는 자신이 베팅한 금액을 돌려받는다.
+        opponent.points.compareTo(dealerPoints).let {
+            return when {
+                it > 0 -> if (opponent.isBlackJack()) ResultState.BLACKJACK else ResultState.WIN
+                it < 0 -> ResultState.LOSE
+                // 같은 경우
+                else -> ResultState.PUSH
             }
         }
     }
