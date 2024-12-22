@@ -26,10 +26,10 @@ class ResultView {
             println(" - 결과: ${player.calculateCard()}")
         }
 
-        println("\n## 최종 승패")
-        showWinningResult(dealer)
+        println("\n## 최종 수익")
+        printPlayerBetMoney(dealer)
         players.forEach { player ->
-            showWinningResult(player)
+            printPlayerBetMoney(player)
         }
     }
 
@@ -66,6 +66,10 @@ class ResultView {
 
     private fun printPlayerResult(player: Participant) {
         if (player.gameResult.getWinCount() > 0) println("승") else println("패")
+    }
+
+    private fun printPlayerBetMoney(player: Participant){
+        println("${player.name}: ${player.betMoney.toInt()}")
     }
 
     fun printDealerDrawExtra(participant: Participant) {
