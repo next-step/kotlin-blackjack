@@ -31,11 +31,11 @@ class BlackjackController {
 
     private fun toEarningMoneyResults(game: Game): List<EarningMoneyResult> {
         val earningCalculator = EarningCalculator(game.dealer())
-        val dealerEarningMoneyResults = EarningMoneyResult("딜러", earningCalculator.dealerMoney(game.players()))
+        val dealerEarningMoneyResults = EarningMoneyResult(game.dealer(), earningCalculator.dealerMoney(game.players()))
         val playerEarningMoneyResults =
             game.players().map {
                 val money = earningCalculator.calculatePlayerEarnings(it)
-                EarningMoneyResult(it.name(), money)
+                EarningMoneyResult(it, money)
             }
         return listOf(dealerEarningMoneyResults) + playerEarningMoneyResults
     }
@@ -43,7 +43,7 @@ class BlackjackController {
     private fun gameLoop(game: Game) {
         game.participants().members.forEach { participant ->
             while (game.isPlayerStillPlaying(participant)) {
-                val hitCommand = InputView.askHitOrStay(participant.name())
+                val hitCommand = InputView.askHitOrStay(participant)
                 game.processPlayerTurn(participant, hitCommand)
                 OutputView.printPlayerCards(participant)
             }

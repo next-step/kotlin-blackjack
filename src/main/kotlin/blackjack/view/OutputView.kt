@@ -9,22 +9,22 @@ import blackjack.domain.Result
 
 object OutputView {
     fun showGameStart(participants: Participants) {
-        val playerNames = participants.members.map { it.name() }
+        val playerNames = participants.members.map { gerParticipantName(it) }
 
         println(String.format(DEAL_RESULT_MESSAGE, playerNames))
         participants.members.forEach {
-            println("${it.name()} 카드: ${it.ownedCards}")
+            println("${gerParticipantName(it)} 카드: ${it.ownedCards}")
         }
         println()
     }
 
     fun printPlayerCards(participant: Participant) {
-        println(String.format(CURRENT_CARD_STATUS, participant.name(), participant.ownedCards))
+        println(String.format(CURRENT_CARD_STATUS, gerParticipantName(participant), participant.ownedCards))
     }
 
     fun showGameResult(participants: Participants) {
         participants.members.forEach {
-            println(String.format(GAME_RESULT_MESSAGE, it.name(), it.ownedCards, it.sumOfCard()))
+            println(String.format(GAME_RESULT_MESSAGE, gerParticipantName(it), it.ownedCards, it.sumOfCard()))
         }
     }
 
@@ -40,7 +40,7 @@ object OutputView {
 
     fun showWinnerPlayers(playerOutcomes: List<PlayerOutcomes>) {
         playerOutcomes.forEach {
-            println("${it.participant.name()}: ${parseResult(it.results)}")
+            println("${gerParticipantName(it.participant)}: ${parseResult(it.results)}")
         }
     }
 
@@ -53,8 +53,13 @@ object OutputView {
     fun showEarningMoneyResult(earningMoneyResults: List<EarningMoneyResult>) {
         println(EARNING_MONEY_RESULT_MESSAGE)
         earningMoneyResults.forEach {
-            println("${it.name}: ${it.amount}")
+            println("${gerParticipantName(it.participant)}: ${it.amount}")
         }
+    }
+
+    private fun gerParticipantName(participant: Participant): String {
+        if (participant is Participant.Player) return participant.name
+        return "딜러"
     }
 
     private const val DEAL_RESULT_MESSAGE = "%s 에게 2장의 카드를 카드를 나누었습니다."

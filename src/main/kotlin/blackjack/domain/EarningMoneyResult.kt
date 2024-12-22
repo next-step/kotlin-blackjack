@@ -1,3 +1,3 @@
 package blackjack.domain
 
-class EarningMoneyResult(val name: String, val amount: Double)
+class EarningMoneyResult(val participant: Participant, val amount: Double)

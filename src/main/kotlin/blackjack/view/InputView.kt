@@ -1,6 +1,7 @@
 package blackjack.view
 
 import blackjack.domain.HitCommand
+import blackjack.domain.Participant
 
 object InputView {
     fun getPlayerNames(): List<String> {
@@ -14,9 +15,12 @@ object InputView {
         return input.split(INPUT_PLAYER_DELIMITER).map { it.trim() }
     }
 
-    fun askHitOrStay(playerName: String): HitCommand {
-        println(String.format(HIT_MESSAGE, playerName))
-        val input = readln()
+    fun askHitOrStay(participant: Participant): HitCommand {
+        require(participant is Participant.Player) { "Only players can make a hit or stay decision." }
+
+        println(String.format(HIT_MESSAGE, participant.name))
+        val input = readlnOrNull() ?: throw IllegalArgumentException("Input cannot be null")
+
         return parseHitCommandOrThrow(input)
     }
 

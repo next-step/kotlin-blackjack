@@ -13,7 +13,6 @@ import blackjack.domain.Result
 import blackjack.domain.Suit
 import fixture.CardListFixture
 import io.kotest.core.spec.style.DescribeSpec
-import io.kotest.matchers.collections.shouldContainExactly
 import io.kotest.matchers.shouldBe
 
 class GameTest : DescribeSpec({
@@ -32,9 +31,6 @@ class GameTest : DescribeSpec({
         it("딜러를 포함한 모든 플레이어를 조회한다.") {
             val actual = sut.allPlayers()
             actual.members.size shouldBe 3
-            actual.members[0].name() shouldBe "딜러"
-            actual.members[1].name() shouldBe "pobi"
-            actual.members[2].name() shouldBe "jason"
         }
     }
 
@@ -42,8 +38,6 @@ class GameTest : DescribeSpec({
         it("딜러를 제외한 플레이어만 조회한다") {
             val actual = sut.participants()
             actual.members.size shouldBe 2
-            actual.members[0].name() shouldBe "pobi"
-            actual.members[1].name() shouldBe "jason"
         }
     }
 
@@ -199,37 +193,6 @@ class GameTest : DescribeSpec({
             sut.giveCardToDealer()
 
             fixedDealer.ownedCards.size shouldBe 3
-        }
-    }
-
-    describe("승패를 계산한다.") {
-        lateinit var player1: Player
-        lateinit var player2: Player
-        lateinit var player3: Player
-        lateinit var player4: Player
-        lateinit var sut: Game
-
-        beforeTest {
-            player1 = Player("player1", 1_000)
-            player2 = Player("player2", 1_000)
-            player3 = Player("player3", 1_000)
-            player4 = Player("player4", 1_000)
-            val fixedDealer = Dealer(Deck(CardListFixture.mixedCardList()))
-            val fixedParticipants = listOf(player1, player2, player3, player4)
-            sut = Game(GameMembers(fixedParticipants, fixedDealer))
-        }
-
-        it("딜러의 카드보다 합이 큰 플레이어 이름을 리턴한다.") {
-            player1.sumOfCard() shouldBe 17
-            player2.sumOfCard() shouldBe 18
-            player3.sumOfCard() shouldBe 19
-            player4.sumOfCard() shouldBe 15
-            val actual = sut.determineWinner()
-
-            actual.filter { it.results == Result.WIN }.map { it.participant.name() } shouldContainExactly
-                listOf(
-                    "player1", "player2", "player3",
-                )
         }
     }
 

@@ -31,11 +31,6 @@ sealed class Participant(
         return ownedCards.size == 2 && sumOfCard() == 21
     }
 
-    fun name(): String {
-        if (this is Player) return this.name
-        return "딜러"
-    }
-
     class Player(val name: String, val bettingAmount: Int, ownedCards: MutableList<Card> = mutableListOf()) :
         Participant(
             ownedCards = ownedCards,
