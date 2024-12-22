@@ -1,26 +1,20 @@
 package blackjack.domain
 
 import io.kotest.core.spec.style.FreeSpec
-import io.kotest.matchers.collections.shouldHaveSize
+import io.kotest.matchers.shouldBe
 
 class DealerTest : FreeSpec({
-    "겜블러들에게 카드를 2장씩 나누어 준다" {
+    "가진 카드의 합이 17점 이상이면 카드를 받을 수 없다" {
         val dealer = Dealer()
-        val gamblers = Gamblers.from(listOf("pobi", "jason"))
+        dealer.receive(Card(Suit.HEARTS, Rank.TEN), Card(Suit.HEARTS, Rank.SEVEN))
 
-        dealer.dealTwoCardsEach(gamblers)
-
-        gamblers.forEach { gambler ->
-            gambler.cards shouldHaveSize 2
-        }
+        dealer.canNotReceiveCard() shouldBe true
     }
 
-    "겜블러에게 카드를 1장 나누어 준다" {
+    "가진 카드의 합이 16점 이하면 카드를 받을 수 있다" {
         val dealer = Dealer()
-        val gambler = Gambler("pobi")
+        dealer.receive(Card(Suit.HEARTS, Rank.TEN), Card(Suit.HEARTS, Rank.SIX))
 
-        dealer.dealCard(gambler)
-
-        gambler.cards shouldHaveSize 1
+        dealer.canNotReceiveCard() shouldBe false
     }
 })

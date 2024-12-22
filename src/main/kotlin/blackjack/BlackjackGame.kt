@@ -1,37 +1,64 @@
 package blackjack
 
+import blackjack.domain.BlackjackResults
 import blackjack.domain.Dealer
-import blackjack.domain.Gamblers
-import blackjack.ui.BlackJackPrinter
-import blackjack.ui.BlackJackReader
+import blackjack.domain.DealingShoe
+import blackjack.domain.Gambler
+import blackjack.domain.Participants
+import blackjack.ui.BlackjackPrinter
+import blackjack.ui.BlackjackReader
 
 fun main() {
-    val gamblerNames = BlackJackReader.readGamblerNames()
-    val gamblers = Gamblers.from(gamblerNames)
+    val gamblers = BlackjackReader.readGamblers()
+    val participants = Participants.of(Dealer(), gamblers)
 
-    val dealer = Dealer()
-    dealer.dealTwoCardsEach(gamblers)
-    BlackJackPrinter.announceCardDistribution(gamblers)
-    BlackJackPrinter.printAllGamblersCardMessage(gamblers)
+    val dealingShoe = DealingShoe()
+    dealingShoe.dealTwoCardsEach(participants)
 
-    gamblers.forEach { gambler ->
-        while (true) {
-            if (gambler.canNotReceiveCard()) {
-                BlackJackPrinter.announceCanNotReceiveCard(gambler)
-                break
-            }
+    BlackjackPrinter.announceCardDistribution(participants)
+    BlackjackPrinter.printCardMessage(participants)
 
-            val wantsMoreCard = BlackJackReader.readDecisionForMoreCard(gambler)
-            if (wantsMoreCard.not()) {
-                break
-            }
+    participants.extractGamblers()
+        .forEach { gambler -> dealCardToGambler(gambler, dealingShoe) }
 
-            dealer.dealCard(gambler)
-            BlackJackPrinter.printGamblerCardMessage(gambler)
+    dealCardToDealer(participants, dealingShoe)
+    BlackjackPrinter.printAllFinalScore(participants)
+
+    val blackjackResults = BlackjackResults(participants)
+    BlackjackPrinter.printWinOrDefeatResults(blackjackResults)
+}
+
+private fun dealCardToGambler(
+    gambler: Gambler,
+    dealingShoe: DealingShoe,
+) {
+    while (true) {
+        if (gambler.canNotReceiveCard()) {
+            BlackjackPrinter.announceCanNotReceiveCard(gambler)
+            break
         }
 
-        BlackJackPrinter.printLineFeed()
+        val wantsMoreCard = BlackjackReader.readDecisionForMoreCard(gambler)
+        if (wantsMoreCard.not()) {
+            break
+        }
+
+        dealingShoe.dealCard(gambler)
+        BlackjackPrinter.printCardMessage(gambler)
     }
 
-    BlackJackPrinter.printResult(gamblers)
+    BlackjackPrinter.printLineFeed()
+}
+
+private fun dealCardToDealer(
+    participants: Participants,
+    dealingShoe: DealingShoe,
+) {
+    val dealer = participants.extractDealer()
+    if (dealer.canNotReceiveCard()) {
+        BlackjackPrinter.announceCanNotReceiveCard(dealer)
+    } else {
+        dealingShoe.dealCard(dealer)
+        BlackjackPrinter.announceReceiveCard()
+    }
 }
