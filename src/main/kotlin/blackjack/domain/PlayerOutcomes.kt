@@ -9,8 +9,8 @@ data class PlayerOutcomes(val participant: Participant, val results: Result) {
             val dealerCardSum = dealer.sumOfCard()
             val result =
                 when {
-                    dealer.hasBusted() && player.hasBusted().not() -> Result.WIN
-                    player.hasBusted() -> Result.LOSE
+                    dealer.status == ParticipantStatus.BUSTED && player.status != ParticipantStatus.BUSTED -> Result.WIN
+                    player.status == ParticipantStatus.BUSTED -> Result.LOSE
                     player.sumOfCard() > dealerCardSum -> Result.WIN
                     else -> Result.LOSE
                 }

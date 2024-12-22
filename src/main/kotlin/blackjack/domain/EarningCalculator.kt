@@ -7,7 +7,7 @@ class EarningCalculator(private val dealer: Dealer) {
     fun calculatePlayerEarnings(player: Player): Double =
         when {
             isDealerBustedButPlayerNot(player) -> calculateWinningAmount(player)
-            player.hasBusted() -> calculateLosingAmount(player)
+            player.status == ParticipantStatus.BUSTED -> calculateLosingAmount(player)
             isBlackjackDraw(player) -> calculateDrawAmount(player)
             player.isBlackjack() -> calculateBlackjackWinningAmount(player)
             else -> calculateWinningAmount(player)
@@ -18,7 +18,7 @@ class EarningCalculator(private val dealer: Dealer) {
     }
 
     private fun isDealerBustedButPlayerNot(player: Player): Boolean {
-        return dealer.hasBusted() && !player.hasBusted()
+        return dealer.status == ParticipantStatus.BUSTED && player.status != ParticipantStatus.BUSTED
     }
 
     private fun isBlackjackDraw(player: Player): Boolean {

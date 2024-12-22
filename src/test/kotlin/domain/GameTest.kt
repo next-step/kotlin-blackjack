@@ -8,6 +8,7 @@ import blackjack.domain.GameMembers
 import blackjack.domain.HitCommand
 import blackjack.domain.Participant.Dealer
 import blackjack.domain.Participant.Player
+import blackjack.domain.ParticipantStatus
 import blackjack.domain.Result
 import blackjack.domain.Suit
 import fixture.CardListFixture
@@ -260,6 +261,44 @@ class GameTest : DescribeSpec({
             it("패배한다.") {
                 val actual = sut.determineDealerWinningOutcome()
                 actual.results.filter { it == Result.LOSE }.size shouldBe 3
+            }
+        }
+    }
+
+    describe("isPlayerStillPlaying test") {
+        lateinit var player1: Player
+        lateinit var sut: Game
+
+        context("플레이어의 상태가 PLAYING인 경우") {
+            beforeTest {
+                player1 = Player("player1", 1_000)
+                val fixedDealer = Dealer(Deck(CardListFixture.mixedCardList()))
+                val fixedParticipants = listOf(player1)
+                sut = Game(GameMembers(fixedParticipants, fixedDealer))
+            }
+            it("should be true") {
+                player1.status shouldBe ParticipantStatus.PLAYING
+                sut.isPlayerStillPlaying(player1) shouldBe true
+            }
+        }
+
+        context("플레이어의 상태가 PLAYING이 아닌 경우") {
+            beforeTest {
+                val cards =
+                    mutableListOf(
+                        Card(Suit.SPADES, CardNumber.TEN),
+                        Card(Suit.SPADES, CardNumber.QUEEN),
+                        Card(Suit.SPADES, CardNumber.KING),
+                    )
+                player1 = Player("player1", 1_000, cards)
+                val fixedDealer = Dealer(Deck(CardListFixture.mixedCardList()))
+                val fixedParticipants = listOf(player1)
+                sut = Game(GameMembers(fixedParticipants, fixedDealer))
+            }
+
+            it("should be false") {
+                player1.status shouldBe ParticipantStatus.BUSTED
+                sut.isPlayerStillPlaying(player1) shouldBe false
             }
         }
     }

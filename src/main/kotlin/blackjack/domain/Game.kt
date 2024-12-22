@@ -30,7 +30,7 @@ class Game(
     }
 
     fun isPlayerStillPlaying(participant: Participant): Boolean {
-        return participant.hasBusted().not() && participant.hasStayed().not()
+        return participant.status == ParticipantStatus.PLAYING
     }
 
     fun determineWinner(): List<PlayerOutcomes> {
@@ -44,8 +44,8 @@ class Game(
         val dealerComparisonResults =
             players.map { player ->
                 when {
-                    dealer.hasBusted() -> Result.LOSE
-                    player.hasBusted() -> Result.WIN
+                    dealer.status == ParticipantStatus.BUSTED -> Result.LOSE
+                    player.status == ParticipantStatus.BUSTED -> Result.WIN
                     dealer.sumOfCard() >= player.sumOfCard() -> Result.WIN
                     else -> Result.LOSE
                 }
