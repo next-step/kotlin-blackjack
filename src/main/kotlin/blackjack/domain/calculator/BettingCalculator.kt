@@ -10,10 +10,8 @@ object BettingCalculator {
         var dealerMoney = 0f
         players.forEach { player ->
             val betMoney = calculateMoney(player)
-            player.updateBetMoney(calculateMoney(player))
-            if (player.gameResult.getLoseCount() > 0) {
-                dealerMoney += betMoney
-            }
+            player.updateBetMoney(betMoney)
+            dealerMoney += (-betMoney)
         }
         dealer.updateBetMoney(dealerMoney)
     }

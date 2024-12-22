@@ -59,10 +59,8 @@ class BettingCalculatorTest {
         WinningCalculator.calculatorGameResult(Players(listOf(player1)), dealer)
         BettingCalculator.calculateBettingAmount(Players(listOf(player1)), dealer)
 
-        println(player1.gameResult)
-
         player1.betMoney shouldBe 1000
-        dealer.betMoney shouldBe 0
+        dealer.betMoney shouldBe -1000
     }
 
     @Test
@@ -80,6 +78,7 @@ class BettingCalculatorTest {
         WinningCalculator.calculatorGameResult(Players(listOf(player1)), dealer)
         BettingCalculator.calculateBettingAmount(Players(listOf(player1)), dealer)
 
+        println(player1.gameResult)
         player1.betMoney.toInt() shouldBe 1000
         dealer.betMoney.toInt() shouldBe -1000
     }
