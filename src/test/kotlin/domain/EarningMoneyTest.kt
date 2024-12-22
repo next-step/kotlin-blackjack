@@ -90,7 +90,7 @@ class EarningMoneyTest : DescribeSpec({
                     )
 
                 val sut = EarningCalculator(dealer)
-                sut.calculatePlayerEarnings(player) shouldBe 2000.0
+                sut.calculatePlayerEarnings(player) shouldBe 1000.0
             }
 
             it("플레이어도 bust 되었다면 돈을 잃는다.") {
@@ -142,7 +142,7 @@ class EarningMoneyTest : DescribeSpec({
                     )
 
                 val sut = EarningCalculator(dealer)
-                sut.calculatePlayerEarnings(player) shouldBe 2000.0
+                sut.calculatePlayerEarnings(player) shouldBe 1000.0
             }
         }
     }
@@ -166,7 +166,7 @@ class EarningMoneyTest : DescribeSpec({
                 )
 
             val sut = EarningCalculator(dealer)
-            sut.dealerMoney(listOf(player)) shouldBe -2000.0
+            sut.dealerMoney(listOf(player)) shouldBe -1000.0
         }
     }
 })

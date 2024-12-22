@@ -26,7 +26,7 @@ class EarningCalculator(private val dealer: Dealer) {
     }
 
     private fun calculateWinningAmount(player: Player): Double {
-        return player.bettingAmount * 2.0
+        return player.bettingAmount * 1.0
     }
 
     private fun calculateLosingAmount(player: Player): Double {
