@@ -5,8 +5,10 @@ import blackjack.domain.player.Player
 import blackjack.domain.player.Players
 
 object BettingCalculator {
-
-    fun calculateBettingAmount(players: Players, dealer: Dealer) {
+    fun calculateBettingAmount(
+        players: Players,
+        dealer: Dealer,
+    ) {
         var dealerMoney = 0f
         players.forEach { player ->
             val betMoney = calculateMoney(player)

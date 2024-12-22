@@ -68,7 +68,7 @@ class ResultView {
         if (player.gameResult.getWinCount() > 0) println("승") else println("패")
     }
 
-    private fun printPlayerBetMoney(player: Participant){
+    private fun printPlayerBetMoney(player: Participant) {
         println("${player.name}: ${player.betMoney.toInt()}")
     }
 

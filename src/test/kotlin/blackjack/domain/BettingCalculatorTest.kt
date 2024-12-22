@@ -9,7 +9,6 @@ import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
 class BettingCalculatorTest {
-
     @Test
     fun `testBettingCalculator - player win with blackjack`() {
         val player1 = Player("Player 1", 1000f)
