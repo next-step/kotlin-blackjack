@@ -1,11 +1,12 @@
 package blackjack.controller
 
 import blackjack.domain.Deck
+import blackjack.domain.EarningCalculator
+import blackjack.domain.EarningMoneyResult
 import blackjack.domain.Game
 import blackjack.domain.GameMembers
 import blackjack.domain.Participant.Dealer
 import blackjack.domain.Participant.Player
-import blackjack.domain.Participants
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
@@ -24,18 +25,29 @@ class BlackjackController {
         OutputView.showWinnerPlayers(
             game.determineWinner(),
         )
+
+        OutputView.showEarningMoneyResult(toEarningMoneyResults(game))
+    }
+
+    private fun toEarningMoneyResults(game: Game): List<EarningMoneyResult> {
+        val earningCalculator = EarningCalculator(game.dealer())
+        val dealerEarningMoneyResults = EarningMoneyResult(game.dealer(), earningCalculator.dealerMoney(game.players()))
+        val playerEarningMoneyResults =
+            game.players().map {
+                val money = earningCalculator.calculatePlayerEarnings(it)
+                EarningMoneyResult(it, money)
+            }
+        return listOf(dealerEarningMoneyResults) + playerEarningMoneyResults
     }
 
     private fun gameLoop(game: Game) {
-        game.participants().forEach { player ->
-            while (game.isPlayerStillPlaying(player)) {
-                val hitCommand = InputView.askHitOrStay(player.name)
-                game.processPlayerTurn(player, hitCommand)
-                OutputView.printPlayerCards(player)
+        game.members().forEach { member ->
+            while (game.isPlayerStillPlaying(member)) {
+                val hitCommand = InputView.askHitOrStay(member)
+                game.processPlayerTurn(member, hitCommand)
+                OutputView.printPlayerCards(member)
             }
         }
-
-        if (game.isDealerBust()) return
     }
 
     private fun dealerTurn(game: Game) {
@@ -55,13 +67,10 @@ class BlackjackController {
 
     private fun createDealer() = Dealer(Deck())
 
-    private fun createPlayers(playerNames: List<String>) =
-        Participants(
-            players =
-                playerNames.map {
-                    Player(
-                        it,
-                    )
-                },
-        )
+    private fun createPlayers(playerNames: List<String>): List<Player> {
+        return playerNames.map { name ->
+            val bettingAmount = InputView.askBettingAmount(name)
+            Player(name = name, bettingAmount = bettingAmount)
+        }
+    }
 }

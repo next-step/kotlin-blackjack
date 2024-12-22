@@ -1,25 +1,22 @@
 package blackjack.domain
 
 sealed class Participant(
-    val name: String = "Unknown",
     val ownedCards: MutableList<Card> = mutableListOf(),
-    private val actions: MutableList<HitCommand> = mutableListOf(),
+    private var _status: ParticipantStatus = ParticipantStatus.PLAYING,
 ) {
+    val status: ParticipantStatus
+        get() =
+            when {
+                sumOfCard() > 21 -> ParticipantStatus.BUSTED
+                else -> _status
+            }
+
     fun receiveCard(card: Card) {
         ownedCards.add(card)
-        actions.add(HitCommand.HIT)
     }
 
     fun stay() {
-        actions.add(HitCommand.STAY)
-    }
-
-    fun hasBusted(): Boolean {
-        return sumOfCard() <= 21
-    }
-
-    fun hasStayed(): Boolean {
-        return actions.lastOrNull() == HitCommand.STAY
+        _status = ParticipantStatus.STAYED
     }
 
     fun sumOfCard(): Int {
@@ -30,11 +27,19 @@ sealed class Participant(
         return totalSum
     }
 
-    class Player(name: String, ownedCards: MutableList<Card> = mutableListOf()) : Participant(name = name, ownedCards = ownedCards)
+    fun isBlackjack(): Boolean {
+        return ownedCards.size == 2 && sumOfCard() == 21
+    }
+
+    class Player(val name: String, val bettingAmount: Int, ownedCards: MutableList<Card> = mutableListOf()) :
+        Participant(
+            ownedCards = ownedCards,
+        )
 
     class Dealer(
         private val deck: Deck,
-    ) : Participant() {
+        ownedCards: MutableList<Card> = mutableListOf(),
+    ) : Participant(ownedCards = ownedCards) {
         fun deal(participants: Participants) {
             repeat(NUMBER_OF_DEAL_CARD) {
                 dealOneCardToEachPlayer(participants)
@@ -42,7 +47,7 @@ sealed class Participant(
         }
 
         private fun dealOneCardToEachPlayer(participants: Participants) {
-            participants.allPlayers().forEach {
+            participants.members.forEach {
                 it.receiveCard(deck.draw())
             }
         }
