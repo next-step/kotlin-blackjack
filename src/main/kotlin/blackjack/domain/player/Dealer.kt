@@ -1,28 +1,35 @@
 package blackjack.domain.player
 
 import blackjack.domain.card.PlayingCard
-import blackjack.domain.state.Hands
+import blackjack.domain.state.Bust
 import blackjack.domain.state.Ready
+import blackjack.domain.state.Running
 import blackjack.domain.state.State
 
-class Dealer {
+class Dealer(
     private var state: State = Ready()
-
-    val hands: Hands
-        get() = state.hands
+) {
 
     fun drawCard(card: PlayingCard) {
         state = state.draw(card)
     }
 
+    fun cards() = state.hands.cards
     fun stay() {
         state = state.stay()
     }
 
-    fun isRunning(): Boolean = state.isRunning()
+    fun isRunning(): Boolean = state is Running
+
+    fun isBust(): Boolean = state is Bust
+
 
     fun needsMoreCard(): Boolean {
-        return hands.score() <= DRAW_THRESHOLD
+        return state.hands.score() <= DRAW_THRESHOLD
+    }
+
+    fun score(): Int {
+        return state.hands.score()
     }
 
     companion object {

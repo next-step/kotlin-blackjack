@@ -10,7 +10,7 @@ import io.kotest.matchers.shouldBe
 class PlayerTest : StringSpec({
     "플레이어를 생성한다" {
         val player = Player.of("aimbe")
-        player.hands.size shouldBe 0
+        player.cards().size shouldBe 0
         player.isRunning() shouldBe true
     }
 
@@ -26,8 +26,8 @@ class PlayerTest : StringSpec({
 
         player.drawCard(card)
 
-        player.hands.size shouldBe 1
-        player.hands.first() shouldBe card
+        player.cards().size shouldBe 1
+        player.cards().first() shouldBe card
     }
 
     "플레이어가 카드를 2장 받으면 Hit 상태가 된다" {

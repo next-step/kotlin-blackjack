@@ -9,7 +9,7 @@ import io.kotest.matchers.shouldBe
 class DealerTest : StringSpec({
     "딜러를 생성한다" {
         val dealer = Dealer()
-        dealer.hands.size shouldBe 0
+        dealer.cards().size shouldBe 0
         dealer.isRunning() shouldBe true
     }
 
