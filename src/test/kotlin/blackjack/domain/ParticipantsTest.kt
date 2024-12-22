@@ -32,14 +32,15 @@ class ParticipantsTest : FreeSpec({
     }
 
     "참가자들이 카드를 두장씩 받는다" {
-        val participants = Participants(
-            listOf(
-                Gambler("kim"),
-                Gambler("lee"),
-                Gambler("park"),
-                Dealer(),
+        val participants =
+            Participants(
+                listOf(
+                    Gambler("kim"),
+                    Gambler("lee"),
+                    Gambler("park"),
+                    Dealer(),
+                ),
             )
-        )
         val deck = Deck()
 
         participants.receiveTwoCardsEach(deck)
@@ -50,14 +51,15 @@ class ParticipantsTest : FreeSpec({
     }
 
     "참가자들 중에서 겜블러들만 추출한다" {
-        val participants = Participants(
-            listOf(
-                Gambler("kim"),
-                Gambler("lee"),
-                Gambler("park"),
-                Dealer(),
+        val participants =
+            Participants(
+                listOf(
+                    Gambler("kim"),
+                    Gambler("lee"),
+                    Gambler("park"),
+                    Dealer(),
+                ),
             )
-        )
 
         val gamblers = participants.extractGamblers()
 
@@ -66,14 +68,15 @@ class ParticipantsTest : FreeSpec({
     }
 
     "참가자들의 이름을 추출한다" {
-        val participants = Participants(
-            listOf(
-                Gambler("kim"),
-                Gambler("lee"),
-                Gambler("park"),
-                Dealer(),
+        val participants =
+            Participants(
+                listOf(
+                    Gambler("kim"),
+                    Gambler("lee"),
+                    Gambler("park"),
+                    Dealer(),
+                ),
             )
-        )
 
         val names = participants.extractNames()
 

@@ -39,7 +39,10 @@ class Participants(private val participants: List<Participant>) {
     }
 
     companion object {
-        fun of(dealer: Dealer, gamblers: List<Gambler>): Participants {
+        fun of(
+            dealer: Dealer,
+            gamblers: List<Gambler>,
+        ): Participants {
             val participants = listOf(dealer) + gamblers
             return Participants(participants)
         }

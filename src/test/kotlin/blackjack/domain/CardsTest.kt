@@ -7,14 +7,15 @@ class CardsTest : FreeSpec({
 
     "카드 목록의 점수를 합산할 수 있다" - {
         "ACE가 없는 경우" {
-            val cards = Cards(
-                mutableListOf(
-                    Card(Suit.HEARTS, Rank.TEN),
-                    Card(Suit.SPADES, Rank.JACK),
-                    Card(Suit.DIAMONDS, Rank.QUEEN),
-                    Card(Suit.CLUBS, Rank.KING),
+            val cards =
+                Cards(
+                    mutableListOf(
+                        Card(Suit.HEARTS, Rank.TEN),
+                        Card(Suit.SPADES, Rank.JACK),
+                        Card(Suit.DIAMONDS, Rank.QUEEN),
+                        Card(Suit.CLUBS, Rank.KING),
+                    ),
                 )
-            )
 
             val totalScore: Int = cards.calculateTotalScore()
 
@@ -30,14 +31,14 @@ class CardsTest : FreeSpec({
                                 Card(Suit.HEARTS, Rank.TEN),
                                 Card(Suit.SPADES, Rank.TEN),
                                 Card(Suit.HEARTS, Rank.ACE),
-                            )
+                            ),
                         ) to 21,
                         Cards(
                             mutableListOf(
                                 Card(Suit.HEARTS, Rank.NINE),
                                 Card(Suit.SPADES, Rank.TWO),
                                 Card(Suit.HEARTS, Rank.ACE),
-                            )
+                            ),
                         ) to 12,
                         Cards(
                             mutableListOf(
@@ -45,7 +46,7 @@ class CardsTest : FreeSpec({
                                 Card(Suit.SPADES, Rank.NINE),
                                 Card(Suit.SPADES, Rank.TWO),
                                 Card(Suit.HEARTS, Rank.ACE),
-                            )
+                            ),
                         ) to 22,
                     ).forEach { cardsTotalScorePair ->
                         val cards = cardsTotalScorePair.first
@@ -63,13 +64,13 @@ class CardsTest : FreeSpec({
                             mutableListOf(
                                 Card(Suit.HEARTS, Rank.TEN),
                                 Card(Suit.HEARTS, Rank.ACE),
-                            )
+                            ),
                         ) to 21,
                         Cards(
                             mutableListOf(
                                 Card(Suit.HEARTS, Rank.NINE),
                                 Card(Suit.HEARTS, Rank.ACE),
-                            )
+                            ),
                         ) to 20,
                     ).forEach { cardsTotalScorePair ->
                         val cards = cardsTotalScorePair.first
@@ -88,7 +89,7 @@ class CardsTest : FreeSpec({
                         mutableListOf(
                             Card(Suit.HEARTS, Rank.ACE),
                             Card(Suit.SPADES, Rank.ACE),
-                        )
+                        ),
                     ) to 12,
                     Cards(
                         mutableListOf(
@@ -96,7 +97,7 @@ class CardsTest : FreeSpec({
                             Card(Suit.HEARTS, Rank.ACE),
                             Card(Suit.SPADES, Rank.ACE),
                             Card(Suit.CLUBS, Rank.ACE),
-                        )
+                        ),
                     ) to 15,
                 ).forEach { cardsTotalScorePair ->
                     val cards = cardsTotalScorePair.first

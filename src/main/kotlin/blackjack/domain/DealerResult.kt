@@ -1,12 +1,13 @@
 package blackjack.domain
 
 data class DealerResult(
-    val dealer: Dealer,  // todo 3개 이상의 인스턴스 변수를 가지면 안됨
+    val dealer: Dealer,
     private val gamblerResults: List<GamblerResult>,
 ) {
-    private val resultStatusCounts = gamblerResults.groupingBy { gamblerResult ->
-        gamblerResult.resultStatus
-    }.eachCount()
+    private val resultStatusCounts =
+        gamblerResults.groupingBy { gamblerResult ->
+            gamblerResult.resultStatus
+        }.eachCount()
 
     val winCount: Int
         get() = resultStatusCounts[ResultStatus.DEFEAT] ?: 0

@@ -1,7 +1,7 @@
 package blackjack.ui
 
-import blackjack.domain.BlackjackRule
 import blackjack.domain.BlackjackResults
+import blackjack.domain.BlackjackRule
 import blackjack.domain.Dealer
 import blackjack.domain.Gambler
 import blackjack.domain.GamblerResult
@@ -9,7 +9,7 @@ import blackjack.domain.Participant
 import blackjack.domain.Participants
 import blackjack.domain.ResultStatus
 
-object BlackJackPrinter {
+object BlackjackPrinter {
     private const val PRINT_SEPARATOR = ", "
     private const val LINE_FEED = "\n"
 
@@ -34,7 +34,7 @@ object BlackJackPrinter {
     }
 
     fun askIfWantMoreCard(participant: Participant) {
-        println("${participant.name}은(는) 한장의 카드를 더 받겠습니까?(예는 ${BlackJackReader.YES_SIGN}, 아니오는 ${BlackJackReader.NO_SIGN}. 대소문자 구분 X)")
+        println("${participant.name}은(는) 한장의 카드를 더 받겠습니까?(예는 ${BlackjackReader.YES_SIGN}, 아니오는 ${BlackjackReader.NO_SIGN}. 대소문자 구분 X)")
     }
 
     fun printAllFinalScore(participants: Participants) {
@@ -52,12 +52,13 @@ object BlackJackPrinter {
     fun announceCanNotReceiveCard(participant: Participant) {
         when (participant) {
             is Dealer -> println("딜러는 ${Dealer.MAXIMUM_SCORE_TO_RECEIVE_CARD}점을 초과하여 카드를 받을 수 없습니다.")
-            is Gambler -> println(
-                """
+            is Gambler ->
+                println(
+                    """
                     |카드의 총합이 ${BlackjackRule.BLACKJACK_SCORE}을 초과하여 더이상 카드를 받을 수 없습니다.
                     |${participant.name}의 턴을 종료합니다.
-                """.trimMargin()
-            )
+                    """.trimMargin(),
+                )
         }
         printLineFeed()
     }
@@ -71,10 +72,11 @@ object BlackJackPrinter {
         val dealerResult = blackjackResults.dealerResult
         val gamblerResultsMessage = createGamblerResultsMessage(blackjackResults)
 
-        val resultsMessage = """
+        val resultsMessage =
+            """
             |${dealerResult.dealer.name}: ${dealerResult.winCount}승 ${dealerResult.defeatCount}패 ${dealerResult.drawCount}무
             |$gamblerResultsMessage
-        """.trimMargin()
+            """.trimMargin()
         println(resultsMessage)
     }
 

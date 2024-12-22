@@ -12,7 +12,10 @@ class BlackjackResults(participants: Participants) {
         dealerResult = DealerResult(dealer, gamblerResults)
     }
 
-    private fun determineGamblerResults(dealer: Dealer, gamblers: List<Gambler>): List<GamblerResult> {
+    private fun determineGamblerResults(
+        dealer: Dealer,
+        gamblers: List<Gambler>,
+    ): List<GamblerResult> {
         return gamblers.map { gambler ->
             GamblerResult(gambler, gambler.determineResultStatus(dealer))
         }

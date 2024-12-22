@@ -1,5 +1,7 @@
 package blackjack.domain
 
 enum class ResultStatus {
-    WIN, DRAW, DEFEAT
+    WIN,
+    DRAW,
+    DEFEAT,
 }
