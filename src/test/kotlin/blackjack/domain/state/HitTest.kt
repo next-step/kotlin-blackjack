@@ -1,6 +1,10 @@
 package blackjack.domain.state
 
-import blackjack.domain.*
+import blackjack.domain.CLUBS_ACE
+import blackjack.domain.CLUBS_KING
+import blackjack.domain.CLUBS_TEN
+import blackjack.domain.CLUBS_THREE
+import blackjack.domain.CLUBS_TWO
 import io.kotest.matchers.collections.shouldContainAnyOf
 import io.kotest.matchers.types.shouldBeInstanceOf
 import org.junit.jupiter.api.Test

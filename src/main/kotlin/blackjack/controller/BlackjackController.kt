@@ -59,7 +59,7 @@ class BlackjackController {
         val dealerLoses = playerResults.count { it.value == GameResult.WIN }
         return mapOf(
             GameResult.WIN to dealerWins,
-            GameResult.LOSE to dealerLoses
+            GameResult.LOSE to dealerLoses,
         )
     }
 }

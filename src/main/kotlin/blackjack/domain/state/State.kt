@@ -10,5 +10,6 @@ interface State {
     fun stay(): State
 
     fun profit(money: Int): Double
+
     fun isRunning(): Boolean
 }

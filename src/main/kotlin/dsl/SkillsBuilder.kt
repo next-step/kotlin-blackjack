@@ -4,7 +4,10 @@ package dsl
 class SkillsBuilder {
     private val skills = mutableListOf<Skill>()
 
-    fun skill(type: SkillType, description: String) {
+    fun skill(
+        type: SkillType,
+        description: String,
+    ) {
         skills.add(Skill(type, description))
     }
 

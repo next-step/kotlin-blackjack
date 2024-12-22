@@ -7,7 +7,10 @@ import blackjack.domain.state.GameResult
 object OutputView {
     private val messageBuilder = StringBuilder()
 
-    fun printInitialCards(dealer: Dealer, players: List<Player>) {
+    fun printInitialCards(
+        dealer: Dealer,
+        players: List<Player>,
+    ) {
         messageBuilder.clear()
             .append("\n딜러와 ")
             .append(players.joinToString(", ") { it.toString() })
@@ -36,7 +39,10 @@ object OutputView {
         print(messageBuilder.toString())
     }
 
-    fun printFinalCards(dealer: Dealer, players: List<Player>) {
+    fun printFinalCards(
+        dealer: Dealer,
+        players: List<Player>,
+    ) {
         messageBuilder.clear()
             .append("딜러 카드: ${dealer.cards().joinToString(", ")} - 결과: ${dealer.score()}\n")
 
@@ -48,7 +54,10 @@ object OutputView {
         print(messageBuilder.toString())
     }
 
-    fun printFinalResults(dealerResult: Map<GameResult, Int>, playerResults: Map<Player, GameResult>) {
+    fun printFinalResults(
+        dealerResult: Map<GameResult, Int>,
+        playerResults: Map<Player, GameResult>,
+    ) {
         val dealerWins = dealerResult[GameResult.WIN] ?: 0
         val dealerLoses = dealerResult[GameResult.LOSE] ?: 0
 
@@ -57,7 +66,7 @@ object OutputView {
             .append("딜러: ${dealerWins}승 ${dealerLoses}패\n")
 
         playerResults.forEach { (player, result) ->
-            messageBuilder.append("${player}: ${result.toString().lowercase()}\n")
+            messageBuilder.append("$player: ${result.toString().lowercase()}\n")
         }
 
         print(messageBuilder.toString())

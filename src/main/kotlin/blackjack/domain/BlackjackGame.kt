@@ -36,8 +36,10 @@ class BlackjackGame {
         }
     }
 
-
-    private fun determineResult(player: Player, dealer: Dealer): GameResult {
+    private fun determineResult(
+        player: Player,
+        dealer: Dealer,
+    ): GameResult {
         val playerScore = player.score()
         val dealerScore = dealer.score()
 
