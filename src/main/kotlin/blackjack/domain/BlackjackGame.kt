@@ -1,32 +1,59 @@
 package blackjack.domain
 
 import blackjack.domain.card.Deck
-import blackjack.domain.state.Hands
-import blackjack.domain.state.Ready
-import blackjack.domain.state.Running
-import blackjack.domain.state.State
+import blackjack.domain.player.Dealer
+import blackjack.domain.player.Player
+import blackjack.domain.state.GameResult
 
 class BlackjackGame {
     private val deck = Deck()
-    private val players = mutableMapOf<String, State>()
+    val dealer = Dealer()
+    private var players = listOf<Player>()
 
-    fun initialize(names: List<String>) {
-        names.forEach { name ->
-            val initialState = Ready()
-            players[name] = initialState.draw(deck.draw()).draw(deck.draw())
+    fun drawCard() = deck.draw()
+
+    fun start(players: List<Player>) {
+        this.players = players
+        dealInitialCards()
+    }
+
+    fun calculateResult(): Map<Player, GameResult> {
+        if (dealer.isBust()) {
+            return players.associateWith { GameResult.WIN }
+        }
+
+        return players.associateWith { player ->
+            determineResult(player, dealer)
         }
     }
 
-    fun getPlayersState(): Map<String, State> = players.toMap()
+    private fun dealInitialCards() {
+        repeat(INITIAL_CARD_COUNT) {
+            dealer.drawCard(deck.draw())
+            players.forEach { player ->
+                player.drawCard(deck.draw())
+            }
+        }
+    }
 
-    fun getPlayerNames(): List<String> = players.keys.toList()
+    private fun determineResult(
+        player: Player,
+        dealer: Dealer,
+    ): GameResult {
+        val playerScore = player.score()
+        val dealerScore = dealer.score()
 
-    fun getPlayerHands(name: String): Hands = players[name]?.hands ?: throw IllegalArgumentException("존재하지 않는 플레이어입니다.")
+        if (player.isBust()) return GameResult.LOSE
+        if (dealer.isBust()) return GameResult.WIN
 
-    fun isRunning(name: String): Boolean = players[name] is Running
+        return when {
+            playerScore > dealerScore -> GameResult.WIN
+            playerScore < dealerScore -> GameResult.LOSE
+            else -> GameResult.DRAW
+        }
+    }
 
-    fun drawCard(name: String) {
-        val currentState = players[name] ?: throw IllegalArgumentException("존재하지 않는 플레이어입니다.")
-        players[name] = currentState.draw(deck.draw())
+    companion object {
+        private const val INITIAL_CARD_COUNT = 2
     }
 }

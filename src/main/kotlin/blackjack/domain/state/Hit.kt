@@ -9,11 +9,13 @@ class Hit(override val hands: Hands) : Running() {
 
     override fun draw(card: PlayingCard): State {
         val hands = hands + card
-        if (hands.score() > 21) return Bust(hands)
+        if (hands.score() > 21) {
+            return Bust(hands)
+        }
         return Hit(hands)
     }
 
-    override fun stay(card: PlayingCard): State {
+    override fun stay(): State {
         return Stay(hands)
     }
 }

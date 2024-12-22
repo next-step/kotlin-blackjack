@@ -2,7 +2,7 @@ package blackjack.domain.state
 
 import blackjack.domain.card.PlayingCard
 
-class Hands(private val cards: List<PlayingCard> = emptyList()) : List<PlayingCard> by cards {
+class Hands(val cards: List<PlayingCard> = emptyList()) : List<PlayingCard> by cards {
     constructor(vararg cards: PlayingCard) : this(cards.toList())
 
     fun score(): Int {

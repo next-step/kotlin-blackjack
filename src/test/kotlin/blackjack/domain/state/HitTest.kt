@@ -39,7 +39,7 @@ class HitTest {
     @Test
     fun stay() {
         val state = Hit(Hands(CLUBS_ACE, CLUBS_KING))
-        val acutal = state.stay(CLUBS_TWO)
+        val acutal = state.stay()
         acutal.shouldBeInstanceOf<Stay>()
     }
 }

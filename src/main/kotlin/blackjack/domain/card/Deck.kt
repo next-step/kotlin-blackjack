@@ -1,16 +1,7 @@
 package blackjack.domain.card
 
 class Deck {
-    private val cards = mutableListOf<PlayingCard>()
-
-    init {
-        Suit.values().forEach { suit ->
-            Denomination.values().forEach { denomination ->
-                cards.add(PlayingCard.of(suit, denomination))
-            }
-        }
-        cards.shuffle()
-    }
+    private val cards = PlayingCard.createDeck().toMutableList().apply { shuffle() }
 
     fun draw(): PlayingCard {
         if (cards.isEmpty()) {

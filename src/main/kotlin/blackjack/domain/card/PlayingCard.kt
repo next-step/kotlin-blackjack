@@ -10,7 +10,18 @@ class PlayingCard private constructor(
     override fun toString(): String = "${denomination.score}${suit.symbol}"
 
     companion object {
-        private val CARDS: MutableMap<String, PlayingCard> = mutableMapOf()
+        private val CARDS: MutableMap<String, PlayingCard> =
+            Suit.entries
+                .asSequence()
+                .flatMap { suit ->
+                    Denomination.entries.map { denomination ->
+                        toKey(suit, denomination) to PlayingCard(suit, denomination)
+                    }
+                }
+                .toMap()
+                .toMutableMap()
+
+        fun createDeck(): List<PlayingCard> = CARDS.values.toList()
 
         fun of(
             suit: Suit,
@@ -25,14 +36,6 @@ class PlayingCard private constructor(
             denomination: Denomination,
         ): String {
             return suit.name + denomination.name
-        }
-
-        init {
-            for (suit in Suit.entries) {
-                for (rank in Denomination.entries) {
-                    CARDS[toKey(suit, rank)] = PlayingCard(suit, rank)
-                }
-            }
         }
     }
 }
