@@ -1,6 +1,7 @@
 package blackjack
 
 import blackjack.domain.Game
+import blackjack.domain.calculator.BettingCalculator
 import blackjack.domain.calculator.WinningCalculator
 import blackjack.domain.player.Participant
 import blackjack.domain.player.Player
@@ -27,5 +28,6 @@ fun main() {
     resultView.printStartMessage(players)
     game.startGame(printCallback, turnCallback)
     WinningCalculator.calculatorGameResult(game.players, game.dealer)
+    BettingCalculator.calculateBettingAmount(game.players, game.dealer)
     resultView.printGameResult(game.players, game.dealer)
 }
