@@ -27,14 +27,14 @@ class ResultView {
         }
 
         println("\n## 최종 수익")
-        printPlayerBetMoney(dealer)
+        printPlayerBalance(dealer)
         players.forEach { player ->
-            printPlayerBetMoney(player)
+            printPlayerBalance(player)
         }
     }
 
     fun showCards(player: Participant) {
-        if (player.name == Dealer.DEALER_NAME) {
+        if (player.isDealer()) {
             println("${player.name}: ${player.getAllCards()[0].printCard()}")
             return
         }
@@ -51,20 +51,13 @@ class ResultView {
         }
     }
 
-    private fun printDealerResult(player: Participant) {
-        println("${player.gameResult.getWinCount()}승 ${player.gameResult.getLoseCount()}패")
-    }
-
-    private fun printPlayerResult(player: Participant) {
-        if (player.gameResult.getWinCount() > 0) println("승") else println("패")
-    }
-
-    private fun printPlayerBetMoney(player: Participant) {
-        println("${player.name}: ${player.betMoney.toInt()}")
+    private fun printPlayerBalance(player: Participant) {
+        println("${player.name}: ${player.balance.toInt()}")
     }
 
     fun printDealerDrawExtra(participant: Participant) {
-        if (participant.name != Dealer.DEALER_NAME) return
-        println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.\n")
+        if (participant.isDealer()) {
+            println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.\n")
+        }
     }
 }

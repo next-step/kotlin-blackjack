@@ -4,12 +4,15 @@ import blackjack.domain.Card
 import blackjack.domain.Card.Companion.SpecialNumber
 import blackjack.domain.CardDeck
 import blackjack.domain.status.GameResult
+import blackjack.domain.status.PlayerStatus
 import blackjack.domain.status.ResultRecord
+import java.math.BigDecimal
 
-abstract class Participant(val name: String, val initBet: Float) {
-    protected var cards = mutableListOf<Card>()
+abstract class Participant(val name: String, val initBet: BigDecimal) {
+    private var cards = mutableListOf<Card>()
     val gameResult = ResultRecord(0, 0)
-    var betMoney: Float = 0f
+    var playerStatus: PlayerStatus = PlayerStatus.HIT
+    var balance: BigDecimal = BigDecimal.ZERO
 
     abstract fun startTurn(
         onTurnStarted: ((Participant) -> String)?,
@@ -20,6 +23,10 @@ abstract class Participant(val name: String, val initBet: Float) {
 
     fun isBust(): Boolean {
         return calculateCard() > 21
+    }
+
+    fun updateStatus(status: PlayerStatus){
+        playerStatus = status
     }
 
     fun drawCard(newCard: Card) {
@@ -53,8 +60,8 @@ abstract class Participant(val name: String, val initBet: Float) {
         gameResult.updateResult(result, count)
     }
 
-    fun updateBetMoney(money: Float) {
-        betMoney = money
+    fun updateBalance(money: BigDecimal) {
+        balance = money
     }
 
     companion object {
