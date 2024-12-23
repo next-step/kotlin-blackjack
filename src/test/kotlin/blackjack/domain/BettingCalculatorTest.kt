@@ -5,6 +5,7 @@ import blackjack.domain.calculator.WinningCalculator
 import blackjack.domain.player.Dealer
 import blackjack.domain.player.Player
 import blackjack.domain.player.Players
+import blackjack.domain.status.PlayerStatus
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 import java.math.BigDecimal
@@ -15,6 +16,7 @@ class BettingCalculatorTest {
         val player1 = Player("Player 1", BigDecimal(1000))
         player1.drawCard(Card.createCard("A", "클로버"))
         player1.drawCard(Card.createCard("10", "하트"))
+        player1.playerStatus = PlayerStatus.BLACKJACK
 
         val dealer = Dealer()
         dealer.drawCard(Card.createCard("5", "클로버"))
@@ -59,8 +61,8 @@ class BettingCalculatorTest {
         WinningCalculator.calculatorGameResult(Players(listOf(player1)), dealer)
         BettingCalculator.calculateBalance(Players(listOf(player1)), dealer)
 
-        player1.balance shouldBe 1000
-        dealer.balance shouldBe -1000
+        player1.balance.toInt() shouldBe 1000
+        dealer.balance.toInt() shouldBe -1000
     }
 
     @Test
@@ -78,7 +80,6 @@ class BettingCalculatorTest {
         WinningCalculator.calculatorGameResult(Players(listOf(player1)), dealer)
         BettingCalculator.calculateBalance(Players(listOf(player1)), dealer)
 
-        println(player1.gameResult)
         player1.balance.toInt() shouldBe 1000
         dealer.balance.toInt() shouldBe -1000
     }
