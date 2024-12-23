@@ -3,24 +3,28 @@ package blackjack.domain.calculator
 import blackjack.domain.player.Dealer
 import blackjack.domain.player.Player
 import blackjack.domain.player.Players
+import blackjack.domain.status.PlayerStatus
+import java.math.BigDecimal
 
 object BettingCalculator {
-    fun calculateBettingAmount(
+    private val RATIO = BigDecimal(1.5)
+
+    fun calculateBalance(
         players: Players,
         dealer: Dealer,
     ) {
-        var dealerMoney = 0f
-        players.forEach { player ->
+        val dealerMoney = players.fold(BigDecimal.ZERO) { acc, player ->
             val betMoney = calculateMoney(player)
-            player.updateBetMoney(betMoney)
-            dealerMoney += (-betMoney)
+            player.updateBalance(betMoney)
+            acc - betMoney
         }
-        dealer.updateBetMoney(dealerMoney)
+        dealer.updateBalance(dealerMoney)
     }
 
-    private fun calculateMoney(player: Player): Float {
+    private fun calculateMoney(player: Player): BigDecimal {
         return when {
-            player.gameResult.getWinCount() > 0 && player.getAllCards().size == 2 -> (player.initBet * 1.5).toFloat()
+            player.playerStatus == PlayerStatus.BLACKJACK -> player.initBet.multiply(RATIO)
+            player.playerStatus == PlayerStatus.BUST -> -player.initBet
             player.gameResult.getWinCount() > 0 -> player.initBet
             player.gameResult.getLoseCount() > 0 -> -player.initBet
             else -> player.initBet

@@ -13,6 +13,10 @@ class Players(private val players: List<Player>) {
         players.forEach(action)
     }
 
+    fun <T> fold(initial: T, operation: (acc: T, Player) -> T): T {
+        return players.fold(initial, operation)
+    }
+
     fun startTurns(
         onTurnStarted: (Participant) -> String,
         onPrintResultCallback: (Participant) -> Unit,
