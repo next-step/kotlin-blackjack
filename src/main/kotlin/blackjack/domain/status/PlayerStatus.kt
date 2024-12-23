@@ -5,10 +5,14 @@ import blackjack.domain.player.Participant
 enum class PlayerStatus {
     BLACKJACK,
     BUST,
-    HIT;
+    HIT,
+    STAY,
+    WIN,
+    LOSE,
+    DRAW;
 
-    fun calculateStatus(player: Participant): PlayerStatus {
-        if(player.calculateCard() == BLACKJACK_THRESHOLD && player.getAllCards().size == BLACKJACK_CONDITION) {
+    fun checkStatus(player: Participant): PlayerStatus {
+        if (player.calculateCard() == BLACKJACK_THRESHOLD && player.getAllCards().size == BLACKJACK_CONDITION) {
             return BLACKJACK
         }
 
