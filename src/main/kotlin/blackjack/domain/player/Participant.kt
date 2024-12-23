@@ -22,7 +22,7 @@ abstract class Participant(val name: String, val initBet: BigDecimal) {
     abstract fun isDealer(): Boolean
 
     fun isBust(): Boolean {
-        return calculateCard() > 21
+        return playerStatus == PlayerStatus.BUST
     }
 
     fun updateStatus(status: PlayerStatus){
