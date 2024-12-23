@@ -4,6 +4,7 @@ import blackjack.domain.calculator.WinningCalculator
 import blackjack.domain.player.Dealer
 import blackjack.domain.player.Player
 import blackjack.domain.player.Players
+import blackjack.domain.status.PlayerStatus
 import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
@@ -29,11 +30,8 @@ class WinningCalculatorTest {
 
         WinningCalculator.calculatorGameResult(Players(listOf(player1, player2)), dealer)
 
-        dealer.gameResult.getWinCount() shouldBe 2
-        dealer.gameResult.getLoseCount() shouldBe 0
-
-        player1.gameResult.getLoseCount() shouldBe 1
-        player2.gameResult.getLoseCount() shouldBe 1
+        player1.playerStatus shouldBe PlayerStatus.LOSE
+        player2.playerStatus shouldBe PlayerStatus.LOSE
     }
 
     @Test
@@ -54,13 +52,7 @@ class WinningCalculatorTest {
 
         WinningCalculator.calculatorGameResult(Players(listOf(player1, player2)), dealer)
 
-        dealer.gameResult.getWinCount() shouldBe 1
-        dealer.gameResult.getLoseCount() shouldBe 1
-
-        player1.gameResult.getWinCount() shouldBe 0
-        player1.gameResult.getLoseCount() shouldBe 1
-
-        player2.gameResult.getWinCount() shouldBe 1
-        player2.gameResult.getLoseCount() shouldBe 0
+        player1.playerStatus shouldBe PlayerStatus.LOSE
+        player2.playerStatus shouldBe PlayerStatus.BLACKJACK
     }
 }

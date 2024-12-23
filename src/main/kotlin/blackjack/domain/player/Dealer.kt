@@ -15,6 +15,7 @@ class Dealer(name: String = DEALER_NAME) : Participant(name, initBet = BigDecima
         if (!isBust() && shouldDrawCard()) {
             val card = CardDeck.drawCard()
             drawCard(card)
+            updateStatus(playerStatus.checkStatus(this))
             onPrintResultCallback(this)
             onTurnStarted?.invoke(this)
         }

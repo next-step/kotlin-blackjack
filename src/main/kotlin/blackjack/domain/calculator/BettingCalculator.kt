@@ -22,11 +22,12 @@ object BettingCalculator {
     }
 
     private fun calculateMoney(player: Player): BigDecimal {
-        return when {
-            player.playerStatus == PlayerStatus.BLACKJACK -> player.initBet.multiply(RATIO)
-            player.playerStatus == PlayerStatus.BUST -> -player.initBet
-            player.gameResult.getWinCount() > 0 -> player.initBet
-            player.gameResult.getLoseCount() > 0 -> -player.initBet
+        return when (player.playerStatus) {
+            PlayerStatus.BLACKJACK -> player.initBet.multiply(RATIO)
+            PlayerStatus.BUST -> -player.initBet
+            PlayerStatus.WIN -> player.initBet
+            PlayerStatus.LOSE -> -player.initBet
+            PlayerStatus.DRAW -> player.initBet
             else -> player.initBet
         }
     }

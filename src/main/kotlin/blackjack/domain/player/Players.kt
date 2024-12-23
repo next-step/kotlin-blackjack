@@ -1,6 +1,6 @@
 package blackjack.domain.player
 
-import blackjack.domain.status.GameResult
+import blackjack.domain.status.PlayerStatus
 
 class Players(private val players: List<Player>) {
     val size: Int = players.size
@@ -32,9 +32,9 @@ class Players(private val players: List<Player>) {
         }
     }
 
-    fun updateWinningStatus(result: GameResult) {
+    fun updateAllStatus(result: PlayerStatus) {
         players.forEach { player ->
-            player.updateWinningStatus(result)
+            player.updateStatus(result)
         }
     }
 }
