@@ -22,4 +22,9 @@ class InputViewTest {
         val expected = listOf("Hong", "Gil", "Dong")
         assertEquals(expected, players)
     }
+
+    @Test
+    fun `check numberInput - throw exception`() {
+        assertThrows<IllegalArgumentException> { inputView.checkValidNumber("") }
+    }
 }

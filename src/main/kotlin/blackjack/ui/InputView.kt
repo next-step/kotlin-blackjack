@@ -1,6 +1,7 @@
 package blackjack.ui
 
 import blackjack.domain.player.Dealer
+import java.math.BigDecimal
 
 class InputView {
     private val playersName: String by lazy {
@@ -17,6 +18,17 @@ class InputView {
 
     fun checkIsValidInput(input: String) {
         require(input.isNotEmpty())
+    }
+
+    fun getUserBetMoney(name: String): BigDecimal {
+        println("\n${name}의 배팅 금액은?")
+        val input = readln()
+        checkValidNumber(input)
+        return input.toBigDecimal()
+    }
+
+    fun checkValidNumber(input: String) {
+        requireNotNull(input.toFloatOrNull()) { "Wrong type input" }
     }
 
     fun setUserAnswer(name: String) {

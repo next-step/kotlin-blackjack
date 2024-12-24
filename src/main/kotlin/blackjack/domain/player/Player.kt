@@ -1,30 +1,28 @@
 package blackjack.domain.player
 
 import blackjack.domain.CardDeck
+import blackjack.domain.status.PlayerStatus
+import java.math.BigDecimal
 
-class Player(name: String) : Participant(name) {
+class Player(name: String, initBet: BigDecimal = BigDecimal.ZERO) : Participant(name, initBet) {
     override fun startTurn(
         onTurnStarted: ((Participant) -> String)?,
         onPrintResultCallback: (Participant) -> Unit,
     ) {
+        if (onTurnStarted?.invoke(this) == NO) {
+            playerStatus = PlayerStatus.STAY
+            return
+        }
+
         while (!isBust() && onTurnStarted?.invoke(this) == YES) {
             val card = CardDeck.drawCard()
             drawCard(card)
+            updateStatus(playerStatus.checkStatus(this))
             onPrintResultCallback(this)
         }
     }
 
-    override fun showCards() {
-        print("${name}카드: ")
-
-        val lastIndex = getAllCards().lastIndex
-        getAllCards().forEachIndexed { index, card ->
-            print(card.printCard())
-            if (index != lastIndex) print(", ") else println()
-        }
-    }
-
-    override fun showGameResult() {
-        if (gameResult.getWinCount() > 0) println("승") else println("패")
+    override fun isDealer(): Boolean {
+        return false
     }
 }

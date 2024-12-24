@@ -3,24 +3,27 @@ package blackjack.domain.player
 import blackjack.domain.Card
 import blackjack.domain.Card.Companion.SpecialNumber
 import blackjack.domain.CardDeck
-import blackjack.domain.status.GameResult
-import blackjack.domain.status.ResultRecord
+import blackjack.domain.status.PlayerStatus
+import java.math.BigDecimal
 
-abstract class Participant(val name: String) {
-    protected var cards = mutableListOf<Card>()
-    val gameResult = ResultRecord(0, 0)
+abstract class Participant(val name: String, val initBet: BigDecimal) {
+    private var cards = mutableListOf<Card>()
+    var playerStatus: PlayerStatus = PlayerStatus.HIT
+    var balance: BigDecimal = BigDecimal.ZERO
 
     abstract fun startTurn(
         onTurnStarted: ((Participant) -> String)?,
         onPrintResultCallback: (Participant) -> Unit,
     )
 
-    abstract fun showGameResult()
-
-    abstract fun showCards()
+    abstract fun isDealer(): Boolean
 
     fun isBust(): Boolean {
-        return calculateCard() > 21
+        return playerStatus == PlayerStatus.BUST
+    }
+
+    fun updateStatus(status: PlayerStatus){
+        playerStatus = status
     }
 
     fun drawCard(newCard: Card) {
@@ -47,14 +50,12 @@ abstract class Participant(val name: String) {
         return cards.toList()
     }
 
-    fun updateWinningStatus(
-        result: GameResult,
-        count: Int = 1,
-    ) {
-        gameResult.updateResult(result, count)
+    fun updateBalance(money: BigDecimal) {
+        balance = money
     }
 
     companion object {
         const val YES = "y"
+        const val NO = "n"
     }
 }

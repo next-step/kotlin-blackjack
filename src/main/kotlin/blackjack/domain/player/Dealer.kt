@@ -1,8 +1,9 @@
 package blackjack.domain.player
 
 import blackjack.domain.CardDeck
+import java.math.BigDecimal
 
-class Dealer(name: String = DEALER_NAME) : Participant(name) {
+class Dealer(name: String = DEALER_NAME) : Participant(name, initBet = BigDecimal.ZERO) {
     private fun shouldDrawCard(): Boolean {
         return calculateCard() <= DRAW_THRESHOLD
     }
@@ -14,27 +15,14 @@ class Dealer(name: String = DEALER_NAME) : Participant(name) {
         if (!isBust() && shouldDrawCard()) {
             val card = CardDeck.drawCard()
             drawCard(card)
+            updateStatus(playerStatus.checkStatus(this))
             onPrintResultCallback(this)
             onTurnStarted?.invoke(this)
         }
     }
 
-    override fun showCards() {
-        println("$name: ${getAllCards()[0].printCard()}")
-    }
-
-    override fun showGameResult() {
-        println("${gameResult.getWinCount()}승 ${gameResult.getLoseCount()}패")
-    }
-
-    fun showAllCards() {
-        print("${name}카드: ")
-
-        val lastIndex = getAllCards().lastIndex
-        getAllCards().forEachIndexed { index, card ->
-            print(card.printCard())
-            if (index != lastIndex) print(", ") else println()
-        }
+    override fun isDealer(): Boolean {
+        return true
     }
 
     companion object {

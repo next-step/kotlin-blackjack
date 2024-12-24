@@ -18,28 +18,46 @@ class ResultView {
         players: Players,
         dealer: Dealer,
     ) {
-        dealer.showAllCards()
+        showAllCards(dealer)
         println(" - 결과: ${dealer.calculateCard()}")
 
         players.forEach { player ->
-            player.showCards()
+            showAllCards(player)
             println(" - 결과: ${player.calculateCard()}")
         }
 
-        println("\n## 최종 승패")
-        showWinningResult(dealer)
+        println("\n## 최종 수익")
+        printPlayerBalance(dealer)
         players.forEach { player ->
-            showWinningResult(player)
+            printPlayerBalance(player)
         }
     }
 
-    private fun showWinningResult(player: Participant) {
-        print("${player.name}: ")
-        player.showGameResult()
+    fun showCards(player: Participant) {
+        if (player.isDealer()) {
+            println("${player.name}: ${player.getAllCards()[0].printCard()}")
+            return
+        }
+        showAllCards(player)
+    }
+
+    private fun showAllCards(player: Participant) {
+        print("${player.name}카드: ")
+
+        val lastIndex = player.getAllCards().lastIndex
+        player.getAllCards().forEachIndexed { index, card ->
+            print(card.printCard())
+            if (index != lastIndex) print(", ") else println()
+        }
+    }
+
+    private fun printPlayerBalance(player: Participant) {
+        println("${player.name}: ${player.balance.toInt()}")
     }
 
     fun printDealerDrawExtra(participant: Participant) {
-        if (participant.name != Dealer.DEALER_NAME) return
-        println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.\n")
+        if (participant.isDealer()) {
+            println("\n딜러는 16이하라 한장의 카드를 더 받았습니다.\n")
+        }
     }
 }
