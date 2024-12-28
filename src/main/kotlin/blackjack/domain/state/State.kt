@@ -1,6 +1,7 @@
 package blackjack.domain.state
 
 import blackjack.domain.card.PlayingCard
+import blackjack.domain.player.DealerState
 
 interface State {
     val hands: Hands
@@ -9,7 +10,10 @@ interface State {
 
     fun stay(): State
 
-    fun profit(money: Int): Double
+    fun profit(
+        betAmount: Int,
+        dealerState: DealerState,
+    ): Double
 
     fun isRunning(): Boolean
 }

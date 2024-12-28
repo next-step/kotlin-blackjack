@@ -2,7 +2,6 @@ package blackjack.controller
 
 import blackjack.domain.BlackjackGame
 import blackjack.domain.player.Player
-import blackjack.domain.state.GameResult
 import blackjack.view.InputView
 import blackjack.view.OutputView
 
@@ -22,12 +21,17 @@ class BlackjackController {
 
     private fun initializePlayers(): List<Player> {
         val names = InputView.readNames()
-        return names.map { Player.of(it) }
+        val betAmounts = InputView.readBetAmounts(names)
+
+        return names.zip(betAmounts).map { (name, betAmount) ->
+            Player.of(name, betAmount)
+        }
     }
 
     private fun playAllTurns(players: List<Player>) {
         players.forEach { player ->
             playTurn(player)
+            println(player)
         }
     }
 
@@ -48,18 +52,9 @@ class BlackjackController {
     private fun showResults(players: List<Player>) {
         OutputView.printFinalCards(game.dealer, players)
 
-        val gameResults = game.calculateResult()
-        val dealerResults = calculateDealerResults(gameResults)
+        val playerProfits = game.calculateProfits(players, game.dealer)
+        val dealerProfit = game.calculateDealerProfit(players, game.dealer)
 
-        OutputView.printFinalResults(dealerResults, gameResults)
-    }
-
-    private fun calculateDealerResults(playerResults: Map<Player, GameResult>): Map<GameResult, Int> {
-        val dealerWins = playerResults.count { it.value == GameResult.LOSE }
-        val dealerLoses = playerResults.count { it.value == GameResult.WIN }
-        return mapOf(
-            GameResult.WIN to dealerWins,
-            GameResult.LOSE to dealerLoses,
-        )
+        OutputView.printFinalProfits(dealerProfit, playerProfits)
     }
 }

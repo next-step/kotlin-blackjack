@@ -1,6 +1,7 @@
 package blackjack.domain.state
 
 import blackjack.domain.card.PlayingCard
+import blackjack.domain.player.DealerState
 
 abstract class Finished(final override val hands: Hands) : State {
     abstract val profitRate: Double
@@ -21,5 +22,8 @@ abstract class Finished(final override val hands: Hands) : State {
         return false
     }
 
-    override fun profit(money: Int): Double = money * profitRate
+    override fun profit(
+        betAmount: Int,
+        dealerState: DealerState,
+    ): Double = betAmount * profitRate
 }

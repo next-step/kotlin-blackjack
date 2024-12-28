@@ -3,7 +3,6 @@ package blackjack.domain
 import blackjack.domain.card.Deck
 import blackjack.domain.player.Dealer
 import blackjack.domain.player.Player
-import blackjack.domain.state.GameResult
 
 class BlackjackGame {
     private val deck = Deck()
@@ -17,13 +16,25 @@ class BlackjackGame {
         dealInitialCards()
     }
 
-    fun calculateResult(): Map<Player, GameResult> {
-        if (dealer.isBust()) {
-            return players.associateWith { GameResult.WIN }
-        }
+    fun calculateProfits(
+        players: List<Player>,
+        dealer: Dealer,
+    ): Map<Player, Double> {
+        val dealerState = dealer.getState()
 
         return players.associateWith { player ->
-            determineResult(player, dealer)
+            player.calculateProfit(dealerState)
+        }
+    }
+
+    fun calculateDealerProfit(
+        players: List<Player>,
+        dealer: Dealer,
+    ): Double {
+        val dealerState = dealer.getState()
+
+        return -players.sumOf { player ->
+            player.calculateProfit(dealerState)
         }
     }
 
@@ -33,23 +44,6 @@ class BlackjackGame {
             players.forEach { player ->
                 player.drawCard(deck.draw())
             }
-        }
-    }
-
-    private fun determineResult(
-        player: Player,
-        dealer: Dealer,
-    ): GameResult {
-        val playerScore = player.score()
-        val dealerScore = dealer.score()
-
-        if (player.isBust()) return GameResult.LOSE
-        if (dealer.isBust()) return GameResult.WIN
-
-        return when {
-            playerScore > dealerScore -> GameResult.WIN
-            playerScore < dealerScore -> GameResult.LOSE
-            else -> GameResult.DRAW
         }
     }
 

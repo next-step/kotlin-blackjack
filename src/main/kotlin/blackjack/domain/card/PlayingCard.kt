@@ -1,6 +1,6 @@
 package blackjack.domain.card
 
-class PlayingCard private constructor(
+class PlayingCard(
     private val suit: Suit,
     private val denomination: Denomination,
 ) {
@@ -10,16 +10,13 @@ class PlayingCard private constructor(
     override fun toString(): String = "${denomination.score}${suit.symbol}"
 
     companion object {
-        private val CARDS: MutableMap<String, PlayingCard> =
-            Suit.entries
-                .asSequence()
-                .flatMap { suit ->
-                    Denomination.entries.map { denomination ->
-                        toKey(suit, denomination) to PlayingCard(suit, denomination)
-                    }
-                }
-                .toMap()
-                .toMutableMap()
+        private val CARDS: Map<String, PlayingCard> = createAllCards()
+
+        private fun createAllCards(): Map<String, PlayingCard> {
+            return Suit.entries
+                .flatMap { it.createCards() }
+                .associateBy { toKey(it.suit, it.denomination) }
+        }
 
         fun createDeck(): List<PlayingCard> = CARDS.values.toList()
 

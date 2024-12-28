@@ -2,7 +2,6 @@ package blackjack.view
 
 import blackjack.domain.player.Dealer
 import blackjack.domain.player.Player
-import blackjack.domain.state.GameResult
 
 object OutputView {
     private val messageBuilder = StringBuilder()
@@ -54,19 +53,16 @@ object OutputView {
         print(messageBuilder.toString())
     }
 
-    fun printFinalResults(
-        dealerResult: Map<GameResult, Int>,
-        playerResults: Map<Player, GameResult>,
+    fun printFinalProfits(
+        dealerProfit: Double,
+        playerProfits: Map<Player, Double>,
     ) {
-        val dealerWins = dealerResult[GameResult.WIN] ?: 0
-        val dealerLoses = dealerResult[GameResult.LOSE] ?: 0
-
         messageBuilder.clear()
-            .append("## 최종 승패\n")
-            .append("딜러: ${dealerWins}승 ${dealerLoses}패\n")
+            .append("\n## 최종 수익\n")
+            .append("딜러: ${dealerProfit.toInt()}원\n")
 
-        playerResults.forEach { (player, result) ->
-            messageBuilder.append("$player: ${result.toString().lowercase()}\n")
+        playerProfits.forEach { (player, profit) ->
+            messageBuilder.append("$player: ${profit.toInt()}원\n")
         }
 
         print(messageBuilder.toString())
