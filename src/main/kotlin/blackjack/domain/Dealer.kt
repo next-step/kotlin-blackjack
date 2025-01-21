@@ -7,7 +7,7 @@ data class Dealer(
     override val canReceiveCard: Boolean
         get() = score <= CAN_RECEIVE_CARD_SCORE
 
-    override fun setupCard(blackjackShoe: BlackjackShoe) {
+    override fun receiveFirstTurnCard(blackjackShoe: BlackjackShoe) {
         receiveCard(blackjackShoe.draw())
     }
 

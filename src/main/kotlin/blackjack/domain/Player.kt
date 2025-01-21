@@ -21,7 +21,7 @@ abstract class Player(
 
     var money: Int = 0
 
-    abstract fun setupCard(blackjackShoe: BlackjackShoe)
+    abstract fun receiveFirstTurnCard(blackjackShoe: BlackjackShoe)
 
     fun receiveCard(card: Card) {
         _cardList.add(card)

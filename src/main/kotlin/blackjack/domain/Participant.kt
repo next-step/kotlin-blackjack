@@ -10,7 +10,7 @@ data class Participant(
             return score <= CAN_RECEIVE_CARD_SCORE
         }
 
-    override fun setupCard(blackjackShoe: BlackjackShoe) {
+    override fun receiveFirstTurnCard(blackjackShoe: BlackjackShoe) {
         repeat(NUMBER_OF_INIT_CARD) {
             receiveCard(blackjackShoe.draw())
         }

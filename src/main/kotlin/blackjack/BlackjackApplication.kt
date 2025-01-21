@@ -27,8 +27,8 @@ class BlackjackApplication(
         }
 
         val dealer = Dealer()
-        dealer.setupCard(blackjackShoe = blackjackShoe)
-        participants.setupCard(blackjackShoe = blackjackShoe)
+        dealer.receiveFirstTurnCard(blackjackShoe = blackjackShoe)
+        participants.receiveFirstTurnCard(blackjackShoe = blackjackShoe)
 
         outputView.showReady(dealer = dealer, participants = participants)
         return dealer to participants
