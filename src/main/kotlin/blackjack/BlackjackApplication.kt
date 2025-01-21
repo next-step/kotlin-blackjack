@@ -1,8 +1,8 @@
 package blackjack
 
+import blackjack.domain.BlackjackGame
 import blackjack.domain.BlackjackResults
 import blackjack.domain.BlackjackShoe
-import blackjack.domain.Dealer
 import blackjack.domain.Participants
 import blackjack.view.InputView
 import blackjack.view.OutputView
@@ -14,45 +14,40 @@ class BlackjackApplication(
 
     fun run() {
         val blackjackShoe = BlackjackShoe()
-        val (dealer, participantList) = ready(blackjackShoe)
-        play(dealer = dealer, participants = participantList, blackjackShoe = blackjackShoe)
-        finish(dealer = dealer, participants = participantList)
+        val blackjackGame = ready(blackjackShoe)
+        play(blackjackGame = blackjackGame, blackjackShoe = blackjackShoe)
+        finish(blackjackGame = blackjackGame)
     }
 
-    private fun ready(blackjackShoe: BlackjackShoe): Pair<Dealer, Participants> {
+    private fun ready(blackjackShoe: BlackjackShoe): BlackjackGame {
         val participantNames: List<String> = inputView.getParticipantNames()
         val participants = Participants(participantNames = participantNames.toTypedArray())
-        participants.forEach { participant ->
-            participant.bettingMoney = inputView.getBettingMoney(participant)
-        }
+        val blackjackGame = BlackjackGame(participants = participants)
 
-        val dealer = Dealer()
-        dealer.receiveFirstTurnCard(blackjackShoe = blackjackShoe)
-        participants.receiveFirstTurnCard(blackjackShoe = blackjackShoe)
-
-        outputView.showReady(dealer = dealer, participants = participants)
-        return dealer to participants
+        blackjackGame.betParticipant(inputView::getBettingMoney)
+        blackjackGame.receiveFirstTurnCard(blackjackShoe)
+        outputView.showReady(blackjackGame = blackjackGame)
+        return blackjackGame
     }
 
-    private fun play(dealer: Dealer, participants: Participants, blackjackShoe: BlackjackShoe) {
-        participants.forEach { participant ->
-            while (participant.canReceiveCard && inputView.getMoreCard(participant)) {
-                val card = blackjackShoe.draw()
-                participant.receiveCard(card)
-                outputView.showParticipantCardList(participant)
-            }
-        }
+    private fun play(blackjackGame: BlackjackGame, blackjackShoe: BlackjackShoe) {
+        blackjackGame.drawCardOfPlayer(
+            blackjackShoe = blackjackShoe,
+            getMoreCard = inputView::getMoreCard,
+            onReceivedCard = outputView::showParticipantCardList
+        )
 
-        while (dealer.canReceiveCard) {
-            val card = blackjackShoe.draw()
-            dealer.receiveCard(card)
-            outputView.showDealerReceivedCard()
-        }
+        blackjackGame.drawCardOfDealer(
+            blackjackShoe = blackjackShoe,
+            onReceivedCard = outputView::showDealerReceivedCard
+        )
     }
 
-    private fun finish(dealer: Dealer, participants: Participants) {
+    private fun finish(blackjackGame: BlackjackGame) {
+        val dealer = blackjackGame.dealer
+        val participants = blackjackGame.participants
         outputView.showDealerInfo(dealer = dealer)
-        outputView.showParticipantsInfo(participants)
+        outputView.showParticipantsInfo(participantList = participants)
         outputView.showResult(BlackjackResults(dealer = dealer, participants = participants))
     }
 
