@@ -20,13 +20,8 @@ class InputView {
         }
     }
 
-    fun requestBettingMoney(participants: Participants) {
-        println()
-        participants.forEach { participant ->
-            println("${participant.name}의 배팅 금액은?")
-            val bettingMoney = readlnOrNull()?.toIntOrNull() ?: error("배팅은 ")
-            participant.bettingMoney = bettingMoney
-        }
+    fun getBettingMoney(participant: Participant): Int {
+        println("${participant.name}의 배팅 금액은?")
+        return readlnOrNull()?.toIntOrNull() ?: error("배팅금액을 잘못 입력했습니다.")
     }
-
 }

@@ -22,7 +22,9 @@ class BlackjackApplication(
     private fun ready(blackjackShoe: BlackjackShoe): Pair<Dealer, Participants> {
         val participantNames: List<String> = inputView.getParticipantNames()
         val participants = Participants(participantNames = participantNames.toTypedArray())
-        inputView.requestBettingMoney(participants)
+        participants.forEach { participant ->
+            participant.bettingMoney = inputView.getBettingMoney(participant)
+        }
 
         val dealer = Dealer()
         dealer.setupCard(blackjackShoe = blackjackShoe)
