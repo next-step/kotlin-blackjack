@@ -22,13 +22,14 @@ class BlackjackResultsTest {
                 Participant("a").apply {
                     receiveCard(Card(Suit.SPADE, Rank.KING))
                     receiveCard(Card(Suit.SPADE, Rank.NINE))
+                    bet(10000)
                 }
             )
         )
 
-        val actual = blackjackResults.result[BlackjackResults.BlackjackResult.LOSE]?.size
+        val actual = blackjackResults.result.first().money
         actual.shouldNotBeNull()
-        actual shouldBe 1
+        actual shouldBe 10000
     }
 
     @Test
@@ -42,13 +43,14 @@ class BlackjackResultsTest {
                 Participant("a").apply {
                     receiveCard(Card(Suit.SPADE, Rank.KING))
                     receiveCard(Card(Suit.SPADE, Rank.KING))
+                    bet(10000)
                 }
             )
         )
 
-        val actual = blackjackResults.result[BlackjackResults.BlackjackResult.WIN]?.size
+        val actual = blackjackResults.result.first().money
         actual.shouldNotBeNull()
-        actual shouldBe 1
+        actual shouldBe -10000
     }
 
     @Test
@@ -62,12 +64,57 @@ class BlackjackResultsTest {
                 Participant("a").apply {
                     receiveCard(Card(Suit.SPADE, Rank.KING))
                     receiveCard(Card(Suit.SPADE, Rank.KING))
+                    bet(10000)
                 }
             )
         )
 
-        val actual = blackjackResults.result[BlackjackResults.BlackjackResult.DRAW]?.size
+        val actual = blackjackResults.result.first().money
         actual.shouldNotBeNull()
-        actual shouldBe 1
+        actual shouldBe 0
+    }
+
+    @Test
+    fun `딜러가 버스트면 참가자의 승`() {
+        val blackjackResults = BlackjackResults(
+            Dealer().apply {
+                receiveCard(Card(Suit.SPADE, Rank.KING))
+                receiveCard(Card(Suit.SPADE, Rank.KING))
+                receiveCard(Card(Suit.SPADE, Rank.KING))
+            },
+            listOf(
+                Participant("a").apply {
+                    receiveCard(Card(Suit.SPADE, Rank.KING))
+                    receiveCard(Card(Suit.SPADE, Rank.KING))
+                    bet(10000)
+                },
+            )
+        )
+
+        val actual = blackjackResults.result.first().money
+        actual.shouldNotBeNull()
+        actual shouldBe -10000
+    }
+
+    @Test
+    fun `참가자가 버스트면 딜러가 승`() {
+        val blackjackResults = BlackjackResults(
+            Dealer().apply {
+                receiveCard(Card(Suit.SPADE, Rank.KING))
+                receiveCard(Card(Suit.SPADE, Rank.KING))
+            },
+            listOf(
+                Participant("a").apply {
+                    receiveCard(Card(Suit.SPADE, Rank.KING))
+                    receiveCard(Card(Suit.SPADE, Rank.KING))
+                    receiveCard(Card(Suit.SPADE, Rank.KING))
+                    bet(10000)
+                },
+            )
+        )
+
+        val actual = blackjackResults.result.first().money
+        actual.shouldNotBeNull()
+        actual shouldBe 10000
     }
 }

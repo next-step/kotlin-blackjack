@@ -1,16 +1,18 @@
 package blackjack.view
 
+import blackjack.domain.BlackjackGame
 import blackjack.domain.BlackjackResults
 import blackjack.domain.Card
 import blackjack.domain.Dealer
 import blackjack.domain.Participant
+import blackjack.domain.Participants
 
 class OutputView {
-    fun showReady(dealer: Dealer, participants: List<Participant>) {
-        println("\n${dealer.name}와 ${participants.joinToString { it.name }}에게 2장의 나누었습니다.")
+    fun showReady(blackjackGame: BlackjackGame) {
+        println("\n${blackjackGame.dealer.name}와 ${blackjackGame.participants.joinToString { it.name }}에게 2장의 나누었습니다.")
 
-        showDealerCard(dealer)
-        participants.forEach {
+        showDealerCard(blackjackGame.dealer)
+        blackjackGame.participants.forEach {
             showParticipantCardList(it)
         }
         println()
@@ -39,20 +41,9 @@ class OutputView {
     }
 
     fun showResult(blackjackResults: BlackjackResults) {
-        println("\n## 최종승패")
-        val result = blackjackResults.result
-        val participantWin = result[BlackjackResults.BlackjackResult.WIN].orEmpty()
-        val participantLose = result[BlackjackResults.BlackjackResult.LOSE].orEmpty()
-        val participantDraw = result[BlackjackResults.BlackjackResult.DRAW].orEmpty()
-        println("${blackjackResults.dealer.name}: ${participantLose.size}승 ${participantWin.size}패 ${participantDraw.size}무")
-        participantWin.forEach {
-            println("${it.name}: 승")
-        }
-        participantLose.forEach {
-            println("${it.name}: 패")
-        }
-        participantDraw.forEach {
-            println("${it.name}: 무")
+        println("\n## 최종 수익")
+        blackjackResults.result.forEach { player ->
+            println("${player.name}: ${player.money}")
         }
     }
 

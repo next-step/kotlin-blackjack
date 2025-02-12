@@ -5,22 +5,21 @@ class BlackjackResults(
     val participants: List<Participant>,
 ) {
 
-    val result: Map<BlackjackResult, List<Participant>> = run {
+    val result: List<Player> = run {
         val dealerScore = dealer.score
-        participants.groupBy { participant ->
+
+        participants.forEach { participant ->
             val participantScore = participant.score
-
-            when {
-                participantScore > dealerScore -> BlackjackResult.WIN
-                participantScore < dealerScore -> BlackjackResult.LOSE
-                else -> BlackjackResult.DRAW
+            val bettingMoney = when {
+                (participantScore <= Const.NUMBER_BLACKJACK && participantScore > dealerScore) || dealerScore > Const.NUMBER_BLACKJACK -> participant.bettingMoney
+                (dealerScore <= Const.NUMBER_BLACKJACK && participantScore < dealerScore) || participantScore > Const.NUMBER_BLACKJACK -> -participant.bettingMoney
+                else -> 0
             }
-        }
-    }
 
-    enum class BlackjackResult {
-        WIN,
-        LOSE,
-        DRAW,
+            dealer.money -= bettingMoney
+            participant.money += bettingMoney
+        }
+
+        listOf(dealer, *participants.toTypedArray())
     }
 }

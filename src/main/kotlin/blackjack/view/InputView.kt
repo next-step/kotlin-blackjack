@@ -1,6 +1,7 @@
 package blackjack.view
 
 import blackjack.domain.Participant
+import blackjack.domain.Participants
 
 class InputView {
 
@@ -19,4 +20,8 @@ class InputView {
         }
     }
 
+    fun getBettingMoney(participant: Participant): Int {
+        println("${participant.name}의 배팅 금액은?")
+        return readlnOrNull()?.toIntOrNull() ?: error("배팅금액을 잘못 입력했습니다.")
+    }
 }
