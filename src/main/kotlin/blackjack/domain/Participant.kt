@@ -4,6 +4,7 @@ data class Participant(
     override val name: String
 ) : Player(name = name) {
     var bettingMoney: Int = 0
+        private set
 
     override val canReceiveCard: Boolean
         get() {
@@ -14,6 +15,10 @@ data class Participant(
         repeat(NUMBER_OF_INIT_CARD) {
             receiveCard(blackjackShoe.draw())
         }
+    }
+
+    fun bet(bettingMoney: Int) {
+        this.bettingMoney = bettingMoney
     }
 
     companion object {

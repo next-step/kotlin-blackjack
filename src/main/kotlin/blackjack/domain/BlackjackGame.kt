@@ -6,7 +6,7 @@ class BlackjackGame(
 ) {
     fun betParticipant(getBettingMoney: (Participant) -> Int) {
         participants.forEach { participant ->
-            participant.bettingMoney = getBettingMoney(participant)
+            participant.bet(getBettingMoney(participant))
         }
     }
 

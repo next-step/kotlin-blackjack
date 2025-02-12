@@ -22,7 +22,7 @@ class BlackjackResultsTest {
                 Participant("a").apply {
                     receiveCard(Card(Suit.SPADE, Rank.KING))
                     receiveCard(Card(Suit.SPADE, Rank.NINE))
-                    bettingMoney = 10000
+                    bet(10000)
                 }
             )
         )
@@ -43,7 +43,7 @@ class BlackjackResultsTest {
                 Participant("a").apply {
                     receiveCard(Card(Suit.SPADE, Rank.KING))
                     receiveCard(Card(Suit.SPADE, Rank.KING))
-                    bettingMoney = 10000
+                    bet(10000)
                 }
             )
         )
@@ -64,7 +64,7 @@ class BlackjackResultsTest {
                 Participant("a").apply {
                     receiveCard(Card(Suit.SPADE, Rank.KING))
                     receiveCard(Card(Suit.SPADE, Rank.KING))
-                    bettingMoney = 10000
+                    bet(10000)
                 }
             )
         )
@@ -86,7 +86,7 @@ class BlackjackResultsTest {
                 Participant("a").apply {
                     receiveCard(Card(Suit.SPADE, Rank.KING))
                     receiveCard(Card(Suit.SPADE, Rank.KING))
-                    bettingMoney = 10000
+                    bet(10000)
                 },
             )
         )
@@ -108,7 +108,7 @@ class BlackjackResultsTest {
                     receiveCard(Card(Suit.SPADE, Rank.KING))
                     receiveCard(Card(Suit.SPADE, Rank.KING))
                     receiveCard(Card(Suit.SPADE, Rank.KING))
-                    bettingMoney = 10000
+                    bet(10000)
                 },
             )
         )
