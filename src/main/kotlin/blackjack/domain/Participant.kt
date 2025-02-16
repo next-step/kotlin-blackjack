@@ -9,6 +9,8 @@ sealed class Participant(val name: String) {
     val score: Int
         get() = _cards.calculateTotalScore()
 
+    abstract fun isDealer(): Boolean
+
     fun receive(vararg cards: Card) {
         _cards.addAll(*cards)
     }
@@ -21,6 +23,15 @@ sealed class Participant(val name: String) {
         return score > BlackjackRule.BLACKJACK_SCORE
     }
 
+    fun isBlackjack(): Boolean {
+        return cards.size == BlackjackRule.NUMBER_OF_CARDS_FOR_BLACKJACK
+                && score == BlackjackRule.BLACKJACK_SCORE
+    }
+
+    fun isNotBlackjack(): Boolean {
+        return isBlackjack().not()
+    }
+
     fun isScoreEqualTo(other: Participant): Boolean {
         return score == other.score
     }
@@ -28,8 +39,6 @@ sealed class Participant(val name: String) {
     fun isScoreLargerThan(other: Participant): Boolean {
         return score > other.score
     }
-
-    abstract fun isDealer(): Boolean
 
     abstract fun canNotReceiveCard(): Boolean
 }

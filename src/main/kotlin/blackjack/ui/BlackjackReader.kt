@@ -24,4 +24,9 @@ object BlackjackReader {
         require(Y_OR_N_REGEX.matches(readLine)) { "$YES_SIGN 또는 ${NO_SIGN}만 입력해 주세요. (대소문자 구분 X) 현재 입력 = $readLine" }
         return readLine == YES_SIGN
     }
+
+    fun readBetAmount(gamblerName: String): Long {
+        BlackjackPrinter.askBetAmount(gamblerName)
+        return ConsoleReader.readNumber()
+    }
 }

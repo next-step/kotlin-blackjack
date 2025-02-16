@@ -12,7 +12,7 @@ class Participants(private val participants: List<Participant>) {
 
     private fun requiresOnlyOneDealer() {
         val dealers = participants.filter { participant -> participant.isDealer() }
-        require(dealers.size == 1) { "게임 내 딜러는 한명만 참여 가능합니다." }
+        require(dealers.size == MAXIMUM_NUMBER_OF_DEALERS) { "게임 내 딜러는 한명만 참여 가능합니다." }
     }
 
     private fun requiresAtLeastOneGambler() {
@@ -35,6 +35,8 @@ class Participants(private val participants: List<Participant>) {
     }
 
     companion object {
+        const val MAXIMUM_NUMBER_OF_DEALERS = 1
+
         fun of(
             dealer: Dealer,
             gamblers: List<Gambler>,
