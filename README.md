@@ -1,6 +1,6 @@
 # kotlin-blackjack
 
-## Step 1 - String Addition Calculator
+## Step 1 - Kotlin DSL
 
 1. Create Person class
 2. Use builder for person
