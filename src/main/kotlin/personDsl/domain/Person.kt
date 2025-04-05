@@ -1,4 +1,4 @@
-package personDsl
+package personDsl.domain
 
 data class Person(
     val name: String,

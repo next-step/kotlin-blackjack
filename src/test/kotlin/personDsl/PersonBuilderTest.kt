@@ -4,6 +4,8 @@ import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
+import personDsl.domain.LanguageLevel
+import personDsl.domain.Person
 
 class PersonBuilderTest {
     @ParameterizedTest

@@ -1,5 +1,10 @@
 package personDsl
 
+import personDsl.api.LanguagesBuilder
+import personDsl.api.SkillsBuilder
+import personDsl.domain.LanguageLevel
+import personDsl.domain.Person
+
 fun introduce(block: PersonBuilder.() -> Unit): Person = PersonBuilder().apply(block).build()
 
 class PersonBuilder :
@@ -40,14 +45,4 @@ class PersonBuilder :
     }
 
     fun build(): Person = Person(name = name, company = company, softSkills = softSkills, hardSkills = hardSkills, languages = languages)
-}
-
-interface SkillsBuilder {
-    fun soft(softSkill: String)
-
-    fun hard(hardSkill: String)
-}
-
-interface LanguagesBuilder {
-    infix fun String.to(level: Int)
 }
