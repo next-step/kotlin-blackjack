@@ -5,4 +5,5 @@ data class Person(
     val company: String?,
     val softSkills: List<String>,
     val hardSkills: List<String>,
+    val languages: List<LanguageLevel>,
 )
