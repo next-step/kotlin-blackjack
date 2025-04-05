@@ -60,4 +60,29 @@ class DslTest : FunSpec({
             values shouldContainAll listOf(Language("Korean", 5), Language("English", 4))
         }
     }
+
+    test("all properties") {
+        val person: Person =
+            introduce {
+                name("Sun")
+                company("Delivery Hero")
+                skills {
+                    soft("A passion for problem solving")
+                    soft("Good communication skills")
+                    hard("Kotlin")
+                }
+                languages {
+                    "Korean" level 5
+                    "English" level 4
+                }
+            }
+
+        assertSoftly(person) {
+            name shouldBe "Sun"
+            company shouldBe "Delivery Hero"
+            skills.softSkills.size shouldBe 2
+            skills.hardSkills.size shouldBe 1
+            languages.values.size shouldBe 2
+        }
+    }
 })
