@@ -3,6 +3,7 @@ package dsl
 import io.kotest.assertions.assertSoftly
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.inspectors.forAll
+import io.kotest.matchers.collections.shouldContainAll
 import io.kotest.matchers.shouldBe
 
 class DslTest : FunSpec({
@@ -31,7 +32,6 @@ class DslTest : FunSpec({
         val person: Person =
             introduce {
                 name("Sun")
-                company("Delivery Hero")
                 skills {
                     soft("A passion for problem solving")
                     soft("Good communication skills")
@@ -42,6 +42,22 @@ class DslTest : FunSpec({
         assertSoftly(person.skills) {
             softSkills.size shouldBe 2
             hardSkills.size shouldBe 1
+        }
+    }
+
+    test("with languages") {
+        val person: Person =
+            introduce {
+                name("Sun")
+                languages {
+                    "Korean" level 5
+                    "English" level 4
+                }
+            }
+
+        assertSoftly(person.languages) {
+            values.size shouldBe 2
+            values shouldContainAll listOf(Language("Korean", 5), Language("English", 4))
         }
     }
 })
