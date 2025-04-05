@@ -28,22 +28,26 @@ class PersonBuilderTest {
     }
 
     @Test
-    fun `when soft skill is valid should add it to the person`() {
+    fun `when a skill is valid should add it to the person`() {
         val softSkill = "Good communication skills"
+        val hardSkill = "Kotlin"
         val person: Person =
             introduce {
                 name("Karyna")
                 company("DH")
                 skills {
                     soft(softSkill)
+                    hard(hardSkill)
                 }
             }
         person.softSkills shouldBe listOf(softSkill)
+        person.hardSkills shouldBe listOf(hardSkill)
     }
 
     @Test
-    fun `when multiple soft skills are added should add all to the person`() {
+    fun `when multiple skills are added should add all to the person`() {
         val softSkills = listOf("Good communication skills", "Charisma")
+        val hardSkills = listOf("Kotlin", "SQL")
         val person: Person =
             introduce {
                 name("Karyna")
@@ -52,8 +56,10 @@ class PersonBuilderTest {
                     softSkills.forEach {
                         soft(it)
                     }
+                    hardSkills.forEach { hard(it) }
                 }
             }
         person.softSkills shouldBe softSkills
+        person.hardSkills shouldBe hardSkills
     }
 }

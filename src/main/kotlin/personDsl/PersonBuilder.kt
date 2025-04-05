@@ -28,7 +28,7 @@ class PersonBuilder : SkillsBuilder {
         hardSkills.add(hardSkill)
     }
 
-    fun build(): Person = Person(name, company, softSkills)
+    fun build(): Person = Person(name = name, company = company, softSkills = softSkills, hardSkills = hardSkills)
 }
 
 interface SkillsBuilder {
