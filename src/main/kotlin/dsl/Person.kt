@@ -2,27 +2,36 @@ package dsl
 
 data class Person(
     var name: String = "",
-    var company: String = "",
+    var company: String? = null,
     val skills: Skills = Skills(),
     val languages: Languages = Languages(),
-) {
-    fun name(name: String) {
-        this.name = name
+)
+
+class PersonBuilder {
+    private lateinit var name: String
+    private var company: String? = null
+    private val skills = Skills()
+    private val languages = Languages()
+
+    fun name(value: String) {
+        name = value
     }
 
-    fun company(company: String) {
-        this.company = company
+    fun company(value: String) {
+        company = value
     }
+
+    fun skills(block: Skills.() -> Unit) {
+        skills.apply(block)
+    }
+
+    fun languages(block: Languages.() -> Unit) {
+        languages.apply(block)
+    }
+
+    fun build(): Person = Person(name, company, skills, languages)
 }
 
-fun introduce(block: Person.() -> Unit): Person {
-    return Person().apply(block)
-}
-
-fun Person.skills(block: Skills.() -> Unit) {
-    this.skills.apply(block)
-}
-
-fun Person.languages(block: Languages.() -> Unit) {
-    this.languages.apply(block)
+fun introduce(block: PersonBuilder.() -> Unit): Person {
+    return PersonBuilder().apply(block).build()
 }
