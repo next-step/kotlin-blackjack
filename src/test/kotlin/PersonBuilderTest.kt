@@ -3,6 +3,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
 import kotlin.test.Test
+import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
@@ -52,4 +53,24 @@ class PersonBuilderTest {
             }
         }
     }
+
+    @Test
+    fun `test language assignment`() {
+        val person = introduce {
+            name("Aparna")
+            company("DH")
+            languages {
+                "Korean" level 5
+                "English" level 3
+            }
+        }
+        val korean = person.languages.firstOrNull { it.name == "Korean" }
+        val english = person.languages.find { it.name == "English" }
+
+        assertEquals(2, person.languages.size)
+        assertTrue(korean?.proficiency == 5)
+        assertTrue(english?.proficiency == 3)
+
+    }
+
 }
