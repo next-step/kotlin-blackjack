@@ -1,3 +1,7 @@
 package models
 
-data class Person(val name: String, val company: String?)
+data class Person(
+    val name: String,
+    val company: String?,
+    val skills: List<Skill>
+)

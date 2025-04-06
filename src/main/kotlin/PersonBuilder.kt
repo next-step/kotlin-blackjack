@@ -1,4 +1,5 @@
 import models.Person
+import models.Skill
 
 fun introduce(block: PersonBuilder.() -> Unit): Person {
     return PersonBuilder().apply(block).build()
@@ -7,7 +8,7 @@ fun introduce(block: PersonBuilder.() -> Unit): Person {
 class PersonBuilder {
     private lateinit var name: String
     private var company: String? = null
-
+    private var skills: List<Skill> = listOf()
     fun name(value: String) {
         name = value
     }
@@ -16,5 +17,13 @@ class PersonBuilder {
         company = value
     }
 
-    fun build(): Person = Person(name, company)
+    fun skills(block: SkillBuilder.() -> Unit) {
+        skills = SkillBuilder().apply(block).build()
+    }
+
+    fun build(): Person = Person(
+        name = name,
+        company = company,
+        skills = skills
+    )
 }
