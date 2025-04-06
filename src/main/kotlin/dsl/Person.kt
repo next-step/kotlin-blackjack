@@ -1,7 +1,7 @@
 package dsl
 
 data class Person(
-    var name: String = "",
+    var name: String,
     var company: String? = null,
     val skills: Skills = Skills(),
     val languages: Languages = Languages(),
