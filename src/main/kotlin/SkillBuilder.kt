@@ -1,16 +1,17 @@
 import models.Skill
+import models.SkillType
 
 class SkillBuilder {
     private var _skills = mutableListOf<Skill>()
-    private val skills = _skills
 
     fun soft(description: String) {
-        _skills.add(Skill(type = "soft", description = description))
+        _skills.add(Skill(type = SkillType.SOFT, description = description))
     }
 
     fun hard(description: String) {
-        _skills.add(Skill(type = "hard", description = description))
+        _skills.add(Skill(type = SkillType.HARD, description = description))
     }
 
-    fun build(): List<Skill> = skills
+    fun build(): List<Skill> = _skills
 }
+

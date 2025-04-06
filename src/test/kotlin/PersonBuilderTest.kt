@@ -1,3 +1,4 @@
+import models.SkillType
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
@@ -36,8 +37,8 @@ class PersonBuilderTest {
                 hard("Kotlin")
             }
         }
-        val softSkills = person.skills.filter { it.type == "soft" }
-        val hardSkills = person.skills.filter { it.type == "hard" }
+        val softSkills = person.skills.filter { it.type == SkillType.SOFT }
+        val hardSkills = person.skills.filter { it.type == SkillType.HARD }
 
         assertThat(person.skills.size).isEqualTo(3)
         assertTrue {

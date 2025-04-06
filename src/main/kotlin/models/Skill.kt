@@ -1,3 +1,10 @@
 package models
 
-data class Skill(val type: String, val description: String)
+data class Skill(
+    val type: SkillType,
+    val description: String
+)
+
+enum class SkillType {
+    SOFT, HARD
+}
