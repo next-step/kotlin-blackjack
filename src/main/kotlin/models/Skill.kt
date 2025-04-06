@@ -5,6 +5,3 @@ data class Skill(
     val description: String
 )
 
-enum class SkillType {
-    SOFT, HARD
-}
