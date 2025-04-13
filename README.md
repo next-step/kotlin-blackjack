@@ -12,12 +12,12 @@ Card
 
 Card Number
 
-- [ ] Number or symbol (J, Q, K, A).
-- [ ] Face cards (King, Queen, Jack) are each worth 10.
+- [x] Number or symbol (J, Q, K, A).
+- [x] Face cards (King, Queen, Jack) are each worth 10.
 
 Card Suit
 
-- [ ] Contains four card suits (Spade, Heart, Diamond, Club).
+- [x] Contains four card suits (Spades, Hearts, Diamonds, Clubs).
 
 Deck
 
