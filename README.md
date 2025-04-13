@@ -21,7 +21,7 @@ Card Suit
 
 Deck
 
-- [ ] Consists of 52 cards with 13 numbers and 4 suits.
+- [x] Deck must not contain duplicated cards.
 
 Player
 
