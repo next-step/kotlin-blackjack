@@ -1,14 +1,21 @@
 package dsl
 
 data class Skills(
-    val softSkills: MutableList<String> = mutableListOf(),
-    val hardSkills: MutableList<String> = mutableListOf(),
+    val values: MutableList<Skill> = mutableListOf(),
 ) {
     fun soft(skill: String) {
-        this.softSkills.add(skill)
+        this.values.add(Skill.Soft(skill))
     }
 
     fun hard(skill: String) {
-        this.hardSkills.add(skill)
+        this.values.add(Skill.Hard(skill))
     }
+}
+
+sealed class Skill(
+    val value: String,
+) {
+    data class Soft(val skill: String) : Skill(skill)
+
+    data class Hard(val skill: String) : Skill(skill)
 }
