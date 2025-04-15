@@ -33,7 +33,7 @@
 - [x] Have the number from Ace to King with score
 
 ### InputView
-- [ ] Get players name
+- [x] Get players name
 - [ ] Get player's response to get another card
 
 ### OutputView
