@@ -1,6 +1,6 @@
 # kotlin-blackjack
 
-## Lotto (Auto)
+## Blackjack 
 
 - [ ] At the start of the game, each player receives two cards.
 - [ ] Players can choose to draw additional cards as long as their total does not exceed 21.

@@ -19,8 +19,8 @@ class DeckTest : FunSpec({
             shouldThrow<IllegalStateException> {
                 Deck.create {
                     listOf(
-                        Card(ACE, SPADES),
-                        Card(ACE, SPADES),
+                        Card.of(ACE, SPADES),
+                        Card.of(ACE, SPADES),
                     )
                 }
             }
