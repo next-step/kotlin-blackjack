@@ -9,8 +9,8 @@
 - Players can choose to draw additional cards as long as their total does not exceed 21.
 
 ### Player
-- [ ] Have hand
-- [ ] Have name
+- [x] Have hand
+- [x] Have name
 
 ### Hand
 - [x] Have cards as a list
