@@ -37,5 +37,5 @@
 - [x] Get player's response to get another card
 
 ### OutputView
-- [ ] Display player's cards
-- [ ] Display player's cards and total score
+- [x] Display player's cards
+- [x] Display player's cards and total score
