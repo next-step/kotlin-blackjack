@@ -19,10 +19,11 @@
   - [x] Aces can count as either 1 or 11
 - [x] Add card
 - [x] Return size
-- [x] Have to have at least two cards 
+- [x] Have to have at least two cards
 
 ### PlayingCard
 - [x] Has suit and denomination
+- [x] Cache
 
 ### Suit
 - enum class
