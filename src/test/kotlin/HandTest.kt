@@ -47,6 +47,34 @@ class HandTest {
     }
 
     @Test
+    fun `Return 21 when cards have KING and ACE`() {
+        // given
+        val cards = listOf(CLUB_ACE, CLUB_KING)
+        val hand = Hand(cards)
+        val expected = 21
+
+        // when
+        val actual = hand.score()
+
+        // then
+        assertThat(actual).isEqualTo(expected)
+    }
+
+    @Test
+    fun `Return 12 when cards have KING and two ACEs`() {
+        // given
+        val cards = listOf(CLUB_ACE, CLUB_ACE, CLUB_KING)
+        val hand = Hand(cards)
+        val expected = 12
+
+        // when
+        val actual = hand.score()
+
+        // then
+        assertThat(actual).isEqualTo(expected)
+    }
+
+    @Test
     fun `Return the size of cards`() {
         // given
         val cards = listOf(CLUB_SEVEN, CLUB_THREE)
