@@ -16,7 +16,8 @@
 - [x] Have cards as a list
 - [x] Return cards total score
   - [ ] Aces can count as either 1 or 11
-- [ ] Add card
+- [x] Add card
+- [x] Return size
 - [x] Have to have at least two cards 
 
 ### PlayingCard

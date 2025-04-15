@@ -3,6 +3,13 @@ class Hand(private val cards: List<PlayingCard>) {
         require(cards.size >= MINIMUM_SIZE) { ERROR_MINIMUM_SIZE }
     }
 
+    val size: Int
+        get() = cards.size
+
+    fun add(card: PlayingCard): Hand {
+        return Hand(cards + card)
+    }
+
     fun score(): Int {
         return cards.sumOf { it.denomination.score }
     }

@@ -45,4 +45,32 @@ class HandTest {
         // then
         assertThat(actual).isEqualTo(expected)
     }
+
+    @Test
+    fun `Return the size of cards`() {
+        // given
+        val cards = listOf(CLUB_SEVEN, CLUB_THREE)
+        val hand = Hand(cards)
+        val expected = 2
+
+        // when
+        val actual = hand.size
+
+        // then
+        assertThat(actual).isEqualTo(expected)
+    }
+
+    @Test
+    fun `Add card to Hand`() {
+        // given
+        val cards = listOf(CLUB_SEVEN, CLUB_THREE)
+        val hand = Hand(cards)
+        val expected = 3
+
+        // when
+        val actual = hand.add(CLUB_TWO)
+
+        // then
+        assertThat(actual.size).isEqualTo(expected)
+    }
 }
