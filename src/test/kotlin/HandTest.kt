@@ -102,4 +102,32 @@ class HandTest {
         // then
         assertThat(actual).isEqualTo(expected)
     }
+
+    @Test
+    fun `Return cards score is bust`() {
+        // given
+        val cards = listOf(CLUB_KING, CLUB_KING, CLUB_KING)
+        val hand = Hand(cards)
+        val expected = true
+
+        // when
+        val actual = hand.isBust()
+
+        // then
+        assertThat(actual).isEqualTo(expected)
+    }
+
+    @Test
+    fun `Return cards score is not bust`() {
+        // given
+        val cards = listOf(CLUB_KING, CLUB_KING)
+        val hand = Hand(cards)
+        val expected = false
+
+        // when
+        val actual = hand.isBust()
+
+        // then
+        assertThat(actual).isEqualTo(expected)
+    }
 }

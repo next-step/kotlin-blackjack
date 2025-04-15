@@ -20,6 +20,7 @@
 - [x] Add card
 - [x] Return size
 - [x] Have to have at least two cards
+- [x] Return is bust
 
 ### PlayingCard
 - [x] Has suit and denomination
