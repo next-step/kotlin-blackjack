@@ -25,6 +25,10 @@
 - [x] Has suit and denomination
 - [x] Cache
 
+### Deck
+- [x] Have Cards
+- [x] Draw card
+
 ### Suit
 - enum class
 - [x] Have Heart, Club, Diamond, Spade
