@@ -11,6 +11,7 @@
 ### Player
 - [x] Have hand
 - [x] Have name
+- [x] Add card to Hand
 
 ### Hand
 - [x] Have cards as a list
