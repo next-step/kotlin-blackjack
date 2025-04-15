@@ -17,7 +17,7 @@
 - [x] Return cards total score
   - [ ] Aces can count as either 1 or 11
 - [ ] Add card
-- [ ] Have to have at least two cards 
+- [x] Have to have at least two cards 
 
 ### PlayingCard
 - [x] Has suit and denomination
