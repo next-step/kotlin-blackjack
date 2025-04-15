@@ -16,7 +16,7 @@
 - [ ] Return cards total score
 
 ### PlayingCard
-- [ ] Has suit and denomination
+- [x] Has suit and denomination
 
 ### Suit
 - enum class
