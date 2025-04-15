@@ -100,8 +100,8 @@ class DslTest {
         assertThat(person.company).isEqualTo("dh")
         assertThat(person.skills?.soft).hasSameElementsAs(expectedSoft)
         assertThat(person.skills?.hard).hasSameElementsAs(expectedHard)
-        assertThat(person.languages!!["Korean"]).isEqualTo(3)
-        assertThat(person.languages["English"]).isEqualTo(3)
+        assertThat(person.languages?.levels!!["Korean"]).isEqualTo(3)
+        assertThat(person.languages.levels["English"]).isEqualTo(3)
     }
 
     private fun introduce(block: PersonBuilder.() -> Unit): Person {
@@ -113,7 +113,7 @@ class DslTest {
         private lateinit var name: String
         private var company: String? = null
         private var skills: Skills? = null
-        private val languages = mutableMapOf<String, Int>()
+        private var languages: Languages? = null
 
         fun name(value: String) {
             name = value
@@ -127,12 +127,8 @@ class DslTest {
             skills = SkillsBuilder().apply(block).build()
         }
 
-        fun languages(block: Map<String, Int>.() -> Unit) {
-            languages.apply(block)
-        }
-
-        infix fun String.level(other: Int) {
-            languages[this] = other
+        fun languages(block: LanguageBuilder.() -> Unit) {
+            languages = LanguageBuilder().apply(block).build()
         }
 
         fun build(): Person = Person(name, company, skills, languages)
@@ -153,7 +149,19 @@ class DslTest {
         fun build(): Skills = Skills(soft, hard)
     }
 
-    data class Person(val name: String, val company: String?, val skills: Skills?, val languages: Map<String, Int>?)
+    class LanguageBuilder {
+        private val languages = mutableMapOf<String, Int>()
+
+        infix fun String.level(other: Int) {
+            languages[this] = other
+        }
+
+        fun build(): Languages = Languages(languages)
+    }
+
+    data class Person(val name: String, val company: String?, val skills: Skills?, val languages: Languages?)
 
     data class Skills(val soft: List<String>, val hard: List<String>)
+
+    data class Languages(val levels: Map<String, Int>)
 }
