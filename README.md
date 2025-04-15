@@ -24,7 +24,7 @@
 
 ### Denomination
 - enum class
-- [ ] Have the number from Ace to King with score
+- [x] Have the number from Ace to King with score
 
 ### InputView
 - [ ] Get players name
