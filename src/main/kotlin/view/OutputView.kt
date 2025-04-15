@@ -15,6 +15,11 @@ class OutputView {
         println(MESSAGE_PLAYER_CARD.format(player.name, player.hand.toDisplay()))
     }
 
+    fun printFirstTurn(players: List<Player>) {
+        println(MESSAGE_DEALING_CARDS.format(players.map { it.name }.joinToString()))
+        players.forEach { printPlayerCards(it) }
+    }
+
     private fun Hand.toDisplay(): String {
         return this.cards.map { it.toDisplay() }.toString()
     }
@@ -33,6 +38,7 @@ class OutputView {
     }
 
     companion object {
+        private const val MESSAGE_DEALING_CARDS = "Dealing two cards to %s"
         private const val MESSAGE_PLAYER_CARD = "%s's cards: %s"
         private const val MESSAGE_SCORE = "– Total: %d"
     }

@@ -44,3 +44,4 @@
 ### OutputView
 - [x] Display player's cards
 - [x] Display player's cards and total score
+- [x] Display first turn
