@@ -20,7 +20,7 @@
 
 ### Suit
 - enum class
-- [ ] Have Heart, Club, Diamond, Spade
+- [x] Have Heart, Club, Diamond, Spade
 
 ### Denomination
 - enum class
