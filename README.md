@@ -13,7 +13,7 @@
 
 ### Hand
 - [x] Have cards as a list
-- [ ] Return cards total score
+- [x] Return cards total score
 
 ### PlayingCard
 - [x] Has suit and denomination
