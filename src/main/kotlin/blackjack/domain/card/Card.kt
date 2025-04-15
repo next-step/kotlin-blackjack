@@ -1,8 +1,27 @@
 package blackjack.domain.card
 
-data class Card(
+class Card private constructor(
     private val number: CardNumber,
     private val suit: Suit,
 ) {
-    constructor(rawNumber: String, rawSuit: String) : this(CardNumber.fromName(rawNumber), Suit.fromName(rawSuit))
+    companion object {
+        private val cache: Map<Pair<CardNumber, Suit>, Card> =
+            CardNumber.entries.flatMap { number ->
+                Suit.entries.map { suit ->
+                    Pair(Pair(number, suit), Card(number, suit))
+                }
+            }.toMap()
+
+        val cached: List<Card> = cache.values.toList()
+
+        fun of(
+            number: CardNumber,
+            suit: Suit,
+        ) = cache[Pair(number, suit)] ?: throw IllegalStateException("Card does not exist in cache.")
+
+        fun of(
+            rawNumber: String,
+            rawSuit: String,
+        ) = of(CardNumber.fromName(rawNumber), Suit.fromName(rawSuit))
+    }
 }
