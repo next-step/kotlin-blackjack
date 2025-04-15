@@ -34,7 +34,7 @@
 
 ### InputView
 - [x] Get players name
-- [ ] Get player's response to get another card
+- [x] Get player's response to get another card
 
 ### OutputView
 - [ ] Display player's cards
