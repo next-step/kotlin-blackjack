@@ -7,56 +7,59 @@ import org.junit.jupiter.params.provider.ValueSource
 
 class DslTest {
     /*
-    * introduce {
-    *     name("Seokjin")
-    * }
-    * */
+     * introduce {
+     *     name("Seokjin")
+     * }
+     * */
     @ValueSource(strings = ["Seokjin", "Kang"])
     @ParameterizedTest
     fun `name test`(input: String) {
-        val person: Person = introduce {
-            name(input)
-        }
+        val person: Person =
+            introduce {
+                name(input)
+            }
 
         assertThat(person.name).isEqualTo(input)
     }
 
     /*
-    * introduce {
-    *     company("dh")
-    * }
-    * */
+     * introduce {
+     *     company("dh")
+     * }
+     * */
     @Test
     fun `company test`() {
-        val person: Person = introduce {
-            name("Seokjin")
-            company("dh")
-        }
+        val person: Person =
+            introduce {
+                name("Seokjin")
+                company("dh")
+            }
 
         assertThat(person.name).isEqualTo("Seokjin")
         assertThat(person.company).isEqualTo("dh")
     }
 
     /*
-    * introduce {
-    *     skills {
-    *         soft("A passion for problem solving")
-    *         soft("Good communication skills")
-    *         hard("Kotlin")
-    *     }
-    * }
-    */
+     * introduce {
+     *     skills {
+     *         soft("A passion for problem solving")
+     *         soft("Good communication skills")
+     *         hard("Kotlin")
+     *     }
+     * }
+     */
     @Test
     fun `skills test`() {
-        val person: Person = introduce {
-            name("Seokjin")
-            company("dh")
-            skills {
-                soft("A passion for problem solving")
-                soft("Good communication skills")
-                hard("Kotlin")
+        val person: Person =
+            introduce {
+                name("Seokjin")
+                company("dh")
+                skills {
+                    soft("A passion for problem solving")
+                    soft("Good communication skills")
+                    hard("Kotlin")
+                }
             }
-        }
         val expectedSoft = listOf("A passion for problem solving", "Good communication skills")
         val expectedHard = listOf("Kotlin")
 
@@ -67,28 +70,29 @@ class DslTest {
     }
 
     /*
-    * introduce {
-    *     languages {
-    *         "Korean" level 3
-    *         "English" level 3
-    *     }
-    * }
-    * */
+     * introduce {
+     *     languages {
+     *         "Korean" level 3
+     *         "English" level 3
+     *     }
+     * }
+     * */
     @Test
     fun `languages test`() {
-        val person: Person = introduce {
-            name("Seokjin")
-            company("dh")
-            skills {
-                soft("A passion for problem solving")
-                soft("Good communication skills")
-                hard("Kotlin")
+        val person: Person =
+            introduce {
+                name("Seokjin")
+                company("dh")
+                skills {
+                    soft("A passion for problem solving")
+                    soft("Good communication skills")
+                    hard("Kotlin")
+                }
+                languages {
+                    "Korean" level 3
+                    "English" level 3
+                }
             }
-            languages {
-                "Korean" level 3
-                "English" level 3
-            }
-        }
         val expectedSoft = listOf("A passion for problem solving", "Good communication skills")
         val expectedHard = listOf("Kotlin")
 
@@ -104,8 +108,6 @@ class DslTest {
 //        return PersonBuilder().apply { block() }.build()
         return PersonBuilder().apply(block).build()
     }
-
-
 
     class PersonBuilder {
         private lateinit var name: String
