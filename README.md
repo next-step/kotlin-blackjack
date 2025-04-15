@@ -12,7 +12,7 @@
 - [ ] Have hand
 
 ### Hand
-- [ ] Have cards as a list
+- [x] Have cards as a list
 - [ ] Return cards total score
 
 ### PlayingCard
