@@ -5,7 +5,8 @@ import blackjack.domain.card.Card
 class Hands(
     private val cards: List<Card> = emptyList(),
 ) {
-    val initialized = cards.size == 2
+    val initialized
+        get() = cards.size >= 2
 
     val size: Int
         get() = cards.size

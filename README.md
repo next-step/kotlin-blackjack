@@ -2,6 +2,7 @@
 
 ## Blackjack 
 
+### Key objects
 - [ ] At the start of the game, each player receives two cards.
 - [ ] Players can choose to draw additional cards as long as their total does not exceed 21.
 
@@ -31,3 +32,16 @@ Player
 
 - [ ] Receives two cards at start of the game.
 - [ ] Players can choose to draw additional cards as long as their total does not exceed 21.
+
+### States
+
+State
+- [x] Interface for all game states
+
+InitialTurn
+- [x] Should remain initial until card size is less than or equal to 2
+- [x] If hands has more than 3 cards after draw, should move state to Hit.
+
+Hit
+- [x] Can add cards until bust
+- 

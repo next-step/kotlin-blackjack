@@ -45,13 +45,14 @@ class HandsTest : FunSpec({
     }
 
     test("bust") {
-        val hands = Hands(
-            listOf(
-                SPADES_JACK,
-                SPADES_SIX,
-                SPADES_QUEEN,
+        val hands =
+            Hands(
+                listOf(
+                    SPADES_JACK,
+                    SPADES_SIX,
+                    SPADES_QUEEN,
+                ),
             )
-        )
 
         hands.isBust() shouldBe true
     }
