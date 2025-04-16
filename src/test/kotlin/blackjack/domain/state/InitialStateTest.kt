@@ -10,22 +10,22 @@ import io.kotest.assertions.assertSoftly
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 
-class InitialTurnTest : FunSpec({
+class InitialStateTest : FunSpec({
     context("addCard") {
         test("if not initialized, should return initial turn state") {
-            val initialTurn = InitialTurn()
+            val initialState = InitialState()
             val newCard = Card.of(CardNumber.ACE, Suit.HEARTS)
-            val state = initialTurn.addCard(newCard)
+            val state = initialState.addCard(newCard)
 
             assertSoftly {
                 state.hands.size shouldBe 1
-                state::class shouldBe InitialTurn::class
+                state::class shouldBe InitialState::class
             }
         }
 
         test("if initialized, should return hit state") {
-            val initialTurn =
-                InitialTurn(
+            val initialState =
+                InitialState(
                     Hands(
                         listOf(
                             SPADES_ACE,
@@ -33,7 +33,7 @@ class InitialTurnTest : FunSpec({
                         ),
                     ),
                 )
-            val state = initialTurn.addCard(SPADES_ACE)
+            val state = initialState.addCard(SPADES_ACE)
 
             assertSoftly {
                 state.hands.size shouldBe 3
