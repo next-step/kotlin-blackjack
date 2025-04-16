@@ -23,6 +23,10 @@ Deck
 
 - [x] Deck must not contain duplicated cards.
 
+Hands
+- [x] Must have two cards to be initialized.
+- [x] Should be able to add card to hands.
+
 Player
 
 - [ ] Receives two cards at start of the game.

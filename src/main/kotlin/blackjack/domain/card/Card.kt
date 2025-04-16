@@ -1,7 +1,7 @@
 package blackjack.domain.card
 
 class Card private constructor(
-    private val number: CardNumber,
+    val number: CardNumber,
     private val suit: Suit,
 ) {
     companion object {
