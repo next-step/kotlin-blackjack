@@ -1,9 +1,9 @@
-package blackjack.domain
+package blackjack.domain.player
 
 import blackjack.domain.card.Card
 
 class Hands(
-    private val cards: List<Card> = emptyList(),
+    val cards: List<Card> = emptyList(),
 ) {
     val initialized
         get() = cards.size >= 2

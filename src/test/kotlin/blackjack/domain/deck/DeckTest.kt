@@ -18,7 +18,7 @@ class DeckTest : FunSpec({
         test("should throw exception if duplicated cards exist") {
             shouldThrow<IllegalStateException> {
                 Deck.create {
-                    listOf(
+                    mutableListOf(
                         Card.of(ACE, SPADES),
                         Card.of(ACE, SPADES),
                     )

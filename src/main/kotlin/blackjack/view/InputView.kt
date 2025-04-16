@@ -6,8 +6,8 @@ object InputView {
 
         return readln()
             .split(",")
-            .filter { it.isNotBlank() }
             .map { it.trim() }
+            .filter { it.isNotBlank() }
     }
 
     fun getUserChoice(): UserChoice {

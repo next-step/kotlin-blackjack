@@ -1,9 +1,9 @@
 package blackjack.domain.state
 
-import blackjack.domain.Hands
 import blackjack.domain.card.CardFixture.SPADES_SEVEN
 import blackjack.domain.card.CardFixture.SPADES_SIX
 import blackjack.domain.card.CardFixture.SPADES_TWO
+import blackjack.domain.player.Hands
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe
 

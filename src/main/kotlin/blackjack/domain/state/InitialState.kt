@@ -1,7 +1,7 @@
 package blackjack.domain.state
 
-import blackjack.domain.Hands
 import blackjack.domain.card.Card
+import blackjack.domain.player.Hands
 
 class InitialState(override val hands: Hands = Hands()) : State {
     override fun addCard(card: Card): State {

@@ -1,7 +1,7 @@
 package blackjack.domain.state
 
-import blackjack.domain.Hands
 import blackjack.domain.card.CardFixture.SPADES_ACE
+import blackjack.domain.player.Hands
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FunSpec
 

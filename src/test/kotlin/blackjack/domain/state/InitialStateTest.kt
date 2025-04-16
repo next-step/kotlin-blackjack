@@ -1,11 +1,11 @@
 package blackjack.domain.state
 
-import blackjack.domain.Hands
 import blackjack.domain.card.Card
 import blackjack.domain.card.CardFixture.SPADES_ACE
 import blackjack.domain.card.CardFixture.SPADES_SIX
 import blackjack.domain.card.CardNumber
 import blackjack.domain.card.Suit
+import blackjack.domain.player.Hands
 import io.kotest.assertions.assertSoftly
 import io.kotest.core.spec.style.FunSpec
 import io.kotest.matchers.shouldBe

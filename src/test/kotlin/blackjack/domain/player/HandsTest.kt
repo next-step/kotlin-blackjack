@@ -1,4 +1,4 @@
-package blackjack.domain
+package blackjack.domain.player
 
 import blackjack.domain.card.CardFixture.SPADES_ACE
 import blackjack.domain.card.CardFixture.SPADES_JACK
