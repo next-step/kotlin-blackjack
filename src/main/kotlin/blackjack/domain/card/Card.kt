@@ -2,7 +2,7 @@ package blackjack.domain.card
 
 class Card private constructor(
     val number: CardNumber,
-    private val suit: Suit,
+    val suit: Suit,
 ) {
     companion object {
         private val cache: Map<Pair<CardNumber, Suit>, Card> =
