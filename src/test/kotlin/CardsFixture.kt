@@ -1,0 +1,5 @@
+val CLUB_SEVEN: PlayingCard = PlayingCard.of(Suit.CLUB, Denomination.SEVEN)
+val CLUB_THREE: PlayingCard = PlayingCard.of(Suit.CLUB, Denomination.THREE)
+val CLUB_TWO: PlayingCard = PlayingCard.of(Suit.CLUB, Denomination.TWO)
+val CLUB_ACE: PlayingCard = PlayingCard.of(Suit.CLUB, Denomination.ACE)
+val CLUB_KING: PlayingCard = PlayingCard.of(Suit.CLUB, Denomination.KING)
