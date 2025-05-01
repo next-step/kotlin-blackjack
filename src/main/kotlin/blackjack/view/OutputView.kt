@@ -3,15 +3,16 @@ package blackjack.view
 import blackjack.domain.card.Card
 import blackjack.domain.card.CardNumber
 import blackjack.domain.card.Suit
+import blackjack.domain.player.Player
 import blackjack.domain.player.Players
 
 object OutputView {
     fun printInitialCards(players: Players) {
         println("Dealing two cards to ${players.names.joinToString()}.")
-        players.values.forEach {
-            println("${it.name.value}'s cards: ${it.cards.toView()}.")
-        }
+        players.values.forEach { printPlayerCards(it) }
     }
+
+    fun printPlayerCards(player: Player) = println("${player.name.value}'s cards: ${player.cards.toView()}")
 
     private fun List<Card>.toView() = joinToString(" ") { card -> card.toView() }
 
