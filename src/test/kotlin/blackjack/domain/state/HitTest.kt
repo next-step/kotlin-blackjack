@@ -24,4 +24,8 @@ class HitTest : FunSpec({
             state::class shouldBe Hit::class
         }
     }
+
+    test("canContinue returns true on hit") {
+        Hit(Hands()).canContinue shouldBe true
+    }
 })

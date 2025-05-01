@@ -41,4 +41,8 @@ class InitialStateTest : FunSpec({
             }
         }
     }
+
+    test("canContinue returns true on initialState") {
+        InitialState().canContinue shouldBe true
+    }
 })
