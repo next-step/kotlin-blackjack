@@ -4,6 +4,7 @@ import blackjack.domain.card.CardFixture.SPADES_ACE
 import blackjack.domain.card.CardFixture.SPADES_SEVEN
 import blackjack.domain.card.CardFixture.SPADES_SIX
 import blackjack.domain.card.CardFixture.SPADES_TWO
+import blackjack.domain.state.Bust
 import blackjack.domain.state.Hit
 import blackjack.domain.state.InitialState
 import io.kotest.assertions.assertSoftly
@@ -15,6 +16,23 @@ class PlayerTest : FunSpec({
         val player = Player("me")
 
         player.state::class shouldBe InitialState::class
+    }
+
+    context("canDraw") {
+        test("return true on initial state") {
+            val player = Player("sun")
+            player.canDraw shouldBe true
+        }
+
+        test("return true on hit state") {
+            val player = Player("sun", Hit(Hands()))
+            player.canDraw shouldBe true
+        }
+
+        test("return false on bust state") {
+            val player = Player("sun", Bust(Hands()))
+            player.canDraw shouldBe false
+        }
     }
 
     test("can draw a card") {

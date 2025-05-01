@@ -14,7 +14,11 @@ class Player(
     val cards: List<Card>
         get() = state.hands.cards
 
+    val canDraw: Boolean
+        get() = state.canContinue
+
     constructor(rawName: String) : this(Name(rawName))
+    constructor(rawName: String, state: State) : this(Name(rawName), state)
 
     fun draw(card: Card) {
         state = state.addCard(card)
