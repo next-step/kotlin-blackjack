@@ -7,6 +7,8 @@ class Players(
 ) {
     val names = values.map { it.name.value }
 
+    constructor(vararg rawNames: String) : this(rawNames.map { Player(Name(it)) })
+
     fun initializeState(block: () -> Card) {
         repeat(FIRST_TURN_REPETITIONS) {
             values.forEach { it.draw(block()) }
