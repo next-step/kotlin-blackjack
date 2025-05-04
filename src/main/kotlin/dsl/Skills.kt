@@ -1,5 +1,6 @@
 package dsl
 
+@PersonDsl
 data class Skills(
     val values: MutableList<Skill> = mutableListOf(),
 ) {

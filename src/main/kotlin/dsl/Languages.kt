@@ -1,5 +1,6 @@
 package dsl
 
+@PersonDsl
 data class Languages(
     val values: MutableList<Language> = mutableListOf(),
 ) {

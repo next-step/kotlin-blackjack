@@ -7,6 +7,7 @@ data class Person(
     val languages: Languages = Languages(),
 )
 
+@PersonDsl
 class PersonBuilder {
     private lateinit var name: String
     private var company: String? = null
