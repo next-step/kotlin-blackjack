@@ -9,10 +9,22 @@ import blackjack.domain.player.Players
 object OutputView {
     fun printInitialCards(players: Players) {
         println("Dealing two cards to ${players.names.joinToString()}.")
-        players.values.forEach { printPlayerCards(it) }
+        players.values.forEach { println(it.toView()) }
     }
 
-    fun printPlayerCards(player: Player) = println("${player.name.value}'s cards: ${player.cards.toView()}")
+    fun printPlayerCards(player: Player) = println(player.toView())
+
+    fun printBlackjackResult(players: Players) {
+        players.values.forEach {
+            println(it.toView() + " - Total: ${it.score ?: "BUST"}")
+        }
+    }
+
+    fun announceBust(player: Player) {
+        println("${player.name.value} busts!")
+    }
+
+    private fun Player.toView() = "${this.name.value}'s cards: ${this.cards.toView()}"
 
     private fun List<Card>.toView() = joinToString(" ") { card -> card.toView() }
 

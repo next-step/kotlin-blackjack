@@ -13,7 +13,19 @@ fun main() {
     val deck = Deck.create()
 
     players.initializeState { deck.drawCard() }
-    println(deck)
-
     OutputView.printInitialCards(players)
+
+    players.values.forEach { player -> player.takeTurn(deck) }
+    OutputView.printBlackjackResult(players)
+}
+
+private fun Player.takeTurn(deck: Deck) {
+    while (this.canDraw && InputView.getUserChoice(this)) {
+        this.draw(deck.drawCard())
+        OutputView.printPlayerCards(this)
+
+        if (!this.canDraw) {
+            return OutputView.announceBust(this)
+        }
+    }
 }
