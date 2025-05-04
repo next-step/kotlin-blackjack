@@ -8,8 +8,8 @@
 
 Card
 
-- [ ] Number cards are counted by their face value.
-- [ ] Aces can count as either 1 or 11.
+- [x] Number cards are counted by their face value.
+- [x] Aces can count as either 1 or 11.
 
 Card Number
 
@@ -30,8 +30,8 @@ Hands
 
 Player
 
-- [ ] Receives two cards at start of the game.
-- [ ] Players can choose to draw additional cards as long as their total does not exceed 21.
+- [x] Receives two cards at start of the game.
+- [x] Players can choose to draw additional cards as long as their total does not exceed 21.
 
 ### States
 
@@ -44,4 +44,3 @@ InitialTurn
 
 Hit
 - [x] Can add cards until bust
-- 
