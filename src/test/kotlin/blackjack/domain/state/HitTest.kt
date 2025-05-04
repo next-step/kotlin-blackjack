@@ -1,5 +1,7 @@
 package blackjack.domain.state
 
+import blackjack.domain.card.CardFixture.SPADES_ACE
+import blackjack.domain.card.CardFixture.SPADES_QUEEN
 import blackjack.domain.card.CardFixture.SPADES_SEVEN
 import blackjack.domain.card.CardFixture.SPADES_SIX
 import blackjack.domain.card.CardFixture.SPADES_TWO
@@ -27,5 +29,11 @@ class HitTest : FunSpec({
 
     test("canContinue returns true on hit") {
         Hit(Hands()).canContinue shouldBe true
+    }
+
+    test("should return hands score") {
+        val hands = Hands(listOf(SPADES_ACE, SPADES_QUEEN))
+
+        Hit(hands).score shouldBe 21
     }
 })

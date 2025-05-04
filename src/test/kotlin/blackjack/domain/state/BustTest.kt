@@ -1,6 +1,9 @@
 package blackjack.domain.state
 
 import blackjack.domain.card.CardFixture.SPADES_ACE
+import blackjack.domain.card.CardFixture.SPADES_QUEEN
+import blackjack.domain.card.CardFixture.SPADES_TEN
+import blackjack.domain.card.CardFixture.SPADES_TWO
 import blackjack.domain.player.Hands
 import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.FunSpec
@@ -15,5 +18,11 @@ class BustTest : FunSpec({
 
     test("canContinue returns false on bust") {
         Bust(Hands()).canContinue shouldBe false
+    }
+
+    test("hands score must be null on bust") {
+        val hands = Hands(listOf(SPADES_TEN, SPADES_QUEEN, SPADES_TWO))
+
+        Bust(hands).score shouldBe null
     }
 })

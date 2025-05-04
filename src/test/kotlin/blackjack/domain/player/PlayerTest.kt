@@ -53,4 +53,11 @@ class PlayerTest : FunSpec({
             player.state::class shouldBe Hit::class
         }
     }
+
+    test("score") {
+        val player = Player("me")
+        player.draw(SPADES_SIX)
+
+        player.score shouldBe 6
+    }
 })

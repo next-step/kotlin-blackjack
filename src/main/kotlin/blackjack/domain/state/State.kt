@@ -9,5 +9,7 @@ interface State {
     val canContinue: Boolean
         get() = true
 
+    val score: Int?
+
     fun addCard(card: Card): State
 }

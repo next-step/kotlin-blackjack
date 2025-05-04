@@ -17,6 +17,9 @@ class Player(
     val canDraw: Boolean
         get() = state.canContinue
 
+    val score: Int?
+        get() = state.score
+
     constructor(rawName: String) : this(Name(rawName))
     constructor(rawName: String, state: State) : this(Name(rawName), state)
 

@@ -2,7 +2,9 @@ package blackjack.domain.state
 
 import blackjack.domain.card.Card
 import blackjack.domain.card.CardFixture.SPADES_ACE
+import blackjack.domain.card.CardFixture.SPADES_QUEEN
 import blackjack.domain.card.CardFixture.SPADES_SIX
+import blackjack.domain.card.CardFixture.SPADES_TEN
 import blackjack.domain.card.CardNumber
 import blackjack.domain.card.Suit
 import blackjack.domain.player.Hands
@@ -44,5 +46,11 @@ class InitialStateTest : FunSpec({
 
     test("canContinue returns true on initialState") {
         InitialState().canContinue shouldBe true
+    }
+
+    test("should return hands score") {
+        val hands = Hands(listOf(SPADES_TEN, SPADES_QUEEN))
+
+        InitialState(hands).score shouldBe 20
     }
 })
