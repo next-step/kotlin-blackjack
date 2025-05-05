@@ -1,0 +1,39 @@
+package blackjack.domain.state
+
+import blackjack.domain.card.CardFixture.SPADES_ACE
+import blackjack.domain.card.CardFixture.SPADES_QUEEN
+import blackjack.domain.card.CardFixture.SPADES_SEVEN
+import blackjack.domain.card.CardFixture.SPADES_SIX
+import blackjack.domain.card.CardFixture.SPADES_TWO
+import blackjack.domain.player.Hands
+import io.kotest.core.spec.style.FunSpec
+import io.kotest.matchers.shouldBe
+
+class HitTest : FunSpec({
+    context("addCard") {
+        test("should remain Hit until bust") {
+            val hit =
+                Hit(
+                    Hands(
+                        listOf(
+                            SPADES_SIX,
+                            SPADES_SEVEN,
+                        ),
+                    ),
+                )
+            val state = hit.addCard(SPADES_TWO)
+
+            state::class shouldBe Hit::class
+        }
+    }
+
+    test("canContinue returns true on hit") {
+        Hit(Hands()).canContinue shouldBe true
+    }
+
+    test("should return hands score") {
+        val hands = Hands(listOf(SPADES_ACE, SPADES_QUEEN))
+
+        Hit(hands).score shouldBe 21
+    }
+})

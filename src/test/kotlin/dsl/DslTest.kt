@@ -40,8 +40,9 @@ class DslTest : FunSpec({
             }
 
         assertSoftly(person.skills) {
-            softSkills.size shouldBe 2
-            hardSkills.size shouldBe 1
+            values.size shouldBe 3
+            values.filterIsInstance<Skill.Soft>().size shouldBe 2
+            values.filterIsInstance<Skill.Hard>().size shouldBe 1
         }
     }
 
@@ -80,8 +81,9 @@ class DslTest : FunSpec({
         assertSoftly(person) {
             name shouldBe "Sun"
             company shouldBe "Delivery Hero"
-            skills.softSkills.size shouldBe 2
-            skills.hardSkills.size shouldBe 1
+            skills.values.size shouldBe 3
+            skills.values.filterIsInstance<Skill.Soft>().size shouldBe 2
+            skills.values.filterIsInstance<Skill.Hard>().size shouldBe 1
             languages.values.size shouldBe 2
         }
     }
