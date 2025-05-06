@@ -4,10 +4,13 @@ import Hand
 import card.PlayingCard
 
 class FirstTurn(override val hand: Hand) : State {
-    override fun drawCards(cards: List<PlayingCard>): State {
-        hand.add(cards)
+    override fun drawCard(card: PlayingCard): State {
+        hand.add(card)
 
-        if (hand.isBlackjack()) return Blackjack(hand)
-        return Hit(hand)
+        if (hand.size == 2) {
+            if (hand.isBlackjack()) return Blackjack(hand)
+            return Hit(hand)
+        }
+        return FirstTurn(hand)
     }
 }

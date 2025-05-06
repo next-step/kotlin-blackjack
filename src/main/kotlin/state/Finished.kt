@@ -4,7 +4,7 @@ import Hand
 import card.PlayingCard
 
 abstract class Finished(override val hand: Hand) : State {
-    override fun drawCards(cards: List<PlayingCard>): State {
+    override fun drawCard(card: PlayingCard): State {
         throw IllegalStateException()
     }
 }

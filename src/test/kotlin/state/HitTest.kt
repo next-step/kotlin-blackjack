@@ -15,7 +15,7 @@ class HitTest {
         val hit = Hit(hand)
 
         // when
-        val actual = hit.drawCards(listOf(CLUB_KING))
+        val actual = hit.drawCard(CLUB_KING)
 
         // then
         assertThat(actual).isInstanceOf(Bust::class.java)
@@ -28,7 +28,7 @@ class HitTest {
         val hit = Hit(hand)
 
         // when
-        val actual = hit.drawCards(listOf(CLUB_TWO))
+        val actual = hit.drawCard(CLUB_TWO)
 
         // then
         assertThat(actual).isInstanceOf(Hit::class.java)
@@ -41,7 +41,7 @@ class HitTest {
         val hit = Hit(hand)
 
         // when
-        val actual = hit.drawCards(listOf(CLUB_ACE))
+        val actual = hit.drawCard(CLUB_ACE)
 
         // then
         assertThat(actual).isInstanceOf(Hit::class.java)

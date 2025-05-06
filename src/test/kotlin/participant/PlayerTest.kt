@@ -17,7 +17,7 @@ class PlayerTest {
         val expected = 3
 
         // when
-        player.drawCards(listOf(CLUB_TWO))
+        player.drawCard(CLUB_TWO)
 
         // then
         assertThat(player.state.hand.size).isEqualTo(expected)

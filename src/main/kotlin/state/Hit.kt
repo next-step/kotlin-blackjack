@@ -4,8 +4,8 @@ import Hand
 import card.PlayingCard
 
 class Hit(override val hand: Hand) : State {
-    override fun drawCards(cards: List<PlayingCard>): State {
-        hand.add(cards)
+    override fun drawCard(card: PlayingCard): State {
+        hand.add(card)
 
         return if (hand.isBust()) {
             return Bust(hand)

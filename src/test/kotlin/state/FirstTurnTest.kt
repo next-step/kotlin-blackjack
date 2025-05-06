@@ -14,7 +14,10 @@ class FirstTurnTest {
         val firstTurn = FirstTurn(hand)
 
         // when
-        val actual = firstTurn.drawCards(listOf(CLUB_KING, CLUB_ACE))
+        val actual =
+            firstTurn
+                .drawCard(CLUB_KING)
+                .drawCard(CLUB_ACE)
 
         // then
         assertThat(actual).isInstanceOf(Blackjack::class.java)
@@ -27,7 +30,10 @@ class FirstTurnTest {
         val firstTurn = FirstTurn(hand)
 
         // when
-        val actual = firstTurn.drawCards(listOf(CLUB_KING, CLUB_KING))
+        val actual =
+            firstTurn
+                .drawCard(CLUB_KING)
+                .drawCard(CLUB_KING)
 
         // then
         assertThat(actual).isInstanceOf(Hit::class.java)

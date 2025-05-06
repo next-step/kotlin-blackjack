@@ -9,8 +9,8 @@ class Hand(cards: List<PlayingCard>) {
     val size: Int
         get() = _cards.size
 
-    fun add(cards: List<PlayingCard>) {
-        _cards.addAll(cards)
+    fun add(card: PlayingCard) {
+        _cards.add(card)
     }
 
     fun score(): Int {

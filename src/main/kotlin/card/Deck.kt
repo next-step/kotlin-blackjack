@@ -5,7 +5,7 @@ class Deck(cards: List<PlayingCard>) {
     val cards: List<PlayingCard>
         get() = _cards.toList()
 
-    fun drawCard(count: Int): List<PlayingCard> {
-        return List(count) { _cards.removeFirst() }
+    fun drawOne(): PlayingCard {
+        return _cards.removeFirst()
     }
 }
