@@ -122,4 +122,18 @@ class HandTest {
         // then
         assertThat(actual).isEqualTo(expected)
     }
+
+    @Test
+    fun `Return blackjack when the card size is 2 and sum is 21`() {
+        // given
+        val cards = listOf(CLUB_KING, CLUB_ACE)
+        val hand = Hand(cards)
+        val expected = true
+
+        // when
+        val actual = hand.isBlackjack()
+
+        // then
+        assertThat(actual).isEqualTo(expected)
+    }
 }

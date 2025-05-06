@@ -20,8 +20,13 @@ class Hand(cards: List<PlayingCard>) {
         return score() > MAX_SCORE
     }
 
+    fun isBlackjack(): Boolean {
+        return size == BLACKJACK_SIZE && score() == MAX_SCORE
+    }
+
     companion object {
         private const val BONUS = 10
         private const val MAX_SCORE = 21
+        private const val BLACKJACK_SIZE = 2
     }
 }

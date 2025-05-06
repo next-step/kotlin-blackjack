@@ -61,7 +61,7 @@ Implement a program based on a simplified version of Blackjack. In this game, th
 - [x] Return size
 - [x] Have to have at least two cards
 - [x] Return is bust
-- [ ] Return is blackjack
+- [x] Return is blackjack
 
 ### PlayingCard
 - [x] Has suit and denomination

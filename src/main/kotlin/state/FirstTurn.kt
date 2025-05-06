@@ -7,7 +7,7 @@ class FirstTurn(private val hand: Hand) : State {
     fun drawCards(cards: List<PlayingCard>): State {
         hand.add(cards)
 
-        if (hand.score() == 21) return Blackjack()
+        if (hand.isBlackjack()) return Blackjack()
         return Hit()
     }
 }
