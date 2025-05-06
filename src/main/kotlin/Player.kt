@@ -1,5 +1,5 @@
-class Player(val name: String, val hand: Hand) {
-    fun drawCard(cards: List<PlayingCard>) {
+class Player(val name: String, override val hand: Hand) : Participant {
+    override fun drawCards(cards: List<PlayingCard>) {
         hand.add(cards)
     }
 }

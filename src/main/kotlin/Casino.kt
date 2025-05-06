@@ -22,7 +22,7 @@ class Casino(
         while (true) {
             val response = inputView.getResponse(player.name)
             if (!response || player.hand.isBust()) return
-            player.drawCard(deck.drawCard(1))
+            player.drawCards(deck.drawCard(1))
             outputView.printPlayerCards(player)
         }
     }
