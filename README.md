@@ -36,6 +36,23 @@ Implement a program based on a simplified version of Blackjack. In this game, th
 - [ ] Implement Person
 - [x] Have name
 
+### FirstTurn
+- [ ] Draw cards
+- [ ] When the sum is 21 return Blackjack
+- [ ] WHen the sum is less than 21 return Hit
+
+### Hit
+- [ ] Draw Card
+- [ ] When the sum is over than 21 return Bust
+- [ ] When the sum is less than 21 return Hit
+- [ ] return stay
+
+### Blackjack
+
+### Bust
+
+### Stay
+
 ### Hand
 - [x] Have cards as a list
 - [x] Return cards total score

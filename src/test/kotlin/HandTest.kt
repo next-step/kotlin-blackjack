@@ -94,7 +94,7 @@ class HandTest {
         val cards = listOf(CLUB_SEVEN, CLUB_THREE)
         val hand = Hand(cards)
         val expected = 3
-        hand.add(CLUB_TWO)
+        hand.add(listOf(CLUB_TWO))
 
         // when
         val actual = hand.size
