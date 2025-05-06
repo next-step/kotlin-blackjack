@@ -29,11 +29,11 @@ Implement a program based on a simplified version of Blackjack. In this game, th
 - [x] Open Card for first
 
 ### Dealer
-- [ ] Implement Person
-- [ ] Add card to Hand
+- [x] Implement Participant
+- [x] Add card to Hand
 
 ### Player
-- [ ] Implement Person
+- [x] Implement Participant
 - [x] Have name
 
 ### FirstTurn
