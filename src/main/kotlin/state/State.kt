@@ -7,4 +7,6 @@ interface State {
     val hand: Hand
 
     fun drawCard(cards: PlayingCard): State
+
+    fun stay(): State
 }

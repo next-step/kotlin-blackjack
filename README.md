@@ -87,4 +87,8 @@ Implement a program based on a simplified version of Blackjack. In this game, th
 - [x] Display player's cards
 - [x] Display player's cards and total score
 - [x] Display first turn
-- [ ] Display final results
+- [x] Display final results
+
+### WinningResult
+- [x] Calculate winners between two participants
+- [x] Return the result of participant

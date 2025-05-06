@@ -13,4 +13,8 @@ class FirstTurn(override val hand: Hand) : State {
         }
         return FirstTurn(hand)
     }
+
+    override fun stay(): State {
+        throw IllegalStateException()
+    }
 }
