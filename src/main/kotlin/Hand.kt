@@ -1,8 +1,4 @@
 class Hand(cards: List<PlayingCard>) {
-    init {
-        require(cards.size >= MINIMUM_SIZE) { ERROR_MINIMUM_SIZE }
-    }
-
     private val _cards: MutableList<PlayingCard> = cards.toMutableList()
     val cards: List<PlayingCard>
         get() = _cards.toList()
@@ -26,8 +22,6 @@ class Hand(cards: List<PlayingCard>) {
 
     companion object {
         private const val BONUS = 10
-        private const val MINIMUM_SIZE = 2
         private const val MAX_SCORE = 21
-        private const val ERROR_MINIMUM_SIZE = "Have to have at least two cards"
     }
 }

@@ -37,9 +37,9 @@ Implement a program based on a simplified version of Blackjack. In this game, th
 - [x] Have name
 
 ### FirstTurn
-- [ ] Draw cards
-- [ ] When the sum is 21 return Blackjack
-- [ ] WHen the sum is less than 21 return Hit
+- [x] Draw cards
+- [x] When the sum is 21 return Blackjack
+- [x] WHen the sum is less than 21 return Hit
 
 ### Hit
 - [ ] Draw Card
@@ -61,6 +61,7 @@ Implement a program based on a simplified version of Blackjack. In this game, th
 - [x] Return size
 - [x] Have to have at least two cards
 - [x] Return is bust
+- [ ] Return is blackjack
 
 ### PlayingCard
 - [x] Has suit and denomination

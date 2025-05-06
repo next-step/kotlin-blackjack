@@ -1,16 +1,8 @@
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
-import org.junit.jupiter.api.assertThrows
 
 class HandTest {
-    @Test
-    fun `Throw exception when hand has cards less than 2`() {
-        assertThrows<IllegalArgumentException> {
-            Hand(listOf(CLUB_SEVEN))
-        }
-    }
-
     @Test
     fun `Create Hand when hand has cards more than 2`() {
         assertDoesNotThrow {
