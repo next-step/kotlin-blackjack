@@ -12,7 +12,7 @@ class DealerTest {
         // given
         val hand = Hand(listOf(CLUB_SEVEN, CLUB_SEVEN))
         val hit = Hit(hand)
-        val dealer = Dealer(hit)
+        val dealer = Dealer(state = hit)
         val expected = listOf(CLUB_SEVEN)
 
         // when

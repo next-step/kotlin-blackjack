@@ -3,11 +3,12 @@ package participant
 import card.PlayingCard
 import state.State
 
-interface Participant {
-    val state: State
-    val name: String
+abstract class Participant(val name: String) {
+    abstract var state: State
 
-    fun drawCards(cards: List<PlayingCard>)
+    fun drawCards(cards: List<PlayingCard>) {
+        state = state.drawCards(cards)
+    }
 
-    fun showCardFirst(): List<PlayingCard>
+    abstract fun showCardFirst(): List<PlayingCard>
 }
