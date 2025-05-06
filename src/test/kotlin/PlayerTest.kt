@@ -15,4 +15,18 @@ class PlayerTest {
         // then
         assertThat(player.hand.size).isEqualTo(expected)
     }
+
+    @Test
+    fun `Return players cards`() {
+        // given
+        val hand = Hand(listOf(CLUB_SEVEN, CLUB_SEVEN))
+        val player = Player("krrong", hand)
+        val expected = listOf(CLUB_SEVEN, CLUB_SEVEN)
+
+        // when
+        val actual = player.showCardFirst()
+
+        // then
+        assertThat(actual).isEqualTo(expected)
+    }
 }

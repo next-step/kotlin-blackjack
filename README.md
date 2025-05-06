@@ -26,7 +26,7 @@ Implement a program based on a simplified version of Blackjack. In this game, th
 ### Participant
 - [x] Have hand
 - [x] Add card to Hand
-- [ ] Open Card for first
+- [x] Open Card for first
 
 ### Dealer
 - [ ] Implement Person
