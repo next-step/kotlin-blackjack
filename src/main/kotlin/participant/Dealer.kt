@@ -1,16 +1,16 @@
 package participant
 
-import Hand
 import card.PlayingCard
+import state.State
 
-class Dealer(override val hand: Hand) : Participant {
+class Dealer(override val state: State) : Participant {
     override val name: String = "Dealer"
 
     override fun drawCards(cards: List<PlayingCard>) {
-        hand.add(cards)
+        state.drawCards(cards)
     }
 
     override fun showCardFirst(): List<PlayingCard> {
-        return listOf(hand.cards.first())
+        return listOf(state.hand.cards.first())
     }
 }

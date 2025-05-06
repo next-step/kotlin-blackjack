@@ -1,6 +1,8 @@
 import card.Deck
 import card.PlayingCard
 import participant.Player
+import state.Bust
+import state.FirstTurn
 import view.InputView
 import view.OutputView
 
@@ -11,7 +13,7 @@ class Casino(
     fun run() {
         val deck = Deck(PlayingCard.ALL.shuffled())
         val names = inputView.getPlayerNames()
-        val players = names.map { Player(it, Hand(deck.drawCard(2))) }
+        val players = names.map { Player(it, FirstTurn(Hand(deck.drawCard(2)))) }
         outputView.printFirstTurn(players)
 
         players.forEach { turn(it, deck) }
@@ -24,7 +26,7 @@ class Casino(
     ) {
         while (true) {
             val response = inputView.getResponse(player.name)
-            if (!response || player.hand.isBust()) return
+            if (!response || player.state is Bust) return
             player.drawCards(deck.drawCard(1))
             outputView.printPlayerCards(player)
         }

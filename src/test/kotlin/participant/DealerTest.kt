@@ -4,13 +4,15 @@ import CLUB_SEVEN
 import Hand
 import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
+import state.Hit
 
 class DealerTest {
     @Test
     fun `Return dealers first cards`() {
         // given
         val hand = Hand(listOf(CLUB_SEVEN, CLUB_SEVEN))
-        val dealer = Dealer(hand)
+        val hit = Hit(hand)
+        val dealer = Dealer(hit)
         val expected = listOf(CLUB_SEVEN)
 
         // when

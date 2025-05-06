@@ -1,14 +1,14 @@
 package participant
 
-import Hand
 import card.PlayingCard
+import state.State
 
-class Player(override val name: String, override val hand: Hand) : Participant {
+class Player(override val name: String, override val state: State) : Participant {
     override fun drawCards(cards: List<PlayingCard>) {
-        hand.add(cards)
+        state.drawCards(cards)
     }
 
     override fun showCardFirst(): List<PlayingCard> {
-        return hand.cards
+        return state.hand.cards
     }
 }

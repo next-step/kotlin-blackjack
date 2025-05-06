@@ -7,16 +7,16 @@ import participant.Player
 
 class OutputView {
     fun printScore(player: Player) {
-        print(MESSAGE_PLAYER_CARD.format(player.name, player.hand.toDisplay()))
-        println(MESSAGE_SCORE.format(player.hand.score()))
+        print(MESSAGE_PLAYER_CARD.format(player.name, player.state.hand.toDisplay()))
+        println(MESSAGE_SCORE.format(player.state.hand.score()))
     }
 
     fun printPlayerCards(player: Player) {
-        println(MESSAGE_PLAYER_CARD.format(player.name, player.hand.toDisplay()))
+        println(MESSAGE_PLAYER_CARD.format(player.name, player.state.hand.toDisplay()))
     }
 
     fun printFirstTurn(players: List<Player>) {
-        println(MESSAGE_DEALING_CARDS.format(players.map { it.name }.joinToString()))
+        println(MESSAGE_DEALING_CARDS.format(players.joinToString { it.name }))
         players.forEach { printPlayerCards(it) }
     }
 

@@ -1,10 +1,10 @@
 package participant
 
-import Hand
 import card.PlayingCard
+import state.State
 
 interface Participant {
-    val hand: Hand
+    val state: State
     val name: String
 
     fun drawCards(cards: List<PlayingCard>)
