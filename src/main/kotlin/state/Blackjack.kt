@@ -1,3 +1,5 @@
 package state
 
-class Blackjack : State
+import Hand
+
+class Blackjack(hand: Hand) : Finished(hand)

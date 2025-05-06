@@ -3,11 +3,11 @@ package state
 import Hand
 import PlayingCard
 
-class FirstTurn(private val hand: Hand) : State {
-    fun drawCards(cards: List<PlayingCard>): State {
+class FirstTurn(override val hand: Hand) : State {
+    override fun drawCards(cards: List<PlayingCard>): State {
         hand.add(cards)
 
-        if (hand.isBlackjack()) return Blackjack()
-        return Hit()
+        if (hand.isBlackjack()) return Blackjack(hand)
+        return Hit(hand)
     }
 }

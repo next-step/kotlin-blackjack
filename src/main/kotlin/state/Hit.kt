@@ -1,3 +1,16 @@
 package state
 
-class Hit : State
+import Hand
+import PlayingCard
+
+class Hit(override val hand: Hand) : State {
+    override fun drawCards(cards: List<PlayingCard>): State {
+        hand.add(cards)
+
+        return if (hand.isBust()) {
+            return Bust(hand)
+        } else {
+            Hit(hand)
+        }
+    }
+}

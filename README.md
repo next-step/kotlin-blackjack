@@ -42,9 +42,9 @@ Implement a program based on a simplified version of Blackjack. In this game, th
 - [x] WHen the sum is less than 21 return Hit
 
 ### Hit
-- [ ] Draw Card
-- [ ] When the sum is over than 21 return Bust
-- [ ] When the sum is less than 21 return Hit
+- [x] Draw Card
+- [x] When the sum is over than 21 return Bust
+- [x] When the sum is less than 21 return Hit
 - [ ] return stay
 
 ### Blackjack
