@@ -46,4 +46,17 @@ class HitTest {
         // then
         assertThat(actual).isInstanceOf(Hit::class.java)
     }
+
+    @Test
+    fun `Return Hit when stay`() {
+        // given
+        val hand = Hand(listOf(CLUB_KING, CLUB_KING))
+        val hit = Hit(hand)
+
+        // when
+        val actual = hit.stay()
+
+        // then
+        assertThat(actual).isInstanceOf(Stay::class.java)
+    }
 }
