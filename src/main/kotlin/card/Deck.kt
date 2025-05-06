@@ -1,3 +1,5 @@
+package card
+
 class Deck(cards: List<PlayingCard>) {
     private val _cards = cards.toMutableList()
     val cards: List<PlayingCard>

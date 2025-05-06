@@ -1,4 +1,9 @@
-import org.assertj.core.api.Assertions.assertThat
+package participant
+
+import CLUB_SEVEN
+import CLUB_TWO
+import Hand
+import org.assertj.core.api.Assertions
 import org.junit.jupiter.api.Test
 
 class PlayerTest {
@@ -13,7 +18,7 @@ class PlayerTest {
         player.drawCards(listOf(CLUB_TWO))
 
         // then
-        assertThat(player.hand.size).isEqualTo(expected)
+        Assertions.assertThat(player.hand.size).isEqualTo(expected)
     }
 
     @Test
@@ -27,6 +32,6 @@ class PlayerTest {
         val actual = player.showCardFirst()
 
         // then
-        assertThat(actual).isEqualTo(expected)
+        Assertions.assertThat(actual).isEqualTo(expected)
     }
 }

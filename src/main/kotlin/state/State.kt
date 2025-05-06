@@ -1,7 +1,7 @@
 package state
 
 import Hand
-import PlayingCard
+import card.PlayingCard
 
 interface State {
     val hand: Hand

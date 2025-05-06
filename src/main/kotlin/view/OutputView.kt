@@ -1,9 +1,9 @@
 package view
 
 import Hand
-import Player
-import PlayingCard
-import Suit
+import card.PlayingCard
+import card.Suit
+import participant.Player
 
 class OutputView {
     fun printScore(player: Player) {

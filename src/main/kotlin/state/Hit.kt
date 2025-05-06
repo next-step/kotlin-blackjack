@@ -1,7 +1,7 @@
 package state
 
 import Hand
-import PlayingCard
+import card.PlayingCard
 
 class Hit(override val hand: Hand) : State {
     override fun drawCards(cards: List<PlayingCard>): State {

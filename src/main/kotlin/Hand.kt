@@ -1,3 +1,6 @@
+import card.Denomination
+import card.PlayingCard
+
 class Hand(cards: List<PlayingCard>) {
     private val _cards: MutableList<PlayingCard> = cards.toMutableList()
     val cards: List<PlayingCard>
