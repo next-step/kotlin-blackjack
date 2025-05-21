@@ -1,17 +1,26 @@
 package view
 
+import participant.Dealer
+import participant.Participant
+import participant.Player
+
 class InputView {
     fun getPlayerNames(): List<String> {
         println(GUIDE_ENTER_PLAYER_NAMES)
         return readln().split(",").map { it.trim() }
     }
 
-    fun getResponse(name: String): Boolean {
-        println(GUIDE_ENTER_RESPONSE.format(name))
-        val response = readln().trim()
-        if (response == "y") return true
-        if (response == "n") return false
-        return getResponse(name)
+    fun getResponse(participant: Participant): Boolean {
+        when (participant) {
+            is Dealer -> return true
+            is Player -> {
+                println(GUIDE_ENTER_RESPONSE.format(participant.name))
+                val response = readln().trim()
+                if (response == "y") return true
+                if (response == "n") return false
+            }
+        }
+        return getResponse(participant)
     }
 
     companion object {

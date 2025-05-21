@@ -7,4 +7,8 @@ class Dealer(name: String = "Dealer", override var state: State) : Participant(n
     override fun showCardFirst(): List<PlayingCard> {
         return listOf(state.hand.cards.first())
     }
+
+    override fun wantDraw(): Boolean {
+        return score() < 17
+    }
 }

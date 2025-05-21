@@ -9,6 +9,7 @@ import card.PlayingCard
 import card.Suit
 import participant.Dealer
 import participant.Participant
+import participant.Player
 
 class OutputView {
     fun printResult(
@@ -36,7 +37,14 @@ class OutputView {
     }
 
     fun printPlayerCards(participant: Participant) {
-        println(MESSAGE_PLAYER_CARD.format(participant.name, participant.showCardFirst().toDisplay()))
+        when (participant) {
+            is Dealer -> {
+                println(MESSAGE_DRAW_DEALER)
+            }
+            is Player -> {
+                println(MESSAGE_PLAYER_CARD.format(participant.name, participant.showCardFirst().toDisplay()))
+            }
+        }
     }
 
     fun printFirstTurn(participants: List<Participant>) {

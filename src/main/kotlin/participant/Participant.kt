@@ -19,4 +19,6 @@ abstract class Participant(val name: String) {
     fun drawCard(card: PlayingCard) {
         state = state.drawCard(card)
     }
+
+    abstract fun wantDraw(): Boolean
 }

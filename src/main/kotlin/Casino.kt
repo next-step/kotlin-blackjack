@@ -45,21 +45,10 @@ class Casino(
         deck: Deck,
     ) {
         while (true) {
-            when (participant) {
-                is Player -> {
-                    val response = inputView.getResponse(participant.name)
-                    if (!response) {
-                        participant.stay()
-                        return
-                    }
-                }
-                is Dealer -> {
-                    if (participant.score() > 17) {
-                        participant.stay()
-                        return
-                    }
-                    outputView.printDealerDrawGuide()
-                }
+            val response = inputView.getResponse(participant)
+            if (!response || !participant.wantDraw()) {
+                participant.stay()
+                return
             }
             participant.drawCard(deck.drawOne())
             outputView.printPlayerCards(participant)
