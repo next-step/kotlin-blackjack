@@ -7,36 +7,36 @@ import state.Blackjack
 import state.Bust
 import state.Stay
 
-class WinningResult {
-    private val dealerResult: MutableMap<GameResult, Int> =
+class WinningResult(private val participant: Participant) {
+    private val participantScore: MutableMap<GameResult, Int> =
         mutableMapOf(
             WIN to 0,
             LOSE to 0,
             DRAW to 0,
         )
 
-    fun getResult() = dealerResult.toMap()
-
-    fun versus(
-        dealer: Participant,
-        player: Participant,
-    ): GameResult {
-        val result = determineResult(dealer, player)
-        dealerResult[result] = dealerResult.getValue(result) + 1
-        return getApposite(result)
+    fun versus(player: Participant): GambleResult {
+        if (participant.name == player.name) {
+            return GambleResult(
+                win = participantScore[WIN] ?: 0,
+                lose = participantScore[WIN] ?: 0,
+                draw = participantScore[WIN] ?: 0,
+            )
+        }
+        val result = compare(player)
+        participantScore[result] = participantScore.getValue(result) + 1
+        val playerResult = getApposite(result)
+        return GambleResult.from(playerResult)
     }
 
-    private fun determineResult(
-        dealer: Participant,
-        player: Participant,
-    ): GameResult {
-        return when (dealer.state) {
+    private fun compare(player: Participant): GameResult {
+        return when (participant.state) {
             is Bust -> LOSE
             is Blackjack -> if (player.state is Blackjack) DRAW else WIN
             is Stay ->
                 when {
-                    dealer.score() < player.score() -> LOSE
-                    dealer.score() == player.score() -> DRAW
+                    participant.score() < player.score() -> LOSE
+                    participant.score() == player.score() -> DRAW
                     else -> WIN
                 }
             else -> throw IllegalStateException()

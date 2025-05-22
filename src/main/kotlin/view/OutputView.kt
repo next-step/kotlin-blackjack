@@ -1,5 +1,6 @@
 package view
 
+import GambleResult
 import GameResult
 import GameResult.DRAW
 import GameResult.LOSE
@@ -14,21 +15,10 @@ import participant.Player
 class OutputView {
     fun printResult(
         participant: Participant,
-        result: GameResult,
+        result: GambleResult,
     ) {
         println(MESSAGE_FINAL_RESULT)
         println(MESSAGE_RESULT.format(participant.name) + result.toDisplay())
-    }
-
-    fun printDealerResult(
-        dealer: Dealer,
-        getResults: Map<GameResult, Int>,
-    ) {
-        println(MESSAGE_RESULT.format(dealer.name) + getResults.toDisplay())
-    }
-
-    fun printDealerDrawGuide() {
-        println(MESSAGE_DRAW_DEALER)
     }
 
     fun printScore(participant: Participant) {
@@ -77,12 +67,14 @@ class OutputView {
         }
     }
 
-    private fun GameResult.toDisplay(): String {
-        return when (this) {
-            WIN -> "Win"
-            LOSE -> "Lose"
-            DRAW -> "Draw"
-        }
+    fun GambleResult.toDisplay(): String {
+        val parts = mutableListOf<String>()
+
+        if (win > 0) parts += "$win Win"
+        if (lose > 0) parts += "$lose Lose"
+        if (draw > 0) parts += "$draw Draw"
+
+        return parts.joinToString(" ")
     }
 
     companion object {

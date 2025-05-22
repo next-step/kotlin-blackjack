@@ -26,17 +26,10 @@ class Casino(
         participants.forEach { turn(it, deck) }
         participants.forEach { outputView.printScore(it) }
 
-        val winningResult = WinningResult()
+        val winningResult = WinningResult(dealer)
         participants.forEach {
-            when (it) {
-                is Player -> {
-                    val result = winningResult.versus(dealer, it)
-                    outputView.printResult(it, result)
-                }
-                is Dealer -> {
-                    outputView.printDealerResult(it, winningResult.getResult())
-                }
-            }
+            val result = winningResult.versus(it)
+            outputView.printResult(it, result)
         }
     }
 
