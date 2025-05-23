@@ -31,14 +31,16 @@ class WinningResult(private val participant: Participant) {
 
     private fun compare(player: Participant): GameResult {
         return when (participant.state) {
-            is Bust -> LOSE
+            is Bust -> if (player.state is Bust) WIN else LOSE
             is Blackjack -> if (player.state is Blackjack) DRAW else WIN
             is Stay ->
                 when {
+                    player.state is Bust -> WIN
                     participant.score() < player.score() -> LOSE
                     participant.score() == player.score() -> DRAW
                     else -> WIN
                 }
+
             else -> throw IllegalStateException()
         }
     }
