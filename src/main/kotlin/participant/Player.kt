@@ -5,7 +5,7 @@ import state.State
 
 class Player(name: String, override var state: State) : Participant(name) {
     override fun showCardFirst(): List<PlayingCard> {
-        return state.hand.cards
+        return state.cards
     }
 
     override fun wantDraw(): Boolean {
