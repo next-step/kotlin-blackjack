@@ -1,3 +1,5 @@
+package card
+
 enum class Denomination(val score: Int) {
     ACE(1),
     TWO(2),

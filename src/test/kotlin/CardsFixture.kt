@@ -1,3 +1,7 @@
+import card.Denomination
+import card.PlayingCard
+import card.Suit
+
 val CLUB_SEVEN: PlayingCard = PlayingCard.of(Suit.CLUB, Denomination.SEVEN)
 val CLUB_THREE: PlayingCard = PlayingCard.of(Suit.CLUB, Denomination.THREE)
 val CLUB_TWO: PlayingCard = PlayingCard.of(Suit.CLUB, Denomination.TWO)

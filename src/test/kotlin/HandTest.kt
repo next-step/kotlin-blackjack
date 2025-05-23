@@ -1,16 +1,8 @@
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
-import org.junit.jupiter.api.assertThrows
 
 class HandTest {
-    @Test
-    fun `Throw exception when hand has cards less than 2`() {
-        assertThrows<IllegalArgumentException> {
-            Hand(listOf(CLUB_SEVEN))
-        }
-    }
-
     @Test
     fun `Create Hand when hand has cards more than 2`() {
         assertDoesNotThrow {
@@ -126,6 +118,20 @@ class HandTest {
 
         // when
         val actual = hand.isBust()
+
+        // then
+        assertThat(actual).isEqualTo(expected)
+    }
+
+    @Test
+    fun `Return blackjack when the card size is 2 and sum is 21`() {
+        // given
+        val cards = listOf(CLUB_KING, CLUB_ACE)
+        val hand = Hand(cards)
+        val expected = true
+
+        // when
+        val actual = hand.isBlackjack()
 
         // then
         assertThat(actual).isEqualTo(expected)

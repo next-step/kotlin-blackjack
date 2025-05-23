@@ -1,3 +1,5 @@
+package card
+
 data class PlayingCard private constructor(val suit: Suit, val denomination: Denomination) {
     companion object {
         val ALL =

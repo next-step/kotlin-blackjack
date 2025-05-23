@@ -1,27 +1,57 @@
 package view
 
+import GambleResult
+import GameResult
+import GameResult.DRAW
+import GameResult.LOSE
+import GameResult.WIN
 import Hand
-import Player
-import PlayingCard
-import Suit
+import card.PlayingCard
+import card.Suit
+import participant.Dealer
+import participant.Participant
+import participant.Player
 
 class OutputView {
-    fun printScore(player: Player) {
-        print(MESSAGE_PLAYER_CARD.format(player.name, player.hand.toDisplay()))
-        println(MESSAGE_SCORE.format(player.hand.score()))
+    fun printResult(
+        participant: Participant,
+        result: GambleResult,
+    ) {
+        println(MESSAGE_FINAL_RESULT)
+        println(MESSAGE_RESULT.format(participant.name) + result.toDisplay())
     }
 
-    fun printPlayerCards(player: Player) {
-        println(MESSAGE_PLAYER_CARD.format(player.name, player.hand.toDisplay()))
+    fun printScore(participant: Participant) {
+        print(MESSAGE_PLAYER_CARD.format(participant.name, participant.state.hand.toDisplay()))
+        println(MESSAGE_SCORE.format(participant.score()))
     }
 
-    fun printFirstTurn(players: List<Player>) {
-        println(MESSAGE_DEALING_CARDS.format(players.map { it.name }.joinToString()))
-        players.forEach { printPlayerCards(it) }
+    fun printPlayerCards(participant: Participant) {
+        when (participant) {
+            is Dealer -> {
+                println(MESSAGE_DRAW_DEALER)
+            }
+            is Player -> {
+                println(MESSAGE_PLAYER_CARD.format(participant.name, participant.showCardFirst().toDisplay()))
+            }
+        }
+    }
+
+    fun printFirstTurn(participants: List<Participant>) {
+        println(MESSAGE_DEALING_CARDS.format(participants.joinToString { it.name }))
+        participants.forEach { printPlayerCards(it) }
+    }
+
+    private fun List<PlayingCard>.toDisplay(): String {
+        return this.map { it.toDisplay() }.toString()
     }
 
     private fun Hand.toDisplay(): String {
         return this.cards.map { it.toDisplay() }.toString()
+    }
+
+    private fun Map<GameResult, Int>.toDisplay(): String {
+        return MESSAGE_RESULTS.format(this[WIN], this[LOSE], this[DRAW])
     }
 
     private fun PlayingCard.toDisplay(): String {
@@ -37,9 +67,23 @@ class OutputView {
         }
     }
 
+    fun GambleResult.toDisplay(): String {
+        val parts = mutableListOf<String>()
+
+        if (win > 0) parts += "$win Win"
+        if (lose > 0) parts += "$lose Lose"
+        if (draw > 0) parts += "$draw Draw"
+
+        return parts.joinToString(" ")
+    }
+
     companion object {
         private const val MESSAGE_DEALING_CARDS = "Dealing two cards to %s"
         private const val MESSAGE_PLAYER_CARD = "%s's cards: %s"
         private const val MESSAGE_SCORE = "– Total: %d"
+        private const val MESSAGE_DRAW_DEALER = "Dealer draws one more card due to having 16 or less."
+        private const val MESSAGE_FINAL_RESULT = "## Final Results"
+        private const val MESSAGE_RESULT = "%s: "
+        private const val MESSAGE_RESULTS = "%d Win %d Lose %d Draw"
     }
 }

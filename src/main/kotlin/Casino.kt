@@ -1,3 +1,10 @@
+import card.Deck
+import card.PlayingCard
+import participant.Dealer
+import participant.Participant
+import participant.Player
+import state.Bust
+import state.FirstTurn
 import view.InputView
 import view.OutputView
 
@@ -8,22 +15,37 @@ class Casino(
     fun run() {
         val deck = Deck(PlayingCard.ALL.shuffled())
         val names = inputView.getPlayerNames()
-        val players = names.map { Player(it, Hand(deck.drawCard(2))) }
-        outputView.printFirstTurn(players)
+        val players = names.map { Player(it, FirstTurn(Hand(emptyList()))) }
+        val dealer = Dealer(state = FirstTurn(Hand(emptyList())))
 
-        players.forEach { turn(it, deck) }
-        players.forEach { outputView.printScore(it) }
+        val participants: List<Participant> = players + dealer
+        repeat(2) { participants.forEach { it.drawCard(deck.drawOne()) } }
+
+        outputView.printFirstTurn(participants)
+
+        participants.forEach { turn(it, deck) }
+        participants.forEach { outputView.printScore(it) }
+
+        val winningResult = WinningResult(dealer)
+        participants.forEach {
+            val result = winningResult.versus(it)
+            outputView.printResult(it, result)
+        }
     }
 
     private fun turn(
-        player: Player,
+        participant: Participant,
         deck: Deck,
     ) {
         while (true) {
-            val response = inputView.getResponse(player.name)
-            if (!response || player.hand.isBust()) return
-            player.drawCard(deck.drawCard(1).first())
-            outputView.printPlayerCards(player)
+            val response = inputView.getResponse(participant)
+            if (!response || !participant.wantDraw()) {
+                participant.stay()
+                return
+            }
+            participant.drawCard(deck.drawOne())
+            outputView.printPlayerCards(participant)
+            if (participant.state is Bust) return
         }
     }
 }
