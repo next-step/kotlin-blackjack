@@ -1,5 +1,6 @@
 package view
 
+import domain.GameResult
 import domain.Participant
 import domain.Player
 import domain.Players
@@ -11,7 +12,7 @@ class OutputView {
         }
 
         fun printFirstCard(players: Players) {
-            println("딜러와 ${players.players.map(Player::name).joinToString(", ")}에게 2장의 카드를 나누었습니다.")
+            println("딜러와 ${players.players.joinToString(", ", transform = Player::name)}에게 2장의 카드를 나누었습니다.")
         }
 
         fun printCardStatusOnFirstRound(participant: Participant) {
@@ -30,28 +31,16 @@ class OutputView {
             println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
         }
 
-        // 결과 출력 카드 합산한 결과까지
-        fun printRoundResult(player: Player) {
-            println("${player.name}카드: ${player.cards} - 결과: ${player.cards.calculateScore()}")
+        fun printRoundResult(participant: Participant) {
+            println("${participant.name}카드: ${participant.cards} - 결과: ${participant.cards.calculateScore()}")
         }
 
-        // 최종 승패 출력
-        fun printFinalResult(
-            players: Players,
-            dealer: Player,
-        ) {
+        fun printFinalResult(gameResult: GameResult) {
             println("## 최종 승패")
-            for (player in players.players) {
-                val result =
-                    when {
-                        player.cards.isBust() -> "패"
-                        dealer.cards.isBust() -> "승"
-                        player.cards.calculateScore() > dealer.cards.calculateScore() -> "승"
-                        player.cards.calculateScore() < dealer.cards.calculateScore() -> "패"
-                        else -> "무승부"
-                    }
-                println("${player.name}: $result")
-            }
+            println("딜러: ${gameResult.loser.players.size} 승 ${gameResult.winner.players.size} 패 ${gameResult.drawer.players.size} 무")
+            gameResult.winner.players.forEach { player -> println("${player.name}: 승") }
+            gameResult.loser.players.forEach { player -> println("${player.name}: 패") }
+            gameResult.drawer.players.forEach { player -> println("${player.name}: 무") }
         }
     }
 }

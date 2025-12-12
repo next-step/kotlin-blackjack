@@ -1,5 +1,6 @@
 import domain.CardDeck
 import domain.Dealer
+import domain.GameResult
 import domain.Players
 import view.InputView
 import view.OutputView
@@ -37,4 +38,13 @@ fun main() {
             }
         }
     }
+
+    if (dealer.cards.calculateScore() < 17) {
+        OutputView.printDealerMustGetCard()
+        dealer.cards.addCard(deck.drawCard())
+    }
+
+    players.players.forEach { OutputView.printRoundResult(it) }
+    OutputView.printRoundResult(dealer)
+    OutputView.printFinalResult(GameResult.of(dealer, players))
 }
