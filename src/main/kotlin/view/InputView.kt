@@ -6,8 +6,8 @@ fun String?.ifNullEmpty(): String {
 
 class InputView {
     companion object {
-        fun inputPlayerNames(): List<String>? {
-            return readln().ifNullEmpty().split(",")
+        fun inputPlayerNames(): List<String> {
+            return readln().ifNullEmpty().split(",").map { it -> it.trim() }
         }
     }
 }
