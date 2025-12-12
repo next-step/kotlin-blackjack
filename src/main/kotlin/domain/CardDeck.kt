@@ -9,8 +9,8 @@ class CardDeck {
 
     private fun reset() {
         cards.clear()
-        for (suit in Suit.values()) {
-            for (rank in Rank.values()) {
+        for (suit in Suit.entries) {
+            for (rank in Rank.entries) {
                 cards.add(Card(suit, rank))
             }
         }
@@ -22,13 +22,7 @@ class CardDeck {
     }
 
     fun drawCard(): Card {
-        if (cards.isEmpty()) {
-            throw IllegalStateException("덱에 카드가 없습니다")
-        }
+        check(cards.isNotEmpty()) { "덱에 카드가 없습니다" }
         return cards.removeAt(cards.size - 1)
     }
-
-    fun remainingCards(): Int = cards.size
-
-    fun isEmpty(): Boolean = cards.isEmpty()
 }
