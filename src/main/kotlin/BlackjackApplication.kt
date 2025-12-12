@@ -19,9 +19,9 @@ fun main() {
 
     // 분배된 카드정보 출력
     println("딜러와 ${players.joinToString(", ") { it.name }}에게 2장의 나누었습니다.")
-    println("딜러: ${dealer.blackjackCards.printCards()}")
+    println("딜러: ${dealer.blackjackCards.displayCardInfo()}")
     players.forEach {
-        println("${it.name}카드: ${it.blackjackCards.printCards()}")
+        println("${it.name}카드: ${it.blackjackCards.displayCardInfo()}")
     }
     println()
 

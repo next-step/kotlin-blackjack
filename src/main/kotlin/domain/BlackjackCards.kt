@@ -1,7 +1,7 @@
 package domain
 
 class BlackjackCards() {
-    private val cards: MutableList<Card> = mutableListOf()
+    val cards: MutableList<Card> = mutableListOf()
 
     companion object {
         const val BLACKJACK_MAX_SCORE = 21
@@ -23,7 +23,7 @@ class BlackjackCards() {
         return total
     }
 
-    fun printCards(): String {
+    fun displayCardInfo(): String {
         return cards.joinToString(", ") { it.toString() }
     }
 }
