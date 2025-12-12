@@ -8,6 +8,11 @@
     - 매개변수가 정확히 하나여야 함
     - 가변인자(vararg)나 기본값을 가지면 안됨
 
+## kotest 학습
+- should 와 shouldBe 의 차이
+  - should : 확장 함수 + 매처를 연결하는 DSL
+  - shouldBe : 값 비교 매처(assert), 앞 뒤의 동등성 비교
+
 # 블랙잭 1단계
 
 ## 기능 요구사항
