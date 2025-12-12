@@ -1,7 +1,7 @@
 package domain
 
 class Player(val name: String, val cards: MutableList<Card> = mutableListOf()) {
-    fun addCard(card: Card) {
+    fun receiveCard(card: Card) {
         cards.add(card)
     }
 }
