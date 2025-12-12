@@ -13,5 +13,18 @@ class InputView {
                 .map { Player(it) }
                 .toSet()
         }
+
+        fun inputAdditionalCard(player: Player): Boolean {
+            println("${player.name}는 한장의 카드를 더 받겠습니까? (예는 y, 아니오는 n)")
+            val input = readln().trim().uppercase()
+            return when (input) {
+                "Y" -> true
+                "N" -> false
+                else -> {
+                    println("잘못된 입력입니다. Y 또는 N을 입력해주세요.")
+                    inputAdditionalCard(player)
+                }
+            }
+        }
     }
 }
