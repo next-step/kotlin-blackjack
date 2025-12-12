@@ -1,7 +1,11 @@
+import domain.CardDeck
+import domain.Dealer
 import presentation.InputView
 
-fun main(args: Array<String>) {
-    println("Welcome to the Blackjack Game!")
+fun main() {
+    val dealer = Dealer()
     val players = InputView.inputPlayers()
     println(players)
+
+    val deck = CardDeck()
 }
