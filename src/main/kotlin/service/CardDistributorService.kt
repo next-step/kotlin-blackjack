@@ -5,14 +5,17 @@ import domain.Dealer
 import domain.Player
 import presentation.InputView
 
-class CardDistributorService(val cardDeck: CardDeck) {
+class CardDistributorService(private val cardDeck: CardDeck) {
     companion object {
         const val PLAYER_CARD_COUNT = 2
         const val DEALER_CARD_COUNT = 2
         const val DEALER_ADDITIONAL_CARD_THRESHOLD = 16
     }
 
-    fun distributeCards(players: Set<Player>, dealer: Dealer) {
+    fun distributeCards(
+        players: Set<Player>,
+        dealer: Dealer,
+    ) {
         // 플레이어에게 카드 분배
         players.forEach { player ->
             repeat(PLAYER_CARD_COUNT) {
@@ -22,8 +25,7 @@ class CardDistributorService(val cardDeck: CardDeck) {
         }
 
         // 딜러에게 카드 분배
-        repeat(DEALER_CARD_COUNT)
-        {
+        repeat(DEALER_CARD_COUNT) {
             val card = cardDeck.drawCard()
             dealer.receiveCard(card)
         }
@@ -35,14 +37,13 @@ class CardDistributorService(val cardDeck: CardDeck) {
         // 3. 카드 점수가 21 이하이면 추가 카드 발급 여부를 묻고, Y인 경우 카드를 한 장 더 발급
         while (true) {
             val inputAdditionalCard = InputView.inputAdditionalCard(player)
-            if (inputAdditionalCard) {
-                val card = cardDeck.drawCard()
-                player.receiveCard(card)
-
-                println("${player.name}카드: ${player.backjackCards.printCards()}")
-            } else {
+            if (!inputAdditionalCard) {
                 break
             }
+            val card = cardDeck.drawCard()
+            player.receiveCard(card)
+
+            println("${player.name}카드: ${player.blackjackCards.printCards()}")
         }
     }
 
@@ -50,7 +51,7 @@ class CardDistributorService(val cardDeck: CardDeck) {
         // 1. 딜러의 카드 점수를 계산
         // 2. 카드 점수가 17 미만이면 카드를 한 장 더 발급
         // 3. 카드 점수가 17 이상이면 종료
-        val dealerScore = dealer.backjackCards.calculateScore()
+        val dealerScore = dealer.blackjackCards.calculateScore()
         if (dealerScore > DEALER_ADDITIONAL_CARD_THRESHOLD) {
             return
         }

@@ -20,10 +20,13 @@ class ResultView {
             }
         }
 
-        fun printParticipantCardResult(players: Set<Player>, dealer: Dealer) {
-            println("딜러 카드: ${dealer.backjackCards.printCards()} - 결과: ${dealer.backjackCards.calculateScore()}")
+        fun printParticipantCardResult(
+            players: Set<Player>,
+            dealer: Dealer,
+        ) {
+            println("딜러 카드: ${dealer.blackjackCards.printCards()} - 결과: ${dealer.blackjackCards.calculateScore()}")
             players.forEach { player ->
-                println("${player.name} 카드: ${player.backjackCards.printCards()} - 결과: ${player.backjackCards.calculateScore()}")
+                println("${player.name} 카드: ${player.blackjackCards.printCards()} - 결과: ${player.blackjackCards.calculateScore()}")
             }
         }
     }
