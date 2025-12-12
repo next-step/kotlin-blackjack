@@ -9,5 +9,10 @@ class InputView {
         fun inputPlayerNames(): List<String> {
             return readln().ifNullEmpty().split(",").map { it -> it.trim() }
         }
+
+        fun inputIsContinue(): Boolean {
+            val input = readln().ifNullEmpty().trim().lowercase()
+            return input == "y"
+        }
     }
 }

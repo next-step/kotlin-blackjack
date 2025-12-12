@@ -4,22 +4,22 @@ import org.assertj.core.api.Assertions.assertThat
 import kotlin.test.Test
 
 class DslTest {
-
     @Test
     fun fullIntroduce() {
-        val person = introduce {
-            name("윤주리")
-            company("우아한형제들")
-            skills {
-                soft("A passion for problem solving")
-                soft("Good communication skills")
-                hard("Kotlin")
+        val person =
+            introduce {
+                name("윤주리")
+                company("우아한형제들")
+                skills {
+                    soft("A passion for problem solving")
+                    soft("Good communication skills")
+                    hard("Kotlin")
+                }
+                languages {
+                    "Korean" level 5
+                    "English" level 3
+                }
             }
-            languages {
-                "Korean" level 5
-                "English" level 3
-            }
-        }
         assertThat(person.name).isEqualTo("윤주리")
         assertThat(person.company).isEqualTo("우아한형제들")
         assertThat(person.skills.soft).containsExactly("A passion for problem solving", "Good communication skills")
@@ -88,14 +88,14 @@ data class Person(
     val name: String,
     val company: String?,
     val skills: Skills = Skills(),
-    val languages: Languages = Languages()
+    val languages: Languages = Languages(),
 )
 
 data class Skills(
     val soft: List<String> = emptyList(),
-    val hard: List<String> = emptyList()
+    val hard: List<String> = emptyList(),
 )
 
 data class Languages(
-    val items: Map<String, Int> = emptyMap()
+    val items: Map<String, Int> = emptyMap(),
 )
