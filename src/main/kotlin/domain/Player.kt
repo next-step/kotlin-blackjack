@@ -1,11 +1,11 @@
 package domain
 
-class Player(val name: String, val backjackCards: BackjackCards = BackjackCards()) {
+class Player(val name: String, val blackjackCards: BlackjackCards = BlackjackCards()) {
     fun receiveCard(card: Card) {
-        backjackCards.receiveCard(card)
+        blackjackCards.receiveCard(card)
     }
 
     fun score(): Int {
-        return backjackCards.calculateScore()
+        return blackjackCards.calculateScore()
     }
 }

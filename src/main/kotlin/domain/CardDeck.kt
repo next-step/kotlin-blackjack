@@ -1,7 +1,7 @@
 package domain
 
 class CardDeck {
-    val cards: MutableList<Card> = mutableListOf()
+    private val cards: MutableList<Card> = mutableListOf()
 
     init {
         for (suit in Suit.entries) {

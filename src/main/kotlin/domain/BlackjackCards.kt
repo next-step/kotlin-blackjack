@@ -1,6 +1,6 @@
 package domain
 
-class BackjackCards() {
+class BlackjackCards() {
     private val cards: MutableList<Card> = mutableListOf()
 
     companion object {
@@ -16,7 +16,7 @@ class BackjackCards() {
         var aceCount = cards.count { it.value == CardValue.ACE }
 
         while (total > BLACKJACK_MAX_SCORE && aceCount > 0) {
-            total -= 10   // ACE 11 → 1 변경
+            total -= 10 // ACE 11 → 1 변경
             aceCount--
         }
 
