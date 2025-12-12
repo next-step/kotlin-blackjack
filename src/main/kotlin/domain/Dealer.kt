@@ -1,7 +1,11 @@
 package domain
 
-class Dealer(val cards: MutableList<Card> = mutableListOf()) {
+class Dealer(val backjackCards: BackjackCards = BackjackCards()) {
     fun receiveCard(card: Card) {
-        cards.add(card)
+        backjackCards.receiveCard(card)
+    }
+
+    fun score(): Int {
+        return backjackCards.calculateScore()
     }
 }
