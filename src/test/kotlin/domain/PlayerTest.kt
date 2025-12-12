@@ -13,4 +13,14 @@ class PlayerTest : FreeSpec({
             exception.message shouldBe "참가자 이름은 빈 값일 수 없습니다."
         }
     }
+
+    "참가자 첫번째 라운드 카드 뽑기" {
+        val cardDeck = CardDeck()
+        val player = Player("player")
+        repeat(2) {
+            player.cards.addCard(cardDeck.drawCard())
+        }
+
+        player.getPublicCardsOnFirstRound().cards().size shouldBe 2
+    }
 })
