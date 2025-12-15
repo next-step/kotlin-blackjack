@@ -4,14 +4,26 @@ import domain.Player
 
 class InputView {
     companion object {
-        fun inputPlayers(): Set<Player> {
-            println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)")
-            return readln()
-                .split(",")
-                .map { it.trim() }
-                .filter { it.isNotEmpty() }
-                .map { Player(it) }
-                .toSet()
+        /**
+         * 플레이어를 입력받으며, 정확하게 입력되지 않는 경우 반복됩니다.
+         */
+        fun readPlayers(): Set<Player> {
+            do {
+                println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)")
+                val players = readln()
+                    .split(",")
+                    .map { it.trim() }
+                    .filter { it.isNotEmpty() }
+                    .map { Player(it) }
+                    .toSet()
+
+                if (players.isNotEmpty()) {
+                    return players
+                }
+
+                println("오류: 한 명 이상의 유효한 플레이어 이름을 쉼표로 구분하여 다시 입력해 주세요.\n")
+
+            } while(true)
         }
 
         fun inputAdditionalCard(player: Player): Boolean {

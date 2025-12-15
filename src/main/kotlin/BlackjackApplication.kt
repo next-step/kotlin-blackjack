@@ -2,7 +2,7 @@ import domain.CardDeck
 import domain.Dealer
 import presentation.InputView
 import presentation.ResultView
-import service.BlackjackWinnerService
+import service.BlackjackResultCalculator
 import service.CardDistributorService
 
 fun main() {
@@ -10,7 +10,7 @@ fun main() {
     val dealer = Dealer()
 
     // 플레이어 입력 및 초기화
-    val players = InputView.inputPlayers()
+    val players = InputView.readPlayers()
     println()
 
     // 카드 분배 : 플레이어, 딜러
@@ -36,7 +36,7 @@ fun main() {
     println()
 
     // 최종 승패 출력
-    val blackjackWinnerService = BlackjackWinnerService()
-    val result = blackjackWinnerService.winner(players, dealer)
+    val blackjackResultCalculator = BlackjackResultCalculator()
+    val result = blackjackResultCalculator.determineWinStatus(players, dealer)
     ResultView.printWinnerResult(result)
 }

@@ -5,9 +5,9 @@ class Dealer(val blackjackCards: BlackjackCards = BlackjackCards()) {
 
     fun score(): Int = blackjackCards.calculateScore()
 
-    fun cardSize() = blackjackCards.cards.size
+    fun cardSize() = blackjackCards.getCards().size
 
     fun getOneVisibleCardInfo(): String {
-        return blackjackCards.cards.firstOrNull()?.toString() ?: "카드 없음"
+        return blackjackCards.getCards().firstOrNull()?.toString() ?: "카드 없음"
     }
 }

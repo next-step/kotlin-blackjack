@@ -5,5 +5,5 @@ class Player(val name: String, val blackjackCards: BlackjackCards = BlackjackCar
 
     fun score(): Int = blackjackCards.calculateScore()
 
-    fun cardSize() = blackjackCards.cards.size
+    fun cardSize() = blackjackCards.getCards().size
 }

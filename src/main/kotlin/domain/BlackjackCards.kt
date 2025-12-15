@@ -1,19 +1,19 @@
 package domain
 
 class BlackjackCards() {
-    val cards: MutableList<Card> = mutableListOf()
+    private val _cards: MutableList<Card> = mutableListOf()
 
     companion object {
         const val BLACKJACK_MAX_SCORE = 21
     }
 
     fun receiveCard(card: Card) {
-        cards.add(card)
+        _cards.add(card)
     }
 
     fun calculateScore(): Int {
-        var total = cards.sumOf { it.value.basicScore }
-        var aceCount = cards.count { it.value == CardValue.ACE }
+        var total = _cards.sumOf { it.value.basicScore }
+        var aceCount = _cards.count { it.value == CardValue.ACE }
 
         while (total > BLACKJACK_MAX_SCORE && aceCount > 0) {
             total -= 10 // ACE 11 → 1 변경
@@ -24,6 +24,10 @@ class BlackjackCards() {
     }
 
     fun displayCardInfo(): String {
-        return cards.joinToString(", ") { it.toString() }
+        return _cards.joinToString(", ") { it.toString() }
+    }
+
+    fun getCards(): List<Card> {
+        return _cards.toList()
     }
 }

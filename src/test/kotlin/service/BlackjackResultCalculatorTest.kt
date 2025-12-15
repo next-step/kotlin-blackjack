@@ -3,14 +3,15 @@ package service
 import domain.Card
 import domain.CardValue
 import domain.Dealer
+import domain.GameOutcome
 import domain.Player
 import domain.Suit
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 
-class BlackjackWinnerServiceTest {
-    private val blackjackWinnerService = BlackjackWinnerService()
+class BlackjackResultCalculatorTest {
+    private val blackjackResultCalculator = BlackjackResultCalculator()
 
     @Test
     @DisplayName("딜러보다 높은 점수를 가진 플레이어가 승리한다.")
@@ -32,11 +33,11 @@ class BlackjackWinnerServiceTest {
         val players = setOf(player, player2)
 
         // when
-        val winner = blackjackWinnerService.winner(players, dealer)
+        val winner = blackjackResultCalculator.determineWinStatus(players, dealer)
 
         // then
-        assertThat(winner[player]).isTrue()
-        assertThat(winner[player2]).isFalse()
+        assertThat(winner[player]).isEqualTo(GameOutcome.WIN)
+        assertThat(winner[player2]).isEqualTo(GameOutcome.LOSE)
     }
 
     @Test
@@ -56,9 +57,9 @@ class BlackjackWinnerServiceTest {
         val players = setOf(player)
 
         // when
-        val winner = blackjackWinnerService.winner(players, dealer)
+        val winner = blackjackResultCalculator.determineWinStatus(players, dealer)
 
         // then
-        assertThat(winner[player]).isFalse()
+        assertThat(winner[player]).isEqualTo(GameOutcome.LOSE)
     }
 }
