@@ -18,11 +18,7 @@ fun main() {
     cardDistributorService.distributeCards(players, dealer)
 
     // 분배된 카드정보 출력
-    println("딜러와 ${players.joinToString(", ") { it.name }}에게 2장의 나누었습니다.")
-    println("딜러: ${dealer.blackjackCards.displayCardInfo()}")
-    players.forEach {
-        println("${it.name}카드: ${it.blackjackCards.displayCardInfo()}")
-    }
+    ResultView.printDistributedCardInfos(players, dealer);
     println()
 
     // 플레이어에게 카드 추가 발급 여부 묻기
