@@ -13,9 +13,7 @@ class CardDeck {
     }
 
     fun drawCard(): Card {
-        if (cards.isEmpty()) {
-            throw IllegalStateException("카드가 더이상 없습니다.")
-        }
-        return cards.removeAt(0)
+        check(cards.isEmpty()) { "카드가 더이상 없습니다." }
+        return cards.removeAt(cards.size - 1)
     }
 }
