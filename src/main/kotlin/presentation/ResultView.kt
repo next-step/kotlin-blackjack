@@ -25,9 +25,9 @@ class ResultView {
             players: Set<Player>,
             dealer: Dealer,
         ) {
-            println("딜러 카드: ${dealer.blackjackCards.displayCardInfo()} - 결과: ${dealer.blackjackCards.calculateScore()}")
+            println("딜러 카드: ${dealer.displayCardInfo()} - 결과: ${dealer.calculateScore()}")
             players.forEach { player ->
-                println("${player.name} 카드: ${player.blackjackCards.displayCardInfo()} - 결과: ${player.blackjackCards.calculateScore()}")
+                println("${player.name} 카드: ${player.displayCardInfo()} - 결과: ${player.calculateScore()}")
             }
         }
 
