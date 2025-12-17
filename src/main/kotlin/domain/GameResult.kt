@@ -1,9 +1,15 @@
 package domain
 
-data class GameResult(val winner: Players, val loser: Players, val drawer: Players) {
-
+class GameResult(
+    val winner: Players,
+    val loser: Players,
+    val drawer: Players,
+) {
     companion object {
-        fun of(dealer: Dealer, players: Players): GameResult {
+        fun of(
+            dealer: Dealer,
+            players: Players,
+        ): GameResult {
             val winner: MutableList<Player> = mutableListOf()
             val loser: MutableList<Player> = mutableListOf()
             val drawer: MutableList<Player> = mutableListOf()
