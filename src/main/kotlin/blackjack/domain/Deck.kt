@@ -1,9 +1,9 @@
 package blackjack.domain
 
 class Deck {
-    private val _cards = mutableSetOf<Card>()
+    private val _cards = mutableListOf<Card>()
 
-    val cards: Set<Card>
+    val cards: List<Card>
         get() = _cards
 
     init {
@@ -18,7 +18,7 @@ class Deck {
 
     fun pop(): Card = _cards.pop()
 
-    private fun MutableSet<Card>.pop(): Card {
+    private fun MutableList<Card>.pop(): Card {
         val firstCard = first()
         remove(firstCard)
         return firstCard

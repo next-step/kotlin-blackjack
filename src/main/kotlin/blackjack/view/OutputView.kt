@@ -1,5 +1,6 @@
 package blackjack.view
 
+import blackjack.domain.DEALER_ADD_CARD_BASE_SCORE
 import blackjack.domain.Dealer
 import blackjack.domain.Participant
 import blackjack.domain.RecordType
@@ -9,7 +10,7 @@ object OutputView {
 
     fun dealerInitialCardList(player: Dealer) = println("${player.name}카드: ${player.cards.take(1).joinToString { it.toString() }}")
 
-    fun dealerAdditionalCondition() = println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
+    fun dealerAdditionalCondition() = println("딜러는 ${DEALER_ADD_CARD_BASE_SCORE}이하라 한장의 카드를 더 받았습니다.")
 
     fun cardList(participant: Participant) = println(createCardListMessage(participant))
 
