@@ -18,7 +18,7 @@ fun main() {
     cardDistributorService.distributeCards(players, dealer)
 
     // 분배된 카드정보 출력
-    ResultView.printDistributedCardInfos(players, dealer);
+    ResultView.printDistributedCardInfos(players, dealer)
     println()
 
     // 플레이어에게 카드 추가 발급 여부 묻기

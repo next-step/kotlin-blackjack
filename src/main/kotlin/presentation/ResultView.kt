@@ -30,7 +30,10 @@ class ResultView {
             }
         }
 
-        fun printDistributedCardInfos(players: Set<Player>, dealer: Dealer) {
+        fun printDistributedCardInfos(
+            players: Set<Player>,
+            dealer: Dealer,
+        ) {
             println("딜러와 ${players.joinToString(", ") { it.name }}에게 2장의 나누었습니다.")
 
             // 딜러 카드 출력 : 한장만 출력
