@@ -1,5 +1,6 @@
 package view
 
+import domain.Dealer
 import domain.GameResult
 import domain.Participant
 import domain.Player
@@ -15,7 +16,15 @@ class OutputView {
             println("딜러와 ${players.players.joinToString(", ", transform = Player::name)}에게 2장의 카드를 나누었습니다.")
         }
 
-        fun printCardStatusOnFirstRound(participant: Participant) {
+        fun printCardStatusOnFirstRound(
+            dealer: Dealer,
+            players: Players,
+        ) {
+            printCardStatusOnFirstRound(dealer)
+            players.players.forEach { printCardStatusOnFirstRound(it) }
+        }
+
+        private fun printCardStatusOnFirstRound(participant: Participant) {
             println("${participant.name}카드: ${participant.getPublicCardsOnFirstRound()}")
         }
 
