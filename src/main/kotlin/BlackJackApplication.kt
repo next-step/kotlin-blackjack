@@ -1,5 +1,3 @@
-import domain.BLACKJACK_SCORE
-import domain.DEALER_STAND_SCORE
 import domain.Dealer
 import domain.GameResult
 import domain.Players
@@ -24,7 +22,7 @@ fun main() {
             if (InputView.inputIsContinue()) {
                 blackjackGameService.drawCards(player)
                 OutputView.printCardStatus(player)
-                if (player.cards.calculateScore() >= BLACKJACK_SCORE) {
+                if (!player.isDrawAvailable()) {
                     break
                 }
             } else {
@@ -33,7 +31,7 @@ fun main() {
         }
     }
 
-    if (dealer.cards.calculateScore() < DEALER_STAND_SCORE) {
+    if (dealer.isDrawAvailable()) {
         OutputView.printDealerMustGetCard()
         blackjackGameService.drawCards(dealer)
     }

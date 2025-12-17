@@ -8,4 +8,6 @@ class Dealer(override val cards: Cards = Cards()) : Participant {
     override fun getPublicCardsOnFirstRound(): Cards {
         return Cards(cards.cards().take(1).toMutableList())
     }
+
+    override fun isDrawAvailable(): Boolean = cards.calculateScore() < DEALER_STAND_SCORE
 }
