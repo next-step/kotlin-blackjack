@@ -14,7 +14,7 @@ class Cards(private val cards: MutableList<Card> = mutableListOf()) {
     }
 
     fun isBust(): Boolean {
-        return calculateScoreTreatAceAsOne() > 21
+        return calculateScoreTreatAceAsOne() > BLACKJACK_SCORE
     }
 
     /**
@@ -37,7 +37,7 @@ class Cards(private val cards: MutableList<Card> = mutableListOf()) {
                 }
         }
 
-        while (total > 21 && aceCount > 0) {
+        while (total > BLACKJACK_SCORE && aceCount > 0) {
             total -= 10
             aceCount--
         }

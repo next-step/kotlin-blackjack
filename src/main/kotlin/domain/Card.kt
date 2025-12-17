@@ -1,5 +1,7 @@
 package domain
 
+const val BLACKJACK_SCORE = 21
+
 enum class Suit(val korean: String) {
     SPADE("스페이드"),
     HEART("하트"),

@@ -1,5 +1,7 @@
 package domain
 
+const val DEALER_STAND_SCORE = 17
+
 class Dealer(override val cards: Cards = Cards()) : Participant {
     override val name: String = "딜러"
 

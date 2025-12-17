@@ -1,4 +1,6 @@
+import domain.BLACKJACK_SCORE
 import domain.CardDeck
+import domain.DEALER_STAND_SCORE
 import domain.Dealer
 import domain.GameResult
 import domain.Players
@@ -15,9 +17,7 @@ fun main() {
 
     repeat(2) {
         dealer.cards.addCard(deck.drawCard())
-        players.players.forEach { player ->
-            player.cards.addCard(deck.drawCard())
-        }
+        players.players.forEach { player -> player.cards.addCard(deck.drawCard()) }
     }
 
     OutputView.printFirstCard(players)
@@ -30,7 +30,7 @@ fun main() {
             if (InputView.inputIsContinue()) {
                 player.cards.addCard(deck.drawCard())
                 OutputView.printCardStatus(player)
-                if (player.cards.calculateScoreTreatAceAsOne() >= 21) {
+                if (player.cards.calculateScoreTreatAceAsOne() >= BLACKJACK_SCORE) {
                     break
                 }
             } else {
@@ -39,7 +39,7 @@ fun main() {
         }
     }
 
-    if (dealer.cards.calculateScore() < 17) {
+    if (dealer.cards.calculateScore() < DEALER_STAND_SCORE) {
         OutputView.printDealerMustGetCard()
         dealer.cards.addCard(deck.drawCard())
     }
