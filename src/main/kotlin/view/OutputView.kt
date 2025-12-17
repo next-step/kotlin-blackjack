@@ -31,14 +31,14 @@ object OutputView {
     }
 
     fun printRoundResult(participant: Participant) {
-        println("${participant.name}카드: ${participant.cards} - 결과: ${participant.cards.calculateScore()}")
+        println("${participant.name}카드: ${participant.cards} - 결과: ${participant.calculateScore()}")
     }
 
     fun printFinalResult(gameResult: GameResult) {
         println("## 최종 승패")
-        println("딜러: ${gameResult.loser.players.size} 승 ${gameResult.winner.players.size} 패 ${gameResult.drawer.players.size} 무")
-        gameResult.winner.players.forEach { player -> println("${player.name}: 승") }
-        gameResult.loser.players.forEach { player -> println("${player.name}: 패") }
-        gameResult.drawer.players.forEach { player -> println("${player.name}: 무") }
+        println("딜러: ${gameResult.losers.size} 승 ${gameResult.winners.size} 패 ${gameResult.draws.size} 무")
+        gameResult.winners.forEach { player -> println("${player.name}: 승") }
+        gameResult.losers.forEach { player -> println("${player.name}: 패") }
+        gameResult.draws.forEach { player -> println("${player.name}: 무") }
     }
 }

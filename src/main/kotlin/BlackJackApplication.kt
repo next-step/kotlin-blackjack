@@ -1,3 +1,4 @@
+import domain.BlackJackConstants
 import domain.CardDeck
 import domain.Dealer
 import domain.GameResult
@@ -11,7 +12,7 @@ fun main() {
     drawPlayerCards(players, deck)
     drawDealerCards(dealer, deck)
 
-    players.players.forEach { OutputView.printRoundResult(it) }
+    players.forEach { OutputView.printRoundResult(it) }
     OutputView.printRoundResult(dealer)
     OutputView.printFinalResult(GameResult.of(dealer, players))
 }
@@ -32,15 +33,15 @@ fun drawFirstCards(
     deck: CardDeck,
 ) {
     repeat(2) {
-        dealer.cards.addCard(deck.drawCard())
-        players.players.forEach { player ->
-            player.cards.addCard(deck.drawCard())
+        dealer.drawCardFromDeck(deck)
+        players.forEach {
+            it.drawCardFromDeck(deck)
         }
     }
 
     OutputView.printFirstCard(players)
     OutputView.printCardStatusOnFirstRound(dealer)
-    players.players.forEach { OutputView.printCardStatusOnFirstRound(it) }
+    players.forEach { OutputView.printCardStatusOnFirstRound(it) }
 }
 
 fun drawPlayerCards(
@@ -50,13 +51,12 @@ fun drawPlayerCards(
     players.forEach { player ->
         while (true) {
             OutputView.printDoYouWantCard(player)
-            if (InputView.inputIsContinue()) {
-                player.cards.addCard(deck.drawCard())
-                OutputView.printCardStatus(player)
-                if (player.cards.calculateScoreTreatAceAsOne() >= 21) {
-                    break
-                }
-            } else {
+            if (!InputView.inputIsContinue()) {
+                break
+            }
+            player.drawCardFromDeck(deck)
+            OutputView.printCardStatus(player)
+            if (player.calculateScoreTreatAceAsOne() >= BlackJackConstants.BLACK_JACK_SCORE) {
                 break
             }
         }
@@ -67,8 +67,8 @@ fun drawDealerCards(
     dealer: Dealer,
     deck: CardDeck,
 ) {
-    if (dealer.cards.calculateScore() < 17) {
+    if (dealer.calculateScore() <= BlackJackConstants.DEALER_DRAW_THRESHOLD) {
         OutputView.printDealerMustGetCard()
-        dealer.cards.addCard(deck.drawCard())
+        dealer.drawCardFromDeck(deck)
     }
 }

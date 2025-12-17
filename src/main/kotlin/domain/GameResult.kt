@@ -1,9 +1,9 @@
 package domain
 
 class GameResult(
-    val winner: Players,
-    val loser: Players,
-    val drawer: Players,
+    val winners: Players,
+    val losers: Players,
+    val draws: Players,
 ) {
     companion object {
         fun of(
@@ -13,12 +13,12 @@ class GameResult(
             val winner: MutableList<Player> = mutableListOf()
             val loser: MutableList<Player> = mutableListOf()
             val drawer: MutableList<Player> = mutableListOf()
-            players.players.forEach { player ->
+            players.forEach { player ->
                 when {
-                    player.cards.isBust() -> loser.add(player)
-                    dealer.cards.isBust() -> winner.add(player)
-                    player.cards.calculateScore() > dealer.cards.calculateScore() -> winner.add(player)
-                    player.cards.calculateScore() < dealer.cards.calculateScore() -> loser.add(player)
+                    player.isBust() -> loser.add(player)
+                    dealer.isBust() -> winner.add(player)
+                    player.calculateScore() > dealer.calculateScore() -> winner.add(player)
+                    player.calculateScore() < dealer.calculateScore() -> loser.add(player)
                     else -> drawer.add(player)
                 }
             }
