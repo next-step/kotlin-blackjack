@@ -2,7 +2,7 @@ package view
 
 object InputView {
     fun inputPlayerNames(): List<String> {
-        return readln().ifNullEmpty().split(",").map { it -> it.trim() }
+        return readln().ifNullEmpty().split(",").map { it.trim() }
     }
 
     fun inputIsContinue(): Boolean {
