@@ -17,7 +17,7 @@ class CardDeck {
         shuffle()
     }
 
-    fun shuffle() {
+    private fun shuffle() {
         cards.shuffle()
     }
 
