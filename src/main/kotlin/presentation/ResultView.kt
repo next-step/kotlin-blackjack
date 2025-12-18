@@ -42,5 +42,13 @@ class ResultView {
                 println("${it.name}카드: ${it.openFirstRound()}")
             }
         }
+
+        fun printParticipantProfit(players: Set<Player>, dealer: Dealer) {
+            println("## 최종 수익")
+            println("딜러: ${dealer.profit}")
+            players.forEach { player ->
+                println("${player.name}: ${player.profit}")
+            }
+        }
     }
 }

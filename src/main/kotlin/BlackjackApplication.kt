@@ -44,8 +44,8 @@ fun main() {
     println()
 
     // 최종 승패 출력 -> 스팩아웃 (과거 blackjackResultCalculator.determineWinStatus() 의 결과)
-    val blackjackResultCalculator = BlackjackResultCalculator()
-
     // 최종 수익 출력
-    var profitReport = blackjackResultCalculator.profitReport(players, dealer)
+    val blackjackResultCalculator = BlackjackResultCalculator()
+    blackjackResultCalculator.profitReport(players, dealer)
+    ResultView.printParticipantProfit(players, dealer)
 }
