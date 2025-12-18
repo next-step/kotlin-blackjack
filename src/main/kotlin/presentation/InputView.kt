@@ -38,5 +38,18 @@ class InputView {
                 }
             }
         }
+
+        fun readBettingAmount(player: Player, minBet: Int): Int {
+            println("${player.name}의 베팅 금액은? (최소 배팅 금액: $minBet)")
+            val input = readln().trim()
+            val bettingAmount = input.toIntOrNull()
+
+            return if (bettingAmount != null && bettingAmount >= minBet) {
+                bettingAmount
+            } else {
+                println("잘못된 입력입니다. 최소 배팅 금액 이상을 숫자로 입력해주세요.")
+                readBettingAmount(player, minBet)
+            }
+        }
     }
 }
