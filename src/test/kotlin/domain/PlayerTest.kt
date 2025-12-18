@@ -21,6 +21,6 @@ class PlayerTest : FreeSpec({
             player.cards.addCard(cardDeck.drawCard())
         }
 
-        player.getPublicCardsOnFirstRound().cards().size shouldBe 2
+        player.getPublicCardsOnFirstRound().cards.size shouldBe 2
     }
 })

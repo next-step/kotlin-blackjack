@@ -10,9 +10,9 @@ class InputView {
             return readln().ifNullEmpty().split(",").map { it -> it.trim() }
         }
 
-        fun inputIsContinue(): Boolean {
+        fun inputIsNo(): Boolean {
             val input = readln().ifNullEmpty().trim().lowercase()
-            return input == "y"
+            return input == "n"
         }
     }
 }

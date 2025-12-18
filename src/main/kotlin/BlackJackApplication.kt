@@ -1,3 +1,6 @@
+import domain.BlackJackConstants.Companion.BLACKJACK_WIN_SCORE
+import domain.BlackJackConstants.Companion.DEALER_DRAW_THRESHOLD_SCORE
+import domain.BlackJackConstants.Companion.FIRST_DRAW_COUNT
 import domain.CardDeck
 import domain.Dealer
 import domain.GameResult
@@ -13,7 +16,7 @@ fun main() {
 
     val deck = CardDeck()
 
-    repeat(2) {
+    repeat(FIRST_DRAW_COUNT) {
         dealer.cards.addCard(deck.drawCard())
         players.players.forEach { player ->
             player.cards.addCard(deck.drawCard())
@@ -27,19 +30,18 @@ fun main() {
     for (player in players.players) {
         while (true) {
             OutputView.printDoYouWantCard(player)
-            if (InputView.inputIsContinue()) {
-                player.cards.addCard(deck.drawCard())
-                OutputView.printCardStatus(player)
-                if (player.cards.calculateScoreTreatAceAsOne() >= 21) {
-                    break
-                }
-            } else {
+            if (InputView.inputIsNo()) {
+                break
+            }
+            player.cards.addCard(deck.drawCard())
+            OutputView.printCardStatus(player)
+            if (player.cards.calculateScore() >= BLACKJACK_WIN_SCORE) {
                 break
             }
         }
     }
 
-    if (dealer.cards.calculateScore() < 17) {
+    if (dealer.cards.calculateScore() < DEALER_DRAW_THRESHOLD_SCORE) {
         OutputView.printDealerMustGetCard()
         dealer.cards.addCard(deck.drawCard())
     }

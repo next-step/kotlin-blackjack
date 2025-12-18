@@ -27,4 +27,8 @@ data class Card(val suit: Suit, val rank: Rank) {
     override fun toString(): String {
         return "${rank.symbol}${suit.korean}"
     }
+
+    fun isAce(): Boolean {
+        return this.rank == Rank.ACE
+    }
 }

@@ -23,6 +23,6 @@ class CardDeck {
 
     fun drawCard(): Card {
         check(cards.isNotEmpty()) { "덱에 카드가 없습니다" }
-        return cards.removeAt(cards.size - 1)
+        return cards.removeLast()
     }
 }

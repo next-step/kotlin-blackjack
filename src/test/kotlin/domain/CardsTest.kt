@@ -7,17 +7,17 @@ class CardsTest : FreeSpec({
     "카드 생성" - {
         "빈 카드로 생성" {
             val cards = Cards()
-            cards.cards() shouldBe emptyList()
+            cards.cards shouldBe emptyList()
             cards.toString() shouldBe ""
         }
 
         "카드 추가" {
             val cards = Cards()
             val card = Card(Suit.HEART, Rank.ACE)
-            
+
             cards.addCard(card)
-            
-            cards.cards() shouldBe listOf(card)
+
+            cards.cards shouldBe listOf(card)
             cards.toString() shouldBe "A하트"
         }
 
@@ -25,11 +25,11 @@ class CardsTest : FreeSpec({
             val cards = Cards()
             val card1 = Card(Suit.HEART, Rank.ACE)
             val card2 = Card(Suit.SPADE, Rank.KING)
-            
+
             cards.addCard(card1)
             cards.addCard(card2)
-            
-            cards.cards() shouldBe listOf(card1, card2)
+
+            cards.cards shouldBe listOf(card1, card2)
             cards.toString() shouldBe "A하트, K스페이드"
         }
 
@@ -38,7 +38,7 @@ class CardsTest : FreeSpec({
                 val cards = Cards()
                 cards.addCard(Card(Suit.HEART, Rank.TWO))
                 cards.addCard(Card(Suit.SPADE, Rank.EIGHT))
-                
+
                 cards.calculateScore() shouldBe 10
             }
 
@@ -47,7 +47,7 @@ class CardsTest : FreeSpec({
                 cards.addCard(Card(Suit.HEART, Rank.JACK))
                 cards.addCard(Card(Suit.SPADE, Rank.QUEEN))
                 cards.addCard(Card(Suit.CLUB, Rank.KING))
-                
+
                 cards.calculateScore() shouldBe 30
             }
 
@@ -55,7 +55,7 @@ class CardsTest : FreeSpec({
                 val cards = Cards()
                 cards.addCard(Card(Suit.HEART, Rank.ACE))
                 cards.addCard(Card(Suit.SPADE, Rank.TEN))
-                
+
                 cards.calculateScore() shouldBe 21
             }
 
@@ -64,7 +64,7 @@ class CardsTest : FreeSpec({
                 cards.addCard(Card(Suit.HEART, Rank.ACE))
                 cards.addCard(Card(Suit.SPADE, Rank.SIX))
                 cards.addCard(Card(Suit.CLUB, Rank.FIVE))
-                
+
                 cards.calculateScore() shouldBe 12
             }
 
@@ -83,7 +83,7 @@ class CardsTest : FreeSpec({
                 val cards = Cards()
                 cards.addCard(Card(Suit.HEART, Rank.TEN))
                 cards.addCard(Card(Suit.SPADE, Rank.ACE))
-                
+
                 cards.calculateScore() shouldBe 21
                 cards.isBust() shouldBe false
             }
@@ -93,7 +93,7 @@ class CardsTest : FreeSpec({
                 cards.addCard(Card(Suit.HEART, Rank.KING))
                 cards.addCard(Card(Suit.SPADE, Rank.QUEEN))
                 cards.addCard(Card(Suit.CLUB, Rank.TWO))
-                
+
                 cards.calculateScore() shouldBe 22
                 cards.isBust() shouldBe true
             }

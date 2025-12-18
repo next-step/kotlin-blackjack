@@ -12,6 +12,6 @@ class DealerTest : FreeSpec({
             dealer.cards.addCard(cardDeck.drawCard())
         }
 
-        dealer.getPublicCardsOnFirstRound().cards().size shouldBe 1
+        dealer.getPublicCardsOnFirstRound().cards.size shouldBe 1
     }
 })
