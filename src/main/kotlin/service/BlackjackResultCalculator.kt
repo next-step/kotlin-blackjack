@@ -67,7 +67,6 @@ class BlackjackResultCalculator {
         return when (winStatus) {
             WIN -> player.bettingAmount
             LOSE -> -player.bettingAmount
-            else -> 0
         }
     }
 }
