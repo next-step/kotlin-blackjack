@@ -9,7 +9,7 @@ import domain.Player
 
 class BlackjackResultCalculator {
 
-    fun profitReport(players: Set<Player>, dealer: Dealer) {
+    fun profitReport(players: List<Player>, dealer: Dealer) {
         val winStatusByPlayer = determineWinStatus(players, dealer)
 
         players.forEach { player ->
@@ -24,7 +24,7 @@ class BlackjackResultCalculator {
     }
 
     private fun determineWinStatus(
-        players: Set<Player>,
+        players: List<Player>,
         dealer: Dealer,
     ): Map<Player, GameOutcome> {
         val result = mutableMapOf<Player, GameOutcome>()

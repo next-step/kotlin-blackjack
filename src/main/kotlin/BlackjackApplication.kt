@@ -15,7 +15,7 @@ fun main() {
     // 플레이어 입력 및 초기화
     val players = InputView.readPlayerNames()
         .map { Player(it) }
-        .toSet()
+
     println()
 
     // 플레이어의 베팅 금액 입력

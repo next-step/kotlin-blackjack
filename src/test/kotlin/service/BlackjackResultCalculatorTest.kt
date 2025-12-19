@@ -30,7 +30,7 @@ class BlackjackResultCalculatorTest {
         }
 
         // when
-        blackjackResultCalculator.profitReport(setOf(player), dealer)
+        blackjackResultCalculator.profitReport(listOf(player), dealer)
 
         // then
         assertThat(player.profit).isEqualTo(-10_000)
@@ -54,7 +54,7 @@ class BlackjackResultCalculatorTest {
         }
 
         // when
-        blackjackResultCalculator.profitReport(setOf(player), dealer)
+        blackjackResultCalculator.profitReport(listOf(player), dealer)
 
         // then
         assertThat(player.profit).isEqualTo(10_000)
@@ -77,7 +77,7 @@ class BlackjackResultCalculatorTest {
         }
 
         // when
-        blackjackResultCalculator.profitReport(setOf(player), dealer)
+        blackjackResultCalculator.profitReport(listOf(player), dealer)
 
         // then
         assertThat(player.profit).isEqualTo(15_000)
@@ -100,7 +100,7 @@ class BlackjackResultCalculatorTest {
         }
 
         // when
-        blackjackResultCalculator.profitReport(setOf(player), dealer)
+        blackjackResultCalculator.profitReport(listOf(player), dealer)
 
         // then
         assertThat(player.profit).isEqualTo(0)
@@ -129,7 +129,7 @@ class BlackjackResultCalculatorTest {
         }
 
         // when
-        blackjackResultCalculator.profitReport(setOf(winner, loser), dealer)
+        blackjackResultCalculator.profitReport(listOf(winner, loser), dealer)
 
         // then
         assertThat(winner.profit).isEqualTo(10_000)
@@ -164,7 +164,7 @@ class BlackjackResultCalculatorTest {
         }
 
         // when
-        blackjackResultCalculator.profitReport(setOf(playerA, playerB), dealer)
+        blackjackResultCalculator.profitReport(listOf(playerA, playerB), dealer)
 
         // then
         assertThat(dealer.profit).isEqualTo(10_000)

@@ -13,7 +13,7 @@ class CardDistributorService(private val cardDeck: CardDeck) {
     }
 
     fun distributeCards(
-        players: Set<Player>,
+        players: List<Player>,
         dealer: Dealer,
     ) {
         // 플레이어에게 카드 분배

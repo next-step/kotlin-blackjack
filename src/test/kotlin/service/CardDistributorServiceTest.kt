@@ -18,7 +18,7 @@ class CardDistributorServiceTest {
         val dealer = Dealer()
 
         // when
-        cardDistributorService.distributeCards(setOf(player), dealer)
+        cardDistributorService.distributeCards(listOf(player), dealer)
 
         // then
         assertThat(player.cardSize()).isEqualTo(CardDistributorService.PLAYER_CARD_COUNT)
@@ -31,7 +31,7 @@ class CardDistributorServiceTest {
         // given
         val player = Player("A")
         val dealer = Dealer()
-        cardDistributorService.distributeCards(setOf(player), dealer)
+        cardDistributorService.distributeCards(listOf(player), dealer)
         val expectedDealerCardSize =
             if (dealer.score() > CardDistributorService.DEALER_ADDITIONAL_CARD_THRESHOLD) {
                 CardDistributorService.DEALER_CARD_COUNT

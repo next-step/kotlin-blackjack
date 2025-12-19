@@ -22,7 +22,7 @@ class ResultView {
         }
 
         fun printParticipantCardResult(
-            players: Set<Player>,
+            players: List<Player>,
             dealer: Dealer,
         ) {
             println("딜러 카드: ${dealer.displayCardInfo()} - 결과: ${dealer.score()}")
@@ -31,7 +31,7 @@ class ResultView {
             }
         }
 
-        fun printDistributedCardInfos(players: Set<Player>, dealer: Dealer) {
+        fun printDistributedCardInfos(players: List<Player>, dealer: Dealer) {
             println("딜러와 ${players.joinToString(", ") { it.name }}에게 2장의 나누었습니다.")
 
             // 딜러 카드 출력 : 한장만 출력
@@ -43,7 +43,7 @@ class ResultView {
             }
         }
 
-        fun printParticipantProfit(players: Set<Player>, dealer: Dealer) {
+        fun printParticipantProfit(players: List<Player>, dealer: Dealer) {
             println("## 최종 수익")
             println("딜러: ${dealer.profit}")
             players.forEach { player ->
