@@ -1,6 +1,7 @@
 import consts.BlackjackConstants.Companion.MIN_BETTING_AMOUNT
 import domain.CardDeck
 import domain.Dealer
+import domain.Player
 import presentation.InputView
 import presentation.ResultView
 import service.BlackjackResultCalculator
@@ -12,7 +13,9 @@ fun main() {
     val dealer = Dealer()
 
     // 플레이어 입력 및 초기화
-    val players = InputView.readPlayers()
+    val players = InputView.readPlayerNames()
+        .map { Player(it) }
+        .toSet()
     println()
 
     // 플레이어의 베팅 금액 입력
