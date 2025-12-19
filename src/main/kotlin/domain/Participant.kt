@@ -16,8 +16,6 @@ abstract class Participant(
 
     fun displayCardInfo(): String = blackjackCards.displayCardInfo()
 
-    fun calculateScore(): Int = blackjackCards.calculateScore()
-
     fun isBust(): Boolean = blackjackCards.calculateScore() > BlackjackCards.BLACKJACK_MAX_SCORE
 
     fun isBlackjack(): Boolean =

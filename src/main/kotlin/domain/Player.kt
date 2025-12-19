@@ -9,6 +9,6 @@ class Player(val name: String): Participant() {
     }
 
     fun placeBet(bettingAmount: Int) {
-        bettingAmount.also { this.bettingAmount = it }
+        this.bettingAmount = bettingAmount
     }
 }
