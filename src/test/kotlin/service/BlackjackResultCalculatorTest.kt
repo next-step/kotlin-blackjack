@@ -3,7 +3,9 @@ package service
 import domain.Card
 import domain.CardValue
 import domain.Dealer
+import domain.Money
 import domain.Player
+import domain.SignedMoney
 import domain.Suit
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
@@ -22,7 +24,7 @@ class BlackjackResultCalculatorTest {
         }
 
         val player = Player("A").apply {
-            bettingAmount = 10_000
+            placeBet(Money.of(10_000))
             receiveCard(Card(Suit.SPADE, CardValue.TEN))
             receiveCard(Card(Suit.DIAMOND, CardValue.NINE))
             receiveCard(Card(Suit.CLUB, CardValue.THREE)) // 22 bust
@@ -32,8 +34,8 @@ class BlackjackResultCalculatorTest {
         blackjackResultCalculator.profitReport(listOf(player), dealer)
 
         // then
-        assertThat(player.profit).isEqualTo(-10_000)
-        assertThat(dealer.profit).isEqualTo(10_000)
+        assertThat(player.profit).isEqualTo(SignedMoney(-10_000))
+        assertThat(dealer.profit).isEqualTo(SignedMoney(10_000))
     }
 
     @Test
@@ -47,7 +49,7 @@ class BlackjackResultCalculatorTest {
         }
 
         val player = Player("A").apply {
-            bettingAmount = 10_000
+            placeBet(Money.of(10_000))
             receiveCard(Card(Suit.SPADE, CardValue.TWO))
             receiveCard(Card(Suit.DIAMOND, CardValue.THREE)) // 5 (상관없음)
         }
@@ -56,8 +58,8 @@ class BlackjackResultCalculatorTest {
         blackjackResultCalculator.profitReport(listOf(player), dealer)
 
         // then
-        assertThat(player.profit).isEqualTo(10_000)
-        assertThat(dealer.profit).isEqualTo(-10_000)
+        assertThat(player.profit).isEqualTo(SignedMoney(10_000))
+        assertThat(dealer.profit).isEqualTo(SignedMoney(-10_000))
     }
 
     @Test
@@ -70,7 +72,7 @@ class BlackjackResultCalculatorTest {
         }
 
         val player = Player("A").apply {
-            bettingAmount = 10_000
+            placeBet(Money.of(10_000))
             receiveCard(Card(Suit.SPADE, CardValue.ACE))
             receiveCard(Card(Suit.DIAMOND, CardValue.TEN)) // blackjack
         }
@@ -79,8 +81,8 @@ class BlackjackResultCalculatorTest {
         blackjackResultCalculator.profitReport(listOf(player), dealer)
 
         // then
-        assertThat(player.profit).isEqualTo(15_000)
-        assertThat(dealer.profit).isEqualTo(-15_000)
+        assertThat(player.profit).isEqualTo(SignedMoney(15_000))
+        assertThat(dealer.profit).isEqualTo(SignedMoney(-15_000))
     }
 
     @Test
@@ -93,7 +95,7 @@ class BlackjackResultCalculatorTest {
         }
 
         val player = Player("A").apply {
-            bettingAmount = 10_000
+            placeBet(Money.of(10_000))
             receiveCard(Card(Suit.SPADE, CardValue.ACE))
             receiveCard(Card(Suit.DIAMOND, CardValue.TEN)) // blackjack
         }
@@ -102,8 +104,8 @@ class BlackjackResultCalculatorTest {
         blackjackResultCalculator.profitReport(listOf(player), dealer)
 
         // then
-        assertThat(player.profit).isEqualTo(0)
-        assertThat(dealer.profit).isEqualTo(0)
+        assertThat(player.profit).isEqualTo(SignedMoney(0))
+        assertThat(dealer.profit).isEqualTo(SignedMoney(0))
     }
 
     @Test
@@ -116,13 +118,13 @@ class BlackjackResultCalculatorTest {
         }
 
         val winner = Player("WIN").apply {
-            bettingAmount = 10_000
+            placeBet(Money.of(10_000))
             receiveCard(Card(Suit.SPADE, CardValue.TEN))
             receiveCard(Card(Suit.DIAMOND, CardValue.NINE)) // 19 -> +10_000
         }
 
         val loser = Player("LOSE").apply {
-            bettingAmount = 20_000
+            placeBet(Money.of(20_000))
             receiveCard(Card(Suit.SPADE, CardValue.TEN))
             receiveCard(Card(Suit.DIAMOND, CardValue.SEVEN)) // 17 -> -20_000
         }
@@ -131,8 +133,8 @@ class BlackjackResultCalculatorTest {
         blackjackResultCalculator.profitReport(listOf(winner, loser), dealer)
 
         // then
-        assertThat(winner.profit).isEqualTo(10_000)
-        assertThat(loser.profit).isEqualTo(-20_000)
+        assertThat(winner.profit).isEqualTo(SignedMoney(10_000))
+        assertThat(loser.profit).isEqualTo(SignedMoney(-20_000))
         assertThat(dealer.profit).isEqualTo(-(winner.profit + loser.profit))
     }
 
@@ -149,7 +151,7 @@ class BlackjackResultCalculatorTest {
 
         // 2하트, 8스페이드, A클로버 - 결과 : 21
         val playerA = Player("A").apply {
-            bettingAmount = 10_000
+            placeBet(Money.of(10_000))
             receiveCard(Card(Suit.HEART, CardValue.TWO))
             receiveCard(Card(Suit.SPADE, CardValue.EIGHT))
             receiveCard(Card(Suit.CLUB, CardValue.ACE))
@@ -157,7 +159,7 @@ class BlackjackResultCalculatorTest {
 
         // 7클로버, K스페이드 - 결과 : 17
         val playerB = Player("B").apply {
-            bettingAmount = 20_000
+            placeBet(Money.of(20_000))
             receiveCard(Card(Suit.CLUB, CardValue.SEVEN))
             receiveCard(Card(Suit.SPADE, CardValue.KING))
         }
@@ -166,8 +168,8 @@ class BlackjackResultCalculatorTest {
         blackjackResultCalculator.profitReport(listOf(playerA, playerB), dealer)
 
         // then
-        assertThat(dealer.profit).isEqualTo(10_000)
-        assertThat(playerA.profit).isEqualTo(10_000)
-        assertThat(playerB.profit).isEqualTo(-20_000)
+        assertThat(dealer.profit).isEqualTo(SignedMoney(10_000))
+        assertThat(playerA.profit).isEqualTo(SignedMoney(10_000))
+        assertThat(playerB.profit).isEqualTo(SignedMoney(-20_000))
     }
 }

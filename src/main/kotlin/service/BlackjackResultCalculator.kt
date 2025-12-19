@@ -2,28 +2,34 @@ package service
 
 import domain.Dealer
 import domain.GameOutcome
+import domain.GameOutcome.*
 import domain.Player
+import domain.SignedMoney
 
 class BlackjackResultCalculator {
 
     fun profitReport(players: List<Player>, dealer: Dealer) {
         players.forEach { player ->
             val gameOutcome = gameOutcomeOf(player, dealer)
-            player.profit = gameOutcome.profitOf(player.bettingAmount)
+            player.applyProfit(gameOutcome.profitOf(player.bet))
         }
-        dealer.profit = -players.sumOf { it.profit }
+
+        val totalPlayerProfit: SignedMoney =
+            players.fold(SignedMoney(0)) { acc, player -> acc + player.profit }
+
+        dealer.applyProfit(-totalPlayerProfit)
     }
 
     private fun gameOutcomeOf(player: Player, dealer: Dealer): GameOutcome = when {
-        player.isBust() -> GameOutcome.PLAYER_BUST
-        dealer.isBust() -> GameOutcome.DEALER_BUST
+        player.isBust() -> PLAYER_BUST
+        dealer.isBust() -> DEALER_BUST
 
-        player.isBlackjack() && dealer.isBlackjack() -> GameOutcome.PUSH
-        player.isBlackjack() -> GameOutcome.PLAYER_BLACKJACK
-        dealer.isBlackjack() -> GameOutcome.DEALER_BLACKJACK
+        player.isBlackjack() && dealer.isBlackjack() -> PUSH
+        player.isBlackjack() -> PLAYER_BLACKJACK
+        dealer.isBlackjack() -> DEALER_BLACKJACK
 
-        player.score() > dealer.score() -> GameOutcome.PLAYER_WIN
-        player.score() < dealer.score() -> GameOutcome.DEALER_WIN
-        else -> GameOutcome.PUSH
+        player.score() > dealer.score() -> PLAYER_WIN
+        player.score() < dealer.score() -> DEALER_WIN
+        else -> PUSH
     }
 }

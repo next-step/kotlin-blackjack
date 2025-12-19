@@ -2,13 +2,14 @@ package domain
 
 class Player(val name: String): Participant() {
 
-    var bettingAmount: Int = 0
+    var bet: Money = Money.of(0)
+        private set
+
+    fun placeBet(bettingAmount: Money) {
+        this.bet = bettingAmount
+    }
 
     override fun openFirstRound(): List<Card> {
         return blackjackCards.getCards()
-    }
-
-    fun placeBet(bettingAmount: Int) {
-        this.bettingAmount = bettingAmount
     }
 }

@@ -4,7 +4,8 @@ abstract class Participant(
     protected val blackjackCards: BlackjackCards = BlackjackCards()
 ) {
 
-    var profit: Int = 0
+    var profit: SignedMoney = SignedMoney(0)
+        protected set
 
     abstract fun openFirstRound(): List<Card>
 
@@ -20,4 +21,8 @@ abstract class Participant(
 
     fun isBlackjack(): Boolean =
         blackjackCards.getCards().size == 2 && blackjackCards.calculateScore() == BlackjackCards.BLACKJACK_MAX_SCORE
+
+    fun applyProfit(profit: SignedMoney) {
+        this.profit = profit
+    }
 }

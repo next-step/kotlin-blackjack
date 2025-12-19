@@ -1,5 +1,6 @@
 package presentation
 
+import domain.Money
 import domain.Player
 
 class InputView {
@@ -50,12 +51,12 @@ class InputView {
         /*
             플레이어의 배팅금액을 입력받으며, 정확하게 입력되지 않은 경우 반복됩니다.
          */
-        fun readBettingAmount(player: Player, minBet: Int): Int {
+        fun readBettingAmount(player: Player, minBet: Int): Money {
             while (true) {
                 println("${player.name}의 베팅 금액은? (최소 배팅 금액: $minBet)")
                 val bettingAmount = readln().trim().toIntOrNull()
 
-                if (bettingAmount != null && bettingAmount >= minBet) return bettingAmount
+                if (bettingAmount != null && bettingAmount >= minBet) return Money.of(bettingAmount)
 
                 println("잘못된 입력입니다. 최소 배팅 금액 이상을 숫자로 입력해주세요.")
             }

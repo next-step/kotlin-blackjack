@@ -29,9 +29,9 @@ class ResultView {
 
         fun printParticipantProfit(players: List<Player>, dealer: Dealer) {
             println("## 최종 수익")
-            println("딜러: ${dealer.profit}")
+            println("딜러: ${dealer.profit.amount}")
             players.forEach { player ->
-                println("${player.name}: ${player.profit}")
+                println("${player.name}: ${player.profit.amount}")
             }
         }
     }
