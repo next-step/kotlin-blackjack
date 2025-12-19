@@ -8,6 +8,21 @@ import domain.GameOutcome.WIN
 import domain.Player
 
 class BlackjackResultCalculator {
+
+    fun profitReport(players: Set<Player>, dealer: Dealer) {
+        val winStatusByPlayer = determineWinStatus(players, dealer)
+
+        players.forEach { player ->
+            player.profit = calculatePlayerProfit(
+                player,
+                dealer,
+                winStatusByPlayer.getValue(player)
+            )
+        }
+
+        dealer.profit = -players.sumOf { it.profit }
+    }
+
     private fun determineWinStatus(
         players: Set<Player>,
         dealer: Dealer,
@@ -36,25 +51,23 @@ class BlackjackResultCalculator {
      * - 딜러와 플레이어가 동시에 블랙잭인 경우 플레이어는 베팅한 금액을 돌려받는다.
      * 결과 : 플레이어, 딜러의 수익금을 출력한다.
      */
-    fun profitReport(players: Set<Player>, dealer: Dealer) {
-        val winStatusByPlayer = determineWinStatus(players, dealer)
+    private fun calculatePlayerProfit(
+        player: Player,
+        dealer: Dealer,
+        winStatus: GameOutcome
+    ): Int {
+        if (player.isBust()) return -player.bettingAmount
+        if (dealer.isBust()) return player.bettingAmount
 
-        players.forEach { player ->
-            val profit = when {
-                player.isBust() -> -player.bettingAmount
-                dealer.isBust() -> player.bettingAmount
-                player.isBlackjack() && !dealer.isBlackjack() -> (player.bettingAmount * 1.5).toInt()
-                player.isBlackjack() && dealer.isBlackjack() -> 0
-                else -> when (winStatusByPlayer[player]) {
-                    WIN -> player.bettingAmount
-                    LOSE -> -player.bettingAmount
-                    else -> 0
-                }
-            }
-
-            player.profit = profit
+        if (player.isBlackjack() && dealer.isBlackjack()) return 0
+        if (player.isBlackjack() && !dealer.isBlackjack()) {
+            return (player.bettingAmount * 1.5).toInt()
         }
 
-        dealer.profit = -players.sumOf { it.profit }
+        return when (winStatus) {
+            WIN -> player.bettingAmount
+            LOSE -> -player.bettingAmount
+            else -> 0
+        }
     }
 }
