@@ -1,8 +1,8 @@
 package service
 
-import domain.CardDeck
-import domain.Dealer
-import domain.Player
+import domain.card.CardDeck
+import domain.participant.Dealer
+import domain.participant.Player
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -18,11 +18,11 @@ class CardDistributorServiceTest {
         val dealer = Dealer()
 
         // when
-        cardDistributorService.distributeCards(setOf(player), dealer)
+        cardDistributorService.distributeInitialCards(listOf(player, dealer))
 
         // then
-        assertThat(player.cardSize()).isEqualTo(CardDistributorService.PLAYER_CARD_COUNT)
-        assertThat(dealer.cardSize()).isEqualTo(CardDistributorService.DEALER_CARD_COUNT)
+        assertThat(player.cardSize()).isEqualTo(CardDistributorService.INITIAL_CARD_COUNT)
+        assertThat(dealer.cardSize()).isEqualTo(CardDistributorService.INITIAL_CARD_COUNT)
     }
 
     @Test
@@ -31,16 +31,16 @@ class CardDistributorServiceTest {
         // given
         val player = Player("A")
         val dealer = Dealer()
-        cardDistributorService.distributeCards(setOf(player), dealer)
+        cardDistributorService.distributeInitialCards(listOf(player, dealer))
         val expectedDealerCardSize =
             if (dealer.score() > CardDistributorService.DEALER_ADDITIONAL_CARD_THRESHOLD) {
-                CardDistributorService.DEALER_CARD_COUNT
+                CardDistributorService.INITIAL_CARD_COUNT
             } else {
-                CardDistributorService.DEALER_CARD_COUNT + 1
+                CardDistributorService.INITIAL_CARD_COUNT + 1
             }
 
         // when
-        cardDistributorService.additionalDistributeForDealer(dealer)
+        cardDistributorService.distributeAdditionalCardsForDealer(dealer)
 
         // then
         assertThat(dealer.cardSize()).isEqualTo(expectedDealerCardSize)

@@ -1,18 +1,26 @@
 package presentation
 
-import domain.Player
+import domain.participant.Player
 
 class InputView {
     companion object {
-        fun inputPlayers(): Set<Player> {
+        fun inputPlayers(): List<Player> {
             println("게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)")
             return readln()
                 .split(",")
                 .map { it.trim() }
                 .filter { it.isNotEmpty() }
                 .map { Player(it) }
-                .toSet()
         }
+
+//        fun inputBetAmount(player: Player): Int {
+//            println("${player.name}의 베팅 금액은?");
+//            val input = readln().trim()
+//            return input.toDoubleOrNull() ?: run {
+//                println("잘못된 입력입니다. 숫자 형식으로 다시 입력해주세요.")
+//                inputBetAmount(player)
+//            }
+//        }
 
         fun inputAdditionalCard(player: Player): Boolean {
             println("${player.name}는 한장의 카드를 더 받겠습니까? (예는 y, 아니오는 n)")

@@ -1,10 +1,10 @@
 package service
 
-import domain.Card
-import domain.CardValue
-import domain.Dealer
-import domain.Player
-import domain.Suit
+import domain.card.Card
+import domain.card.CardValue
+import domain.card.Suit
+import domain.participant.Dealer
+import domain.participant.Player
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -29,7 +29,7 @@ class BlackjackWinnerServiceTest {
         player2.receiveCard(Card(Suit.HEART, CardValue.TWO))
         player2.receiveCard(Card(Suit.CLUB, CardValue.TWO))
 
-        val players = setOf(player, player2)
+        val players = listOf(player, player2)
 
         // when
         val winner = blackjackWinnerService.winner(players, dealer)
@@ -53,7 +53,7 @@ class BlackjackWinnerServiceTest {
         player.receiveCard(Card(Suit.DIAMOND, CardValue.NINE))
         player.receiveCard(Card(Suit.CLUB, CardValue.NINE))
 
-        val players = setOf(player)
+        val players = listOf(player)
 
         // when
         val winner = blackjackWinnerService.winner(players, dealer)

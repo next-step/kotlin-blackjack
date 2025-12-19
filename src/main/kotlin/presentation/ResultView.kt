@@ -1,7 +1,7 @@
 package presentation
 
-import domain.Dealer
-import domain.Player
+import domain.participant.Dealer
+import domain.participant.Player
 
 class ResultView {
     companion object {
@@ -21,17 +21,17 @@ class ResultView {
         }
 
         fun printParticipantCardResult(
-            players: Set<Player>,
+            players: List<Player>,
             dealer: Dealer,
         ) {
-            println("딜러 카드: ${dealer.blackjackCards.displayCardInfo()} - 결과: ${dealer.blackjackCards.calculateScore()}")
+            println("딜러 카드: ${dealer.participantHand.describeHand()} - 결과: ${dealer.participantHand.calculateScore()}")
             players.forEach { player ->
-                println("${player.name} 카드: ${player.blackjackCards.displayCardInfo()} - 결과: ${player.blackjackCards.calculateScore()}")
+                println("${player.name} 카드: ${player.participantHand.describeHand()} - 결과: ${player.participantHand.calculateScore()}")
             }
         }
 
         fun printDistributedCardInfos(
-            players: Set<Player>,
+            players: List<Player>,
             dealer: Dealer,
         ) {
             println("딜러와 ${players.joinToString(", ") { it.name }}에게 2장의 나누었습니다.")
@@ -41,7 +41,7 @@ class ResultView {
 
             // 플레이어 카드 출력 : 플레이어별 전체 카드 출력
             players.forEach {
-                println("${it.name}카드: ${it.blackjackCards.displayCardInfo()}")
+                println("${it.name}카드: ${it.participantHand.describeHand()}")
             }
         }
     }
