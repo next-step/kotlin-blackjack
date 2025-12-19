@@ -3,7 +3,6 @@ package service
 import domain.Card
 import domain.CardValue
 import domain.Dealer
-import domain.GameOutcome
 import domain.Player
 import domain.Suit
 import org.assertj.core.api.Assertions.assertThat

@@ -1,72 +1,48 @@
 package service
 
-import domain.BlackjackCards
 import domain.Dealer
-import domain.GameOutcome
-import domain.GameOutcome.LOSE
-import domain.GameOutcome.WIN
 import domain.Player
 
 class BlackjackResultCalculator {
 
+    enum class Outcome {
+        PLAYER_BUST,
+        DEALER_BUST,
+        PUSH,
+        PLAYER_BLACKJACK,
+        DEALER_BLACKJACK,
+        PLAYER_WIN,
+        DEALER_WIN
+        ;
+
+        fun profitOf(bet: Int): Int = when (this) {
+            // 정수형 처리를 위해 1.5배 하는 것이 아니라 3배 후 2로 나눔
+            PLAYER_BLACKJACK -> (bet * 3) / 2
+            PLAYER_WIN, DEALER_BUST -> bet
+            PUSH -> 0
+            DEALER_WIN, DEALER_BLACKJACK, PLAYER_BUST -> -bet
+        }
+    }
+
+    fun outcomeOf(player: Player, dealer: Dealer): Outcome = when {
+        player.isBust() -> Outcome.PLAYER_BUST
+        dealer.isBust() -> Outcome.DEALER_BUST
+
+        player.isBlackjack() && dealer.isBlackjack() -> Outcome.PUSH
+        player.isBlackjack() -> Outcome.PLAYER_BLACKJACK
+        dealer.isBlackjack() -> Outcome.DEALER_BLACKJACK
+
+        player.score() > dealer.score() -> Outcome.PLAYER_WIN
+        player.score() < dealer.score() -> Outcome.DEALER_WIN
+        else -> Outcome.PUSH
+    }
+
+
     fun profitReport(players: List<Player>, dealer: Dealer) {
-        val winStatusByPlayer = determineWinStatus(players, dealer)
-
         players.forEach { player ->
-            player.profit = calculatePlayerProfit(
-                player,
-                dealer,
-                winStatusByPlayer.getValue(player)
-            )
+            val outcome = outcomeOf(player, dealer)
+            player.profit = outcome.profitOf(player.bettingAmount)
         }
-
         dealer.profit = -players.sumOf { it.profit }
-    }
-
-    private fun determineWinStatus(
-        players: List<Player>,
-        dealer: Dealer,
-    ): Map<Player, GameOutcome> {
-        val result = mutableMapOf<Player, GameOutcome>()
-
-        players.forEach {
-            if (dealer.score() > BlackjackCards.BLACKJACK_MAX_SCORE) {
-                result[it] = WIN
-            } else if (it.score() > BlackjackCards.BLACKJACK_MAX_SCORE) {
-                result[it] = LOSE
-            } else {
-                result[it] = GameOutcome.judge(it.score() >= dealer.score())
-            }
-        }
-
-        return result
-    }
-
-    /**
-     * 게임 결과에 따른 수익금 계산 : (예시) profitCalculator.calculate(..)
-     * - 플레이어
-     *   - 추가 카드를 뽑아 21을 초과할 경우 배팅 금액을 모두 잃게된다.
-     *   - 처음 두 장의 카드 합이 21일 경우 베팅 금액의 1.5배를 딜러에게 받는다.
-     * - 딜러 : 21을 초과할 경우 플레이어들은 패에 상관없이 승리해 배팅 금액을 받는다.
-     * - 딜러와 플레이어가 동시에 블랙잭인 경우 플레이어는 베팅한 금액을 돌려받는다.
-     * 결과 : 플레이어, 딜러의 수익금을 출력한다.
-     */
-    private fun calculatePlayerProfit(
-        player: Player,
-        dealer: Dealer,
-        winStatus: GameOutcome
-    ): Int {
-        if (player.isBust()) return -player.bettingAmount
-        if (dealer.isBust()) return player.bettingAmount
-
-        if (player.isBlackjack() && dealer.isBlackjack()) return 0
-        if (player.isBlackjack() && !dealer.isBlackjack()) {
-            return (player.bettingAmount * 1.5).toInt()
-        }
-
-        return when (winStatus) {
-            WIN -> player.bettingAmount
-            LOSE -> -player.bettingAmount
-        }
     }
 }
