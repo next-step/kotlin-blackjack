@@ -24,10 +24,11 @@ object OutputView {
     }
 
     fun printFinalResult(gameResult: GameResult) {
-        println("## 최종 승패")
-        println("딜러: ${gameResult.losers.size} 승 ${gameResult.winners.size} 패 ${gameResult.draws.size} 무")
-        gameResult.winners.forEach { println("${it.name}: 승") }
-        gameResult.losers.forEach { println("${it.name}: 패") }
-        gameResult.draws.forEach { println("${it.name}: 무") }
+        println("## 최종 수익")
+        println("딜러: ${gameResult.dealerWin}")
+        gameResult.playerWins.forEach { (name, win) ->
+            println("$name: $win")
+        }
+        println()
     }
 }

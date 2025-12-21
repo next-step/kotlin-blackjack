@@ -14,10 +14,6 @@ class CardDeck {
                 cards.add(Card(suit, rank))
             }
         }
-        shuffle()
-    }
-
-    fun shuffle() {
         cards.shuffle()
     }
 

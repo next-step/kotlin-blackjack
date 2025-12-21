@@ -1,7 +1,7 @@
 package domain
 
 import io.kotest.core.spec.style.FreeSpec
-import io.kotest.matchers.collections.shouldContainExactlyInAnyOrder
+import io.kotest.matchers.shouldBe
 import model.*
 
 class GameResultTest :
@@ -28,11 +28,18 @@ class GameResultTest :
                 val drawer =
                     Player("player4", Cards(mutableListOf(Card(Suit.SPADE, Rank.TEN), Card(Suit.DIAMOND, Rank.TEN))))
 
-                val gameResult = GameResult.of(dealer, Players(listOf(winner, buster, loser, drawer)))
+                val players = Players(listOf(winner, buster, loser, drawer))
+                players.forEach { it.betAmount = 100 }
 
-                gameResult.winners.players shouldContainExactlyInAnyOrder listOf(winner)
-                gameResult.losers.players shouldContainExactlyInAnyOrder listOf(loser, buster)
-                gameResult.draws.players shouldContainExactlyInAnyOrder listOf(drawer)
+                val gameResult = GameResult.of(dealer, players)
+
+                gameResult.playerWins shouldBe mapOf(
+                    winner.name to 150,
+                    buster.name to -100,
+                    loser.name to -100,
+                    drawer.name to 0,
+                )
+                gameResult.dealerWin shouldBe 50
             }
 
             "딜러 점수가 21을 넘는다" {
@@ -60,10 +67,16 @@ class GameResultTest :
                 val winner =
                     Player("player1", Cards(mutableListOf(Card(Suit.SPADE, Rank.ACE), Card(Suit.DIAMOND, Rank.TEN))))
 
-                val gameResult = GameResult.of(dealer, Players(listOf(winner, buster)))
+                val players = Players(listOf(winner, buster))
+                players.forEach { it.betAmount = 100 }
 
-                gameResult.winners.players shouldContainExactlyInAnyOrder listOf(winner)
-                gameResult.losers.players shouldContainExactlyInAnyOrder listOf(buster)
+                val gameResult = GameResult.of(dealer, players)
+
+                gameResult.playerWins shouldBe mapOf(
+                    winner.name to 150,
+                    buster.name to -100,
+                )
+                gameResult.dealerWin shouldBe -50
             }
         }
     })

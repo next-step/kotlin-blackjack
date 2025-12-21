@@ -1,13 +1,9 @@
 package model
 
 class GameResult(
-    private val playerWins: Map<String, Long>,
+    val playerWins: Map<String, Long>,
 ) {
     val dealerWin = playerWins.values.sum() * -1
-
-    fun getPlayerWin(player: Player): Long {
-        return playerWins[player.name] ?: 0L
-    }
 
     companion object {
         fun of(

@@ -1,6 +1,6 @@
 package model
 
-abstract class Participant(val name: String, val cards: Cards = Cards()) {
+abstract class Participant(val name: String, val cards: Cards) {
     init {
         require(name.isNotBlank()) { "참가자 이름은 빈 값일 수 없습니다." }
     }

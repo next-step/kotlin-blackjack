@@ -1,5 +1,6 @@
 import model.*
 import view.InputView
+import view.InputView.tryUntilSuccess
 import view.OutputView
 
 fun main() {
@@ -8,19 +9,21 @@ fun main() {
     drawPlayerCards(game)
     drawDealerCards(game)
 
-    game.players.forEach { OutputView.printRoundResult(it) }
     OutputView.printRoundResult(game.dealer)
+    game.players.forEach { OutputView.printRoundResult(it) }
+    println()
+
     OutputView.printFinalResult(game.getResult())
 }
 
 fun init(): BlackJackGame {
-    val inputPlayerNames = InputView.inputPlayerNames()
-    val players = Players.of(inputPlayerNames)
+    val players: Players = tryUntilSuccess {
+        Players.of(InputView.inputPlayerNames())
+    }
     val dealer = Dealer()
 
     players.forEach {
-        val bet = InputView.inputBetAmount(it)
-        it.betAmount += bet
+        it.betAmount = tryUntilSuccess { InputView.inputBetAmount(it) }
     }
 
     val deck = CardDeck()
@@ -41,6 +44,7 @@ fun drawFirstCards(
         OutputView.printFirstCard(players)
         OutputView.printCardStatusOnFirstRound(dealer)
         players.forEach { OutputView.printCardStatusOnFirstRound(it) }
+        println()
     }
 }
 
@@ -50,7 +54,8 @@ fun drawPlayerCards(
     with(game) {
         players.forEach { player ->
             while (true) {
-                if (!InputView.inputOneMoreCard(player)) {
+                val isOneMoreCard = tryUntilSuccess { InputView.inputOneMoreCard(player) }
+                if (!isOneMoreCard) {
                     break
                 }
                 player.drawCardFromDeck(deck)
@@ -60,6 +65,7 @@ fun drawPlayerCards(
                 }
             }
         }
+        println()
     }
 }
 
@@ -71,5 +77,6 @@ fun drawDealerCards(
             OutputView.printDealerMustGetCard()
             dealer.drawCardFromDeck(deck)
         }
+        println()
     }
 }
