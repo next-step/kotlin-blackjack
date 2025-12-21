@@ -5,15 +5,16 @@ import io.kotest.matchers.shouldBe
 import model.CardDeck
 import model.Dealer
 
-class DealerTest : FreeSpec({
+class DealerTest :
+    FreeSpec({
 
-    "딜러 첫번째 라운드 카드 뽑기" {
-        val cardDeck = CardDeck()
-        val dealer = Dealer()
-        repeat(2) {
-            dealer.cards.addCard(cardDeck.drawCard())
+        "딜러 첫번째 라운드 카드 뽑기" {
+            val cardDeck = CardDeck()
+            val dealer = Dealer()
+            repeat(2) {
+                dealer.cards.addCard(cardDeck.drawCard())
+            }
+
+            dealer.getPublicCardsOnFirstRound().cards().size shouldBe 1
         }
-
-        dealer.getPublicCardsOnFirstRound().cards().size shouldBe 1
-    }
-})
+    })

@@ -1,6 +1,9 @@
 package model
 
-abstract class Participant(val name: String, val cards: Cards) {
+abstract class Participant(
+    val name: String,
+    val cards: Cards,
+) {
     init {
         require(name.isNotBlank()) { "참가자 이름은 빈 값일 수 없습니다." }
     }
@@ -11,19 +14,11 @@ abstract class Participant(val name: String, val cards: Cards) {
         cards.addCard(deck.drawCard())
     }
 
-    fun isBust(): Boolean {
-        return cards.isBust()
-    }
+    fun isBust(): Boolean = cards.isBust()
 
-    fun isBlackJack(): Boolean {
-        return cards.calculateScore() == BlackJackConstants.BLACK_JACK_SCORE && cards.cards().size == 2
-    }
+    fun isBlackJack(): Boolean = cards.calculateScore() == BlackJackConstants.BLACK_JACK_SCORE && cards.cards().size == 2
 
-    fun calculateScore(): Int {
-        return cards.calculateScore()
-    }
+    fun calculateScore(): Int = cards.calculateScore()
 
-    fun calculateScoreTreatAceAsOne(): Int {
-        return cards.calculateScoreTreatAceAsOne()
-    }
+    fun calculateScoreTreatAceAsOne(): Int = cards.calculateScoreTreatAceAsOne()
 }

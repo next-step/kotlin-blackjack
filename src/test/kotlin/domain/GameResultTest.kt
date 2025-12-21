@@ -33,12 +33,13 @@ class GameResultTest :
 
                 val gameResult = GameResult.of(dealer, players)
 
-                gameResult.playerWins shouldBe mapOf(
-                    winner.name to 150,
-                    buster.name to -100,
-                    loser.name to -100,
-                    drawer.name to 0,
-                )
+                gameResult.playerWins shouldBe
+                    mapOf(
+                        winner.name to 150,
+                        buster.name to -100,
+                        loser.name to -100,
+                        drawer.name to 0,
+                    )
                 gameResult.dealerWin shouldBe 50
             }
 
@@ -72,10 +73,11 @@ class GameResultTest :
 
                 val gameResult = GameResult.of(dealer, players)
 
-                gameResult.playerWins shouldBe mapOf(
-                    winner.name to 150,
-                    buster.name to -100,
-                )
+                gameResult.playerWins shouldBe
+                    mapOf(
+                        winner.name to 150,
+                        buster.name to -100,
+                    )
                 gameResult.dealerWin shouldBe -50
             }
         }

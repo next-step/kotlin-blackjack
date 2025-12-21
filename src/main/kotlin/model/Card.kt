@@ -1,13 +1,18 @@
 package model
 
-enum class Suit(val korean: String) {
+enum class Suit(
+    val korean: String,
+) {
     SPADE("스페이드"),
     HEART("하트"),
     DIAMOND("다이아몬드"),
     CLUB("클럽"),
 }
 
-enum class Rank(val value: Int, val symbol: String) {
+enum class Rank(
+    val value: Int,
+    val symbol: String,
+) {
     ACE(1, "A"),
     TWO(2, "2"),
     THREE(3, "3"),
@@ -23,8 +28,9 @@ enum class Rank(val value: Int, val symbol: String) {
     KING(10, "K"),
 }
 
-data class Card(val suit: Suit, val rank: Rank) {
-    override fun toString(): String {
-        return "${rank.symbol}${suit.korean}"
-    }
+data class Card(
+    val suit: Suit,
+    val rank: Rank,
+) {
+    override fun toString(): String = "${rank.symbol}${suit.korean}"
 }

@@ -17,9 +17,10 @@ fun main() {
 }
 
 fun init(): BlackJackGame {
-    val players: Players = tryUntilSuccess {
-        Players.of(InputView.inputPlayerNames())
-    }
+    val players: Players =
+        tryUntilSuccess {
+            Players.of(InputView.inputPlayerNames())
+        }
     val dealer = Dealer()
 
     players.forEach {
@@ -30,9 +31,7 @@ fun init(): BlackJackGame {
     return BlackJackGame(players, dealer, deck)
 }
 
-fun drawFirstCards(
-    game: BlackJackGame
-) {
+fun drawFirstCards(game: BlackJackGame) {
     with(game) {
         repeat(2) {
             dealer.drawCardFromDeck(deck)
@@ -48,9 +47,7 @@ fun drawFirstCards(
     }
 }
 
-fun drawPlayerCards(
-    game: BlackJackGame
-) {
+fun drawPlayerCards(game: BlackJackGame) {
     with(game) {
         players.forEach { player ->
             while (true) {
@@ -69,9 +66,7 @@ fun drawPlayerCards(
     }
 }
 
-fun drawDealerCards(
-    game: BlackJackGame
-) {
+fun drawDealerCards(game: BlackJackGame) {
     with(game) {
         while (dealer.calculateScore() <= BlackJackConstants.DEALER_DRAW_THRESHOLD) {
             OutputView.printDealerMustGetCard()

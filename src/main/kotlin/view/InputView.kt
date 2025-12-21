@@ -24,9 +24,7 @@ object InputView {
         return input == "y"
     }
 
-    private fun String?.ifNullEmpty(): String {
-        return this ?: ""
-    }
+    private fun String?.ifNullEmpty(): String = this ?: ""
 
     fun <T> tryUntilSuccess(block: () -> T): T {
         while (true) {
