@@ -1,4 +1,4 @@
-package domain
+package model
 
 enum class Suit(val korean: String) {
     SPADE("스페이드"),

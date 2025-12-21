@@ -2,6 +2,8 @@ package domain
 
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
+import model.CardDeck
+import model.Dealer
 
 class DealerTest : FreeSpec({
 

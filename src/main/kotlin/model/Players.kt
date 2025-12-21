@@ -1,8 +1,8 @@
-package domain
+package model
 
 class Players(
     val players: List<Player>,
-) {
+) : Iterable<Player> {
     val size get() = players.size
 
     companion object {
@@ -13,7 +13,5 @@ class Players(
         require(players.map { it.name }.toSet().size == players.size) { "참가자의 이름이 중복될 수 없습니다." }
     }
 
-    fun forEach(action: (Player) -> Unit) {
-        players.forEach(action)
-    }
+    override fun iterator(): Iterator<Player> = players.iterator()
 }

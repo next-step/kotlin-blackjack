@@ -2,6 +2,10 @@ package domain
 
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
+import model.Card
+import model.Cards
+import model.Rank
+import model.Suit
 
 class CardsTest : FreeSpec({
     "카드 생성" - {

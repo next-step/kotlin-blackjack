@@ -2,6 +2,7 @@ package domain
 
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.collections.shouldContainExactlyInAnyOrder
+import model.*
 
 class GameResultTest :
     FreeSpec({

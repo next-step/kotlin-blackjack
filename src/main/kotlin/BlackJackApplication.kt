@@ -1,74 +1,75 @@
-import domain.BlackJackConstants
-import domain.CardDeck
-import domain.Dealer
-import domain.GameResult
-import domain.Players
+import model.*
 import view.InputView
 import view.OutputView
 
 fun main() {
-    val (players, dealer, deck) = init()
-    drawFirstCards(players, dealer, deck)
-    drawPlayerCards(players, deck)
-    drawDealerCards(dealer, deck)
+    val game = init()
+    drawFirstCards(game)
+    drawPlayerCards(game)
+    drawDealerCards(game)
 
-    players.forEach { OutputView.printRoundResult(it) }
-    OutputView.printRoundResult(dealer)
-    OutputView.printFinalResult(GameResult.of(dealer, players))
+    game.players.forEach { OutputView.printRoundResult(it) }
+    OutputView.printRoundResult(game.dealer)
+    OutputView.printFinalResult(game.getResult())
 }
 
-fun init(): Triple<Players, Dealer, CardDeck> {
-    OutputView.printPlayerNames()
+fun init(): BlackJackGame {
     val inputPlayerNames = InputView.inputPlayerNames()
     val players = Players.of(inputPlayerNames)
     val dealer = Dealer()
 
+    players.forEach {
+        val bet = InputView.inputBetAmount(it)
+        it.betAmount += bet
+    }
+
     val deck = CardDeck()
-    return Triple(players, dealer, deck)
+    return BlackJackGame(players, dealer, deck)
 }
 
 fun drawFirstCards(
-    players: Players,
-    dealer: Dealer,
-    deck: CardDeck,
+    game: BlackJackGame
 ) {
-    repeat(2) {
-        dealer.drawCardFromDeck(deck)
-        players.forEach {
-            it.drawCardFromDeck(deck)
+    with(game) {
+        repeat(2) {
+            dealer.drawCardFromDeck(deck)
+            players.forEach {
+                it.drawCardFromDeck(deck)
+            }
         }
-    }
 
-    OutputView.printFirstCard(players)
-    OutputView.printCardStatusOnFirstRound(dealer)
-    players.forEach { OutputView.printCardStatusOnFirstRound(it) }
+        OutputView.printFirstCard(players)
+        OutputView.printCardStatusOnFirstRound(dealer)
+        players.forEach { OutputView.printCardStatusOnFirstRound(it) }
+    }
 }
 
 fun drawPlayerCards(
-    players: Players,
-    deck: CardDeck,
+    game: BlackJackGame
 ) {
-    players.forEach { player ->
-        while (true) {
-            OutputView.printDoYouWantCard(player)
-            if (!InputView.inputIsContinue()) {
-                break
-            }
-            player.drawCardFromDeck(deck)
-            OutputView.printCardStatus(player)
-            if (player.calculateScoreTreatAceAsOne() >= BlackJackConstants.BLACK_JACK_SCORE) {
-                break
+    with(game) {
+        players.forEach { player ->
+            while (true) {
+                if (!InputView.inputOneMoreCard(player)) {
+                    break
+                }
+                player.drawCardFromDeck(deck)
+                OutputView.printCardStatus(player)
+                if (player.calculateScoreTreatAceAsOne() >= BlackJackConstants.BLACK_JACK_SCORE) {
+                    break
+                }
             }
         }
     }
 }
 
 fun drawDealerCards(
-    dealer: Dealer,
-    deck: CardDeck,
+    game: BlackJackGame
 ) {
-    if (dealer.calculateScore() <= BlackJackConstants.DEALER_DRAW_THRESHOLD) {
-        OutputView.printDealerMustGetCard()
-        dealer.drawCardFromDeck(deck)
+    with(game) {
+        while (dealer.calculateScore() <= BlackJackConstants.DEALER_DRAW_THRESHOLD) {
+            OutputView.printDealerMustGetCard()
+            dealer.drawCardFromDeck(deck)
+        }
     }
 }

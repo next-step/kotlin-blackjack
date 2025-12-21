@@ -1,8 +1,6 @@
-package domain
+package model
 
-class Dealer(override val cards: Cards = Cards()) : Participant {
-    override val name: String = "딜러"
-
+class Dealer : Participant(name = "딜러") {
     override fun getPublicCardsOnFirstRound(): Cards {
         return Cards(cards.cards().take(1).toMutableList())
     }

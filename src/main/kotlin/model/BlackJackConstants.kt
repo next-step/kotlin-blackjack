@@ -1,4 +1,4 @@
-package domain
+package model
 
 object BlackJackConstants {
     const val BLACK_JACK_SCORE = 21
