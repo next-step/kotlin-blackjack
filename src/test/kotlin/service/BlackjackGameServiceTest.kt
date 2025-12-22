@@ -11,7 +11,7 @@ class BlackjackGameServiceTest : FreeSpec({
     "딜러와 참가자에게 초기 카드 2장씩 분배" {
         val gameService = BlackjackGameService()
         val dealer = Dealer()
-        val players = Players(listOf(Player("pobi"), Player("jason")))
+        val players = Players(listOf(Player("pobi", 1000), Player("jason", 1000)))
 
         gameService.drawInitialCards(dealer, players)
 
@@ -22,7 +22,7 @@ class BlackjackGameServiceTest : FreeSpec({
 
     "참가자에게 카드 한 장 추가 분배" {
         val gameService = BlackjackGameService()
-        val player = Player("pobi")
+        val player = Player("pobi", 1000)
         val initialCardCount = player.cards.cards().size
 
         gameService.drawCards(player)
@@ -43,7 +43,7 @@ class BlackjackGameServiceTest : FreeSpec({
     "카드 분배 시 중복되지 않는 카드 확인" {
         val gameService = BlackjackGameService()
         val dealer = Dealer()
-        val players = Players(listOf(Player("pobi"), Player("jason")))
+        val players = Players(listOf(Player("pobi", 1000), Player("jason", 1000)))
 
         gameService.drawInitialCards(dealer, players)
 
