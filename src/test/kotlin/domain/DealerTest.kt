@@ -34,15 +34,15 @@ class DealerTest : FreeSpec({
 
     "딜러 돈 추가" {
         val dealer = Dealer()
-        dealer.minusMoney(1000)()
+        dealer.minusMoney(1000)
 
-        dealer.money shouldBe 1000
+        dealer.money shouldBe -1000
     }
 
     "딜러 돈 차감" {
         val dealer = Dealer()
-        dealer.minusMoney(-1000)()
+        dealer.minusMoney(-1000)
 
-        dealer.money shouldBe -1000
+        dealer.money shouldBe 1000
     }
 })

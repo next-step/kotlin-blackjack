@@ -1,5 +1,4 @@
 import domain.Dealer
-import domain.GameResult
 import domain.Player
 import domain.Players
 import service.BlackjackGameService
@@ -25,5 +24,5 @@ fun main() {
     blackjackGameService.decideGameResult(dealer, players)
 
     OutputView.printRoundResult(players, dealer)
-    OutputView.printFinalResult(GameResult.of(dealer, players))
+    OutputView.printFinalResult(dealer, players)
 }

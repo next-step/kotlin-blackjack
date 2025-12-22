@@ -1,7 +1,6 @@
 package view
 
 import domain.Dealer
-import domain.GameResult
 import domain.Participant
 import domain.Player
 import domain.Players
@@ -52,12 +51,13 @@ class OutputView {
             println("${participant.name}카드: ${participant.cards} - 결과: ${participant.cards.calculateScore()}")
         }
 
-        fun printFinalResult(gameResult: GameResult) {
-            println("## 최종 승패")
-            println("딜러: ${gameResult.loser.players.size} 승 ${gameResult.winner.players.size} 패 ${gameResult.drawer.players.size} 무")
-            gameResult.winner.players.forEach { player -> println("${player.name}: 승") }
-            gameResult.loser.players.forEach { player -> println("${player.name}: 패") }
-            gameResult.drawer.players.forEach { player -> println("${player.name}: 무") }
+        fun printFinalResult(
+            dealer: Dealer,
+            players: Players,
+        ) {
+            println("## 최종 수익")
+            println("딜러: ${dealer.money}")
+            players.players.forEach { player -> println("${player.name}: ${player.money}") }
         }
     }
 }

@@ -12,5 +12,7 @@ class Dealer(override val cards: Cards = Cards()) : Participant {
 
     override fun isDrawAvailable(): Boolean = cards.calculateScore() < DEALER_STAND_SCORE
 
-    fun minusMoney(money: Int) = { this.money -= money }
+    fun minusMoney(money: Int) {
+        this.money = this.money - money
+    }
 }
