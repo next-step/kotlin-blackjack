@@ -18,8 +18,7 @@ fun main() {
 
     for (player in players.players) {
         while (true) {
-            OutputView.printDoYouWantCard(player)
-            if (InputView.inputIsContinue()) {
+            if (InputView.inputIsContinue(player.name)) {
                 blackjackGameService.drawCards(player)
                 OutputView.printCardStatus(player)
                 if (!player.isDrawAvailable()) {
@@ -36,7 +35,6 @@ fun main() {
         blackjackGameService.drawCards(dealer)
     }
 
-    players.players.forEach { OutputView.printRoundResult(it) }
-    OutputView.printRoundResult(dealer)
+    OutputView.printRoundResult(players, dealer)
     OutputView.printFinalResult(GameResult.of(dealer, players))
 }

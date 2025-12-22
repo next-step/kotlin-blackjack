@@ -16,7 +16,8 @@ class InputView {
             return readln().ifNullEmpty().toInt()
         }
 
-        fun inputIsContinue(): Boolean {
+        fun inputIsContinue(playerName: String): Boolean {
+            println("$playerName 님 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
             val input = readln().ifNullEmpty().trim().lowercase()
             return input == "y"
         }

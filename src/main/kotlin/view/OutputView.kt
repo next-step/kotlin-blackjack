@@ -28,15 +28,19 @@ class OutputView {
             println("${participant.name}카드: ${participant.cards}")
         }
 
-        fun printDoYouWantCard(player: Player) {
-            println("${player.name}는 한장의 카드를 더 받겠습니까?(예는 y, 아니오는 n)")
-        }
-
         fun printDealerMustGetCard() {
             println("딜러는 16이하라 한장의 카드를 더 받았습니다.")
         }
 
-        fun printRoundResult(participant: Participant) {
+        fun printRoundResult(
+            players: Players,
+            dealer: Dealer,
+        ) {
+            players.players.forEach { printRoundResult(it) }
+            printRoundResult(dealer)
+        }
+
+        private fun printRoundResult(participant: Participant) {
             println("${participant.name}카드: ${participant.cards} - 결과: ${participant.cards.calculateScore()}")
         }
 
