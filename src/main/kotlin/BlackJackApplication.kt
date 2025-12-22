@@ -16,7 +16,7 @@ fun main() {
     OutputView.printFirstCard(players)
     OutputView.printCardStatusOnFirstRound(dealer, players)
 
-    for (player in players.players) {
+    players.players.forEach { player ->
         blackjackGameService.drawPlayerCards(
             player,
             { InputView.inputIsContinue(player.name) },
