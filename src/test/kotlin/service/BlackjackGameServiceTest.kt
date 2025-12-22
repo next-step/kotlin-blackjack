@@ -1,8 +1,12 @@
 package service
 
+import domain.Card
+import domain.Cards
 import domain.Dealer
 import domain.Player
 import domain.Players
+import domain.Rank
+import domain.Suit
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 
@@ -22,12 +26,22 @@ class BlackjackGameServiceTest : FreeSpec({
 
     "참가자에게 카드 한 장 추가 분배" {
         val gameService = BlackjackGameService()
+        val player = Player("pobi", 1000, Cards(mutableListOf(Card(Suit.SPADE, Rank.TEN), Card(Suit.DIAMOND, Rank.TEN))))
+        val initialCardCount = player.cards.cards().size
+
+        gameService.drawPlayerCards(player, { true }) {}
+
+        player.cards.cards().size shouldBe initialCardCount + 1
+    }
+
+    "참가자에게 카드 추가 분배하지 않음" {
+        val gameService = BlackjackGameService()
         val player = Player("pobi", 1000)
         val initialCardCount = player.cards.cards().size
 
-        gameService.drawCards(player)
+        gameService.drawPlayerCards(player, { false }) {}
 
-        player.cards.cards().size shouldBe initialCardCount + 1
+        player.cards.cards().size shouldBe initialCardCount
     }
 
     "딜러에게 카드 한 장 추가 분배" {
@@ -35,7 +49,7 @@ class BlackjackGameServiceTest : FreeSpec({
         val dealer = Dealer()
         val initialCardCount = dealer.cards.cards().size
 
-        gameService.drawCards(dealer)
+        gameService.drawDealerCards(dealer) {}
 
         dealer.cards.cards().size shouldBe initialCardCount + 1
     }
@@ -47,7 +61,7 @@ class BlackjackGameServiceTest : FreeSpec({
 
         gameService.drawInitialCards(dealer, players)
 
-        val allCards = mutableListOf<domain.Card>()
+        val allCards = mutableListOf<Card>()
         allCards.addAll(dealer.cards.cards())
         allCards.addAll(players.players[0].cards.cards())
         allCards.addAll(players.players[1].cards.cards())

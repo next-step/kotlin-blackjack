@@ -17,23 +17,13 @@ fun main() {
     OutputView.printCardStatusOnFirstRound(dealer, players)
 
     for (player in players.players) {
-        while (true) {
-            if (InputView.inputIsContinue(player.name)) {
-                blackjackGameService.drawCards(player)
-                OutputView.printCardStatus(player)
-                if (!player.isDrawAvailable()) {
-                    break
-                }
-            } else {
-                break
-            }
-        }
+        blackjackGameService.drawPlayerCards(
+            player,
+            { InputView.inputIsContinue(player.name) },
+        ) { OutputView.printCardStatus(player) }
     }
 
-    if (dealer.isDrawAvailable()) {
-        OutputView.printDealerMustGetCard()
-        blackjackGameService.drawCards(dealer)
-    }
+    blackjackGameService.drawDealerCards(dealer) { OutputView.printDealerMustGetCard() }
 
     OutputView.printRoundResult(players, dealer)
     OutputView.printFinalResult(GameResult.of(dealer, players))

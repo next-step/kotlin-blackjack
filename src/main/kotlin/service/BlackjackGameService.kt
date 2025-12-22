@@ -2,7 +2,7 @@ package service
 
 import domain.CardDeck
 import domain.Dealer
-import domain.Participant
+import domain.Player
 import domain.Players
 
 private const val INITIAL_DRAW_CARD_SIZE = 2
@@ -20,7 +20,31 @@ class BlackjackGameService {
         }
     }
 
-    fun drawCards(participant: Participant) {
-        participant.cards.addCard(deck.drawCard())
+    fun drawPlayerCards(
+        player: Player,
+        isDrawCard: () -> Boolean,
+        printCards: () -> Unit,
+    ) {
+        while (true) {
+            if (isDrawCard()) {
+                player.cards.addCard(deck.drawCard())
+                printCards()
+                if (!player.isDrawAvailable()) {
+                    break
+                }
+            } else {
+                break
+            }
+        }
+    }
+
+    fun drawDealerCards(
+        dealer: Dealer,
+        printDealerDraw: () -> Unit,
+    ) {
+        if (dealer.isDrawAvailable()) {
+            dealer.cards.addCard(deck.drawCard())
+            printDealerDraw()
+        }
     }
 }
