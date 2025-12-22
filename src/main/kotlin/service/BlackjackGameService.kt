@@ -49,4 +49,41 @@ class BlackjackGameService {
             printDealerDraw()
         }
     }
+
+    fun decideGameResult(
+        dealer: Dealer,
+        players: Players,
+    ) {
+        players.players.forEach { player ->
+            dealer.minusMoney(calculateAndApplyPlayerResult(dealer, player))
+        }
+    }
+
+    private fun calculateAndApplyPlayerResult(
+        dealer: Dealer,
+        player: Player,
+    ): Int {
+        val multiplier = calculateWinMultiplier(dealer, player)
+        player.multiplyMoney(multiplier)
+        return player.money
+    }
+
+    private fun calculateWinMultiplier(
+        dealer: Dealer,
+        player: Player,
+    ): Double {
+        if (player.getCardSize() > INITIAL_DRAW_CARD_SIZE && player.isBust()) return -1.0
+        if (dealer.isBust()) return 1.0
+        if (isBothBlackJack(dealer, player)) return 1.0
+        if (player.isPlayerBlackJack()) return 1.5
+        if (dealer.getScore() < player.getScore()) return 1.0
+        return -1.0
+    }
+
+    private fun isBothBlackJack(
+        dealer: Dealer,
+        player: Player,
+    ): Boolean = dealer.isBlackJack() && player.getCardSize() == INITIAL_DRAW_CARD_SIZE && player.isBlackJack()
+
+    private fun Player.isPlayerBlackJack(): Boolean = getCardSize() == INITIAL_DRAW_CARD_SIZE && isBlackJack()
 }

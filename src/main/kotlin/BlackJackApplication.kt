@@ -22,6 +22,7 @@ fun main() {
     }
 
     blackjackGameService.drawDealerCards(dealer) { OutputView.printDealerMustGetCard() }
+    blackjackGameService.decideGameResult(dealer, players)
 
     OutputView.printRoundResult(players, dealer)
     OutputView.printFinalResult(GameResult.of(dealer, players))

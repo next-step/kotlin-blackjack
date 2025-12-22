@@ -49,4 +49,25 @@ class PlayerTest : FreeSpec({
             player.isDrawAvailable() shouldBe false
         }
     }
+
+    "플레이어 돈 결정" - {
+        "돈 추가" {
+            val player = Player("player", 1000)
+            player.multiplyMoney(1.0)
+
+            player.money shouldBe 1000
+        }
+        "돈 1.5배" {
+            val player = Player("player", 1000)
+            player.multiplyMoney(1.5)
+
+            player.money shouldBe 1500
+        }
+        "돈 손실" {
+            val player = Player("player", 1000)
+            player.multiplyMoney(-1.0)
+
+            player.money shouldBe -1000
+        }
+    }
 })
