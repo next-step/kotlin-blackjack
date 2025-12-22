@@ -12,9 +12,7 @@ fun main() {
     val players = Players(inputPlayerNames.map { Player(it, InputView.inputPlayerMoney(it)) })
     val dealer = Dealer()
 
-    blackjackGameService.drawInitialCards(dealer, players)
-    OutputView.printFirstCard(players)
-    OutputView.printCardStatusOnFirstRound(dealer, players)
+    blackjackGameService.drawInitialCards(dealer, players) { OutputView.printFirstRoundCard(players, dealer) }
 
     players.players.forEach { player ->
         blackjackGameService.drawPlayerCards(

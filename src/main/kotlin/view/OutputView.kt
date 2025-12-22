@@ -8,11 +8,19 @@ import domain.Players
 
 class OutputView {
     companion object {
-        fun printFirstCard(players: Players) {
+        fun printFirstRoundCard(
+            players: Players,
+            dealer: Dealer,
+        ) {
+            printFirstCard(players)
+            printCardStatusOnFirstRound(dealer, players)
+        }
+
+        private fun printFirstCard(players: Players) {
             println("딜러와 ${players.players.joinToString(", ", transform = Player::name)}에게 2장의 카드를 나누었습니다.")
         }
 
-        fun printCardStatusOnFirstRound(
+        private fun printCardStatusOnFirstRound(
             dealer: Dealer,
             players: Players,
         ) {

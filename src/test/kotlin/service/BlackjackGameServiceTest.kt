@@ -17,7 +17,7 @@ class BlackjackGameServiceTest : FreeSpec({
         val dealer = Dealer()
         val players = Players(listOf(Player("pobi", 1000), Player("jason", 1000)))
 
-        gameService.drawInitialCards(dealer, players)
+        gameService.drawInitialCards(dealer, players) {}
 
         dealer.cards.cards().size shouldBe 2
         players.players[0].cards.cards().size shouldBe 2
@@ -59,7 +59,7 @@ class BlackjackGameServiceTest : FreeSpec({
         val dealer = Dealer()
         val players = Players(listOf(Player("pobi", 1000), Player("jason", 1000)))
 
-        gameService.drawInitialCards(dealer, players)
+        gameService.drawInitialCards(dealer, players) {}
 
         val allCards = mutableListOf<Card>()
         allCards.addAll(dealer.cards.cards())

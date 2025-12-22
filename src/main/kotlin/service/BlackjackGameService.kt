@@ -13,11 +13,13 @@ class BlackjackGameService {
     fun drawInitialCards(
         dealer: Dealer,
         players: Players,
+        printCard: () -> Unit,
     ) {
         repeat(INITIAL_DRAW_CARD_SIZE) {
             dealer.cards.addCard(deck.drawCard())
             players.players.forEach { player -> player.cards.addCard(deck.drawCard()) }
         }
+        printCard()
     }
 
     fun drawPlayerCards(
