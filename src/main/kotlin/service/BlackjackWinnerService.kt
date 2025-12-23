@@ -3,24 +3,20 @@ package service
 import domain.participant.Dealer
 import domain.participant.ParticipantHand
 import domain.participant.Player
+import domain.participant.WinType
 
 class BlackjackWinnerService {
-    fun winner(
+    fun determineWinner(
         players: List<Player>,
         dealer: Dealer,
-    ): Map<Player, Boolean> {
-        val result = mutableMapOf<Player, Boolean>()
-
-        players.forEach {
-            if (dealer.score() > ParticipantHand.BLACKJACK_MAX_SCORE) {
-                result[it] = true
-            } else if (it.score() > ParticipantHand.BLACKJACK_MAX_SCORE) {
-                result[it] = false
-            } else {
-                result[it] = it.score() >= dealer.score()
+    ): Map<Player, WinType> =
+        players.associateWith {
+            when {
+                dealer.score() > ParticipantHand.BLACKJACK_MAX_SCORE -> WinType.WIN
+                it.score() > ParticipantHand.BLACKJACK_MAX_SCORE -> WinType.LOSE
+                it.score() == dealer.score() -> WinType.DRAW
+                it.score() > dealer.score() -> WinType.WIN
+                else -> WinType.LOSE
             }
         }
-
-        return result
-    }
 }

@@ -2,21 +2,22 @@ package presentation
 
 import domain.participant.Dealer
 import domain.participant.Player
+import domain.participant.WinType
 
 class ResultView {
     companion object {
-        fun printWinnerResult(result: Map<Player, Boolean>) {
+        fun printWinnerResult(result: Map<Player, WinType>) {
             println("## 최종승패")
 
             // 딜러 승패 출력
-            val dealerDefeatCount = result.count { it.value }
-            val dealerWinCount = result.count { !it.value }
-            println("딜러: ${dealerWinCount}승 ${dealerDefeatCount}패")
+            val dealerDefeatCount = result.count { it.value == WinType.WIN }
+            val dealerWinCount = result.count { it.value == WinType.LOSE }
+            val drawCount = result.count { it.value == WinType.DRAW }
+            println("딜러: ${dealerWinCount}승 ${dealerDefeatCount}패 ${drawCount}무")
 
             // 플레이어 승패 출력
-            result.forEach { (player, isWin) ->
-                val resultText = if (isWin) "승" else "패"
-                println("${player.name}: $resultText")
+            result.forEach { (player, winType) ->
+                println("${player.name}: ${winType.displayName}")
             }
         }
 

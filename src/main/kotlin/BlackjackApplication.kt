@@ -46,6 +46,6 @@ fun main() {
 
     // 최종 승패 출력
     val blackjackWinnerService = BlackjackWinnerService()
-    val result = blackjackWinnerService.winner(players, dealer)
+    val result = blackjackWinnerService.determineWinner(players, dealer)
     ResultView.printWinnerResult(result)
 }

@@ -48,3 +48,10 @@
 8. 최송 수익 출력
   - 플레이어 별 손익금
   - 손익금 지급/수령 후 딜러 최종 손익 출력
+
+---
+## 배운점
+- List 를 Map 으로 바꾸는 associate 계열 함수의 존재를 알게 되었다.
+  - associate : 람다에서 Key, Value로 이뤄진 Pair 반환
+  - associateBy : Key는 람다 결과, 값은 엘리먼트
+  - associateWith : Key는 엘리먼트, Value 는 람다 결과
