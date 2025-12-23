@@ -17,15 +17,6 @@ class InputView {
             return readln().toInt()
         }
 
-//        fun inputBetAmount(player: Player): Int {
-//            println("${player.name}의 베팅 금액은?");
-//            val input = readln().trim()
-//            return input.toDoubleOrNull() ?: run {
-//                println("잘못된 입력입니다. 숫자 형식으로 다시 입력해주세요.")
-//                inputBetAmount(player)
-//            }
-//        }
-
         fun inputAdditionalCard(player: Player): Boolean {
             println("${player.name}는 한장의 카드를 더 받겠습니까? (예는 y, 아니오는 n)")
             val input = readln().trim().uppercase()
