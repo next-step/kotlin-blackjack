@@ -1,5 +1,6 @@
 package service
 
+import domain.bet.BetMoney
 import domain.card.Card
 import domain.card.CardValue
 import domain.card.Suit
@@ -21,11 +22,11 @@ class BlackjackWinnerServiceTest {
         dealer.receiveCard(Card(Suit.HEART, CardValue.THREE))
 
         // when
-        val player = Player("A")
+        val player = Player("A", BetMoney(10000))
         player.receiveCard(Card(Suit.SPADE, CardValue.NINE))
         player.receiveCard(Card(Suit.DIAMOND, CardValue.NINE))
 
-        val player2 = Player("B")
+        val player2 = Player("B", BetMoney(10000))
         player2.receiveCard(Card(Suit.HEART, CardValue.TWO))
         player2.receiveCard(Card(Suit.CLUB, CardValue.TWO))
 
@@ -48,7 +49,7 @@ class BlackjackWinnerServiceTest {
         dealer.receiveCard(Card(Suit.HEART, CardValue.TEN))
 
         // when
-        val player = Player("A")
+        val player = Player("A", BetMoney(10000))
         player.receiveCard(Card(Suit.SPADE, CardValue.NINE))
         player.receiveCard(Card(Suit.DIAMOND, CardValue.NINE))
         player.receiveCard(Card(Suit.CLUB, CardValue.NINE))

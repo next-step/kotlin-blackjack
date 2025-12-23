@@ -20,7 +20,7 @@ class ParticipantHandTest {
         participantHand.receiveCard(Card(Suit.SPADE, CardValue.ACE))
 
         // then
-        assertThat(participantHand.describeHand()).isEqualTo("10하트, A스페이드")
+        assertThat(participantHand).isEqualTo("10하트, A스페이드")
     }
 
     @Test

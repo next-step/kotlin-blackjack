@@ -24,9 +24,9 @@ class ResultView {
             players: List<Player>,
             dealer: Dealer,
         ) {
-            println("딜러 카드: ${dealer.participantHand.describeHand()} - 결과: ${dealer.participantHand.calculateScore()}")
+            println("딜러 카드: ${dealer.participantHand} - 결과: ${dealer.participantHand.calculateScore()}")
             players.forEach { player ->
-                println("${player.name} 카드: ${player.participantHand.describeHand()} - 결과: ${player.participantHand.calculateScore()}")
+                println("${player.name} 카드: ${player.participantHand} - 결과: ${player.participantHand.calculateScore()}")
             }
         }
 
@@ -41,7 +41,7 @@ class ResultView {
 
             // 플레이어 카드 출력 : 플레이어별 전체 카드 출력
             players.forEach {
-                println("${it.name}카드: ${it.participantHand.describeHand()}")
+                println("${it.name}카드: ${it.participantHand}")
             }
         }
     }

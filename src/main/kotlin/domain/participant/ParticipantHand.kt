@@ -29,7 +29,7 @@ class ParticipantHand() {
         return total
     }
 
-    fun describeHand(): String {
+    override fun toString(): String {
         return _ownCards.joinToString()
     }
 }

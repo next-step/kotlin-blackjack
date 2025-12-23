@@ -1,5 +1,6 @@
 package service
 
+import domain.bet.BetMoney
 import domain.card.CardDeck
 import domain.participant.Dealer
 import domain.participant.Player
@@ -14,7 +15,7 @@ class CardDistributorServiceTest {
     @DisplayName("플레이어와 딜러에게 각각 2장의 카드를 분배한다.")
     fun distributeTest() {
         // given
-        val player = Player("A")
+        val player = Player("A", BetMoney(10000))
         val dealer = Dealer()
 
         // when
@@ -29,7 +30,7 @@ class CardDistributorServiceTest {
     @DisplayName("플레이어와 딜러에게 각각 2장의 카드를 분배한다.")
     fun additionalDistributeTest() {
         // given
-        val player = Player("A")
+        val player = Player("A", BetMoney(10000))
         val dealer = Dealer()
         cardDistributorService.distributeInitialCards(listOf(player, dealer))
         val expectedDealerCardSize =

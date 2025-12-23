@@ -33,7 +33,7 @@ class CardDistributorService(private val cardDeck: CardDeck) {
             val card = cardDeck.drawCard()
             player.receiveCard(card)
 
-            println("${player.name}카드: ${player.participantHand.describeHand()}")
+            println("${player.name}카드: ${player.participantHand}")
         }
     }
 

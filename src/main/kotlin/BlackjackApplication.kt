@@ -1,5 +1,7 @@
+import domain.bet.BetMoney
 import domain.card.CardDeck
 import domain.participant.Dealer
+import domain.participant.Player
 import presentation.InputView
 import presentation.ResultView
 import service.BlackjackWinnerService
@@ -9,8 +11,15 @@ fun main() {
     // 딜러 초기화
     val dealer = Dealer()
 
-    // 플레이어 입력 및 초기화
-    val players = InputView.inputPlayers()
+    // 플레이어 이름 입력
+    val playerNames = InputView.inputPlayers()
+    println()
+
+    // 베팅금액 입력 및 플레이어 초기화
+    val players =
+        playerNames.map {
+            Player(it, BetMoney(InputView.inputBetMoney(it)))
+        }
     println()
 
     // 카드 분배 : 플레이어, 딜러
