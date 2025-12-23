@@ -31,7 +31,11 @@ class BlackjackWinnerServiceTest {
         player2.receiveCard(Card(Suit.HEART, CardValue.TWO))
         player2.receiveCard(Card(Suit.CLUB, CardValue.TWO))
 
-        val players = listOf(player, player2)
+        val player3 = Player("C", BetMoney(10000))
+        player3.receiveCard(Card(Suit.CLUB, CardValue.TEN))
+        player3.receiveCard(Card(Suit.CLUB, CardValue.THREE))
+
+        val players = listOf(player, player2, player3)
 
         // when
         val winner = blackjackWinnerService.determineWinner(players, dealer)
@@ -39,6 +43,7 @@ class BlackjackWinnerServiceTest {
         // then
         assertThat(winner[player]).isEqualTo(WinType.WIN)
         assertThat(winner[player2]).isEqualTo(WinType.LOSE)
+        assertThat(winner[player3]).isEqualTo(WinType.DRAW)
     }
 
     @Test

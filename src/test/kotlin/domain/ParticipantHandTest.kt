@@ -53,4 +53,20 @@ class ParticipantHandTest {
         // then
         assertThat(score).isEqualTo(12)
     }
+
+    @Test
+    @DisplayName("범위를 지정하면 지정한 범위만큼의 카드 점수만 계산된다.")
+    fun calculateScoreTest3() {
+        // given
+        val participantHand = ParticipantHand()
+        participantHand.receiveCard(Card(Suit.HEART, CardValue.TEN))
+        participantHand.receiveCard(Card(Suit.SPADE, CardValue.ACE))
+        participantHand.receiveCard(Card(Suit.DIAMOND, CardValue.ACE))
+
+        // when
+        val score = participantHand.calculateScore(2)
+
+        // then
+        assertThat(score).isEqualTo(21)
+    }
 }
