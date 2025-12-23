@@ -3,11 +3,11 @@ package domain.participant
 import domain.card.Card
 
 abstract class Participant(
-    val participantHand: ParticipantHand = ParticipantHand(),
+    val hand: ParticipantHand = ParticipantHand(),
 ) {
-    fun receiveCard(card: Card) = participantHand.receiveCard(card)
+    fun receiveCard(card: Card) = hand.receiveCard(card)
 
-    fun score(): Int = participantHand.calculateScore()
+    fun score(): Int = hand.calculateScore()
 
-    fun cardSize() = participantHand.ownCards.size
+    fun isBlackjack(): Boolean = hand.calculateScore(2) == ParticipantHand.BLACKJACK_MAX_SCORE
 }

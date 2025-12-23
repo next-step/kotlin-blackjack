@@ -3,6 +3,7 @@ package presentation
 import domain.participant.Dealer
 import domain.participant.Player
 import domain.participant.WinType
+import kotlin.math.ceil
 
 class ResultView {
     companion object {
@@ -21,13 +22,32 @@ class ResultView {
             }
         }
 
+        fun printProfit(result: Map<Player, WinType>) {
+            println("## 최종 수익")
+            val playerProfits =
+                result.mapValues { (player, winType) ->
+                    when (winType) {
+                        WinType.WIN ->
+                            ceil(player.betMoney.amount * if (player.isBlackjack()) 1.5 else 1.0).toInt()
+
+                        WinType.LOSE -> -player.betMoney.amount
+                        WinType.DRAW -> 0
+                    }
+                }
+
+            println("딜러: ${-playerProfits.values.sum()}")
+            playerProfits.forEach { (player, profit) ->
+                println("${player.name}: ${profit}원")
+            }
+        }
+
         fun printParticipantCardResult(
             players: List<Player>,
             dealer: Dealer,
         ) {
-            println("딜러 카드: ${dealer.participantHand} - 결과: ${dealer.participantHand.calculateScore()}")
+            println("딜러 카드: ${dealer.hand} - 결과: ${dealer.hand.calculateScore()}")
             players.forEach { player ->
-                println("${player.name} 카드: ${player.participantHand} - 결과: ${player.participantHand.calculateScore()}")
+                println("${player.name} 카드: ${player.hand} - 결과: ${player.hand.calculateScore()}")
             }
         }
 
@@ -42,7 +62,7 @@ class ResultView {
 
             // 플레이어 카드 출력 : 플레이어별 전체 카드 출력
             players.forEach {
-                println("${it.name}카드: ${it.participantHand}")
+                println("${it.name}카드: ${it.hand}")
             }
         }
     }

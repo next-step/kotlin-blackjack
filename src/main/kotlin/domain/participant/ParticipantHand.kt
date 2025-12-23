@@ -17,9 +17,12 @@ class ParticipantHand() {
         _ownCards.add(card)
     }
 
-    fun calculateScore(): Int {
-        var total = _ownCards.sumOf { it.value.basicScore }
-        var aceCount = _ownCards.count { it.value == CardValue.ACE }
+    fun handSize() = _ownCards.size
+
+    fun calculateScore(scope: Int = _ownCards.size): Int {
+        val scopedCard = _ownCards.take(scope)
+        var total = scopedCard.sumOf { it.value.basicScore }
+        var aceCount = scopedCard.count { it.value == CardValue.ACE }
 
         while (total > BLACKJACK_MAX_SCORE && aceCount > 0) {
             total -= 10 // ACE 11 → 1 변경

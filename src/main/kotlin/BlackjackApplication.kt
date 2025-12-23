@@ -7,6 +7,10 @@ import presentation.ResultView
 import service.BlackjackWinnerService
 import service.CardDistributorService
 
+// Service 선언
+val cardDistributorService = CardDistributorService(CardDeck())
+val blackjackWinnerService = BlackjackWinnerService()
+
 fun main() {
     // 딜러 초기화
     val dealer = Dealer()
@@ -23,7 +27,6 @@ fun main() {
     println()
 
     // 카드 분배 : 플레이어, 딜러
-    val cardDistributorService = CardDistributorService(CardDeck())
     cardDistributorService.distributeInitialCards(players + dealer)
 
     // 분배된 카드정보 출력
@@ -45,7 +48,9 @@ fun main() {
     println()
 
     // 최종 승패 출력
-    val blackjackWinnerService = BlackjackWinnerService()
-    val result = blackjackWinnerService.determineWinner(players, dealer)
-    ResultView.printWinnerResult(result)
+    val winResult = blackjackWinnerService.determineWinner(players, dealer)
+    ResultView.printWinnerResult(winResult)
+    println()
+
+    ResultView.printProfit(winResult)
 }

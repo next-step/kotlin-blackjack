@@ -33,7 +33,7 @@ class CardDistributorService(private val cardDeck: CardDeck) {
             val card = cardDeck.drawCard()
             player.receiveCard(card)
 
-            println("${player.name}카드: ${player.participantHand}")
+            println("${player.name}카드: ${player.hand}")
         }
     }
 
@@ -41,7 +41,7 @@ class CardDistributorService(private val cardDeck: CardDeck) {
         // 1. 딜러의 카드 점수를 계산
         // 2. 카드 점수가 17 미만이면 카드를 한 장 더 발급
         // 3. 카드 점수가 17 이상이면 종료
-        val dealerScore = dealer.participantHand.calculateScore()
+        val dealerScore = dealer.hand.calculateScore()
         if (dealerScore > DEALER_ADDITIONAL_CARD_THRESHOLD) {
             return
         }

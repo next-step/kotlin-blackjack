@@ -22,8 +22,8 @@ class CardDistributorServiceTest {
         cardDistributorService.distributeInitialCards(listOf(player, dealer))
 
         // then
-        assertThat(player.cardSize()).isEqualTo(CardDistributorService.INITIAL_CARD_COUNT)
-        assertThat(dealer.cardSize()).isEqualTo(CardDistributorService.INITIAL_CARD_COUNT)
+        assertThat(player.hand.handSize()).isEqualTo(CardDistributorService.INITIAL_CARD_COUNT)
+        assertThat(dealer.hand.handSize()).isEqualTo(CardDistributorService.INITIAL_CARD_COUNT)
     }
 
     @Test
@@ -44,6 +44,6 @@ class CardDistributorServiceTest {
         cardDistributorService.distributeAdditionalCardsForDealer(dealer)
 
         // then
-        assertThat(dealer.cardSize()).isEqualTo(expectedDealerCardSize)
+        assertThat(dealer.hand.handSize()).isEqualTo(expectedDealerCardSize)
     }
 }
