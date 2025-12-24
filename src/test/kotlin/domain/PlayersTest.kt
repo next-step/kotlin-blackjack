@@ -11,9 +11,9 @@ class PlayersTest : FreeSpec({
             shouldThrow<IllegalArgumentException> {
                 Players(
                     listOf(
-                        Player("juri"),
-                        Player("juri"),
-                        Player("ryeol"),
+                        Player(name = "juri", bettingAmount = 10_000L),
+                        Player(name = "juri", bettingAmount = 10_000L),
+                        Player(name = "ryeol", bettingAmount = 10_000L),
                     ),
                 )
             }
@@ -23,9 +23,9 @@ class PlayersTest : FreeSpec({
         val players =
             Players(
                 listOf(
-                    Player("juri"),
-                    Player("yebin"),
-                    Player("ryeol"),
+                    Player(name = "juri", bettingAmount = 10_000L),
+                    Player(name = "yebin", bettingAmount = 10_000L),
+                    Player(name = "ryeol", bettingAmount = 10_000L),
                 ),
             )
 

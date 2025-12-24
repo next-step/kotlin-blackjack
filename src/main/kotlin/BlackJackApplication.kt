@@ -11,7 +11,14 @@ import view.OutputView
 fun main() {
     OutputView.printPlayerNames()
     val inputPlayerNames = InputView.inputPlayerNames()
-    val players = Players.of(inputPlayerNames)
+
+    val playersMap =
+        inputPlayerNames.associateWith { it ->
+            OutputView.printPlayerBettingAmount(it)
+            InputView.inputPlayerBettingAmounts()
+        }
+
+    val players = Players.of(playersMap)
     val dealer = Dealer()
 
     val deck = CardDeck()
