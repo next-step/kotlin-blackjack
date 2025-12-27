@@ -1,6 +1,6 @@
 package service
 
-import consts.BlackjackConstants.Companion.MIN_BETTING_AMOUNT
+import consts.MIN_BETTING_AMOUNT
 import domain.Dealer
 import domain.Player
 import presentation.InputView

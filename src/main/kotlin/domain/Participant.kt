@@ -22,7 +22,5 @@ abstract class Participant(
     fun isBlackjack(): Boolean =
         blackjackCards.getCards().size == 2 && blackjackCards.calculateScore() == BlackjackCards.BLACKJACK_MAX_SCORE
 
-    fun applyProfit(profit: SignedMoney) {
-        this.profit = profit
-    }
+    fun applyProfit(profit: SignedMoney) = run { this.profit = profit }
 }
