@@ -172,4 +172,49 @@ class BlackjackResultCalculatorTest {
         assertThat(playerA.profit).isEqualTo(SignedMoney(10_000))
         assertThat(playerB.profit).isEqualTo(SignedMoney(-20_000))
     }
+
+    @Test
+    @DisplayName("플레이어, 딜러 모두 블랙잭이 아니면서 플레이어 점수가 높으면 플레이어가 이긴다")
+    fun determineWinStatus_playerWinsWithHigherScore() {
+        // given
+        val dealer = Dealer().apply {
+            receiveCard(Card(Suit.HEART, CardValue.TEN))
+            receiveCard(Card(Suit.CLUB, CardValue.SEVEN)) // 17
+        }
+
+        val player = Player("A").apply {
+            placeBet(Money.of(99_000))
+            receiveCard(Card(Suit.SPADE, CardValue.NINE))
+            receiveCard(Card(Suit.DIAMOND, CardValue.NINE)) // 19
+        }
+
+        // when
+        blackjackResultCalculator.profitReport(listOf(player), dealer)
+
+        // then
+        assertThat(player.profit).isEqualTo(SignedMoney(99_000))
+    }
+
+    @Test
+    @DisplayName("플레이어, 딜러 모두 블랙잭이 아니면서 딜러 점수가 높으면 딜러가 이긴다")
+    fun determineWinStatus_dealerWinsWithHigherScore() {
+        // given
+        val dealer = Dealer().apply {
+            receiveCard(Card(Suit.HEART, CardValue.TEN))
+            receiveCard(Card(Suit.CLUB, CardValue.NINE)) // 19
+        }
+
+        val player = Player("A").apply {
+            placeBet(Money.of(99_000))
+            receiveCard(Card(Suit.SPADE, CardValue.NINE))
+            receiveCard(Card(Suit.DIAMOND, CardValue.SEVEN)) // 17
+        }
+
+        // when
+        blackjackResultCalculator.profitReport(listOf(player), dealer)
+
+        // then
+        assertThat(player.profit).isEqualTo(SignedMoney(-99_000))
+        assertThat(dealer.profit).isEqualTo(SignedMoney(99_000))
+    }
 }
