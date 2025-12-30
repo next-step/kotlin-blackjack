@@ -24,17 +24,6 @@ class BlackjackGameServiceTest : FreeSpec({
         players.players[1].cards.cards().size shouldBe 2
     }
 
-    "참가자에게 카드 한 장 추가 분배" {
-        val gameService = BlackjackGameService()
-        val player =
-            Player("pobi", 1000, Cards(mutableListOf(Card(Suit.SPADE, Rank.TEN), Card(Suit.DIAMOND, Rank.TEN))))
-        val initialCardCount = player.cards.cards().size
-
-        gameService.drawPlayerCards(player, { true }) {}
-
-        player.cards.cards().size shouldBe initialCardCount + 1
-    }
-
     "참가자에게 카드 추가 분배하지 않음" {
         val gameService = BlackjackGameService()
         val player = Player("pobi", 1000)

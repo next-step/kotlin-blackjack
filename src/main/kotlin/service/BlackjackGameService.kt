@@ -65,7 +65,7 @@ class BlackjackGameService {
         dealer: Dealer,
         player: Player,
     ): Double {
-        if (player.getCardSize() > INITIAL_DRAW_CARD_SIZE && player.isBust()) return -1.0
+        if (player.isBust()) return -1.0
         if (dealer.isBust()) return 1.0
         if (isBothBlackJack(dealer, player)) return 1.0
         if (player.isPlayerBlackJack()) return 1.5
