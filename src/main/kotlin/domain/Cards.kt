@@ -16,8 +16,16 @@ class Cards(cards: List<Card> = mutableListOf<Card>()) {
         _cards.add(card)
     }
 
+    fun size(): Int {
+        return _cards.size
+    }
+
     fun isBust(): Boolean {
         return calculateScore() > BLACKJACK_WIN_SCORE
+    }
+
+    fun isBlackjackScore(): Boolean {
+        return calculateScore() == BLACKJACK_WIN_SCORE
     }
 
     /**

@@ -1,22 +1,47 @@
 package domain
 
-data class GameResult(val winner: Players, val loser: Players, val drawer: Players) {
-
+data class GameResult(val result: Map<String, Long>) {
     companion object {
-        fun of(dealer: Dealer, players: Players): GameResult {
-            val winner: MutableList<Player> = mutableListOf()
-            val loser: MutableList<Player> = mutableListOf()
-            val drawer: MutableList<Player> = mutableListOf()
+        fun of(
+            dealer: Dealer,
+            players: Players,
+        ): GameResult {
+            var dealerWinAmount = 0L
+            val results: MutableMap<String, Long> = mutableMapOf()
+
             players.players.forEach { player ->
-                when {
-                    player.cards.isBust() -> loser.add(player)
-                    dealer.cards.isBust() -> winner.add(player)
-                    player.cards.calculateScore() > dealer.cards.calculateScore() -> winner.add(player)
-                    player.cards.calculateScore() < dealer.cards.calculateScore() -> loser.add(player)
-                    else -> drawer.add(player)
+                PlayerResultType.calculate(player, dealer).apply {
+                    results.put(player.name, this)
+                    dealerWinAmount -= this
                 }
             }
-            return GameResult(Players(winner), Players(loser), Players(drawer))
+
+            results.put(dealer.name, dealerWinAmount)
+            return GameResult(results)
+        }
+    }
+}
+
+enum class PlayerResultType(val score: Double) {
+    BLACKJACK(1.5),
+    WIN(1.0),
+    DRAW(0.0),
+    LOSE(-1.0),
+    ;
+
+    companion object {
+        fun calculate(
+            player: Player,
+            dealer: Dealer,
+        ): Long {
+            return when {
+                player.isBust() -> (LOSE.score * player.bettingAmount).toLong()
+                dealer.isBust() -> (WIN.score * player.bettingAmount).toLong()
+                player.isBlackjack() -> (BLACKJACK.score * player.bettingAmount).toLong()
+                player.cards.calculateScore() < dealer.cards.calculateScore() -> (LOSE.score * player.bettingAmount).toLong()
+                player.cards.calculateScore() > dealer.cards.calculateScore() -> (WIN.score * player.bettingAmount).toLong()
+                else -> (DRAW.score * player.bettingAmount).toLong()
+            }
         }
     }
 }

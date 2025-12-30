@@ -5,4 +5,6 @@ interface Participant {
     val cards: Cards
 
     fun getPublicCardsOnFirstRound(): Cards
+
+    fun isBust(): Boolean = cards.isBust()
 }

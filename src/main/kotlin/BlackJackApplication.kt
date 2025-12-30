@@ -55,5 +55,5 @@ fun main() {
 
     players.players.forEach { OutputView.printRoundResult(it) }
     OutputView.printRoundResult(dealer)
-    OutputView.printFinalResult(GameResult.of(dealer, players))
+    OutputView.printWinResult(GameResult.of(dealer, players))
 }
