@@ -27,16 +27,9 @@ class BlackjackGameService {
         isDrawCard: () -> Boolean,
         printCards: () -> Unit,
     ) {
-        while (true) {
-            if (isDrawCard()) {
-                player.cards.addCard(deck.drawCard())
-                printCards()
-                if (!player.isDrawAvailable()) {
-                    break
-                }
-            } else {
-                break
-            }
+        while (isDrawCard() && !player.isDrawAvailable()) {
+            player.cards.addCard(deck.drawCard())
+            printCards()
         }
     }
 
