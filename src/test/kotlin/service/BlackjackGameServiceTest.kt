@@ -1,8 +1,12 @@
 package service
 
+import domain.Card
+import domain.Cards
 import domain.Dealer
 import domain.Player
 import domain.Players
+import domain.Rank
+import domain.Suit
 import io.kotest.core.spec.style.FreeSpec
 import io.kotest.matchers.shouldBe
 
@@ -11,23 +15,23 @@ class BlackjackGameServiceTest : FreeSpec({
     "딜러와 참가자에게 초기 카드 2장씩 분배" {
         val gameService = BlackjackGameService()
         val dealer = Dealer()
-        val players = Players(listOf(Player("pobi"), Player("jason")))
+        val players = Players(listOf(Player("pobi", 1000), Player("jason", 1000)))
 
-        gameService.drawInitialCards(dealer, players)
+        gameService.drawInitialCards(dealer, players) {}
 
         dealer.cards.cards().size shouldBe 2
         players.players[0].cards.cards().size shouldBe 2
         players.players[1].cards.cards().size shouldBe 2
     }
 
-    "참가자에게 카드 한 장 추가 분배" {
+    "참가자에게 카드 추가 분배하지 않음" {
         val gameService = BlackjackGameService()
-        val player = Player("pobi")
+        val player = Player("pobi", 1000)
         val initialCardCount = player.cards.cards().size
 
-        gameService.drawCards(player)
+        gameService.drawPlayerCards(player, { false }) {}
 
-        player.cards.cards().size shouldBe initialCardCount + 1
+        player.cards.cards().size shouldBe initialCardCount
     }
 
     "딜러에게 카드 한 장 추가 분배" {
@@ -35,7 +39,7 @@ class BlackjackGameServiceTest : FreeSpec({
         val dealer = Dealer()
         val initialCardCount = dealer.cards.cards().size
 
-        gameService.drawCards(dealer)
+        gameService.drawDealerCards(dealer) {}
 
         dealer.cards.cards().size shouldBe initialCardCount + 1
     }
@@ -43,15 +47,183 @@ class BlackjackGameServiceTest : FreeSpec({
     "카드 분배 시 중복되지 않는 카드 확인" {
         val gameService = BlackjackGameService()
         val dealer = Dealer()
-        val players = Players(listOf(Player("pobi"), Player("jason")))
+        val players = Players(listOf(Player("pobi", 1000), Player("jason", 1000)))
 
-        gameService.drawInitialCards(dealer, players)
+        gameService.drawInitialCards(dealer, players) {}
 
-        val allCards = mutableListOf<domain.Card>()
+        val allCards = mutableListOf<Card>()
         allCards.addAll(dealer.cards.cards())
         allCards.addAll(players.players[0].cards.cards())
         allCards.addAll(players.players[1].cards.cards())
 
         allCards.toSet().size shouldBe allCards.size
+    }
+
+    "플레이어가 3장 이상이고 버스트하면 배팅 금액을 잃음" {
+        val gameService = BlackjackGameService()
+        val dealer = Dealer()
+        val player =
+            Player(
+                "pobi",
+                1000,
+                Cards(
+                    mutableListOf(
+                        Card(Suit.SPADE, Rank.KING),
+                        Card(Suit.DIAMOND, Rank.QUEEN),
+                        Card(Suit.HEART, Rank.JACK),
+                    ),
+                ),
+            )
+        val players = Players(listOf(player))
+
+        gameService.decideGameResult(dealer, players)
+
+        player.money shouldBe -1000
+    }
+
+    "딜러가 버스트하면 플레이어는 배팅 금액을 돌려받음" {
+        val gameService = BlackjackGameService()
+        val dealer =
+            Dealer(
+                Cards(
+                    mutableListOf(
+                        Card(Suit.SPADE, Rank.KING),
+                        Card(Suit.DIAMOND, Rank.QUEEN),
+                        Card(Suit.HEART, Rank.JACK),
+                    ),
+                ),
+            )
+        val player =
+            Player(
+                "pobi",
+                1000,
+                Cards(
+                    mutableListOf(
+                        Card(Suit.SPADE, Rank.FIVE),
+                        Card(Suit.DIAMOND, Rank.FIVE),
+                    ),
+                ),
+            )
+        val players = Players(listOf(player))
+
+        gameService.decideGameResult(dealer, players)
+
+        player.money shouldBe 1000
+    }
+
+    "플레이어와 딜러 모두 블랙잭이면 배팅 금액을 그대로 받음" {
+        val gameService = BlackjackGameService()
+        val dealer =
+            Dealer(
+                Cards(
+                    mutableListOf(
+                        Card(Suit.SPADE, Rank.ACE),
+                        Card(Suit.DIAMOND, Rank.KING),
+                    ),
+                ),
+            )
+        val player =
+            Player(
+                "pobi",
+                1000,
+                Cards(
+                    mutableListOf(
+                        Card(Suit.HEART, Rank.ACE),
+                        Card(Suit.CLUB, Rank.QUEEN),
+                    ),
+                ),
+            )
+        val players = Players(listOf(player))
+
+        gameService.decideGameResult(dealer, players)
+
+        player.money shouldBe 1000
+    }
+
+    "플레이어만 블랙잭이면 배팅 금액의 1.5배를 받음" {
+        val gameService = BlackjackGameService()
+        val dealer =
+            Dealer(
+                Cards(
+                    mutableListOf(
+                        Card(Suit.SPADE, Rank.KING),
+                        Card(Suit.DIAMOND, Rank.FIVE),
+                    ),
+                ),
+            )
+        val player =
+            Player(
+                "pobi",
+                1000,
+                Cards(
+                    mutableListOf(
+                        Card(Suit.HEART, Rank.ACE),
+                        Card(Suit.CLUB, Rank.KING),
+                    ),
+                ),
+            )
+        val players = Players(listOf(player))
+
+        gameService.decideGameResult(dealer, players)
+
+        player.money shouldBe 1500
+    }
+
+    "플레이어 점수가 딜러보다 높으면 배팅 금액을 받음" {
+        val gameService = BlackjackGameService()
+        val dealer =
+            Dealer(
+                Cards(
+                    mutableListOf(
+                        Card(Suit.SPADE, Rank.KING),
+                        Card(Suit.DIAMOND, Rank.FIVE),
+                    ),
+                ),
+            )
+        val player =
+            Player(
+                "pobi",
+                1000,
+                Cards(
+                    mutableListOf(
+                        Card(Suit.HEART, Rank.KING),
+                        Card(Suit.CLUB, Rank.NINE),
+                    ),
+                ),
+            )
+        val players = Players(listOf(player))
+
+        gameService.decideGameResult(dealer, players)
+
+        player.money shouldBe 1000
+    }
+
+    "플레이어 점수가 딜러보다 낮으면 배팅 금액을 잃음" {
+        val gameService = BlackjackGameService()
+        val dealer =
+            Dealer(
+                Cards(
+                    mutableListOf(
+                        Card(Suit.SPADE, Rank.KING),
+                        Card(Suit.DIAMOND, Rank.NINE),
+                    ),
+                ),
+            )
+        val player =
+            Player(
+                "pobi",
+                1000,
+                Cards(
+                    mutableListOf(
+                        Card(Suit.HEART, Rank.KING),
+                        Card(Suit.CLUB, Rank.FIVE),
+                    ),
+                ),
+            )
+        val players = Players(listOf(player))
+
+        gameService.decideGameResult(dealer, players)
+
+        player.money shouldBe -1000
     }
 })

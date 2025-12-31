@@ -14,7 +14,11 @@ class Cards(private val cards: MutableList<Card> = mutableListOf()) {
     }
 
     fun isBust(): Boolean {
-        return calculateScoreTreatAceAsOne() > BLACKJACK_SCORE
+        return calculateScore() > BLACKJACK_SCORE
+    }
+
+    fun isBlackJack(): Boolean {
+        return calculateScore() == BLACKJACK_SCORE
     }
 
     /**
@@ -40,23 +44,6 @@ class Cards(private val cards: MutableList<Card> = mutableListOf()) {
         while (total > BLACKJACK_SCORE && aceCount > 0) {
             total -= 10
             aceCount--
-        }
-
-        return total
-    }
-
-    /**
-     * ace 를 무조건 1로 판단하는 버전
-     */
-    fun calculateScoreTreatAceAsOne(): Int {
-        var total = 0
-
-        for (card in cards) {
-            total +=
-                when (card.rank) {
-                    Rank.ACE -> 1
-                    else -> card.rank.value
-                }
         }
 
         return total
