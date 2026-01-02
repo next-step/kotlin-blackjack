@@ -11,6 +11,10 @@ class OutputView {
             println("게임에 참여할 사람의 이름을 입력하세요.")
         }
 
+        fun printPlayerBettingAmount(player: String) {
+            println("${player}의 베팅 금액은?")
+        }
+
         fun printFirstCard(players: Players) {
             println("딜러와 ${players.players.joinToString(", ", transform = Player::name)}에게 2장의 카드를 나누었습니다.")
         }
@@ -35,12 +39,9 @@ class OutputView {
             println("${participant.name}카드: ${participant.cards} - 결과: ${participant.cards.calculateScore()}")
         }
 
-        fun printFinalResult(gameResult: GameResult) {
-            println("## 최종 승패")
-            println("딜러: ${gameResult.loser.players.size} 승 ${gameResult.winner.players.size} 패 ${gameResult.drawer.players.size} 무")
-            gameResult.winner.players.forEach { player -> println("${player.name}: 승") }
-            gameResult.loser.players.forEach { player -> println("${player.name}: 패") }
-            gameResult.drawer.players.forEach { player -> println("${player.name}: 무") }
+        fun printWinResult(gameResult: GameResult) {
+            println("## 최종 수익")
+            gameResult.result.forEach { (participant, amount) -> println("$participant: $amount") }
         }
     }
 }

@@ -2,8 +2,8 @@ package domain
 
 class Players(val players: List<Player>) {
     companion object {
-        fun of(input: List<String>): Players {
-            return Players(input.map { Player(it) })
+        fun of(input: Map<String, Long>): Players {
+            return Players(input.map { Player(name = it.key, bettingAmount = it.value) })
         }
     }
 

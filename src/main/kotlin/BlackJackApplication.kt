@@ -11,7 +11,14 @@ import view.OutputView
 fun main() {
     OutputView.printPlayerNames()
     val inputPlayerNames = InputView.inputPlayerNames()
-    val players = Players.of(inputPlayerNames)
+
+    val playersMap =
+        inputPlayerNames.associateWith { it ->
+            OutputView.printPlayerBettingAmount(it)
+            InputView.inputPlayerBettingAmounts()
+        }
+
+    val players = Players.of(playersMap)
     val dealer = Dealer()
 
     val deck = CardDeck()
@@ -35,18 +42,18 @@ fun main() {
             }
             player.cards.addCard(deck.drawCard())
             OutputView.printCardStatus(player)
-            if (player.cards.calculateScore() >= BLACKJACK_WIN_SCORE) {
+            if (player.getScore() >= BLACKJACK_WIN_SCORE) {
                 break
             }
         }
     }
 
-    if (dealer.cards.calculateScore() < DEALER_DRAW_THRESHOLD_SCORE) {
+    if (dealer.getScore() < DEALER_DRAW_THRESHOLD_SCORE) {
         OutputView.printDealerMustGetCard()
         dealer.cards.addCard(deck.drawCard())
     }
 
     players.players.forEach { OutputView.printRoundResult(it) }
     OutputView.printRoundResult(dealer)
-    OutputView.printFinalResult(GameResult.of(dealer, players))
+    OutputView.printWinResult(GameResult.of(dealer, players))
 }
