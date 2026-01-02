@@ -2,18 +2,17 @@ package presentation
 
 import domain.participant.Dealer
 import domain.participant.Player
-import domain.participant.WinType
-import kotlin.math.ceil
+import domain.participant.PlayerWinType
 
 class ResultView {
     companion object {
-        fun printWinnerResult(result: Map<Player, WinType>) {
+        fun printWinnerResult(result: Map<Player, PlayerWinType>) {
             println("## 최종승패")
 
             // 딜러 승패 출력
-            val dealerDefeatCount = result.count { it.value == WinType.WIN }
-            val dealerWinCount = result.count { it.value == WinType.LOSE }
-            val drawCount = result.count { it.value == WinType.DRAW }
+            val dealerDefeatCount = result.count { it.value == PlayerWinType.WIN }
+            val dealerWinCount = result.count { it.value == PlayerWinType.LOSE }
+            val drawCount = result.count { it.value == PlayerWinType.DRAW }
             println("딜러: ${dealerWinCount}승 ${dealerDefeatCount}패 ${drawCount}무")
 
             // 플레이어 승패 출력
@@ -22,17 +21,11 @@ class ResultView {
             }
         }
 
-        fun printProfit(result: Map<Player, WinType>) {
+        fun printProfit(result: Map<Player, PlayerWinType>) {
             println("## 최종 수익")
             val playerProfits =
                 result.mapValues { (player, winType) ->
-                    when (winType) {
-                        WinType.WIN ->
-                            ceil(player.betMoney.amount * if (player.isBlackjack()) 1.5 else 1.0).toInt()
-
-                        WinType.LOSE -> -player.betMoney.amount
-                        WinType.DRAW -> 0
-                    }
+                    player.betMoney.amount * winType.profitMultiplier
                 }
 
             println("딜러: ${-playerProfits.values.sum()}")

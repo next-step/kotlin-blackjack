@@ -9,5 +9,5 @@ abstract class Participant(
 
     fun score(): Int = hand.calculateScore()
 
-    fun isBlackjack(): Boolean = hand.calculateScore(2) == ParticipantHand.BLACKJACK_MAX_SCORE
+    fun isBust(): Boolean = score() > ParticipantHand.BLACKJACK_MAX_SCORE
 }

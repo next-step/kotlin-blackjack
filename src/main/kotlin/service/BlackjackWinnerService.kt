@@ -1,22 +1,21 @@
 package service
 
 import domain.participant.Dealer
-import domain.participant.ParticipantHand
 import domain.participant.Player
-import domain.participant.WinType
+import domain.participant.PlayerWinType
 
 class BlackjackWinnerService {
     fun determineWinner(
         players: List<Player>,
         dealer: Dealer,
-    ): Map<Player, WinType> =
+    ): Map<Player, PlayerWinType> =
         players.associateWith {
             when {
-                dealer.score() > ParticipantHand.BLACKJACK_MAX_SCORE -> WinType.WIN
-                it.score() > ParticipantHand.BLACKJACK_MAX_SCORE -> WinType.LOSE
-                it.score() == dealer.score() -> WinType.DRAW
-                it.score() > dealer.score() -> WinType.WIN
-                else -> WinType.LOSE
+                it.isBust() -> PlayerWinType.LOSE
+                dealer.isBust() -> PlayerWinType.WIN
+                it.score() == dealer.score() -> PlayerWinType.DRAW
+                it.score() > dealer.score() -> if (it.isBlackjack()) PlayerWinType.BLACKJACK_WIN else PlayerWinType.WIN
+                else -> PlayerWinType.LOSE
             }
         }
 }

@@ -6,7 +6,7 @@ import domain.card.CardValue
 import domain.card.Suit
 import domain.participant.Dealer
 import domain.participant.Player
-import domain.participant.WinType
+import domain.participant.PlayerWinType
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -41,9 +41,9 @@ class BlackjackWinnerServiceTest {
         val winner = blackjackWinnerService.determineWinner(players, dealer)
 
         // then
-        assertThat(winner[player]).isEqualTo(WinType.WIN)
-        assertThat(winner[player2]).isEqualTo(WinType.LOSE)
-        assertThat(winner[player3]).isEqualTo(WinType.DRAW)
+        assertThat(winner[player]).isEqualTo(PlayerWinType.WIN)
+        assertThat(winner[player2]).isEqualTo(PlayerWinType.LOSE)
+        assertThat(winner[player3]).isEqualTo(PlayerWinType.DRAW)
     }
 
     @Test
@@ -66,6 +66,6 @@ class BlackjackWinnerServiceTest {
         val winner = blackjackWinnerService.determineWinner(players, dealer)
 
         // then
-        assertThat(winner[player]).isEqualTo(WinType.LOSE)
+        assertThat(winner[player]).isEqualTo(PlayerWinType.LOSE)
     }
 }
