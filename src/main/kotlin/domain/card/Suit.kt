@@ -1,4 +1,4 @@
-package domain
+package domain.card
 
 enum class Suit(val description: String) {
     SPADE("스페이드"),

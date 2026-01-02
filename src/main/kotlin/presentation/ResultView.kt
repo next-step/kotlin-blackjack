@@ -1,37 +1,51 @@
 package presentation
 
-import domain.Dealer
-import domain.Player
+import domain.participant.Dealer
+import domain.participant.Player
+import domain.participant.PlayerWinType
 
 class ResultView {
     companion object {
-        fun printWinnerResult(result: Map<Player, Boolean>) {
+        fun printWinnerResult(result: Map<Player, PlayerWinType>) {
             println("## 최종승패")
 
             // 딜러 승패 출력
-            val dealerDefeatCount = result.count { it.value }
-            val dealerWinCount = result.count { !it.value }
-            println("딜러: ${dealerWinCount}승 ${dealerDefeatCount}패")
+            val dealerDefeatCount = result.count { it.value == PlayerWinType.WIN }
+            val dealerWinCount = result.count { it.value == PlayerWinType.LOSE }
+            val drawCount = result.count { it.value == PlayerWinType.DRAW }
+            println("딜러: ${dealerWinCount}승 ${dealerDefeatCount}패 ${drawCount}무")
 
             // 플레이어 승패 출력
-            result.forEach { (player, isWin) ->
-                val resultText = if (isWin) "승" else "패"
-                println("${player.name}: $resultText")
+            result.forEach { (player, winType) ->
+                println("${player.name}: ${winType.displayName}")
+            }
+        }
+
+        fun printProfit(result: Map<Player, PlayerWinType>) {
+            println("## 최종 수익")
+            val playerProfits =
+                result.mapValues { (player, winType) ->
+                    player.betMoney.amount * winType.profitMultiplier
+                }
+
+            println("딜러: ${-playerProfits.values.sum()}")
+            playerProfits.forEach { (player, profit) ->
+                println("${player.name}: ${profit}원")
             }
         }
 
         fun printParticipantCardResult(
-            players: Set<Player>,
+            players: List<Player>,
             dealer: Dealer,
         ) {
-            println("딜러 카드: ${dealer.blackjackCards.displayCardInfo()} - 결과: ${dealer.blackjackCards.calculateScore()}")
+            println("딜러 카드: ${dealer.hand} - 결과: ${dealer.hand.calculateScore()}")
             players.forEach { player ->
-                println("${player.name} 카드: ${player.blackjackCards.displayCardInfo()} - 결과: ${player.blackjackCards.calculateScore()}")
+                println("${player.name} 카드: ${player.hand} - 결과: ${player.hand.calculateScore()}")
             }
         }
 
         fun printDistributedCardInfos(
-            players: Set<Player>,
+            players: List<Player>,
             dealer: Dealer,
         ) {
             println("딜러와 ${players.joinToString(", ") { it.name }}에게 2장의 나누었습니다.")
@@ -41,7 +55,7 @@ class ResultView {
 
             // 플레이어 카드 출력 : 플레이어별 전체 카드 출력
             players.forEach {
-                println("${it.name}카드: ${it.blackjackCards.displayCardInfo()}")
+                println("${it.name}카드: ${it.hand}")
             }
         }
     }

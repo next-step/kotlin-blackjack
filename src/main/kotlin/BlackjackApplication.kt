@@ -1,21 +1,33 @@
-import domain.CardDeck
-import domain.Dealer
+import domain.bet.BetMoney
+import domain.card.CardDeck
+import domain.participant.Dealer
+import domain.participant.Player
 import presentation.InputView
 import presentation.ResultView
 import service.BlackjackWinnerService
 import service.CardDistributorService
 
+// Service 선언
+val cardDistributorService = CardDistributorService(CardDeck())
+val blackjackWinnerService = BlackjackWinnerService()
+
 fun main() {
     // 딜러 초기화
     val dealer = Dealer()
 
-    // 플레이어 입력 및 초기화
-    val players = InputView.inputPlayers()
+    // 플레이어 이름 입력
+    val playerNames = InputView.inputPlayers()
+    println()
+
+    // 베팅금액 입력 및 플레이어 초기화
+    val players =
+        playerNames.map {
+            Player(it, BetMoney(InputView.inputBetMoney(it)))
+        }
     println()
 
     // 카드 분배 : 플레이어, 딜러
-    val cardDistributorService = CardDistributorService(CardDeck())
-    cardDistributorService.distributeCards(players, dealer)
+    cardDistributorService.distributeInitialCards(players + dealer)
 
     // 분배된 카드정보 출력
     ResultView.printDistributedCardInfos(players, dealer)
@@ -23,12 +35,12 @@ fun main() {
 
     // 플레이어에게 카드 추가 발급 여부 묻기
     players.forEach { player ->
-        cardDistributorService.additionalDistributeForPlayer(player)
+        cardDistributorService.distributeAdditionalCardsForPlayer(player)
     }
     println()
 
     // 딜러에게 카드 추가 발급
-    cardDistributorService.additionalDistributeForDealer(dealer)
+    cardDistributorService.distributeAdditionalCardsForDealer(dealer)
     println()
 
     // 딜러 및 플레이어의 최종 카드 출력
@@ -36,7 +48,9 @@ fun main() {
     println()
 
     // 최종 승패 출력
-    val blackjackWinnerService = BlackjackWinnerService()
-    val result = blackjackWinnerService.winner(players, dealer)
-    ResultView.printWinnerResult(result)
+    val winResult = blackjackWinnerService.determineWinner(players, dealer)
+    ResultView.printWinnerResult(winResult)
+    println()
+
+    ResultView.printProfit(winResult)
 }

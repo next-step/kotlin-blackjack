@@ -1,26 +1,21 @@
 package service
 
-import domain.BlackjackCards
-import domain.Dealer
-import domain.Player
+import domain.participant.Dealer
+import domain.participant.Player
+import domain.participant.PlayerWinType
 
 class BlackjackWinnerService {
-    fun winner(
-        players: Set<Player>,
+    fun determineWinner(
+        players: List<Player>,
         dealer: Dealer,
-    ): Map<Player, Boolean> {
-        val result = mutableMapOf<Player, Boolean>()
-
-        players.forEach {
-            if (dealer.score() > BlackjackCards.BLACKJACK_MAX_SCORE) {
-                result[it] = true
-            } else if (it.score() > BlackjackCards.BLACKJACK_MAX_SCORE) {
-                result[it] = false
-            } else {
-                result[it] = it.score() >= dealer.score()
+    ): Map<Player, PlayerWinType> =
+        players.associateWith {
+            when {
+                it.isBust() -> PlayerWinType.LOSE
+                dealer.isBust() -> PlayerWinType.WIN
+                it.score() == dealer.score() -> PlayerWinType.DRAW
+                it.score() > dealer.score() -> if (it.isBlackjack()) PlayerWinType.BLACKJACK_WIN else PlayerWinType.WIN
+                else -> PlayerWinType.LOSE
             }
         }
-
-        return result
-    }
 }

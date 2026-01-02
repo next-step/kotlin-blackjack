@@ -1,4 +1,4 @@
-package domain
+package domain.card
 
 enum class CardValue(val basicScore: Int) {
     TWO(2),

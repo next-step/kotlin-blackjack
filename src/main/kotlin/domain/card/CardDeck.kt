@@ -1,4 +1,4 @@
-package domain
+package domain.card
 
 class CardDeck {
     private val cards: MutableList<Card> = mutableListOf()

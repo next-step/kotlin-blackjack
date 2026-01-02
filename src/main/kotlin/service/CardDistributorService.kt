@@ -1,37 +1,27 @@
 package service
 
-import domain.CardDeck
-import domain.Dealer
-import domain.Player
+import domain.card.CardDeck
+import domain.participant.Dealer
+import domain.participant.Participant
+import domain.participant.Player
 import presentation.InputView
 
 class CardDistributorService(private val cardDeck: CardDeck) {
     companion object {
-        const val PLAYER_CARD_COUNT = 2
-        const val DEALER_CARD_COUNT = 2
+        const val INITIAL_CARD_COUNT = 2
         const val DEALER_ADDITIONAL_CARD_THRESHOLD = 16
     }
 
-    fun distributeCards(
-        players: Set<Player>,
-        dealer: Dealer,
-    ) {
-        // 플레이어에게 카드 분배
-        players.forEach { player ->
-            repeat(PLAYER_CARD_COUNT) {
+    fun distributeInitialCards(participants: List<Participant>) {
+        participants.forEach { participant ->
+            repeat(INITIAL_CARD_COUNT) {
                 val card = cardDeck.drawCard()
-                player.receiveCard(card)
+                participant.receiveCard(card)
             }
-        }
-
-        // 딜러에게 카드 분배
-        repeat(DEALER_CARD_COUNT) {
-            val card = cardDeck.drawCard()
-            dealer.receiveCard(card)
         }
     }
 
-    fun additionalDistributeForPlayer(player: Player) {
+    fun distributeAdditionalCardsForPlayer(player: Player) {
         // 1. 플레이어의 카드 점수를 계산
         // 2. 카드 점수가 21을 넘으면 return;
         // 3. 카드 점수가 21 이하이면 추가 카드 발급 여부를 묻고, Y인 경우 카드를 한 장 더 발급
@@ -43,15 +33,15 @@ class CardDistributorService(private val cardDeck: CardDeck) {
             val card = cardDeck.drawCard()
             player.receiveCard(card)
 
-            println("${player.name}카드: ${player.blackjackCards.displayCardInfo()}")
+            println("${player.name}카드: ${player.hand}")
         }
     }
 
-    fun additionalDistributeForDealer(dealer: Dealer) {
+    fun distributeAdditionalCardsForDealer(dealer: Dealer) {
         // 1. 딜러의 카드 점수를 계산
         // 2. 카드 점수가 17 미만이면 카드를 한 장 더 발급
         // 3. 카드 점수가 17 이상이면 종료
-        val dealerScore = dealer.blackjackCards.calculateScore()
+        val dealerScore = dealer.hand.calculateScore()
         if (dealerScore > DEALER_ADDITIONAL_CARD_THRESHOLD) {
             return
         }
