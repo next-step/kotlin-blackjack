@@ -3,7 +3,7 @@ package domain
 class Players(val players: List<Player>) {
     companion object {
         fun of(input: Map<String, Long>): Players {
-            return Players(input.map { it -> Player(name = it.key, bettingAmount = it.value) })
+            return Players(input.map { Player(name = it.key, bettingAmount = it.value) })
         }
     }
 

@@ -42,13 +42,13 @@ fun main() {
             }
             player.cards.addCard(deck.drawCard())
             OutputView.printCardStatus(player)
-            if (player.cards.calculateScore() >= BLACKJACK_WIN_SCORE) {
+            if (player.getScore() >= BLACKJACK_WIN_SCORE) {
                 break
             }
         }
     }
 
-    if (dealer.cards.calculateScore() < DEALER_DRAW_THRESHOLD_SCORE) {
+    if (dealer.getScore() < DEALER_DRAW_THRESHOLD_SCORE) {
         OutputView.printDealerMustGetCard()
         dealer.cards.addCard(deck.drawCard())
     }

@@ -12,5 +12,5 @@ data class Player(
 
     override fun getPublicCardsOnFirstRound(): Cards = cards
 
-    fun isBlackjack(): Boolean = cards.size() == 2 && cards.isBlackjackScore()
+    fun isBlackjack(): Boolean = cards.hasTwoCards() && cards.isBlackjackScore()
 }

@@ -16,8 +16,8 @@ class Cards(cards: List<Card> = mutableListOf<Card>()) {
         _cards.add(card)
     }
 
-    fun size(): Int {
-        return _cards.size
+    fun hasTwoCards(): Boolean {
+        return _cards.size == 2
     }
 
     fun isBust(): Boolean {

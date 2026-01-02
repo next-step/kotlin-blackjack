@@ -11,7 +11,7 @@ data class GameResult(val result: Map<String, Long>) {
 
             players.players.forEach { player ->
                 PlayerResultType.calculate(player, dealer).apply {
-                    results.put(player.name, this)
+                    results[player.name] = this
                     dealerWinAmount -= this
                 }
             }
@@ -22,7 +22,7 @@ data class GameResult(val result: Map<String, Long>) {
     }
 }
 
-enum class PlayerResultType(val score: Double) {
+enum class PlayerResultType(private val ratio: Double) {
     BLACKJACK(1.5),
     WIN(1.0),
     DRAW(0.0),
@@ -35,12 +35,12 @@ enum class PlayerResultType(val score: Double) {
             dealer: Dealer,
         ): Long {
             return when {
-                player.isBust() -> (LOSE.score * player.bettingAmount).toLong()
-                dealer.isBust() -> (WIN.score * player.bettingAmount).toLong()
-                player.isBlackjack() -> (BLACKJACK.score * player.bettingAmount).toLong()
-                player.cards.calculateScore() < dealer.cards.calculateScore() -> (LOSE.score * player.bettingAmount).toLong()
-                player.cards.calculateScore() > dealer.cards.calculateScore() -> (WIN.score * player.bettingAmount).toLong()
-                else -> (DRAW.score * player.bettingAmount).toLong()
+                player.isBlackjack() -> (BLACKJACK.ratio * player.bettingAmount).toLong()
+                player.isBust() -> (LOSE.ratio * player.bettingAmount).toLong()
+                dealer.isBust() -> (WIN.ratio * player.bettingAmount).toLong()
+                player.getScore() < dealer.getScore() -> (LOSE.ratio * player.bettingAmount).toLong()
+                player.getScore() > dealer.getScore() -> (WIN.ratio * player.bettingAmount).toLong()
+                else -> (DRAW.ratio * player.bettingAmount).toLong()
             }
         }
     }

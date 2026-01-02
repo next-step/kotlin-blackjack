@@ -7,4 +7,6 @@ interface Participant {
     fun getPublicCardsOnFirstRound(): Cards
 
     fun isBust(): Boolean = cards.isBust()
+
+    fun getScore(): Int = cards.calculateScore()
 }
