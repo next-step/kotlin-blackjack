@@ -1,5 +1,6 @@
 package blackjack.view
 
+import blackjack.domain.BetMoney
 import blackjack.domain.Player
 import blackjack.util.InputUtils
 
@@ -13,7 +14,7 @@ object InputView {
                     ?.split(",")
                     ?.map { it.trim() }
 
-            require(playerNames != null && playerNames.isNotEmpty() && playerNames.all { it.isNotBlank() }) { "올바른 참가자 이름을 입력해주세요." }
+            require(!playerNames.isNullOrEmpty() && playerNames.all { it.isNotBlank() }) { "올바른 참가자 이름을 입력해주세요." }
             playerNames
         }
     }
@@ -28,6 +29,14 @@ object InputView {
             }
 
             decider == "y"
+        }
+    }
+
+    fun betMoney(player: Player): BetMoney {
+        println("${player.name}의 배팅 금액은?")
+        return InputUtils.retryInput {
+            val input = readlnOrNull()
+            BetMoney(input?.toIntOrNull() ?: 0)
         }
     }
 }

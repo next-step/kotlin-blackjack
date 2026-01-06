@@ -1,31 +1,13 @@
 package blackjack.domain
 
 abstract class Participant(val name: String) {
-    private val _cards = mutableSetOf<Card>()
+    val hand = Hand()
 
-    val cards: Set<Card>
-        get() = _cards.toSet()
+    fun addCard(card: Card) = hand.add(card)
 
-    open fun addCard(card: Card) {
-        _cards.add(card)
-    }
+    fun score(): Int = hand.score()
 
-    fun totalScore(): Int {
-        var score = cards.sumOf { it.score() }
-        val aceCount = cards.count { it.isAce() }
+    fun isBust(): Boolean = score() > BLACKJACK_SCORE
 
-        repeat(aceCount) {
-            if (score + ACE_ADDITIONAL_SCORE <= BLACKJACK_SCORE) {
-                score += ACE_ADDITIONAL_SCORE
-            }
-        }
-
-        return score
-    }
-
-    fun cardCount() = cards.size
-
-    companion object {
-        const val ACE_ADDITIONAL_SCORE = 10
-    }
+    fun isBlackjack(): Boolean = hand.count() == BLACKJACK_CARD_COUNT && score() == BLACKJACK_SCORE
 }

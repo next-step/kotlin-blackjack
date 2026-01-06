@@ -3,23 +3,29 @@ package blackjack.domain
 class Player(
     name: String,
 ) : Participant(name) {
-    fun match(dealer: Dealer): RecordType {
-        val playerScore = totalScore()
-        val dealerScore = dealer.totalScore()
+    lateinit var betMoney: BetMoney
+
+    fun profit(dealer: Dealer): Double {
+        val result = getResult(dealer)
+        return betMoney.money * result.payoutRate
+    }
+
+    private fun getResult(dealer: Dealer): RecordType {
+        val playerScore = score()
+        val dealerScore = dealer.score()
 
         return when {
-            playerScore > BLACKJACK_SCORE -> RecordType.LOSE
-            dealerScore > BLACKJACK_SCORE -> RecordType.WIN
-            playerScore > dealerScore -> RecordType.WIN
-            playerScore < dealerScore -> RecordType.LOSE
-            else -> compareCardCount(dealer)
+            isBlackjack() && dealer.isBlackjack() -> RecordType.DRAW // 둘다 블랙잭인경우 비김
+            isBlackjack() -> RecordType.BLACKJACK
+            isBust() -> RecordType.LOSE // 딜러 승
+            dealer.isBust() -> RecordType.WIN // 플레이어 승
+            playerScore > dealerScore -> RecordType.WIN // 플레이어 승
+            playerScore < dealerScore -> RecordType.LOSE // 딜러 승
+            else -> RecordType.DRAW
         }
     }
 
-    private fun compareCardCount(dealer: Dealer): RecordType =
-        when {
-            cardCount() < dealer.cardCount() -> RecordType.WIN
-            cardCount() > dealer.cardCount() -> RecordType.LOSE
-            else -> RecordType.DRAW
-        }
+    fun placeBet(betMoney: BetMoney) {
+        this.betMoney = betMoney
+    }
 }

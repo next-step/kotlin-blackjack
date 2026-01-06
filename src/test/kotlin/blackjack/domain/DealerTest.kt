@@ -1,6 +1,5 @@
 package blackjack.domain
 
-import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.shouldBe
 
@@ -48,26 +47,7 @@ class DealerTest : BehaviorSpec({
             dealer.addCard(Card(Suit.HEART, Rank.THREE))
 
             Then("카드가 정상적으로 추가된다.") {
-                dealer.cardCount() shouldBe 3
-            }
-        }
-    }
-
-    Given("딜러가 주어졌을 때") {
-        val dealer = Dealer()
-
-        When("카드를 3장 추가한 후 4번째 카드를 추가하려고 하면") {
-            dealer.addCard(Card(Suit.DIAMOND, Rank.ACE))
-            dealer.addCard(Card(Suit.SPADE, Rank.TWO))
-            dealer.addCard(Card(Suit.HEART, Rank.THREE))
-
-            Then("예외가 발생한다.") {
-                val exception =
-                    shouldThrow<IllegalArgumentException> {
-                        dealer.addCard(Card(Suit.CLUB, Rank.FOUR))
-                    }
-
-                exception.message shouldBe "딜러는 카드를 3장 초과해서 가질 수 없습니다."
+                dealer.score() shouldBe 16
             }
         }
     }

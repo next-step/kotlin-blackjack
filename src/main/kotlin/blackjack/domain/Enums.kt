@@ -23,16 +23,9 @@ enum class Rank(val displayName: String, val score: Int) {
     KING("K", 10),
 }
 
-enum class RecordType(val displayName: String) {
-    WIN("승"),
-    DRAW("무"),
-    LOSE("패"),
-    ;
-
-    fun reverse(): RecordType =
-        when (this) {
-            WIN -> LOSE
-            DRAW -> DRAW
-            LOSE -> WIN
-        }
+enum class RecordType(val payoutRate: Double) {
+    BLACKJACK(1.5),
+    WIN(1.0),
+    DRAW(0.0),
+    LOSE(-1.0),
 }

@@ -4,8 +4,7 @@ class Result(
     dealer: Dealer,
     players: List<Player>,
 ) {
-    val playerRecords: List<PlayerRecord> =
-        players.map { PlayerRecord(it.name, it.match(dealer)) }
+    val playerProfits: List<PlayerProfit> = players.map { PlayerProfit(it.name, it.profit(dealer)) }
 
-    val dealerRecord: DealerWinDrawLose = DealerWinDrawLose(playerRecords)
+    val dealerProfit: DealerProfit = DealerProfit(playerProfits)
 }

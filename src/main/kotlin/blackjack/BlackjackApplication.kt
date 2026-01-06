@@ -12,12 +12,19 @@ fun main() {
     val dealer = Dealer()
     val players = createPlayers()
 
+    initialBetMoney(players)
     initialDeal(deck, players, dealer)
     additionalDeal(deck, players, dealer)
     showResult(players, dealer)
 }
 
 private fun createPlayers(): List<Player> = InputView.playerNames().map { Player(it) }
+
+private fun initialBetMoney(players: List<Player>) {
+    players.forEach { player ->
+        player.placeBet(InputView.betMoney(player))
+    }
+}
 
 private fun initialDeal(
     deck: Deck,
@@ -62,7 +69,7 @@ private fun dealToDealer(
     deck: Deck,
     dealer: Dealer,
 ) {
-    if (dealer.isAdditionalDealCondition()) {
+    while (dealer.isAdditionalDealCondition()) {
         OutputView.dealerAdditionalCondition()
         dealer.addCard(deck.pop())
     }
@@ -74,5 +81,5 @@ private fun showResult(
 ) {
     val participants = players + dealer
     OutputView.scoreResult(participants)
-    OutputView.winOrLose(Result(dealer, players))
+    OutputView.finalProfit(Result(dealer, players))
 }
