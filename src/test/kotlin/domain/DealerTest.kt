@@ -12,7 +12,7 @@ class DealerTest :
             val cardDeck = CardDeck()
             val dealer = Dealer()
             repeat(2) {
-                dealer.cards.addCard(cardDeck.drawCard())
+                dealer.cards.add(cardDeck.drawCard())
             }
 
             dealer.getPublicCardsOnFirstRound().cards().size shouldBe 1

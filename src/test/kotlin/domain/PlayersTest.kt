@@ -32,6 +32,6 @@ class PlayersTest :
                     ),
                 )
 
-            players.players.size shouldBe 3
+            players.size shouldBe 3
         }
     })

@@ -1,4 +1,8 @@
-import model.*
+import model.BlackJackConstants
+import model.BlackJackGame
+import model.CardDeck
+import model.Dealer
+import model.Players
 import view.InputView
 import view.InputView.tryUntilSuccess
 import view.OutputView
@@ -32,7 +36,7 @@ fun init(): BlackJackGame {
 }
 
 fun drawFirstCards(game: BlackJackGame) {
-    with(game) {
+    game.run {
         repeat(2) {
             dealer.drawCardFromDeck(deck)
             players.forEach {
@@ -48,7 +52,7 @@ fun drawFirstCards(game: BlackJackGame) {
 }
 
 fun drawPlayerCards(game: BlackJackGame) {
-    with(game) {
+    game.run {
         players.forEach { player ->
             while (true) {
                 val isOneMoreCard = tryUntilSuccess { InputView.inputOneMoreCard(player) }
@@ -67,7 +71,7 @@ fun drawPlayerCards(game: BlackJackGame) {
 }
 
 fun drawDealerCards(game: BlackJackGame) {
-    with(game) {
+    game.run {
         while (dealer.calculateScore() <= BlackJackConstants.DEALER_DRAW_THRESHOLD) {
             OutputView.printDealerMustGetCard()
             dealer.drawCardFromDeck(deck)

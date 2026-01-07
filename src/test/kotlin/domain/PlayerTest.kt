@@ -21,7 +21,7 @@ class PlayerTest :
             val cardDeck = CardDeck()
             val player = Player("player")
             repeat(2) {
-                player.cards.addCard(cardDeck.drawCard())
+                player.cards.add(cardDeck.drawCard())
             }
 
             player.getPublicCardsOnFirstRound().cards().size shouldBe 2

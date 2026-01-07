@@ -2,12 +2,12 @@ package model
 
 class Cards(
     private val cards: MutableList<Card> = mutableListOf(),
-) {
+) : List<Card> by cards {
     override fun toString(): String = cards.joinToString(", ")
 
     fun cards(): List<Card> = cards.toList()
 
-    fun addCard(card: Card) {
+    fun add(card: Card) {
         cards.add(card)
     }
 

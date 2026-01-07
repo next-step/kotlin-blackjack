@@ -11,12 +11,12 @@ abstract class Participant(
     abstract fun getPublicCardsOnFirstRound(): Cards
 
     fun drawCardFromDeck(deck: CardDeck) {
-        cards.addCard(deck.drawCard())
+        cards.add(deck.drawCard())
     }
 
     fun isBust(): Boolean = cards.isBust()
 
-    fun isBlackJack(): Boolean = cards.calculateScore() == BlackJackConstants.BLACK_JACK_SCORE && cards.cards().size == 2
+    fun isBlackJack(): Boolean = cards.calculateScore() == BlackJackConstants.BLACK_JACK_SCORE && cards.size == 2
 
     fun calculateScore(): Int = cards.calculateScore()
 
