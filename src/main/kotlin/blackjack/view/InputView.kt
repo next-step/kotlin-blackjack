@@ -24,4 +24,13 @@ object InputView {
 
         return decider == "y"
     }
+
+    fun betMoney(playerName: String): Int {
+        println("${playerName}의 배팅 금액은?")
+
+        val betMoney = readlnOrNull()?.toIntOrNull()
+        require(betMoney != null && betMoney > 0) { "배팅 금액은 0보다 큰 수를 입력해주세요." }
+
+        return betMoney
+    }
 }
