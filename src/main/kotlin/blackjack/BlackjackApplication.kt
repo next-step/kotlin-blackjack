@@ -27,7 +27,7 @@ private fun players(): List<Player> {
 private fun initBet(players: List<Player>) {
     OutputView.initialDeal(players.map { it.name })
 
-    (players).forEach { player ->
+    players.forEach { player ->
         val betMoney = InputUtils.retryInput { InputView.betMoney(player.name) }
         player.initIncome(betMoney)
     }
@@ -75,7 +75,7 @@ private fun result(
     (players + dealer).forEach { OutputView.scoreResult(it) }
 
     players.forEach { it.match(dealer) }
-    val dealerMoney = -players.sumOf { player -> player.income }
+    val dealerMoney = -players.sumOf { it.income }
 
     OutputView.income()
     OutputView.dealerIncome(dealerMoney)
