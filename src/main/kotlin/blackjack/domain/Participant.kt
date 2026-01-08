@@ -1,10 +1,14 @@
 package blackjack.domain
 
-abstract class Participant(val name: String) {
+abstract class Participant(
+    val name: String,
+) {
     private val _cards = mutableSetOf<Card>()
 
     val cards: Set<Card>
         get() = _cards
+
+    fun isTwoCardBlackJackScore(): Boolean = cards.size == 2 && totalScore() == BLACKJACK_SCORE
 
     fun addCard(card: Card) {
         _cards.add(card)

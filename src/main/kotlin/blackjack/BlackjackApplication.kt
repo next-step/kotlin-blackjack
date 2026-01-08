@@ -3,7 +3,6 @@ package blackjack
 import blackjack.domain.Dealer
 import blackjack.domain.Deck
 import blackjack.domain.Player
-import blackjack.domain.RecordType
 import blackjack.util.InputUtils
 import blackjack.view.InputView
 import blackjack.view.OutputView
@@ -13,7 +12,8 @@ fun main() {
     val dealer = Dealer()
     val players = players()
 
-    init(deck, players, dealer)
+    initBet(players)
+    initDeal(deck, players, dealer)
     additionalDeal(deck, players, dealer)
     result(players, dealer)
 }
@@ -24,7 +24,16 @@ private fun players(): List<Player> {
     return players
 }
 
-private fun init(
+private fun initBet(players: List<Player>) {
+    OutputView.initialDeal(players.map { it.name })
+
+    players.forEach { player ->
+        val betMoney = InputUtils.retryInput { InputView.betMoney(player.name) }
+        player.initIncome(betMoney)
+    }
+}
+
+private fun initDeal(
     deck: Deck,
     players: List<Player>,
     dealer: Dealer,
@@ -65,11 +74,10 @@ private fun result(
 ) {
     (players + dealer).forEach { OutputView.scoreResult(it) }
 
-    val matchResults: Map<String, RecordType> =
-        players.associateBy({ player -> player.name }, { player -> player.match(dealer) })
-    val dealerRecords = matchResults.values.map { it.reverse() }
+    players.forEach { it.match(dealer) }
+    val dealerMoney = -players.sumOf { it.income }
 
-    OutputView.winOrLoseTitle()
-    OutputView.playersRecords(matchResults)
-    OutputView.dealerRecords(dealerRecords)
+    OutputView.income()
+    OutputView.dealerIncome(dealerMoney)
+    OutputView.playersIncomes(players)
 }
