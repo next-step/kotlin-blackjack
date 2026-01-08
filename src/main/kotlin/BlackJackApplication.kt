@@ -1,74 +1,81 @@
-import domain.BlackJackConstants
-import domain.CardDeck
-import domain.Dealer
-import domain.GameResult
-import domain.Players
+import model.BlackJackConstants
+import model.BlackJackGame
+import model.CardDeck
+import model.Dealer
+import model.Players
 import view.InputView
+import view.InputView.tryUntilSuccess
 import view.OutputView
 
 fun main() {
-    val (players, dealer, deck) = init()
-    drawFirstCards(players, dealer, deck)
-    drawPlayerCards(players, deck)
-    drawDealerCards(dealer, deck)
+    val game = init()
+    drawFirstCards(game)
+    drawPlayerCards(game)
+    drawDealerCards(game)
 
-    players.forEach { OutputView.printRoundResult(it) }
-    OutputView.printRoundResult(dealer)
-    OutputView.printFinalResult(GameResult.of(dealer, players))
+    OutputView.printRoundResult(game.dealer)
+    game.players.forEach { OutputView.printRoundResult(it) }
+    println()
+
+    OutputView.printFinalResult(game.getResult())
 }
 
-fun init(): Triple<Players, Dealer, CardDeck> {
-    OutputView.printPlayerNames()
-    val inputPlayerNames = InputView.inputPlayerNames()
-    val players = Players.of(inputPlayerNames)
+fun init(): BlackJackGame {
+    val players: Players =
+        tryUntilSuccess {
+            Players.of(InputView.inputPlayerNames())
+        }
     val dealer = Dealer()
 
+    players.forEach {
+        it.betAmount = tryUntilSuccess { InputView.inputBetAmount(it) }
+    }
+
     val deck = CardDeck()
-    return Triple(players, dealer, deck)
+    return BlackJackGame(players, dealer, deck)
 }
 
-fun drawFirstCards(
-    players: Players,
-    dealer: Dealer,
-    deck: CardDeck,
-) {
-    repeat(2) {
-        dealer.drawCardFromDeck(deck)
-        players.forEach {
-            it.drawCardFromDeck(deck)
-        }
-    }
-
-    OutputView.printFirstCard(players)
-    OutputView.printCardStatusOnFirstRound(dealer)
-    players.forEach { OutputView.printCardStatusOnFirstRound(it) }
-}
-
-fun drawPlayerCards(
-    players: Players,
-    deck: CardDeck,
-) {
-    players.forEach { player ->
-        while (true) {
-            OutputView.printDoYouWantCard(player)
-            if (!InputView.inputIsContinue()) {
-                break
-            }
-            player.drawCardFromDeck(deck)
-            OutputView.printCardStatus(player)
-            if (player.calculateScoreTreatAceAsOne() >= BlackJackConstants.BLACK_JACK_SCORE) {
-                break
+fun drawFirstCards(game: BlackJackGame) {
+    game.run {
+        repeat(2) {
+            dealer.drawCardFromDeck(deck)
+            players.forEach {
+                it.drawCardFromDeck(deck)
             }
         }
+
+        OutputView.printFirstCard(players)
+        OutputView.printCardStatusOnFirstRound(dealer)
+        players.forEach { OutputView.printCardStatusOnFirstRound(it) }
+        println()
     }
 }
 
-fun drawDealerCards(
-    dealer: Dealer,
-    deck: CardDeck,
-) {
-    if (dealer.calculateScore() <= BlackJackConstants.DEALER_DRAW_THRESHOLD) {
-        OutputView.printDealerMustGetCard()
-        dealer.drawCardFromDeck(deck)
+fun drawPlayerCards(game: BlackJackGame) {
+    game.run {
+        players.forEach { player ->
+            while (true) {
+                val isOneMoreCard = tryUntilSuccess { InputView.inputOneMoreCard(player) }
+                if (!isOneMoreCard) {
+                    break
+                }
+                player.drawCardFromDeck(deck)
+                OutputView.printCardStatus(player)
+                if (player.calculateScoreTreatAceAsOne() >= BlackJackConstants.BLACK_JACK_SCORE) {
+                    break
+                }
+            }
+        }
+        println()
+    }
+}
+
+fun drawDealerCards(game: BlackJackGame) {
+    game.run {
+        while (dealer.calculateScore() <= BlackJackConstants.DEALER_DRAW_THRESHOLD) {
+            OutputView.printDealerMustGetCard()
+            dealer.drawCardFromDeck(deck)
+        }
+        println()
     }
 }

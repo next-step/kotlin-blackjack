@@ -1,21 +1,17 @@
-package domain
+package model
 
-class Cards(private val cards: MutableList<Card> = mutableListOf()) {
-    override fun toString(): String {
-        return cards.joinToString(", ")
-    }
+class Cards(
+    private val cards: MutableList<Card> = mutableListOf(),
+) : List<Card> by cards {
+    override fun toString(): String = cards.joinToString(", ")
 
-    fun cards(): List<Card> {
-        return cards.toList()
-    }
+    fun cards(): List<Card> = cards.toList()
 
-    fun addCard(card: Card) {
+    fun add(card: Card) {
         cards.add(card)
     }
 
-    fun isBust(): Boolean {
-        return calculateScoreTreatAceAsOne() > 21
-    }
+    fun isBust(): Boolean = calculateScoreTreatAceAsOne() > BlackJackConstants.BLACK_JACK_SCORE
 
     /**
      * 카드 합산 점수 계산
@@ -33,11 +29,14 @@ class Cards(private val cards: MutableList<Card> = mutableListOf()) {
                         aceCount++
                         11
                     }
-                    else -> card.rank.value
+
+                    else -> {
+                        card.rank.value
+                    }
                 }
         }
 
-        while (total > 21 && aceCount > 0) {
+        while (total > BlackJackConstants.BLACK_JACK_SCORE && aceCount > 0) {
             total -= 10
             aceCount--
         }

@@ -1,4 +1,4 @@
-package domain
+package model
 
 class CardDeck {
     private val cards: MutableList<Card> = mutableListOf()
@@ -14,10 +14,6 @@ class CardDeck {
                 cards.add(Card(suit, rank))
             }
         }
-        shuffle()
-    }
-
-    fun shuffle() {
         cards.shuffle()
     }
 

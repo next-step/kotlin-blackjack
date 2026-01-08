@@ -28,9 +28,7 @@ class DslTest {
     }
 }
 
-fun introduce(block: PersonBuilder.() -> Unit): Person {
-    return PersonBuilder().apply(block).build()
-}
+fun introduce(block: PersonBuilder.() -> Unit): Person = PersonBuilder().apply(block).build()
 
 class PersonBuilder {
     private lateinit var name: String
@@ -54,9 +52,7 @@ class PersonBuilder {
         languages = LanguagesBuilder().apply(block).build()
     }
 
-    fun build(): Person {
-        return Person(name, company, skills, languages)
-    }
+    fun build(): Person = Person(name, company, skills, languages)
 }
 
 class SkillsBuilder {
